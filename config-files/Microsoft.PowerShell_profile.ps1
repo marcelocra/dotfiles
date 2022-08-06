@@ -21,7 +21,7 @@ function prompt {
     elseif($principal.IsInRole($adminRole)) { '[ADMIN] ' }
     else { '' }
   ) + '[' + $(Get-Location) + '] em [' + $(Get-Date -Format "dMMMyy HH:mm") + "] 😎 Rock on!`n" +
-  $(if ($NestedPromptLevel -ge 1) { '>>' }) + '🪟 PS> '
+  $(if ($NestedPromptLevel -ge 1) { '>>' }) + 'PS> '
 }
 
 <#------------------------------------------------------------------------------
