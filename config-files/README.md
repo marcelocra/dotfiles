@@ -4,47 +4,53 @@ This repo contains many configuration files that I use.
 
 ## Symlink
 
-For this to work, commands should be run from the config files directory.
-
 ### Windows (PowerShell)
 
 Notice the `-Force` option, that WILL OVERRIDE your destination file. Only use
 it if you know what you are doing.
 
 ```powershell
+# Read all environment variables from a `.env` file. This considers that
+# the `.env` file is in the current folder. Adapt for your requirements.
+get-content .env | foreach {
+    $name, $value = $_.split('=')
+    set-content env:\$name $value
+}
+
+
 # Sublime.
 New-Item `
 -Path "C:\Users\$env:USERNAME\AppData\Roaming\Sublime Text 3\Packages\User\Preferences.sublime-settings" `
 -ItemType SymbolicLink `
--Value "Preferences.sublime-settings" `
+-Value "$env:MCRA_CONFIG_FILES_DIRECTORY\Preferences.sublime-settings" `
 -Force
 
 # Powershell.
 New-Item `
--Path "C:\Users\$env:USERNAME\OneDrive\Documentos\PowerShell\Microsoft.PowerShell_profile.ps1" `
+-Path "$env:MCRA_POWERSHELL_DIRECTORY\Microsoft.PowerShell_profile.ps1" `
 -ItemType SymbolicLink `
--Value "Microsoft.PowerShell_profile.ps1" `
+-Value "$env:MCRA_CONFIG_FILES_DIRECTORY\Microsoft.PowerShell_profile.ps1" `
 -Force
 
 # VSCode settings.
 New-Item `
 -Path "C:\Users\$env:USERNAME\AppData\Roaming\Code\User\settings.json" `
 -ItemType SymbolicLink `
--Value "vscode-settings.json" `
+-Value "$env:MCRA_CONFIG_FILES_DIRECTORY\vscode-settings.jsonc" `
 -Force
 
 # VSCode keybindings.
 New-Item `
 -Path "C:\Users\$env:USERNAME\AppData\Roaming\Code\User\keybindings.json" `
 -ItemType SymbolicLink `
--Value "vscode-keybindings.json" `
+-Value "$env:MCRA_CONFIG_FILES_DIRECTORY\vscode-keybindings.jsonc" `
 -Force
 
 # Gitconfig.
 New-Item `
 -Path "C:\Users\$env:USERNAME\.gitconfig" `
 -ItemType SymbolicLink `
--Value ".gitconfig" `
+-Value "$env:MCRA_CONFIG_FILES_DIRECTORY\.gitconfig" `
 -Force
 
 # Windows Terminal.
@@ -56,7 +62,7 @@ New-Item `
 New-Item `
 -Path "C:\Users\$env:USERNAME\AppData\Local\Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalState\settings.json" `
 -ItemType SymbolicLink `
--Value "windows-terminal-settings.json" `
+-Value "$env:MCRA_CONFIG_FILES_DIRECTORY\windows-terminal-settings.json" `
 -Force
 
 ```
