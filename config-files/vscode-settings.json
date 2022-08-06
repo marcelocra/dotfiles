@@ -1,0 +1,323 @@
+{
+  //============================================================================
+  //= Programming fonts and their settings
+  //============================================================================
+  // // Roboto Mono
+  // // -----------
+  // "editor.fontFamily": "Roboto Mono",
+  // "editor.fontSize": 15,
+
+  // // Inconsolata
+  // // -----------
+  // "editor.fontFamily": "Inconsolata",
+  // "editor.fontSize": 16,
+
+  // JetBrains Mono
+  // --------------
+  "editor.fontFamily": "JetBrains Mono",
+  "editor.fontSize": 13,
+
+  // // Fira Code Light
+  // // ---------------
+  // "editor.fontFamily": "Fira Code Light",
+  // "editor.fontLigatures": false,
+  // "editor.fontSize": 13,
+
+  // // Fira Code
+  // // ---------
+  // "editor.fontFamily": "Fira Code",
+  // "editor.fontSize": 15,
+
+  // // Fantasque Sans Mono
+  // // -------------------
+  // "editor.fontFamily": "Fantasque Sans Mono",
+  // "editor.fontSize": 15,
+
+  // // IBM Plex Mono
+  // // -------------
+  // "editor.fontFamily": "IBM Plex Mono",
+  // "editor.fontSize": 13,
+
+  // // Anonymous Pro
+  // // -------------
+  // "editor.fontFamily": "Anonymous Pro",
+  // "editor.fontSize": 15,
+
+  // // Consolas
+  // // --------
+  // "editor.fontFamily": "Consolas",
+  // "editor.fontSize": 14,
+
+  // // Cascadia Code
+  // // -------------
+  // "editor.fontFamily": "Cascadia Code PL Light", // Good size: 15
+  // // ss19: dashed zero; ss01: stylistic alternates for italics.
+  // // not sure what 'calt' does, but it is reccomended in the docs:
+  // // https://github.com/microsoft/cascadia-code#to-enable-the-cursive-form-of-the-italic-heres-the-code-you-should-use
+  // // "editor.fontLigatures": "'ss19', 'calt', 'ss01'",
+  // // "editor.fontLigatures": "'ss19'",
+  // "editor.fontSize": 15,
+
+  //============================================================================
+  //= Editor settings
+  //============================================================================
+  // "editor.wordWrap": "wordWrapColumn",
+  // "editor.wordWrapColumn": 120,
+  // "editor.lineHeight": 16,
+  // "editor.letterSpacing": -0.8,
+  // "editor.fontWeight": "900",
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": true
+  },
+  "editor.quickSuggestions": {
+    "other": false,
+    "comments": false,
+    "strings": false
+  },
+  "editor.parameterHints.enabled": false,
+  "editor.suggest.snippetsPreventQuickSuggestions": false,
+  "editor.foldingStrategy": "indentation",
+  "editor.guides.bracketPairs": "active",
+  "editor.bracketPairColorization.enabled": true,
+  "editor.guides.indentation": true,
+  "editor.guides.highlightActiveIndentation": true,
+  "editor.semanticHighlighting.enabled": true,
+  "editor.tabSize": 2,
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.cursorStyle": "line-thin",
+  "editor.cursorBlinking": "phase",
+  "editor.rulers": [80],
+  "editor.minimap.maxColumn": 80,
+  "editor.minimap.renderCharacters": false,
+  "editor.minimap.showSlider": "always",
+  "editor.minimap.size": "fill",
+  "editor.formatOnSave": true,
+
+  //============================================================================
+  //= Misc settings
+  //============================================================================
+  "explorer.openEditors.visible": 0,
+  "problems.showCurrentInStatus": true,
+  "scm.diffDecorationsGutterWidth": 2,
+  "search.exclude": {
+    "**/node_modules": true,
+    "**/bower_components": true,
+    "**/*.code-search": true,
+    "**/out": true
+  },
+  "telemetry.telemetryLevel": "off",
+  "terminal.integrated.allowChords": true,
+  "terminal.integrated.commandsToSkipShell": [""],
+  // "terminal.integrated.fontFamily": "'JetBrains Mono'",
+  // "terminal.integrated.fontSize": 13,
+  // "terminal.integrated.fontFamily": "'Anonymous Pro'",
+  // "terminal.integrated.fontSize": 15,
+  "terminal.integrated.tabs.enabled": false,
+  "window.menuBarVisibility": "toggle",
+  "window.title": "${dirty}${activeEditorLong}${separator}${appName}",
+  "workbench.colorCustomizations": {
+    "editorCursor.foreground": "#00ffff",
+    "tree.indentGuidesStroke": "#00ffff"
+  },
+  "workbench.colorTheme": "GitHub Dark",
+  // "workbench.iconTheme": "vscode-icons",
+  "workbench.startupEditor": "newUntitledFile",
+  "workbench.tree.indent": 20,
+  "workbench.tree.renderIndentGuides": "always",
+  "files.associations": {
+    "*.erb": "html"
+  },
+
+  //============================================================================
+  // JavaScript
+  //============================================================================
+  "eslint.validate": [
+    "javascript",
+    "javascriptreact",
+    "typescript",
+    "typescriptreact"
+  ],
+  "javascript.updateImportsOnFileMove.enabled": "never",
+  "[javascript]": {
+    "editor.rulers": [80, 100]
+  },
+  "[javascriptreact]": {
+    "editor.rulers": [80, 100]
+  },
+
+  //============================================================================
+  //= TypeScript
+  //============================================================================
+  "[typescript]": {
+    "editor.rulers": [80, 100]
+  },
+  "[typescriptreact]": {
+    "editor.rulers": [80, 100]
+  },
+
+  //============================================================================
+  //= Svelte
+  //============================================================================
+  "[svelte]": {
+    "editor.defaultFormatter": "svelte.svelte-vscode"
+  },
+  "svelte.enable-ts-plugin": true,
+
+  //============================================================================
+  //= Go
+  //============================================================================
+  "go.formatTool": "goimports",
+
+  //============================================================================
+  //= Dart
+  //============================================================================
+  "dart.openDevTools": "flutter",
+  "dart.debugExternalPackageLibraries": false,
+  "dart.debugSdkLibraries": false,
+  "[dart]": {
+    "editor.defaultFormatter": "Dart-Code.dart-code",
+    "editor.formatOnType": true,
+    // "editor.selectionHighlight": false,
+    "editor.suggest.snippetsPreventQuickSuggestions": false,
+    "editor.suggestSelection": "first",
+    "editor.tabCompletion": "onlySnippets",
+    "editor.wordBasedSuggestions": false
+  },
+  "gitlens.defaultDateFormat": "DDMMMYY HH:mm",
+
+  //============================================================================
+  //= HTML and markups
+  //============================================================================
+  "html.suggest.html5": false,
+  "[markdown]": {
+    "editor.wordWrap": "wordWrapColumn",
+    "editor.wordWrapColumn": 80,
+    "editor.wrappingIndent": "same",
+    "editor.tabSize": 4
+  },
+  "[asciidoc]": {
+    "editor.wordWrap": "wordWrapColumn",
+    "editor.wordWrapColumn": 80,
+    "editor.wrappingIndent": "same",
+    "editor.tabSize": 4
+  },
+
+  //============================================================================
+  //= Vim extension
+  //============================================================================
+  "vim.easymotion": true,
+  "vim.sneak": true,
+  "vim.surround": true,
+  "vim.incsearch": true,
+  "vim.useSystemClipboard": true,
+  "vim.useCtrlKeys": true,
+  "vim.hlsearch": true,
+  "vim.insertModeKeyBindings": [
+    {
+      "before": ["j", "f"],
+      "after": ["<esc>"]
+    },
+    {
+      "before": ["f", "j"],
+      "after": ["<esc>"]
+    },
+    {
+      "before": ["<leader>", "<leader>", "w"],
+      "commands": [":w"],
+      "after": ["<esc>"]
+    }
+  ],
+  "vim.normalModeKeyBindingsNonRecursive": [
+    {
+      "before": ["]", "<leader>"],
+      "after": ["o", "<esc>", "k"]
+    },
+    {
+      "before": ["[", "<leader>"],
+      "after": ["O", "<esc>", "j"]
+    },
+    {
+      "before": ["g", "j"],
+      "commands": ["workbench.action.previousEditorInGroup"]
+    },
+    {
+      "before": ["g", "k"],
+      "commands": ["workbench.action.nextEditorInGroup"]
+    },
+    {
+      "before": ["<c-l>"],
+      "after": ["<c-w>", "<c-w>"]
+    },
+    {
+      "before": ["<c-h>"],
+      "after": ["<c-w>", "<c-w>"]
+    },
+    {
+      "before": ["<leader>", "d"],
+      "after": ["d", "d"]
+    },
+    {
+      "before": ["<C-n>"],
+      "commands": [":nohl"]
+    },
+    {
+      "before": ["<leader>", "<leader>", "w"],
+      "commands": [":w"]
+    },
+    {
+      "before": ["<leader>", "<leader>", "x"],
+      "commands": [":x"]
+    }
+  ],
+  "vim.leader": ",",
+  "vim.handleKeys": {
+    "<C-a>": false,
+    "<C-f>": false
+  },
+
+  //============================================================================
+  //= Calva
+  //============================================================================
+  "calva.paredit.defaultKeyMap": "strict",
+  "calva.replConnectSequences": [],
+  "calva.showCalvaSaysOnStart": false,
+  "calva.prettyPrintingOptions": {
+    "printEngine": "pprint",
+    "enabled": true,
+    "width": 120,
+    "maxLength": 50
+  },
+  "[clojure]": {
+    "editor.wordSeparators": "\t ()\"':,;~@#$%^&{}[]`",
+    "editor.autoClosingBrackets": "always",
+    "editor.autoClosingQuotes": "always",
+    "editor.formatOnType": true,
+    "editor.autoIndent": "full",
+    "editor.formatOnPaste": true,
+    "files.trimTrailingWhitespace": false,
+    // "editor.matchBrackets": "never",
+    // "editor.guides.indentation": false,
+    "editor.parameterHints.enabled": false,
+    "editor.unicodeHighlight.allowedCharacters": {
+      " ": true,
+      "꞉": true
+    },
+    "editor.defaultFormatter": "betterthantomorrow.calva"
+  },
+
+  //============================================================================
+  //= Deno
+  //============================================================================
+  "deno.enable": false,
+
+  //============================================================================
+  //= F#
+  //============================================================================
+  "[fsharp]": {
+    "editor.defaultFormatter": "Ionide.Ionide-fsharp"
+  },
+  "gitlens.defaultDateLocale": "pt-br",
+  "gitlens.defaultDateStyle": "absolute",
+  "git.ignoreMissingGitWarning": true,
+  "diffEditor.ignoreTrimWhitespace": false
+}
