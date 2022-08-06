@@ -3,7 +3,7 @@
   // specific settings file, for example, "Preferences (Linux).sublime-settings".
   // Because of this, setting them here will have no effect: you must set them
   // in your User File Preferences.
-  "font_face": "Fira Code Light",          // Good size: 12
+  "font_face": "Fira Code Light", // Good size: 12
   // "font_face": "Anonymous Pro",            // Good size: 13
   // "font_face": "IBM Plex Mono",            // Good size: 11
   // "font_face": "Cascadia Code PL Light",   // Good size: 11
@@ -70,10 +70,7 @@
   //    group containing the caret in a different color
   //  - "solid" - can be combined with any of the draw_* options to draw
   //    solid instead of stippled lines
-  "indent_guide_options":
-  [
-    "draw_active"
-  ],
+  "indent_guide_options": ["draw_active"],
 
   // Adds whitespace up to the first open bracket when indenting. Requires
   // auto_indent to be enabled.
@@ -88,10 +85,7 @@
   "overlay_scroll_bars": "disabled",
 
   // Columns in which to display vertical rulers
-  "rulers":
-  [
-    80
-  ],
+  "rulers": [80],
 
   // By default, shift+tab will only unindent if the selection spans
   // multiple lines. When pressing shift+tab at other times, it'll insert a
@@ -118,7 +112,7 @@
 
   // The number of spaces a tab is considered equal to
   "tab_size": 2,
-  
+
   // Set to true to insert spaces when tab is pressed
   "translate_tabs_to_spaces": true,
 
@@ -146,10 +140,7 @@
   "hardware_acceleration": "opengl",
 
   // Words that should be ignored by the spell checker.
-  "ignored_words":
-  [
-    "reusability"
-  ],
+  "ignored_words": ["reusability"],
 
   // Exiting the application with hot_exit enabled will cause it to close
   // immediately without prompting. Unsaved modifications and open files will
@@ -175,7 +166,7 @@
   // you'll need to place this line in your user settings to override it.
   "close_windows_when_empty": true,
 
-    // Controls when white space is drawn. Any of the following options may be
+  // Controls when white space is drawn. Any of the following options may be
   // combined:
   // - "selection": Draw white space under the current selection.
   // - "leading": Draw any white space between the beginning of a line and the
@@ -250,5 +241,5 @@
   // Mac-only options: ->
   //  - "no_round": Don't round glyph widths for monospace fonts when
   //        "font_size" is small.
-  "font_options": ["ss01", "ss02", "ss03", "ss04", "ss05", "ss06", "ss07"],
+  "font_options": ["ss01", "ss02", "ss03", "ss04", "ss05", "ss06", "ss07"]
 }
