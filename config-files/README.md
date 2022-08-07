@@ -65,6 +65,14 @@ New-Item `
 -Value "$env:MCRA_CONFIG_FILES_DIRECTORY\windows-terminal-settings.json" `
 -Force
 
+# WSL 2 global config (applies for all wsl2 distros).
+New-Item `
+-Path "C:\Users\$env:USERNAME\.wslconfig" `
+-ItemType SymbolicLink `
+-Value "$env:MCRA_CONFIG_FILES_DIRECTORY\.wslconfig" `
+-Force
+
+
 ```
 
 ### Unix (Bash)
