@@ -1,3 +1,26 @@
+# The `~\.userEnvsPath.ps1` should define the $env:USER_ENVS_PATH like so:
+#
+#   Set-Content env:USER_ENVS_PATH "PATH_TO_YOUR_ENV_FILE_HERE"
+# 
+# If that file exists, this first block will load all env variables defined
+# there. It respects comments (lines starting with '#').
+$userEnvsPath = "C:\Users\$env:USERNAME\.userEnvsPath.ps1"
+if ( Test-Path $userEnvsPath ) {
+  # Load user env path.
+  . $userEnvsPath
+
+  # Uses the user env path to load their envs, 
+  get-content "$env:USER_ENVS_PATH" | foreach {
+    $name, $value = $_.split('=')
+    if ( $name -match '^[# ]' ) {
+        return
+    }
+
+    set-content env:\$name $value
+
+  } 
+}
+
 # Provides an interactive menu, somewhat like what zsh does on tab.
 Set-PSReadLineKeyHandler -Key Tab -Function MenuComplete
 
@@ -60,8 +83,14 @@ function docker-run-standard {
   docker run --rm -it -v ${PWD}:/home/dev --workdir=/home/app $Image $Cmd
 }
 
-function source-profile {
-  . $PROFILE
+# [ FUNCTIONS ] ----------------------------------------------------------------
+
+function jump-to-private-repos {
+  pushd $env:MCRA_PRIVATE_REPOS
+}
+
+function jump-to-public-repos {
+  pushd $env:MCRA_PUBLIC_REPOS
 }
 
 # [ ENVIRONMENT STUFF ] --------------------------------------------------------
@@ -77,4 +106,5 @@ Set-Alias -Name di-sort-by-name-and-size -Value docker-images-sort-by-name-and-s
 Set-Alias -Name dr-rm-it -Value docker-run-standard
 Set-Alias -Name vim -Value subl
 Set-Alias -Name l -Value ls
-Set-Alias -Name reload-profile -Value source-profile
+Set-Alias -Name jpr -Value jump-to-private-repos
+Set-Alias -Name jpu -Value jump-to-public-repos
