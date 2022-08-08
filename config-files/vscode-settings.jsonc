@@ -12,10 +12,10 @@
   // "editor.fontFamily": "Inconsolata",
   // "editor.fontSize": 16,
 
-  // JetBrains Mono
-  // --------------
-  "editor.fontFamily": "JetBrains Mono",
-  "editor.fontSize": 13,
+  // // JetBrains Mono
+  // // --------------
+  // "editor.fontFamily": "JetBrains Mono",
+  // "editor.fontSize": 13,
 
   // // Fira Code Light
   // // ---------------
@@ -57,6 +57,12 @@
   // // "editor.fontLigatures": "'ss19', 'calt', 'ss01'",
   // // "editor.fontLigatures": "'ss19'",
   // "editor.fontSize": 15,
+
+  // JetBrains Mono
+  // --------------
+  // "editor.fontWeight": "bold",
+  "editor.fontFamily": "CodeNewRoman Nerd Font Mono",
+  "editor.fontSize": 15,
 
   //============================================================================
   //= Editor settings
