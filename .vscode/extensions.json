@@ -13,6 +13,7 @@
     "betterthantomorrow.calva",
     "denoland.vscode-deno",
     "ms-dotnettools.csharp",
-    "ionide.ionide-fsharp"
+    "ionide.ionide-fsharp",
+    "ms-dotnettools.dotnet-interactive-vscode"
   ]
 }
