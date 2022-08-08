@@ -26,30 +26,7 @@ Set-PSReadLineKeyHandler -Key Tab -Function MenuComplete
 
 # [ FUNCTIONS ] ----------------------------------------------------------------
 
-<#------------------------------------------------------------------------------
- # Configures the prompt, to include some newlines between commands, an emoji
- # some details about what kind of terminal this is (debug? admin?) and the full
- # path to the current folder.
- #>
-function prompt {
-  $identity = [Security.Principal.WindowsIdentity]::GetCurrent()
-  $principal = [Security.Principal.WindowsPrincipal] $identity
-  $adminRole = [Security.Principal.WindowsBuiltInRole]::Administrator
-
-  $mcra = '▬' * $(Get-Host).UI.RawUI.WindowSize.Width
-
-  "$mcra" +
-
-  $(if (Test-Path variable:/PSDebugContext) { '[DBG] ' }
-    elseif($principal.IsInRole($adminRole)) { '[ADMIN] ' }
-    else { '' }
-  ) + '[' + $(Get-Location) + '] em [' + $(Get-Date -Format "dMMMyy HH:mm") + "] 😎 Rock on!`n" +
-  $(if ($NestedPromptLevel -ge 1) { '>>' }) + 'PS> '
-}
-
-<#------------------------------------------------------------------------------
- # Facilitates running Docker commands.
- #>
+# Facilitates running Docker commands.
 function docker-images-sort-by-size {
   docker images --format="{{json .}}" |
   convertfrom-json |
@@ -83,8 +60,7 @@ function docker-run-standard {
   docker run --rm -it -v ${PWD}:/home/dev --workdir=/home/app $Image $Cmd
 }
 
-# [ FUNCTIONS ] ----------------------------------------------------------------
-
+# Facilitates jumping between folders.
 function jump-to-private-repos {
   pushd $env:MCRA_PRIVATE_REPOS
 }
@@ -97,6 +73,8 @@ function jump-to-public-repos {
 
 $env:GITHUB_MARCELOCODES = "67549662+marcelocodes@users.noreply.github.com"
 $env:GITHUB_MARCELOCRA = "2532492+marcelocra@users.noreply.github.com"
+
+oh-my-posh init pwsh --config "$env:POSH_THEMES_PATH/jandedobbeleer.omp.json" | Invoke-Expression
 
 # [ ALIASES ] ------------------------------------------------------------------
 
