@@ -100,41 +100,6 @@
   "editor.formatOnSave": true,
 
   //============================================================================
-  //= Misc settings
-  //============================================================================
-  "explorer.openEditors.visible": 0,
-  "problems.showCurrentInStatus": true,
-  "scm.diffDecorationsGutterWidth": 2,
-  "search.exclude": {
-    "**/node_modules": true,
-    "**/bower_components": true,
-    "**/*.code-search": true,
-    "**/out": true
-  },
-  "telemetry.telemetryLevel": "off",
-  "terminal.integrated.allowChords": true,
-  "terminal.integrated.commandsToSkipShell": [""],
-  // "terminal.integrated.fontFamily": "'JetBrains Mono'",
-  // "terminal.integrated.fontSize": 13,
-  // "terminal.integrated.fontFamily": "'Anonymous Pro'",
-  // "terminal.integrated.fontSize": 15,
-  "terminal.integrated.tabs.enabled": false,
-  "window.menuBarVisibility": "toggle",
-  "window.title": "${dirty}${activeEditorLong}${separator}${appName}",
-  "workbench.colorCustomizations": {
-    "editorCursor.foreground": "#00ffff",
-    "tree.indentGuidesStroke": "#00ffff"
-  },
-  "workbench.colorTheme": "GitHub Dark",
-  // "workbench.iconTheme": "vscode-icons",
-  "workbench.startupEditor": "newUntitledFile",
-  "workbench.tree.indent": 20,
-  "workbench.tree.renderIndentGuides": "always",
-  "files.associations": {
-    "*.erb": "html"
-  },
-
-  //============================================================================
   // JavaScript
   //============================================================================
   "eslint.validate": [
@@ -189,7 +154,37 @@
     "editor.tabCompletion": "onlySnippets",
     "editor.wordBasedSuggestions": false
   },
+
+  //============================================================================
+  //= Gitlens
+  //============================================================================
+  "gitlens.defaultDateLocale": "pt-BR",
+  "gitlens.defaultDateStyle": "absolute",
   "gitlens.defaultDateFormat": "DDMMMYY HH:mm",
+  "gitlens.defaultDateShortFormat": "DDMMMYY",
+  "gitlens.views.searchAndCompare.pullRequests.showForCommits": false,
+  "gitlens.views.searchAndCompare.pullRequests.enabled": false,
+  "gitlens.views.contributors.pullRequests.showForCommits": false,
+  "gitlens.views.contributors.pullRequests.enabled": false,
+  "gitlens.views.worktrees.pullRequests.showForCommits": false,
+  "gitlens.views.worktrees.pullRequests.showForBranches": false,
+  "gitlens.views.worktrees.pullRequests.enabled": false,
+  "gitlens.views.remotes.pullRequests.showForCommits": false,
+  "gitlens.views.remotes.pullRequests.showForBranches": false,
+  "gitlens.views.remotes.pullRequests.enabled": false,
+  "gitlens.views.branches.pullRequests.showForCommits": false,
+  "gitlens.views.branches.pullRequests.showForBranches": false,
+  "gitlens.views.branches.pullRequests.enabled": false,
+  "gitlens.views.repositories.pullRequests.showForCommits": false,
+  "gitlens.views.repositories.pullRequests.showForBranches": false,
+  "gitlens.views.repositories.pullRequests.enabled": false,
+  "gitlens.views.commits.pullRequests.showForBranches": false,
+  "gitlens.views.commits.pullRequests.enabled": false,
+  "gitlens.hovers.autolinks.enhanced": false,
+  "gitlens.hovers.pullRequests.enabled": false,
+  "gitlens.statusBar.pullRequests.enabled": false,
+  "gitlens.currentLine.pullRequests.enabled": false,
+  "gitlens.views.commits.pullRequests.showForCommits": false,
 
   //============================================================================
   //= HTML and markups
@@ -322,8 +317,44 @@
   "[fsharp]": {
     "editor.defaultFormatter": "Ionide.Ionide-fsharp"
   },
-  "gitlens.defaultDateLocale": "pt-br",
-  "gitlens.defaultDateStyle": "absolute",
+
+  //============================================================================
+  //= Misc settings
+  //============================================================================
+  "diffEditor.ignoreTrimWhitespace": false,
+  "explorer.openEditors.visible": 0,
+  "files.associations": { "*.erb": "html" },
   "git.ignoreMissingGitWarning": true,
-  "diffEditor.ignoreTrimWhitespace": false
+  "nxConsole.enableTelemetry": false,
+  "problems.showCurrentInStatus": true,
+  "remoteHub.commitDirectlyWarning": "off",
+  "scm.diffDecorationsGutterWidth": 2,
+  "search.exclude": {
+    "**/node_modules": true,
+    "**/bower_components": true,
+    "**/*.code-search": true,
+    "**/out": true
+  },
+  "telemetry.telemetryLevel": "off",
+  "terminal.integrated.allowChords": true,
+  "terminal.integrated.commandsToSkipShell": [""],
+  "terminal.integrated.tabs.enabled": false,
+  "typescript.tsserver.experimental.enableProjectDiagnostics": true,
+  "vscode-neovim.neovimExecutablePaths.darwin": "/usr/local/bin/nvim",
+  "vscode-neovim.neovimInitVimPaths.darwin": "/Users/marcelocra/.config/nvim/init.vim",
+  "window.menuBarVisibility": "toggle",
+  "window.title": "${dirty}${activeEditorLong}${separator}${appName}",
+  "workbench.colorCustomizations": {
+    "editorCursor.foreground": "#00ffff",
+    "tree.indentGuidesStroke": "#00ffff"
+  },
+  "workbench.colorTheme": "GitHub Dark",
+  "workbench.startupEditor": "newUntitledFile",
+  "workbench.tree.indent": 20,
+  "workbench.tree.renderIndentGuides": "always"
+  // "terminal.integrated.fontFamily": "'Anonymous Pro'",
+  // "terminal.integrated.fontFamily": "'JetBrains Mono'",
+  // "terminal.integrated.fontSize": 13,
+  // "terminal.integrated.fontSize": 15,
+  // "workbench.iconTheme": "vscode-icons",
 }

@@ -298,5 +298,9 @@
     "key": "ctrl+alt+k",
     "command": "cursorUp",
     "when": "textInputFocus"
+  },
+  {
+    "key": "cmd+k cmd+g",
+    "command": "issue.copyGithubPermalink"
   }
 ]
