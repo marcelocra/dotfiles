@@ -1,0 +1,4 @@
+git_protocol: https
+aliases:
+  personal: "!ln -s -f ~/.config/gh/hosts.personal.yml ~/.config/gh/hosts.yml && ln -s -f ${PERSONAL_GITCONFIG} ~/.gitconfig && gh auth status"
+  work: "!ln -s -f ~/.config/gh/hosts.work.yml ~/.config/gh/hosts.yml && ln -s -f ${WORK_GITCONFIG} ~/.gitconfig && gh auth status"
