@@ -1,0 +1,32 @@
+brew:
+  install_command: /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+  site: https://brew.sh/
+
+neovim:
+  install_command: brew install neovim
+  site: https://github.com/neovim/neovim/wiki/Installing-Neovim#homebrew-on-macos-or-linux
+
+fzf:
+  install_command: brew install fzf
+  site: https://github.com/junegunn/fzf#using-homebrew
+
+bat:
+  install_command: brew install bat
+  site: https://github.com/sharkdp/bat#installation
+
+git:
+  linux:
+    install_command: apt install git
+    site: https://git-scm.com/download/linux
+  mac:
+    install_command: brew install git
+    # Need to understand if this works on Linux.
+    site: https://git-scm.com/download/mac
+
+tmux:
+  site: https://github.com/tmux/tmux/wiki/Installing
+
+  linux:
+    install_command: apt install tmux
+  mac:
+    install_command: brew install tmux
