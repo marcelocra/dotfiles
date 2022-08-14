@@ -228,18 +228,23 @@
       "after": ["<esc>"]
     },
     {
-      "before": ["<leader>", "<leader>", "w"],
+      "before": ["<leader>", "w"],
       "commands": [":w"],
       "after": ["<esc>"]
+    },
+    {
+      "before": ["<leader>", "x"],
+      "commands": [":x"]
+      // "after": ["<esc>"]
     }
   ],
   "vim.normalModeKeyBindingsNonRecursive": [
     {
-      "before": ["]", "<leader>"],
+      "before": ["<leader>", "j"],
       "after": ["o", "<esc>", "k"]
     },
     {
-      "before": ["[", "<leader>"],
+      "before": ["<leader>", "k"],
       "after": ["O", "<esc>", "j"]
     },
     {
@@ -267,17 +272,22 @@
       "commands": [":nohl"]
     },
     {
-      "before": ["<leader>", "<leader>", "w"],
+      "before": ["<leader>", "w"],
       "commands": [":w"]
     },
     {
-      "before": ["<leader>", "<leader>", "x"],
+      "before": ["<leader>", "x"],
       "commands": [":x"]
+    },
+    {
+      "before": ["<leader>", "q"],
+      "commands": [":q"]
     }
   ],
   "vim.leader": ",",
   "vim.handleKeys": {
     "<C-a>": false,
+    "<C-c>": false,
     "<C-f>": false
   },
 
