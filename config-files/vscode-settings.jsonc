@@ -282,6 +282,10 @@
     {
       "before": ["<leader>", "q"],
       "commands": [":q"]
+    },
+    {
+      "before": ["<space>"],
+      "after": ["@", "q"]
     }
   ],
   "vim.leader": ",",
