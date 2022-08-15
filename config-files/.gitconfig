@@ -33,6 +33,5 @@
   dagd = log --graph --abbrev-commit --decorate --format=format:'%C(yellow)%h%C(reset) %C(magenta)%aD%C(reset) %C(green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(cyan)%d%C(reset)' --all
 
 [core]
-  autocrlf = true
-	editor = 'C:\\Program Files\\Sublime Text\\sublime_text.exe' -w
+  editor = vim
   pager = less -F -X
