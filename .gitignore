@@ -1,1 +1,7 @@
+# Environment variables.
 .env
+
+# Clojure
+.calva
+.clj-kondo
+.lsp
