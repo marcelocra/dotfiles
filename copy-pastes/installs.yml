@@ -30,3 +30,4 @@ tmux:
     install_command: apt install tmux
   mac:
     install_command: brew install tmux
+

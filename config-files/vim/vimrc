@@ -1,41 +1,54 @@
-" ---------
-" Vim Plug.
-" ---------
+call plug#begin()
+" The default plugin directory will be as follows:
+"   - Vim (Linux/macOS): '~/.vim/plugged'
+"   - Vim (Windows): '~/vimfiles/plugged'
+"   - Neovim (Linux/macOS/Windows): stdpath('data') . '/plugged'
+" You can specify a custom plugin directory by passing it as the argument
+"   - e.g. `call plug#begin('~/.vim/plugged')`
+"   - Avoid using standard Vim directory names like 'plugin'
 
-call plug#begin('~/.vim/plugged')
+" On-demand loading
+Plug 'tpope/vim-fireplace', { 'for': 'clojure' }
+
+" Go stuff.
+"Plug 'fatih/vim-go', { 'tag': '*' }
+"Plug 'nsf/gocode', { 'tag': 'v.20150303', 'rtp': 'vim' }
+
+" Plugin outside ~/.vim/plugged with post-update hook
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 
 " Colorschemes.
-Plug 'altercation/vim-colors-solarized'
-Plug 'sjl/badwolf'
-Plug 'tomasr/molokai'
-Plug 'tpope/vim-vividchalk'
+"Plug 'altercation/vim-colors-solarized'
+"Plug 'sjl/badwolf'
+"Plug 'tomasr/molokai'
+"Plug 'tpope/vim-vividchalk'
 
 " Makes commenting easier on Vim.
-Plug 'scrooloose/nerdcommenter'
+"Plug 'scrooloose/nerdcommenter'
 
 " Handles Git wonderfully from within Vim.
-Plug 'tpope/vim-fugitive'
+"Plug 'tpope/vim-fugitive'
 
 " Provides a few more mappings to facilitate some tasks.
-Plug 'tpope/vim-unimpaired'
+"Plug 'tpope/vim-unimpaired'
 
 " Changes Vim's status bar to a fancy one.
 "Plug 'bling/vim-airline'
 
 " Allows one to easily traverse files.
-Plug 'Lokaltog/vim-easymotion'
+"Plug 'Lokaltog/vim-easymotion'
 
 " Provides an easy way to surround text with characters.
-Plug 'tpope/vim-surround'
+"Plug 'tpope/vim-surround'
 
 " Plugin outside ~/.vim/plugged with post-update hook.
-Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
-Plug 'junegunn/fzf.vim'
+"Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+"Plug 'junegunn/fzf.vim'
 
 " JavaScript stuff.
-Plug 'dense-analysis/ale'
-Plug 'prettier/vim-prettier', { 'do': 'yarn install' }
-Plug 'ternjs/tern_for_vim', { 'do': 'yarn install' }
+"Plug 'dense-analysis/ale'
+"Plug 'prettier/vim-prettier', { 'do': 'yarn install' }
+"Plug 'ternjs/tern_for_vim', { 'do': 'yarn install' }
 
 " Initialize plugin system
 call plug#end()
@@ -130,103 +143,14 @@ endtry
 
 " Set ruler.
 " TODO: adapt for different filetypes.
-set colorcolumn=79
+set colorcolumn=80
 
 " Set how the status line will be shown in the bottom of Vim.
 set statusline=%<%F\ %m%r%h\ %=lines:%l/%L\ col:%c%V
 
-set guicursor=n-v-c:block-Cursor-blinkon0
-set guicursor+=ve:ver35-Cursor
-set guicursor+=o:hor30-Cursor
-set guicursor+=i-ci:ver10-Cursor
-set guicursor+=r-cr:hor10-Cursor
-set guicursor+=sm:block-Cursor-blinkwait175-blinkoff150-blinkon175
-
-if empty(glob('~/.vim/tmp'))
-    silent !mkdir -p ~/.vim/tmp
-endif
-set directory=~/.vim/tmp
-
 "autocmd BufNewFile,BufRead *.ejs set filetype=html
 "set term=xterm-256color
 
-" ################################
-" ##### GUI related settings #####
-" ################################
-" For NVim, check the ginit.vim.
-
-if has('win32')
-    " Windows specific settings.
-    if has('gui_running')
-        " Windows GUI settings.
-        set guifont=Consolas:h10:cANSI
-    endif
-    " Yank to clipboard.
-    set clipboard=unnamed
-else
-    let s:uname = system("uname -s")
-    if s:uname == "Darwin"
-        " Do Mac stuff here.
-        if has('gui_running')
-            set guifont=Menlo\ Regular:h10
-        endif
-        set clipboard=unnamed
-    else
-        " Do Linux stuff here.
-        if has('gui_running')
-            " Set font according to the list (if one is not present, the next
-            " one is used).
-            set guifont=Meslo\ LG\ M\ 10,Roboto\ Mono\ 12,Consolas\ 10,Monospace\ 10
-        endif
-        " Yank to clipboard
-        set clipboard=unnamedplus
-    endif
-endif
-
-" General GUI specific settings.
-if has('gui_running')
-    " Remove menus (don't like them)
-    set guioptions-=m  " remove menubar
-    set guioptions-=T  " remove toolbar
-    set guioptions-=r  " remove right-hand scroll bar
-    set guioptions-=L  " remove left-hand scroll bar
-endif
-
-" ###########################
-" ##### plugin settings #####
-" ###########################
-
-" --- Molokai ---
-
-let g:molokai_original = 1  " Original monokai background color.
-" For terminal, with 256 colors.
-if !has('gui_running')
-    let g:rehash256 = 1
-endif
-
-" --- Ycm ---
-let g:ycm_filepath_blacklist = {}
-
-" --- Ale Javascript ---
-let g:ale_linter_aliases = {'jsx': ['css', 'javascript']}
-let g:ale_linters = {'jsx': ['eslint', 'prettier']}
-let g:ale_fixers = { 'javascript': ['eslint', 'prettier'] }
-let g:ale_fix_on_save = 1
-
-" --- Plugin specific mappings ---
-
-function! LoadPluginSpecificMappings()
-    if exists(':NERDTree')
-        " Open current working directory in NERDTree.
-        nnoremap <silent> <leader><leader>d :NERDTreeCWD<CR>
-    endif
-    nnoremap <a-f> :Ag<cr>
-endfunction
-
-augroup plugin_initialize
-    autocmd!
-    autocmd VimEnter * call LoadPluginSpecificMappings()
-augroup END
 
 " ############################
 " ##### general mappings #####
@@ -261,7 +185,7 @@ vnoremap > >gv
 nnoremap <a-k> :tabnext<cr>
 nnoremap <a-j> :tabprevious<cr>
 
-" Ctrl+P pra mostrar os arquivos.
+" Ctrl+P to show files.
 nnoremap <c-p> :Files<cr>
 
 " ###########################
@@ -300,3 +224,4 @@ nnoremap <leader>x :x<cr>
 
 " Select all.
 nnoremap <leader>a ggVG
+
