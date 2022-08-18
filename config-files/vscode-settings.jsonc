@@ -268,7 +268,7 @@
       "after": ["d", "d"]
     },
     {
-      "before": ["<C-n>"],
+      "before": ["<c-n>"],
       "commands": [":nohl"]
     },
     {
