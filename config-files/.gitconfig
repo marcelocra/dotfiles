@@ -1,5 +1,4 @@
 [user]
-  email = 2532492+marcelocra@users.noreply.github.com
   name = Marcelo Almeida
 
 [alias]
@@ -32,6 +31,11 @@
   lold = log --abbrev-commit --decorate --format=format:'%C(yellow)%h%C(reset) %C(magenta)%aD%C(reset) %C(green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(cyan)%d%C(reset)'
   dagd = log --graph --abbrev-commit --decorate --format=format:'%C(yellow)%h%C(reset) %C(magenta)%aD%C(reset) %C(green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(cyan)%d%C(reset)' --all
 
-[core]
-  editor = vim
-  pager = less -F -X
+[includeIf "gitdir:C:/Users/marce/"]
+  path = .gitconfig.windows.gitconfig
+
+[includeIf "gitdir:C:/Users/marce/projects/"]
+  path = .gitconfig.personal.gitconfig
+
+[includeIf "gitdir:C:/Users/marce/work/"]
+  path = .gitconfig.work.gitconfig
