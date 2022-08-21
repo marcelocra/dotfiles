@@ -78,7 +78,7 @@
   "editor.quickSuggestions": {
     "other": false,
     "comments": false,
-    "strings": false
+    "strings": true
   },
   "editor.parameterHints.enabled": false,
   "editor.suggest.snippetsPreventQuickSuggestions": false,
@@ -131,7 +131,8 @@
   "workbench.tree.indent": 20,
   "workbench.tree.renderIndentGuides": "always",
   "files.associations": {
-    "*.erb": "html"
+    "*.erb": "html",
+    "*.css": "tailwindcss"
   },
 
   //============================================================================
@@ -286,6 +287,14 @@
     {
       "before": ["<space>"],
       "after": ["@", "q"]
+    },
+    {
+      "before": ["u"],
+      "commands": ["undo"]
+    },
+    {
+      "before": ["<c-r>"],
+      "commands": ["redo"]
     }
   ],
   "vim.leader": ",",
@@ -339,5 +348,10 @@
   "gitlens.defaultDateLocale": "pt-br",
   "gitlens.defaultDateStyle": "absolute",
   "git.ignoreMissingGitWarning": true,
-  "diffEditor.ignoreTrimWhitespace": false
+  "diffEditor.ignoreTrimWhitespace": false,
+
+  //============================================================================
+  //= Tailwind CSS
+  //============================================================================
+  "tailwindCSS.emmetCompletions": true
 }
