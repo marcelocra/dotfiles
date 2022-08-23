@@ -1,0 +1,3 @@
+[core]
+  editor = code -w
+  pager = less -F -X

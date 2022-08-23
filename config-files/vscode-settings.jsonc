@@ -78,7 +78,7 @@
   "editor.quickSuggestions": {
     "other": false,
     "comments": false,
-    "strings": false
+    "strings": true
   },
   "editor.parameterHints.enabled": false,
   "editor.suggest.snippetsPreventQuickSuggestions": false,
@@ -223,18 +223,23 @@
       "after": ["<esc>"]
     },
     {
-      "before": ["<leader>", "<leader>", "w"],
+      "before": ["<leader>", "w"],
       "commands": [":w"],
       "after": ["<esc>"]
+    },
+    {
+      "before": ["<leader>", "x"],
+      "commands": [":x"]
+      // "after": ["<esc>"]
     }
   ],
   "vim.normalModeKeyBindingsNonRecursive": [
     {
-      "before": ["]", "<leader>"],
+      "before": ["<leader>", "j"],
       "after": ["o", "<esc>", "k"]
     },
     {
-      "before": ["[", "<leader>"],
+      "before": ["<leader>", "k"],
       "after": ["O", "<esc>", "j"]
     },
     {
@@ -258,21 +263,38 @@
       "after": ["d", "d"]
     },
     {
-      "before": ["<C-n>"],
+      "before": ["<c-n>"],
       "commands": [":nohl"]
     },
     {
-      "before": ["<leader>", "<leader>", "w"],
+      "before": ["<leader>", "w"],
       "commands": [":w"]
     },
     {
-      "before": ["<leader>", "<leader>", "x"],
+      "before": ["<leader>", "x"],
       "commands": [":x"]
+    },
+    {
+      "before": ["<leader>", "q"],
+      "commands": [":q"]
+    },
+    {
+      "before": ["<space>"],
+      "after": ["@", "q"]
+    },
+    {
+      "before": ["u"],
+      "commands": ["undo"]
+    },
+    {
+      "before": ["<c-r>"],
+      "commands": ["redo"]
     }
   ],
   "vim.leader": ",",
   "vim.handleKeys": {
     "<C-a>": false,
+    "<C-c>": false,
     "<C-f>": false
   },
 
@@ -323,7 +345,10 @@
   //============================================================================
   "diffEditor.ignoreTrimWhitespace": false,
   "explorer.openEditors.visible": 0,
-  "files.associations": { "*.erb": "html" },
+  "files.associations": {
+    "*.erb": "html",
+    "*.css": "tailwindcss"
+  },
   "git.ignoreMissingGitWarning": true,
   "nxConsole.enableTelemetry": false,
   "problems.showCurrentInStatus": true,
@@ -351,10 +376,15 @@
   "workbench.colorTheme": "GitHub Dark",
   "workbench.startupEditor": "newUntitledFile",
   "workbench.tree.indent": 20,
-  "workbench.tree.renderIndentGuides": "always"
+  "workbench.tree.renderIndentGuides": "always",
   // "terminal.integrated.fontFamily": "'Anonymous Pro'",
   // "terminal.integrated.fontFamily": "'JetBrains Mono'",
   // "terminal.integrated.fontSize": 13,
   // "terminal.integrated.fontSize": 15,
   // "workbench.iconTheme": "vscode-icons",
+
+  //============================================================================
+  //= Tailwind CSS
+  //============================================================================
+  "tailwindCSS.emmetCompletions": true
 }

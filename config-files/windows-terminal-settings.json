@@ -45,10 +45,10 @@
         "source": "Windows.Terminal.PowershellCore"
       },
       {
-        "guid": "{60c3e313-8e1a-58f6-8175-3650c2bd2b26}",
+        "guid": "{17bf3de4-5353-5709-bcf9-835bd952a95e}",
         "hidden": false,
-        "name": "Ubuntu 22.04 LTS",
-        "source": "CanonicalGroupLimited.Ubuntu22.04LTS_79rhkp1fndgsc"
+        "name": "Ubuntu-22.04",
+        "source": "Windows.Terminal.Wsl"
       },
       {
         "guid": "{2c4de342-38b7-51cf-b940-2309a097f518}",
@@ -81,10 +81,10 @@
         "name": "Command Prompt"
       },
       {
-        "guid": "{17bf3de4-5353-5709-bcf9-835bd952a95e}",
+        "guid": "{60c3e313-8e1a-58f6-8175-3650c2bd2b26}",
         "hidden": true,
-        "name": "Ubuntu-22.04",
-        "source": "Windows.Terminal.Wsl"
+        "name": "Ubuntu 22.04 LTS",
+        "source": "CanonicalGroupLimited.Ubuntu22.04LTS_79rhkp1fndgsc"
       },
       {
         "guid": "{b453ae62-4e3d-5e58-b989-0a998ec441b8}",

@@ -14,6 +14,7 @@
     "denoland.vscode-deno",
     "ms-dotnettools.csharp",
     "ionide.ionide-fsharp",
-    "ms-dotnettools.dotnet-interactive-vscode"
+    "ms-dotnettools.dotnet-interactive-vscode",
+    "bradlc.vscode-tailwindcss"
   ]
 }

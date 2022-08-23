@@ -1,0 +1,7 @@
+[user]
+  email = 2532492+marcelocra@users.noreply.github.com
+[core]
+  # TODO(marcelocra): enable this to use ssh based commits:
+  #   https://stackoverflow.com/a/43884702/1814970
+  #
+  # sshCommand = ssh -i ~/.ssh/id_rsa_personal
