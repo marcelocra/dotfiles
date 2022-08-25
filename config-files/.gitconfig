@@ -38,28 +38,29 @@
   dagd = log --graph --abbrev-commit --decorate --format=format:'%C(yellow)%h%C(reset) %C(magenta)%aD%C(reset) %C(green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(cyan)%d%C(reset)' --all
 
 
-# Windows stuff.
+# Common configs.
 
 
-[includeIf "gitdir:C:/Users/marce/"]
-  path = .gitconfig.windows.gitconfig
-
+# TODO: migrate stuff to the `projects/personal` folder.
 [includeIf "gitdir:C:/Users/marce/projects/"]
   path = .gitconfig.personal.gitconfig
 
-[includeIf "gitdir:C:/Users/marce/work/"]
+[includeIf "gitdir:~/projects/personal/"]
+  path = .gitconfig.personal.gitconfig
+
+[includeIf "gitdir:~/projects/work/"]
   path = .gitconfig.work.gitconfig
 
 
-# MacOS stuff.
+# Windows configs.
+
+
+[includeIf "gitdir:C:/Users/marce/projects/"]
+  path = .gitconfig.windows.gitconfig
+
+
+# MacOS configs.
 
 
 [includeIf "gitdir:/Users/marcelocra/projects/"]
   path = .gitconfig.unix.gitconfig
-
-[includeIf "gitdir:/Users/marcelocra/projects/personal/"]
-  path = .gitconfig.personal.gitconfig
-
-[includeIf "gitdir:/Users/marcelocra/projects/work/"]
-  path = .gitconfig.work.gitconfig
-
