@@ -86,3 +86,4 @@ Set-Alias -Name vim -Value subl
 Set-Alias -Name l -Value ls
 Set-Alias -Name jpr -Value jump-to-private-repos
 Set-Alias -Name jpu -Value jump-to-public-repos
+Set-Alias -Name less -Value "C:\\Program Files\\Git\\usr\\bin\\less.exe"
