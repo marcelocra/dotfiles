@@ -1,6 +1,12 @@
 [user]
   name = Marcelo Almeida
 
+[init]
+  defaultBranch = main
+
+[pull]
+	rebase = false
+
 [alias]
   # Diff stuff.
   dw = diff --word-diff --color-words
@@ -31,6 +37,10 @@
   lold = log --abbrev-commit --decorate --format=format:'%C(yellow)%h%C(reset) %C(magenta)%aD%C(reset) %C(green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(cyan)%d%C(reset)'
   dagd = log --graph --abbrev-commit --decorate --format=format:'%C(yellow)%h%C(reset) %C(magenta)%aD%C(reset) %C(green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(cyan)%d%C(reset)' --all
 
+
+# Windows stuff.
+
+
 [includeIf "gitdir:C:/Users/marce/"]
   path = .gitconfig.windows.gitconfig
 
@@ -39,3 +49,17 @@
 
 [includeIf "gitdir:C:/Users/marce/work/"]
   path = .gitconfig.work.gitconfig
+
+
+# MacOS stuff.
+
+
+[includeIf "gitdir:/Users/marcelocra/projects/"]
+  path = .gitconfig.unix.gitconfig
+
+[includeIf "gitdir:/Users/marcelocra/projects/personal/"]
+  path = .gitconfig.personal.gitconfig
+
+[includeIf "gitdir:/Users/marcelocra/projects/work/"]
+  path = .gitconfig.work.gitconfig
+
