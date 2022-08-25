@@ -301,7 +301,7 @@
     "when": "textInputFocus"
   },
   {
-    "key": "cmd+k cmd+g",
+    "key": "ctrl+k ctrl+g",
     "command": "issue.copyGithubPermalink"
   }
 ]
