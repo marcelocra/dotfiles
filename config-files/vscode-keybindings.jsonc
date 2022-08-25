@@ -49,8 +49,9 @@
     "command": "-workbench.view.explorer"
   },
   {
-    "key": "ctrl+k ctrl+m",
-    "command": "workbench.action.toggleMaximizedPanel"
+    "key": "alt+shift+m",
+    "command": "workbench.action.toggleMaximizedPanel",
+    "when": "terminalFocus"
   },
   {
     "key": "ctrl+k ctrl+m",
