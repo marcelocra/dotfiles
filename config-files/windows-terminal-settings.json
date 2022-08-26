@@ -3,15 +3,15 @@
   "$schema": "https://aka.ms/terminal-profiles-schema",
   "actions": [
     {
-      "command": "paste",
-      "keys": "ctrl+v"
-    },
-    {
       "command": {
         "action": "copy",
         "singleLine": false
       },
       "keys": "ctrl+c"
+    },
+    {
+      "command": "paste",
+      "keys": "ctrl+v"
     },
     {
       "command": "find",
@@ -81,12 +81,6 @@
         "name": "Command Prompt"
       },
       {
-        "guid": "{60c3e313-8e1a-58f6-8175-3650c2bd2b26}",
-        "hidden": true,
-        "name": "Ubuntu 22.04 LTS",
-        "source": "CanonicalGroupLimited.Ubuntu22.04LTS_79rhkp1fndgsc"
-      },
-      {
         "guid": "{b453ae62-4e3d-5e58-b989-0a998ec441b8}",
         "hidden": true,
         "name": "Azure Cloud Shell",
@@ -109,6 +103,12 @@
         "hidden": true,
         "name": "Developer Command Prompt for VS 2017",
         "source": "Windows.Terminal.VisualStudio"
+      },
+      {
+        "guid": "{2ece5bfe-50ed-5f3a-ab87-5cd4baafed2b}",
+        "hidden": false,
+        "name": "Git Bash",
+        "source": "Git"
       }
     ]
   },
