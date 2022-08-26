@@ -48,7 +48,7 @@
 
 
 # TODO: migrate stuff to the `projects/personal` folder.
-[includeIf "gitdir:C:/Users/marce/projects/"]
+[includeIf "gitdir:~/projects/"]
   path = .gitconfig.personal.gitconfig
 
 [includeIf "gitdir:~/projects/personal/"]
@@ -58,15 +58,10 @@
   path = .gitconfig.work.gitconfig
 
 
-# Windows configs.
 
-
-[includeIf "gitdir:C:/Users/marce/projects/"]
+[include]
+  # This file should only exist in Windows systems.
   path = .gitconfig.windows.gitconfig
 
-
-# MacOS configs.
-
-
-[includeIf "gitdir:/Users/marcelocra/projects/"]
+  # This file should only exist in Unix systems (Mac, Debian, Ubuntu, etc).
   path = .gitconfig.unix.gitconfig
