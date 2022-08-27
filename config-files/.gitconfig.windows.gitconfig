@@ -2,3 +2,9 @@
   autocrlf = true
   editor = 'C:\\Program Files\\Sublime Text\\sublime_text.exe' -w
   pager = 'C:\\Program Files\\Git\\usr\\bin\\less.exe'
+
+[credential]
+	helper = 
+	helper = manager-core
+[credential "https://dev.azure.com"]
+	useHttpPath = true
