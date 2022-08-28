@@ -37,9 +37,7 @@
   lold = log --abbrev-commit --decorate --format=format:'%C(yellow)%h%C(reset) %C(magenta)%aD%C(reset) %C(green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(cyan)%d%C(reset)'
   dagd = log --graph --abbrev-commit --decorate --format=format:'%C(yellow)%h%C(reset) %C(magenta)%aD%C(reset) %C(green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(cyan)%d%C(reset)' --all
 
-
 # Common configs.
-
 
 # TODO: migrate stuff to the `projects/personal` folder.
 [includeIf "gitdir:~/projects/"]
@@ -51,11 +49,12 @@
 [includeIf "gitdir:~/projects/work/"]
   path = .gitconfig.work.gitconfig
 
-
-
 [include]
   # This file should only exist in Windows systems.
   path = .gitconfig.windows.gitconfig
 
   # This file should only exist in Unix systems (Mac, Debian, Ubuntu, etc).
   path = .gitconfig.unix.gitconfig
+
+[core]
+  autocrlf = false
