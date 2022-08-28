@@ -362,7 +362,9 @@
   },
   "telemetry.telemetryLevel": "off",
   "terminal.integrated.allowChords": false,
-  "terminal.integrated.commandsToSkipShell": [""],
+  "terminal.integrated.commandsToSkipShell": [
+    "-workbench.action.terminal.focusFind"
+  ],
   "terminal.integrated.tabs.enabled": true,
   "typescript.tsserver.experimental.enableProjectDiagnostics": true,
   "window.menuBarVisibility": "toggle",
