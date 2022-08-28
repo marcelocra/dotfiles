@@ -3,6 +3,9 @@
 #
 # This Dockerfile can be used to create a container for all my projects, as it
 # will have everything that I use. Will be huge, but disk is free ;).
+#
+# To build it:
+#   docker build -t marcelocra/main -f .\copy-pastes\gists.Dockerfile .\copy-pastes\
 FROM ubuntu:22.04
 
 ENV HOME="/root"
