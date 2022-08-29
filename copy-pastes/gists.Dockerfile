@@ -70,7 +70,7 @@ ENV PATH="${PATH}:/usr/local/go/bin"
 # - hugo -----------------------------------------------------------------------
 # ------------------------------------------------------------------------------
 RUN wget https://github.com/gohugoio/hugo/releases/download/v0.102.0/hugo_extended_0.102.0_Linux-64bit.tar.gz
-RUN tar -C /usr/local/bin -xzf hugo_extended_0.102.0_Linux-64bit.tar.gzgo1.19.linux-amd64.tar.gz
+RUN tar -C /usr/local/bin -xzf hugo_extended_0.102.0_Linux-64bit.tar.gz
 
 
 # ------------------------------------------------------------------------------
