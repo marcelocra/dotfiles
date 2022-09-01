@@ -15,6 +15,7 @@
     "ms-dotnettools.csharp",
     "ionide.ionide-fsharp",
     "ms-dotnettools.dotnet-interactive-vscode",
-    "bradlc.vscode-tailwindcss"
+    "bradlc.vscode-tailwindcss",
+    "golang.go"
   ]
 }
