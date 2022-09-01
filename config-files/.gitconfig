@@ -57,4 +57,4 @@
   path = .gitconfig.unix.gitconfig
 
 [core]
-  autocrlf = false
+  autocrlf = input
