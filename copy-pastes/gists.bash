@@ -14,3 +14,8 @@ printf "%${COLUMNS}s\n" | tr " " "="
 # is not. For more info, check:
 #
 # https://stackoverflow.com/q/5349718/1814970
+
+# Simple way to convert all EOL characters to LF.
+# Be careful if you have folders like `node_modules`, as it
+# could take a VERY long time to finish (if it does).
+prettier --end-of-line lf --write .
