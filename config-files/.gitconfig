@@ -60,4 +60,4 @@
   # Never plays with end of line character. Configure your editor to always use
   # lf (\n).
   autocrlf = false
-  eof = lf
+  eol = lf
