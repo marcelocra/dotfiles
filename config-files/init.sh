@@ -42,6 +42,9 @@ alias python=python3
 alias l="ls -lFh --block-size=MB"
 alias ll="l -a"
 
+alias p=pnpm
+alias pr="p run"
+
 
 # Exports
 
