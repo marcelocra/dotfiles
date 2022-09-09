@@ -243,12 +243,12 @@
       "after": ["O", "<esc>", "j"]
     },
     {
-      "before": ["g", "j"],
-      "commands": ["workbench.action.previousEditorInGroup"]
+      "before": ["g", "h"], // For some reason, <c-h> doesn't work...
+      "commands": [":tabp"]
     },
     {
-      "before": ["g", "k"],
-      "commands": ["workbench.action.nextEditorInGroup"]
+      "before": ["g", "l"], // ... and <c-l> also.
+      "commands": [":tabn"]
     },
     {
       "before": ["<c-l>"],
@@ -293,9 +293,9 @@
   ],
   "vim.leader": ",",
   "vim.handleKeys": {
-    "<C-a>": false,
-    "<C-c>": false,
-    "<C-f>": false
+    "<c-a>": false,
+    "<c-c>": false,
+    "<c-f>": false
   },
 
   //============================================================================
@@ -375,8 +375,8 @@
   "window.menuBarVisibility": "toggle",
   "window.title": "${dirty}${activeEditorLong}${separator}${appName}",
   "workbench.colorCustomizations": {
-    "editorCursor.foreground": "#00ffff",
-    "tree.indentGuidesStroke": "#00ffff"
+    "tree.indentGuidesStroke": "#00ffff",
+    "editorIndentGuide.activeBackground": "#00ff00"
   },
   "workbench.colorTheme": "GitHub Dark Default",
   "workbench.startupEditor": "newUntitledFile",
