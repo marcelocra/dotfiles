@@ -193,14 +193,12 @@
   "[markdown]": {
     "editor.wordWrap": "wordWrapColumn",
     "editor.wordWrapColumn": 80,
-    "editor.wrappingIndent": "same",
-    "editor.tabSize": 4
+    "editor.wrappingIndent": "same"
   },
   "[asciidoc]": {
     "editor.wordWrap": "wordWrapColumn",
     "editor.wordWrapColumn": 80,
-    "editor.wrappingIndent": "same",
-    "editor.tabSize": 4
+    "editor.wrappingIndent": "same"
   },
 
   //============================================================================
