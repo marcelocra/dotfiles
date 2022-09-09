@@ -318,8 +318,6 @@
     "editor.autoIndent": "full",
     "editor.formatOnPaste": true,
     "files.trimTrailingWhitespace": false,
-    // "editor.matchBrackets": "never",
-    // "editor.guides.indentation": false,
     "editor.parameterHints.enabled": false,
     "editor.unicodeHighlight.allowedCharacters": {
       " ": true,
@@ -372,11 +370,10 @@
   ],
   "terminal.integrated.tabs.enabled": true,
   "typescript.tsserver.experimental.enableProjectDiagnostics": true,
-  "window.menuBarVisibility": "toggle",
   "window.title": "${dirty}${activeEditorLong}${separator}${appName}",
   "workbench.colorCustomizations": {
     "tree.indentGuidesStroke": "#00ffff",
-    "editorIndentGuide.activeBackground": "#00ff00"
+    "editorIndentGuide.activeBackground": "#00ffff"
   },
   "workbench.colorTheme": "GitHub Dark Default",
   "workbench.startupEditor": "newUntitledFile",
