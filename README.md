@@ -1,6 +1,6 @@
 # Dev
 
-All my development stuff, as mentioned in the **About**.
+All my development stuff. See the details in the **About**.
 
 ## How to use
 
