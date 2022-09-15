@@ -1,5 +1,6 @@
 [user]
   email = 2532492+marcelocra@users.noreply.github.com
+
 [core]
   # Symlink your personal ssh file to this path:
   sshCommand = ssh -i ~/.ssh/id_rsa_personal
