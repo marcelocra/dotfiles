@@ -49,3 +49,18 @@ AppImage, but this simply doesn't work out of the box in Ubuntu 22.04.
 is missing `libfuse2`, which is required for running AppImages. Simply install
 that with `sudo apt install libfuse2`, enable running AppImage files (from
 the file properties) and voila: double click for it to open.
+
+## Install Git Credential Manager
+
+Don't even think in using Linuxbrew for this one. Won't work ("--cask only
+works on MacOS" sort of issue).
+
+Go straight to the
+[Linux installation section](https://github.com/GitCredentialManager/git-credential-manager#linux),
+download the `.deb` and install with `sudo dpkg -i ...`.
+
+It asks you to run `git-credential-manager-core configure`, but I don't think
+that's necessary when you already have that setting in your `.gitconfig` like
+I do, so I'll add a TODO here, to double check it.
+
+TODO: describe how the actual configuration goes.
