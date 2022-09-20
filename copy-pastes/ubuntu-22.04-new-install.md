@@ -64,3 +64,11 @@ that's necessary when you already have that setting in your `.gitconfig` like
 I do, so I'll add a TODO here, to double check it.
 
 TODO: describe how the actual configuration goes.
+
+## Install something that will improve your shell experience
+
+I've used `oh-my-zsh` for a long time, but now I'm trying
+[`oh-my-posh`](https://ohmyposh.dev/docs/installation/linux). It is terribly
+slow on Windows PowerShell, but I wanted to check on Linux terminal too.
+
+Let's see.
