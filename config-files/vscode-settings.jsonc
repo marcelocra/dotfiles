@@ -98,6 +98,7 @@
   "editor.minimap.showSlider": "always",
   "editor.minimap.size": "fill",
   "editor.formatOnSave": true,
+  "editor.tabCompletion": "on",
 
   //============================================================================
   // JavaScript
@@ -151,7 +152,6 @@
     // "editor.selectionHighlight": false,
     "editor.suggest.snippetsPreventQuickSuggestions": false,
     "editor.suggestSelection": "first",
-    "editor.tabCompletion": "onlySnippets",
     "editor.wordBasedSuggestions": false
   },
 
