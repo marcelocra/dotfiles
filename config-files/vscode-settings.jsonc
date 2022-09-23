@@ -352,7 +352,8 @@
   "explorer.openEditors.visible": 0,
   "files.associations": {
     "*.erb": "html",
-    "*.css": "tailwindcss"
+    "*.css": "tailwindcss",
+    "vimrc": "vimrc"
   },
   "git.ignoreMissingGitWarning": true,
   "nxConsole.enableTelemetry": false,
