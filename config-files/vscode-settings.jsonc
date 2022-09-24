@@ -211,7 +211,7 @@
   "vim.useSystemClipboard": true,
   "vim.useCtrlKeys": true,
   "vim.hlsearch": true,
-  "vim.insertModeKeyBindings": [
+  "vim.insertModeKeyBindingsNonRecursive": [
     {
       "before": ["j", "f"],
       "after": ["<esc>"]
@@ -291,6 +291,23 @@
     {
       "before": ["<leader>", "a"],
       "after": ["g", "g", "V", "G"]
+    }
+  ],
+  "vim.visualModeKeyBindingsNonRecursive": [
+    {
+      "before": ["<leader>", "w"],
+      "commands": [":w"],
+      "after": ["<esc>"]
+    },
+    {
+      "before": ["<leader>", "x"],
+      "commands": [":x"],
+      "after": ["<esc>"]
+    },
+    {
+      "before": ["<leader>", "q"],
+      "commands": [":q"],
+      "after": ["<esc>"]
     }
   ],
   "vim.leader": ",",
