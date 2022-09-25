@@ -95,6 +95,16 @@ sudo apt install -y \
 wget https://raw.githubusercontent.com/marcelocra/.dotfiles/master/unix/.tmux.conf -P ~
 ```
 
+## Install VSCode
+
+```sh
+VSCODE_FILENAME=vscode.deb
+
+wget https://code.visualstudio.com/sha/download?build=stable&os=linux-deb-x64 -O $VSCODE_FILENAME
+dpkg -i $VSCODE_FILENAME
+rm $VSCODE_FILENAME
+```
+
 ## Install programming languages runtimes
 
 ### Deno
