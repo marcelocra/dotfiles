@@ -80,3 +80,49 @@ slow on Windows' PowerShell, but I wanted to check it in a Linux terminal too.
 Let's see.
 
 ps: it is terribly ugly with `bash`. Will check with `zsh`.
+ps2: it is also ugly with `zsh`. Going back to `powerlevel10k`
+
+## Install essential software from ubuntu repos
+
+```sh
+sudo apt install -y \
+  wget curl unzip git neovim tmux ripgrep
+```
+
+## Install my `.tmux.conf`
+
+```sh
+wget https://raw.githubusercontent.com/marcelocra/.dotfiles/master/unix/.tmux.conf -P ~
+```
+
+## Install programming languages runtimes
+
+### Deno
+
+```sh
+curl -fsSL https://deno.land/install.sh | sh
+# Add to `.rc` file:
+export DENO_INSTALL="${HOME}/.deno"
+export PATH="${DENO_INSTALL}/bin:${PATH}"
+```
+
+### DotNet
+
+```sh
+wget https://packages.microsoft.com/config/debian/10/packages-microsoft-prod.deb -O packages-microsoft-prod.deb
+dpkg -i packages-microsoft-prod.deb
+rm packages-microsoft-prod.deb
+sudo apt update
+sudo apt install -y apt-transport-https
+sudo apt update 
+sudo apt install -y dotnet-sdk-6.0
+export DOTNET_CLI_TELEMETRY_OPTOUT=1
+```
+
+### Golang
+
+```sh
+wget https://go.dev/dl/go1.19.linux-amd64.tar.gz
+rm -rf /usr/local/go && tar -C /usr/local -xzf go1.19.linux-amd64.tar.gz
+export PATH="${PATH}:/usr/local/go/bin"
+```
