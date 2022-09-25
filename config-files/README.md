@@ -1,6 +1,9 @@
 # My config files
 
-This repo contains many configuration files that I use.
+This folder contains many configuration files that I use.
+
+If you would like to use any of these, I recommend symlinking them. That is how
+I use and think it is the best option to keep them up-to-date.
 
 ## Symlink
 
