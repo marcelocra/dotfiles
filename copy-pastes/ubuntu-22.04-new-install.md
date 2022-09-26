@@ -4,7 +4,8 @@ I did it mostly in this order.
 
 ## Install Google Chrome
 
-Download Google Chrome `.deb` file and install it using `sudo dpgk -i ./path-to-deb`
+Download Google Chrome `.deb` file and install it using
+`sudo dpgk -i ./path-to-deb`
 
 ## Figure out a way to remap Caps Lock to Control
 
@@ -16,9 +17,8 @@ setxkbmap -option caps:ctrl_modifier
 
 It needs me to restart the terminal every now and then.
 
-Perhaps
-[input-mapper](https://github.com/sezanzeb/input-remapper/) will work better,
-but I still need to research it a bit more.
+Perhaps [input-mapper](https://github.com/sezanzeb/input-remapper/) will work
+better, but I still need to research it a bit more.
 
 ## Figure out a way to remap mouse buttons
 
@@ -45,23 +45,23 @@ Another weird one.
 The recommended Linux install from [their website](https://obsidian.md) is the
 AppImage, but this simply doesn't work out of the box in Ubuntu 22.04.
 
-[So it seems](https://github.com/sezanzeb/input-remapper/) like this version
-is missing `libfuse2`, which is required for running AppImages. Simply install
-that with `sudo apt install libfuse2`, enable running AppImage files (from
-the file properties) and voila: double click for it to open.
+[So it seems](https://github.com/sezanzeb/input-remapper/) like this version is
+missing `libfuse2`, which is required for running AppImages. Simply install that
+with `sudo apt install libfuse2`, enable running AppImage files (from the file
+properties) and voila: double click for it to open.
 
 ## Install Git Credential Manager
 
-Don't even think in using Linuxbrew for this one. Won't work ("--cask only
-works on MacOS" sort of issue).
+Don't even think in using Linuxbrew for this one. Won't work ("--cask only works
+on MacOS" sort of issue).
 
 Go straight to the
 [Linux installation section](https://github.com/GitCredentialManager/git-credential-manager#linux),
 download the `.deb` and install with `sudo dpkg -i ...`.
 
 It asks you to run `git-credential-manager-core configure`, but I don't think
-that's necessary when you already have that setting in your `.gitconfig` like
-I do, so I'll add a TODO here, to double check it.
+that's necessary when you already have that setting in your `.gitconfig` like I
+do, so I'll add a TODO here, to double check it.
 
 TODO: describe how the actual configuration goes.
 
@@ -79,8 +79,8 @@ slow on Windows' PowerShell, but I wanted to check it in a Linux terminal too.
 
 Let's see.
 
-ps: it is terribly ugly with `bash`. Will check with `zsh`.
-ps2: it is also ugly with `zsh`. Going back to `powerlevel10k`
+ps: it is terribly ugly with `bash`. Will check with `zsh`. ps2: it is also ugly
+with `zsh`. Going back to `powerlevel10k`
 
 ## Install essential software from ubuntu repos
 
@@ -105,6 +105,15 @@ dpkg -i $VSCODE_FILENAME
 rm $VSCODE_FILENAME
 ```
 
+## Install Telegram
+
+```sh
+TELEGRAM_FILENAME=tsetup.4.2.0.tar.xz
+
+wget https://updates.tdesktop.com/tlinux/${TELEGRAM_FILENAME}
+tar -xvf $TELEGRAM_FILENAME
+```
+
 ## Install programming languages runtimes
 
 ### Deno
@@ -124,7 +133,7 @@ dpkg -i packages-microsoft-prod.deb
 rm packages-microsoft-prod.deb
 sudo apt update
 sudo apt install -y apt-transport-https
-sudo apt update 
+sudo apt update
 sudo apt install -y dotnet-sdk-6.0
 export DOTNET_CLI_TELEMETRY_OPTOUT=1
 ```
