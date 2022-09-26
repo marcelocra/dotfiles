@@ -75,5 +75,9 @@ setup_expert_mouse
 setup_evoluent_mouse
 reduce_speed_of_logitech_mouse
 
+
+setxkbmap -option caps:ctrl_modifier
+
+
 export MCRA_HARDWARE_CONFIGURED=true
 # ----------------------------------------------------------------------------
