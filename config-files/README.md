@@ -7,6 +7,17 @@ I use and think it is the best option to keep them up-to-date.
 
 ## Symlink
 
+### Unix shell
+
+```sh
+# VSCode Settings and Keybindings.
+ln -f -s $(pwd)/config-files/vscode-settings.jsonc ${HOME}/.config/Code/User/settings.json
+ln -f -s $(pwd)/config-files/vscode-keybindings.jsonc ${HOME}/.config/Code/User/keybindings.json
+
+
+# TODO: fill with the other paths, as I use them on unix.
+```
+
 ### Windows (PowerShell)
 
 Notice the `-Force` option, that WILL OVERRIDE your destination file. Only use
@@ -76,13 +87,4 @@ New-Item `
 -Force
 
 
-```
-
-### Unix (Bash)
-
-```bash
-# Gitconfig.
-ln -s $(pwd)/.gitconfig ${HOME}/.gitconfig
-
-# TODO: fill with the other paths, as I use them on unix.
 ```
