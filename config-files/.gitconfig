@@ -58,6 +58,9 @@
   # This file should only exist in Unix systems (Mac, Debian, Ubuntu, etc).
   path = .gitconfig.unix.gitconfig
 
+  # This file should only exist in Linux systems (but not in a Mac).
+  path = .gitconfig.linux.gitconfig
+
 [core]
   # Never plays with end of line character. Configure your editor to always use
   # lf (\n).
