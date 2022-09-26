@@ -1,13 +1,15 @@
 # Dev
 
-All my development stuff. See the details in the **About**.
+All my development stuff.
 
 ## How to use
 
-Depends on what do you want to use:
+Well, that depends on what you want to use. Check the README files in each
+folder for details.
 
-- `config-files`: dotfiles and configuration files that you could symlink
-  directly. Instructions for Windows or Unix in the README.
-- `copy-pastes`: stuff that I usually need to copy/paste, from Docker file parts
-  to language features and more.
-- `programs`: programs that I write and use frequently.
+## Roadmap
+
+- [ ] create script to facilitate install of config files
+- [ ] create cronjob to enable system configurations that should happen at
+      startup
+- [ ] create init shell script with proper stuff

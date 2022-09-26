@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/usr/bin/env zsh
 
 
 # Functions
@@ -50,5 +50,11 @@ alias pr="p run"
 
 
 export DOTNET_CLI_TELEMETRY_OPTOUT=true
+export HOMEBREW_NO_ANALYTICS=1
 export EDITOR=vim
 
+
+# Commands
+
+
+eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"

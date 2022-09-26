@@ -407,9 +407,10 @@
   "workbench.startupEditor": "newUntitledFile",
   "workbench.tree.indent": 20,
   "workbench.tree.renderIndentGuides": "always",
-  "terminal.integrated.fontFamily": "MesloLGS NF",
+  "terminal.integrated.fontFamily": "MesloLGS Nerd Font",
   "terminal.integrated.fontSize": 12,
   // "terminal.integrated.lineHeight": 1.3,
   "files.eol": "\n",
-  "editor.renderWhitespace": "boundary"
+  "editor.renderWhitespace": "boundary",
+  "window.menuBarVisibility": "toggle"
 }

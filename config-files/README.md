@@ -1,8 +1,22 @@
 # My config files
 
-This repo contains many configuration files that I use.
+This folder contains many configuration files that I use.
+
+If you would like to use any of these, I recommend symlinking them. That is how
+I use and think it is the best option to keep them up-to-date.
 
 ## Symlink
+
+### Unix shell
+
+```sh
+# VSCode Settings and Keybindings.
+ln -f -s $(pwd)/config-files/vscode-settings.jsonc ${HOME}/.config/Code/User/settings.json
+ln -f -s $(pwd)/config-files/vscode-keybindings.jsonc ${HOME}/.config/Code/User/keybindings.json
+
+
+# TODO: fill with the other paths, as I use them on unix.
+```
 
 ### Windows (PowerShell)
 
@@ -73,13 +87,4 @@ New-Item `
 -Force
 
 
-```
-
-### Unix (Bash)
-
-```bash
-# Gitconfig.
-ln -s $(pwd)/.gitconfig ${HOME}/.gitconfig
-
-# TODO: fill with the other paths, as I use them on unix.
 ```
