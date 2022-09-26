@@ -61,7 +61,7 @@
   // JetBrains Mono
   // --------------
   // "editor.fontWeight": "bold",
-  "editor.fontFamily": "CodeNewRoman Nerd Font Mono",
+  "editor.fontFamily": "'CodeNewRoman Nerd Font Mono', monospace",
   "editor.fontSize": 15,
 
   //============================================================================
@@ -407,7 +407,7 @@
   "workbench.startupEditor": "newUntitledFile",
   "workbench.tree.indent": 20,
   "workbench.tree.renderIndentGuides": "always",
-  "terminal.integrated.fontFamily": "MesloLGS Nerd Font",
+  "terminal.integrated.fontFamily": "'MesloLGS Nerd Font', 'MesloLGS NF', monospace",
   "terminal.integrated.fontSize": 12,
   // "terminal.integrated.lineHeight": 1.3,
   "files.eol": "\n",
