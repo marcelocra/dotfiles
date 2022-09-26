@@ -291,6 +291,14 @@
     {
       "before": ["<leader>", "a"],
       "after": ["g", "g", "V", "G"]
+    },
+    {
+      "before": ["j"],
+      "after": ["g", "j"]
+    },
+    {
+      "before": ["k"],
+      "after": ["g", "k"]
     }
   ],
   "vim.visualModeKeyBindingsNonRecursive": [
