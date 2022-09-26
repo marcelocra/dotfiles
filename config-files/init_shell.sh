@@ -57,12 +57,10 @@ export EDITOR=vim
 # Commands
 
 
-# What OS are we running?
-if command apt > /dev/null; then
-    # Do Linux stuff here.
-    eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
-elif [[ `uname` == "Darwin" ]]; then
-    # Do mac stuff here.
+# Are we running a Mac or Linux?
+if [[ `uname` == "Darwin" ]]; then
+    # Do mac stuff.
 else
-    echo 'Unknown OS!'
+    # Do linux stuff.
+    eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 fi
