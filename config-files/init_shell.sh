@@ -39,7 +39,7 @@ alias tmux="TERM=xterm-256color tmux"
 alias pip=pip3
 alias python=python3
 
-alias l="ls -lFh --block-size=MB"
+alias l="ls -lFh"
 alias ll="l -a"
 
 alias p=pnpm
