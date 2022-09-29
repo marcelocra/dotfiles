@@ -1,7 +1,7 @@
 #!/usr/bin/env zsh
 
 
-# Functions
+# [ Functions ] ----------------------------------------------------------------
 
 
 # Simplifies working with tmux. Tries to create
@@ -28,7 +28,7 @@ tmx() {
 }
 
 
-# Aliases
+# [ Aliases ] ------------------------------------------------------------------
 
 
 alias vim=nvim
@@ -45,8 +45,18 @@ alias ll="l -a"
 alias p=pnpm
 alias pr="p run"
 
+# Git aliases
 
-# Exports
+alias gc="git commit"
+alias gcm="git commit -m"
+alias gco="git checkout"
+alias gs="git status"
+alias gss="git status -s"
+alias gb="git branch"
+alias gd="git diff"
+
+
+# [ Exports ] ------------------------------------------------------------------
 
 
 export DOTNET_CLI_TELEMETRY_OPTOUT=true
@@ -54,7 +64,7 @@ export HOMEBREW_NO_ANALYTICS=1
 export EDITOR=vim
 
 
-# Commands
+# [ Commands ] -----------------------------------------------------------------
 
 
 # Are we running a Mac or Linux?
