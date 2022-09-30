@@ -229,6 +229,10 @@
       "before": ["<leader>", "x"],
       "commands": [":x"]
       // "after": ["<esc>"]
+    },
+    {
+      "before": ["<c-n>"],
+      "commands": [":nohl"]
     }
   ],
   "vim.normalModeKeyBindingsNonRecursive": [
@@ -316,6 +320,10 @@
       "before": ["<leader>", "q"],
       "commands": [":q"],
       "after": ["<esc>"]
+    },
+    {
+      "before": ["<c-n>"],
+      "commands": [":nohl"]
     }
   ],
   "vim.leader": ",",
