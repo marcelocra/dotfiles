@@ -45,10 +45,10 @@ Another weird one.
 The recommended Linux install from [their website](https://obsidian.md) is the
 AppImage, but this simply doesn't work out of the box in Ubuntu 22.04.
 
-[So it seems](https://github.com/sezanzeb/input-remapper/) like this version is
-missing `libfuse2`, which is required for running AppImages. Simply install that
-with `sudo apt install libfuse2`, enable running AppImage files (from the file
-properties) and voila: double click for it to open.
+[So it seems](https://itsfoss.com/cant-run-appimage-ubuntu/) like this version
+is missing `libfuse2`, which is required for running AppImages. Simply install
+that with `sudo apt install libfuse2`, enable running AppImage files (from the
+file properties) and voila: double click for it to open.
 
 ## Install Git Credential Manager
 
@@ -145,3 +145,25 @@ wget https://go.dev/dl/go1.19.linux-amd64.tar.gz
 rm -rf /usr/local/go && tar -C /usr/local -xzf go1.19.linux-amd64.tar.gz
 export PATH="${PATH}:/usr/local/go/bin"
 ```
+
+## Install correct Nvidia drivers
+
+After the initial installation, I was able to use the computer normally for a
+small while.
+
+BUT then, all of a sudden one of my monitors stopped working. When trying to
+change/update the drivers, I got a greyed out options, like this:
+
+![greyed out nvidia driver options](./nvidia-drivers-greyed-out.png)
+
+To fix that, there's a number of references pointing out to the following
+command:
+
+```
+sudo ubuntu-drivers autoinstall
+```
+
+References:
+
+- https://askubuntu.com/a/1237598/121101
+- https://askubuntu.com/a/1264804/121101
