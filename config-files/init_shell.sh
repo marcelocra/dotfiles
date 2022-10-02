@@ -8,22 +8,30 @@
 # a new session and if it already exists, just
 # jump to it.
 tmx() {
+    local session_name
+    session_name="$1"
+
+    # If no session name was given, use a default one.
+    if [ -z "$session_name" ]; then
+        session_name="default"
+    fi
+
     # Try to create a new session.
-    tmux new -s $1 > /dev/null 2>&1
+    tmux new -s $session_name > /dev/null 2>&1
     if [ $? -eq 0 ]; then
         return 0
     fi
 
-    echo "Trying to reuse session $1..."
+    echo "Trying to reuse session $session_name..."
     sleep 0.5
     # Try to load existing session.
-    tmux attach-session -t $1 > /dev/null 2>&1
+    tmux attach-session -t $session_name > /dev/null 2>&1
     if [ $? -eq 0 ]; then
         return 0
     fi
 
     # Something else happened.
-    echo "An error happened. Couldn't load $1"
+    echo "An error happened. Couldn't load $session_name"
     return 1
 }
 
@@ -67,10 +75,15 @@ export EDITOR=vim
 # [ Commands ] -----------------------------------------------------------------
 
 
-# Are we running a Mac or Linux?
+# Are we running Mac or Linux?
 if [[ `uname` == "Darwin" ]]; then
-    # Do mac stuff.
+    # Do Mac stuff.
 else
-    # Do linux stuff.
+    # Do Linux stuff.
+
+    # Make caps lock a new control.
+    setxkbmap -option caps:ctrl_modifier
+
+    # Activate Linuxbrew.
     eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 fi
