@@ -192,3 +192,8 @@ sudo apt update && sudo apt install signal-desktop
 ```
 
 They worked successfully.
+
+## Install Docker
+
+Go to https://www.docker.com/ and follow the instructions for your OS. Should be
+straightforward.
