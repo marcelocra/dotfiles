@@ -1,22 +1,41 @@
 {
   "recommendations": [
-    "betterthantomorrow.calva",
-    "bradlc.vscode-tailwindcss",
-    "dart-code.dart-code",
-    "dart-code.flutter",
-    "dbaeumer.vscode-eslint",
-    "denoland.vscode-deno",
-    "eamodio.gitlens",
+    // [ Tools ] ---------------------------------------------------------------
+
     "esbenp.prettier-vscode",
-    "github.github-vscode-theme",
+    "dbaeumer.vscode-eslint",
+    "eamodio.gitlens",
     "github.vscode-pull-request-github",
-    "golang.go",
-    "ionide.ionide-fsharp",
-    "ms-dotnettools.csharp",
-    "ms-dotnettools.dotnet-interactive-vscode",
     "ms-vscode-remote.vscode-remote-extensionpack",
     "ms-vsliveshare.vsliveshare-pack",
+    "vscodevim.vim",
+
+    // [ Themes ] --------------------------------------------------------------
+
+    "github.github-vscode-theme",
+
+    // [ Languages ] -----------------------------------------------------------
+
+    // Clojure.
+    "betterthantomorrow.calva",
+
+    "bradlc.vscode-tailwindcss",
+
+    // Dart needs to be installed before Flutter.
+    "dart-code.dart-code",
+    "dart-code.flutter",
+
+    "denoland.vscode-deno",
+
+    "golang.go",
+
+    // C# needs to be installed before F#.
+    "ms-dotnettools.csharp",
+    "ms-dotnettools.dotnet-interactive-vscode",
+    "ionide.ionide-fsharp",
+
     "svelte.svelte-vscode",
-    "vscodevim.vim"
+
+    "astro-build.astro-vscode"
   ]
 }
