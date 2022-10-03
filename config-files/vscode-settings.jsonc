@@ -420,5 +420,6 @@
   // "terminal.integrated.lineHeight": 1.3,
   "files.eol": "\n",
   "editor.renderWhitespace": "boundary",
-  "window.menuBarVisibility": "toggle"
+  "window.menuBarVisibility": "toggle",
+  "explorer.excludeGitIgnore": true
 }
