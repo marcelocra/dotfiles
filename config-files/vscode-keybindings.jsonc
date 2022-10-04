@@ -67,14 +67,6 @@
     "command": "-workbench.action.quickOpen"
   },
   {
-    "key": "ctrl+k ctrl+t",
-    "command": "-workbench.action.selectTheme"
-  },
-  {
-    "key": "ctrl+k ctrl+t",
-    "command": "workbench.action.showAllSymbols"
-  },
-  {
     "key": "ctrl+t",
     "command": "-workbench.action.showAllSymbols"
   },
