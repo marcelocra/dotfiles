@@ -303,6 +303,10 @@
     {
       "before": ["k"],
       "after": ["g", "k"]
+    },
+    {
+      "before": ["s"],
+      "after": ["leader", "leader", "s"]
     }
   ],
   "vim.visualModeKeyBindingsNonRecursive": [
