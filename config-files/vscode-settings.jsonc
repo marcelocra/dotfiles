@@ -1,6 +1,6 @@
 {
   //============================================================================
-  //= Programming fonts and their settings
+  //= Programming fonts and their ideal settings
   //============================================================================
   // // Roboto Mono
   // // -----------
@@ -420,8 +420,9 @@
   "workbench.tree.indent": 20,
   "workbench.tree.renderIndentGuides": "always",
   "terminal.integrated.fontFamily": "'MesloLGS Nerd Font', 'MesloLGS NF', monospace",
-  "terminal.integrated.fontSize": 12,
+  "terminal.integrated.fontSize": 11,
   // "terminal.integrated.lineHeight": 1.3,
+  "terminal.integrated.macOptionClickForcesSelection": true,
   "files.eol": "\n",
   "editor.renderWhitespace": "boundary",
   "window.menuBarVisibility": "toggle",
