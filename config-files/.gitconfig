@@ -92,3 +92,9 @@
 
   # This file should only exist in Linux systems (but not in a Mac).
   path = .gitconfig.linux.gitconfig
+
+[filter "lfs"]
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true
+	clean = git-lfs clean -- %f
