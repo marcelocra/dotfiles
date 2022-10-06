@@ -53,6 +53,23 @@ alias ll="l -a"
 alias p=pnpm
 alias pr="p run"
 
+# Git
+
+alias gs="git status"
+alias gss="git status -s"
+
+alias gp="git push"
+alias gpl="git pull"
+
+alias gl="git log"
+
+alias gc="git commit"
+alias gcm="git commit -m"
+
+alias gco="git checkout"
+
+alias gb="git branch"
+
 
 # [ Exports ] ------------------------------------------------------------------
 
