@@ -8,5 +8,7 @@ ln -s ${HOME}/apps/Obsidian-0.15.9.AppImage \
 ln -s ${HOME}/projects/personal/dev/config-files/obsidian.desktop \
     ${HOME}/.local/share/applications/obsidian.desktop
 
+# Credits to the creator of the icons here:
+# https://forum.obsidian.md/t/big-sur-icon/8121
 ln -s ${HOME}/projects/personal/dev/config-files/obsidian.png \
     ${HOME}/.local/share/icons/obsidian.png 
