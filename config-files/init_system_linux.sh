@@ -3,8 +3,10 @@
 # Commands to be run during startup. Need to figure a way to run them
 # automatically.
 
-# Configure hardware.
-# ----------------------------------------------------------------------------
+
+# -- [ Configure hardware ] ----------------------------------------------------
+
+
 [ -z "$MCRA_HARDWARE_CONFIGURED" ] \
   || { echo "Hardware already configured! Skipping."; return 0; }
 
@@ -70,14 +72,21 @@ reduce_speed_of_logitech_mouse() {
     xinput set-prop $device_id $prop_id -0.75  # I found this value to be good.
 }
 
-
 setup_expert_mouse
 setup_evoluent_mouse
 reduce_speed_of_logitech_mouse
+
+export MCRA_HARDWARE_CONFIGURED=true
+
+
+# -- [ Run global commands ] ---------------------------------------------------
 
 
 setxkbmap -option caps:ctrl_modifier
 
 
-export MCRA_HARDWARE_CONFIGURED=true
-# ----------------------------------------------------------------------------
+# -- [ System exports ] --------------------------------------------------------
+
+
+export PATH="$PATH:${HOME}/apps"
+export PATH="$PATH:${HOME}/bin"
