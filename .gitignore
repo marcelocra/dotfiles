@@ -1,7 +1,10 @@
 # Environment variables.
 .env
 
-# Clojure
+# Clojure.
 .calva
 .clj-kondo
 .lsp
+
+# Mac stuff.
+.DS_Store

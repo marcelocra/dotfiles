@@ -57,18 +57,17 @@ alias pr="p run"
 
 alias gs="git status"
 alias gss="git status -s"
-
 alias gp="git push"
 alias gpl="git pull"
-
 alias gl="git log"
-
 alias gc="git commit"
 alias gcm="git commit -m"
-
 alias gco="git checkout"
-
 alias gb="git branch"
+alias gte="git remote"
+alias grm="git rm"
+alias grs="git restore"
+alias glfsdry="git lfs push origin main --dry-run --all"
 
 
 # [ Exports ] ------------------------------------------------------------------
