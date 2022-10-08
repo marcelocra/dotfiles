@@ -81,12 +81,9 @@ export EDITOR=vim
 # [ Commands ] -----------------------------------------------------------------
 
 
-# Are we running Mac or Linux?
-if [[ `uname` == "Darwin" ]]; then
-    # Do Mac stuff.
-else
-    # Do Linux stuff.
-
+# Ignore commands for Mac and run them in Ubuntu (should work in other Unixes
+# too, but I haven't tested).
+if [[ ! `uname` == "Darwin" ]]; then
     # Make caps lock a new control.
     if command -v setxkbmap &> /dev/null; then
         setxkbmap -option caps:ctrl_modifier
