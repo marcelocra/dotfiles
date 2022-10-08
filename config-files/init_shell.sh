@@ -1,4 +1,4 @@
-#!/usr/bin/env zsh
+#!/usr/bin/env sh
 
 
 # [ Functions ] ----------------------------------------------------------------
@@ -88,8 +88,12 @@ else
     # Do Linux stuff.
 
     # Make caps lock a new control.
-    setxkbmap -option caps:ctrl_modifier
+    if command -v setxkbmap &> /dev/null; then
+        setxkbmap -option caps:ctrl_modifier
+    fi
 
     # Activate Linuxbrew.
-    eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+    if [ -f /home/linuxbrew/.linuxbrew/bin/brew ]; then
+        eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+    fi
 fi
