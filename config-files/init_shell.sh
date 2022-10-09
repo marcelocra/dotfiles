@@ -53,6 +53,9 @@ alias ll="l -a"
 alias p=pnpm
 alias pr="p run"
 
+alias rc="vim ~/.zshrc"
+alias src="source ~/.zshrc"
+
 # Git
 
 alias gs="git status"
