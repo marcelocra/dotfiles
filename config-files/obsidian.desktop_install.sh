@@ -2,8 +2,8 @@
 
 # Creates a symbolic link to the latest version of Obsidian, to avoid having
 # references to fixed versions.
-ln -s ${HOME}/apps/Obsidian-0.15.9.AppImage \
-    ${HOME}/apps/Obsidian-latest.AppImage
+ln -s ${HOME}/bin/Obsidian-0.15.9.AppImage \
+    ${HOME}/bin/Obsidian-latest
 
 ln -s ${HOME}/projects/personal/dev/config-files/obsidian.desktop \
     ${HOME}/.local/share/applications/obsidian.desktop

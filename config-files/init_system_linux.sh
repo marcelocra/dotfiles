@@ -88,5 +88,4 @@ setxkbmap -option caps:ctrl_modifier
 # -- [ System exports ] --------------------------------------------------------
 
 
-export PATH="$PATH:${HOME}/apps"
 export PATH="$PATH:${HOME}/bin"
