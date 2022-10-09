@@ -2,7 +2,7 @@
 Name=Telegram Desktop
 Comment=Official desktop version of Telegram messaging app
 TryExec=Telegram-latest
-Exec=Telegram-latest -workdir /home/username/.local/share/TelegramDesktop/ -- %u
+Exec=sh -c "Telegram-latest -workdir ${HOME}/.local/share/TelegramDesktop/ -- %u"
 Icon=telegram
 Terminal=false
 StartupWMClass=TelegramDesktop
@@ -16,6 +16,6 @@ X-GNOME-UsesNotifications=true
 X-GNOME-SingleWindow=true
 
 [Desktop Action Quit]
-Exec=Telegram-latest -workdir /home/username/.local/share/TelegramDesktop/ -quit
+Exec=sh -c "Telegram-latest -workdir ${HOME}/.local/share/TelegramDesktop/ -quit"
 Name=Quit Telegram
 Icon=application-exit
