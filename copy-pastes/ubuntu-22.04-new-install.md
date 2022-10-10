@@ -50,6 +50,13 @@ is missing `libfuse2`, which is required for running AppImages. Simply install
 that with `sudo apt install libfuse2`, enable running AppImage files (from the
 file properties) and voila: double click for it to open.
 
+Note: while these instructions will make Obisidian work, they won't provide a
+nice icon for the both in search (gnome-shell) or in the docks (and alt-tab).
+For that you'll need to configure a `obsidian.desktop`. You can find
+[that file](../config-files/obsidian.desktop) along with
+[instructions](../config-files/obsidian.desktop_install.sh) and icons in this
+repo.
+
 ## Install Git Credential Manager
 
 Don't even think in using Linuxbrew for this one. Won't work ("--cask only works
@@ -113,6 +120,16 @@ TELEGRAM_FILENAME=tsetup.4.2.0.tar.xz
 wget https://updates.tdesktop.com/tlinux/${TELEGRAM_FILENAME}
 tar -xvf $TELEGRAM_FILENAME
 ```
+
+Most likely the first time you run Telegram it will setup a `telegram.desktop`
+file for you, so that it appears correctly when searching for the program
+through gnome-shell or in the dock.
+
+If that doesn't happen, theres a
+[`telegram.desktop`](../config-files/telegram.desktop) file that you can use.
+Take a look at the
+[`telegram.desktop_install.sh` ](../config-files/telegram.desktop_install.sh)
+file for details on how to install it.
 
 ## Install programming languages runtimes
 
@@ -197,3 +214,17 @@ They worked successfully.
 
 Go to https://www.docker.com/ and follow the instructions for your OS. Should be
 straightforward.
+
+## Install config files
+
+If you take a look at the [config-files](../config-files/) folder here, you'll
+see that there's a number of things there. Those are all config files that I
+use.
+
+That folder already contains instructions on how to install the files, so I'll
+just mention the one that took me longer:
+
+[`init_system_linux.sh`](../config-files/init_system_linux.sh)
+
+follow the instructions that are in the header precisely, otherwise you might
+lose a lot of time.

@@ -10,6 +10,8 @@
 #
 # Without the sleep, configurations do not apply correctly, as they seem to need
 # the desktop to be fully loaded (https://askubuntu.com/a/708043/121101).
+#
+# After setting that up, reboot the system and you should be good to go!
 
 # -- [ Configure hardware ] ----------------------------------------------------
 
