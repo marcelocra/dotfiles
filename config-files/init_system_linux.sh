@@ -1,14 +1,18 @@
 #!/usr/bin/env sh
 #
-# Commands to be run during startup. Need to figure a way to run them
-# automatically.
-
+# Commands run during system startup.
+#
+# To set them up, use Ubuntu's Startup Application app. In there, create a new
+# command to run using the "Add" button and paste the following in the command
+# section:
+#
+#   /bin/sh -c "sleep 3 && /path-to-this-file/init_system_linux.sh"
+#
+# Without the sleep, configurations do not apply correctly, as they seem to need
+# the desktop to be fully loaded (https://askubuntu.com/a/708043/121101).
 
 # -- [ Configure hardware ] ----------------------------------------------------
 
-
-[ -z "$MCRA_HARDWARE_CONFIGURED" ] \
-  || { echo "Hardware already configured! Skipping."; return 0; }
 
 # Commands need xinput, so check that first.
 if [ -f "${HOME}/.no-xinput-found" ]; then
@@ -35,7 +39,17 @@ setup_expert_mouse() {
         | sed -nre 's/.*Kensington\ Expert\ Mouse.*id\=([0-9]+).*/\1/p' \
         | head -n1)
     if [ ! -z "$device_id" ]; then
-        xinput set-button-map $device_id 8 1 3 4 5 6 7 9 0 0
+        # In this device, top buttons are 1 and 3, botton are 8 and 9. Thinking
+        # of a pizza with 4 pieces, top left is 1 and bottom left is 8.
+        # Here we are mapping those buttons to what xinput expects:
+        #   1) browser back. Will be mapped to mouse 1
+        #   2) left click. Will be mapped to mouse 8
+        #   3) right click. Will be mapped to mouse 9
+        #   4->5) scroll. Keep as is.
+        #   6->7) don't know. Keep as is.
+        #   8) browser forward. Will be mapped to mouse 3.
+        #   9->10) don't remember, but mapped to 0 for some reason.
+        xinput set-button-map $device_id 1 8 9 4 5 6 7 3 0 0
     fi
 }
 
@@ -48,6 +62,8 @@ setup_evoluent_mouse() {
         | sed -nre 's/.*Evoluent\ VerticalMouse.*id\=([0-9]+).*/\1/p' \
         | head -n1)
     if [ ! -z "$device_id" ]; then
+        # This device is different from the one above, but I don't remember
+        # exactly how. As I discover, will add here.
         xinput set-button-map $device_id 1 2 3 4 5 6 7 8 10 9
     fi
 }
@@ -76,16 +92,8 @@ setup_expert_mouse
 setup_evoluent_mouse
 reduce_speed_of_logitech_mouse
 
-export MCRA_HARDWARE_CONFIGURED=true
-
 
 # -- [ Run global commands ] ---------------------------------------------------
 
 
 setxkbmap -option caps:ctrl_modifier
-
-
-# -- [ System exports ] --------------------------------------------------------
-
-
-export PATH="$PATH:${HOME}/bin"
