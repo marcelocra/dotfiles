@@ -57,6 +57,7 @@ alias rc="vim ~/.zshrc"
 alias src="source ~/.zshrc"
 
 # Git
+# ---
 
 alias gs="git status"
 alias gss="git status -s"
@@ -87,11 +88,6 @@ export EDITOR=vim
 # Ignore commands for Mac and run them in Ubuntu (should work in other Unixes
 # too, but I haven't tested).
 if [[ ! `uname` == "Darwin" ]]; then
-    # Make caps lock a new control.
-    if command -v setxkbmap &> /dev/null; then
-        setxkbmap -option caps:ctrl_modifier
-    fi
-
     # Activate Linuxbrew.
     if [ -f /home/linuxbrew/.linuxbrew/bin/brew ]; then
         eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
