@@ -56,8 +56,8 @@ alias pr="p run"
 alias rc="vim ~/.zshrc"
 alias src="source ~/.zshrc"
 
-# Git
-# ---
+# Git native
+# ----------
 
 alias gs="git status"
 alias gss="git status -s"
@@ -71,7 +71,14 @@ alias gb="git branch"
 alias gte="git remote"
 alias grm="git rm"
 alias grs="git restore"
+alias gsh="git show"
+alias gssh="git stash"
+
+# Git lfs
+# -------
+
 alias glfsdry="git lfs push origin main --dry-run --all"
+alias glfss="git lfs status"
 
 
 # [ Exports ] ------------------------------------------------------------------
