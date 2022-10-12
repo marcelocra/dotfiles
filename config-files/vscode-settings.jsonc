@@ -424,7 +424,7 @@
   // "terminal.integrated.lineHeight": 1.3,
   "terminal.integrated.macOptionClickForcesSelection": true,
   "files.eol": "\n",
-  "editor.renderWhitespace": "boundary",
+  "editor.renderWhitespace": "none",
   "window.menuBarVisibility": "toggle",
   "explorer.excludeGitIgnore": true
 }
