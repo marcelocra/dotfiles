@@ -7,15 +7,25 @@ call plug#begin()
 "   - e.g. `call plug#begin('~/.vim/plugged')`
 "   - Avoid using standard Vim directory names like 'plugin'
 
-" On-demand loading
-Plug 'tpope/vim-fireplace', { 'for': 'clojure' }
+" Make sure you use single quotes
 
-" Go stuff.
+" Shorthand notation; fetches https://github.com/junegunn/vim-easy-align
+" Plug 'junegunn/vim-easy-align'
+
+" Multiple Plug commands can be written in a single line using | separators
+"Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
+
+" On-demand loading
+" Plug 'tpope/vim-fireplace', { 'for': 'clojure' }
+
+"" Go stuff.
+"" Plugin options
+"" Using a tagged release; wildcard allowed (requires git 1.9.2 or above)
 "Plug 'fatih/vim-go', { 'tag': '*' }
 "Plug 'nsf/gocode', { 'tag': 'v.20150303', 'rtp': 'vim' }
 
-" Plugin outside ~/.vim/plugged with post-update hook
-Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plug 'junegunn/fzf.vim'
 
 " Colorschemes.
 "Plug 'altercation/vim-colors-solarized'
@@ -53,28 +63,29 @@ Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 " Initialize plugin system
 call plug#end()
 
+" Syntax highlighting.
+syntax enable
+
 " ############################
 " ##### general settings #####
 " ############################
 
 " When inserting a tab in the beggining of the line, it will be N spaces long
-" and a <BS> will go back N spaces also (where N is the chosen number).
+" and a backspace will go back N spaces also (where N is the chosen number).
 set smarttab
 set shiftwidth=2
+set tabstop=2
 
 " Use spaces instead of tabs.
 set expandtab
 
-" 1 tab == 2 spaces.
-set tabstop=2
-
 " Automatically insert a linebreak after the selected width.
 set textwidth=0   " No line breaks for me.
 set wrapmargin=0  " I really don't want you to wrap, VIM.
+set nowrap  " Don't wrap lines.
 
 " Indentation.
 set autoindent
-set nowrap  " Don't wrap lines.
 
 " Disable annoying error noise (now it blinks).
 set vb t_vb=
@@ -86,9 +97,6 @@ set number
 
 " Show line and column.
 set ruler
-
-" Syntax highlighting.
-syntax enable
 
 " Highlight search matches as you type.
 set hlsearch
@@ -129,17 +137,8 @@ set t_Co=256
 " Avoid folding. Note: 'za' to unfold.
 set nofoldenable
 
-try
-    if has('gui_running')
-        colorscheme molokai
-        set background=dark
-    else
-        colorscheme badwolf
-    endif
-catch /^Vim\%((\a\+)\)\=:E185/
-    colorscheme desert
-    set background=dark
-endtry
+colorscheme desert
+set background=dark
 
 " Set ruler.
 " TODO: adapt for different filetypes.
@@ -148,9 +147,7 @@ set colorcolumn=80
 " Set how the status line will be shown in the bottom of Vim.
 set statusline=%<%F\ %m%r%h\ %=lines:%l/%L\ col:%c%V
 
-"autocmd BufNewFile,BufRead *.ejs set filetype=html
-"set term=xterm-256color
-
+set clipboard+=unnamedplus
 
 " ############################
 " ##### general mappings #####
@@ -184,9 +181,8 @@ vnoremap > >gv
 " Easy way to change between tabs.
 nnoremap <a-k> :tabnext<cr>
 nnoremap <a-j> :tabprevious<cr>
-
-" Ctrl+P to show files.
-nnoremap <c-p> :Files<cr>
+nnoremap g] :tabnext<cr>
+nnoremap g[ :tabprevious<cr>
 
 " ###########################
 " ##### leader mappings #####
@@ -197,10 +193,6 @@ let mapleader = ","
 
 " Execute last macro recorded in register 'q'.
 nnoremap <space> @q
-
-" Shift the line below by one line (downwards).
-"nnoremap <silent> <Leader>o :let cp=getpos('.')<CR>o<Esc>k:call cursor(cp[1],cp[2])<CR>
-"nnoremap <silent> <Leader>O :let cp=getpos('.')<CR>O<Esc>j:call cursor(cp[1] + 1,cp[2]) <CR>
 
 " Easily source my vimrc.
 nnoremap <leader><leader>sv :source $MYVIMRC<cr>
@@ -224,4 +216,29 @@ nnoremap <leader>x :x<cr>
 
 " Select all.
 nnoremap <leader>a ggVG
+
+" Functions
+" function MarkdownLevel()
+"   let h = matchstr(getline(v:lnum), '^#\+')
+"   if empty(h)
+"     return "="
+"   else
+"     return ">" . len(h)
+"   endif
+" endfunction
+" 
+" au BufEnter *.md setlocal foldexpr=MarkdownLevel()  
+" au BufEnter *.md setlocal foldmethod=expr
+
+" For vscode-neovim. Settings that should be enabled only in cmdline vim
+" should go here.
+if !exists('g:vscode')
+endif
+
+" fzf settings.
+nnoremap <c-p> :Files<cr>
+
+" Create new lines.
+"nnoremap <c-j> o<esc>2k<cr>
+"nnoremap <c-k> O<esc><cr>
 
