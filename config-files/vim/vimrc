@@ -1,80 +1,94 @@
-call plug#begin()
 " The default plugin directory will be as follows:
 "   - Vim (Linux/macOS): '~/.vim/plugged'
 "   - Vim (Windows): '~/vimfiles/plugged'
 "   - Neovim (Linux/macOS/Windows): stdpath('data') . '/plugged'
+"
 " You can specify a custom plugin directory by passing it as the argument
 "   - e.g. `call plug#begin('~/.vim/plugged')`
 "   - Avoid using standard Vim directory names like 'plugin'
+"
+" In your plugin paths, make sure you use single quotes.
+"
+" 
+" Plugin example usage:
+"
+"   " Shorthand notation; fetches https://github.com/junegunn/vim-easy-align
+"   Plug 'junegunn/vim-easy-align'
+"
+"   " Multiple Plug commands can be written in a single line using | separators
+"   Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
+"
+"   " On-demand loading
+"   Plug 'tpope/vim-fireplace', { 'for': 'clojure' }
+"
+"   " Using a tagged release; wildcard allowed (requires git 1.9.2 or above)
+"   Plug 'fatih/vim-go', { 'tag': '*' }
+"   Plug 'nsf/gocode', { 'tag': 'v.20150303', 'rtp': 'vim' }
+"
+"   " Plugin outside ~/.vim/plugged with post-update hook
+"   Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+"   Plug 'junegunn/fzf.vim'
+"
+" Previously used plugins, to keep in mind:
+"
+"   " Colorschemes
+"   Plug 'altercation/vim-colors-solarized'
+"   Plug 'sjl/badwolf'
+"   Plug 'tomasr/molokai'
+"   Plug 'tpope/vim-vividchalk'
+"
+"   " Allows one to easily traverse files.
+"   Plug 'Lokaltog/vim-easymotion'
+"
+"   " JavaScript stuff.
+"   Plug 'dense-analysis/ale'
+"   Plug 'prettier/vim-prettier', { 'do': 'yarn install' }
+"   Plug 'ternjs/tern_for_vim', { 'do': 'yarn install' }
+"
+"   " Makes commenting easier on Vim.
+"   Plug 'scrooloose/nerdcommenter'
 
-" On-demand loading
-Plug 'tpope/vim-fireplace', { 'for': 'clojure' }
 
-" Go stuff.
-"Plug 'fatih/vim-go', { 'tag': '*' }
-"Plug 'nsf/gocode', { 'tag': 'v.20150303', 'rtp': 'vim' }
+" -- [ Install plugins and initialize the plugin system ] ----------------------
 
-" Plugin outside ~/.vim/plugged with post-update hook
-Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+call plug#begin()  
 
-" Colorschemes.
-"Plug 'altercation/vim-colors-solarized'
-"Plug 'sjl/badwolf'
-"Plug 'tomasr/molokai'
-"Plug 'tpope/vim-vividchalk'
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plug 'junegunn/fzf.vim'
 
-" Makes commenting easier on Vim.
-"Plug 'scrooloose/nerdcommenter'
+Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-unimpaired'
+Plug 'tpope/vim-surround'
+Plug 'tpope/vim-commentary'
 
-" Handles Git wonderfully from within Vim.
-"Plug 'tpope/vim-fugitive'
+Plug 'bling/vim-airline'
 
-" Provides a few more mappings to facilitate some tasks.
-"Plug 'tpope/vim-unimpaired'
+Plug 'justinmk/vim-sneak'
 
-" Changes Vim's status bar to a fancy one.
-"Plug 'bling/vim-airline'
-
-" Allows one to easily traverse files.
-"Plug 'Lokaltog/vim-easymotion'
-
-" Provides an easy way to surround text with characters.
-"Plug 'tpope/vim-surround'
-
-" Plugin outside ~/.vim/plugged with post-update hook.
-"Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
-"Plug 'junegunn/fzf.vim'
-
-" JavaScript stuff.
-"Plug 'dense-analysis/ale'
-"Plug 'prettier/vim-prettier', { 'do': 'yarn install' }
-"Plug 'ternjs/tern_for_vim', { 'do': 'yarn install' }
-
-" Initialize plugin system
 call plug#end()
 
-" ############################
-" ##### general settings #####
-" ############################
+
+" -- [ Settings ] --------------------------------------------------------------
+
+" Syntax highlighting.
+syntax enable
 
 " When inserting a tab in the beggining of the line, it will be N spaces long
-" and a <BS> will go back N spaces also (where N is the chosen number).
+" and a backspace will go back N spaces also (where N is the chosen number).
 set smarttab
 set shiftwidth=2
+set tabstop=2
 
 " Use spaces instead of tabs.
 set expandtab
 
-" 1 tab == 2 spaces.
-set tabstop=2
-
 " Automatically insert a linebreak after the selected width.
 set textwidth=0   " No line breaks for me.
-set wrapmargin=0  " I really don't want you to wrap, VIM.
+set wrapmargin=0  " I really don't want you to wrap, Vim.
+set nowrap  " Don't wrap lines.
 
 " Indentation.
 set autoindent
-set nowrap  " Don't wrap lines.
 
 " Disable annoying error noise (now it blinks).
 set vb t_vb=
@@ -82,13 +96,12 @@ set vb t_vb=
 " Lines with number and with a particular width (no variation when
 " increasing).
 set number
-" set numberwidth=5
+"set numberwidth=5
 
 " Show line and column.
 set ruler
+set colorcolumn=80
 
-" Syntax highlighting.
-syntax enable
 
 " Highlight search matches as you type.
 set hlsearch
@@ -116,12 +129,12 @@ set wildmenu
 " Redraw only when needed to.
 set lazyredraw
 
-" Change VIM default splits (to bottom right).
+" Change Vim default splits (to bottom right).
 set splitbelow
 set splitright
 
 " Set line endings. Prefer Unix, but also accept DOS.
-set fileformats=unix,dos
+set fileformats=unix
 
 " Set proper colors.
 set t_Co=256
@@ -129,32 +142,16 @@ set t_Co=256
 " Avoid folding. Note: 'za' to unfold.
 set nofoldenable
 
-try
-    if has('gui_running')
-        colorscheme molokai
-        set background=dark
-    else
-        colorscheme badwolf
-    endif
-catch /^Vim\%((\a\+)\)\=:E185/
-    colorscheme desert
-    set background=dark
-endtry
-
-" Set ruler.
-" TODO: adapt for different filetypes.
-set colorcolumn=80
+colorscheme desert
+set background=dark
 
 " Set how the status line will be shown in the bottom of Vim.
-set statusline=%<%F\ %m%r%h\ %=lines:%l/%L\ col:%c%V
+"set statusline=%<%F\ %m%r%h\ %=lines:%l/%L\ col:%c%V
 
-"autocmd BufNewFile,BufRead *.ejs set filetype=html
-"set term=xterm-256color
+set clipboard+=unnamedplus
 
 
-" ############################
-" ##### general mappings #####
-" ############################
+" -- [ Mappings ] --------------------------------------------------------------
 
 " Use normal regex.
 nnoremap / /\v\c
@@ -181,16 +178,8 @@ nnoremap gV `[v`]
 vnoremap < <gv
 vnoremap > >gv
 
-" Easy way to change between tabs.
-nnoremap <a-k> :tabnext<cr>
-nnoremap <a-j> :tabprevious<cr>
 
-" Ctrl+P to show files.
-nnoremap <c-p> :Files<cr>
-
-" ###########################
-" ##### leader mappings #####
-" ###########################
+" -- [ Leader mappings ] -------------------------------------------------------
 
 " Change leader.
 let mapleader = ","
@@ -198,17 +187,13 @@ let mapleader = ","
 " Execute last macro recorded in register 'q'.
 nnoremap <space> @q
 
-" Shift the line below by one line (downwards).
-"nnoremap <silent> <Leader>o :let cp=getpos('.')<CR>o<Esc>k:call cursor(cp[1],cp[2])<CR>
-"nnoremap <silent> <Leader>O :let cp=getpos('.')<CR>O<Esc>j:call cursor(cp[1] + 1,cp[2]) <CR>
-
 " Easily source my vimrc.
 nnoremap <leader><leader>sv :source $MYVIMRC<cr>
 " Easily edit my vimrc.
 nnoremap <leader><leader>ev :tabe $MYVIMRC<cr>
 
 " Clear last search.
-nnoremap <silent> <leader><leader>cl :let @/ = ""<cr>
+nnoremap <silent> <c-n> :let @/ = ""<cr>
 
 " Save while in insert mode without leaving insert mode.
 nnoremap <leader>w :w<cr>
@@ -225,3 +210,23 @@ nnoremap <leader>x :x<cr>
 " Select all.
 nnoremap <leader>a ggVG
 
+" Functions
+" function MarkdownLevel()
+"   let h = matchstr(getline(v:lnum), '^#\+')
+"   if empty(h)
+"     return "="
+"   else
+"     return ">" . len(h)
+"   endif
+" endfunction
+" 
+" au BufEnter *.md setlocal foldexpr=MarkdownLevel()  
+" au BufEnter *.md setlocal foldmethod=expr
+
+" For vscode-neovim. Settings that should be enabled only in cmdline vim
+" should go here.
+if !exists('g:vscode')
+endif
+
+" fzf settings.
+nnoremap <c-p> :Files<cr>
