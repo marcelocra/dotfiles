@@ -228,3 +228,14 @@ just mention the one that took me longer:
 
 follow the instructions that are in the header precisely, otherwise you might
 lose a lot of time.
+
+## Install `fzf`
+
+Simply follow the installation instructions in
+[the project site](https://github.com/junegunn/fzf#installation). Notice that
+there's a Vim plugin that is also interesting.
+
+## Install `vim-plug`
+
+Simply follow the installation instructions in
+[the project site](https://github.com/junegunn/vim-plug#installation).
