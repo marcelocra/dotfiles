@@ -56,19 +56,13 @@ call plug#begin()
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
 
-" Handles Git wonderfully from within Vim.
 Plug 'tpope/vim-fugitive'
-
-" Provides a few more mappings to facilitate some tasks.
 Plug 'tpope/vim-unimpaired'
-
-" Provides an easy way to surround text with characters.
 Plug 'tpope/vim-surround'
+Plug 'tpope/vim-commentary'
 
-" Changes Vim's status bar to a fancy one.
 Plug 'bling/vim-airline'
 
-" Simplifies jumping through the file.
 Plug 'justinmk/vim-sneak'
 
 call plug#end()
