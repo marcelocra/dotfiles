@@ -1,74 +1,83 @@
-call plug#begin()
 " The default plugin directory will be as follows:
 "   - Vim (Linux/macOS): '~/.vim/plugged'
 "   - Vim (Windows): '~/vimfiles/plugged'
 "   - Neovim (Linux/macOS/Windows): stdpath('data') . '/plugged'
+"
 " You can specify a custom plugin directory by passing it as the argument
 "   - e.g. `call plug#begin('~/.vim/plugged')`
 "   - Avoid using standard Vim directory names like 'plugin'
+"
+" In your plugin paths, make sure you use single quotes.
+"
+" 
+" Plugin example usage:
+"
+"   " Shorthand notation; fetches https://github.com/junegunn/vim-easy-align
+"   Plug 'junegunn/vim-easy-align'
+"
+"   " Multiple Plug commands can be written in a single line using | separators
+"   Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
+"
+"   " On-demand loading
+"   Plug 'tpope/vim-fireplace', { 'for': 'clojure' }
+"
+"   " Using a tagged release; wildcard allowed (requires git 1.9.2 or above)
+"   Plug 'fatih/vim-go', { 'tag': '*' }
+"   Plug 'nsf/gocode', { 'tag': 'v.20150303', 'rtp': 'vim' }
+"
+"   " Plugin outside ~/.vim/plugged with post-update hook
+"   Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+"   Plug 'junegunn/fzf.vim'
+"
+" Previously used plugins, to keep in mind:
+"
+"   " Colorschemes
+"   Plug 'altercation/vim-colors-solarized'
+"   Plug 'sjl/badwolf'
+"   Plug 'tomasr/molokai'
+"   Plug 'tpope/vim-vividchalk'
+"
+"   " Allows one to easily traverse files.
+"   Plug 'Lokaltog/vim-easymotion'
+"
+"   " JavaScript stuff.
+"   Plug 'dense-analysis/ale'
+"   Plug 'prettier/vim-prettier', { 'do': 'yarn install' }
+"   Plug 'ternjs/tern_for_vim', { 'do': 'yarn install' }
+"
+"   " Makes commenting easier on Vim.
+"   Plug 'scrooloose/nerdcommenter'
 
-" Make sure you use single quotes
 
-" Shorthand notation; fetches https://github.com/junegunn/vim-easy-align
-" Plug 'junegunn/vim-easy-align'
+" -- [ Install plugins and initialize the plugin system ] ----------------------
 
-" Multiple Plug commands can be written in a single line using | separators
-"Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
-
-" On-demand loading
-" Plug 'tpope/vim-fireplace', { 'for': 'clojure' }
-
-"" Go stuff.
-"" Plugin options
-"" Using a tagged release; wildcard allowed (requires git 1.9.2 or above)
-"Plug 'fatih/vim-go', { 'tag': '*' }
-"Plug 'nsf/gocode', { 'tag': 'v.20150303', 'rtp': 'vim' }
+call plug#begin()  
 
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
 
-" Colorschemes.
-"Plug 'altercation/vim-colors-solarized'
-"Plug 'sjl/badwolf'
-"Plug 'tomasr/molokai'
-"Plug 'tpope/vim-vividchalk'
-
-" Makes commenting easier on Vim.
-"Plug 'scrooloose/nerdcommenter'
-
 " Handles Git wonderfully from within Vim.
-"Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-fugitive'
 
 " Provides a few more mappings to facilitate some tasks.
-"Plug 'tpope/vim-unimpaired'
-
-" Changes Vim's status bar to a fancy one.
-"Plug 'bling/vim-airline'
-
-" Allows one to easily traverse files.
-"Plug 'Lokaltog/vim-easymotion'
+Plug 'tpope/vim-unimpaired'
 
 " Provides an easy way to surround text with characters.
-"Plug 'tpope/vim-surround'
+Plug 'tpope/vim-surround'
 
-" Plugin outside ~/.vim/plugged with post-update hook.
-"Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
-"Plug 'junegunn/fzf.vim'
+" Changes Vim's status bar to a fancy one.
+Plug 'bling/vim-airline'
 
-" JavaScript stuff.
-"Plug 'dense-analysis/ale'
-"Plug 'prettier/vim-prettier', { 'do': 'yarn install' }
-"Plug 'ternjs/tern_for_vim', { 'do': 'yarn install' }
+" Simplifies jumping through the file.
+Plug 'justinmk/vim-sneak'
 
-" Initialize plugin system
 call plug#end()
+
+
+" -- [ Settings ] --------------------------------------------------------------
 
 " Syntax highlighting.
 syntax enable
-
-" ############################
-" ##### general settings #####
-" ############################
 
 " When inserting a tab in the beggining of the line, it will be N spaces long
 " and a backspace will go back N spaces also (where N is the chosen number).
@@ -81,7 +90,7 @@ set expandtab
 
 " Automatically insert a linebreak after the selected width.
 set textwidth=0   " No line breaks for me.
-set wrapmargin=0  " I really don't want you to wrap, VIM.
+set wrapmargin=0  " I really don't want you to wrap, Vim.
 set nowrap  " Don't wrap lines.
 
 " Indentation.
@@ -93,10 +102,12 @@ set vb t_vb=
 " Lines with number and with a particular width (no variation when
 " increasing).
 set number
-" set numberwidth=5
+"set numberwidth=5
 
 " Show line and column.
 set ruler
+set colorcolumn=80
+
 
 " Highlight search matches as you type.
 set hlsearch
@@ -124,12 +135,12 @@ set wildmenu
 " Redraw only when needed to.
 set lazyredraw
 
-" Change VIM default splits (to bottom right).
+" Change Vim default splits (to bottom right).
 set splitbelow
 set splitright
 
 " Set line endings. Prefer Unix, but also accept DOS.
-set fileformats=unix,dos
+set fileformats=unix
 
 " Set proper colors.
 set t_Co=256
@@ -140,18 +151,13 @@ set nofoldenable
 colorscheme desert
 set background=dark
 
-" Set ruler.
-" TODO: adapt for different filetypes.
-set colorcolumn=80
-
 " Set how the status line will be shown in the bottom of Vim.
-set statusline=%<%F\ %m%r%h\ %=lines:%l/%L\ col:%c%V
+"set statusline=%<%F\ %m%r%h\ %=lines:%l/%L\ col:%c%V
 
 set clipboard+=unnamedplus
 
-" ############################
-" ##### general mappings #####
-" ############################
+
+" -- [ Mappings ] --------------------------------------------------------------
 
 " Use normal regex.
 nnoremap / /\v\c
@@ -178,15 +184,8 @@ nnoremap gV `[v`]
 vnoremap < <gv
 vnoremap > >gv
 
-" Easy way to change between tabs.
-nnoremap <a-k> :tabnext<cr>
-nnoremap <a-j> :tabprevious<cr>
-nnoremap g] :tabnext<cr>
-nnoremap g[ :tabprevious<cr>
 
-" ###########################
-" ##### leader mappings #####
-" ###########################
+" -- [ Leader mappings ] -------------------------------------------------------
 
 " Change leader.
 let mapleader = ","
@@ -200,7 +199,7 @@ nnoremap <leader><leader>sv :source $MYVIMRC<cr>
 nnoremap <leader><leader>ev :tabe $MYVIMRC<cr>
 
 " Clear last search.
-nnoremap <silent> <leader><leader>cl :let @/ = ""<cr>
+nnoremap <silent> <c-n> :let @/ = ""<cr>
 
 " Save while in insert mode without leaving insert mode.
 nnoremap <leader>w :w<cr>
@@ -237,8 +236,3 @@ endif
 
 " fzf settings.
 nnoremap <c-p> :Files<cr>
-
-" Create new lines.
-"nnoremap <c-j> o<esc>2k<cr>
-"nnoremap <c-k> O<esc><cr>
-
