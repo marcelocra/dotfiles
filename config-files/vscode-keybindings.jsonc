@@ -73,12 +73,16 @@
   {
     "key": "ctrl+t",
     "command": "workbench.action.togglePanel",
-    "when": "activePanel"
+    "when": "activePanel && terminalFocus"
+  },
+  {
+    "key": "ctrl+t",
+    "command": "workbench.action.terminal.focus",
+    "when": "activePanel && !terminalFocus"
   },
   {
     "key": "ctrl+t",
     "command": "workbench.action.togglePanel",
-    // "command": "workbench.action.toggleMaximizedPanel",
     "when": "!activePanel"
   },
   {
