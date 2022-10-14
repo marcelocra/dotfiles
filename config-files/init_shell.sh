@@ -120,7 +120,7 @@ alias gfg='git ls-files | grep'
 alias ggpull='git pull origin'
 alias ggpush='git push origin'
 
-alias gpsup='git push --set-upstream origin $(git_current_branch)'
+alias gpsup='git push --set-upstream origin'
 
 alias ghh='git help'
 
@@ -177,13 +177,13 @@ alias gsps='git show --pretty=short --show-signature'
 alias gss='git status -s'
 alias gs="git status"
 
+alias gst='git stash'
 alias gstaa='git stash apply'
 alias gstc='git stash clear'
 alias gstd='git stash drop'
 alias gstl='git stash list'
 alias gstp='git stash pop'
 alias gsts='git stash show --text'
-alias gstu='gsta --include-untracked'
 alias gstall='git stash --all'
 
 alias gts='git tag -s'
