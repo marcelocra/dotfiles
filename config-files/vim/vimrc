@@ -31,12 +31,6 @@
 "
 " Previously used plugins, to keep in mind:
 "
-"   " Colorschemes
-"   Plug 'altercation/vim-colors-solarized'
-"   Plug 'sjl/badwolf'
-"   Plug 'tomasr/molokai'
-"   Plug 'tpope/vim-vividchalk'
-"
 "   " Allows one to easily traverse files.
 "   Plug 'Lokaltog/vim-easymotion'
 "
@@ -64,6 +58,12 @@ Plug 'tpope/vim-commentary'
 Plug 'bling/vim-airline'
 
 Plug 'justinmk/vim-sneak'
+
+" Colorschemes
+Plug 'altercation/vim-colors-solarized'
+Plug 'sjl/badwolf'
+Plug 'tomasr/molokai'
+Plug 'tpope/vim-vividchalk'
 
 call plug#end()
 
@@ -96,12 +96,11 @@ set vb t_vb=
 " Lines with number and with a particular width (no variation when
 " increasing).
 set number
-"set numberwidth=5
+set relativenumber 
 
 " Show line and column.
 set ruler
 set colorcolumn=80
-
 
 " Highlight search matches as you type.
 set hlsearch
@@ -142,8 +141,8 @@ set t_Co=256
 " Avoid folding. Note: 'za' to unfold.
 set nofoldenable
 
-colorscheme desert
-set background=dark
+colorscheme badwolf
+au BufEnter,BufNew * if &diff | colorscheme molokai | else | colorscheme badwolf | endif
 
 " Set how the status line will be shown in the bottom of Vim.
 "set statusline=%<%F\ %m%r%h\ %=lines:%l/%L\ col:%c%V
@@ -210,18 +209,12 @@ nnoremap <leader>x :x<cr>
 " Select all.
 nnoremap <leader>a ggVG
 
-" Functions
-" function MarkdownLevel()
-"   let h = matchstr(getline(v:lnum), '^#\+')
-"   if empty(h)
-"     return "="
-"   else
-"     return ">" . len(h)
-"   endif
-" endfunction
-" 
-" au BufEnter *.md setlocal foldexpr=MarkdownLevel()  
-" au BufEnter *.md setlocal foldmethod=expr
+" Change tabs.
+nnoremap [t :tabprevious<cr>
+nnoremap ]t :tabnext<cr>
+
+
+" -- [ Plugins mappings ] ------------------------------------------------------
 
 " For vscode-neovim. Settings that should be enabled only in cmdline vim
 " should go here.
@@ -230,3 +223,10 @@ endif
 
 " fzf settings.
 nnoremap <c-p> :Files<cr>
+
+let g:sneak#label = 1
+
+" molokai settings.
+"let g:molokai_original = 0
+"let g:rehash256 = 0
+
