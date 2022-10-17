@@ -211,6 +211,7 @@
   "vim.useSystemClipboard": true,
   "vim.useCtrlKeys": true,
   "vim.hlsearch": true,
+  "vim.smartRelativeLine": true,
   "vim.insertModeKeyBindingsNonRecursive": [
     {
       "before": ["j", "f"],
@@ -244,12 +245,13 @@
       "before": ["<leader>", "k"],
       "after": ["O", "<esc>", "j"]
     },
+    // Use vim-unimpaired shortcuts.
     {
-      "before": ["g", "h"], // For some reason, <c-h> doesn't work...
+      "before": ["[", "t"], // For some reason, <c-h> doesn't work...
       "commands": [":tabp"]
     },
     {
-      "before": ["g", "l"], // ... and <c-l> also.
+      "before": ["]", "t"], // ... and <c-l> also.
       "commands": [":tabn"]
     },
     {
@@ -296,6 +298,7 @@
       "before": ["<leader>", "a"],
       "after": ["g", "g", "V", "G"]
     },
+    // Move using visual lines.
     {
       "before": ["j"],
       "after": ["g", "j"]
