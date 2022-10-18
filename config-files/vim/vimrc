@@ -41,6 +41,13 @@
 "
 "   " Makes commenting easier on Vim.
 "   Plug 'scrooloose/nerdcommenter'
+"
+"   " Colorschemes
+"   Plug 'altercation/vim-colors-solarized'
+"   Plug 'sjl/badwolf'
+"   Plug 'tomasr/molokai'
+"   Plug 'tpope/vim-vividchalk'
+"   Plug 'marcelocra/vim-colorscheme'
 
 
 " -- [ Install plugins and initialize the plugin system ] ----------------------
@@ -58,12 +65,6 @@ Plug 'tpope/vim-commentary'
 Plug 'bling/vim-airline'
 
 Plug 'justinmk/vim-sneak'
-
-" Colorschemes
-Plug 'altercation/vim-colors-solarized'
-Plug 'sjl/badwolf'
-Plug 'tomasr/molokai'
-Plug 'tpope/vim-vividchalk'
 
 call plug#end()
 
@@ -141,8 +142,7 @@ set t_Co=256
 " Avoid folding. Note: 'za' to unfold.
 set nofoldenable
 
-colorscheme badwolf
-au BufEnter,BufNew * if &diff | colorscheme molokai | else | colorscheme badwolf | endif
+colorscheme koehler
 
 " Set how the status line will be shown in the bottom of Vim.
 "set statusline=%<%F\ %m%r%h\ %=lines:%l/%L\ col:%c%V
