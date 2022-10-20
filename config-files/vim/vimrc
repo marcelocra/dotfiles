@@ -225,6 +225,7 @@ endif
 nnoremap <c-p> :Files<cr>
 
 let g:sneak#label = 1
+let g:sneak#s_next = 1
 
 " molokai settings.
 "let g:molokai_original = 0
