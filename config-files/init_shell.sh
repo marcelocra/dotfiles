@@ -124,7 +124,7 @@ alias gpsup='git push --set-upstream origin'
 
 alias ghh='git help'
 
-alias gl="git pull"
+alias gpl="git pull"
 alias glg="git log"
 alias glg='git log --stat'
 alias glgp='git log --stat -p'
@@ -135,6 +135,8 @@ alias glo='git log --oneline --decorate'
 alias glol="git log --graph --pretty='%Cred%h%Creset -%C(auto)%d%Creset %s %Cgreen(%ar) %C(bold blue)<%an>%Creset'"
 alias glols="git log --graph --pretty='%Cred%h%Creset -%C(auto)%d%Creset %s %Cgreen(%ar) %C(bold blue)<%an>%Creset' --stat"
 alias glod="git log --graph --pretty='%Cred%h%Creset -%C(auto)%d%Creset %s %Cgreen(%ad) %C(bold blue)<%an>%Creset'"
+alias gl="glod"
+alias gls="gl -5"
 alias glods="git log --graph --pretty='%Cred%h%Creset -%C(auto)%d%Creset %s %Cgreen(%ad) %C(bold blue)<%an>%Creset' --date=short"
 alias glola="git log --graph --pretty='%Cred%h%Creset -%C(auto)%d%Creset %s %Cgreen(%ar) %C(bold blue)<%an>%Creset' --all"
 alias glog='git log --oneline --decorate --graph'
@@ -143,7 +145,7 @@ alias gloga='git log --oneline --decorate --graph --all'
 alias gm='git merge'
 alias gma='git merge --abort'
 
-alias gp="git push"
+alias gps="git push"
 alias gpd='git push --dry-run'
 alias gpf!='git push --force'
 
