@@ -93,9 +93,3 @@ reduce_speed_of_logitech_mouse() {
 setup_expert_mouse
 setup_evoluent_mouse
 reduce_speed_of_logitech_mouse
-
-
-# -- [ Run global commands ] ---------------------------------------------------
-
-
-setxkbmap -option caps:ctrl_modifier

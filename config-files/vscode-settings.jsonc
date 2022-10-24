@@ -58,8 +58,8 @@
   // // "editor.fontLigatures": "'ss19'",
   // "editor.fontSize": 15,
 
-  // JetBrains Mono
-  // --------------
+  // CodeNewRoman
+  // ------------
   // "editor.fontWeight": "bold",
   "editor.fontFamily": "'CodeNewRoman Nerd Font Mono', monospace",
   "editor.fontSize": 15,

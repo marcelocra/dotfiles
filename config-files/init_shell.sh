@@ -213,6 +213,7 @@ alias glfss="git lfs status"
 export DOTNET_CLI_TELEMETRY_OPTOUT=true
 export HOMEBREW_NO_ANALYTICS=1
 export EDITOR=vim
+export PATH="${PATH}:${HOME}/bin"
 
 
 # [ Commands ] -----------------------------------------------------------------
