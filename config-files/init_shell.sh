@@ -56,9 +56,6 @@ alias pr='p run'
 alias rc='vim ~/.zshrc'
 alias src='source ~/.zshrc'
 
-# Makes Caps Lock a new Ctrl.
-alias linuxnocaps='setxkbmap -option caps:ctrl_modifier'
-
 # Git native
 # ----------
 
