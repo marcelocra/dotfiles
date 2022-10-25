@@ -52,6 +52,14 @@ Use this:
 
 You might need to add some spaces around stuff for it to appear correctly.
 
+Notice that there's a number of `%n` in the format, which behaves like `\n`
+(adding new lines), as I use the menu bar vertically to the left. If you prefer
+it to be at the top or bottom of the screen, replace the `%n`s with spaces.
+
+The result will be like this:
+
+![Cinnamon date and time widget format output](./cinnamon-date-time.png)
+
 ## Add appropriate keyboard layout
 
 For international keyboards, try this:
@@ -76,7 +84,7 @@ files from the `config-files` folder:
 - .tmux.conf
 
 This one needs to be installed using the "Startup Applications" app (just search
-for it):
+for it in the menu):
 
 - init_system_linux.sh
 
@@ -170,19 +178,16 @@ straightforward.
 
 ## Install Obsidian
 
-Another weird one.
-
 The recommended Linux install from [their website](https://obsidian.md) is the
-AppImage, but this simply doesn't work out of the box in Ubuntu 22.04.
+AppImage.
 
-[So it seems](https://itsfoss.com/cant-run-appimage-ubuntu/) like this version
-is missing `libfuse2`, which is required for running AppImages. Simply install
-that with `sudo apt install libfuse2`, enable running AppImage files (from the
-file properties) and voila: double click for it to open.
+For it to run, after downloading it, right click > properties > permissions >
+enable "allow executing file as a program". After that, double clicking should
+launch the program.
 
 Note: while these instructions will make Obisidian work, they won't provide a
-nice icon for the both in search (gnome-shell) or in the docks (and alt-tab).
-For that you'll need to configure a `obsidian.desktop`. You can find
+nice icon in search (gnome-shell) or in the menus (and alt-tab). For that you'll
+need to configure a `obsidian.desktop`. You can find
 [that file](../config-files/obsidian.desktop) along with
 [instructions](../config-files/obsidian.desktop_install.sh) and icons in this
 repo.
