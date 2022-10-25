@@ -133,7 +133,7 @@ set lazyredraw
 set splitbelow
 set splitright
 
-" Set line endings. Prefer Unix, but also accept DOS.
+" Set line endings using Unix style.
 set fileformats=unix
 
 " Set proper colors.
@@ -142,11 +142,14 @@ set t_Co=256
 " Avoid folding. Note: 'za' to unfold.
 set nofoldenable
 
+" My new favourite preeinstalled theme.
 colorscheme koehler
 
 " Set how the status line will be shown in the bottom of Vim.
+" (not needed if using airline)
 "set statusline=%<%F\ %m%r%h\ %=lines:%l/%L\ col:%c%V
 
+" Use the system clipboard to copy to/from.
 set clipboard+=unnamedplus
 
 
