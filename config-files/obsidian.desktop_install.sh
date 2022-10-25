@@ -12,3 +12,6 @@ ln -s ${HOME}/projects/personal/dev/config-files/obsidian.desktop \
 # https://forum.obsidian.md/t/big-sur-icon/8121
 ln -s ${HOME}/projects/personal/dev/config-files/obsidian.png \
     ${HOME}/.local/share/icons/obsidian.png 
+
+# Update desktop files database.
+update-desktop-database ~/.local/share/applications
