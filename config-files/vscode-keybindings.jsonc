@@ -297,7 +297,21 @@
     "when": "textInputFocus"
   },
   {
-    "key": "ctrl+k ctrl+g",
+    "key": "ctrl+k ctrl+p",
     "command": "issue.copyGithubPermalink"
+  },
+  {
+    "key": "ctrl+k ctrl+o",
+    "command": "outline.focus"
+  },
+  {
+    "key": "ctrl+k ctrl+g",
+    "command": "workbench.view.scm",
+    "when": "workbench.scm.active && !gitlens:disabled && config.gitlens.keymap == 'chorded'"
+  },
+  {
+    "key": "ctrl+shift+g g",
+    "command": "-workbench.view.scm",
+    "when": "workbench.scm.active && !gitlens:disabled && config.gitlens.keymap == 'chorded'"
   }
 ]
