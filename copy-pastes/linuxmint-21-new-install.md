@@ -23,7 +23,7 @@ that I created in the past. Works fine.
 
 ```sh
 sudo apt install -y \
-  wget curl unzip git neovim tmux ripgrep zsh
+  wget curl unzip git neovim tmux ripgrep zsh copyq
 ```
 
 DON'T install `curl` from `snap`. It simply doesn't work as expected and end up
