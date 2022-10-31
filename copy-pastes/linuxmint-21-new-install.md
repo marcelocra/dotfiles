@@ -68,6 +68,41 @@ I use the following layouts:
 - English (US, intl., with dead keys): to type in brazilian portuguese with an
   en-US keyboard.
 
+## Update keyboard to accept cedilla (necessary for pt-BR speakers)
+
+First, follow the third step mentioned below
+([reference](https://superuser.com/a/1235405/295116)):
+
+> It's because the cedilla module isn't loaded by default when the locale is set
+> to _en_, so you have to change the configuration files for gtk to add them:
+>
+> **1. Edit configuration files:**
+>
+>     sudo vim /usr/lib/x86_64-linux-gnu/gtk-3.0/3.0.0/immodules.cache
+>
+>     sudo vim /usr/lib/x86_64-linux-gnu/gtk-2.0/2.10.0/immodules.cache
+>
+> On both, find the lines starting with `"cedilla" "Cedilla" ` and add :en to
+> the line. Something like this:
+>
+> `"cedilla" "Cedilla" "gtk30" "/usr/share/locale" "az:ca:co:fr:gv:oc:pt:sq:tr:wa:en"`
+>
+> **2. Change the Compose file:**
+>
+>     sudo sed -i /usr/share/X11/locale/en_US.UTF-8/Compose -e 's/ć/ç/g' -e 's/Ć/Ç/g'
+>
+> **3. Instruct the system to load the _cedilla_ module:**
+>
+> Add those lines to `/etc/environment`:
+>
+>     GTK_IM_MODULE=cedilla
+>     QT_IM_MODULE=cedilla
+>
+> Reboot and you are done.
+
+I didn't need the other steps. If this one doesn't work for you, try the others
+too.
+
 ## Install config files
 
 Clone https://github.com/marcelocra/dev/ and symlink the following essential
@@ -193,41 +228,6 @@ need to configure a `obsidian.desktop`. You can find
 [that file](../config-files/obsidian.desktop) along with
 [instructions](../config-files/obsidian.desktop_install.sh) and icons in this
 repo.
-
-## Update keyboard to accept cedilla (necessary for pt-BR speakers)
-
-First, follow the third step mentioned below
-([reference](https://superuser.com/a/1235405/295116)):
-
-> It's because the cedilla module isn't loaded by default when the locale is set
-> to _en_, so you have to change the configuration files for gtk to add them:
->
-> **1. Edit configuration files:**
->
->     sudo vim /usr/lib/x86_64-linux-gnu/gtk-3.0/3.0.0/immodules.cache
->
->     sudo vim /usr/lib/x86_64-linux-gnu/gtk-2.0/2.10.0/immodules.cache
->
-> On both, find the lines starting with `"cedilla" "Cedilla" ` and add :en to
-> the line. Something like this:
->
-> `"cedilla" "Cedilla" "gtk30" "/usr/share/locale" "az:ca:co:fr:gv:oc:pt:sq:tr:wa:en"`
->
-> **2. Change the Compose file:**
->
->     sudo sed -i /usr/share/X11/locale/en_US.UTF-8/Compose -e 's/ć/ç/g' -e 's/Ć/Ç/g'
->
-> **3. Instruct the system to load the _cedilla_ module:**
->
-> Add those lines to `/etc/environment`:
->
->     GTK_IM_MODULE=cedilla
->     QT_IM_MODULE=cedilla
->
-> Reboot and you are done.
-
-I didn't need the other steps. If this one doesn't work for you, try the others
-too.
 
 ## Install programming languages runtimes
 
