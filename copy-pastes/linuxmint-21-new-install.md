@@ -237,7 +237,7 @@ https://brave.com/linux/#debian-ubuntu-mint
 
 ## Install programming languages runtimes
 
-### Deno
+### Deno (need review)
 
 ```sh
 curl -fsSL https://deno.land/install.sh | sh
@@ -246,20 +246,16 @@ export DENO_INSTALL="${HOME}/.deno"
 export PATH="${DENO_INSTALL}/bin:${PATH}"
 ```
 
-### DotNet
+### .NET
 
-```sh
-wget https://packages.microsoft.com/config/debian/10/packages-microsoft-prod.deb -O packages-microsoft-prod.deb
-dpkg -i packages-microsoft-prod.deb
-rm packages-microsoft-prod.deb
-sudo apt update
-sudo apt install -y apt-transport-https
-sudo apt update
-sudo apt install -y dotnet-sdk-6.0
-export DOTNET_CLI_TELEMETRY_OPTOUT=1
-```
+Follow the manual installation instructions
+[in Microsoft's website](https://learn.microsoft.com/en-us/dotnet/core/install/linux-scripted-manual#manual-install):
 
-### Golang
+Basically, download the binary file from
+[their download page](https://dotnet.microsoft.com/en-us/download/dotnet/7.0)
+and extract it to some folder that is present in your PATH.
+
+### Golang (need review)
 
 ```sh
 wget https://go.dev/dl/go1.19.linux-amd64.tar.gz
