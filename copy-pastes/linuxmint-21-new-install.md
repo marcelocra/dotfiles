@@ -229,6 +229,12 @@ need to configure a `obsidian.desktop`. You can find
 [instructions](../config-files/obsidian.desktop_install.sh) and icons in this
 repo.
 
+## Install Brave Browser
+
+Follow the instructions from their website:
+
+https://brave.com/linux/#debian-ubuntu-mint
+
 ## Install programming languages runtimes
 
 ### Deno
