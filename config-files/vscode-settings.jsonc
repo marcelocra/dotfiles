@@ -434,5 +434,6 @@
   "files.eol": "\n",
   "editor.renderWhitespace": "none",
   "window.menuBarVisibility": "toggle",
-  "explorer.excludeGitIgnore": true
+  "explorer.excludeGitIgnore": false,
+  "git.confirmSync": false
 }
