@@ -64,10 +64,6 @@
 [includeIf "gitdir:~/projects/personal/"]
   path = .gitconfig.personal.gitconfig
 
-[includeIf "gitdir:/workspaces/personal/"]
-  # Add the personal config when working in a personal project using containers.
-  path = .gitconfig.personal.gitconfig
-
 
 # [ Work configs ] -------------------------------------------------------------
 
@@ -75,8 +71,15 @@
 [includeIf "gitdir:~/projects/work/"]
   path = .gitconfig.work.gitconfig
 
-[includeIf "gitdir:/workspaces/work/"]
-  # Add the work config when working in a work project using containers.
+
+# [ Container configs ] --------------------------------------------------------
+#
+# Should install only one of these in the container. It will load the appropriate
+# configs
+
+
+[includeIf "gitdir:/workspaces/"]
+  path = .gitconfig.personal.gitconfig
   path = .gitconfig.work.gitconfig
 
 
