@@ -105,6 +105,8 @@
   "editor.minimap.size": "fill",
   "editor.formatOnSave": true,
   "editor.tabCompletion": "on",
+  "editor.renderWhitespace": "none",
+  "editor.acceptSuggestionOnCommitCharacter": false,
 
   //============================================================================
   // JavaScript
@@ -432,7 +434,6 @@
   "terminal.integrated.fontSize": 13,
   "terminal.integrated.macOptionClickForcesSelection": true,
   "files.eol": "\n",
-  "editor.renderWhitespace": "none",
   "window.menuBarVisibility": "toggle",
   "explorer.excludeGitIgnore": false,
   "git.confirmSync": false
