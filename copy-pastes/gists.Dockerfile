@@ -26,6 +26,14 @@ RUN apt-get install -y wget git tmux ripgrep curl unzip neovim zsh
 # Download my .tmux.conf.
 RUN wget https://raw.githubusercontent.com/marcelocra/.dotfiles/master/unix/.tmux.conf -P ~
 
+# Install appropriate gitconfig files. No need to use the *(linux|unix).gitconfig files
+# as they are essentially for credentials and containers inherit them from the system
+# already.
+RUN wget https://raw.githubusercontent.com/marcelocra/dev/main/config-files/.gitconfig -P ~
+RUN wget https://raw.githubusercontent.com/marcelocra/dev/main/config-files/.gitconfig.personal.gitconfig -P ~
+# If running work stuff, add this one instead.
+# RUN wget https://raw.githubusercontent.com/marcelocra/dev/main/config-files/.gitconfig.work.gitconfig -P ~
+
 
 # ------------------------------------------------------------------------------
 # - Node -----------------------------------------------------------------------
@@ -98,9 +106,3 @@ RUN tar -C /usr/local/bin -xzf hugo_extended_0.102.0_Linux-64bit.tar.gz
 # there's a need to update other things above, then move these ones to a more
 # appropriate location.
 WORKDIR ${HOME}
-
-RUN apt-get install -y neovim
-
-RUN bash -c "source ${HOME}/.bashrc && nvm install 16.16"
-RUN bash -c "source ${HOME}/.bashrc && nvm use 16.16"
-
