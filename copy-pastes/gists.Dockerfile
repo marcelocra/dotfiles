@@ -26,10 +26,11 @@ RUN apt-get install -y wget git tmux ripgrep curl unzip neovim zsh
 # Download my .tmux.conf.
 RUN wget https://raw.githubusercontent.com/marcelocra/.dotfiles/master/unix/.tmux.conf -P ~
 
-# Install appropriate gitconfig files. No need to use the *(linux|unix).gitconfig files
-# as they are essentially for credentials and containers inherit them from the system
-# already.
-RUN wget https://raw.githubusercontent.com/marcelocra/dev/main/config-files/.gitconfig -P ~
+# Install appropriate gitconfig files. No need to use the *(linux|unix).gitconfig files,
+# as they are essentially for credentials and containers inherit credentials from the system.
+# If not running in a system that already have my default .gitconfig, uncomment the first
+# line below. Otherwise the system will also copy the local .gitconfig.
+# RUN wget https://raw.githubusercontent.com/marcelocra/dev/main/config-files/.gitconfig -P ~
 RUN wget https://raw.githubusercontent.com/marcelocra/dev/main/config-files/.gitconfig.personal.gitconfig -P ~
 # If running work stuff, add this one instead.
 # RUN wget https://raw.githubusercontent.com/marcelocra/dev/main/config-files/.gitconfig.work.gitconfig -P ~
