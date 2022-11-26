@@ -21,7 +21,7 @@ RUN echo 'PS1="\$(printf \"=%.0s\" \$(seq 1 \${COLUMNS}))\n[\$(TZ=\"America/Sao_
 
 # Update and install essentials.
 RUN apt-get update
-RUN apt-get install -y wget git tmux ripgrep curl unzip
+RUN apt-get install -y wget git tmux ripgrep curl unzip neovim zsh
 
 # Download my .tmux.conf.
 RUN wget https://raw.githubusercontent.com/marcelocra/.dotfiles/master/unix/.tmux.conf -P ~
@@ -44,16 +44,34 @@ ENV PATH="${DENO_INSTALL}/bin:${PATH}"
 
 
 # ------------------------------------------------------------------------------
-# - dotNET ---------------------------------------------------------------------
+# - dotnet ---------------------------------------------------------------------
 # ------------------------------------------------------------------------------
-# Download, install and configure.
-RUN wget https://packages.microsoft.com/config/debian/10/packages-microsoft-prod.deb -O packages-microsoft-prod.deb
-RUN dpkg -i packages-microsoft-prod.deb
-RUN rm packages-microsoft-prod.deb
-RUN apt-get update
-RUN apt-get install -y apt-transport-https
-RUN apt-get update 
-RUN apt-get install -y dotnet-sdk-6.0
+# Install dotnet 6.0
+ENV DOTNET_6_ROOT=$HOME/dotnet6
+ENV DOTNET_6_FILE="dotnet-sdk-6.0.403-linux-x64.tar.gz"
+RUN wget \
+  "https://download.visualstudio.microsoft.com/download/pr/1d2007d3-da35-48ad-80cc-a39cbc726908/1f3555baa8b14c3327bb4eaa570d7d07/${DOTNET_6_FILE}"
+RUN [ "$(sha512sum $DOTNET_6_FILE | tr ' ' '\n' | head -n1)" = "779b3e24a889dbb517e5ff5359dab45dd3296160e4cb5592e6e41ea15cbf87279f08405febf07517aa02351f953b603e59648550a096eefcb0a20fdaf03fadde" ] \
+  && echo "success - valid shasum" \
+  || (echo "failure - invalid shasum" && exit 1)
+RUN mkdir -p $DOTNET_6_ROOT && tar zxf $DOTNET_6_FILE -C $DOTNET_6_ROOT
+RUN rm $DOTNET_6_FILE
+
+# Install dotnet 7.0
+ENV DOTNET_7_ROOT=$HOME/dotnet7
+ENV DOTNET_7_FILE="dotnet-sdk-7.0.100-linux-x64.tar.gz"
+RUN wget \
+  "https://download.visualstudio.microsoft.com/download/pr/253e5af8-41aa-48c6-86f1-39a51b44afdc/5bb2cb9380c5b1a7f0153e0a2775727b/${DOTNET_7_FILE}"
+RUN [ "$(sha512sum $DOTNET_7_FILE | tr ' ' '\n' | head -n1)" = "0a2e74486357a3ee16abb551ecd828836f90d8744d6e2b6b83556395c872090d9e5166f92a8d050331333d07d112c4b27e87100ba1af86cac8a37f1aee953078" ] \
+  && echo "success - valid shasum" \
+  || (echo "failure - invalid shasum" && exit 1)
+RUN mkdir -p $DOTNET_7_ROOT && tar zxf $DOTNET_7_FILE -C $DOTNET_7_ROOT
+RUN rm $DOTNET_7_FILE
+
+# Point PATH to generic dotnet root.
+ENV DOTNET_ROOT=$HOME/bin/dotnet
+ENV PATH="$PATH:$DOTNET_ROOT"
+RUN ln -s $DOTNET_7_ROOT $DOTNET_ROOT
 ENV DOTNET_CLI_TELEMETRY_OPTOUT=1
 
 
