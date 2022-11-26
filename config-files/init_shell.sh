@@ -207,10 +207,13 @@ alias glfss="git lfs status"
 # [ Exports ] ------------------------------------------------------------------
 
 
+export DOTNET_ROOT="${HOME}/bin/dotnet"
 export DOTNET_CLI_TELEMETRY_OPTOUT=true
 export HOMEBREW_NO_ANALYTICS=1
 export EDITOR=vim
+
 export PATH="${PATH}:${HOME}/bin"
+export PATH="${PATH}:${DOTNET_ROOT}"
 
 
 # [ Commands ] -----------------------------------------------------------------
