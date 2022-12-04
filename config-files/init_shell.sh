@@ -203,6 +203,11 @@ alias gwch='git whatchanged -p --abbrev-commit --pretty=medium'
 alias glfsdry="git lfs push origin main --dry-run --all"
 alias glfss="git lfs status"
 
+# Docker
+# ------
+
+alias dc="docker-compose"
+
 
 # [ Exports ] ------------------------------------------------------------------
 
