@@ -177,7 +177,7 @@ alias gss='git status -s'
 alias gs="git status"
 
 alias gst='git stash'
-alias gstaa='git stash apply'
+alias gsta='git stash apply'
 alias gstc='git stash clear'
 alias gstd='git stash drop'
 alias gstl='git stash list'
