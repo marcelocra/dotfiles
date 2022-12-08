@@ -1,0 +1,9 @@
+[Desktop Entry]
+Name=Todoist
+Comment=To do App
+GenericName=Text Editor
+Type=Application
+Exec=Todoist-latest %U
+Icon=todoist
+StartupWMClass=todoist
+MimeType=x-scheme-handler/todoist;text/html;x-scheme-handler/com.todoist
