@@ -212,13 +212,21 @@ alias dc="docker-compose"
 # [ Exports ] ------------------------------------------------------------------
 
 
+# dotnet.
 export DOTNET_ROOT="${HOME}/bin/dotnet"
 export DOTNET_CLI_TELEMETRY_OPTOUT=true
-export HOMEBREW_NO_ANALYTICS=1
-export EDITOR=vim
-
-export PATH="${PATH}:${HOME}/bin"
 export PATH="${PATH}:${DOTNET_ROOT}"
+
+# Homebrew.
+export HOMEBREW_NO_ANALYTICS=1
+
+# Flutter.
+export FLUTTER_ROOT="${HOME}/bin/flutter/bin"
+export PATH="${PATH}:${FLUTTER_ROOT}"
+
+# Other.
+export EDITOR=vim
+export PATH="${PATH}:${HOME}/bin"
 
 
 # [ Commands ] -----------------------------------------------------------------
