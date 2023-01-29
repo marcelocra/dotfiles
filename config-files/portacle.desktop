@@ -1,0 +1,9 @@
+[Desktop Entry]
+Type=Application
+Version=1.0
+Name=Portacle
+Comment=Portable Common Lisp IDE
+Exec=Portacle
+Icon=portacle
+Terminal=false
+Categories=Development;Common Lisp;Lisp;Text Editor
