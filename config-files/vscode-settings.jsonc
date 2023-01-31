@@ -104,7 +104,7 @@
   "editor.minimap.showSlider": "always",
   "editor.minimap.size": "fill",
   "editor.formatOnSave": true,
-  "editor.tabCompletion": "on",
+  "editor.tabCompletion": "onlySnippets",
   "editor.renderWhitespace": "none",
   "editor.acceptSuggestionOnCommitCharacter": false,
 
@@ -434,7 +434,9 @@
   "terminal.integrated.fontSize": 13,
   "terminal.integrated.macOptionClickForcesSelection": true,
   "files.eol": "\n",
-  "window.menuBarVisibility": "toggle",
   "explorer.excludeGitIgnore": false,
-  "git.confirmSync": false
+  "git.confirmSync": false,
+  "typescript.updateImportsOnFileMove.enabled": "always",
+  "explorer.confirmDragAndDrop": false,
+  "gitlens.mode.active": "zen"
 }
