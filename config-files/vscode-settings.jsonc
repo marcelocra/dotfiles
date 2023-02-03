@@ -426,7 +426,7 @@
     "tree.indentGuidesStroke": "#00ffff",
     "editorIndentGuide.activeBackground": "#00ffff"
   },
-  "workbench.colorTheme": "GitHub Dark",
+  "workbench.colorTheme": "GitHub Dark Dimmed",
   "workbench.startupEditor": "newUntitledFile",
   "workbench.tree.indent": 20,
   "workbench.tree.renderIndentGuides": "always",
@@ -437,6 +437,5 @@
   "explorer.excludeGitIgnore": false,
   "git.confirmSync": false,
   "typescript.updateImportsOnFileMove.enabled": "always",
-  "explorer.confirmDragAndDrop": false,
-  "gitlens.mode.active": "zen"
+  "explorer.confirmDragAndDrop": false
 }
