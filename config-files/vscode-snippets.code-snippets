@@ -16,9 +16,14 @@
   // 	"description": "Log output to console"
   // }
   "Disable eslint for the next line": {
-    "scope": "javascript,typescript",
-    "prefix": "eslintd",
+    "scope": "javascript,typescript,javascriptreact,typescriptreact",
+    "prefix": "ed",
     "body": ["// eslint-disable-next-line"]
+  },
+  "Disable eslint for React's exhaustive deps in a useEffect": {
+    "scope": "javascript,typescript,javascriptreact,typescriptreact",
+    "prefix": "edre",
+    "body": ["// eslint-disable-next-line react-hooks/exhaustive-deps"]
   },
   "React useState hook": {
     "scope": "javascriptreact,typescriptreact",
