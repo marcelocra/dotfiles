@@ -221,7 +221,8 @@ export PATH="${PATH}:${DOTNET_ROOT}"
 export HOMEBREW_NO_ANALYTICS=1
 
 # Flutter.
-export FLUTTER_ROOT="${HOME}/bin/flutter/bin"
+export FLUTTER_SDK="${HOME}/bin/flutter"
+export FLUTTER_ROOT="${FLUTTER_SDK}/bin"
 export PATH="${PATH}:${FLUTTER_ROOT}"
 
 # Other.

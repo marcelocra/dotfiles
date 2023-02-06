@@ -155,12 +155,15 @@
   "dart.debugExternalPackageLibraries": false,
   "dart.debugSdkLibraries": false,
   "[dart]": {
-    "editor.defaultFormatter": "Dart-Code.dart-code",
+    "editor.formatOnSave": true,
     "editor.formatOnType": true,
-    // "editor.selectionHighlight": false,
+    "editor.rulers": [80],
+    "editor.selectionHighlight": false,
     "editor.suggest.snippetsPreventQuickSuggestions": false,
     "editor.suggestSelection": "first",
-    "editor.wordBasedSuggestions": false
+    "editor.tabCompletion": "onlySnippets",
+    "editor.wordBasedSuggestions": false,
+    "editor.defaultFormatter": "Dart-Code.dart-code"
   },
 
   //============================================================================
@@ -437,5 +440,8 @@
   "explorer.excludeGitIgnore": false,
   "git.confirmSync": false,
   "typescript.updateImportsOnFileMove.enabled": "always",
-  "explorer.confirmDragAndDrop": false
+  "explorer.confirmDragAndDrop": false,
+  "diffEditor.renderSideBySide": true,
+  "workbench.editor.enablePreview": false,
+  "dart.flutterSdkPath": "${env:FLUTTER_SDK}"
 }
