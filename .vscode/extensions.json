@@ -7,7 +7,7 @@
     "eamodio.gitlens",
     "github.vscode-pull-request-github",
     "ms-vscode-remote.vscode-remote-extensionpack",
-    "ms-vsliveshare.vsliveshare-pack",
+    "ms-vsliveshare.vsliveshare",
     "vscodevim.vim",
 
     // [ Themes ] --------------------------------------------------------------
