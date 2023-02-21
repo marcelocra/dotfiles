@@ -101,6 +101,15 @@ RUN tar -C /usr/local/bin -xzf hugo_extended_0.102.0_Linux-64bit.tar.gz
 
 
 # ------------------------------------------------------------------------------
+# - elm ------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
+# Docs: https://github.com/elm/compiler/blob/master/installers/linux/README.md
+RUN curl -L -o elm.gz https://github.com/elm/compiler/releases/download/0.19.1/binary-for-linux-64-bit.gz
+RUN gunzip elm.gz
+RUN chmod +x elm
+RUN mv elm /usr/local/bin/
+
+# ------------------------------------------------------------------------------
 # - Additional stuff -----------------------------------------------------------
 # ------------------------------------------------------------------------------
 # Add new stuff below this line, to avoid rebuilding the full image. Once
