@@ -442,6 +442,5 @@
   "typescript.updateImportsOnFileMove.enabled": "always",
   "explorer.confirmDragAndDrop": false,
   "diffEditor.renderSideBySide": true,
-  "workbench.editor.enablePreview": false,
   "dart.flutterSdkPath": "${env:FLUTTER_SDK}"
 }
