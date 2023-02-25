@@ -22,7 +22,7 @@
   },
   "Disable eslint for React's exhaustive deps in a useEffect": {
     "scope": "javascript,typescript,javascriptreact,typescriptreact",
-    "prefix": "edre",
+    "prefix": "edex",
     "body": ["// eslint-disable-next-line react-hooks/exhaustive-deps"]
   },
   "React useState hook": {

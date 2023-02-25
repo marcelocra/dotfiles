@@ -447,5 +447,6 @@
   "rubyLsp.rubyVersionManager": "asdf",
   "emmet.includeLanguages": {
     "erb": "html"
-  }
+  },
+  "workbench.list.horizontalScrolling": true
 }
