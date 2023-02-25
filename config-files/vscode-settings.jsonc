@@ -388,7 +388,8 @@
   //= F#
   //============================================================================
   "[fsharp]": {
-    "editor.defaultFormatter": "Ionide.Ionide-fsharp"
+    "editor.defaultFormatter": "Ionide.Ionide-fsharp",
+    "editor.tabSize": 4
   },
 
   //============================================================================
@@ -402,7 +403,7 @@
   "diffEditor.ignoreTrimWhitespace": false,
   "explorer.openEditors.visible": 0,
   "files.associations": {
-    "*.erb": "html",
+    "*.erb": "erb",
     "*.css": "tailwindcss",
     "vimrc": "vimrc"
   },
@@ -442,5 +443,9 @@
   "typescript.updateImportsOnFileMove.enabled": "always",
   "explorer.confirmDragAndDrop": false,
   "diffEditor.renderSideBySide": true,
-  "dart.flutterSdkPath": "${env:FLUTTER_SDK}"
+  "dart.flutterSdkPath": "${env:FLUTTER_SDK}",
+  "rubyLsp.rubyVersionManager": "asdf",
+  "emmet.includeLanguages": {
+    "erb": "html"
+  }
 }
