@@ -448,5 +448,6 @@
   "emmet.includeLanguages": {
     "erb": "html"
   },
-  "workbench.list.horizontalScrolling": true
+  "workbench.list.horizontalScrolling": true,
+  "git.openRepositoryInParentFolders": "never"
 }
