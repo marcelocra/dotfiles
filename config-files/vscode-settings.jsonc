@@ -219,7 +219,7 @@
   "vim.sneak": true,
   "vim.surround": true,
   "vim.incsearch": true,
-  "vim.useSystemClipboard": true,
+  "vim.useSystemClipboard": false,
   "vim.useCtrlKeys": true,
   "vim.hlsearch": true,
   "vim.smartRelativeLine": true,

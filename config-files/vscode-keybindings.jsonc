@@ -340,5 +340,9 @@
   {
     "key": "ctrl+k ctrl+z",
     "command": "workbench.action.toggleZenMode"
+  },
+  {
+    "key": "ctrl+k ctrl+f",
+    "command": "workbench.action.gotoSymbol"
   }
 ]
