@@ -22,13 +22,13 @@
 
   "eslint disable next line": {
     "scope": "javascript,typescript,javascriptreact,typescriptreact",
-    "prefix": "-ed-next-line",
+    "prefix": "ed-next-line",
     "body": ["// eslint-disable-next-line"]
   },
 
   "eslint disable next line useEffect exhaustive deps": {
     "scope": "javascript,typescript,javascriptreact,typescriptreact",
-    "prefix": "-ed-next-line-exhaustive-deps",
+    "prefix": "ed-next-line-exhaustive-deps",
     "body": ["// eslint-disable-next-line react-hooks/exhaustive-deps"]
   },
 
@@ -36,13 +36,13 @@
 
   "react useState hook": {
     "scope": "javascriptreact,typescriptreact",
-    "prefix": "-us",
+    "prefix": "us",
     "body": ["const [$1, set${1/(.*)/${1:/capitalize}/}] = useState($2)"]
   },
 
   "react useEffect hook": {
     "scope": "javascriptreact,typescriptreact",
-    "prefix": "-ue",
+    "prefix": "ue",
     "body": ["useEffect(() => {", "  $1", "}, [$2])"]
   },
 
@@ -51,7 +51,7 @@
   "prettier essentials": {
     "scope": "json",
     "description": "All projects should use these.",
-    "prefix": "-prettier-essentials",
+    "prefix": "prettier-essentials",
     "body": [
       "\"endOfLine\": \"lf\",",
       "\"printWidth\": 80,",
@@ -64,7 +64,7 @@
 
   "prettier global overrides": {
     "scope": "json",
-    "prefix": "-prettier-global-overrides",
+    "prefix": "prettier-global-overrides",
     "body": [
       "\"overrides\": [",
       "  {",
@@ -87,7 +87,7 @@
 
   "prettier javascript defaults": {
     "scope": "json",
-    "prefix": "-prettier-javascript-defaults",
+    "prefix": "prettier-javascript-defaults",
     "body": [
       "\"arrowParens\": \"always\",",
       "\"bracketSpacing\": true,",
