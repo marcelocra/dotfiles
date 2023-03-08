@@ -219,7 +219,7 @@
   "vim.sneak": true,
   "vim.surround": true,
   "vim.incsearch": true,
-  "vim.useSystemClipboard": false,
+  "vim.useSystemClipboard": true,
   "vim.useCtrlKeys": true,
   "vim.hlsearch": true,
   "vim.smartRelativeLine": true,
@@ -346,9 +346,14 @@
   ],
   "vim.leader": ",",
   "vim.handleKeys": {
+    // ctrl stuff.
     "<c-a>": false,
     "<c-c>": false,
-    "<c-f>": false
+    "<c-f>": false,
+
+    // cmd stuff.
+    "<D-c>": false,
+    "<D-d>": false
   },
 
   //============================================================================
