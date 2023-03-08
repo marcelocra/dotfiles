@@ -321,12 +321,12 @@
   {
     "key": "ctrl+k ctrl+g",
     "command": "workbench.view.scm",
-    "when": "workbench.scm.active && !gitlens:disabled && config.gitlens.keymap == 'chorded'"
+    "when": "workbench.scm.active"
   },
   {
     "key": "ctrl+shift+g g",
     "command": "-workbench.view.scm",
-    "when": "workbench.scm.active && !gitlens:disabled && config.gitlens.keymap == 'chorded'"
+    "when": "workbench.scm.active"
   },
   {
     "key": "ctrl+k ctrl+f",
