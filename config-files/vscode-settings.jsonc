@@ -455,5 +455,8 @@
   },
   "workbench.list.horizontalScrolling": true,
   "git.openRepositoryInParentFolders": "never",
-  "editor.inlineSuggest.enabled": true
+  "editor.inlineSuggest.enabled": true,
+  "github.copilot.enable": {
+    "*": true
+  }
 }
