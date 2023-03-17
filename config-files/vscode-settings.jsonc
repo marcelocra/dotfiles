@@ -458,5 +458,6 @@
   "editor.inlineSuggest.enabled": true,
   "github.copilot.enable": {
     "*": true
-  }
+  },
+  "breadcrumbs.filePath": "last"
 }
