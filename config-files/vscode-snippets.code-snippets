@@ -134,5 +134,15 @@
       "RUN echo 'source ~/init_shell.sh' >> \\${shell_rc}",
       ""
     ]
+  }, 
+
+  "dockerfile rust": {
+    "scope": "dockerfile",
+    "prefix": "rust",
+    "body": [
+      "# Install Rust. '-y' is for non-interactive mode.",
+      "RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y",
+      ""
+    ]
   }
 }
