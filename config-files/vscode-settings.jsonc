@@ -342,6 +342,16 @@
     {
       "before": ["<c-n>"],
       "commands": [":nohl"]
+    },
+    // Prevents `p` from yanking text that is being overwriten. When that
+    // behavior is desired, use `gp`.
+    {
+      "before": ["g", "p"],
+      "after": ["p"]
+    },
+    {
+      "before": ["p"],
+      "after": ["\"", "_", "d", "P"]
     }
   ],
   "vim.leader": ",",
@@ -459,5 +469,6 @@
   "github.copilot.enable": {
     "*": true
   },
-  "breadcrumbs.filePath": "last"
+  "breadcrumbs.filePath": "last",
+  "window.newWindowDimensions": "inherit"
 }
