@@ -94,6 +94,7 @@ alias gclean='git clean -id'
 alias gpristine='git reset --hard && git clean -dffx'
 alias gcm='git commit -m'
 alias gco='git checkout'
+alias gc-='git checkout -'
 alias gcor='git checkout --recurse-submodules'
 alias gcount='git shortlog -sn'
 alias gcp='git cherry-pick'
@@ -196,6 +197,8 @@ alias gupa='git pull --rebase --autostash'
 alias gupav='git pull --rebase --autostash -v'
 
 alias gwch='git whatchanged -p --abbrev-commit --pretty=medium'
+
+alias gi='git init'
 
 # Git lfs
 # -------
