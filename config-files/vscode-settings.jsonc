@@ -342,6 +342,16 @@
     {
       "before": ["<c-n>"],
       "commands": [":nohl"]
+    },
+    // Prevents `p` from yanking text that is being overwriten. When that
+    // behavior is desired, use `gp`.
+    {
+      "before": ["g", "p"],
+      "after": ["p"]
+    },
+    {
+      "before": ["p"],
+      "after": ["\"", "_", "d", "P"]
     }
   ],
   "vim.leader": ",",
@@ -455,5 +465,10 @@
   },
   "workbench.list.horizontalScrolling": true,
   "git.openRepositoryInParentFolders": "never",
-  "editor.inlineSuggest.enabled": true
+  "editor.inlineSuggest.enabled": true,
+  "github.copilot.enable": {
+    "*": true
+  },
+  "breadcrumbs.filePath": "last",
+  "window.newWindowDimensions": "inherit"
 }
