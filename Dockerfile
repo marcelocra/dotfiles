@@ -38,3 +38,11 @@ ENV DOTNET_ROOT=$DOTNET_7_ROOT
 ENV PATH="$PATH:$DOTNET_ROOT"
 ENV DOTNET_CLI_TELEMETRY_OPTOUT=1
 ENV DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=1
+
+
+RUN wget https://raw.githubusercontent.com/marcelocra/dev/main/config-files/.tmux.conf -P ~
+RUN wget https://github.com/git-lfs/git-lfs/releases/download/v3.3.0/git-lfs-linux-amd64-v3.3.0.tar.gz
+RUN tar zxf git-lfs-linux-amd64-v3.3.0.tar.gz
+RUN mv git-lfs-3.3.0/git-lfs /usr/bin
+RUN rm -f ./git-lfs-linux-amd64-v3.3.0.tar.gz
+RUN rm -rf ./git-lfs-3.3.0/

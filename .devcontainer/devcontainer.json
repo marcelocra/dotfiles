@@ -1,4 +1,17 @@
 {
-  "name": "Node LTS",
-  "image": "node:lts"
+  "name": "Existing Dockerfile",
+  "context": "..",
+  "dockerFile": "../Dockerfile",
+
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "esbenp.prettier-vscode",
+        "ms-dotnettools.csharp",
+        "Ionide.Ionide-fsharp",
+        "Ionide.Ionide-FAKE",
+        "Ionide.Ionide-Paket"
+      ]
+    }
+  }
 }
