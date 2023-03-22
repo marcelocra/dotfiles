@@ -4,7 +4,7 @@ open System
 open System.Diagnostics
 
 
-let isUnix = Environment.OSVersion.Platform = PlatformID.Unix
+let private isUnix = Environment.OSVersion.Platform = PlatformID.Unix
 
 
 /// <summary>Runs the given command in a shell and returns the output.</summary>
