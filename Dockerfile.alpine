@@ -1,0 +1,19 @@
+# syntax=docker/dockerfile:1
+FROM alpine:3.17.2
+
+ENV HOME="/root"
+ARG shell_rc="${HOME}/.profile"
+
+# Create a reasonably decent prompt line.
+RUN echo 'PS1="\$(printf \"=%.0s\" \$(seq 1 \${COLUMNS}))\n[\$(TZ=\"America/Sao_Paulo\" date \"+%F %T\")] [\w]\n# "' >> ${shell_rc}
+
+# Update and install essentials.
+RUN apk update
+RUN apk add git git-lfs tmux ripgrep curl neovim 
+
+# Download my helpers.
+RUN wget https://raw.githubusercontent.com/marcelocra/dev/main/config-files/.tmux.conf -P ~
+RUN wget https://raw.githubusercontent.com/marcelocra/dev/main/config-files/.gitconfig -P ~
+RUN wget https://raw.githubusercontent.com/marcelocra/dev/main/config-files/.gitconfig.personal.gitconfig -P ~
+RUN wget https://raw.githubusercontent.com/marcelocra/dev/main/config-files/init_shell.sh -P ~
+RUN echo 'source ~/init_shell.sh' >> ${shell_rc}
