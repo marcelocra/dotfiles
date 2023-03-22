@@ -1,15 +1,7 @@
 # Dev
 
-All my development stuff.
+All my development stuff, from settings to custom programs.
 
 ## How to use
 
-Well, that depends on what you want to use. Check the README files in each
-folder for details.
-
-## Roadmap
-
-- [ ] create script to facilitate install of config files
-- [ ] create cronjob to enable system configurations that should happen at
-      startup
-- [ ] create init shell script with proper stuff
+Depends on what do you want to use. Take a look at the folders.
