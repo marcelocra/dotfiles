@@ -57,11 +57,6 @@
 
 
 [includeIf "gitdir:~/projects/"]
-  # TODO: migrate stuff to the `projects/personal` folder, not to need this
-  # additional include.
-  path = .gitconfig.personal.gitconfig
-
-[includeIf "gitdir:~/projects/personal/"]
   path = .gitconfig.personal.gitconfig
 
 
@@ -75,12 +70,11 @@
 # [ Container configs ] --------------------------------------------------------
 #
 # Should install only one of these in the container. It will load the appropriate
-# configs
+# configs.
 
 
 [includeIf "gitdir:/workspaces/"]
   path = .gitconfig.personal.gitconfig
-  path = .gitconfig.work.gitconfig
 
 
 # [ OS specific configs ] ------------------------------------------------------
@@ -95,6 +89,10 @@
 
   # This file should only exist in Linux systems (but not in a Mac).
   path = .gitconfig.linux.gitconfig
+
+
+# [ Git LFS ] ------------------------------------------------------------------
+
 
 [filter "lfs"]
   smudge = git-lfs smudge -- %f

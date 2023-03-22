@@ -4,4 +4,3 @@
 [core]
   # Symlink your work ssh file to this path:
   sshCommand = ssh -i ~/.ssh/id_rsa_work
-
