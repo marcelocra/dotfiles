@@ -126,15 +126,22 @@
       "RUN apt-get update",
       "RUN apt-get install -y wget git tmux ripgrep curl unzip neovim less xz-utils fontconfig",
       "",
+      "# Install git-lfs.",
+      "RUN wget https://github.com/git-lfs/git-lfs/releases/download/v3.3.0/git-lfs-linux-amd64-v3.3.0.tar.gz",
+      "RUN tar zxf git-lfs-linux-amd64-v3.3.0.tar.gz",
+      "RUN mv git-lfs-3.3.0/git-lfs /usr/bin",
+      "RUN rm -f ./git-lfs-linux-amd64-v3.3.0.tar.gz",
+      "RUN rm -rf ./git-lfs-3.3.0/",
+      "",
       "# Download my helpers.",
-      "RUN wget https://raw.githubusercontent.com/marcelocra/.dotfiles/master/unix/.tmux.conf -P ~",
+      "RUN wget https://raw.githubusercontent.com/marcelocra/dev/main/config-files/.tmux.conf -P ~",
       "RUN wget https://raw.githubusercontent.com/marcelocra/dev/main/config-files/.gitconfig -P ~",
       "RUN wget https://raw.githubusercontent.com/marcelocra/dev/main/config-files/.gitconfig.personal.gitconfig -P ~",
       "RUN wget https://raw.githubusercontent.com/marcelocra/dev/main/config-files/init_shell.sh -P ~",
       "RUN echo 'source ~/init_shell.sh' >> \\${shell_rc}",
       ""
     ]
-  }, 
+  },
 
   "dockerfile rust": {
     "scope": "dockerfile",
