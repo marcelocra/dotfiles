@@ -47,8 +47,8 @@ alias tmux='TERM=xterm-256color tmux'
 alias pip=pip3
 alias python=python3
 
-alias l='ls -lFh'
-alias ll='l -a'
+alias l='ls -lFh -t'
+alias ll='l -a -t'
 
 alias p=pnpm
 alias pr='p run'
