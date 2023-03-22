@@ -53,28 +53,19 @@
   gcm = credential-manager-core
 
 
-# [ Personal configs ] ---------------------------------------------------------
+# [ Configs ] ------------------------------------------------------------------
 
 
 [includeIf "gitdir:~/projects/"]
   path = .gitconfig.personal.gitconfig
 
-
-# [ Work configs ] -------------------------------------------------------------
-
-
 [includeIf "gitdir:~/projects/work/"]
   path = .gitconfig.work.gitconfig
 
-
-# [ Container configs ] --------------------------------------------------------
-#
-# Should install only one of these in the container. It will load the appropriate
-# configs.
-
-
-[includeIf "gitdir:/workspaces/"]
+[includeIf "gitdir:/workspaces/"]  # Containers.
+  # Loaded in this order. If work file doesn't exist, it is ignored.
   path = .gitconfig.personal.gitconfig
+  path = .gitconfig.work.gitconfig
 
 
 # [ OS specific configs ] ------------------------------------------------------
