@@ -1,5 +1,40 @@
 #!/usr/bin/env bash
 
+install_desktop_and_image_files() {
+  # Obsidian.
+  ln -s -f "$src_dir/obsidian.desktop" \
+    ${HOME}/.local/share/applications/obsidian.desktop
+  # Credits to the creator of the icons here: https://forum.obsidian.md/t/big-sur-icon/8121
+  ln -s -f "$src_dir/obsidian.png" \
+    ${HOME}/.local/share/icons/obsidian.png 
+
+
+  # Portacle.
+  ln -s -f "$src_dir/portacle.desktop" \
+    ${HOME}/.local/share/applications/portacle.desktop
+  ln -s -f "$src_dir/portacle.svg" \
+    ${HOME}/.local/share/icons/portacle.svg 
+
+  
+  # Telegram.
+  ln -s -f "$src_dir/telegram.desktop" \
+    ${HOME}/.local/share/applications/telegram.desktop
+  ln -s -f "$src_dir/telegram.png" \
+    ${HOME}/.local/share/icons/telegram.png 
+
+
+  # Todoist.
+  ln -s -f "$src_dir/todoist.desktop" \
+    ${HOME}/.local/share/applications/todoist.desktop
+  ln -s -f "$src_dir/todoist.png" \
+    ${HOME}/.local/share/icons/todoist.png 
+
+
+  # Necessary to refresh the desktop database and actually show stuff on search,
+  # during alt tab, in the taskbar, etc.
+  update-desktop-database ~/.local/share/applications
+}
+
 main() {
   local src_dir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )/config-files"
 
@@ -19,38 +54,6 @@ main() {
   ln -s -f "$src_dir/.tmux.conf" "$HOME/.tmux.conf"
 
 
-  # Obsidian.
-  ln -s -f "$src_dir/obsidian.desktop" \
-    ${HOME}/.local/share/applications/obsidian.desktop
-  # Credits to the creator of the icons here: https://forum.obsidian.md/t/big-sur-icon/8121
-  ln -s -f "$src_dir/obsidian.png" \
-    ${HOME}/.local/share/icons/obsidian.png 
-
-
-  # Portacle.
-  ln -s -f "$src_dir/portacle.desktop" \
-    ${HOME}/.local/share/applications/portacle.desktop
-  ln -s -f "$src_dir/portacle.svg" \
-    ${HOME}/.local/share/icons/portacle.svg 
-
-  
-  # # Telegram.
-  # ln -s -f "$src_dir/telegram.desktop" \
-  #   ${HOME}/.local/share/applications/telegram.desktop
-  # ln -s -f "$src_dir/telegram.png" \
-  #   ${HOME}/.local/share/icons/telegram.png 
-
-
-  # # Todoist.
-  # ln -s -f "$src_dir/todoist.desktop" \
-  #   ${HOME}/.local/share/applications/todoist.desktop
-  # ln -s -f "$src_dir/todoist.png" \
-  #   ${HOME}/.local/share/icons/todoist.png 
-
-
-  update-desktop-database ~/.local/share/applications
-  
-
   # VSCode.
   ln -s -f "$src_dir/vscode-keybindings.jsonc" \
     ${HOME}/.config/Code/User/keybindings.json
@@ -58,6 +61,12 @@ main() {
     ${HOME}/.config/Code/User/settings.json
   ln -s -f "$src_dir/vscode-snippets.code-snippets" \
     ${HOME}/.config/Code/User/snippets/snippets.code-snippets
+
+
+  # Install some desktop and image files, as described in the function. Disabled
+  # by default because won't be useful for everyone.
+
+  # install_apps_desktop_and_image_files
 }
 
 
