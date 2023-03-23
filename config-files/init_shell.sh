@@ -51,7 +51,7 @@ alias l='ls -lFh -t'
 alias ll='l -a -t'
 
 alias p=pnpm
-alias pr='p run'
+alias r='p run'
 
 alias rc='vim ~/.zshrc'
 alias src='source ~/.zshrc'
