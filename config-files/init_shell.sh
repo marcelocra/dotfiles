@@ -50,7 +50,10 @@ alias python=python3
 alias l='ls -lFh -t'
 alias ll='l -a -t'
 
-alias n=pnpm
+alias n=npm
+alias p=pnpm
+alias y=yarn
+
 alias r='n run'
 
 alias rc='vim ~/.zshrc'
