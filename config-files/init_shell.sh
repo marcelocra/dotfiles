@@ -36,11 +36,24 @@ tmx() {
 }
 
 
+if [[ ! -z "${MCRA_PROJECTS_FOLDER}" ]]; then
+  easy_jump_to_project() {
+    if [[ ! -z "$1" ]]; then
+      pushd ${MCRA_PROJECTS_FOLDER}/$1
+    else
+      popd
+    fi
+  }
+
+  alias j="easy_jump_to_project"
+fi
+
 # [ Aliases ] ------------------------------------------------------------------
 
 
 alias vim=nvim
-alias vi=nvim
+alias vi=vim
+alias v=vim
 
 alias tmux='TERM=xterm-256color tmux'
 
@@ -56,8 +69,12 @@ alias y=yarn
 
 alias r='n run'
 
-alias rc='vim ~/.zshrc'
-alias src='source ~/.zshrc'
+if [[ ! -z "${MCRA_INIT_SHELL}" ]]; then
+  alias init='v ${MCRA_INIT_SHELL}'
+  alias edot='v ~/.zshrc'
+  alias sdot='source ~/.zshrc'
+fi
+
 
 # Git native
 # ----------
