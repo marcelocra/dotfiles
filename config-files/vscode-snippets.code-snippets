@@ -46,6 +46,12 @@
     "body": ["useEffect(() => {", "  $1", "}, [$2])"]
   },
 
+  "react const with function": {
+    "scope": "javascript,typescript,javascriptreact,typescriptreact",
+    "prefix": "const",
+    "body": ["const $2 = $1()"]
+  },
+
   "delay promise": {
     "scope": "javascript,typescript,javascriptreact,typescriptreact",
     "prefix": "delay",
