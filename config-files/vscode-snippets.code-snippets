@@ -46,6 +46,12 @@
     "body": ["useEffect(() => {", "  $1", "}, [$2])"]
   },
 
+  "delay promise": {
+    "scope": "javascript,typescript,javascriptreact,typescriptreact",
+    "prefix": "delay",
+    "body": ["await new Promise((resolve) => setTimeout(resolve, $1))"]
+  },
+
   // -- PRETTIER -----
 
   "prettier essentials": {
