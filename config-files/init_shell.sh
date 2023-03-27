@@ -60,8 +60,13 @@ alias tmux='TERM=xterm-256color tmux'
 alias pip=pip3
 alias python=python3
 
-alias l='ls -lFh -t'
-alias ll='l -a -t'
+# -l: print as a list.
+# -F: classify (folder vs files).
+# -h: print human readable sizes (using K, M, G instead of bytes).
+# -t: sort by time, most recently updated first.
+# --time-style: how to show time. Currently, 30mar23[22:10].
+alias l='ls -lFh -t --time-style="+%d%b%y[%H:%M]"'
+alias ll='l -a'
 
 alias n=npm
 alias p=pnpm
