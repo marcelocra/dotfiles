@@ -230,7 +230,18 @@ alias glfss="git lfs status"
 # ------
 
 alias dc="docker-compose"
+alias docker-prune-month-old-images='docker image prune -a --filter "until=720h"'
+alias docker-prune-two-week-old-images='docker image prune -a --filter "until=336h"'
 
+docker_images_sorted() {
+  docker images --format "table {{.ID}}\t{{.Size}}\t{{.Repository}}:{{.Tag}}" \
+    | head -n1
+  docker images --format "{{.ID}}\t{{.Size}}\t{{.Repository}}:{{.Tag}}" \
+    | awk '{match($2, /([0-9.]+)([KMG]?B)/, a); size = a[1]; unit = a[2]; if (unit == "GB") size *= 1024; else if (unit == "KB") size /= 1024; printf "%s\t%09.2f MB\t%s \n", $1, size, $3}' \
+    | (sed -u 1q; sort -k 2 -h)
+}
+
+alias di='docker_images_sorted'
 
 # [ Exports ] ------------------------------------------------------------------
 

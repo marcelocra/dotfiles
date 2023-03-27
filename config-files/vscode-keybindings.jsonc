@@ -344,5 +344,10 @@
   {
     "key": "ctrl+k ctrl+f",
     "command": "workbench.action.gotoSymbol"
+  },
+  {
+    "key": "ctrl+.",
+    "command": "editor.action.quickFix",
+    "when": "textInputFocus && !editorReadonly"
   }
 ]
