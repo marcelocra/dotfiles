@@ -60,12 +60,17 @@ alias tmux='TERM=xterm-256color tmux'
 alias pip=pip3
 alias python=python3
 
-# -l: print as a list.
-# -F: classify (folder vs files).
-# -h: print human readable sizes (using K, M, G instead of bytes).
-# -t: sort by time, most recently updated first.
-# --time-style: how to show time. Currently, 30mar23[22:10].
-alias l='ls -lFh -t --time-style="+%d%b%y[%H:%M]"'
+if [[ `uname` == "Darwin" ]]; then
+  alias l='ls -lFh -t'
+else
+  # -l: print as a list.
+  # -F: classify (folder vs files).
+  # -h: print human readable sizes (using K, M, G instead of bytes).
+  # -t: sort by time, most recently updated first.
+  # --time-style: how to show time. Currently, 30mar23[22:10].
+  alias l='ls -lFh -t --time-style="+%d%b%y[%H:%M]"'
+fi
+
 alias ll='l -a'
 
 alias n=npm
@@ -159,7 +164,7 @@ alias glol="git log --graph --pretty='%Cred%h%Creset -%C(auto)%d%Creset %s %Cgre
 alias glols="git log --graph --pretty='%Cred%h%Creset -%C(auto)%d%Creset %s %Cgreen(%ar) %C(bold blue)<%an>%Creset' --stat"
 alias glod="git log --graph --pretty='%Cred%h%Creset -%C(auto)%d%Creset %s %Cgreen(%ad) %C(bold blue)<%an>%Creset'"
 alias gl="glod"
-alias gls="gl -5"
+alias gl5="gl -5"
 alias glods="git log --graph --pretty='%Cred%h%Creset -%C(auto)%d%Creset %s %Cgreen(%ad) %C(bold blue)<%an>%Creset' --date=short"
 alias glola="git log --graph --pretty='%Cred%h%Creset -%C(auto)%d%Creset %s %Cgreen(%ar) %C(bold blue)<%an>%Creset' --all"
 alias glog='git log --oneline --decorate --graph'

@@ -38,16 +38,17 @@ install_desktop_and_image_files() {
 main() {
   local src_dir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )/config-files"
 
-
   # Vim.
   ln -s -f "$src_dir/vim/vimrc" "$HOME/.config/nvim/init.vim"
 
 
   # Git.
   ln -s -f "$src_dir/.gitconfig" "$HOME/.gitconfig"
-  ln -s -f "$src_dir/.gitconfig.linux.gitconfig" "$HOME/.gitconfig.linux.gitconfig"
   ln -s -f "$src_dir/.gitconfig.unix.gitconfig" "$HOME/.gitconfig.unix.gitconfig"
   ln -s -f "$src_dir/.gitconfig.personal.gitconfig" "$HOME/.gitconfig.personal.gitconfig"
+  if [[ ! `uname` == "Darwin" ]]; then
+    ln -s -f "$src_dir/.gitconfig.linux.gitconfig" "$HOME/.gitconfig.linux.gitconfig"
+  fi
 
 
   # Tmux.
@@ -55,12 +56,17 @@ main() {
 
 
   # VSCode.
-  ln -s -f "$src_dir/vscode-keybindings.jsonc" \
-    ${HOME}/.config/Code/User/keybindings.json
-  ln -s -f "$src_dir/vscode-settings.jsonc" \
-    ${HOME}/.config/Code/User/settings.json
-  ln -s -f "$src_dir/vscode-snippets.code-snippets" \
-    ${HOME}/.config/Code/User/snippets/snippets.code-snippets
+  local config_path
+  
+  if [[ `uname` == "Darwin" ]]; then
+    config_path="$HOME/Library/Application Support/Code/User"
+  else
+    config_path="$HOME/.config/Code/User"
+  fi
+
+  ln -s -f "$src_dir/vscode-keybindings.jsonc" "${config_path}/keybindings.json"
+  ln -s -f "$src_dir/vscode-settings.jsonc" "${config_path}/settings.json"
+  ln -s -f "$src_dir/vscode-snippets.code-snippets" "${config_path}/snippets/snippets.code-snippets"
 
 
   # Install some desktop and image files, as described in the function. Disabled
@@ -74,4 +80,4 @@ main() {
 # If you want to keep your existing config files, save them before running this.
 # Uncomment the line below to run the script.
 
-# main
+#main
