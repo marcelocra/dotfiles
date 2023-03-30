@@ -45,6 +45,8 @@ if [[ ! -z "${MCRA_PROJECTS_FOLDER}" ]]; then
   }
 
   alias j="easy_jump_to_project"
+else
+  echo '$MCRA_PROJECTS_FOLDER not defined'
 fi
 
 
@@ -60,6 +62,7 @@ alias pip=pip3
 alias python=python3
 
 if [[ `uname` == "Darwin" ]]; then
+  # Mac doesn't support the --time-style flag.
   alias l='ls -lFh -t'
 else
   # -l: print as a list.
@@ -80,8 +83,12 @@ alias r='n run'
 
 if [[ ! -z "${MCRA_INIT_SHELL}" ]]; then
   alias init='v ${MCRA_INIT_SHELL}'
-  alias edot='v ~/.zshrc'
-  alias sdot='source ~/.zshrc'
+  alias erc='v ~/.zshrc'
+  alias src='source ~/.zshrc'
+else
+  alias init="echo 'Define \$MCRA_INIT_SHELL in your rc file'"
+  alias erc=init
+  alias src=init
 fi
 
 
@@ -125,6 +132,9 @@ alias glod="git log --graph --pretty='%Cred%h%Creset -%C(auto)%d%Creset %s %Cgre
 alias gl="glod"
 alias gl5="gl -5"
 alias gloga='git log --oneline --decorate --graph --all'
+alias glo='git log --oneline --no-decorate -5'
+alias gloa='git log --oneline --no-decorate'
+alias glt='git log --pretty=format:"* %s"'
 
 alias gm='git merge'
 alias gma='git merge --abort'
