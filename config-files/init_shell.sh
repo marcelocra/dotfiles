@@ -45,8 +45,6 @@ if [[ ! -z "${MCRA_PROJECTS_FOLDER}" ]]; then
   }
 
   alias j="easy_jump_to_project"
-else
-  echo '$MCRA_PROJECTS_FOLDER not defined'
 fi
 
 
