@@ -428,9 +428,11 @@
   "remoteHub.commitDirectlyWarning": "off",
   "scm.diffDecorationsGutterWidth": 2,
   "search.exclude": {
-    "**/node_modules": true,
-    "**/bower_components": true,
+    "**/.clj-kondo": true,
+    "**/.lsp": true,
     "**/*.code-search": true,
+    "**/bower_components": true,
+    "**/node_modules": true,
     "**/out": true
   },
   "telemetry.telemetryLevel": "off",
