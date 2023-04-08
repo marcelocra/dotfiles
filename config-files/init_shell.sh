@@ -57,7 +57,6 @@ alias v=vim
 alias tmux='TERM=xterm-256color tmux'
 
 alias pip=pip3
-alias python=python3
 
 if [[ `uname` == "Darwin" ]]; then
   # Mac doesn't support the --time-style flag.

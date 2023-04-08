@@ -2,14 +2,20 @@
 #
 # Commands run during system startup.
 #
-# To set them up, use Ubuntu's Startup Application app. In there, create a new
-# command to run using the "Add" button and paste the following in the command
-# section:
+# To set them up, use Ubuntu's Startup Application app (also present in Linux
+# Mint). Open the app and add a new command, pasting the path to this file.
 #
+# BE AWARE that simply doing that might not be enough, as sometimes the
+# configurations only work if the desktop is fully loaded before they are
+# applied.
+#
+# In those cases, add a delay to the command. Linux Mint provide a 'delay'
+# option directly in the UI. If that's not the case for the distro you are
+# using, do something like this:
+# 
 #   /bin/sh -c "sleep 3 && /path-to-this-file/init_system_linux.sh"
 #
-# Without the sleep, configurations do not apply correctly, as they seem to need
-# the desktop to be fully loaded (https://askubuntu.com/a/708043/121101).
+# For more details, take a look at: https://askubuntu.com/a/708043/121101.
 #
 # After setting that up, reboot the system and you should be good to go!
 
