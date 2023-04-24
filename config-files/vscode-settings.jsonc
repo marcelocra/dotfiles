@@ -220,7 +220,7 @@
   "vim.surround": true,
   "vim.incsearch": true,
   "vim.useSystemClipboard": true,
-  "vim.useCtrlKeys": true,
+  "vim.useCtrlKeys": false,
   "vim.hlsearch": true,
   "vim.smartRelativeLine": true,
   "vim.insertModeKeyBindingsNonRecursive": [
@@ -360,10 +360,11 @@
     "<c-a>": false,
     "<c-c>": false,
     "<c-f>": false,
-
-    // cmd stuff.
-    "<D-c>": false,
-    "<D-d>": false
+    "<c-x>": false,
+    "<c-v>": true,
+    "<c-d>": true,
+    "<c-r>": true,
+    "<c-u>": true
   },
 
   //============================================================================
