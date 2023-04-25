@@ -220,7 +220,7 @@
   "vim.surround": true,
   "vim.incsearch": true,
   "vim.useSystemClipboard": true,
-  "vim.useCtrlKeys": false,
+  "vim.useCtrlKeys": true,
   "vim.hlsearch": true,
   "vim.smartRelativeLine": true,
   "vim.insertModeKeyBindingsNonRecursive": [
@@ -321,6 +321,22 @@
     {
       "before": ["s"],
       "after": ["leader", "leader", "s"]
+    },
+    {
+      "before": ["<c-a>"],
+      "after": ["gg", "V", "G"]
+    },
+    {
+      "before": ["<c-x>"],
+      "after": ["V", "d"]
+    },
+    {
+      "before": ["<c-c>"],
+      "after": ["V", "y"]
+    },
+    {
+      "before": ["<c-v>"],
+      "after": ["p"]
     }
   ],
   "vim.visualModeKeyBindingsNonRecursive": [
@@ -355,17 +371,6 @@
     }
   ],
   "vim.leader": ",",
-  "vim.handleKeys": {
-    // ctrl stuff.
-    "<c-a>": false,
-    "<c-c>": false,
-    "<c-f>": false,
-    "<c-x>": false,
-    "<c-v>": true,
-    "<c-d>": true,
-    "<c-r>": true,
-    "<c-u>": true
-  },
 
   //============================================================================
   //= Calva
