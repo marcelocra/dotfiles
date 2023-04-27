@@ -133,8 +133,8 @@ alias glo='git log --oneline --no-decorate -5'
 alias gloa='git log --oneline --no-decorate'
 alias glt='git log --pretty=format:"* %s"'
 
-alias gm='git merge'
-alias gma='git merge --abort'
+# alias gm='git merge'
+# alias gma='git merge --abort'
 
 alias gps="git push"
 alias gpd='git push --dry-run'
@@ -142,10 +142,10 @@ alias gpd='git push --dry-run'
 alias gra='git remote add'
 
 alias gr='git remote'
-alias grb='git rebase'
-alias grba='git rebase --abort'
-alias grbc='git rebase --continue'
-alias grbi='git rebase -i'
+# alias grb='git rebase'
+# alias grba='git rebase --abort'
+# alias grbc='git rebase --continue'
+# alias grbi='git rebase -i'
 
 alias grs='git restore'
 alias grset='git remote set-url'
@@ -160,10 +160,10 @@ alias gs="git status"
 
 alias gst='git stash'
 alias gsta='git stash apply'
-alias gstc='git stash clear'
-alias gstd='git stash drop'
+# alias gstc='git stash clear'
+# alias gstd='git stash drop'
 alias gstl='git stash list'
-alias gstp='git stash pop'
+alias gstp='git stash push -m'
 alias gsts='git stash show --text'
 alias gstall='git stash --all'
 
