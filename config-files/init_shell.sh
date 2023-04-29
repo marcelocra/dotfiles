@@ -124,13 +124,13 @@ alias gpsup='git push --set-upstream origin'
 alias gpl="git pull"
 
 alias glg="git log"
-alias glg='git log --stat'
-alias glod="git log --graph --pretty='%Cred%h%Creset -%C(auto)%d%Creset %s %Cgreen(%ad) %C(bold blue)<%an>%Creset'"
-alias gl="glod"
-alias gl5="gl -5"
-alias gloga='git log --oneline --decorate --graph --all'
-alias glo='git log --oneline --no-decorate -5'
-alias gloa='git log --oneline --no-decorate'
+alias glgs='git log --stat'
+alias gld="git log --graph --pretty='%Cred%h%Creset -%C(auto)%d%Creset %s %Cgreen(%ad) %C(bold blue)<%an>%Creset'"
+alias gl="gld -5"
+alias gla="gld"
+alias glga='git log --oneline --decorate --graph --all'
+alias gls='git log --oneline --no-decorate -5'
+alias glsa='git log --oneline --no-decorate'
 alias glt='git log --pretty=format:"* %s"'
 
 # alias gm='git merge'
