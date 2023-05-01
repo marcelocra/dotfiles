@@ -425,7 +425,7 @@
   "explorer.openEditors.visible": 0,
   "files.associations": {
     "*.erb": "erb",
-    "*.css": "tailwindcss",
+    "*.css": "css",
     "vimrc": "vimrc"
   },
   "git.ignoreMissingGitWarning": true,
@@ -453,7 +453,7 @@
     "tree.indentGuidesStroke": "#00ffff",
     "editorIndentGuide.activeBackground": "#00ffff"
   },
-  "workbench.colorTheme": "Quiet Light",
+  "workbench.colorTheme": "GitHub Dark Default",
   "workbench.startupEditor": "newUntitledFile",
   "workbench.tree.indent": 20,
   "workbench.tree.renderIndentGuides": "always",
