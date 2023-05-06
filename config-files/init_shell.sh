@@ -167,6 +167,8 @@ alias gstp='git stash push -m'
 alias gsts='git stash show --text'
 alias gstall='git stash --all'
 
+alias gt='git tag'
+alias gta='git tag -a'
 alias gts='git tag -s'
 alias gtv='git tag | sort -V'
 
