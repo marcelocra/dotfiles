@@ -1,0 +1,9 @@
+[Desktop Entry]
+Name=ClickUp
+Comment=Project Management
+GenericName=Text Editor
+Type=Application
+Exec=clickup %U
+Icon=clickup
+StartupWMClass=clickup
+MimeType=x-scheme-handler/clickup;x-scheme-handler/com.clickup
