@@ -245,6 +245,10 @@
     {
       "before": ["<c-n>"],
       "commands": [":nohl"]
+    },
+    {
+      "before": ["<c-v>"],
+      "after": ["p"]
     }
   ],
   "vim.normalModeKeyBindingsNonRecursive": [
@@ -333,10 +337,6 @@
     {
       "before": ["<c-c>"],
       "after": ["V", "y"]
-    },
-    {
-      "before": ["<c-v>"],
-      "after": ["p"]
     }
   ],
   "vim.visualModeKeyBindingsNonRecursive": [
@@ -478,5 +478,6 @@
     "*": true
   },
   "window.newWindowDimensions": "inherit",
-  "outline.collapseItems": "alwaysCollapse"
+  "outline.collapseItems": "alwaysCollapse",
+  "window.restoreWindows": "none"
 }
