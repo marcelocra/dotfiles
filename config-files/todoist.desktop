@@ -6,4 +6,4 @@ Type=Application
 Exec=Todoist-latest %U
 Icon=todoist
 StartupWMClass=todoist
-MimeType=x-scheme-handler/todoist;text/html;x-scheme-handler/com.todoist
+MimeType=x-scheme-handler/todoist;x-scheme-handler/com.todoist
