@@ -1,9 +1,9 @@
 [Desktop Entry]
+Version=1.0
+Type=Application
 Name=ClickUp
 Comment=Project Management
-GenericName=Text Editor
-Type=Application
-Exec=clickup %U
+TryExec=clickup
+Exec=clickup
 Icon=clickup
-StartupWMClass=clickup
-MimeType=x-scheme-handler/clickup;x-scheme-handler/com.clickup
+MimeType=x-scheme-handler/clickup
