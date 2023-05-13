@@ -163,5 +163,12 @@
       "RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y",
       ""
     ]
+  },
+
+  "javascript type": {
+    "scope": "javascript,typescript,javascriptreact,typescriptreact",
+    "prefix": "type",
+    "body": ["/** @type {$1} */ $2"]
+  },
   }
 }
