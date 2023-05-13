@@ -47,6 +47,27 @@ if [[ ! -z "${MCRA_PROJECTS_FOLDER}" ]]; then
   alias j="easy_jump_to_project"
 fi
 
+editor() {
+  if command -v nvim &> /dev/null; then
+    export EDITOR=nvim
+    return
+  fi
+
+  if command -v vim &> /dev/null; then
+    export EDITOR=vim
+    return
+  fi
+
+  if command -v vi &> /dev/null; then
+    export EDITOR=vi
+    return
+  fi
+
+  echo "You don't have neovim, vim or vi installed. EDITOR var not defined"
+}
+
+editor
+
 
 # [ Aliases ] ------------------------------------------------------------------
 
@@ -108,6 +129,7 @@ alias gcfso='git config --show-origin'
 
 alias gcl='git clone'
 
+alias gc='git commit -v'
 alias gcm='git commit -m'
 
 alias gco='git checkout'
@@ -191,7 +213,6 @@ alias gi='git init'
 # alias gbsr='git bisect reset'
 # alias gbss='git bisect start'
 
-# alias gc='git commit -v'
 # alias gc!='git commit -v --amend'
 # alias gcn!='git commit -v --no-edit --amend'
 # alias gca='git commit -v -a'
@@ -297,8 +318,11 @@ export FLUTTER_SDK="${HOME}/bin/flutter"
 export FLUTTER_ROOT="${FLUTTER_SDK}/bin"
 export PATH="${PATH}:${FLUTTER_ROOT}"
 
+# Deno.
+export DENO_INSTALL="$HOME/.deno"
+export PATH="$DENO_INSTALL/bin:$PATH"
+
 # Other.
-export EDITOR=vim
 export PATH="${PATH}:${HOME}/bin"
 
 

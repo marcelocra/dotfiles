@@ -1,5 +1,4 @@
 [core]
-  editor = vim
   pager = less -F -X
 
 [credential]
