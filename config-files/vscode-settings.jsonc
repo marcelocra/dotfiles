@@ -238,17 +238,16 @@
       "after": ["<esc>"]
     },
     {
+      "before": ["<leader>", "q"],
+      "commands": [":x"]
+    },
+    {
       "before": ["<leader>", "x"],
       "commands": [":x"]
-      // "after": ["<esc>"]
     },
     {
       "before": ["<c-n>"],
       "commands": [":nohl"]
-    },
-    {
-      "before": ["<c-v>"],
-      "after": ["p"]
     }
   ],
   "vim.normalModeKeyBindingsNonRecursive": [
@@ -399,11 +398,6 @@
     },
     "editor.defaultFormatter": "betterthantomorrow.calva"
   },
-
-  //============================================================================
-  //= Deno
-  //============================================================================
-  "deno.enable": false,
 
   //============================================================================
   //= F#
