@@ -47,17 +47,36 @@ setup_expert_mouse() {
         | sed -nre 's/.*Kensington\ Expert\ Mouse.*id\=([0-9]+).*/\1/p' \
         | head -n1)
     if [ ! -z "$device_id" ]; then
-        # In this device, top buttons are 1 and 3, botton are 8 and 9. Thinking
-        # of a pizza with 4 pieces, top left is 1 and bottom left is 8.
-        # Here we are mapping those buttons to what xinput expects:
-        #   1) browser back. Will be mapped to mouse 1
-        #   2) left click. Will be mapped to mouse 8
-        #   3) right click. Will be mapped to mouse 9
-        #   4->5) scroll. Keep as is.
-        #   6->7) don't know. Keep as is.
-        #   8) browser forward. Will be mapped to mouse 3.
-        #   9->10) don't remember, but mapped to 0 for some reason.
-        xinput set-button-map $device_id 1 8 9 4 5 6 7 3 0 0
+        # In this device, buttons are originally as follows:
+        # 
+        #  / 2 | 8 \
+        # |----O----|
+        #  \ 1 | 3 /
+        #
+        # With the following functions:
+        #
+        # 1 = left click
+        # 2 = middle click
+        # 3 = right click
+        # 8 = navigation back
+        #
+        # We want to remap it so that:
+        #
+        # 1 = right click
+        # 2 = navigation back
+        # 3 = navigation forward
+        # 8 = left click
+        #
+        # And avoid changing the others.
+        #
+        # Remapping works like this: the argument position is the physical
+        # mouse numbers and the original numbers map to that physical button's
+        # function. E.g.: the first argument represents the physical 1 in the
+        # drawing above. When we place the number 3 there, we are "moving its
+        # function" (right click) to be in the physical button number 1. At
+        # this point, physical buttons and functions won't match anymore, but
+        # that's ok.
+        xinput set-button-map $device_id 3 8 9 4 5 6 7 1
     fi
 }
 
