@@ -136,8 +136,22 @@ reduce_speed_of_evoluent_mouse() {
 
 }
 
+# Todoist has an auto update feature that replaces the AppImage binary with
+# a new one, meaning that the reference used in the .desktop file end up
+# invalid. But that only happens after a system restart, so this is meant to
+# update the reference, keeping the .desktop valid.
+#
+# It also replaces the ~/.local/share/applications/todoist.desktop, it seems,
+# as I also symlink it to my own, but after updates the symlink seems to be
+# gone, but I need to double check this. In any case, if the binary link is ok,
+# I guess the .desktop won't be an issue.
+symlink_todoist_again() {
+  ln -f -s "${HOME}/bin/binaries/$(ls ~/bin/binaries | rg -e '^Todoist.*AppImage$')" "${HOME}/bin/Todoist-latest"
+}
+
 setup_expert_mouse
 setup_evoluent_mouse
 reduce_speed_of_logitech_mouse
 reduce_speed_of_evoluent_mouse
+symlink_todoist_again
 
