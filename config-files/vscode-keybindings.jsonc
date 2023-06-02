@@ -342,10 +342,6 @@
     "command": "workbench.action.toggleZenMode"
   },
   {
-    "key": "ctrl+k ctrl+f",
-    "command": "workbench.action.gotoSymbol"
-  },
-  {
     "key": "ctrl+.",
     "command": "editor.action.quickFix",
     "when": "textInputFocus && !editorReadonly"
@@ -364,5 +360,9 @@
     "key": "meta+enter",
     "command": "-notebook.cell.execute",
     "when": "notebookCellListFocused && notebookMissingKernelExtension && !notebookCellExecuting && notebookCellType == 'code' || notebookCellListFocused && !notebookCellExecuting && notebookCellType == 'code' && notebookKernelCount > 0 || notebookCellListFocused && !notebookCellExecuting && notebookCellType == 'code' && notebookKernelSourceCount > 0"
+  },
+  {
+    "key": "alt+s",
+    "command": "workbench.action.gotoSymbol"
   }
 ]

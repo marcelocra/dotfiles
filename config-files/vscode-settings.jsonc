@@ -62,7 +62,7 @@
   // ------------
   // "editor.fontWeight": "bold",
   "editor.fontFamily": "'CodeNewRoman Nerd Font', 'CodeNewRoman Nerd Font Mono', monospace",
-  "editor.fontSize": 15,
+  "editor.fontSize": 13,
 
   // // Meslo
   // // -----
@@ -447,7 +447,7 @@
     "tree.indentGuidesStroke": "#00ffff",
     "editorIndentGuide.activeBackground": "#00ffff"
   },
-  "workbench.colorTheme": "GitHub Light Colorblind (Beta)",
+  "workbench.colorTheme": "GitHub Dark Dimmed",
   "workbench.startupEditor": "newUntitledFile",
   "workbench.tree.indent": 20,
   "workbench.tree.renderIndentGuides": "always",
