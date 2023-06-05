@@ -170,5 +170,10 @@
     "prefix": "type",
     "body": ["/** @type {$1} */ $2"]
   },
+
+  "tsignore": {
+    "scope": "javascript,typescript,javascriptreact,typescriptreact",
+    "prefix": "tsi",
+    "body": ["// @ts-ignore"]
   }
 }
