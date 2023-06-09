@@ -416,7 +416,7 @@
   //= Misc settings
   //============================================================================
   "diffEditor.ignoreTrimWhitespace": false,
-  "explorer.openEditors.visible": 0,
+  "explorer.openEditors.visible": 1,
   "files.associations": {
     "*.erb": "erb",
     "*.css": "css",
@@ -436,6 +436,8 @@
     "**/out": true
   },
   "telemetry.telemetryLevel": "off",
+  "telemetry.enableCrashReporter": false,
+  "telemetry.enableTelemetry": false,
   "terminal.integrated.allowChords": false,
   "terminal.integrated.commandsToSkipShell": [
     "-workbench.action.terminal.focusFind"

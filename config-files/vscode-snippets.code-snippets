@@ -175,5 +175,11 @@
     "scope": "javascript,typescript,javascriptreact,typescriptreact",
     "prefix": "tsi",
     "body": ["// @ts-ignore"]
+  },
+
+  "md fold region": {
+    "scope": "markdown",
+    "prefix": "fold",
+    "body": ["<!-- #region $1 -->", "$2", "<!-- #endregion -->"]
   }
 }

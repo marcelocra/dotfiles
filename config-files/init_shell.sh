@@ -303,6 +303,14 @@ docker_images_sorted() {
 alias di='docker_images_sorted'
 
 
+# Current context
+# ---------------
+
+# alias code="code-insiders"
+alias code="code"
+alias p1="code \$MCRA_P1"
+
+
 # [ Exports ] ------------------------------------------------------------------
 
 # dotnet.
