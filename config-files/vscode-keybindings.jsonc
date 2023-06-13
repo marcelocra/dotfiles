@@ -364,5 +364,13 @@
   {
     "key": "alt+s",
     "command": "workbench.action.gotoSymbol"
+  },
+  {
+    "key": "ctrl+[",
+    "command": "workbench.action.navigateBack"
+  },
+  {
+    "key": "ctrl+]",
+    "command": "workbench.action.navigateForward"
   }
 ]

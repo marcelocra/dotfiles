@@ -449,7 +449,7 @@
     "tree.indentGuidesStroke": "#00ffff",
     "editorIndentGuide.activeBackground": "#00ffff"
   },
-  "workbench.colorTheme": "GitHub Dark Dimmed",
+  "workbench.colorTheme": "Quiet Light",
   "workbench.startupEditor": "newUntitledFile",
   "workbench.tree.indent": 20,
   "workbench.tree.renderIndentGuides": "always",
@@ -475,5 +475,6 @@
   },
   "window.newWindowDimensions": "inherit",
   "outline.collapseItems": "alwaysCollapse",
-  "window.restoreWindows": "none"
+  "window.restoreWindows": "none",
+  "editor.minimap.enabled": false
 }
