@@ -465,7 +465,8 @@
   "dart.flutterSdkPath": "${env:FLUTTER_SDK}",
   "rubyLsp.rubyVersionManager": "asdf",
   "emmet.includeLanguages": {
-    "erb": "html"
+    "erb": "html",
+    "svelte": "html"
   },
   "workbench.list.horizontalScrolling": true,
   "git.openRepositoryInParentFolders": "never",
@@ -476,5 +477,7 @@
   "window.newWindowDimensions": "inherit",
   "outline.collapseItems": "alwaysCollapse",
   "window.restoreWindows": "none",
-  "editor.minimap.enabled": false
+  "editor.minimap.enabled": false,
+  "workbench.sideBar.location": "right",
+  "emmet.triggerExpansionOnTab": true
 }
