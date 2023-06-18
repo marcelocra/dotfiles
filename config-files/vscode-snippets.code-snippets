@@ -179,7 +179,7 @@
 
   "md fold region": {
     "scope": "markdown",
-    "prefix": "fold",
+    "prefix": ["fold", "region"],
     "body": ["<!-- #region $1 -->", "$2", "<!-- #endregion -->"]
   }
 }
