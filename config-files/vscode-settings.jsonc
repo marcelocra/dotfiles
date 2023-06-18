@@ -79,7 +79,9 @@
   // "editor.letterSpacing": -0.8,
   // "editor.fontWeight": "900",
   "editor.codeActionsOnSave": {
-    "source.fixAll.eslint": true
+    "source.fixAll.eslint": true,
+    "source.fixAll": true
+    // "source.organizeImports": true
   },
   "editor.quickSuggestions": {
     "other": false,
@@ -94,7 +96,9 @@
   "editor.guides.indentation": true,
   "editor.guides.highlightActiveIndentation": true,
   "editor.semanticHighlighting.enabled": true,
-  "editor.tabSize": 2,
+  "editor.tabSize": 8,
+  "editor.insertSpaces": true,
+  "editor.detectIndentation": true,
   "editor.defaultFormatter": "esbenp.prettier-vscode",
   "editor.cursorStyle": "line-thin",
   "editor.cursorBlinking": "phase",
@@ -111,12 +115,6 @@
   //============================================================================
   // JavaScript
   //============================================================================
-  "eslint.validate": [
-    "javascript",
-    "javascriptreact",
-    "typescript",
-    "typescriptreact"
-  ],
   "javascript.updateImportsOnFileMove.enabled": "never",
   "[javascript]": {
     "editor.rulers": [80, 100]
@@ -270,11 +268,19 @@
     },
     {
       "before": ["<c-l>"],
-      "after": ["<c-w>", "<c-w>"]
+      "after": ["<c-w>", "l"]
     },
     {
       "before": ["<c-h>"],
-      "after": ["<c-w>", "<c-w>"]
+      "after": ["<c-w>", "h"]
+    },
+    {
+      "before": ["<c-j>"],
+      "after": ["<c-w>", "j"]
+    },
+    {
+      "before": ["<c-k>"],
+      "after": ["<c-w>", "k"]
     },
     {
       "before": ["<leader>", "d"],
@@ -420,7 +426,8 @@
   "files.associations": {
     "*.erb": "erb",
     "*.css": "css",
-    "vimrc": "vimrc"
+    "vimrc": "vimrc",
+    "json5": "jsonc"
   },
   "git.ignoreMissingGitWarning": true,
   "nxConsole.enableTelemetry": false,
@@ -436,8 +443,6 @@
     "**/out": true
   },
   "telemetry.telemetryLevel": "off",
-  "telemetry.enableCrashReporter": false,
-  "telemetry.enableTelemetry": false,
   "terminal.integrated.allowChords": false,
   "terminal.integrated.commandsToSkipShell": [
     "-workbench.action.terminal.focusFind"
@@ -477,7 +482,29 @@
   "window.newWindowDimensions": "inherit",
   "outline.collapseItems": "alwaysCollapse",
   "window.restoreWindows": "none",
-  "editor.minimap.enabled": false,
   "workbench.sideBar.location": "right",
-  "emmet.triggerExpansionOnTab": true
+  "emmet.triggerExpansionOnTab": true,
+  "eslint.enable": true,
+  "eslint.format.enable": true,
+  "eslint.probe": [
+    "javascript",
+    "javascriptreact",
+    "typescript",
+    "typescriptreact",
+    "html",
+    "vue",
+    "markdown",
+    "svelte"
+  ],
+  "eslint.validate": [
+    "javascript",
+    "javascriptreact",
+    "typescript",
+    "typescriptreact",
+    "html",
+    "vue",
+    "markdown",
+    "svelte"
+  ],
+  "editor.minimap.enabled": false
 }
