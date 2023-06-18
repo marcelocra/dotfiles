@@ -278,6 +278,74 @@
   },
 
   //============================================================================
+  //= alt stuff
+  //============================================================================
+  {
+    "key": "alt+s",
+    "command": "workbench.action.gotoSymbol"
+  },
+  {
+    "key": "alt+b",
+    "command": "workbench.action.toggleSidebarVisibility"
+  },
+  {
+    "key": "alt+x",
+    "command": "workbench.view.extensions",
+    "when": "!sideBarFocus !! activeViewlet != 'workbench.view.extensions'"
+  },
+  {
+    "key": "alt+x",
+    "command": "workbench.action.toggleSidebarVisibility",
+    "when": "sideBarFocus && activeViewlet == 'workbench.view.extensions'"
+  },
+  {
+    "key": "alt+g",
+    "command": "workbench.view.scm",
+    "when": "!sideBarFocus || activeViewlet != 'workbench.view.scm'"
+  },
+  {
+    "key": "alt+g",
+    "command": "workbench.action.toggleSidebarVisibility",
+    "when": "sideBarFocus && activeViewlet == 'workbench.view.scm'"
+  },
+  {
+    "key": "alt+e",
+    "command": "workbench.view.explorer",
+    "when": "!sideBarFocus || activeViewlet != 'workbench.view.explorer'"
+  },
+  {
+    "key": "alt+e",
+    "command": "workbench.action.toggleSidebarVisibility",
+    "when": "sideBarFocus && activeViewlet == 'workbench.view.explorer'"
+  },
+  {
+    "key": "alt+o",
+    "command": "runCommands",
+    "args": {
+      "commands": [
+        "outline.focus",
+        "outline.focus"
+      ]
+    },
+    "when": "focusedView != 'outline'"
+  },
+  {
+    "key": "alt+o",
+    "command": "workbench.action.toggleSidebarVisibility",
+    "when": "focusedView == 'outline'"
+  },
+  {
+    "key": "alt+f",
+    "command": "workbench.view.search",
+    "when": "!sideBarFocus || activeViewlet != 'workbench.view.search'"
+  },
+  {
+    "key": "alt+f",
+    "command": "workbench.action.toggleSidebarVisibility",
+    "when": "sideBarFocus && activeViewlet == 'workbench.view.search'"
+  },
+
+  //============================================================================
   //= misc
   //============================================================================
 
@@ -362,10 +430,6 @@
     "when": "notebookCellListFocused && notebookMissingKernelExtension && !notebookCellExecuting && notebookCellType == 'code' || notebookCellListFocused && !notebookCellExecuting && notebookCellType == 'code' && notebookKernelCount > 0 || notebookCellListFocused && !notebookCellExecuting && notebookCellType == 'code' && notebookKernelSourceCount > 0"
   },
   {
-    "key": "alt+s",
-    "command": "workbench.action.gotoSymbol"
-  },
-  {
     "key": "ctrl+[",
     "command": "workbench.action.navigateBack"
   },
@@ -377,5 +441,10 @@
     "key": "ctrl+k",
     "command": "selectPrevSuggestion",
     "when": "suggestWidgetMultipleSuggestions && suggestWidgetVisible && textInputFocus || suggestWidgetVisible && textInputFocus && !suggestWidgetHasFocusedSuggestion"
+  },
+  {
+    "key": "ctrl+k",
+    "command": "workbench.action.focusAboveGroup",
+    "when": "vim.mode == 'Normal' && editorTextFocus && vim.active"
   }
 ]
