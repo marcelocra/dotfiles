@@ -29,26 +29,6 @@
     "command": "workbench.action.openSettings"
   },
   {
-    "key": "ctrl+k ctrl+a",
-    "command": "workbench.action.toggleActivityBarVisibility"
-  },
-  {
-    "key": "ctrl+shift+x",
-    "command": "-workbench.view.extensions"
-  },
-  {
-    "key": "ctrl+k ctrl+x",
-    "command": "workbench.view.extensions"
-  },
-  {
-    "key": "ctrl+k ctrl+e",
-    "command": "workbench.view.explorer"
-  },
-  {
-    "key": "ctrl+shift+e",
-    "command": "-workbench.view.explorer"
-  },
-  {
     "key": "alt+shift+m",
     "command": "workbench.action.toggleMaximizedPanel",
     "when": "terminalFocus && !isMac"
@@ -62,14 +42,6 @@
     "key": "cmd+shift+m",
     "command": "-workbench.actions.view.problems",
     "when": "workbench.panel.markers.view.active && isMac"
-  },
-  {
-    "key": "ctrl+k ctrl+m",
-    "command": "-workbench.extensions.action.showRecommendedKeymapExtensions"
-  },
-  {
-    "key": "ctrl+k ctrl+m",
-    "command": "editor.action.toggleMinimap"
   },
   {
     "key": "ctrl+r",
@@ -299,6 +271,14 @@
     "when": "sideBarFocus && activeViewlet == 'workbench.view.extensions'"
   },
   {
+    "key": "alt+v",
+    "command": "toggleVim"
+  },
+  {
+    "key": "alt+m",
+    "command": "editor.action.toggleMinimap"
+  },
+  {
     "key": "alt+g",
     "command": "workbench.view.scm",
     "when": "!sideBarFocus || activeViewlet != 'workbench.view.scm'"
@@ -322,10 +302,7 @@
     "key": "alt+o",
     "command": "runCommands",
     "args": {
-      "commands": [
-        "outline.focus",
-        "outline.focus"
-      ]
+      "commands": ["outline.focus", "outline.focus"]
     },
     "when": "focusedView != 'outline'"
   },
@@ -344,16 +321,19 @@
     "command": "workbench.action.toggleSidebarVisibility",
     "when": "sideBarFocus && activeViewlet == 'workbench.view.search'"
   },
+  {
+    "key": "alt+a",
+    "command": "workbench.action.toggleActivityBarVisibility"
+  },
+  {
+    "key": "alt+p",
+    "command": "issue.copyGithubPermalink"
+  },
 
   //============================================================================
   //= misc
   //============================================================================
 
-  {
-    "key": "ctrl+k ctrl+e",
-    "command": "-keybindings.editor.defineWhenExpression",
-    "when": "inKeybindings && keybindingFocus"
-  },
   {
     "key": "ctrl+.",
     "command": "-problems.action.showQuickFixes",
@@ -363,10 +343,6 @@
     "key": "ctrl+.",
     "command": "-settings.action.editFocusedSetting",
     "when": "inSettingsSearch"
-  },
-  {
-    "key": "ctrl+k ctrl+v",
-    "command": "toggleVim"
   },
   {
     "key": "ctrl+alt+j",
@@ -379,31 +355,9 @@
     "when": "textInputFocus"
   },
   {
-    "key": "ctrl+k ctrl+p",
-    "command": "issue.copyGithubPermalink"
-  },
-  {
-    "key": "ctrl+k ctrl+o",
-    "command": "outline.focus"
-  },
-  {
-    "key": "ctrl+k ctrl+g",
-    "command": "workbench.view.scm",
-    "when": "workbench.scm.active"
-  },
-  {
-    "key": "ctrl+shift+g g",
-    "command": "-workbench.view.scm",
-    "when": "workbench.scm.active"
-  },
-  {
     "key": "ctrl+k ctrl+f",
     "command": "workbench.action.toggleFullScreen",
     "when": "!isIOS"
-  },
-  {
-    "key": "ctrl+k ctrl+b",
-    "command": "workbench.action.toggleSidebarVisibility"
   },
   {
     "key": "ctrl+k ctrl+z",
