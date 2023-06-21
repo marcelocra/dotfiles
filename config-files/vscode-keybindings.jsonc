@@ -329,6 +329,45 @@
     "key": "alt+p",
     "command": "issue.copyGithubPermalink"
   },
+  {
+    "key": "alt+w",
+    "command": "workbench.action.closeOtherEditors",
+    "when": "textInputFocus"
+  },
+  {
+    "key": "shift+alt+k",
+    "command": "workbench.action.openGlobalKeybindingsFile"
+  },
+  {
+    "key": "shift+alt+s",
+    "command": "workbench.action.openApplicationSettingsJson"
+  },
+  {
+    "key": "shift+alt+w",
+    "command": "workbench.action.closeAllEditors"
+  },
+  {
+    "key": "alt+h",
+    "command": "workbench.action.replaceInFiles",
+    "when": "editorTextFocus"
+  },
+  {
+    "key": "alt+h",
+    "command": "workbench.action.toggleSidebarVisibility",
+    "when": "!editorTextFocus"
+  },
+  {
+    "key": "alt+r",
+    "command": "runCommands",
+    "when": "editorTextFocus",
+    "args": {
+      "commands": [
+        "typescript.restartTsServer",
+        "eslint.restart",
+        "svelte.restartLanguageServer"
+      ]
+    }
+  },
 
   //============================================================================
   //= misc
