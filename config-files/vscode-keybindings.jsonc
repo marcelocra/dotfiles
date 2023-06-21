@@ -334,6 +334,23 @@
     "command": "workbench.action.closeOtherEditors",
     "when": "textInputFocus"
   },
+  // TODO: play more with this. The idea is to always open the keybindings file
+  // in a new VSCode window. Current problem is that if we are in a dev
+  // container, the keybindings file is opened in a new window with the same dev
+  // container. This means that it will automatically try to connect to the
+  // container, install all extensions and so on. That takes much more time than
+  // simply opening the file.
+  // {
+  //   "key": "shift+alt+k",
+  //   "command": "runCommands",
+  //   "args": {
+  //     "commands": [
+  //       "workbench.action.openGlobalKeybindingsFile",
+  //       "workbench.action.files.showOpenedFileInNewWindow",
+  //       "workbench.action.closeActiveEditor"
+  //     ]
+  //   }
+  // },
   {
     "key": "shift+alt+k",
     "command": "workbench.action.openGlobalKeybindingsFile"
@@ -368,6 +385,21 @@
       ]
     }
   },
+  {
+    "key": "alt+k",
+    "command": "-keybindings.editor.recordSearchKeys",
+    "when": "inKeybindings && inKeybindingsSearch"
+  },
+  {
+    "key": "alt+k",
+    "command": "workbench.action.nextEditor"
+  },
+  {
+    "key": "alt+j",
+    "command": "workbench.action.previousEditor"
+  },
+
+  // nextalt
 
   //============================================================================
   //= misc
