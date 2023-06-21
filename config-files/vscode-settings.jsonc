@@ -96,7 +96,7 @@
   "editor.guides.indentation": true,
   "editor.guides.highlightActiveIndentation": true,
   "editor.semanticHighlighting.enabled": true,
-  "editor.tabSize": 8,
+  "editor.tabSize": 2,
   "editor.insertSpaces": true,
   "editor.detectIndentation": true,
   "editor.defaultFormatter": "esbenp.prettier-vscode",
@@ -342,6 +342,10 @@
     {
       "before": ["<c-c>"],
       "after": ["V", "y"]
+    },
+    {
+      "before": ["<c-w>"],
+      "commands": [":tabclose"]
     }
   ],
   "vim.visualModeKeyBindingsNonRecursive": [
@@ -422,7 +426,7 @@
   //= Misc settings
   //============================================================================
   "diffEditor.ignoreTrimWhitespace": false,
-  "explorer.openEditors.visible": 1,
+  "explorer.openEditors.visible": 0,
   "files.associations": {
     "*.erb": "erb",
     "*.css": "css",
