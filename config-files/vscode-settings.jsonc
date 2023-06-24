@@ -221,6 +221,7 @@
   "vim.useCtrlKeys": true,
   "vim.hlsearch": true,
   "vim.smartRelativeLine": true,
+  "vim.foldfix": true,
   "vim.insertModeKeyBindingsNonRecursive": [
     {
       "before": ["j", "f"],

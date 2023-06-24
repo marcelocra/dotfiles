@@ -1,5 +1,5 @@
 #!/usr/bin/env sh
-
+# vim: fdm=marker:fmr=###,###
 
 # [ Functions ] ----------------------------------------------------------------
 
@@ -303,12 +303,13 @@ docker_images_sorted() {
 alias di='docker_images_sorted'
 
 
-# Current context
-# ---------------
-
+# Add next aliases that are not grouped by some context below
+# -----------------------------------------------------------
 # alias code="code-insiders"
 alias code="code"
 alias p1="code \$MCRA_P1"
+
+alias td="turbo dev --filter"
 
 
 # [ Exports ] ------------------------------------------------------------------
