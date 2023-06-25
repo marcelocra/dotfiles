@@ -267,7 +267,7 @@
   },
   {
     "key": "alt+x",
-    "command": "workbench.action.toggleSidebarVisibility",
+    "command": "workbench.action.focusLastEditorGroup",
     "when": "sideBarFocus && activeViewlet == 'workbench.view.extensions'"
   },
   {
@@ -285,7 +285,7 @@
   },
   {
     "key": "alt+g",
-    "command": "workbench.action.toggleSidebarVisibility",
+    "command": "workbench.action.focusLastEditorGroup",
     "when": "sideBarFocus && activeViewlet == 'workbench.view.scm'"
   },
   {
@@ -295,7 +295,7 @@
   },
   {
     "key": "alt+e",
-    "command": "workbench.action.toggleSidebarVisibility",
+    "command": "workbench.action.focusLastEditorGroup",
     "when": "sideBarFocus && activeViewlet == 'workbench.view.explorer'"
   },
   {
@@ -308,7 +308,7 @@
   },
   {
     "key": "alt+o",
-    "command": "workbench.action.toggleSidebarVisibility",
+    "command": "workbench.action.focusLastEditorGroup",
     "when": "focusedView == 'outline'"
   },
   {
@@ -318,7 +318,7 @@
   },
   {
     "key": "alt+f",
-    "command": "workbench.action.toggleSidebarVisibility",
+    "command": "workbench.action.focusLastEditorGroup",
     "when": "sideBarFocus && activeViewlet == 'workbench.view.search'"
   },
   {
@@ -352,8 +352,12 @@
   //   }
   // },
   {
-    "key": "shift+alt+k",
+    "key": "shift+alt+k f",
     "command": "workbench.action.openGlobalKeybindingsFile"
+  },
+  {
+    "key": "shift+alt+k s",
+    "command": "workbench.action.openGlobalKeybindings"
   },
   {
     "key": "shift+alt+s",
@@ -370,7 +374,7 @@
   },
   {
     "key": "alt+h",
-    "command": "workbench.action.toggleSidebarVisibility",
+    "command": "workbench.action.focusLastEditorGroup",
     "when": "!editorTextFocus"
   },
   {
