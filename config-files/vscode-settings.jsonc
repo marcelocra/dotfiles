@@ -233,8 +233,7 @@
     },
     {
       "before": ["<leader>", "w"],
-      "commands": [":w"],
-      "after": ["<esc>"]
+      "commands": [":w"]
     },
     {
       "before": ["<leader>", "q"],
