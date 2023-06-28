@@ -233,7 +233,8 @@
     },
     {
       "before": ["<leader>", "w"],
-      "commands": [":w"]
+      "commands": [":w"],
+      "after": ["<esc>"]
     },
     {
       "before": ["<leader>", "q"],
@@ -259,11 +260,11 @@
     },
     // Use vim-unimpaired shortcuts.
     {
-      "before": ["[", "t"], // For some reason, <c-h> doesn't work...
+      "before": ["[", "t"],
       "commands": [":tabp"]
     },
     {
-      "before": ["]", "t"], // ... and <c-l> also.
+      "before": ["]", "t"],
       "commands": [":tabn"]
     },
     {
@@ -347,6 +348,20 @@
       "before": ["<c-w>"],
       "commands": [":tabclose"]
     }
+    // The following three commands are mimicking the behavior of Vimium. First
+    // one is actually to keep the default J behavior somewhere.
+    // {
+    //   "before": ["g", "j"],
+    //   "after": ["J"]
+    // },
+    // {
+    //   "before": ["J"],
+    //   "commands": [":tabp"]
+    // },
+    // {
+    //   "before": ["K"],
+    //   "commands": [":tabn"]
+    // }
   ],
   "vim.visualModeKeyBindingsNonRecursive": [
     {
@@ -458,7 +473,7 @@
     "tree.indentGuidesStroke": "#00ffff",
     "editorIndentGuide.activeBackground": "#00ffff"
   },
-  "workbench.colorTheme": "Quiet Light",
+  "workbench.colorTheme": "GitHub Dark",
   "workbench.startupEditor": "newUntitledFile",
   "workbench.tree.indent": 20,
   "workbench.tree.renderIndentGuides": "always",
@@ -487,7 +502,7 @@
   "outline.collapseItems": "alwaysCollapse",
   "window.restoreWindows": "none",
   "workbench.sideBar.location": "right",
-  "emmet.triggerExpansionOnTab": true,
+  // "emmet.triggerExpansionOnTab": true,
   "eslint.enable": true,
   "eslint.format.enable": true,
   "eslint.probe": [
