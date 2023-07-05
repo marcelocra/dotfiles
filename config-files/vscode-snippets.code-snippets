@@ -181,5 +181,10 @@
     "scope": "markdown",
     "prefix": ["fold", "region"],
     "body": ["<!-- #region $1 -->", "$2", "<!-- #endregion -->"]
+  },
+
+  "shebang": {
+    "prefix": "shebang",
+    "body": ["#!/usr/bin/env $1"]
   }
 }

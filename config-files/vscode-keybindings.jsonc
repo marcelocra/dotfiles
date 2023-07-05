@@ -390,6 +390,10 @@
     }
   },
   {
+    "key": "shift+alt+r",
+    "command": "workbench.action.reloadWindow"
+  },
+  {
     "key": "alt+k",
     "command": "-keybindings.editor.recordSearchKeys",
     "when": "inKeybindings && inKeybindingsSearch"
@@ -485,5 +489,10 @@
     "key": "ctrl+k",
     "command": "workbench.action.focusAboveGroup",
     "when": "vim.mode == 'Normal' && editorTextFocus && vim.active"
+  },
+  {
+    "key": "alt+l",
+    "command": "workbench.action.quickOpenPreviousRecentlyUsedEditorInGroup",
+    "when": "!activeEditorGroupEmpty"
   }
 ]

@@ -311,6 +311,9 @@ alias p1="code \$MCRA_P1"
 
 alias td="turbo dev --filter"
 
+# Speech synthesizer.
+alias fala="spd-say -w -l pt-BR -p 100 -r -30 -R 100 -m all"
+
 
 # [ Exports ] ------------------------------------------------------------------
 
