@@ -501,7 +501,6 @@
   "window.newWindowDimensions": "inherit",
   "outline.collapseItems": "alwaysCollapse",
   "window.restoreWindows": "none",
-  "workbench.sideBar.location": "right",
   // "emmet.triggerExpansionOnTab": true,
   "eslint.enable": true,
   "eslint.format.enable": true,
@@ -525,5 +524,6 @@
     "markdown",
     "svelte"
   ],
-  "editor.minimap.enabled": false
+  "editor.minimap.enabled": false,
+  "workbench.sideBar.location": "right"
 }

@@ -411,13 +411,18 @@
     "command": "workbench.files.action.collapseExplorerFolders",
     "when": "sideBarFocus && activeViewlet == 'workbench.view.explorer'"
   },
+  {
+    "key": "shift+alt+b",
+    "command": "workbench.action.toggleAuxiliaryBar"
+  },
+
+  // nextalt next alt
+
   // {
   //   "key": "alt+c",
   //   "command": "list.collapseAll",
   //   "when": "sideBarFocus && activeViewlet == 'workbench.view.scm'"
   // },
-
-  // nextalt
 
   //============================================================================
   //= misc
@@ -494,5 +499,10 @@
     "key": "alt+l",
     "command": "workbench.action.quickOpenPreviousRecentlyUsedEditorInGroup",
     "when": "!activeEditorGroupEmpty"
+  },
+  {
+    "key": "shift+alt+b",
+    "command": "-gitlens.toggleCodeLens",
+    "when": "editorTextFocus && !gitlens:disabled && !gitlens:disabledToggleCodeLens && config.gitlens.keymap == 'alternate'"
   }
 ]
