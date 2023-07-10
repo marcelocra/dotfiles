@@ -1,6 +1,29 @@
 #!/usr/bin/env sh
 # vim: fdm=marker:fmr=###,###
 
+# [ Exports ] ------------------------------------------------------------------
+
+# dotnet.
+export DOTNET_ROOT="${HOME}/bin/dotnet"
+export DOTNET_CLI_TELEMETRY_OPTOUT=true
+export PATH="${PATH}:${DOTNET_ROOT}"
+
+# Homebrew.
+export HOMEBREW_NO_ANALYTICS=1
+
+# Flutter.
+export FLUTTER_SDK="${HOME}/bin/flutter"
+export FLUTTER_ROOT="${FLUTTER_SDK}/bin"
+export PATH="${PATH}:${FLUTTER_ROOT}"
+
+# Deno.
+export DENO_INSTALL="$HOME/.deno"
+export PATH="$DENO_INSTALL/bin:$PATH"
+
+# Other.
+export PATH="${PATH}:${HOME}/bin"
+
+
 # [ Functions ] ----------------------------------------------------------------
 
 # Simplifies working with tmux. Tries to create
@@ -71,9 +94,8 @@ editor
 
 # [ Aliases ] ------------------------------------------------------------------
 
-alias vim=nvim
+alias vim="$EDITOR"
 alias vi=vim
-alias v=vim
 
 alias tmux='TERM=xterm-256color tmux'
 
@@ -313,29 +335,6 @@ alias td="turbo dev --filter"
 
 # Speech synthesizer.
 alias fala="spd-say -w -l pt-BR -p 100 -r -30 -R 100 -m all"
-
-
-# [ Exports ] ------------------------------------------------------------------
-
-# dotnet.
-export DOTNET_ROOT="${HOME}/bin/dotnet"
-export DOTNET_CLI_TELEMETRY_OPTOUT=true
-export PATH="${PATH}:${DOTNET_ROOT}"
-
-# Homebrew.
-export HOMEBREW_NO_ANALYTICS=1
-
-# Flutter.
-export FLUTTER_SDK="${HOME}/bin/flutter"
-export FLUTTER_ROOT="${FLUTTER_SDK}/bin"
-export PATH="${PATH}:${FLUTTER_ROOT}"
-
-# Deno.
-export DENO_INSTALL="$HOME/.deno"
-export PATH="$DENO_INSTALL/bin:$PATH"
-
-# Other.
-export PATH="${PATH}:${HOME}/bin"
 
 
 # [ Commands ] -----------------------------------------------------------------
