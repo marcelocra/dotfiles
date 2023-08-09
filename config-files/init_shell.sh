@@ -20,8 +20,13 @@ export PATH="${PATH}:${FLUTTER_ROOT}"
 export DENO_INSTALL="$HOME/.deno"
 export PATH="$DENO_INSTALL/bin:$PATH"
 
+# Fly.io.
+export FLYCTL_INSTALL="/home/marcelocra/.fly"
+export PATH="$FLYCTL_INSTALL/bin:$PATH"
+
 # Other.
 export PATH="${PATH}:${HOME}/bin"
+
 
 
 # [ Functions ] ----------------------------------------------------------------
@@ -122,8 +127,8 @@ alias y=yarn
 alias r='n run'
 
 if [[ ! -z "${MCRA_INIT_SHELL}" ]]; then
-  alias init='v ${MCRA_INIT_SHELL}'
-  alias erc='v ~/.zshrc'
+  alias init='vim ${MCRA_INIT_SHELL}'
+  alias erc='vim ~/.zshrc'
   alias src='source ~/.zshrc'
 else
   alias init="echo 'Define \$MCRA_INIT_SHELL in your rc file'"

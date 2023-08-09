@@ -61,10 +61,17 @@ Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-unimpaired'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-commentary'
+Plug 'tpope/vim-repeat'
 
 Plug 'bling/vim-airline'
 
 Plug 'justinmk/vim-sneak'
+
+" Plugins for Clojure and other lisps.
+Plug 'Olical/conjure', { 'for': ['clojure'] }
+Plug 'guns/vim-sexp', { 'for': ['clojure'] } 
+Plug 'tpope/vim-sexp-mappings-for-regular-people', { 'for': ['clojure'] } 
+
 
 call plug#end()
 
@@ -180,11 +187,20 @@ nnoremap gV `[v`]
 vnoremap < <gv
 vnoremap > >gv
 
+" Use alt to change tabs.
+" TODO(marcelocra): figure how to avoid this conflicting with vim-sexp.
+" nnoremap <m-j> :tabprevious<cr>
+" nnoremap <m-k> :tabnext<cr>
+" inoremap <m-j> <esc>:tabprevious<cr>
+" inoremap <m-k> <esc>:tabnext<cr>
+
+
 
 " -- [ Leader mappings ] -------------------------------------------------------
 
 " Change leader.
 let mapleader = ","
+let maplocalleader = '\'
 
 " Execute last macro recorded in register 'q'.
 nnoremap <space> @q
