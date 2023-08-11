@@ -200,10 +200,10 @@ vnoremap > >gv
 
 " Change leader.
 let mapleader = ","
-let maplocalleader = '\'
+let maplocalleader = " "
 
 " Execute last macro recorded in register 'q'.
-nnoremap <space> @q
+" nnoremap <space> @q
 
 " Easily source my vimrc.
 nnoremap <leader><leader>sv :source $MYVIMRC<cr>
