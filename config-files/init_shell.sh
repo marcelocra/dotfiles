@@ -330,8 +330,8 @@ docker_images_sorted() {
 alias di='docker_images_sorted'
 
 
-# Add next aliases that are not grouped by some context below
-# -----------------------------------------------------------
+# Add aliases that are not grouped by some context below
+# ------------------------------------------------------
 # alias code="code-insiders"
 alias code="code"
 alias p1="code \$MCRA_P1"
@@ -340,6 +340,13 @@ alias td="turbo dev --filter"
 
 # Speech synthesizer.
 alias fala="spd-say -w -l pt-BR -p 100 -r -30 -R 100 -m all"
+
+# AsciiDoc.
+alias asciidoctor="docker run --rm -it -v $(pwd):/documents/ asciidoctor/docker-asciidoctor"
+alias asciidoctor-gen="docker run --rm -v $(pwd):/documents/ asciidoctor/docker-asciidoctor asciidoctor-pdf index.adoc"
+
+
+# Next aliases above!
 
 
 # [ Commands ] -----------------------------------------------------------------
