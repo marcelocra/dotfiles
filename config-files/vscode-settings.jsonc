@@ -518,11 +518,7 @@
     "javascript",
     "javascriptreact",
     "typescript",
-    "typescriptreact",
-    "html",
-    "vue",
-    "markdown",
-    "svelte"
+    "typescriptreact"
   ],
   "editor.minimap.enabled": false,
   "workbench.sideBar.location": "right"
