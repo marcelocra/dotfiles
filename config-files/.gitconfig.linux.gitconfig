@@ -1,2 +1,2 @@
-[credential]
-  credentialStore = gpg
+# [credential]
+#   credentialStore = gpg
