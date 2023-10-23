@@ -24,9 +24,14 @@ export PATH="$DENO_INSTALL/bin:$PATH"
 export FLYCTL_INSTALL="/home/marcelocra/.fly"
 export PATH="$FLYCTL_INSTALL/bin:$PATH"
 
-# Other.
+# Path.
 export PATH="${PATH}:${HOME}/bin"
 
+# fzf.
+export FZF_TMUX_OPTS='-p80%,60%'
+
+
+# next export
 
 
 # [ Functions ] ----------------------------------------------------------------
