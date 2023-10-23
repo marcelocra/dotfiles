@@ -1,6 +1,6 @@
 #!/usr/bin/env sh
 #
-# Commands run during system startup.
+# Commands to run during system startup.
 #
 # To set them up, use Ubuntu's Startup Application app (also present in Linux
 # Mint). Open the app and add a new command, pasting the path to this file.
@@ -80,19 +80,33 @@ setup_expert_mouse() {
     fi
 }
 
-# Configure Evoluent vertical mouse so that back/forward buttons work as
-# expected.
+# Reconfigure Evoluent vertical mouse to swap back/forward button. Originally,
+# they are assigned to the bottom/top buttons respectively, but I prefer
+# top/bottom. Also reduce the device speed.
 setup_evoluent_mouse() {
+    # Swap back/forward buttons.
     local device_id
 
     device_id=$(xinput \
         | sed -nre 's/.*Evoluent\ VerticalMouse.*id\=([0-9]+).*/\1/p' \
         | head -n1)
-    if [ ! -z "$device_id" ]; then
-        # This device is different from the one above, but I don't remember
-        # exactly how. As I discover, will add here.
-        xinput set-button-map $device_id 1 2 3 4 5 6 7 8 10 9
+    if [ -z "$device_id" ]; then
+      return
     fi
+
+    xinput set-button-map $device_id 1 2 3 4 5 6 7 8 10 9
+
+    # Reduce the device acceleration speed.
+    local prop_id
+    prop_id=$(xinput list-props $device_id \
+        | sed -nre 's/.*Accel\ Speed\ \(([0-9]+)\).*/\1/p' \
+        | head -n1)
+    if [ -z "$prop_id" ]; then
+        return
+    fi
+
+    # This is a good value that I found by testing different ones.
+    xinput set-prop $device_id $prop_id -0.75 
 }
 
 reduce_speed_of_logitech_mouse() {
@@ -112,28 +126,8 @@ reduce_speed_of_logitech_mouse() {
         return
     fi
 
-    xinput set-prop $device_id $prop_id -0.75  # I found this value to be good.
-}
-
-reduce_speed_of_evoluent_mouse() {
-    local device_id
-    device_id=$(xinput \
-        | sed -nre 's/.*Evoluent\ VerticalMouse.*id\=([0-9]+).*/\1/p' \
-        | head -n1)
-    if [ -z "$device_id" ]; then
-        return
-    fi
-
-    local prop_id
-    prop_id=$(xinput list-props $device_id \
-        | sed -nre 's/.*Accel\ Speed\ \(([0-9]+)\).*/\1/p' \
-        | head -n1)
-    if [ -z "$prop_id" ]; then
-        return
-    fi
-
-    xinput set-prop $device_id $prop_id -0.75  # I found this value to be good.
-
+    # This is a good value that I found by testing different ones.
+    xinput set-prop $device_id $prop_id -0.75
 }
 
 # Todoist has an auto update feature that replaces the AppImage binary with
@@ -146,12 +140,11 @@ reduce_speed_of_evoluent_mouse() {
 # gone, but I need to double check this. In any case, if the binary link is ok,
 # I guess the .desktop won't be an issue.
 symlink_todoist_again() {
-  ln -f -s "${HOME}/bin/binaries/$(ls ~/bin/binaries | rg -e '^Todoist.*AppImage$')" "${HOME}/bin/Todoist-latest"
+  ln -f -s "${HOME}/bin/binaries/$(ls ~/bin/binaries | rg -e '^Todoist.*AppImage$' | sort -r | head -n1)" "${HOME}/bin/Todoist-latest"
 }
 
 setup_expert_mouse
 setup_evoluent_mouse
 reduce_speed_of_logitech_mouse
-reduce_speed_of_evoluent_mouse
 symlink_todoist_again
 
