@@ -350,6 +350,9 @@ alias fala="spd-say -w -l pt-BR -p 100 -r -30 -R 100 -m all"
 alias asciidoctor="docker run --rm -it -v $(pwd):/documents/ asciidoctor/docker-asciidoctor"
 alias asciidoctor-gen="docker run --rm -v $(pwd):/documents/ asciidoctor/docker-asciidoctor asciidoctor-pdf index.adoc"
 
+# Supabase.
+alias sup="supabase"
+
 
 # Next aliases above!
 
