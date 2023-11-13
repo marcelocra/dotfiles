@@ -347,6 +347,10 @@
     {
       "before": ["<c-w>"],
       "commands": [":tabclose"]
+    },
+    {
+      "before": ["<c-p>"],
+      "commands": ["workbench.action.quickOpen"]
     }
     // The following three commands are mimicking the behavior of Vimium. First
     // one is actually to keep the default J behavior somewhere.
@@ -470,10 +474,16 @@
   "typescript.tsserver.experimental.enableProjectDiagnostics": true,
   "window.title": "${dirty}${activeEditorLong}${separator}${appName}",
   "workbench.colorCustomizations": {
-    "tree.indentGuidesStroke": "#00ffff",
-    "editorIndentGuide.activeBackground": "#00ffff"
+    "[Solarized Dark]": {
+      "tree.indentGuidesStroke": "#00ffff",
+      "tree.inactiveIndentGuidesStroke": "#444",
+      "editorIndentGuide.activeBackground1": "#00ffff",
+      "editorIndentGuide.background1": "#444",
+      "editor.lineHighlightBorder": "#00ffff44",
+      "editor.lineHighlightBackground": "#00ffff22"
+    }
   },
-  "workbench.colorTheme": "Quiet Light",
+  "workbench.colorTheme": "Solarized Dark",
   "workbench.startupEditor": "newUntitledFile",
   "workbench.tree.indent": 20,
   "workbench.tree.renderIndentGuides": "always",
@@ -521,5 +531,6 @@
     "typescriptreact"
   ],
   "editor.minimap.enabled": false,
-  "workbench.sideBar.location": "right"
+  "workbench.sideBar.location": "right",
+  "window.menuBarVisibility": "toggle"
 }
