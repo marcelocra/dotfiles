@@ -140,7 +140,7 @@ reduce_speed_of_logitech_mouse() {
 # gone, but I need to double check this. In any case, if the binary link is ok,
 # I guess the .desktop won't be an issue.
 symlink_todoist_again() {
-  ln -f -s "${HOME}/bin/binaries/$(ls ~/bin/binaries | rg -e '^Todoist.*AppImage$' | sort -r | head -n1)" "${HOME}/bin/Todoist-latest"
+  ln -f -s "${HOME}/bin/binaries/todoist/$(ls ~/bin/binaries/todoist | sort -V -r | head -n1)" "${HOME}/bin/Todoist-latest"
 }
 
 setup_expert_mouse
