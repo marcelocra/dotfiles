@@ -1,3 +1,6 @@
+" vim:ts=4:sw=4:ai:foldmethod=marker:foldlevel=0:foldenable:foldmarker={{{,}}}
+" {{{ Details on how to use vim-plug, with examples.
+"
 " The default plugin directory will be as follows:
 "   - Vim (Linux/macOS): '~/.vim/plugged'
 "   - Vim (Windows): '~/vimfiles/plugged'
@@ -48,9 +51,13 @@
 "   Plug 'tomasr/molokai'
 "   Plug 'tpope/vim-vividchalk'
 "   Plug 'marcelocra/vim-colorscheme'
+"
+" }}}
+
 
 
 " -- [ Install plugins and initialize the plugin system ] ----------------------
+
 
 call plug#begin()  
 
@@ -72,17 +79,12 @@ Plug 'Olical/conjure', { 'for': ['clojure'] }
 Plug 'guns/vim-sexp', { 'for': ['clojure'] } 
 Plug 'tpope/vim-sexp-mappings-for-regular-people', { 'for': ['clojure'] } 
 
-
 call plug#end()
 
-lua << LUACODE
-
-  print("init.vim loaded!")
-
-LUACODE
 
 
-" -- [ Settings ] --------------------------------------------------------------
+" -- [ Settings ] ------------------------------------------------------------
+
 
 " Syntax highlighting.
 syntax enable
@@ -166,7 +168,9 @@ colorscheme koehler
 set clipboard+=unnamedplus
 
 
+
 " -- [ Mappings ] --------------------------------------------------------------
+
 
 " Use normal regex.
 nnoremap / /\v\c
@@ -204,6 +208,7 @@ vnoremap > >gv
 
 " -- [ Leader mappings ] -------------------------------------------------------
 
+
 " Change leader.
 let mapleader = ","
 let maplocalleader = " "
@@ -239,7 +244,9 @@ nnoremap [t :tabprevious<cr>
 nnoremap ]t :tabnext<cr>
 
 
+
 " -- [ Plugins mappings ] ------------------------------------------------------
+
 
 " For vscode-neovim. Settings that should be enabled only in cmdline vim
 " should go here.
