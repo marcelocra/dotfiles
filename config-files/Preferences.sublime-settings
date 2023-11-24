@@ -3,13 +3,14 @@
   // specific settings file, for example, "Preferences (Linux).sublime-settings".
   // Because of this, setting them here will have no effect: you must set them
   // in your User File Preferences.
-  "font_face": "Fira Code Light", // Good size: 12
+  // "font_face": "Fira Code Light", // Good size: 12
   // "font_face": "Anonymous Pro",            // Good size: 13
   // "font_face": "IBM Plex Mono",            // Good size: 11
   // "font_face": "Cascadia Code PL Light",   // Good size: 11
   // "font_face": "Iosevka SS04 Light",          // Good size: 11
   // "font_face": "Source Code Pro",   // Good size: 11
-  "font_size": 11,
+  "font_face": "CodeNewRoman Nerd Font",   // Good size: 11
+  "font_size": 13,
 
   // These settings control the size of the caret
   "caret_extra_top": 0,
