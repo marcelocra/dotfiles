@@ -1,7 +1,10 @@
 #!/usr/bin/env sh
 # vim: fdm=marker:fmr=###,###
 
+
+
 # [ Exports ] ------------------------------------------------------------------
+
 
 # dotnet.
 export DOTNET_ROOT="${HOME}/bin/dotnet"
@@ -30,11 +33,19 @@ export PATH="${PATH}:${HOME}/bin"
 # fzf.
 export FZF_TMUX_OPTS='-p80%,60%'
 
+# Nextjs.
+# Print what would be collected to stderr without sending it. Set this to 0 to
+# allow telemetry, along with a 0 in the next one.
+export NEXT_TELEMETRY_DEBUG=0
+# Disable telemetry by setting this to 1.
+export NEXT_TELEMETRY_DISABLED=1
 
 # next export
 
 
+
 # [ Functions ] ----------------------------------------------------------------
+
 
 # Simplifies working with tmux. Tries to create
 # a new session and if it already exists, just
@@ -102,7 +113,9 @@ editor() {
 editor
 
 
+
 # [ Aliases ] ------------------------------------------------------------------
+
 
 alias vim="$EDITOR"
 alias vi=vim
@@ -345,6 +358,7 @@ alias td="turbo dev --filter"
 
 # Speech synthesizer.
 alias fala="spd-say -w -l pt-BR -p 100 -r -30 -R 100 -m all"
+alias falar="spd-say -w -l pt-BR -p 100 -r -30 -R 100 -m all"
 
 # AsciiDoc.
 alias asciidoctor="docker run --rm -it -v $(pwd):/documents/ asciidoctor/docker-asciidoctor"
@@ -357,7 +371,9 @@ alias sup="supabase"
 # Next aliases above!
 
 
+
 # [ Commands ] -----------------------------------------------------------------
+
 
 # Ignore commands for Mac and run them in Ubuntu (should work in other Unixes
 # too, but I haven't tested).
