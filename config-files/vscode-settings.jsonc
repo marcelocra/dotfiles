@@ -532,5 +532,6 @@
   ],
   "editor.minimap.enabled": false,
   "workbench.sideBar.location": "right",
-  "window.menuBarVisibility": "toggle"
+  "window.menuBarVisibility": "toggle",
+  "haskell.manageHLS": "GHCup"
 }

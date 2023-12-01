@@ -53,10 +53,7 @@
 "   Plug 'marcelocra/vim-colorscheme'
 "
 " }}}
-
-
-
-" -- [ Install plugins and initialize the plugin system ] ----------------------
+" -- [ Install plugins and initialize the plugin system ] ----------------------{{{
 
 
 call plug#begin()  
@@ -82,8 +79,8 @@ Plug 'tpope/vim-sexp-mappings-for-regular-people', { 'for': ['clojure'] }
 call plug#end()
 
 
-
-" -- [ Settings ] ------------------------------------------------------------
+"}}}
+" -- [ Settings ] ------------------------------------------------------------{{{
 
 
 " Syntax highlighting.
@@ -112,7 +109,7 @@ set vb t_vb=
 " Lines with number and with a particular width (no variation when
 " increasing).
 set number
-set relativenumber 
+set norelativenumber 
 
 " Show line and column.
 set ruler
@@ -168,8 +165,8 @@ colorscheme koehler
 set clipboard+=unnamedplus
 
 
-
-" -- [ Mappings ] --------------------------------------------------------------
+"}}}
+" -- [ Mappings ] --------------------------------------------------------------{{{
 
 
 " Use normal regex.
@@ -189,6 +186,13 @@ nnoremap <c-l> <c-w><c-l>
 " Move vertically by visual line (not jumping long lines).
 nnoremap j gj
 nnoremap k gk
+nnoremap $ g$
+nnoremap 0 g0
+
+vnoremap j gj
+vnoremap k gk
+vnoremap $ g$
+vnoremap 0 g0
 
 " Highlight last inserted text.
 nnoremap gV `[v`]
@@ -204,9 +208,13 @@ vnoremap > >gv
 " inoremap <m-j> <esc>:tabprevious<cr>
 " inoremap <m-k> <esc>:tabnext<cr>
 
+inoremap <a-j> <esc>:tabprevious<cr>
+inoremap <a-k> <esc>:tabnext<cr>
+nnoremap <a-j> :tabprevious<cr>
+nnoremap <a-k> :tabnext<cr>
 
-
-" -- [ Leader mappings ] -------------------------------------------------------
+"}}}
+" -- [ Leader mappings ] -------------------------------------------------------{{{
 
 
 " Change leader.
@@ -244,8 +252,8 @@ nnoremap [t :tabprevious<cr>
 nnoremap ]t :tabnext<cr>
 
 
-
-" -- [ Plugins mappings ] ------------------------------------------------------
+"}}}
+" -- [ Plugins mappings ] ------------------------------------------------------{{{
 
 
 " For vscode-neovim. Settings that should be enabled only in cmdline vim
@@ -262,4 +270,4 @@ let g:sneak#s_next = 1
 " molokai settings.
 "let g:molokai_original = 0
 "let g:rehash256 = 0
-
+"}}}

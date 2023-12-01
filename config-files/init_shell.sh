@@ -1,5 +1,5 @@
 #!/usr/bin/env sh
-# vim: fdm=marker:fmr=###,###
+# vim: fdm=marker:fmr={{{,}}}
 
 
 
@@ -119,6 +119,9 @@ editor
 
 alias vim="$EDITOR"
 alias vi=vim
+if [[ $EDITOR == "nvim" ]]; then
+  alias vimdiff="nvim -d"
+fi
 
 alias tmux='TERM=xterm-256color tmux'
 

@@ -242,5 +242,15 @@
   // Mac-only options: ->
   //  - "no_round": Don't round glyph widths for monospace fonts when
   //        "font_size" is small.
-  "font_options": ["ss01", "ss02", "ss03", "ss04", "ss05", "ss06", "ss07"]
+  "font_options": ["ss01", "ss02", "ss03", "ss04", "ss05", "ss06", "ss07"],
+
+
+  "ignored_packages": [],
+
+
+
+  // Vintage
+
+
+  "vintage_start_in_command_mode": true,
 }
