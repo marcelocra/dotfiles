@@ -246,6 +246,8 @@ alias gwch='git whatchanged -p --abbrev-commit --pretty=medium'
 
 alias gi='git init'
 
+alias git-undo-last="git reset HEAD~"
+
 
 # Git: shortcuts I keep here as reference
 # ---------------------------------------
