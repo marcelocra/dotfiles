@@ -1,9 +1,12 @@
+#!/usr/bin/env xdg-open
 [Desktop Entry]
+Version=1.0
+Terminal=false
 Name=Obsidian
 Comment=Markdown Notetaking App
 GenericName=Text Editor
 Type=Application
-Exec=obsidian %U
+Exec=/home/marcelocra/bin/obsidian %U
 Icon=obsidian
 StartupWMClass=obsidian
 MimeType=x-scheme-handler/obsidian;
