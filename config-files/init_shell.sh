@@ -1,10 +1,7 @@
 #!/usr/bin/env sh
-# vim: fdm=marker:fmr={{{,}}}
+# vim: fdm=marker:fmr={{{,}}}:foldlevel=0:fen
 
-
-
-# [ Exports ] ------------------------------------------------------------------
-
+# [ Exports ] ------------------------------------------------------------------{{{
 
 # dotnet.
 export DOTNET_ROOT="${HOME}/bin/dotnet"
@@ -43,9 +40,8 @@ export NEXT_TELEMETRY_DISABLED=1
 # next export
 
 
-
-# [ Functions ] ----------------------------------------------------------------
-
+# }}}
+# [ Functions ] ----------------------------------------------------------------{{{
 
 # Simplifies working with tmux. Tries to create
 # a new session and if it already exists, just
@@ -113,9 +109,9 @@ editor() {
 editor
 
 
-
-# [ Aliases ] ------------------------------------------------------------------
-
+# }}}
+# [ Aliases ] ------------------------------------------------------------------{{{
+# General stuff.{{{
 
 alias vim="$EDITOR"
 alias vi=vim
@@ -157,8 +153,8 @@ else
   alias src=init
 fi
 
-
-# Git: shortcuts I use frequently
+# }}}
+# Git: shortcuts I use frequently{{{
 # -------------------------------
 
 alias g='git'
@@ -248,8 +244,8 @@ alias gi='git init'
 
 alias git-undo-last="git reset HEAD~"
 
-
-# Git: shortcuts I keep here as reference
+# }}}
+# Git: shortcuts I keep here as reference{{{
 # ---------------------------------------
 # Should either move them above or remove them.
 
@@ -327,15 +323,15 @@ alias git-undo-last="git reset HEAD~"
 # alias gupa='git pull --rebase --autostash'
 # alias gupav='git pull --rebase --autostash -v'
 
-
-# Git lfs
+# }}}
+# Git lfs{{{
 # -------
 
 alias glfsdry="git lfs push origin main --dry-run --all"
 alias glfss="git lfs status"
 
-
-# Docker
+# }}}
+# Docker{{{
 # ------
 
 alias dc="docker-compose"
@@ -352,8 +348,8 @@ docker_images_sorted() {
 
 alias di='docker_images_sorted'
 
-
-# Add aliases that are not grouped by some context below
+# }}}
+# Add aliases that are not grouped by some context below{{{
 # ------------------------------------------------------
 # alias code="code-insiders"
 alias code="code"
@@ -375,9 +371,9 @@ alias sup="supabase"
 
 # Next aliases above!
 
-
-
-# [ Commands ] -----------------------------------------------------------------
+# }}}
+# }}}
+# [ Commands ] -----------------------------------------------------------------{{{
 
 
 # Ignore commands for Mac and run them in Ubuntu (should work in other Unixes
@@ -388,3 +384,4 @@ if [[ ! `uname` == "Darwin" ]]; then
         eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
     fi
 fi
+# }}}
