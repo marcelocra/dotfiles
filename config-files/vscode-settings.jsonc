@@ -483,7 +483,7 @@
       "editor.lineHighlightBackground": "#00ffff22"
     }
   },
-  "workbench.colorTheme": "Solarized Dark",
+  "workbench.colorTheme": "GitHub Dark",
   "workbench.startupEditor": "newUntitledFile",
   "workbench.tree.indent": 20,
   "workbench.tree.renderIndentGuides": "always",

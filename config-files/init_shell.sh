@@ -119,7 +119,11 @@ if [[ $EDITOR == "nvim" ]]; then
   alias vimdiff="nvim -d"
 fi
 
-alias tmux='TERM=xterm-256color tmux'
+# The -T option sets terminal features for the client. Uses csv format.
+# Features:
+#   - 256: forces tmux to assume the terminal supports 256 colors. It is the
+#     same as running tmux with -2: `tmux -2`.
+alias tmux='TERM=xterm-256color tmux -T 256'
 
 alias pip=pip3
 
