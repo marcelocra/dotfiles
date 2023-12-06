@@ -37,6 +37,10 @@ export NEXT_TELEMETRY_DEBUG=0
 # Disable telemetry by setting this to 1.
 export NEXT_TELEMETRY_DISABLED=1
 
+# Astro.build
+# Disable telemetry by setting this to 1.
+export ASTRO_TELEMETRY_DISABLED=1
+
 # next export
 
 
