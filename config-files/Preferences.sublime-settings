@@ -10,7 +10,7 @@
   // "font_face": "Iosevka SS04 Light",          // Good size: 11
   // "font_face": "Source Code Pro",   // Good size: 11
   "font_face": "CodeNewRoman Nerd Font",   // Good size: 11
-  "font_size": 13,
+  "font_size": 12,
 
   // These settings control the size of the caret
   "caret_extra_top": 0,
@@ -120,7 +120,7 @@
   // When Vintage, the vi emulation package, is enabled
   // (see ignored_packages, below), this setting controls if files are opened
   // in command mode or insert mode by default
-  "vintage_start_in_command_mode": false,
+  "vintage_start_in_command_mode": true,
 
   // Yank commands can place the text in either an internal register, or in
   // the system clipboard.
@@ -245,12 +245,15 @@
   "font_options": ["ss01", "ss02", "ss03", "ss04", "ss05", "ss06", "ss07"],
 
 
-  "ignored_packages": [],
+  "ignored_packages": [
+    "Vintage"
+  ],
 
 
 
   // Vintage
 
 
-  "vintage_start_in_command_mode": true,
+  /*"vintage_start_in_command_mode": true,*/
+  "index_files": true,
 }

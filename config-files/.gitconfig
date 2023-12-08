@@ -56,6 +56,9 @@
 # [ Configs ] ------------------------------------------------------------------
 
 
+[includeIf "gitdir:~/Private/"]
+  path = .gitconfig.personal.gitconfig
+
 [includeIf "gitdir:~/projects/"]
   path = .gitconfig.personal.gitconfig
 
