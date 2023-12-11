@@ -52,7 +52,9 @@ Use this:
 
 You might need to add some spaces around stuff for it to appear correctly, like so:
 
-`  •%n%a%n %d%n%b%n  •%n %H%n %M%n %S%n  •`
+`   •%n %a%n  %d%n %b%n   •%n  %H%n  %M%n  %S%n   •`
+
+![image](https://github.com/marcelocra/dev/assets/2532492/a81affc9-7a3b-4f39-b655-ce9a61da2f90)
 
 Notice that there's a number of `%n` in the format, which behaves like `\n`
 (adding new lines), as I use the menu bar vertically to the left. If you prefer
