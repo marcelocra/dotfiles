@@ -79,9 +79,8 @@
   // "editor.letterSpacing": -0.8,
   // "editor.fontWeight": "900",
   "editor.codeActionsOnSave": {
-    "source.fixAll.eslint": true,
-    "source.fixAll": true
-    // "source.organizeImports": true
+    "source.fixAll.eslint": "explicit",
+    "source.fixAll": "explicit"
   },
   "editor.quickSuggestions": {
     "other": false,
@@ -160,7 +159,7 @@
     "editor.suggest.snippetsPreventQuickSuggestions": false,
     "editor.suggestSelection": "first",
     "editor.tabCompletion": "onlySnippets",
-    "editor.wordBasedSuggestions": false,
+    "editor.wordBasedSuggestions": "off",
     "editor.defaultFormatter": "Dart-Code.dart-code"
   },
 
@@ -223,12 +222,16 @@
   "vim.smartRelativeLine": true,
   "vim.foldfix": true,
   "vim.insertModeKeyBindingsNonRecursive": [
+    // {
+    //   "before": ["j", "f"],
+    //   "after": ["<esc>"]
+    // },
+    // {
+    //   "before": ["f", "j"],
+    //   "after": ["<esc>"]
+    // },
     {
-      "before": ["j", "f"],
-      "after": ["<esc>"]
-    },
-    {
-      "before": ["f", "j"],
+      "before": ["<c-n>"],
       "after": ["<esc>"]
     },
     {
@@ -244,10 +247,6 @@
       "before": ["<leader>", "x"],
       "commands": [":x"]
     },
-    {
-      "before": ["<c-n>"],
-      "commands": [":nohl"]
-    }
   ],
   "vim.normalModeKeyBindingsNonRecursive": [
     {
@@ -288,7 +287,7 @@
       "after": ["d", "d"]
     },
     {
-      "before": ["<c-n>"],
+      "before": ["<c-c>"],
       "commands": [":nohl"]
     },
     {
@@ -319,7 +318,7 @@
       "before": ["<leader>", "a"],
       "after": ["g", "g", "V", "G"]
     },
-    // Move using visual lines.
+    // -- visual lines - Move using visual lines.
     {
       "before": ["j"],
       "after": ["g", "j"]
@@ -329,24 +328,21 @@
       "after": ["g", "k"]
     },
     {
+      "before": ["0"],
+      "after": ["g", "0"]
+    },
+    {
+      "before": ["$"],
+      "after": ["g", "$"]
+    },
+    // -- visual lines - end
+    {
       "before": ["s"],
       "after": ["leader", "leader", "s"]
     },
     {
       "before": ["<c-a>"],
       "after": ["gg", "V", "G"]
-    },
-    {
-      "before": ["<c-x>"],
-      "after": ["V", "d"]
-    },
-    {
-      "before": ["<c-c>"],
-      "after": ["V", "y"]
-    },
-    {
-      "before": ["<c-w>"],
-      "commands": [":tabclose"]
     },
     {
       "before": ["<c-p>"],
@@ -382,10 +378,6 @@
       "before": ["<leader>", "q"],
       "commands": [":q"],
       "after": ["<esc>"]
-    },
-    {
-      "before": ["<c-n>"],
-      "commands": [":nohl"]
     },
     // Prevents `p` from yanking text that is being overwriten. When that
     // behavior is desired, use `gp`.
@@ -483,7 +475,7 @@
       "editor.lineHighlightBackground": "#00ffff22"
     }
   },
-  "workbench.colorTheme": "GitHub Dark",
+  "workbench.colorTheme": "Solarized Dark",
   "workbench.startupEditor": "newUntitledFile",
   "workbench.tree.indent": 20,
   "workbench.tree.renderIndentGuides": "always",
@@ -533,5 +525,6 @@
   "editor.minimap.enabled": false,
   "workbench.sideBar.location": "right",
   "window.menuBarVisibility": "toggle",
-  "haskell.manageHLS": "GHCup"
+  "haskell.manageHLS": "GHCup",
+  "window.zoomLevel": 2
 }
