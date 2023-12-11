@@ -174,8 +174,9 @@ nnoremap / /\v\c
 vnoremap / /\v\c
 
 " Simpler way to go to command mode from insert mode.
-inoremap jf <esc>
-inoremap fj <esc>
+inoremap <c-n> <esc>
+"inoremap jf <esc>
+"inoremap fj <esc>
 
 " Quicker window movement.
 nnoremap <c-j> <c-w><c-j>
@@ -230,7 +231,13 @@ nnoremap <leader><leader>sv :source $MYVIMRC<cr>
 nnoremap <leader><leader>ev :tabe $MYVIMRC<cr>
 
 " Clear last search.
-nnoremap <silent> <c-n> :let @/ = ""<cr>
+"
+" TODO: understand why I used this instead of :nohl, as it allows
+" us to search again for the same string (seems better).
+" nnoremap <silent> <c-c> :let @/ = ""<cr>
+nnoremap <silent> <c-c> :nohl<cr>
+nnoremap <silent> <c-n> :nohl<cr>
+inoremap <silent> <c-c> <esc>:nohl<cr>a
 
 " Save while in insert mode without leaving insert mode.
 nnoremap <leader>w :w<cr>
@@ -250,6 +257,9 @@ nnoremap <leader>a ggVG
 " Change tabs.
 nnoremap [t :tabprevious<cr>
 nnoremap ]t :tabnext<cr>
+
+" Change generic autocomplete mapping.
+inoremap <c-space> <c-n>
 
 
 "}}}
