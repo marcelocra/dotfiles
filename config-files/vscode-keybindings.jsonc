@@ -331,7 +331,7 @@
   },
   {
     "key": "alt+w",
-    "command": "workbench.action.closeOtherEditors",
+    "command": "workbench.action.closeActiveEditor",
     "when": "textInputFocus"
   },
   // TODO: play more with this. The idea is to always open the keybindings file
