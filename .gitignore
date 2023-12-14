@@ -5,6 +5,7 @@
 .calva
 .clj-kondo
 .lsp
+.nrepl-port
 
 # Mac stuff.
 .DS_Store
