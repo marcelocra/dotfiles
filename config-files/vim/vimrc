@@ -230,6 +230,11 @@ nnoremap <a-c> za
 nnoremap - :split<cr>
 nnoremap \| :vsplit<cr>
 
+" Avoids replacing the clipboard content with the selected content. Does this
+" by deleting the selected content to the blackhole register and then pasting
+" the clipboard content to before the cursor position.
+vnoremap p "_dP
+
 " next mapping above
 
 
