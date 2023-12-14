@@ -1,3 +1,4 @@
+" vim:ts=4:sw=4:noet:ai:fdm=marker:fmr={{{,}}}:fdl=0:fen
 " vim:ts=4:sw=4:ai:foldmethod=marker:foldlevel=0:foldenable:foldmarker={{{,}}}
 " {{{ Details on how to use vim-plug, with examples.
 "
@@ -155,7 +156,7 @@ set t_Co=256
 set nofoldenable
 
 " My new favourite preeinstalled theme.
-colorscheme koehler
+colorscheme zellner
 
 " Set how the status line will be shown in the bottom of Vim.
 " (not needed if using airline)
@@ -175,8 +176,8 @@ vnoremap / /\v\c
 
 " Simpler way to go to command mode from insert mode.
 inoremap <c-n> <esc>
-"inoremap jf <esc>
-"inoremap fj <esc>
+inoremap jf <esc>
+inoremap fj <esc>
 
 " Quicker window movement.
 nnoremap <c-j> <c-w><c-j>
@@ -213,6 +214,24 @@ inoremap <a-j> <esc>:tabprevious<cr>
 inoremap <a-k> <esc>:tabnext<cr>
 nnoremap <a-j> :tabprevious<cr>
 nnoremap <a-k> :tabnext<cr>
+
+" Search for the selected text.
+vnoremap // y/\V<c-r>=escape(@",'/\')<cr><cr>
+
+" Count occurrences. In normal mode, count occurrences for the word where the
+" cursor is in. In visual mode, count occurrences for the selected text.
+nnoremap <leader><leader>c *N:%s///gn<cr>
+vnoremap <leader><leader>c y/\V<c-r>=escape(@",'/\')<cr><cr>:%s///gn<cr>
+
+" Use alt-c to toggle folds.
+nnoremap <a-c> za
+
+" Use - and | to split in normal mode.
+nnoremap - :split<cr>
+nnoremap \| :vsplit<cr>
+
+" next mapping above
+
 
 "}}}
 " -- [ Leader mappings ] -------------------------------------------------------{{{
