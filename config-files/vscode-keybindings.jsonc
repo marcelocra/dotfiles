@@ -163,6 +163,46 @@
   //   "command": "-calva.loadFile",
   //   "when": "calva:connected"
   // },
+  {
+    "key": "shift+, shift+9",
+    "command": "paredit.slurpSexpBackward",
+    "when": "calva:keybindingsEnabled && editorTextFocus && editorLangId == 'clojure' && paredit:keyMap =~ /original|strict/"
+  },
+  {
+    "key": "ctrl+shift+alt+left",
+    "command": "-paredit.slurpSexpBackward",
+    "when": "vim.mode == 'Normal' && calva:keybindingsEnabled && editorTextFocus && editorLangId == 'clojure' && paredit:keyMap =~ /original|strict/"
+  },
+  {
+    "key": "shift+. shift+0",
+    "command": "paredit.slurpSexpForward",
+    "when": "vim.mode == 'Normal' && calva:keybindingsEnabled && editorTextFocus && editorLangId == 'clojure' && paredit:keyMap =~ /original|strict/"
+  },
+  {
+    "key": "ctrl+alt+.",
+    "command": "-paredit.slurpSexpForward",
+    "when": "vim.mode == 'Normal' && calva:keybindingsEnabled && editorTextFocus && editorLangId == 'clojure' && paredit:keyMap =~ /original|strict/"
+  },
+  {
+    "key": "shift+, shift+0",
+    "command": "paredit.barfSexpForward",
+    "when": "vim.mode == 'Normal' && calva:keybindingsEnabled && editorTextFocus && editorLangId == 'clojure' && paredit:keyMap =~ /original|strict/"
+  },
+  {
+    "key": "ctrl+alt+,",
+    "command": "-paredit.barfSexpForward",
+    "when": "vim.mode == 'Normal' && calva:keybindingsEnabled && editorTextFocus && editorLangId == 'clojure' && paredit:keyMap =~ /original|strict/"
+  },
+  {
+    "key": "shift+. shift+9",
+    "command": "paredit.barfSexpBackward",
+    "when": "vim.mode == 'Normal' && calva:keybindingsEnabled && editorTextFocus && editorLangId == 'clojure' && paredit:keyMap =~ /original|strict/"
+  },
+  {
+    "key": "ctrl+shift+alt+right",
+    "command": "-paredit.barfSexpBackward",
+    "when": "vim.mode == 'Normal' && calva:keybindingsEnabled && editorTextFocus && editorLangId == 'clojure' && paredit:keyMap =~ /original|strict/"
+  },
 
   //============================================================================
   //= paredit
@@ -330,9 +370,23 @@
     "command": "issue.copyGithubPermalink"
   },
   {
+    "key": "ctrl+f",
+    "command": "actions.find"
+  },
+  {
+    "key": "ctrl+h",
+    "command": "editor.action.startFindReplaceAction",
+    "when": "vim.mode == 'Insert' && textInputFocus"
+  },
+  {
     "key": "alt+w",
     "command": "workbench.action.closeActiveEditor",
-    "when": "textInputFocus"
+    "when": "vim.mode == 'Normal' && textInputFocus"
+  },
+  {
+    "key": "ctrl+w",
+    "command": "workbench.action.closeActiveEditor",
+    "when": "vim.mode == 'Normal' && textInputFocus"
   },
   // TODO: play more with this. The idea is to always open the keybindings file
   // in a new VSCode window. Current problem is that if we are in a dev
@@ -509,5 +563,5 @@
     "key": "ctrl+j",
     "command": "selectNextSuggestion",
     "when": "(vim.mode == 'Normal' && vim.active) && (suggestWidgetMultipleSuggestions && suggestWidgetVisible && textInputFocus || suggestWidgetVisible && textInputFocus && !suggestWidgetHasFocusedSuggestion)"
-  },
+  }
 ]

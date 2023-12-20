@@ -101,11 +101,12 @@
   "editor.defaultFormatter": "esbenp.prettier-vscode",
   "editor.cursorStyle": "line-thin",
   "editor.cursorBlinking": "phase",
-  "editor.rulers": [80],
-  "editor.minimap.maxColumn": 80,
+  "editor.rulers": [100, 120],
+  "editor.minimap.maxColumn": 60,
   "editor.minimap.renderCharacters": false,
   "editor.minimap.showSlider": "always",
   "editor.minimap.size": "fill",
+  "editor.minimap.enabled": false,
   "editor.formatOnSave": true,
   "editor.tabCompletion": "onlySnippets",
   "editor.renderWhitespace": "none",
@@ -115,22 +116,10 @@
   // JavaScript
   //============================================================================
   "javascript.updateImportsOnFileMove.enabled": "never",
-  "[javascript]": {
-    "editor.rulers": [80, 100]
-  },
-  "[javascriptreact]": {
-    "editor.rulers": [80, 100]
-  },
 
   //============================================================================
   //= TypeScript
   //============================================================================
-  "[typescript]": {
-    "editor.rulers": [80, 100]
-  },
-  "[typescriptreact]": {
-    "editor.rulers": [80, 100]
-  },
 
   //============================================================================
   //= Svelte
@@ -154,7 +143,6 @@
   "[dart]": {
     "editor.formatOnSave": true,
     "editor.formatOnType": true,
-    "editor.rulers": [80],
     "editor.selectionHighlight": false,
     "editor.suggest.snippetsPreventQuickSuggestions": false,
     "editor.suggestSelection": "first",
@@ -190,9 +178,13 @@
   "gitlens.views.commits.pullRequests.enabled": false,
   "gitlens.hovers.autolinks.enhanced": false,
   "gitlens.hovers.pullRequests.enabled": false,
+  "gitlens.hovers.enabled": false,
   "gitlens.statusBar.pullRequests.enabled": false,
   "gitlens.currentLine.pullRequests.enabled": false,
+  "gitlens.currentLine.enabled": false,
   "gitlens.views.commits.pullRequests.showForCommits": false,
+  "gitlens.codeLens.authors.enabled": false,
+  "gitlens.codeLens.recentChange.enabled": false,
 
   //============================================================================
   //= HTML and markups
@@ -201,7 +193,8 @@
   "[markdown]": {
     "editor.wordWrap": "wordWrapColumn",
     "editor.wordWrapColumn": 80,
-    "editor.wrappingIndent": "same"
+    "editor.wrappingIndent": "same",
+    "editor.rulers": [80, 100, 120]
   },
   "[asciidoc]": {
     "editor.wordWrap": "wordWrapColumn",
@@ -219,7 +212,7 @@
   "vim.useSystemClipboard": true,
   "vim.useCtrlKeys": true,
   "vim.hlsearch": true,
-  "vim.smartRelativeLine": true,
+  "vim.smartRelativeLine": false,
   "vim.foldfix": true,
   "vim.insertModeKeyBindingsNonRecursive": [
     // {
@@ -246,7 +239,7 @@
     {
       "before": ["<leader>", "x"],
       "commands": [":x"]
-    },
+    }
   ],
   "vim.normalModeKeyBindingsNonRecursive": [
     {
@@ -287,7 +280,7 @@
       "after": ["d", "d"]
     },
     {
-      "before": ["<c-c>"],
+      "before": ["<c-n>"],
       "commands": [":nohl"]
     },
     {
@@ -347,7 +340,33 @@
     {
       "before": ["<c-p>"],
       "commands": ["workbench.action.quickOpen"]
-    }
+    },
+
+    // --- calva keybindings
+    {
+      "before": ["<leader>", "e", "e"],
+      "commands": ["calva.evaluateSelection"]
+    },
+    {
+      "before": ["<leader>", "e", "r"],
+      "commands": ["calva.evaluateCurrentTopLevelForm"]
+    },
+
+    {
+      "before": ["<leader>", "e", "c", "e"],
+      "commands": ["calva.evaluateSelectionAsComment"]
+    },
+    {
+      "before": ["<leader>", "e", "c", "e"],
+      "commands": ["calva.evaluateTopLevelFormAsComment"]
+    },
+    {
+      "before": ["<leader>", "E"],
+      "commands": ["calva.evaluateSelectionToSelectionEnd"]
+    },
+    {}
+    // --- calva keybindings end
+
     // The following three commands are mimicking the behavior of Vimium. First
     // one is actually to keep the default J behavior somewhere.
     // {
@@ -388,7 +407,13 @@
     {
       "before": ["p"],
       "after": ["\"", "_", "d", "P"]
-    }
+    },
+    {
+      // search for all occurences of the selected text
+      "before": ["/", "/"],
+      "after": ["y", "/", "<c-r>", "*", "<cr>"]
+    },
+    {}
   ],
   "vim.leader": ",",
 
@@ -432,11 +457,6 @@
   //= Tailwind CSS
   //============================================================================
   "tailwindCSS.emmetCompletions": true,
-
-  //============================================================================
-  //= Misc settings
-  //============================================================================
-  "diffEditor.ignoreTrimWhitespace": false,
   "explorer.openEditors.visible": 0,
   "files.associations": {
     "*.erb": "erb",
@@ -475,7 +495,7 @@
       "editor.lineHighlightBackground": "#00ffff22"
     }
   },
-  "workbench.colorTheme": "Solarized Dark",
+  "workbench.colorTheme": "GitHub Dark Dimmed",
   "workbench.startupEditor": "newUntitledFile",
   "workbench.tree.indent": 20,
   "workbench.tree.renderIndentGuides": "always",
@@ -498,7 +518,10 @@
   "git.openRepositoryInParentFolders": "never",
   "editor.inlineSuggest.enabled": true,
   "github.copilot.enable": {
-    "*": true
+    "*": false,
+    "plaintext": false,
+    "markdown": false,
+    "scminput": false
   },
   "window.newWindowDimensions": "inherit",
   "outline.collapseItems": "alwaysCollapse",
@@ -522,9 +545,12 @@
     "typescript",
     "typescriptreact"
   ],
-  "editor.minimap.enabled": false,
   "workbench.sideBar.location": "right",
   "window.menuBarVisibility": "toggle",
   "haskell.manageHLS": "GHCup",
-  "window.zoomLevel": 2
+  "window.zoomLevel": 1,
+  "[astro]": {
+    "editor.defaultFormatter": "astro-build.astro-vscode"
+  },
+  "diffEditor.ignoreTrimWhitespace": false
 }
