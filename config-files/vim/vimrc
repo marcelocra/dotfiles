@@ -156,7 +156,7 @@ set t_Co=256
 set nofoldenable
 
 " My new favourite preeinstalled theme.
-colorscheme zellner
+colorscheme default
 
 " Set how the status line will be shown in the bottom of Vim.
 " (not needed if using airline)
@@ -164,6 +164,7 @@ colorscheme zellner
 
 " Use the system clipboard to copy to/from.
 set clipboard+=unnamedplus
+
 
 
 "}}}
@@ -238,6 +239,25 @@ vnoremap p "_dP
 " next mapping above
 
 
+
+"}}}
+" -- [ Abbreviations ] ---------------------------------------------------------{{{
+
+
+" Shebang.
+iab sh #!/usr/bin/env
+iab shebang #!/usr/bin/env
+
+" Vim modeline with my preferred defaults:
+"   - foldermethod (fdm): I define the folds
+"   - fmr (foldmarker): curlies are great
+"   - ai (autoindent): continue from previous indentation level
+"   - et (noexpandtabs): use spaces, not tabs
+"   - ts (tabstop): number of spaces that a <tab> counts for
+iab vim # vim:fdm=manual:fmr={{{,}}}:ai:et:ts=4
+
+
+
 "}}}
 " -- [ Leader mappings ] -------------------------------------------------------{{{
 
@@ -252,7 +272,8 @@ let maplocalleader = " "
 " Easily source my vimrc.
 nnoremap <leader><leader>sv :source $MYVIMRC<cr>
 " Easily edit my vimrc.
-nnoremap <leader><leader>ev :tabe $MYVIMRC<cr>
+nnoremap <leader><leader>ev :vspl $MYVIMRC<cr>
+nnoremap <leader><leader>etv :tabe $MYVIMRC<cr>
 
 " Clear last search.
 "
