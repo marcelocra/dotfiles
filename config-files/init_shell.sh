@@ -376,6 +376,13 @@ alias asciidoctor-gen="docker run --rm -v $(pwd):/documents/ asciidoctor/docker-
 # Supabase.
 alias sup="supabase"
 
+# Always use sed with extended regexes.
+if [[ `uname` == "Darwin" ]]; then
+  alias sed='sed -E'
+else
+  alias sed='sed -r'
+fi
+
 
 # Next aliases above!
 
