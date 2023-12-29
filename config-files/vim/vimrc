@@ -1,6 +1,6 @@
 " vim:ts=4:sw=4:noet:ai:fdm=marker:fmr={{{,}}}:fdl=0:fen
-" vim:ts=4:sw=4:ai:foldmethod=marker:foldlevel=0:foldenable:foldmarker={{{,}}}
-" {{{ Details on how to use vim-plug, with examples.
+"
+" Details on how to use vim-plug, with examples. {{{ {{{
 "
 " The default plugin directory will be as follows:
 "   - Vim (Linux/macOS): '~/.vim/plugged'
@@ -53,7 +53,8 @@
 "   Plug 'tpope/vim-vividchalk'
 "   Plug 'marcelocra/vim-colorscheme'
 "
-" }}}
+" }}} }}}
+"
 " -- [ Install plugins and initialize the plugin system ] ----------------------{{{
 
 
@@ -73,7 +74,7 @@ Plug 'bling/vim-airline'
 Plug 'justinmk/vim-sneak'
 
 " Plugins for Clojure and other lisps.
-Plug 'Olical/conjure', { 'for': ['clojure'] }
+"Plug 'Olical/conjure', { 'for': ['clojure'] }
 Plug 'guns/vim-sexp', { 'for': ['clojure'] } 
 Plug 'tpope/vim-sexp-mappings-for-regular-people', { 'for': ['clojure'] } 
 
@@ -236,6 +237,20 @@ nnoremap \| :vsplit<cr>
 " the clipboard content to before the cursor position.
 vnoremap p "_dP
 
+" Show all whitespace characters!
+nnoremap <c-w> :set list!<cr>
+
+" Go to the Nth tab.
+nnoremap <a-1> :tabn 1<cr>
+nnoremap <a-2> :tabn 2<cr>
+nnoremap <a-3> :tabn 3<cr>
+nnoremap <a-4> :tabn 4<cr>
+nnoremap <a-5> :tabn 5<cr>
+nnoremap <a-6> :tabn 6<cr>
+nnoremap <a-7> :tabn 7<cr>
+nnoremap <a-8> :tabn 8<cr>
+nnoremap <a-9> :tabn 9<cr>
+
 " next mapping above
 
 
@@ -245,7 +260,6 @@ vnoremap p "_dP
 
 
 " Shebang.
-iab sh #!/usr/bin/env
 iab shebang #!/usr/bin/env
 
 " Vim modeline with my preferred defaults:
@@ -254,8 +268,8 @@ iab shebang #!/usr/bin/env
 "   - ai (autoindent): continue from previous indentation level
 "   - et (noexpandtabs): use spaces, not tabs
 "   - ts (tabstop): number of spaces that a <tab> counts for
-iab vim # vim:fdm=manual:fmr={{{,}}}:ai:et:ts=4
-
+iab vimmode vim: foldmethod=marker foldmarker={{{,}}} foldlevel=1 foldenable autoindent expandtab tabstop=4 shiftwidth=4
+iab vimmodemd filetype=markdown textwidth=80
 
 
 "}}}
@@ -325,4 +339,8 @@ let g:sneak#s_next = 1
 " molokai settings.
 "let g:molokai_original = 0
 "let g:rehash256 = 0
+
+" Conjure
+" let g:conjure#client#clojure#nrepl#connection#auto_repl#enabled = 0
+
 "}}}

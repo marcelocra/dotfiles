@@ -548,9 +548,9 @@
   "workbench.sideBar.location": "right",
   "window.menuBarVisibility": "toggle",
   "haskell.manageHLS": "GHCup",
-  "window.zoomLevel": 1,
   "[astro]": {
     "editor.defaultFormatter": "astro-build.astro-vscode"
   },
-  "diffEditor.ignoreTrimWhitespace": false
+  "diffEditor.ignoreTrimWhitespace": false,
+  "window.zoomLevel": 1
 }
