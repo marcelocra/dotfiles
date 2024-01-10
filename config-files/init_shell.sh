@@ -1,7 +1,10 @@
+# vim: foldmethod=marker foldmarker={{{,}}} foldlevel=1 foldenable autoindent expandtab tabstop=4 shiftwidth=4
 #!/usr/bin/env sh
-# vim: fdm=marker:fmr={{{,}}}:foldlevel=0:fen
+#
+# TODO: this file is too big already. Perhaps move each
+# section to its own file, in the shell subdir?
 
-# [ Exports ] ------------------------------------------------------------------{{{
+# [ Exports ] ---------------------------------------------------------------{{{
 
 # dotnet.
 export DOTNET_ROOT="${HOME}/bin/dotnet"
@@ -45,7 +48,7 @@ export ASTRO_TELEMETRY_DISABLED=1
 
 
 # }}}
-# [ Functions ] ----------------------------------------------------------------{{{
+# [ Functions ] -------------------------------------------------------------{{{
 
 # Simplifies working with tmux. Tries to create
 # a new session and if it already exists, just
@@ -91,31 +94,21 @@ if [[ ! -z "${MCRA_PROJECTS_FOLDER}" ]]; then
   alias j="easy_jump_to_project"
 fi
 
-editor() {
-  if command -v nvim &> /dev/null; then
+if command -v nvim &> /dev/null; then
     export EDITOR=nvim
-    return
-  fi
-
-  if command -v vim &> /dev/null; then
+elif command -v vim &> /dev/null; then
     export EDITOR=vim
-    return
-  fi
-
-  if command -v vi &> /dev/null; then
+elif command -v vi &> /dev/null; then
     export EDITOR=vi
-    return
-  fi
+else
+    echo "You don't have neovim, vim or vi installed. EDITOR env not defined"
+fi
 
-  echo "You don't have neovim, vim or vi installed. EDITOR var not defined"
-}
-
-editor
 
 
 # }}}
-# [ Aliases ] ------------------------------------------------------------------{{{
-# General stuff.{{{
+# [ Aliases ] ---------------------------------------------------------------{{{
+# General stuff {{{
 
 alias vim="$EDITOR"
 alias vi=vim
@@ -148,201 +141,95 @@ alias ll='l -a'
 alias n=npm
 alias p=pnpm
 alias y=yarn
-
 alias r='n run'
 
 if [[ ! -z "${MCRA_INIT_SHELL}" ]]; then
-  alias init='vim ${MCRA_INIT_SHELL}'
-  alias erc='vim ~/.zshrc'
-  alias src='source ~/.zshrc'
+  alias rc='vim ${MCRA_INIT_SHELL}'
+  alias rcz='vim ~/.zshrc'
+  alias rc.='source ~/.zshrc'
 else
-  alias init="echo 'Define \$MCRA_INIT_SHELL in your rc file'"
-  alias erc=init
-  alias src=init
+  alias rc="echo 'Define \$MCRA_INIT_SHELL in your rc file'"
+  alias rcz=rc
+  alias rc.=rc
 fi
 
 # }}}
-# Git: shortcuts I use frequently{{{
-# -------------------------------
+# Git: shortcuts I use frequently {{{
+# -----------------------------------
 
-alias g='git'
+alias gs='git status'
+# simple and resumed, no branches
+alias gss='git status -s'
+# simple and resumed, with branches
+alias gsb='git status -sb'
 
 alias ga='git add'
 alias gaa='git add --all'
 
 alias gb='git branch'
-alias gbd='git branch -d'
-alias gbD='git branch -D'
 
-alias gcb='git checkout -b'
-alias gcf='git config'
-alias gcfl='git config --list'
-alias gcfso='git config --show-origin'
-
-alias gcl='git clone'
+alias gco='git checkout'
+# Go back to previous branch.
+alias gco-='git checkout -'
 
 alias gc='git commit -v'
 alias gcm='git commit -m'
 
-alias gco='git checkout'
-alias gc-='git checkout -'
-
 alias gd='git d'
-alias gdiff='git diff'
-
-alias gf='git fetch'
-alias gfo='git fetch origin'
-
-alias gpsup='git push --set-upstream origin'
 
 alias gpl="git pull"
-
-alias glg="git log"
-alias glgs='git log --stat'
-alias gld="git log --graph --pretty='%Cred%h%Creset -%C(auto)%d%Creset %s %Cgreen(%ad) %C(bold blue)<%an>%Creset'"
-alias gl="gld -5"
-alias gla="gld"
-alias glga='git log --oneline --decorate --graph --all'
-alias gls='git log --oneline --no-decorate -5'
-alias glsa='git log --oneline --no-decorate'
-alias glt='git log --pretty=format:"* %s"'
-
-# alias gm='git merge'
-# alias gma='git merge --abort'
-
 alias gps="git push"
 alias gpd='git push --dry-run'
 
-alias gra='git remote add'
-
-alias gr='git remote'
-# alias grb='git rebase'
-# alias grba='git rebase --abort'
-# alias grbc='git rebase --continue'
-# alias grbi='git rebase -i'
+alias gld="git log --graph --pretty='%Cred%h%Creset -%C(auto)%d%Creset %s %Cgreen(%ad) %C(bold blue)<%an>%Creset'"
+alias gl="gld -5"
+alias gla="gld"
+# git log graph
+alias glg='git log --oneline --decorate --graph --all'
+# git log simple
+alias glsa="git log --oneline --no-decorate"
+alias gls="glsa -5"
+# git log messages
+alias glm='git log --pretty=format:"* %s"'
 
 alias grs='git restore'
-alias grset='git remote set-url'
 alias grss='git restore --staged'
-alias grv='git remote -v'
-
-alias gsb='git status -sb'
-alias gsh='git show'
-alias gsps='git show --pretty=short --show-signature'
-alias gss='git status -s'
-alias gs="git status"
 
 alias gst='git stash'
 alias gsta='git stash apply'
-# alias gstc='git stash clear'
-# alias gstd='git stash drop'
+alias gstc='git stash clear'
+alias gstd='git stash drop'
 alias gstl='git stash list'
 alias gstp='git stash push -m'
+# TODO: test this when stashing
 alias gsts='git stash show --text'
 alias gstall='git stash --all'
+
+alias gsh='git show'
+alias gsps='git show --pretty=short --show-signature'
 
 alias gt='git tag'
 alias gta='git tag -a'
 alias gts='git tag -s'
 alias gtv='git tag | sort -V'
 
-alias gwch='git whatchanged -p --abbrev-commit --pretty=medium'
+# TODO: test this
+alias gchanges='git whatchanged -p --abbrev-commit --pretty=medium'
 
-alias gi='git init'
-
-alias git-undo-last="git reset HEAD~"
-
-# }}}
-# Git: shortcuts I keep here as reference{{{
-# ---------------------------------------
-# Should either move them above or remove them.
-
-# alias gba='git branch -a'
-# alias gbl='git blame -b -w'
-# alias gbnm='git branch --no-merged'
-# alias gbr='git branch --remote'
-# alias gbs='git bisect'
-# alias gbsb='git bisect bad'
-# alias gbsg='git bisect good'
-# alias gbsr='git bisect reset'
-# alias gbss='git bisect start'
-
-# alias gc!='git commit -v --amend'
-# alias gcn!='git commit -v --no-edit --amend'
-# alias gca='git commit -v -a'
-# alias gca!='git commit -v -a --amend'
-# alias gcan!='git commit -v -a --no-edit --amend'
-# alias gcam='git commit -a -m'
-
-# alias gclr='git clone --recurse-submodules'
-# alias gclean='git clean -id'
-# alias gpristine='git reset --hard && git clean -dffx'
-# alias gcor='git checkout --recurse-submodules'
-# alias gcount='git shortlog -sn'
-# alias gcp='git cherry-pick'
-# alias gcpa='git cherry-pick --abort'
-# alias gcpc='git cherry-pick --continue'
-
-# alias gdca='git diff --cached'
-# alias gdcw='git diff --cached --word-diff'
-# alias gdct='git describe --tags $(git rev-list --tags --max-count=1)'
-# alias gds='git diff --staged'
-# alias gdt='git diff-tree --no-commit-id --name-only -r'
-# alias gdw='git diff --word-diff'
-
-# alias gfg='git ls-files | grep'
-
-# alias ggpull='git pull origin'
-# alias ggpush='git push origin'
-
-# alias ghh='git help'
-
-# alias glgp='git log --stat -p'
-# alias glgg='git log --graph'
-# alias glgga='git log --graph --decorate --all'
-# alias glm='git log --graph --max-count=10'
-# alias glo='git log --oneline --decorate'
-# alias glol="git log --graph --pretty='%Cred%h%Creset -%C(auto)%d%Creset %s %Cgreen(%ar) %C(bold blue)<%an>%Creset'"
-# alias glols="git log --graph --pretty='%Cred%h%Creset -%C(auto)%d%Creset %s %Cgreen(%ar) %C(bold blue)<%an>%Creset' --stat"
-# alias glods="git log --graph --pretty='%Cred%h%Creset -%C(auto)%d%Creset %s %Cgreen(%ad) %C(bold blue)<%an>%Creset' --date=short"
-# alias glola="git log --graph --pretty='%Cred%h%Creset -%C(auto)%d%Creset %s %Cgreen(%ar) %C(bold blue)<%an>%Creset' --all"
-# alias glog='git log --oneline --decorate --graph'
-
-# alias gpf!='git push --force'
-
-# alias grbo='git rebase --onto'
-# alias grbs='git rebase --skip'
-# alias grev='git revert'
-# alias grh='git reset'
-# alias grhh='git reset --hard'
-# alias grm='git rm'
-# alias grmc='git rm --cached'
-# alias grmv='git remote rename'
-# alias grrm='git remote remove'
-
-# alias grt='cd "$(git rev-parse --show-toplevel || echo .)"'
-# alias gru='git reset --'
-# alias grup='git remote update'
-
-# alias gunignore='git update-index --no-assume-unchanged'
-# alias gunwip='git log -n 1 | grep -q -c "\-\-wip\-\-" && git reset HEAD~1'
-# alias gup='git pull --rebase'
-# alias gupv='git pull --rebase -v'
-# alias gupa='git pull --rebase --autostash'
-# alias gupav='git pull --rebase --autostash -v'
+alias git-undo-last='git reset HEAD~'
 
 # }}}
-# Git lfs{{{
-# -------
+# Git lfs {{{
+# -----------
 
 alias glfsdry="git lfs push origin main --dry-run --all"
 alias glfss="git lfs status"
 
 # }}}
-# Docker{{{
-# ------
+# Docker {{{
+# ----------
 
-alias dc="docker-compose"
+alias dc="docker compose"
 alias docker-prune-month-old-images='docker image prune -a --filter "until=720h"'
 alias docker-prune-two-week-old-images='docker image prune -a --filter "until=336h"'
 
@@ -357,8 +244,8 @@ docker_images_sorted() {
 alias di='docker_images_sorted'
 
 # }}}
-# Add aliases that are not grouped by some context below{{{
-# ------------------------------------------------------
+# Aliases that are not grouped by some context {{{
+# ------------------------------------------------
 # alias code="code-insiders"
 alias code="code"
 alias p1="code \$MCRA_P1"
@@ -383,12 +270,17 @@ else
   alias sed='sed -r'
 fi
 
+# I never remember how to extract tar files. Now I discovered that it
+# automatically detect the compression format, so I only need to provide the -x
+# (extract) and the -f (point to file) options (f has to be the last one if
+# they are provided together).
+alias untar="tar -xf"
 
 # Next aliases above!
 
 # }}}
 # }}}
-# [ Commands ] -----------------------------------------------------------------{{{
+# [ Commands ] --------------------------------------------------------------{{{
 
 
 # Ignore commands for Mac and run them in Ubuntu (should work in other Unixes
@@ -400,3 +292,6 @@ if [[ ! `uname` == "Darwin" ]]; then
     fi
 fi
 # }}}
+
+# next commands above
+
