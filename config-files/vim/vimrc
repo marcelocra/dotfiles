@@ -237,7 +237,7 @@ vnoremap p "_dP
 " us to search again for the same string (seems better).
 " nnoremap <silent> <c-c> :let @/ = ""<cr>
 nnoremap <silent> <c-n> :nohl<cr>
-inoremap <silent> <c-c> <esc>:nohl<cr>a
+"inoremap <silent> <c-c> <esc>:nohl<cr>a
 
 " Go to the Nth tab.
 nnoremap <a-1> :tabn 1<cr>
