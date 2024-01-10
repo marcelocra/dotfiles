@@ -1,4 +1,4 @@
-" vim:ts=4:sw=4:noet:ai:fdm=marker:fmr={{{,}}}:fdl=0:fen
+" vim: foldmethod=marker foldmarker={{{,}}} foldlevel=1 foldenable autoindent expandtab tabstop=4 shiftwidth=4 textwidth=80
 "
 " Details on how to use vim-plug, with examples. {{{ {{{
 "
@@ -91,16 +91,11 @@ syntax enable
 " When inserting a tab in the beggining of the line, it will be N spaces long
 " and a backspace will go back N spaces also (where N is the chosen number).
 set smarttab
-set shiftwidth=2
-set tabstop=2
+set shiftwidth=4
+set tabstop=4
 
 " Use spaces instead of tabs.
 set expandtab
-
-" Automatically insert a linebreak after the selected width.
-"set textwidth=0   " No line breaks for me.
-"set wrapmargin=0  " I really don't want you to wrap, Vim.
-"set nowrap  " Don't wrap lines.
 
 " Indentation.
 set autoindent
@@ -115,7 +110,7 @@ set norelativenumber
 
 " Show line and column.
 set ruler
-set colorcolumn=80
+set colorcolumn=60,80,100,120
 
 " Highlight search matches as you type.
 set hlsearch
@@ -128,8 +123,10 @@ set laststatus=2
 set encoding=utf-8
 
 " Change tab and trail characters.
-set listchars=eol:$,tab:»-,trail:.,extends:>,precedes:<,nbsp:_
-" set listchars=eol:¬,tab:»˽,trail:~,extends:>,precedes:<,nbsp:_
+let &showbreak = '+++ '
+set listchars=eol:↲,tab:→\ ,trail:·,extends:>,precedes:<,nbsp:%
+"set listchars=eol:$,tab:».,trail:.,extends:>,precedes:<,nbsp:_
+set nolist
 
 " Highlight the cursor line.
 set cursorline
@@ -153,14 +150,12 @@ set fileformats=unix
 " Set proper colors.
 set t_Co=256
 
-" Avoid folding. Note: 'za' to unfold.
-set nofoldenable
 
 " My new favourite preeinstalled theme.
 colorscheme slate
 
-" Set how the status line will be shown in the bottom of Vim.
-" (not needed if using airline)
+" Set how the status line will be shown in the bottom of Vim. (Not needed if
+" using airline.)
 "set statusline=%<%F\ %m%r%h\ %=lines:%l/%L\ col:%c%V
 
 " Use the system clipboard to copy to/from.
@@ -237,8 +232,12 @@ nnoremap \| :vsplit<cr>
 " the clipboard content to before the cursor position.
 vnoremap p "_dP
 
-" Show all whitespace characters!
-nnoremap <c-w> :set list!<cr>
+" Clear last search.
+" TODO: understand why I used this instead of :nohl, as it allows
+" us to search again for the same string (seems better).
+" nnoremap <silent> <c-c> :let @/ = ""<cr>
+nnoremap <silent> <c-n> :nohl<cr>
+inoremap <silent> <c-c> <esc>:nohl<cr>a
 
 " Go to the Nth tab.
 nnoremap <a-1> :tabn 1<cr>
@@ -251,8 +250,16 @@ nnoremap <a-7> :tabn 7<cr>
 nnoremap <a-8> :tabn 8<cr>
 nnoremap <a-9> :tabn 9<cr>
 
+" Change tabs.
+nnoremap [t :tabprevious<cr>
+nnoremap ]t :tabnext<cr>
+
+" Change generic autocomplete mapping.
+inoremap <c-space> <c-n>
+
 " Ignore <c-b>, as I want to get used to <c-u>.
 nnoremap <c-b> :echo 'use <' . 'c-u> instead!'<cr>
+
 
 " next mapping above
 
@@ -287,15 +294,6 @@ nnoremap <leader><leader>sv :source $MYVIMRC<cr>
 nnoremap <leader><leader>ev :vspl $MYVIMRC<cr>
 nnoremap <leader><leader>etv :tabe $MYVIMRC<cr>
 
-" Clear last search.
-"
-" TODO: understand why I used this instead of :nohl, as it allows
-" us to search again for the same string (seems better).
-" nnoremap <silent> <c-c> :let @/ = ""<cr>
-nnoremap <silent> <c-c> :nohl<cr>
-nnoremap <silent> <c-n> :nohl<cr>
-inoremap <silent> <c-c> <esc>:nohl<cr>a
-
 " Save while in insert mode without leaving insert mode.
 nnoremap <leader>w :w<cr>
 inoremap <leader>w <esc>:w<cr>
@@ -311,12 +309,8 @@ nnoremap <leader>x :x<cr>
 " Select all.
 nnoremap <leader>a ggVG
 
-" Change tabs.
-nnoremap [t :tabprevious<cr>
-nnoremap ]t :tabnext<cr>
+" next leader mapping above
 
-" Change generic autocomplete mapping.
-inoremap <c-space> <c-n>
 
 
 "}}}
@@ -334,11 +328,5 @@ nnoremap <c-p> :Files<cr>
 let g:sneak#label = 1
 let g:sneak#s_next = 1
 
-" molokai settings.
-"let g:molokai_original = 0
-"let g:rehash256 = 0
-
-" Conjure
-" let g:conjure#client#clojure#nrepl#connection#auto_repl#enabled = 0
 
 "}}}
