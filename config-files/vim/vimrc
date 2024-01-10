@@ -1,4 +1,4 @@
-" vim: foldmethod=marker foldmarker={{{,}}} foldlevel=1 foldenable autoindent expandtab tabstop=4 shiftwidth=4 textwidth=80
+" vim: foldmethod=marker foldmarker={{{,}}} foldlevel=0 foldenable autoindent expandtab tabstop=4 shiftwidth=4 textwidth=80
 "
 " Details on how to use vim-plug, with examples. {{{ {{{
 "
@@ -54,9 +54,7 @@
 "   Plug 'marcelocra/vim-colorscheme'
 "
 " }}} }}}
-"
-" -- [ Install plugins and initialize the plugin system ] ----------------------{{{
-
+" -- [ Install plugins and initialize the plugin system ] -------------------{{{
 
 call plug#begin()  
 
@@ -82,8 +80,7 @@ call plug#end()
 
 
 "}}}
-" -- [ Settings ] ------------------------------------------------------------{{{
-
+" -- [ Settings ] -----------------------------------------------------------{{{
 
 " Syntax highlighting.
 syntax enable
@@ -164,8 +161,7 @@ set clipboard+=unnamedplus
 
 
 "}}}
-" -- [ Mappings ] --------------------------------------------------------------{{{
-
+" -- [ Mappings ] -----------------------------------------------------------{{{
 
 " Use normal regex.
 nnoremap / /\v\c
@@ -266,8 +262,7 @@ nnoremap <c-b> :echo 'use <' . 'c-u> instead!'<cr>
 
 
 "}}}
-" -- [ Abbreviations ] ---------------------------------------------------------{{{
-
+" -- [ Abbreviations ] ------------------------------------------------------{{{
 
 " Shebang.
 iab shebang #!/usr/bin/env
@@ -278,8 +273,7 @@ iab vimmodemd filetype=markdown textwidth=80
 
 
 "}}}
-" -- [ Leader mappings ] -------------------------------------------------------{{{
-
+" -- [ Leader mappings ] ----------------------------------------------------{{{
 
 " Change leader.
 let mapleader = ","
@@ -314,8 +308,7 @@ nnoremap <leader>a ggVG
 
 
 "}}}
-" -- [ Plugins mappings ] ------------------------------------------------------{{{
-
+" -- [ Plugins mappings ] ---------------------------------------------------{{{
 
 " For vscode-neovim. Settings that should be enabled only in cmdline vim
 " should go here.
@@ -330,3 +323,12 @@ let g:sneak#s_next = 1
 
 
 "}}}
+" -- [ Auto commands ] ------------------------------------------------------{{{
+
+augroup gitcommitColorColumn
+    autocmd!
+    autocmd FileType gitcommit set colorcolumn=51
+augroup END
+
+" }}}
+
