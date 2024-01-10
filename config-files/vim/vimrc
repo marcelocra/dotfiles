@@ -325,7 +325,7 @@ let g:sneak#s_next = 1
 "}}}
 " -- [ Auto commands ] ------------------------------------------------------{{{
 
-augroup gitcommitColorColumn
+augroup myautocommands
     autocmd!
     autocmd FileType gitcommit set colorcolumn=51
 augroup END
