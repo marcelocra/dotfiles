@@ -74,7 +74,7 @@ Plug 'bling/vim-airline'
 Plug 'justinmk/vim-sneak'
 
 " Plugins for Clojure and other lisps.
-"Plug 'Olical/conjure', { 'for': ['clojure'] }
+Plug 'Olical/conjure', { 'for': ['clojure'] }
 Plug 'guns/vim-sexp', { 'for': ['clojure'] } 
 Plug 'tpope/vim-sexp-mappings-for-regular-people', { 'for': ['clojure'] } 
 
@@ -157,7 +157,7 @@ set t_Co=256
 set nofoldenable
 
 " My new favourite preeinstalled theme.
-colorscheme default
+colorscheme slate
 
 " Set how the status line will be shown in the bottom of Vim.
 " (not needed if using airline)
@@ -251,6 +251,9 @@ nnoremap <a-7> :tabn 7<cr>
 nnoremap <a-8> :tabn 8<cr>
 nnoremap <a-9> :tabn 9<cr>
 
+" Ignore <c-b>, as I want to get used to <c-u>.
+nnoremap <c-b> :echo 'use <' . 'c-u> instead!'<cr>
+
 " next mapping above
 
 
@@ -262,12 +265,7 @@ nnoremap <a-9> :tabn 9<cr>
 " Shebang.
 iab shebang #!/usr/bin/env
 
-" Vim modeline with my preferred defaults:
-"   - foldermethod (fdm): I define the folds
-"   - fmr (foldmarker): curlies are great
-"   - ai (autoindent): continue from previous indentation level
-"   - et (noexpandtabs): use spaces, not tabs
-"   - ts (tabstop): number of spaces that a <tab> counts for
+" Vim modeline with my preferred defaults.
 iab vimmode vim: foldmethod=marker foldmarker={{{,}}} foldlevel=1 foldenable autoindent expandtab tabstop=4 shiftwidth=4
 iab vimmodemd filetype=markdown textwidth=80
 

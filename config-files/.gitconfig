@@ -6,9 +6,11 @@
   # lf (\n).
   autocrlf = false
   eol = lf
+  pager = less -F -X
 
 [user]
   name = Marcelo Almeida
+  email = 155087689+dnf331@users.noreply.github.com
 
 [init]
   defaultBranch = main
@@ -93,9 +95,15 @@
   process = git-lfs filter-process
   required = true
   clean = git-lfs clean -- %f
+
+
+# [ Credential ] ---------------------------------------------------------------
+
+
 [credential "https://github.com"]
 	helper = 
 	helper = !/usr/bin/gh auth git-credential
+
 [credential "https://gist.github.com"]
 	helper = 
 	helper = !/usr/bin/gh auth git-credential
