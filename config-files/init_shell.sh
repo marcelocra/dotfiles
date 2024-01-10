@@ -31,7 +31,8 @@ export PATH="$FLYCTL_INSTALL/bin:$PATH"
 export PATH="${PATH}:${HOME}/bin"
 
 # fzf.
-export FZF_TMUX_OPTS='-p80%,60%'
+# TODO: set this up only for tmux above 3.2
+#export FZF_TMUX_OPTS='-p80%,60%'
 
 # Nextjs.
 # Print what would be collected to stderr without sending it. Set this to 0 to
@@ -120,7 +121,8 @@ fi
 # Features:
 #   - 256: forces tmux to assume the terminal supports 256 colors. It is the
 #     same as running tmux with -2: `tmux -2`.
-alias tmux='TERM=xterm-256color tmux -T 256'
+# alias tmux='TERM=xterm-256color tmux -T 256'
+# alias tmux='tmux -2'
 
 alias pip=pip3
 
