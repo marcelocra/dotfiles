@@ -32,7 +32,8 @@ export PATH="${PATH}:${HOME}/bin"
 
 # fzf.
 # TODO: set this up only for tmux above 3.2
-#export FZF_TMUX_OPTS='-p80%,60%'
+# export FZF_TMUX_OPTS='-p80%,60%'
+export FZF_TMUX_OPTS='-d50%'
 
 # Nextjs.
 # Print what would be collected to stderr without sending it. Set this to 0 to
