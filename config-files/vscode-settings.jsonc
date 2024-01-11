@@ -61,14 +61,14 @@
   // CodeNewRoman
   // ------------
   // "editor.fontWeight": "bold",
-  "editor.fontFamily": "'CodeNewRoman Nerd Font', 'CodeNewRoman Nerd Font Mono', monospace",
-  "editor.fontSize": 13,
+  // "editor.fontFamily": "'CodeNewRoman Nerd Font', 'CodeNewRoman Nerd Font Mono', monospace",
+  // "editor.fontSize": 13,
 
   // // Meslo
   // // -----
   // // "editor.fontWeight": "bold",
-  // "editor.fontFamily": "'MesloLGS Nerd Font', 'MesloLGS NF', monospace",
-  // "editor.fontSize": 15,
+  "editor.fontFamily": "'MesloLGS Nerd Font', 'MesloLGS NF', monospace",
+  "editor.fontSize": 13,
 
   //============================================================================
   //= Editor settings
@@ -85,7 +85,7 @@
   "editor.quickSuggestions": {
     "other": false,
     "comments": false,
-    "strings": true
+    "strings": false
   },
   "editor.parameterHints.enabled": false,
   "editor.suggest.snippetsPreventQuickSuggestions": false,
@@ -111,6 +111,7 @@
   "editor.tabCompletion": "onlySnippets",
   "editor.renderWhitespace": "none",
   "editor.acceptSuggestionOnCommitCharacter": false,
+  "editor.hover.delay": 1000,
 
   //============================================================================
   // JavaScript
@@ -342,29 +343,58 @@
       "commands": ["workbench.action.quickOpen"]
     },
 
-    // --- calva keybindings
+    // --- calva keybindings - making them more conjure-ish
     {
-      "before": ["<leader>", "e", "e"],
+      // evaluates current form
+      // default: ctrl+enter
+      "before": [" ", "e", "e"],
       "commands": ["calva.evaluateSelection"]
     },
     {
-      "before": ["<leader>", "e", "r"],
+      // evaluates current top level form
+      // default: alt+enter
+      "before": [" ", "e", "r"],
       "commands": ["calva.evaluateCurrentTopLevelForm"]
     },
-
     {
-      "before": ["<leader>", "e", "c", "e"],
+      "before": [" ", "e", "c", "e"],
       "commands": ["calva.evaluateSelectionAsComment"]
     },
     {
-      "before": ["<leader>", "e", "c", "e"],
+      "before": [" ", "e", "c", "r"],
       "commands": ["calva.evaluateTopLevelFormAsComment"]
     },
     {
-      "before": ["<leader>", "E"],
-      "commands": ["calva.evaluateSelectionToSelectionEnd"]
+      "before": [" ", "e", "b"],
+      "commands": ["calva.loadFile"]
     },
-    {}
+    {
+      "before": ["<a-i>"],
+      "commands": ["editor.action.showHover"]
+    },
+    {
+      "before": ["K"],
+      "commands": ["calva.printClojureDocsToOutputWindow"]
+    },
+    {
+      "before": [" ", "d", "$"],
+      "commands": ["paredit.killListForward"]
+    },
+    {
+      "before": [" ", "d", "0"],
+      "commands": ["paredit.killListBackward"]
+    },
+    {
+      "before": [" ", "d", "w"],
+      "commands": ["paredit.spliceSexpKillForward"]
+    },
+    {
+      "before": [" ", "d", "b"],
+      "commands": ["paredit.spliceSexpKillBackward"]
+    },
+    {
+      // nextcalva
+    },
     // --- calva keybindings end
 
     // The following three commands are mimicking the behavior of Vimium. First
@@ -381,6 +411,11 @@
     //   "before": ["K"],
     //   "commands": [":tabn"]
     // }
+    {
+      "before": ["<c-b>"],
+      "commands": [""]
+    },
+    {}
   ],
   "vim.visualModeKeyBindingsNonRecursive": [
     {
@@ -413,6 +448,10 @@
       "before": ["/", "/"],
       "after": ["y", "/", "<c-r>", "*", "<cr>"]
     },
+    // {
+    //   "before": [" ", "E"],
+    //   "commands": ["calva.evaluateSelectionToSelectionEnd"]
+    // },
     {}
   ],
   "vim.leader": ",",
@@ -430,7 +469,7 @@
     "maxLength": 50
   },
   "[clojure]": {
-    "editor.wordSeparators": "\t ()\"':,;~@#$%^&{}[]`",
+    "editor.wordSeparators": "\t ()\"':,;~@#$%^&{}[]`.+",
     "editor.autoClosingBrackets": "always",
     "editor.autoClosingQuotes": "always",
     "editor.formatOnType": true,
@@ -442,7 +481,7 @@
       " ": true,
       "꞉": true
     },
-    "editor.defaultFormatter": "betterthantomorrow.calva"
+    "editor.defaultFormatter": "betterthantomorrow.calva",
   },
 
   //============================================================================

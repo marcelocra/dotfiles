@@ -125,7 +125,7 @@
   },
 
   //============================================================================
-  //= calva
+  //= calva - start
   //============================================================================
 
   // {
@@ -166,7 +166,7 @@
   {
     "key": "shift+, shift+9",
     "command": "paredit.slurpSexpBackward",
-    "when": "calva:keybindingsEnabled && editorTextFocus && editorLangId == 'clojure' && paredit:keyMap =~ /original|strict/"
+    "when": "vim.mode == 'Normal' && calva:keybindingsEnabled && editorTextFocus && editorLangId == 'clojure' && paredit:keyMap =~ /original|strict/"
   },
   {
     "key": "ctrl+shift+alt+left",
@@ -203,6 +203,23 @@
     "command": "-paredit.barfSexpBackward",
     "when": "vim.mode == 'Normal' && calva:keybindingsEnabled && editorTextFocus && editorLangId == 'clojure' && paredit:keyMap =~ /original|strict/"
   },
+  {
+    "key": "ctrl+i",
+    "command": "-calva-fmt.tabIndent",
+    "when": "calva:keybindingsEnabled && editorTextFocus && !editorReadOnly && !hasOtherSuggestions && !suggestWidgetVisible && editorLangId == 'clojure'"
+  },
+  {
+    "key": "ctrl+backspace",
+    "command": "-paredit.killListBackward",
+    "when": "calva:keybindingsEnabled && editorTextFocus && editorLangId == 'clojure' && paredit:keyMap =~ /original|strict/"
+  },
+  {
+    "key": "ctrl+delete",
+    "command": "-paredit.killListForward",
+    "when": "calva:keybindingsEnabled && editorTextFocus && editorLangId == 'clojure' && paredit:keyMap =~ /original|strict/"
+  },
+
+  // calvaend
 
   //============================================================================
   //= paredit
