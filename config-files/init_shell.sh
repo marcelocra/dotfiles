@@ -1,8 +1,8 @@
-# vim: foldmethod=marker foldmarker={{{,}}} foldlevel=1 foldenable autoindent expandtab tabstop=4 shiftwidth=4
 #!/usr/bin/env sh
+# vim: foldmethod=marker foldmarker={{{,}}} foldlevel=1 foldenable autoindent expandtab tabstop=4 shiftwidth=4
 #
-# TODO: this file is too big already. Perhaps move each
-# section to its own file, in the shell subdir?
+# TODO: this file is too big already. Perhaps move each section to its own
+# file, in the shell subdir?
 
 # [ Exports ] ---------------------------------------------------------------{{{
 
@@ -84,17 +84,18 @@ tmx() {
 }
 
 
-if [[ ! -z "${MCRA_PROJECTS_FOLDER}" ]]; then
-  easy_jump_to_project() {
-    if [[ ! -z "$1" ]]; then
-      pushd ${MCRA_PROJECTS_FOLDER}/$1
+easy_jump_to_project() {
+    if [[ ! -z "${MCRA_PROJECTS_FOLDER}" ]]; then
+        if [[ ! -z "$1" ]]; then
+            pushd ${MCRA_PROJECTS_FOLDER}/$1
+        else
+            popd
+        fi
     else
-      popd
+        echo '${MCRA_PROJECTS_FOLDER} not defined'
     fi
-  }
-
-  alias j="easy_jump_to_project"
-fi
+}
+alias j="easy_jump_to_project"
 
 if command -v nvim &> /dev/null; then
     export EDITOR=nvim
@@ -115,7 +116,7 @@ fi
 alias vim="$EDITOR"
 alias vi=vim
 if [[ $EDITOR == "nvim" ]]; then
-  alias vimdiff="nvim -d"
+    alias vimdiff="nvim -d"
 fi
 
 # The -T option sets terminal features for the client. Uses csv format.
@@ -128,15 +129,15 @@ fi
 alias pip=pip3
 
 if [[ `uname` == "Darwin" ]]; then
-  # Mac doesn't support the --time-style flag.
-  alias l='ls -lFh -t'
+    # Mac doesn't support the --time-style flag.
+    alias l='ls -lFh -t'
 else
-  # -l: print as a list.
-  # -F: classify (folder vs files).
-  # -h: print human readable sizes (using K, M, G instead of bytes).
-  # -t: sort by time, most recently updated first.
-  # --time-style: how to show time. Currently, 30mar23[22:10].
-  alias l='ls -lFh -t --time-style="+%d%b%y[%H:%M]"'
+    # -l: print as a list.
+    # -F: classify (folder vs files).
+    # -h: print human readable sizes (using K, M, G instead of bytes).
+    # -t: sort by time, most recently updated first.
+    # --time-style: how to show time. Currently, 30mar23[22:10].
+    alias l='ls -lFh -t --time-style="+%d%b%y[%H:%M]"'
 fi
 
 alias ll='l -a'
@@ -146,14 +147,18 @@ alias p=pnpm
 alias y=yarn
 alias r='n run'
 
-if [[ ! -z "${MCRA_INIT_SHELL}" ]]; then
-  alias rc='vim ${MCRA_INIT_SHELL}'
-  alias rcz='vim ~/.zshrc'
-  alias rc.='source ~/.zshrc'
+if [[ ! -z "${MCRA_INIT_SHELL}" && ! -z "${MCRA_LOCAL_SHELL}" ]]; then
+    alias rc='vim $MCRA_INIT_SHELL'
+    alias rcl='vim $MCRA_LOCAL_SHELL'
+    alias rcz='vim ~/.zshrc'
+    alias rcb='vim ~/.bashrc'
+    alias rc.='source $MCRA_INIT_SHELL && source $MCRA_LOCAL_SHELL'
 else
-  alias rc="echo 'Define \$MCRA_INIT_SHELL in your rc file'"
-  alias rcz=rc
-  alias rc.=rc
+    alias rc="echo 'Define \$MCRA_INIT_SHELL and \$MCRA_LOCAL_SHELL in your rc file'"
+    alias rcl=rc
+    alias rcz=rc
+    alias rcb=rc
+    alias rc.=rc
 fi
 
 # }}}
@@ -237,14 +242,14 @@ alias docker-prune-month-old-images='docker image prune -a --filter "until=720h"
 alias docker-prune-two-week-old-images='docker image prune -a --filter "until=336h"'
 
 docker_images_sorted() {
-  docker images --format "table {{.ID}}\t{{.Size}}\t{{.Repository}}:{{.Tag}}" \
-    | head -n1
-  docker images --format "{{.ID}}\t{{.Size}}\t{{.Repository}}:{{.Tag}}" \
-    | awk '{match($2, /([0-9.]+)([KMG]?B)/, a); size = a[1]; unit = a[2]; if (unit == "GB") size *= 1024; else if (unit == "KB") size /= 1024; printf "%s\t%09.2f MB\t%s \n", $1, size, $3}' \
-    | (sed -u 1q; sort -k 2 -h)
-}
+    docker images --format "table {{.ID}}\t{{.Size}}\t{{.Repository}}:{{.Tag}}" \
+        | head -n1
+            docker images --format "{{.ID}}\t{{.Size}}\t{{.Repository}}:{{.Tag}}" \
+                | awk '{match($2, /([0-9.]+)([KMG]?B)/, a); size = a[1]; unit = a[2]; if (unit == "GB") size *= 1024; else if (unit == "KB") size /= 1024; printf "%s\t%09.2f MB\t%s \n", $1, size, $3}' \
+                | (sed -u 1q; sort -k 2 -h)
+            }
 
-alias di='docker_images_sorted'
+            alias di='docker_images_sorted'
 
 # }}}
 # Aliases that are not grouped by some context {{{
@@ -268,9 +273,9 @@ alias sup="supabase"
 
 # Always use sed with extended regexes.
 if [[ `uname` == "Darwin" ]]; then
-  alias sed='sed -E'
+    alias sed='sed -E'
 else
-  alias sed='sed -r'
+    alias sed='sed -r'
 fi
 
 # I never remember how to extract tar files. Now I discovered that it
