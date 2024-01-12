@@ -216,31 +216,45 @@
   "vim.smartRelativeLine": false,
   "vim.foldfix": true,
   "vim.insertModeKeyBindingsNonRecursive": [
-    // {
-    //   "before": ["j", "f"],
-    //   "after": ["<esc>"]
-    // },
-    // {
-    //   "before": ["f", "j"],
-    //   "after": ["<esc>"]
-    // },
     {
-      "before": ["<c-n>"],
+      "before": ["j", "f"],
       "after": ["<esc>"]
     },
     {
+      "before": ["f", "j"],
+      "after": ["<esc>"]
+    },
+    {
+      // something to try...
+      // TODO: review later
+      "before": ["<c-m>"],
+      "after": ["<esc>"]
+    },
+    {
+      // save a leave insert mode
       "before": ["<leader>", "w"],
       "commands": [":w"],
       "after": ["<esc>"]
     },
     {
-      "before": ["<leader>", "q"],
-      "commands": [":x"]
+      // save but stay in insert mode
+      "before": ["<leader>", "s"],
+      "commands": [":w"],
+      "after": ["<esc>", "a"]
     },
     {
+      // try to quit without saving
+      "before": ["<leader>", "q"],
+      "commands": [":q"]
+    },
+    {
+      // save and quit
       "before": ["<leader>", "x"],
       "commands": [":x"]
-    }
+    },
+    // nextviminsert - copy next curlies above
+    {},
+    {}
   ],
   "vim.normalModeKeyBindingsNonRecursive": [
     {
@@ -415,6 +429,8 @@
       "before": ["<c-b>"],
       "commands": [""]
     },
+    // nextvimnormal - copy next curlies above
+    {},
     {}
   ],
   "vim.visualModeKeyBindingsNonRecursive": [
