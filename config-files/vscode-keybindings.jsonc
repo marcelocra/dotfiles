@@ -223,6 +223,16 @@
     "command": "-paredit.killListForward",
     "when": "calva:keybindingsEnabled && editorTextFocus && editorLangId == 'clojure' && paredit:keyMap =~ /original|strict/"
   },
+  {
+    "key": "backspace",
+    "command": "-paredit.deleteBackward",
+    "when": "calva:keybindingsEnabled && editorTextFocus && !calva:cursorInComment && !editorHasMultipleSelections && !editorReadOnly && editorLangId == 'clojure' && paredit:keyMap == 'strict'"
+  },
+  {
+    "key": "backspace",
+    "command": "-paredit.deleteBackward",
+    "when": "(vim.mode == 'Normal' || vim.mode == 'SearchInProgressMode') && calva:keybindingsEnabled && editorTextFocus && !calva:cursorInComment && !editorHasMultipleSelections && !editorReadOnly && editorLangId == 'clojure' && paredit:keyMap == 'strict'"
+  },
 
   // calvaend
 
