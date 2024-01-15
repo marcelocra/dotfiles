@@ -36,16 +36,50 @@
  ;;   :test {:extra-paths ["test"]}
  ;; }
  :aliases
- {:tink {:extra-deps {com.google.crypto.tink/tink {:mvn/version "1.12.0"}}}
+ {:fmt 
+  {:deps {dev.weavejester/cljfmt {:mvn/version "0.12.0"}}
+   :ns-default cljfmt.tool}
 
-  :fmt {:deps {dev.weavejester/cljfmt {:mvn/version "0.12.0"}}
-        :ns-default cljfmt.tool}
+  ;; See https://github.com/bhauman/rebel-readline
+  ;; Start a Rebel Readline REPL.
+  :rebel
+  {:extra-deps {com.bhauman/rebel-readline {:mvn/version "0.1.4"}}
+   :main-opts  ["-m" "rebel-readline.main"]}
 
-  :repl {:extra-deps {nrepl/nrepl       {:mvn/version "1.0.0"}
-                      cider/cider-nrepl {:mvn/version "0.42.1"}}
-         :main-opts  ["--main" "nrepl.cmdline"
-                      "--middleware" "[cider.nrepl/cider-middleware]"
-                      "--interactive"]}}
+  ;; See https://nrepl.org/
+  ;; Start a basic nREPL server on a random available port.
+  :nrepl 
+  {:extra-deps {nrepl/nrepl {:mvn/version "1.0.0"}}
+   :main-opts ["-m" "nrepl.cmdline"]}
+
+  ;; See https://nrepl.org/
+  ;; Start a CIDER-enhanced nREPL server on a random available port.
+  :cider-nrepl 
+  {:extra-deps {cider/cider-nrepl {:mvn/version "0.42.1"}}
+   :main-opts ["--main" "nrepl.cmdline"
+                "--middleware" "[cider.nrepl/cider-middleware]"
+                "--interactive"]}
+
+
+  ;; Extra deps ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+  ;; See https://developers.google.com/tink
+  :tink
+  {:extra-deps {com.google.crypto.tink/tink {:mvn/version "1.12.0"}}}
+  
+  ;; See https://github.com/djblue/portal
+  :portal
+  {:extra-deps {djblue/portal {:mvn/version "RELEASE"}}}
+
+  ;; See https://github.com/stuarthalloway/reflector
+  :reflect
+  {:extra-deps {io.github.stuarthalloway/reflector
+                {:git/url "https://github.com/stuarthalloway/reflector"
+                 :sha "93a0c19b4526c1180959e940202928d35e5c3cef"}}}
+
+
+  ;; Prevents auto-formatter from wrapping.
+  }
 
 ;; Provider attributes
 
