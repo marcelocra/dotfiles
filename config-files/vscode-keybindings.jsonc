@@ -52,25 +52,31 @@
     "key": "ctrl+e",
     "command": "-workbench.action.quickOpen"
   },
+  // Terminal panel behavior.
   {
     "key": "ctrl+t",
     "command": "-workbench.action.showAllSymbols"
   },
   {
-    "key": "ctrl+t",
-    "command": "workbench.action.togglePanel",
+    "key": "alt+t",
+    "command": "workbench.action.focusLastEditorGroup",
     "when": "activePanel && terminalFocus"
   },
   {
     "key": "ctrl+t",
+    "command": "workbench.action.togglePanel",
+  },
+  {
+    "key": "alt+t",
     "command": "workbench.action.terminal.focus",
     "when": "activePanel && !terminalFocus"
   },
   {
-    "key": "ctrl+t",
+    "key": "alt+t",
     "command": "workbench.action.togglePanel",
     "when": "!activePanel"
   },
+  // end.
   {
     "key": "ctrl+j",
     "command": "-workbench.action.togglePanel"
@@ -232,6 +238,26 @@
     "key": "backspace",
     "command": "-paredit.deleteBackward",
     "when": "(vim.mode == 'Normal' || vim.mode == 'SearchInProgressMode') && calva:keybindingsEnabled && editorTextFocus && !calva:cursorInComment && !editorHasMultipleSelections && !editorReadOnly && editorLangId == 'clojure' && paredit:keyMap == 'strict'"
+  },
+  {
+    "key": "ctrl+shift+t t",
+    "command": "calva.tapSelection",
+    "when": "vim.mode != 'Normal' && calva:connected && calva:keybindingsEnabled && editorTextFocus && editorLangId == 'clojure'"
+  },
+  {
+    "key": "ctrl+shift+t space",
+    "command": "calva.tapCurrentTopLevelForm",
+    "when": "vim.mode != 'Normal' && calva:connected && calva:keybindingsEnabled && editorTextFocus && editorLangId == 'clojure'"
+  },
+  {
+    "key": "ctrl+shift+t space",
+    "command": "-calva.tapCurrentTopLevelForm",
+    "when": "calva:connected && calva:keybindingsEnabled && editorTextFocus && editorLangId == 'clojure'"
+  },
+  {
+    "key": "ctrl+shift+t t",
+    "command": "-calva.tapSelection",
+    "when": "calva:connected && calva:keybindingsEnabled && editorTextFocus && editorLangId == 'clojure'"
   },
 
   // calvaend
@@ -438,16 +464,34 @@
   //   }
   // },
   {
-    "key": "shift+alt+k f",
-    "command": "workbench.action.openGlobalKeybindingsFile"
+    "key": "shift+alt+s f",
+    "command": "workbench.action.openApplicationSettingsJson",
   },
   {
-    "key": "shift+alt+k s",
-    "command": "workbench.action.openGlobalKeybindings"
+    "key": "shift+alt+s s",
+    "command": "workbench.action.openGlobalSettings"
   },
+  // {
+  //   "key": "shift+alt+s",
+  //   "command": "runCommands",
+  //   "args": {
+  //     "commands": [
+  //       "workbench.action.openApplicationSettingsJson",
+  //       "workbench.action.openGlobalSettings",
+  //       "workbench.action.openApplicationSettingsJson",
+  //     ]
+  //   }
+  // },
   {
-    "key": "shift+alt+s",
-    "command": "workbench.action.openApplicationSettingsJson"
+    "key": "shift+alt+k",
+    "command": "runCommands",
+    "args": {
+      "commands": [
+        "workbench.action.openGlobalKeybindingsFile",
+        "workbench.action.openGlobalKeybindings",
+        "workbench.action.openGlobalKeybindingsFile",
+      ]
+    }
   },
   {
     "key": "shift+alt+w",
