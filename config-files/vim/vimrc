@@ -271,6 +271,9 @@ iab shebang #!/usr/bin/env
 iab vimmode vim: foldmethod=marker foldmarker={{{,}}} foldlevel=1 foldenable autoindent expandtab tabstop=4 shiftwidth=4
 iab vimmodemd filetype=markdown textwidth=80
 
+" Comment to prevent clojure auto-formatters from wrapping sexps.
+iab noparenwrap ;; Prevents auto-formatter from wrapping.
+
 
 "}}}
 " -- [ Leader mappings ] ----------------------------------------------------{{{
