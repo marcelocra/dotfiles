@@ -60,15 +60,13 @@
 
   // CodeNewRoman
   // ------------
-  // "editor.fontWeight": "bold",
-  // "editor.fontFamily": "'CodeNewRoman Nerd Font', 'CodeNewRoman Nerd Font Mono', monospace",
-  // "editor.fontSize": 13,
+  "editor.fontFamily": "'CodeNewRoman Nerd Font', 'CodeNewRoman Nerd Font Mono', monospace",
+  "editor.fontSize": 17,
 
-  // // Meslo
-  // // -----
-  // // "editor.fontWeight": "bold",
-  "editor.fontFamily": "'MesloLGS Nerd Font', 'MesloLGS NF', monospace",
-  "editor.fontSize": 13,
+  // Meslo
+  // -----
+  // "editor.fontFamily": "'MesloLGS Nerd Font', 'MesloLGS NF', monospace",
+  // "editor.fontSize": 13,
 
   //============================================================================
   //= Editor settings
@@ -485,7 +483,7 @@
     "maxLength": 50
   },
   "[clojure]": {
-    "editor.wordSeparators": "\t ()\"':,;~@#$%^&{}[]`.+",
+    "editor.wordSeparators": "\t()\"':,;~@#$%^&{}[]`.+-/<>",
     "editor.autoClosingBrackets": "always",
     "editor.autoClosingQuotes": "always",
     "editor.formatOnType": true,
@@ -497,7 +495,7 @@
       " ": true,
       "꞉": true
     },
-    "editor.defaultFormatter": "betterthantomorrow.calva",
+    "editor.defaultFormatter": "betterthantomorrow.calva"
   },
 
   //============================================================================
@@ -606,6 +604,5 @@
   "[astro]": {
     "editor.defaultFormatter": "astro-build.astro-vscode"
   },
-  "diffEditor.ignoreTrimWhitespace": false,
-  "window.zoomLevel": 1
+  "diffEditor.ignoreTrimWhitespace": false
 }
