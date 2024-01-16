@@ -61,7 +61,7 @@
   // CodeNewRoman
   // ------------
   "editor.fontFamily": "'CodeNewRoman Nerd Font', 'CodeNewRoman Nerd Font Mono', monospace",
-  "editor.fontSize": 17,
+  "editor.fontSize": 15,
 
   // Meslo
   // -----
@@ -605,5 +605,7 @@
     "editor.defaultFormatter": "astro-build.astro-vscode"
   },
   "diffEditor.ignoreTrimWhitespace": false,
-  "editor.wordWrap": "on"
+  "editor.wordWrap": "on",
+  // // "window.zoomLevel": 1
+  "window.zoomLevel": 1
 }
