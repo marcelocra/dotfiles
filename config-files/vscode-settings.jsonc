@@ -598,11 +598,12 @@
     "typescript",
     "typescriptreact"
   ],
-  "workbench.sideBar.location": "right",
+  "workbench.sideBar.location": "left",
   "window.menuBarVisibility": "toggle",
   "haskell.manageHLS": "GHCup",
   "[astro]": {
     "editor.defaultFormatter": "astro-build.astro-vscode"
   },
-  "diffEditor.ignoreTrimWhitespace": false
+  "diffEditor.ignoreTrimWhitespace": false,
+  "editor.wordWrap": "on"
 }
