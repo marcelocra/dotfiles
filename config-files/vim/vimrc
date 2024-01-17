@@ -274,6 +274,15 @@ iab vimmodemd filetype=markdown textwidth=80
 " Comment to prevent clojure auto-formatters from wrapping sexps.
 iab noparenwrap ;; Prevents auto-formatter from wrapping.
 
+" Create better bash scripts with these options at the top
+" of them.
+"
+" -e: exit on error
+" -u: exit on undefined variable
+" -x: print commands before execution
+" -o pipefail: exits on command pipe failures
+iab euxo set -euxo pipefail
+
 
 "}}}
 " -- [ Leader mappings ] ----------------------------------------------------{{{
