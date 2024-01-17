@@ -1,3 +1,4 @@
+# vim: autoindent expandtab tabstop=2 shiftwidth=2
 # [ Main configs ] -------------------------------------------------------------
 
 
@@ -10,7 +11,7 @@
 
 [user]
   name = Marcelo Almeida
-  email = 155087689+dnf331@users.noreply.github.com
+  email = 2532492+marcelocra@users.noreply.github.com
 
 [init]
   defaultBranch = main
