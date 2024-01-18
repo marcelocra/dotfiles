@@ -1,0 +1,39 @@
+#!/usr/bin/env sh
+# vim:ts=4:et:ai:fen:fdm=marker:fmr={{{,}}}:fdl=0 
+#
+# This script was meant to be associated to a shortcut, like
+# F10, for example.
+#
+# Then, whenever you press F10 one of three things will
+# happen:
+#
+#   1. The first time you hit F10, it will open a new
+#      terminal window with tmux attached.
+#
+#   2. If you press F10 again, that tmux session will be
+#      detached and the terminal window will be closed.
+#
+#   3. If you press F10 again, a new terminal window will be
+#      opened, but attached to the same tmux session created
+#      in 1. Unless you kill this tmux session, whenever you
+#      press F10, it will be used.
+#
+# Gotcha: if you do not press F10 to close the scratch
+# terminal window (e.g. you alt+tab away from it) and then
+# press F10, it will close the existing (and unfocused)
+# window, which might be confusing. Just press F10 again :).
+#
+
+SCRATCHPAD_SESSION_NAME="scratch"
+
+# If session exists, connect to it. Otherwise, create it.
+if tmux has -t $SCRATCHPAD_SESSION_NAME > /dev/null 2>&1; then
+    if tmux lsc | grep $SCRATCHPAD_SESSION_NAME > /dev/null 2>&1; then
+        tmux detach -s $SCRATCHPAD_SESSION_NAME
+    else
+        tmux attach -t $SCRATCHPAD_SESSION_NAME > /dev/null 2>&1
+    fi
+else
+    tmux new -s $SCRATCHPAD_SESSION_NAME > /dev/null 2>&1
+fi
+
