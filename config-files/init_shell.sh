@@ -31,9 +31,11 @@ export PATH="$FLYCTL_INSTALL/bin:$PATH"
 export PATH="${PATH}:${HOME}/bin"
 
 # fzf.
-# TODO: set this up only for tmux above 3.2
-# export FZF_TMUX_OPTS='-p80%,60%'
-export FZF_TMUX_OPTS='-d50%'
+# # TODO: set this up only for tmux above 3.2
+# # export FZF_TMUX_OPTS='-p80%,60%'
+# export FZF_TMUX_OPTS='-d50%'
+export FZF_TMUX=0
+export FZF_DEFAULT_OPTS='--height 40% --layout=reverse --border'
 
 # Nextjs.
 # Print what would be collected to stderr without sending it. Set this to 0 to
