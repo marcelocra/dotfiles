@@ -253,12 +253,7 @@ nnoremap ]t :tabnext<cr>
 " Change generic autocomplete mapping.
 inoremap <c-space> <c-n>
 
-" Ignore <c-b>, as I want to get used to <c-u>.
-nnoremap <c-b> :echo 'use <' . 'c-u> instead!'<cr>
-
-
 " next mapping above
-
 
 
 "}}}
@@ -306,6 +301,7 @@ inoremap <leader>w <esc>:w<cr>
 
 " Quit easily.
 nnoremap <leader>q :q<cr>
+nnoremap <leader><leader>q :qa<cr>
 inoremap <leader>q <esc>:q<cr>
 
 " Save and quit easily.
@@ -328,7 +324,19 @@ if !exists('g:vscode')
 endif
 
 " fzf settings.
+" -------------
+
 nnoremap <c-p> :Files<cr>
+" " Ignore <c-b>, as I want to get used to <c-u>.
+" nnoremap <c-b> :echo 'use <' . 'c-u> instead!'<cr>
+" Use c-b to list buffers!
+nnoremap <c-b> :Buffers<cr>
+
+" Search lines in all open buffers.
+nnoremap <leader>l :Lines<cr>
+
+" fzf end.
+" --------
 
 let g:sneak#label = 1
 let g:sneak#s_next = 1
