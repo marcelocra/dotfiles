@@ -64,7 +64,7 @@
   },
   {
     "key": "ctrl+t",
-    "command": "workbench.action.togglePanel",
+    "command": "workbench.action.togglePanel"
   },
   {
     "key": "alt+t",
@@ -437,11 +437,6 @@
     "when": "vim.mode == 'Insert' && textInputFocus"
   },
   {
-    "key": "alt+w",
-    "command": "workbench.action.closeActiveEditor",
-    "when": "vim.mode == 'Normal' && textInputFocus"
-  },
-  {
     "key": "ctrl+w",
     "command": "workbench.action.closeActiveEditor",
     "when": "vim.mode == 'Normal' && textInputFocus"
@@ -465,7 +460,7 @@
   // },
   {
     "key": "shift+alt+s f",
-    "command": "workbench.action.openApplicationSettingsJson",
+    "command": "workbench.action.openApplicationSettingsJson"
   },
   {
     "key": "shift+alt+s s",
@@ -489,7 +484,7 @@
       "commands": [
         "workbench.action.openGlobalKeybindingsFile",
         "workbench.action.openGlobalKeybindings",
-        "workbench.action.openGlobalKeybindingsFile",
+        "workbench.action.openGlobalKeybindingsFile"
       ]
     }
   },
@@ -584,7 +579,7 @@
     "when": "!isIOS"
   },
   {
-    "key": "ctrl+k ctrl+z",
+    "key": "alt+z",
     "command": "workbench.action.toggleZenMode"
   },
   {
@@ -639,5 +634,13 @@
     "key": "ctrl+j",
     "command": "selectNextSuggestion",
     "when": "(vim.mode == 'Normal' && vim.active) && (suggestWidgetMultipleSuggestions && suggestWidgetVisible && textInputFocus || suggestWidgetVisible && textInputFocus && !suggestWidgetHasFocusedSuggestion)"
+  },
+  {
+    "key": "alt+w",
+    "command": "editor.action.toggleWordWrap"
+  },
+  {
+    "key": "alt+z",
+    "command": "-editor.action.toggleWordWrap"
   }
 ]

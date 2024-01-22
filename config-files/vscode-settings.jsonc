@@ -433,8 +433,15 @@
       "before": ["<c-b>"],
       "commands": [""]
     },
-    // nextvimnormal - copy next curlies above
-    {},
+    {
+      "before": ["|"],
+      "commands": ["workbench.action.splitEditor"]
+    },
+    {
+      "before": ["-"],
+      "commands": ["workbench.action.splitEditorDown"]
+    },
+    // nextnormal - copy next curlies above
     {}
   ],
   "vim.visualModeKeyBindingsNonRecursive": [
@@ -511,12 +518,7 @@
     "editor.defaultFormatter": "Ionide.Ionide-fsharp",
     "editor.tabSize": 4
   },
-
-  //============================================================================
-  //= Tailwind CSS
-  //============================================================================
-  "tailwindCSS.emmetCompletions": true,
-  "explorer.openEditors.visible": 0,
+  "explorer.openEditors.visible": 1,
   "files.associations": {
     "*.erb": "erb",
     "*.css": "css",
@@ -573,6 +575,8 @@
     "erb": "html",
     "svelte": "html"
   },
+  "emmet.triggerExpansionOnTab": true,
+  "tailwindCSS.emmetCompletions": true,
   "workbench.list.horizontalScrolling": true,
   "git.openRepositoryInParentFolders": "never",
   "editor.inlineSuggest.enabled": true,
@@ -585,7 +589,6 @@
   "window.newWindowDimensions": "inherit",
   "outline.collapseItems": "alwaysCollapse",
   "window.restoreWindows": "none",
-  // "emmet.triggerExpansionOnTab": true,
   "eslint.enable": true,
   "eslint.format.enable": true,
   "eslint.probe": [
@@ -611,7 +614,5 @@
     "editor.defaultFormatter": "astro-build.astro-vscode"
   },
   "diffEditor.ignoreTrimWhitespace": false,
-  "editor.wordWrap": "on",
-  // // "window.zoomLevel": 1
-  "window.zoomLevel": 1
+  "editor.wordWrap": "on"
 }
