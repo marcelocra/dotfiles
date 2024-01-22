@@ -1,4 +1,4 @@
-#!/usr/bin/env sh
+#!/usr/bin/env bash
 # vim: foldmethod=marker foldmarker={{{,}}} foldlevel=1 foldenable autoindent expandtab tabstop=4 shiftwidth=4
 #
 # TODO: this file is too big already. Perhaps move each section to its own
@@ -40,7 +40,7 @@ export FZF_DEFAULT_OPTS='--height 40% --layout=reverse --border'
 # Nextjs.
 # Print what would be collected to stderr without sending it. Set this to 0 to
 # allow telemetry, along with a 0 in the next one.
-export NEXT_TELEMETRY_DEBUG=0
+# export NEXT_TELEMETRY_DEBUG=0
 # Disable telemetry by setting this to 1.
 export NEXT_TELEMETRY_DISABLED=1
 
@@ -113,6 +113,22 @@ fi
 
 # }}}
 # [ Aliases ] ---------------------------------------------------------------{{{
+# One lettered aliases. {{{
+
+# Used in the next sections:
+#
+# v = vim
+# l = ls ...
+# n = npm
+# p = pnpm
+# y = yarn
+# r = n run
+# t = go to my temp dir
+# b = popd
+# x = npx
+alias x="npx"
+
+# }}}
 # General stuff {{{
 
 alias vim="$EDITOR"
@@ -164,6 +180,49 @@ else
     alias rc.=rc
 fi
 
+# alias code="code-insiders"
+alias code="code"
+alias p1="code \$MCRA_P1"
+
+alias td="turbo dev --filter"
+
+# Speech synthesizer.
+alias fala="spd-say -w -l pt-BR -p 100 -r -30 -R 100 -m all"
+alias falar="spd-say -w -l pt-BR -p 100 -r -30 -R 100 -m all"
+
+# AsciiDoc.
+alias asciidoctor="docker run --rm -it -v $(pwd):/documents/ asciidoctor/docker-asciidoctor"
+alias asciidoctor-gen="docker run --rm -v $(pwd):/documents/ asciidoctor/docker-asciidoctor asciidoctor-pdf index.adoc"
+
+# Supabase.
+alias sup="supabase"
+
+# Always use sed with extended regexes.
+if [[ `uname` == "Darwin" ]]; then
+    alias sed='sed -E'
+else
+    alias sed='sed -r'
+fi
+
+# I never remember how to extract tar files. Now I discovered that it
+# automatically detect the compression format, so I only need to provide the -x
+# (extract) and the -f (point to file) options (f has to be the last one if
+# they are provided together).
+alias untar="tar -xf"
+
+# Always use the same tmp and make it easy to go there.
+export MCRA_TMP_PLAYGROUND="/tmp/mcra-tmp-playground"
+if [[ ! -d "$MCRA_TMP_PLAYGROUND" ]]; then
+    mkdir $MCRA_TMP_PLAYGROUND
+fi
+alias t="pushd $MCRA_TMP_PLAYGROUND"
+
+# As in 'back'.
+alias b="popd"
+
+# Next aliases above!
+
+
 # }}}
 # Git: shortcuts I use frequently {{{
 # -----------------------------------
@@ -178,6 +237,7 @@ alias ga='git add'
 alias gaa='git add --all'
 
 alias gb='git branch'
+alias gbd='git branch -d'
 
 alias gco='git checkout'
 # Go back to previous branch.
@@ -255,44 +315,8 @@ docker_images_sorted() {
             alias di='docker_images_sorted'
 
 # }}}
-# Aliases that are not grouped by some context {{{
-# ------------------------------------------------
-# alias code="code-insiders"
-alias code="code"
-alias p1="code \$MCRA_P1"
-
-alias td="turbo dev --filter"
-
-# Speech synthesizer.
-alias fala="spd-say -w -l pt-BR -p 100 -r -30 -R 100 -m all"
-alias falar="spd-say -w -l pt-BR -p 100 -r -30 -R 100 -m all"
-
-# AsciiDoc.
-alias asciidoctor="docker run --rm -it -v $(pwd):/documents/ asciidoctor/docker-asciidoctor"
-alias asciidoctor-gen="docker run --rm -v $(pwd):/documents/ asciidoctor/docker-asciidoctor asciidoctor-pdf index.adoc"
-
-# Supabase.
-alias sup="supabase"
-
-# Always use sed with extended regexes.
-if [[ `uname` == "Darwin" ]]; then
-    alias sed='sed -E'
-else
-    alias sed='sed -r'
-fi
-
-# I never remember how to extract tar files. Now I discovered that it
-# automatically detect the compression format, so I only need to provide the -x
-# (extract) and the -f (point to file) options (f has to be the last one if
-# they are provided together).
-alias untar="tar -xf"
-
-# Next aliases above!
-
-# }}}
 # }}}
 # [ Commands ] --------------------------------------------------------------{{{
-
 
 # Ignore commands for Mac and run them in Ubuntu (should work in other Unixes
 # too, but I haven't tested).
@@ -302,7 +326,8 @@ if [[ ! `uname` == "Darwin" ]]; then
         eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
     fi
 fi
-# }}}
 
 # next commands above
+
+# }}}
 
