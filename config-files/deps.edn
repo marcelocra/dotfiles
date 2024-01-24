@@ -64,6 +64,19 @@
                 "--middleware" "[cider.nrepl/cider-middleware]"
                 "--interactive"]}
 
+  :test 
+  {:extra-paths ["test"]
+   :extra-deps {io.github.cognitect-labs/test-runner {:git/tag "v0.5.1" :git/sha "dfb30dd"}}
+   :main-opts ["-m" "cognitect.test-runner"]
+   :exec-fn cognitect.test-runner.api/test}
+
+  :repl-server
+  {:exec-fn clojure.core.server/start-server
+   :exec-args {:name "repl-server"
+               :port 5555
+               :accept clojure.core.server/repl
+               :server-daemon false}}
+
 
 
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -78,7 +91,8 @@
    :ns-default cljfmt.tool}
 
   :build
-  {:deps io.github.clojure/tools.build {:git/tag "v0.9.6" :git/sha "8e78bcc"}
+  {:deps {io.github.clojure/tools.build {:git/tag "v0.9.6"
+                                         :git/sha "8e78bcc"}}
    :ns-default build}
 
 
@@ -90,7 +104,7 @@
   ;; See https://developers.google.com/tink
   :tink
   {:extra-deps {com.google.crypto.tink/tink {:mvn/version "1.12.0"}}}
-  
+
   ;; See https://github.com/djblue/portal
   :portal
   {:extra-deps {djblue/portal {:mvn/version "RELEASE"}}}
@@ -100,6 +114,12 @@
   {:extra-deps {io.github.stuarthalloway/reflector
                 {:git/url "https://github.com/stuarthalloway/reflector"
                  :sha "93a0c19b4526c1180959e940202928d35e5c3cef"}}}
+
+  :java-time
+  {:extra-deps {clojure.java-time/clojure.java-time {:mvn/version "1.4.2"}}}
+
+  :core-async
+  {:extra-deps {org.clojure/core.async {:mvn/version "1.6.681"}}}
 
 
 
