@@ -99,6 +99,7 @@ easy_jump_to_project() {
 }
 alias j="easy_jump_to_project"
 
+# Setup the default text editor based on what is installed.
 if command -v nvim &> /dev/null; then
     export EDITOR=nvim
 elif command -v vim &> /dev/null; then
@@ -116,16 +117,16 @@ fi
 # One lettered aliases. {{{
 
 # Used in the next sections:
-#
-# v = vim
-# l = ls ...
-# n = npm
-# p = pnpm
-# y = yarn
-# r = n run
-# t = go to my temp dir
+
 # b = popd
+# l = ls ...
+# n = reserved
+# r = js run
+# s = reserved
+# t = go to my temp dir
+# v = vim
 # x = npx
+
 alias x="npx"
 
 # }}}
@@ -160,11 +161,6 @@ else
 fi
 
 alias ll='l -a'
-
-alias n=npm
-alias p=pnpm
-alias y=yarn
-alias r='n run'
 
 if [[ ! -z "${MCRA_INIT_SHELL}" && ! -z "${MCRA_LOCAL_SHELL}" ]]; then
     alias rc='vim $MCRA_INIT_SHELL'
@@ -219,6 +215,17 @@ alias t="pushd $MCRA_TMP_PLAYGROUND"
 
 # As in 'back'.
 alias b="popd"
+
+if [[ -f 'pnpm-lock.yaml' ]]; then
+    alias js="pnpm"
+elif [[ -f 'package-lock.json' ]]; then
+    alias js="npm"
+elif [[ -f 'yarn.lock' ]]; then
+    alias js="yarn"
+else
+    alias js='echo "This project does not have a lockfile"'
+fi
+alias r='js run'
 
 # Next aliases above!
 
