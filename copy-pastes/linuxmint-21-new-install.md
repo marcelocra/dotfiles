@@ -266,3 +266,17 @@ wget https://go.dev/dl/go1.19.linux-amd64.tar.gz
 rm -rf /usr/local/go && tar -C /usr/local -xzf go1.19.linux-amd64.tar.gz
 export PATH="${PATH}:/usr/local/go/bin"
 ```
+
+## Install shortcuts
+
+### Spotify
+
+- play/pause: dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.PlayPause
+- next: dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Next
+- previous: dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Previous
+
+
+### Terminal with tmux
+
+gnome-terminal --geometry 91x45--26+4 -- sh -c "<path-to-rc.scratch>"
+
