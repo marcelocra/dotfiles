@@ -216,16 +216,18 @@ alias t="pushd $MCRA_TMP_PLAYGROUND"
 # As in 'back'.
 alias b="popd"
 
-if [[ -f 'pnpm-lock.yaml' ]]; then
-    alias js="pnpm"
-elif [[ -f 'package-lock.json' ]]; then
-    alias js="npm"
-elif [[ -f 'yarn.lock' ]]; then
-    alias js="yarn"
-else
-    alias js='echo "This project does not have a lockfile"'
-fi
-alias r='js run'
+js () {
+    if [[ -f 'pnpm-lock.yaml' ]]; then
+        pnpm "$@"
+    elif [[ -f 'package-lock.json' ]]; then
+        npm "$@"
+    elif [[ -f 'yarn.lock' ]]; then
+        yarn "$@"
+    else
+        echo 'This project does not have a lockfile'
+    fi
+}
+alias r="js run"
 
 # Next aliases above!
 
