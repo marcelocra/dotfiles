@@ -4,6 +4,20 @@
 # TODO: this file is too big already. Perhaps move each section to its own
 # file, in the shell subdir?
 
+# Important environment variables to make this work correctly:
+
+is_defined() {
+    if [[ -z "$1" ]]; then
+        echo "'$2' is not defined"
+    fi
+}
+
+is_defined "$MCRA_PROJECTS_FOLDER" "MCRA_PROJECTS_FOLDER"
+is_defined "$MCRA_INIT_SHELL" "MCRA_INIT_SHELL"
+is_defined "$MCRA_LOCAL_SHELL" "MCRA_LOCAL_SHELL"
+is_defined "$MCRA_TMP_PLAYGROUND" "MCRA_TMP_PLAYGROUND"
+
+
 # [ Exports ] ---------------------------------------------------------------{{{
 
 # dotnet.
@@ -207,7 +221,6 @@ fi
 alias untar="tar -xf"
 
 # Always use the same tmp and make it easy to go there.
-export MCRA_TMP_PLAYGROUND="/tmp/mcra-tmp-playground"
 if [[ ! -d "$MCRA_TMP_PLAYGROUND" ]]; then
     mkdir $MCRA_TMP_PLAYGROUND
 fi
