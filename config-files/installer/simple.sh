@@ -28,8 +28,12 @@ if [[ -z "$MCRA_INIT_SHELL" ]]; then
 # -----------------------------------------------------------------------------
 export MCRA_INIT_SHELL=$MCRA_INIT_SHELL
 export MCRA_LOCAL_SHELL=$MCRA_LOCAL_SHELL
-source \$MCRA_INIT_SHELL
+export MCRA_TMP_PLAYGROUND="/tmp/mcra-tmp-playground"
+
+# Local should be first, as the other one checks for some expected MCRA_* env
+# variables.
 source \$MCRA_LOCAL_SHELL
+source \$MCRA_INIT_SHELL
 # -----------------------------------------------------------------------------
 
 
