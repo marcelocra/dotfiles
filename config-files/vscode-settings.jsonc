@@ -213,8 +213,11 @@
   "vim.hlsearch": true,
   "vim.smartRelativeLine": false,
   "vim.foldfix": true,
-  // This is VERY slow, unable, in Ubuntu 20.04 using gdbus. I used the following configuration:
-  // https://github.com/daipeihust/im-select?tab=readme-ov-file#gdbus
+  // This is VERY, PAINFULLY, UNUSABLY slow in Ubuntu 20.04. It uses gdbus, as shown in the
+  // following link. I also got the scripts (get-im and set-im) from there:
+  //
+  //    https://github.com/daipeihust/im-select?tab=readme-ov-file#gdbus
+  //
   // "vim.autoSwitchInputMethod.enable": true,
   // "vim.autoSwitchInputMethod.defaultIM": "1",
   // "vim.autoSwitchInputMethod.obtainIMCmd": "/home/marcelocra/bin/get-im",
@@ -523,7 +526,8 @@
     "*.erb": "erb",
     "*.css": "css",
     "vimrc": "vimrc",
-    "json5": "jsonc"
+    "json5": "jsonc",
+    "*.liquid": "html"
   },
   "git.ignoreMissingGitWarning": true,
   "nxConsole.enableTelemetry": false,
@@ -556,7 +560,7 @@
       "editor.lineHighlightBackground": "#00ffff22"
     }
   },
-  "workbench.colorTheme": "GitHub Dark Dimmed",
+  "workbench.colorTheme": "GitHub Dark Default",
   "workbench.startupEditor": "newUntitledFile",
   "workbench.tree.indent": 20,
   "workbench.tree.renderIndentGuides": "always",
