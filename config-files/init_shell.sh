@@ -62,6 +62,11 @@ export NEXT_TELEMETRY_DISABLED=1
 # Disable telemetry by setting this to 1.
 export ASTRO_TELEMETRY_DISABLED=1
 
+# Install Ruby Gems to ~/bin/packages/ruby/gems
+export GEM_HOME="$HOME/bin/packages/ruby/gems"
+if [[ ! -d "$GEM_HOME" ]]; then mkdir -p "$GEM_HOME"; fi
+export PATH="$GEM_HOME/bin:$PATH"
+
 # next export
 
 
