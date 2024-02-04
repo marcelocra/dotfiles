@@ -38,15 +38,83 @@
 ;;
 
 ;;
-;; if [[ "$1" == "launch-terminal" ]]; then
-;;     gnome-terminal --geometry 91x45--26+4 -- sh -c ""
-(require '[clojure.java.shell :as shell])
+;; Check command line options and behave accordingly. Options:
+;; 
+;; gnome-terminal
+;; ==============
+;; 
+;; Run gnome-terminal with the appropriate geometry.
+;; 
+;; 
+;; scratch
+;; =======
+;; 
+;; Check if a tmux scratch session exists. If so, attaches.
+;; If not, create and attach.
+;;
 
-(def scratchpad-session-name "scratch")
 
-(let [scratch-session-exists? (shell
-                               (format "tmux has -t %s > /dev/null 2>&1"
-                                       scratchpad-session-name))])
+(ns scratch
+  (:require [clojure.java.shell :refer [sh]]
+            [clojure.string :as str]
+            [babashka.cli :as cli]))
+
+(defn usage []
+  (println "Options: help, cmd (scratch, gnome-terminal)"))
+
+(defn shell [cmd]
+  (apply sh (str/split cmd #" ")))
+
+(def cli-options 
+  {:help {:coerce :boolean}
+   :cmd {:default :scratch :coerce :keyword}})
+
+(def parsed-cli-options 
+  (cli/parse-opts *command-line-args* 
+                  {:spec cli-options}))
+
+(def cmd (:cmd parsed-cli-options))
+
+(defn scratch []
+  (let [scratch-session-name "scratch"
+        tmux-session-exists? (= (:exit (shell (format "tmux has -t %s"
+                                                      scratch-session-name)))
+                                0)] 
+    (if tmux-session-exists?
+      (let [is-connected? (str/includes? (shell "tmux lsc")
+                                         scratch-session-name)]
+        (if is-connected?
+          (shell (format "tmux detach -s %s" scratch-session-name))
+
+          ;; TODO: need to change to run the terminal command instead of the actual
+          ;; tmux command. But this is still not working. See error below.
+          (sh "gnome-terminal" "--" "sh" "-c" (format "\"tmux attach -t %s\"" scratch-session-name))))
+      (shell (format "tmux new -s %s" scratch-session-name)))))
+
+(comment
+  
+  (str/includes? "blabla" "abl") ; true
+  (str/includes? "blabla" "aa") ; false
+
+  ;; when connected, the output is the following
+  (scratch) ; {:exit 0, :out "", :err ""}
+
+  ;; when not connected:
+  (scratch) ; {:exit 1, :out "", :err "open terminal failed: not a terminal\n"}
+
+  ;; when using gnome-terminal:
+  (scratch) ; {:exit 0, :out "", :err "# Failed to use specified server: GDBus.Error:org.freedesktop.DBus.Error.ServiceUnknown: The name :1.1047 was not provided by any .service files\n# Falling back to default server.\n"}
+
+  ;; rcf
+  )
+
+(defn gnome-terminal []
+  (println "gnome-terminal"))
+
+(cond
+  (= cmd :scratch) (scratch)
+  (= cmd :gnome-terminal) (gnome-terminal)
+  :else (usage))
 
 ; SCRATCHPAD_SESSION_NAME="scratch"
 
@@ -60,4 +128,28 @@
 ; else
 ;     tmux new -s $SCRATCHPAD_SESSION_NAME > /dev/null 2>&1
 ; fi
+
+
+(comment
+  (require '[clojure.java.shell :as shell])
+
+  (shell/sh "tmux" "has" "-t" scratch-session-name)
+
+  (clojure.string.join  " " ["tmux" "has" "-t" scratch-session-name])
+  (clojure.string.split (format "tmux has -t %s" scratch-session-name) #" ")
+
+
+  (def scratch-session-name "scratch")
+  (def tmux-check-session-exists-cmd (join ))
+
+
+
+  (if (= (:exit ())))
+
+  (let [scratch-session-exists? (shell/sh
+                                  (format "tmux has -t %s > /dev/null 2>&1"
+                                          scratch-session-name))])
+
+  ;; rcf
+  )
 
