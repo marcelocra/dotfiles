@@ -318,13 +318,13 @@ nnoremap <leader>a ggVG
 "}}}
 " -- [ Plugins mappings ] ---------------------------------------------------{{{
 
-" For vscode-neovim. Settings that should be enabled only in cmdline vim
-" should go here.
+" vscode-vim settings --------------------------------------
+" For vscode-neovim. Settings that should be enabled only in
+" cmdline vim should go here.
 if !exists('g:vscode')
 endif
 
-" fzf settings.
-" -------------
+" fzf settings ---------------------------------------------
 
 nnoremap <c-p> :Files<cr>
 " " Ignore <c-b>, as I want to get used to <c-u>.
@@ -335,11 +335,21 @@ nnoremap <c-b> :Buffers<cr>
 " Search lines in all open buffers.
 nnoremap <leader>l :Lines<cr>
 
-" fzf end.
-" --------
+" -- [ Plugin settings ] ----------------------------------------------------{{{
+" vim-sneak settings ---------------------------------------
 
 let g:sneak#label = 1
 let g:sneak#s_next = 1
+
+" conjure settings -----------------------------------------
+
+let g:conjure#client_on_load = 0
+
+" next plugin setting above --------------------------------
+
+
+"  }}}
+" next setting above ---------------------------------------
 
 
 "}}}
