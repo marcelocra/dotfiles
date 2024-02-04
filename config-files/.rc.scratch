@@ -35,7 +35,7 @@
 #   gnome-terminal --geometry 115x60--26+4 -- sh -c "<path-to-this>"
 #
 #   # For MesloLGS NF Regular, size 9:
-#   gnome-terminal --geometry 115x60--26+4 -- sh -c "<path-to-this>"
+#   gnome-terminal --geometry 131x65--26+4 -- sh -c "<path-to-this>"
 #
 
 SCRATCHPAD_SESSION_NAME="scratch"
