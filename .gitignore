@@ -6,6 +6,8 @@
 .clj-kondo
 .lsp
 .nrepl-port
+.cpcache/
+.rebel_readline_history
 
 # Mac stuff.
 .DS_Store
