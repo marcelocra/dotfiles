@@ -133,6 +133,8 @@
   :core-async
   {:extra-deps {org.clojure/core.async {:mvn/version "1.6.681"}}}
 
+  :cljs
+  {:extra-deps {org.clojure/clojurescript {:mvn/version "1.11.54"}}}
 
 
   ;; Prevents auto-formatter from wrapping.
