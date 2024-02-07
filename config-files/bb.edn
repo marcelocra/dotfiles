@@ -47,16 +47,49 @@
                    (Thread. (fn [] (fs/delete ".nrepl-port")))))
              (deref (promise)))}
 
-  cljs-simple
-  {:doc "Runs a very simple cljs repl, without shadow-cljs or anything else"
+  cljs
+  {:doc "Runs a simple cljs repl, without shadow-cljs or anything else."
    :task (shell 
            (format 
              "clj -M:cljs
              --main cljs.main
-             --repl-opts \"{:launch-browser false}\"
+             --repl-opts \"%s\"
              --compile %s
              --repl"
+             (str {:launch-browser false})
              (:cljs-ns parsed-cli-args)))}
+
+  cljs-adv
+  {:doc "Creates a production build of a cljs project."
+   :task (shell 
+           (format 
+             "clj -M:cljs
+             --main cljs.main
+             --optimizations advanced
+             --compile %s"
+             (:cljs-ns parsed-cli-args)))}
+
+  cljs-serve
+  {:doc "Checks if the generated production build still works, as a lot of advanced compilation and deletions happen."
+   :task (shell "clj -M:cljs --main cljs.main --serve")}
+
+  cljs-node-compile
+  {:doc "Creates a javascript output for nodejs."
+   :task (shell 
+           (format 
+             "clj -M:cljs
+             --main cljs.main
+             --target node
+             --output-to main.js
+             --compile %s"
+             (:cljs-ns parsed-cli-args)))}
+
+  cljs-node-repl
+  {:doc "Runs a nodejs repl."
+   :task (shell "clj -M:cljs:cider-nrepl
+                --main cljs.main
+                --output-to main.js
+                --repl-env node")}
 
 
   ;; Write next task above this comment.
