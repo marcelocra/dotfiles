@@ -247,6 +247,8 @@ js () {
 }
 alias r="js run"
 
+alias bbc="bb --config ~/.config/babashka/bb.edn"
+
 # Next aliases above!
 
 
