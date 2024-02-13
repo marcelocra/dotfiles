@@ -148,8 +148,9 @@ set fileformats=unix
 set t_Co=256
 
 
-" My new favourite preeinstalled theme.
-colorscheme slate
+" My current favourite preeinstalled theme.
+colorscheme slate  " git diffs works properly
+colorscheme zellner  " light
 
 " Set how the status line will be shown in the bottom of Vim. (Not needed if
 " using airline.)
@@ -252,6 +253,9 @@ nnoremap ]t :tabnext<cr>
 
 " Change generic autocomplete mapping.
 inoremap <c-space> <c-n>
+
+" Reminder that I'm using the wrong keyboard layout.
+nnoremap Ç :echo 'wrong keyboard layout!'<cr>
 
 " next mapping above
 
@@ -361,4 +365,24 @@ augroup myautocommands
 augroup END
 
 " }}}
+" -- [ Lua ] ----------------------------------------------------------------{{{
 
+if has('nvim')
+
+lua << LUACODE
+
+local hour_now = tonumber(os.date("%H"))
+local daylight_ends = 17
+local daylight_starts = 6
+
+if hour_now < daylight_starts or hour_now > daylight_ends then
+    vim.cmd("colorscheme slate")
+else
+    vim.cmd("colorscheme zellner")
+end
+
+LUACODE
+
+endif
+
+" }}}
