@@ -4,6 +4,10 @@
 
 (def debug? true)
 
+(if debug?
+  (println "RUNNING IN DEBUG MODE!")
+  nil)
+
 (def scratch-session-name "scratch")
 
 (defn shell [cmd]
@@ -18,7 +22,7 @@
   (:out (shell "gsettings get org.gnome.desktop.interface monospace-font-name")))
 
 (def terminal-font-size
-  (str/replace terminal-font #"[^0-9]*" ""))
+  (Integer/parseInt (str/replace terminal-font #"[^0-9]*" "")))
 
 ;; TODO: do this per font face. Current values are for meslo font
 (def terminal-geometry
@@ -27,7 +31,7 @@
      10 "115x60"
      11 "103x55"
      13 "91x45"}
-    terminal-font-size
+    [terminal-font-size]
     "131x65"))
 
 (defn terminal-cmd [cmd]
@@ -55,7 +59,7 @@
 
 (cond
   (and tmux-session-exists? tmux-connected?)
-  (shell-cmd (terminal-cmd (tmux "tmux detach -s %s")))
+  (shell-cmd (tmux "tmux detach -s %s"))
 
   (and tmux-session-exists? (not tmux-connected?))
   (shell-cmd (terminal-cmd (tmux "tmux attach -t %s")))
@@ -63,6 +67,5 @@
   (and (not tmux-session-exists?) (not tmux-connected?))
   (shell-cmd (terminal-cmd (tmux "tmux new -s %s")))
 
-  :else (println "something went wrong")
-  )
+  :else (println "something went wrong"))
 
