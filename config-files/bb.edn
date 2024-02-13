@@ -5,7 +5,9 @@
              [babashka.cli :as cli])
   :init (do 
           (def cli-options
-            {:cljs-ns {:default "core"}})
+            {:cljs-ns {:default "core"}
+             :time {:default "30m"}
+             :text {:default "Olá, mundo!"}})
           (def parsed-cli-args (cli/parse-opts *command-line-args* {:spec cli-options}))
 
           (defn now
@@ -20,14 +22,17 @@
           (defn logging
             "Logs timestamp with task name."
             [text-to-log]
-            (let [log (Object.)] 
+            (let [log (Object.)
+                  current-task-name (:name (current-task))] 
               (locking log
                 (println 
                   (format 
-                    "[%s | %s] %s"
+                    "[ %s | %s ] %s"
                     (now)
-                    (:name (current-task))
-                    text-to-log))))))
+                    (if (nil? current-task-name) "global" current-task-name)
+                    text-to-log)))))
+
+          (logging parsed-cli-args))
   :enter (logging "starting")
   :leave (logging "done!")
 
@@ -90,6 +95,19 @@
                 --main cljs.main
                 --output-to main.js
                 --repl-env node")}
+
+  notify
+  {:doc "Creates a desktop notification after some time. Time format: 14s (seconds), 20m (minutes), 3h (hours)."
+   :task (do
+           (shell (format "sleep '%s'" (:time parsed-cli-args)))
+           (shell (format "spd-say -w -l pt-BR -p 100 -r -30 -R 100 -m all '%s'" (:text parsed-cli-args)))
+           (shell (format "notify-send '%s'" (:text parsed-cli-args))))}
+
+  notify-sound
+  {:doc "Creates an audio notification after some time."
+   :task (do
+           (shell (format "sleep '%s'" (:time parsed-cli-args)))
+           (shell (format "spd-say -w -l pt-BR -p 100 -r -30 -R 100 -m all '%s'" (:text parsed-cli-args))))}
 
 
   ;; Write next task above this comment.
