@@ -36,6 +36,8 @@
 #
 #   # For MesloLGS NF Regular, size 10:
 #   gnome-terminal --geometry 115x60--26+4 -- sh -c "<path-to-this>"
+#   # wide screen:
+#   gnome-terminal --geometry 155x60--26+4 -- sh -c "<path-to-this>"
 #
 #   # For MesloLGS NF Regular, size 9:
 #   gnome-terminal --geometry 131x65--26+4 -- sh -c "<path-to-this>"
