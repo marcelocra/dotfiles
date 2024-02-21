@@ -159,6 +159,8 @@ colorscheme zellner  " light
 " Use the system clipboard to copy to/from.
 set clipboard+=unnamedplus
 
+" next setting above
+
 
 
 "}}}
@@ -315,6 +317,9 @@ nnoremap <leader>x :x<cr>
 " Select all.
 nnoremap <leader>a ggVG
 
+" Delete current buffer
+noremap <leader>d :bd<cr>
+
 " next leader mapping above
 
 
@@ -365,6 +370,26 @@ augroup myautocommands
 augroup END
 
 " }}}
+" -- [ Functions ] ----------------------------------------------------------{{{
+
+"" From StackOverflow, in case changing the highlight colors doesn't work:
+""
+""   https://stackoverflow.com/a/47361068/1814970
+""
+" set noshowmatch
+
+" function! g:FuckThatMatchParen ()
+"     if exists(":NoMatchParen")
+"         :NoMatchParen
+"     endif
+" endfunction
+
+" augroup plugin_initialize
+"     autocmd!
+"     autocmd VimEnter * call FuckThatMatchParen()
+" augroup END
+
+" }}}
 " -- [ Lua ] ----------------------------------------------------------------{{{
 
 if has('nvim')
@@ -375,10 +400,29 @@ local hour_now = tonumber(os.date("%H"))
 local daylight_ends = 17
 local daylight_starts = 6
 
-if hour_now < daylight_starts or hour_now > daylight_ends then
+-- Use this to either chose a mode or allow time based mode. Options:
+--   0 - time based
+--   1 - force dark mode
+--   2 - force light mode
+local force_mode = 1
+
+-- If not forcing light mode, then check if forcing dark. If not, then use the
+-- time-based approach.
+if force_mode ~= 2 and (force_mode == 1 or hour_now < daylight_starts or hour_now >= daylight_ends) then
     vim.cmd("colorscheme slate")
+    vim.cmd("colorscheme elflord")
+
+    -- Try to make paranthesis matching useful and less confusing.
+    -- This needs to be after selecting a colorscheme, which is why it is here.
+    vim.cmd("hi MatchParen ctermfg=magenta ctermbg=white")
+
 else
     vim.cmd("colorscheme zellner")
+
+    -- Try to make paranthesis matching useful and less confusing.
+    -- This needs to be after selecting a colorscheme, which is why it is here.
+    vim.cmd("hi MatchParen ctermfg=black ctermbg=lightblue")
+
 end
 
 LUACODE
