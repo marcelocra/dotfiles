@@ -146,5 +146,5 @@ symlink_todoist_again() {
 setup_expert_mouse
 setup_evoluent_mouse
 reduce_speed_of_logitech_mouse
-symlink_todoist_again
+# symlink_todoist_again
 
