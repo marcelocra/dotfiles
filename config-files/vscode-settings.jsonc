@@ -619,5 +619,6 @@
   },
   "diffEditor.ignoreTrimWhitespace": false,
   "editor.wordWrap": "on",
-  "notebook.lineNumbers": "on"
+  "notebook.lineNumbers": "on",
+  "workbench.activityBar.location": "hidden"
 }

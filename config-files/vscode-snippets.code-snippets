@@ -186,5 +186,11 @@
   "shebang": {
     "prefix": "shebang",
     "body": ["#!/usr/bin/env $1"]
+  },
+
+  "md checkbox": {
+    "scope": "markdown",
+    "prefix": ["ck"],
+    "body": ["- [ ] "]
   }
 }
