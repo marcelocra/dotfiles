@@ -3,6 +3,10 @@
 #
 # Run from the config-files directory.
 
+# -e: exit on error
+# -o pipefail: exits on command pipe failures
+set -eo pipefail
+
 if [[ "$(basename $(pwd))" != "config-files" ]]
 then
     echo "please, run from the config-files directory"
