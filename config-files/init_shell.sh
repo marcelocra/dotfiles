@@ -275,6 +275,9 @@ alias gco-='git checkout -'
 alias gc='git commit -v'
 alias gcm='git commit -m'
 
+alias gac='gaa && gc'
+alias gacm='gaa && gcm'
+
 alias gd='git d'
 
 alias gpl="git pull"
@@ -294,6 +297,7 @@ alias glm='git log --pretty=format:"* %s"'
 
 alias grs='git restore'
 alias grss='git restore --staged'
+alias grssa='git restore --staged .'
 
 alias gst='git stash'
 alias gsta='git stash apply'
