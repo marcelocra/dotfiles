@@ -280,9 +280,12 @@ iab noparenwrap ;; Prevents auto-formatter from wrapping.
 "
 " -e: exit on error
 " -u: exit on undefined variable
-" -x: print commands before execution
 " -o pipefail: exits on command pipe failures
+" -x: print commands before execution
 iab euxo set -euxo pipefail
+
+" Printing all commands make it very verbose and hard to read.
+iab euo set -euo pipefail
 
 
 "}}}
