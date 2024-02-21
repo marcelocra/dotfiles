@@ -410,7 +410,7 @@ local force_mode = 1
 -- time-based approach.
 if force_mode ~= 2 and (force_mode == 1 or hour_now < daylight_starts or hour_now >= daylight_ends) then
     vim.cmd("colorscheme slate")
-    vim.cmd("colorscheme elflord")
+    -- vim.cmd("colorscheme elflord")
 
     -- Try to make paranthesis matching useful and less confusing.
     -- This needs to be after selecting a colorscheme, which is why it is here.
