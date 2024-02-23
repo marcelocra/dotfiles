@@ -1,4 +1,4 @@
-" vim: foldmethod=marker foldmarker={{{,}}} foldlevel=0 foldenable autoindent expandtab tabstop=4 shiftwidth=4 textwidth=80
+" vim: foldmethod=marker foldmarker={{{,}}} foldlevel=1 foldenable autoindent expandtab tabstop=4 shiftwidth=4 textwidth=80
 "
 " Details on how to use vim-plug, with examples. {{{ {{{
 "
@@ -258,6 +258,9 @@ inoremap <c-space> <c-n>
 
 " Reminder that I'm using the wrong keyboard layout.
 nnoremap Ç :echo 'wrong keyboard layout!'<cr>
+
+" Simulate multiple cursors.
+vnoremap <c-d> y:%s/<c-r>"
 
 " next mapping above
 
