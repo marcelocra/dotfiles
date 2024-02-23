@@ -87,7 +87,6 @@
   },
   "editor.parameterHints.enabled": false,
   "editor.suggest.snippetsPreventQuickSuggestions": false,
-  "editor.foldingStrategy": "indentation",
   "editor.guides.bracketPairs": "active",
   "editor.bracketPairColorization.enabled": true,
   "editor.guides.indentation": true,
@@ -535,6 +534,7 @@
   "remoteHub.commitDirectlyWarning": "off",
   "scm.diffDecorationsGutterWidth": 2,
   "search.exclude": {
+    ".calva/": true,
     "**/.clj-kondo": true,
     "**/.lsp": true,
     "**/*.code-search": true,
@@ -543,10 +543,6 @@
     "**/out": true
   },
   "telemetry.telemetryLevel": "off",
-  "terminal.integrated.allowChords": false,
-  "terminal.integrated.commandsToSkipShell": [
-    "-workbench.action.terminal.focusFind"
-  ],
   "terminal.integrated.tabs.enabled": true,
   "typescript.tsserver.experimental.enableProjectDiagnostics": true,
   "window.title": "${dirty}${activeEditorLong}${separator}${appName}",
@@ -581,6 +577,16 @@
   },
   "emmet.triggerExpansionOnTab": true,
   "tailwindCSS.emmetCompletions": true,
+  "tailwindCSS.files.exclude": [
+    // Default.
+    "**/.git/**",
+    "**/node_modules/**",
+    "**/.hg/**",
+    "**/.svn/**",
+
+    // Custom.
+    "*.md"
+  ],
   "workbench.list.horizontalScrolling": true,
   "git.openRepositoryInParentFolders": "never",
   "editor.inlineSuggest.enabled": true,
@@ -620,5 +626,6 @@
   "diffEditor.ignoreTrimWhitespace": false,
   "editor.wordWrap": "on",
   "notebook.lineNumbers": "on",
-  "workbench.activityBar.location": "hidden"
+  "workbench.activityBar.location": "hidden",
+  "tailwindCSS.colorDecorators": false
 }
