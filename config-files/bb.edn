@@ -85,7 +85,7 @@
              "clj -M:cljs
              --main cljs.main
              --target node
-             --output-to main.js
+             --output-to node/out/main.js
              --compile %s"
              (:cljs-ns parsed-cli-args)))}
 
@@ -93,7 +93,7 @@
   {:doc "Runs a nodejs repl."
    :task (shell "clj -M:cljs:cider-nrepl
                 --main cljs.main
-                --output-to main.js
+                --output-to node/out/main.js
                 --repl-env node")}
 
   notify

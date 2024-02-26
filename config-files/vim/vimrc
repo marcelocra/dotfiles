@@ -120,7 +120,7 @@ set laststatus=2
 set encoding=utf-8
 
 " Change tab and trail characters.
-let &showbreak = '+++ '
+" let &showbreak = '+++ '
 set listchars=eol:↲,tab:→\ ,trail:·,extends:>,precedes:<,nbsp:%
 "set listchars=eol:$,tab:».,trail:.,extends:>,precedes:<,nbsp:_
 set nolist
@@ -295,7 +295,7 @@ iab euo set -euo pipefail
 " -- [ Leader mappings ] ----------------------------------------------------{{{
 
 " Change leader.
-let mapleader = ","
+let mapleader = " "
 let maplocalleader = " "
 
 " Execute last macro recorded in register 'q'.
@@ -324,7 +324,7 @@ nnoremap <leader>x :x<cr>
 nnoremap <leader>a ggVG
 
 " Delete current buffer
-noremap <leader>d :bd<cr>
+noremap <silent><leader>d :bd<cr>
 
 " next leader mapping above
 
