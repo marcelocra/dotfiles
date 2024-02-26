@@ -67,6 +67,11 @@ export GEM_HOME="$HOME/bin/packages/ruby/gems"
 if [[ ! -d "$GEM_HOME" ]]; then mkdir -p "$GEM_HOME"; fi
 export PATH="$GEM_HOME/bin:$PATH"
 
+# bun
+[ -s "/home/marcelocra/.bun/_bun" ] && source "/home/marcelocra/.bun/_bun"  # completions
+export BUN_INSTALL="$HOME/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"
+
 # next export
 
 
