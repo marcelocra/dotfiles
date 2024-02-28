@@ -295,7 +295,7 @@ iab euo set -euo pipefail
 " -- [ Leader mappings ] ----------------------------------------------------{{{
 
 " Change leader.
-let mapleader = " "
+let mapleader = ","
 let maplocalleader = " "
 
 " Execute last macro recorded in register 'q'.
