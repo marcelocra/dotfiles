@@ -29,7 +29,7 @@
 (defn from-theme-to-theme [from to]
   (do
     (println 
-      (format "Go to dark: from '%s' to '%s'" from to))
+      (format "from '%s' to '%s'" from to))
     (spit settings-path
           (str/replace
             settings-content 
