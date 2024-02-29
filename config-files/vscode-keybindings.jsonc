@@ -654,5 +654,26 @@
     "key": "ctrl+i",
     "command": "-extension.vim_ctrl+i",
     "when": "editorTextFocus && vim.active && vim.use<C-i> && !inDebugRepl"
+  },
+  {
+    "key": "shift+alt+l",
+    "command": "workbench.action.tasks.runTask",
+    "args": "echo"
   }
+  // {
+  //   "key": "shift+alt+l",
+  //   "command": "workbench.action.toggleLightDarkThemes"
+  // }
+  // {
+  //   "key": "shift+alt+l",
+  //   "command": "workbench.extensions.action.setColorTheme",
+  //   "args": {
+  //     "themeId": "GitHub Dark Dimmed"
+  //   }
+  // }
+  // {
+  //   "key": "shift+alt+l",
+  //   "command": "workbench.extensions.action.setColorTheme",
+  //   "args": "GitHub Dark Dimmed"
+  // }
 ]

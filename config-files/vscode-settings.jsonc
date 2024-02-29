@@ -97,7 +97,6 @@
       "editor.lineHighlightBackground": "#00ffff22"
     }
   },
-  "workbench.colorTheme": "Solarized Light",
   "workbench.startupEditor": "newUntitledFile",
   "workbench.tree.indent": 20,
   "workbench.tree.renderIndentGuides": "always",
@@ -568,7 +567,8 @@
   },
   "svelte.enable-ts-plugin": true,
   "go.formatTool": "goimports",
-  "workbench.activityBar.location": "hidden"
+  "workbench.activityBar.location": "hidden",
+  "workbench.colorTheme": "Solarized Light"
 
   // ) misc-
 
