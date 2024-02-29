@@ -71,8 +71,10 @@ Plug 'bling/vim-airline'
 
 Plug 'justinmk/vim-sneak'
 
+Plug 'nvim-treesitter/nvim-treesitter', { 'do': ':TSUpdate' }
+
 " Plugins for Clojure and other lisps.
-Plug 'Olical/conjure', { 'for': ['clojure'] }
+Plug 'Olical/conjure', { 'for': ['clojure', 'python'] }
 Plug 'guns/vim-sexp', { 'for': ['clojure'] } 
 Plug 'tpope/vim-sexp-mappings-for-regular-people', { 'for': ['clojure'] } 
 
