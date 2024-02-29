@@ -5,48 +5,51 @@
   '[clojure.java.io :as io]
   '[babashka.fs :as fs]
   '[clojure.pprint :as pp]
-  '[clojure.reflect :as reflect]
-  )
+  '[clojure.reflect :as reflect])
 
+(def settings-content (slurp settings-path))
+
+;; This works on Linux, but might not work on other systems.
 (def settings-path (-> (System/getenv "HOME")
                        (io/file ".config" "Code" "User" "settings.json")
-                       (fs/canonicalize)
+                       (fs/canonicalize)  ;; Necessary to follow symlinks (`slurp` doesn't).
                        (.toString)))
 
-(def from-theme-to-theme
+;; TODO: add more options and allow choosing from cmd line.
+(def theme-mapper
   {:github-dark-dimmed-to-solarized-light
    {:dark "\"GitHub Dark Dimmed\""
     :light "\"Solarized Light\""}})
 
 (defn get-theme [theme]
-  (let [current (-> from-theme-to-theme
+  (let [current (-> theme-mapper
                     theme)]
     [(:light current) (:dark current)]))
 
-(let [settings-content (slurp settings-path)
-      [light-theme dark-theme] (get-theme :github-dark-dimmed-to-solarized-light)
-      light-theme-str-in-settings? (not (nil? (re-find (re-pattern (str "colorTheme.*" light-theme)) settings-content)))]
-  (if light-theme-str-in-settings?
-    ;; go to dark
-    (do
-      (println (format "Go to dark: from '%s' to '%s'"
-                           light-theme
-                           dark-theme))
-      (spit settings-path
-            (str/replace
-              settings-content
-              (re-pattern light-theme)
-              dark-theme))) 
-    ;; go to light
-    (do
-      (println (format "Go to light: from '%s' to '%s'"
-                           dark-theme
-                           light-theme))
-      (spit settings-path
-            (str/replace
-              settings-content
-              (re-pattern dark-theme)
-              light-theme)))))
+(defn from-theme-to-theme [from to]
+  (do
+    (println 
+      (format "Go to dark: from '%s' to '%s'" from to))
+    (spit settings-path
+          (str/replace
+            settings-content 
+            (re-pattern from)
+            to))))
+
+
+(defn toggle
+  "If light mode is enabled, toggle dark mode (and vice-versa)."
+  []
+  (let [[light-theme dark-theme] (get-theme :github-dark-dimmed-to-solarized-light)
+        light-theme-str-in-settings? (not (nil? (re-find (re-pattern (str "colorTheme.*" light-theme)) settings-content)))]
+    (if light-theme-str-in-settings?
+      (from-theme-to-theme light-theme dark-theme)
+      (from-theme-to-theme dark-theme light-theme))))
+
+(toggle)
+
+
+;; playground below! :)
 
 (comment
   (re-find #"colorTheme.*Dark" settings-content)

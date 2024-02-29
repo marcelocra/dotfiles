@@ -4,9 +4,12 @@
   "version": "2.0.0",
   "tasks": [
     {
-      "label": "echo",
+      "label": "toggle-light-dark",
       "type": "shell",
-      "command": "echo Hello"
+      "command": "vscode-toggle-light-dark",
+      "presentation": {
+        "reveal": "never"
+      }
     }
   ]
 }
