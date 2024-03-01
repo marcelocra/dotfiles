@@ -16,7 +16,12 @@
       (re-find #"[0-9]+.*"))))
 
 
-;; CLI helpers -----------------------------------------------------------------
+;; CLI helper ------------------------------------------------------------------
+
+(def cli-options
+  {:example-cli-flag {:default "the default value"}})
+
+;; Do not change code below here -----------------------------------------------
 
 (defn help []
   (println
@@ -25,15 +30,16 @@
                    (map #(format "%s\t%s" (:name %) (:doc %))
                         [(meta #'free-ram)])))))
 
-(def cli-options
-  {:cmd {:default "help"}})
-
-
-;; Do not change code below here -----------------------------------------------
-
 (def parsed-cli-args
   (cli/parse-opts *command-line-args* {:spec cli-options}))
 
+(def cmd-str (first *command-line-args*))
+
 ;; Run the selected command.
-((resolve (symbol (:cmd parsed-cli-args))))
+(if (nil? cmd-str)
+  (help)
+  (let [fn-to-run (resolve (symbol cmd-str))]
+    (if (nil? fn-to-run)
+      (help)
+      (fn-to-run))))
 
