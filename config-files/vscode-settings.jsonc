@@ -568,7 +568,7 @@
   "svelte.enable-ts-plugin": true,
   "go.formatTool": "goimports",
   "workbench.activityBar.location": "hidden",
-  "workbench.colorTheme": "Solarized Light"
+  "workbench.colorTheme": "GitHub Dark Dimmed"
 
   // ) misc-
 
