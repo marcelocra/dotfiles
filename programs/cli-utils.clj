@@ -7,9 +7,41 @@
   '[babashka.cli :as cli]
   '[clojure.java.io :as io])
 
+;; -----------------------------------------------------------------------------
+;; -----------------------------------------------------------------------------
+;; -----------------------------------------------------------------------------
+;; CLI helper
+
+(def cli-options
+  {:lang {:default "js"}})
+
+(def parsed-cli-args
+  (cli/parse-opts *command-line-args* {:spec cli-options}))
+
+(def cmd-str (first *command-line-args*))
+
+
+;; -----------------------------------------------------------------------------
+;; -----------------------------------------------------------------------------
+;; -----------------------------------------------------------------------------
+
+(defn free-ram
+  "Prints the amount of free ram memory."
+  []
+  (println 
+    (->>
+      (:out (sh "cat" "/proc/meminfo"))
+      (re-find #"MemFree.*")
+      (re-find #"[0-9]+.*"))))
+
+
+;; -----------------------------------------------------------------------------
+;; -----------------------------------------------------------------------------
+;; -----------------------------------------------------------------------------
+
 (def
   prettierrc-content
-  "{
+  {"js" "{
   \"arrowParens\": \"always\",
   \"bracketSpacing\": true,
   \"endOfLine\": \"lf\",
@@ -40,34 +72,32 @@
       }
     }
   ]
-}")
+}"
+   })
 
-(defn free-ram
-  "Prints the amount of free ram memory."
+
+(defn pretty
+  "Creates a prettierrc file for one of the following languages (use the options from the parenthesis): JavaScript (default or :js)."
   []
-  (println 
-    (->>
-      (:out (sh "cat" "/proc/meminfo"))
-      (re-find #"MemFree.*")
-      (re-find #"[0-9]+.*"))))
-
-(defn js-pretty
-  "Creates a base JavaScript prettierrc file with markdown override."
-  []
-  (spit
-    (-> (fs/cwd) 
-        (.toString)
-        (io/file ".prettierrc")
-        (.toString))
-    prettierrc-content))
+  (let [lang (:lang parsed-cli-args)
+        content (get prettierrc-content lang)]
+    (if (nil? content)
+      (println (str "Option '" lang "' not available. See help."))
+      (spit
+        (-> (fs/cwd) 
+            (.toString)
+            (io/file ".prettierrc")
+            (.toString))
+        content))))
 
 
-;; CLI helper ------------------------------------------------------------------
-
-(def cli-options
-  {:example-cli-flag {:default "the default value"}})
-
-;; Do not change code below here -----------------------------------------------
+;; -----------------------------------------------------------------------------
+;; -----------------------------------------------------------------------------
+;; -----------------------------------------------------------------------------
+;; NO COMMANDS BELOW HERE.
+;;
+;; This section is meant for the helper function and code that runs the other
+;; commands.
 
 (defn help []
   (println
@@ -75,12 +105,8 @@
          (str/join "\n"
                    (map #(format "%-25s%s" (:name %) (:doc %))
                         [(meta #'free-ram)
-                         (meta #'js-pretty)])))))
+                         (meta #'pretty)])))))
 
-(def parsed-cli-args
-  (cli/parse-opts *command-line-args* {:spec cli-options}))
-
-(def cmd-str (first *command-line-args*))
 
 ;; Run the selected command.
 (if (nil? cmd-str)
