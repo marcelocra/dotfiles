@@ -213,6 +213,7 @@
   "vim.hlsearch": true,
   "vim.smartRelativeLine": false,
   "vim.foldfix": true,
+  "vim.camelCaseMotion.enable": true,
 
   // This is VERY, PAINFULLY, UNUSABLY slow in Ubuntu 20.04. It uses gdbus, as shown in the
   // following link. I also got the scripts (get-im and set-im) from there:
@@ -240,16 +241,16 @@
       "after": ["<esc>"]
     },
     {
-      // save a leave insert mode
-      "before": ["<leader>", "w"],
-      "commands": [":w"],
-      "after": ["<esc>"]
-    },
-    {
-      // save but stay in insert mode
+      // save and leave insert mode
       "before": ["<leader>", "s"],
       "commands": [":w"],
       "after": ["<esc>", "a"]
+    },
+    {
+      // save but stay in insert mode
+      "before": ["<leader>", "<leader>", "s"],
+      "commands": [":w"],
+      "after": ["<esc>"]
     },
     {
       // try to quit without saving
@@ -308,7 +309,7 @@
       "commands": [":nohl"]
     },
     {
-      "before": ["<leader>", "w"],
+      "before": ["<leader>", "s"],
       "commands": [":w"]
     },
     {
@@ -451,7 +452,7 @@
   ],
   "vim.visualModeKeyBindingsNonRecursive": [
     {
-      "before": ["<leader>", "w"],
+      "before": ["<leader>", "s"],
       "commands": [":w"],
       "after": ["<esc>"]
     },

@@ -310,8 +310,9 @@ nnoremap <leader><leader>ev :vspl $MYVIMRC<cr>
 nnoremap <leader><leader>etv :tabe $MYVIMRC<cr>
 
 " Save while in insert mode without leaving insert mode.
-nnoremap <leader>w :w<cr>
-inoremap <leader>w <esc>:w<cr>
+nnoremap <leader>s :w<cr>
+inoremap <leader>s <esc>:w<cr>a
+inoremap <leader><leader>s <esc>:w<cr>
 
 " Quit easily.
 nnoremap <leader>q :q<cr>
@@ -351,6 +352,14 @@ nnoremap <c-b> :Buffers<cr>
 
 " Search lines in all open buffers.
 nnoremap <leader>l :Lines<cr>
+
+" vim-sneak mapping ----------------------------------------
+map f <Plug>Sneak_f
+map F <Plug>Sneak_F
+map t <Plug>Sneak_t
+map T <Plug>Sneak_T
+
+" next plugin mapping above --------------------------------
 
 " -- [ Plugin settings ] ----------------------------------------------------{{{
 " vim-sneak settings ---------------------------------------
