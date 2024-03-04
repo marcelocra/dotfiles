@@ -1,4 +1,6 @@
 #!/usr/bin/env bb
+;;
+;; Command line utils.
 
 (require
   '[clojure.java.shell :refer [sh]]
@@ -94,6 +96,21 @@
 ;; -----------------------------------------------------------------------------
 ;; -----------------------------------------------------------------------------
 ;; -----------------------------------------------------------------------------
+
+(defn time-in
+  "Returns the current time in the given timezone or America/New_York (default)."
+  []
+  (let [tz (get parsed-cli-args :tz "America/New_York")
+        now (java.time.ZonedDateTime/now)
+        timezone (java.time.ZoneId/of tz)
+        tz-time (.withZoneSameInstant now timezone)
+        pattern (java.time.format.DateTimeFormatter/ofPattern "HH:mm")]
+    (println (.format tz-time pattern))))
+
+
+;; -----------------------------------------------------------------------------
+;; -----------------------------------------------------------------------------
+;; -----------------------------------------------------------------------------
 ;; NO COMMANDS BELOW HERE.
 ;;
 ;; This section is meant for the helper function and code that runs the other
@@ -105,7 +122,8 @@
          (str/join "\n"
                    (map #(format "%-25s%s" (:name %) (:doc %))
                         [(meta #'free-ram)
-                         (meta #'pretty)])))))
+                         (meta #'pretty)
+                         (meta #'time-in)])))))
 
 
 ;; Run the selected command.
