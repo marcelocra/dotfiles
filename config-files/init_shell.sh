@@ -252,7 +252,7 @@ js () {
 }
 alias r="js run"
 
-alias bbc="bb --config ~/.config/babashka/bb.edn"
+alias bbg="bb --config ~/.config/babashka/bb.edn"
 
 alias colines='echo "Columns: $COLUMNS, Lines: $LINES"'
 
