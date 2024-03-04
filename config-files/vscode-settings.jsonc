@@ -1,10 +1,10 @@
 {
   // -editor (
-  "editor.fontFamily": "'MonaspiceAr Nerd Font', 'MonaspiceNe Nerd Font', 'MonaspiceKr Nerd Font'",
-  "editor.fontLigatures": "'calt', 'liga', 'dlig', 'ss01', 'ss02', 'ss03', 'ss04', 'ss05', 'ss06', 'ss07'",
-  "editor.fontSize": 11,
-  // "editor.fontFamily": "CodeNewRoman Nerd Font",
+  // "editor.fontFamily": "'MonaspiceAr Nerd Font', 'MonaspiceNe Nerd Font', 'MonaspiceKr Nerd Font'",
+  // "editor.fontLigatures": "'calt', 'liga', 'dlig', 'ss01', 'ss02', 'ss03', 'ss04', 'ss05', 'ss06', 'ss07'",
   // "editor.fontSize": 11,
+  "editor.fontFamily": "CodeNewRoman Nerd Font",
+  "editor.fontSize": 13,
   "editor.codeActionsOnSave": {
     "source.fixAll.eslint": "explicit",
     "source.fixAll": "explicit"
@@ -244,13 +244,13 @@
       // save and leave insert mode
       "before": ["<leader>", "s"],
       "commands": [":w"],
-      "after": ["<esc>", "a"]
+      "after": ["<esc>"]
     },
     {
       // save but stay in insert mode
       "before": ["<leader>", "<leader>", "s"],
       "commands": [":w"],
-      "after": ["<esc>"]
+      "after": ["<esc>", "a"]
     },
     {
       // try to quit without saving

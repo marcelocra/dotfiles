@@ -311,8 +311,8 @@ nnoremap <leader><leader>etv :tabe $MYVIMRC<cr>
 
 " Save while in insert mode without leaving insert mode.
 nnoremap <leader>s :w<cr>
-inoremap <leader>s <esc>:w<cr>a
-inoremap <leader><leader>s <esc>:w<cr>
+inoremap <leader>s <esc>:w<cr>
+inoremap <leader><leader>s <esc>:w<cr>a
 
 " Quit easily.
 nnoremap <leader>q :q<cr>
