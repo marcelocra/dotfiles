@@ -190,7 +190,7 @@
 
   "md checkbox": {
     "scope": "markdown",
-    "prefix": ["ck"],
+    "prefix": ["--"],
     "body": ["- [ ] "]
   }
 }
