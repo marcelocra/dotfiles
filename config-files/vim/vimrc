@@ -292,6 +292,11 @@ iab euxo set -euxo pipefail
 " Printing all commands make it very verbose and hard to read.
 iab euo set -euo pipefail
 
+" Add Rich Hickey comment block comment.
+iab rich ;; rcf - rich comment form
+
+" next abbreviation
+
 
 "}}}
 " -- [ Leader mappings ] ----------------------------------------------------{{{
@@ -417,21 +422,24 @@ local hour_now = tonumber(os.date("%H"))
 local daylight_ends = 17
 local daylight_starts = 6
 
--- Use this to either chose a mode or allow time based mode. Options:
---   0 - time based
---   1 - force dark mode
---   2 - force light mode
-local force_mode = 0
+-- Use this to either choose a mode or allow it to be time based. Options:
+local ColorMode = {
+    TimeBased = 0,
+    Dark = 1,
+    Light = 2,
+}
+
+local mode = ColorMode.Dark
 
 -- If not forcing light mode, then check if forcing dark. If not, then use the
 -- time-based approach.
-if force_mode ~= 2 and (force_mode == 1 or hour_now < daylight_starts or hour_now >= daylight_ends) then
+if mode ~= ColorMode.Light and (mode == ColorMode.Dark or hour_now < daylight_starts or hour_now >= daylight_ends) then
     vim.cmd("colorscheme slate")
     -- vim.cmd("colorscheme elflord")
 
     -- Try to make paranthesis matching useful and less confusing.
     -- This needs to be after selecting a colorscheme, which is why it is here.
-    vim.cmd("hi MatchParen ctermfg=white ctermbg=magenta")
+    vim.cmd("hi MatchParen ctermfg=red ctermbg=black")
     vim.cmd("hi ColorColumn ctermfg=gray ctermbg=black")
 
 else
@@ -439,7 +447,7 @@ else
 
     -- Try to make paranthesis matching useful and less confusing.
     -- This needs to be after selecting a colorscheme, which is why it is here.
-    vim.cmd("hi MatchParen ctermfg=black ctermbg=lightblue")
+    vim.cmd("hi MatchParen ctermfg=black ctermbg=lightgreen")
     vim.cmd("hi ColorColumn ctermfg=gray ctermbg=white")
 
 end
