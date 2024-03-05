@@ -1,4 +1,5 @@
 #!/usr/bin/env bb
+;; vim: autoindent expandtab tabstop=2 shiftwidth=2
 ;;
 ;; Command line utils.
 
@@ -17,7 +18,8 @@
 (def cli-options
   {:lang {:default "js"}})
 
-(def parsed-cli-args
+;; Made dynamic to simplify testing.
+(def ^:dynamic parsed-cli-args
   (cli/parse-opts *command-line-args* {:spec cli-options}))
 
 (def cmd-str (first *command-line-args*))
@@ -105,7 +107,15 @@
         timezone (java.time.ZoneId/of tz)
         tz-time (.withZoneSameInstant now timezone)
         pattern (java.time.format.DateTimeFormatter/ofPattern "HH:mm")]
-    (println (.format tz-time pattern))))
+    (println (format "[%s] %s" tz (.format tz-time pattern)))))
+
+;; Example on how to create a binding to test functions.
+(comment
+  (binding [parsed-cli-args {:tz "America/Toronto"}]
+    (time-in))
+
+  ;; rcf - rich comment form
+  )
 
 
 ;; -----------------------------------------------------------------------------
