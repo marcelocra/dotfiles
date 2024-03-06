@@ -354,10 +354,10 @@
       "after": ["g", "$"]
     },
     // -- visual lines - end
-    {
-      "before": ["s"],
-      "after": ["leader", "leader", "s"]
-    },
+    // {
+    //   "before": ["s"],
+    //   "after": ["leader", "leader", "s"]
+    // },
     {
       "before": ["<c-a>"],
       "after": ["gg", "V", "G"]
