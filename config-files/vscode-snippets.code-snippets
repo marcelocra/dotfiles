@@ -205,4 +205,16 @@
       "// )$1-"
     ]
   },
+
+  "ts ignore": {
+    "scope": "javascript,typescript,javascriptreact,typescriptreact",
+    "prefix": "ig",
+    "body": ["// @ts-ignore"]
+  },
+
+  "ts expect error": {
+    "scope": "javascript,typescript,javascriptreact,typescriptreact",
+    "prefix": "err",
+    "body": ["// @ts-expect-error"]
+  },
 }
