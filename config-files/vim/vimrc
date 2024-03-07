@@ -1,6 +1,6 @@
-" vim: foldmethod=marker foldmarker={{{,}}} foldlevel=1 foldenable autoindent expandtab tabstop=4 shiftwidth=4 textwidth=80
+" vim: foldmethod=marker foldmarker={{{,}}} foldlevel=0 foldenable autoindent expandtab tabstop=4 shiftwidth=4 textwidth=80
 "
-" Details on how to use vim-plug, with examples. {{{ {{{
+" Details on how to use vim-plug, with examples. {{{
 "
 " The default plugin directory will be as follows:
 "   - Vim (Linux/macOS): '~/.vim/plugged'
@@ -53,8 +53,8 @@
 "   Plug 'tpope/vim-vividchalk'
 "   Plug 'marcelocra/vim-colorscheme'
 "
-" }}} }}}
-" -- [ Install plugins and initialize the plugin system ] -------------------{{{
+" }}}
+" --- -vim-plug( ----------------------------------------{{{
 
 call plug#begin()  
 
@@ -81,8 +81,8 @@ Plug 'tpope/vim-sexp-mappings-for-regular-people', { 'for': ['clojure'] }
 call plug#end()
 
 
-"}}}
-" -- [ Settings ] -----------------------------------------------------------{{{
+" )vim-plug- }}}
+" --- -settings( ------------------------------------------------------------{{{
 
 " Syntax highlighting.
 syntax enable
@@ -161,12 +161,8 @@ colorscheme zellner  " light
 " Use the system clipboard to copy to/from.
 set clipboard+=unnamedplus
 
-" next setting above
-
-
-
-"}}}
-" -- [ Mappings ] -----------------------------------------------------------{{{
+" )settings- }}}
+" --- -mappings( ------------------------------------------------------------{{{
 
 " Use normal regex.
 nnoremap / /\v\c
@@ -264,11 +260,8 @@ nnoremap Ç :echo 'wrong keyboard layout!'<cr>
 " Simulate multiple cursors.
 vnoremap <c-d> y:%s/<c-r>"
 
-" next mapping above
-
-
-"}}}
-" -- [ Abbreviations ] ------------------------------------------------------{{{
+" )mappings- }}}
+" --- -abbreviations( -------------------------------------------------------{{{
 
 " Shebang.
 iab shebang #!/usr/bin/env
@@ -295,11 +288,8 @@ iab euo set -euo pipefail
 " Add Rich Hickey comment block comment.
 iab rich ;; rcf - rich comment form
 
-" next abbreviation
-
-
-"}}}
-" -- [ Leader mappings ] ----------------------------------------------------{{{
+" )abbreviations- }}}
+" --- -leader-mappings( -----------------------------------------------------{{{
 
 " Change leader.
 let mapleader = ","
@@ -334,12 +324,8 @@ nnoremap <leader>a ggVG
 " Delete current buffer
 noremap <silent><leader>d :bd<cr>
 
-" next leader mapping above
-
-
-
-"}}}
-" -- [ Plugins mappings ] ---------------------------------------------------{{{
+" )leader-mappings- }}}
+" --- -plugin-mappings( -----------------------------------------------------{{{
 
 " vscode-vim settings --------------------------------------
 " For vscode-neovim. Settings that should be enabled only in
@@ -364,9 +350,8 @@ map F <Plug>Sneak_F
 map t <Plug>Sneak_t
 map T <Plug>Sneak_T
 
-" next plugin mapping above --------------------------------
-
-" -- [ Plugin settings ] ----------------------------------------------------{{{
+" )plugin-mappings- }}}
+" --- -plugin-settings( -----------------------------------------------------{{{
 " vim-sneak settings ---------------------------------------
 
 let g:sneak#label = 1
@@ -376,23 +361,16 @@ let g:sneak#s_next = 1
 
 let g:conjure#client_on_load = 0
 
-" next plugin setting above --------------------------------
-
-
-"  }}}
-" next setting above ---------------------------------------
-
-
-"}}}
-" -- [ Auto commands ] ------------------------------------------------------{{{
+" )plugin-settings- }}}
+" --- -autocommands( --------------------------------------------------------{{{
 
 augroup myautocommands
     autocmd!
     autocmd FileType gitcommit set colorcolumn=51
 augroup END
 
-" }}}
-" -- [ Functions ] ----------------------------------------------------------{{{
+" )autocommands- }}}
+" --- -functions( -----------------------------------------------------------{{{
 
 "" From StackOverflow, in case changing the highlight colors doesn't work:
 ""
@@ -411,8 +389,8 @@ augroup END
 "     autocmd VimEnter * call FuckThatMatchParen()
 " augroup END
 
-" }}}
-" -- [ Lua ] ----------------------------------------------------------------{{{
+" )functions- }}}
+" --- -lua( -----------------------------------------------------------------{{{
 
 if has('nvim')
 
@@ -456,4 +434,4 @@ LUACODE
 
 endif
 
-" }}}
+" )lua- }}}
