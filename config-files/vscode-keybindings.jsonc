@@ -1,9 +1,7 @@
-// Place your key bindings in this file to override the defaultsauto[]
+// Place your key bindings in this file to override the defaults.
 [
-  //============================================================================
-  //= workbench
-  //============================================================================
-
+  // -reviewed(
+  // -navigation(
   {
     "key": "ctrl+,",
     "command": "workbench.action.navigateBack"
@@ -20,6 +18,8 @@
     "key": "ctrl+shift+-",
     "command": "-workbench.action.navigateForward"
   },
+  // )navigation-
+
   {
     "key": "ctrl+,",
     "command": "-workbench.action.openSettings"
@@ -28,11 +28,15 @@
     "key": "ctrl+shift+,",
     "command": "workbench.action.openSettings"
   },
+  // )reviewed-
+
   {
     "key": "alt+shift+m",
     "command": "workbench.action.toggleMaximizedPanel",
     "when": "terminalFocus && !isMac"
   },
+
+  // -macos(
   {
     "key": "cmd+shift+m",
     "command": "workbench.action.toggleMaximizedPanel",
@@ -43,6 +47,8 @@
     "command": "-workbench.actions.view.problems",
     "when": "workbench.panel.markers.view.active && isMac"
   },
+  // )macos-
+
   {
     "key": "ctrl+r",
     "command": "workbench.action.debug.restart",
@@ -52,31 +58,31 @@
     "key": "ctrl+e",
     "command": "-workbench.action.quickOpen"
   },
-  // Terminal panel behavior.
-  {
-    "key": "ctrl+t",
-    "command": "-workbench.action.showAllSymbols"
-  },
-  {
-    "key": "alt+t",
-    "command": "workbench.action.focusLastEditorGroup",
-    "when": "activePanel && terminalFocus"
-  },
-  {
-    "key": "ctrl+t",
-    "command": "workbench.action.togglePanel"
-  },
-  {
-    "key": "alt+t",
-    "command": "workbench.action.terminal.focus",
-    "when": "activePanel && !terminalFocus"
-  },
-  {
-    "key": "alt+t",
-    "command": "workbench.action.togglePanel",
-    "when": "!activePanel"
-  },
-  // end.
+  // // Terminal panel behavior. -terminal(
+  // {
+  //   "key": "ctrl+t",
+  //   "command": "-workbench.action.showAllSymbols"
+  // },
+  // {
+  //   "key": "alt+t",
+  //   "command": "workbench.action.focusLastEditorGroup",
+  //   "when": "activePanel && terminalFocus"
+  // },
+  // {
+  //   "key": "ctrl+t",
+  //   "command": "workbench.action.togglePanel"
+  // },
+  // {
+  //   "key": "alt+t",
+  //   "command": "workbench.action.terminal.focus",
+  //   "when": "activePanel && !terminalFocus"
+  // },
+  // {
+  //   "key": "alt+t",
+  //   "command": "workbench.action.togglePanel",
+  //   "when": "!activePanel"
+  // },
+  // // )terminal-
   {
     "key": "ctrl+j",
     "command": "-workbench.action.togglePanel"
@@ -661,14 +667,43 @@
     "args": "toggle-light-dark"
   },
   {
-    "key": "ctrl+p",
-    "command": "workbench.action.quickOpen",
-    "when": "!terminalFocus"
+    "key": "ctrl+shift+`",
+    "command": "workbench.action.toggleMaximizedPanel",
+    "when": "terminalFocus && (terminalProcessSupported || terminalWebExtensionContributedProfile)"
   },
   {
-    "key": "ctrl+p",
-    "command": "-workbench.action.quickOpen"
+    "key": "ctrl+shift+`",
+    "command": "workbench.action.terminal.new",
+    "when": "!terminalFocus && (terminalProcessSupported || terminalWebExtensionContributedProfile)"
   }
+  // {
+  //   "key": "ctrl+shift+capslock ctrl+shift+f",
+  //   "command": "workbench.action.terminal.focusFind",
+  //   "when": "terminalFindFocused && terminalHasBeenCreated || terminalFindFocused && terminalProcessSupported || terminalFocusInAny && terminalHasBeenCreated || terminalFocusInAny && terminalProcessSupported"
+  // },
+  // {
+  //   "key": "ctrl+f",
+  //   "command": "-workbench.action.terminal.focusFind",
+  //   "when": "terminalFindFocused && terminalHasBeenCreated || terminalFindFocused && terminalProcessSupported || terminalFocusInAny && terminalHasBeenCreated || terminalFocusInAny && terminalProcessSupported"
+  // }
+  // {
+  //   "key": "ctrl+p",
+  //   "command": "workbench.action.quickOpen",
+  //   "when": "!terminalFocus"
+  // },
+  // {
+  //   "key": "ctrl+p",
+  //   "command": "-workbench.action.quickOpen"
+  // },
+  // {
+  //   "key": "ctrl+k",
+  //   "command": "workbench.action.terminal.sendSequence",
+  //   "args": {
+  //     "text": "^k"
+  //   },
+  //   "when": "terminalFocus"
+  // }
+
   // {
   //   "key": "shift+alt+l",
   //   "command": "workbench.action.toggleLightDarkThemes"

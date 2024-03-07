@@ -192,5 +192,17 @@
     "scope": "markdown",
     "prefix": ["--"],
     "body": ["- [ ] "]
-  }
+  },
+
+
+  "config comment block": {
+    "scope": "json,jsonc",
+    "description": "Create simple comment to make parts of a config easier to find. The parenthesis also simplify jumping between start and finish of the block.",
+    "prefix": "-",
+    "body": [
+      "// -$1(",
+      "$0",
+      "// )$1-"
+    ]
+  },
 }

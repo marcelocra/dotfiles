@@ -70,6 +70,8 @@
   "terminal.integrated.fontFamily": "'MesloLGS Nerd Font', 'MesloLGS NF', monospace",
   "terminal.integrated.fontSize": 13,
   "terminal.integrated.macOptionClickForcesSelection": true,
+  "terminal.integrated.allowChords": false,
+  "terminal.integrated.sendKeybindingsToShell": true,
   // ) terminal-
 
   // -window (
@@ -225,6 +227,7 @@
   // "vim.autoSwitchInputMethod.obtainIMCmd": "/home/marcelocra/bin/get-im",
   // "vim.autoSwitchInputMethod.switchIMCmd": "/home/marcelocra/bin/set-im {im}",
 
+  // -viminsert(
   "vim.insertModeKeyBindingsNonRecursive": [
     {
       "before": ["j", "f"],
@@ -261,11 +264,11 @@
       // save and quit
       "before": ["<leader>", "x"],
       "commands": [":x"]
-    },
-    // nextviminsert - copy next curlies above
-    {},
-    {}
+    }
+    // )viminsert-
   ],
+
+  // -vimnormal(
   "vim.normalModeKeyBindingsNonRecursive": [
     {
       "before": ["<leader>", "j"],
@@ -447,9 +450,14 @@
       "before": ["-"],
       "commands": ["workbench.action.splitEditorDown"]
     },
-    // nextnormal - copy next curlies above
-    {}
+    {
+      "before": ["<c-f>"],
+      "after": ["/"]
+    }
   ],
+  // )vimnormal-
+
+  // -vimvisual(
   "vim.visualModeKeyBindingsNonRecursive": [
     {
       "before": ["<leader>", "s"],
@@ -486,6 +494,8 @@
     //   "commands": ["calva.evaluateSelectionToSelectionEnd"]
     // },
   ],
+  // )vimvisual-
+
   "vim.leader": ",",
   // ) vim-
 
@@ -568,8 +578,8 @@
   },
   "svelte.enable-ts-plugin": true,
   "go.formatTool": "goimports",
-  "workbench.activityBar.location": "hidden",
-  "workbench.colorTheme": "GitHub Dark Dimmed"
+  "workbench.colorTheme": "GitHub Dark Dimmed",
+  "workbench.activityBar.location": "hidden"
 
   // ) misc-
 
