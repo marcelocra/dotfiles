@@ -181,6 +181,33 @@
 ;; -----------------------------------------------------------------------------
 ;; -----------------------------------------------------------------------------
 ;; -----------------------------------------------------------------------------
+
+(defn toggle-notifications
+  "Enables/disables desktop notifications in an ubuntu/mint with cinnamon de."
+  []
+  (let [enabled-status "true\n"
+        notifications-enabled?  (= enabled-status (:out (sh "gsettings"
+                                                            "get"
+                                                            "org.cinnamon.desktop.notifications"
+                                                            "display-notifications")))]
+    (let [result (sh "gsettings"
+                     "set"
+                     "org.cinnamon.desktop.notifications"
+                     "display-notifications"
+                     (str (not notifications-enabled?)))
+          current-status (:out (sh "gsettings"
+                                   "get"
+                                   "org.cinnamon.desktop.notifications"
+                                   "display-notifications"))
+          user-feedback (if (= current-status enabled-status)
+                          "Notifications enabled"
+                          "Notifications disabled")]
+      user-feedback)))
+
+
+;; -----------------------------------------------------------------------------
+;; -----------------------------------------------------------------------------
+;; -----------------------------------------------------------------------------
 ;; Next command here.
 
 
@@ -200,7 +227,8 @@
                         [(meta #'free-ram)
                          (meta #'pretty)
                          (meta #'time-in)
-                         (meta #'bb)])))))
+                         (meta #'bb)
+                         (meta #'toggle-notifications)])))))
 
 
 ;; Run the selected command.
