@@ -288,6 +288,10 @@ iab euo set -euo pipefail
 " Add Rich Hickey comment block comment.
 iab rich ;; rcf - rich comment form
 
+" Always open help in a new tab.
+cab help tab help
+cab h tab help
+
 " )abbreviations- }}}
 " --- -leader-mappings( -----------------------------------------------------{{{
 
