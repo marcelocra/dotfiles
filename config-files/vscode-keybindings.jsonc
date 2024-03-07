@@ -63,20 +63,20 @@
   //   "key": "ctrl+t",
   //   "command": "-workbench.action.showAllSymbols"
   // },
-  // {
-  //   "key": "alt+t",
-  //   "command": "workbench.action.focusLastEditorGroup",
-  //   "when": "activePanel && terminalFocus"
-  // },
+  {
+    "key": "ctrl+shift+m",
+    "command": "workbench.action.focusLastEditorGroup",
+    "when": "activePanel && terminalFocus"
+  },
   // {
   //   "key": "ctrl+t",
   //   "command": "workbench.action.togglePanel"
   // },
-  // {
-  //   "key": "alt+t",
-  //   "command": "workbench.action.terminal.focus",
-  //   "when": "activePanel && !terminalFocus"
-  // },
+  {
+    "key": "ctrl+shift+m",
+    "command": "workbench.action.terminal.focus",
+    "when": "activePanel && !terminalFocus"
+  },
   // {
   //   "key": "alt+t",
   //   "command": "workbench.action.togglePanel",

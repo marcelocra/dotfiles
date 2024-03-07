@@ -547,10 +547,15 @@
     "editor.wordWrapColumn": 80,
     "editor.wrappingIndent": "same"
   },
+
+  // -fsharp(
   "[fsharp]": {
     "editor.defaultFormatter": "Ionide.Ionide-fsharp",
     "editor.tabSize": 4
   },
+  // )fsharp-
+
+  // -clojure(
   "[clojure]": {
     // "editor.wordSeparators": "\t()\"':,;~@#$%^&{}[]`.+-/<>",
     "editor.autoClosingBrackets": "always",
@@ -566,6 +571,8 @@
     },
     "editor.defaultFormatter": "betterthantomorrow.calva"
   },
+  // )clojure-
+
   "[python]": {
     "editor.tabSize": 4,
     "editor.defaultFormatter": "ms-python.black-formatter"
@@ -579,7 +586,9 @@
   "svelte.enable-ts-plugin": true,
   "go.formatTool": "goimports",
   "workbench.colorTheme": "GitHub Dark Dimmed",
-  "workbench.activityBar.location": "hidden"
+  "workbench.activityBar.location": "hidden",
+  "vim.enableNeovim": true,
+  "vim.neovimUseConfigFile": true
 
   // ) misc-
 
