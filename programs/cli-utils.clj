@@ -202,7 +202,7 @@
           user-feedback (if (= current-status enabled-status)
                           "Notifications enabled"
                           "Notifications disabled")]
-      user-feedback)))
+      (println user-feedback))))
 
 
 ;; -----------------------------------------------------------------------------
