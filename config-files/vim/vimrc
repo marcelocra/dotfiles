@@ -349,10 +349,14 @@ nnoremap <c-b> :Buffers<cr>
 nnoremap <leader>l :Lines<cr>
 
 " vim-sneak mapping ----------------------------------------
+
 map f <Plug>Sneak_f
 map F <Plug>Sneak_F
 map t <Plug>Sneak_t
 map T <Plug>Sneak_T
+
+" conjure mapping ----------------------------------------
+nnoremap <c-c> :Commands<cr>
 
 " )plugin-mappings- }}}
 " --- -plugin-settings( -----------------------------------------------------{{{
@@ -364,6 +368,10 @@ let g:sneak#s_next = 1
 " conjure settings -----------------------------------------
 
 let g:conjure#client_on_load = 0
+let g:conjure#log#jump_to_latest#enabled = 0
+let g:conjure#log#jump_to_latest#cursor_scroll_position = 'center'
+let g:conjure#log#wrap = 1
+let g:conjure#log#fold#enabled = 1
 
 " )plugin-settings- }}}
 " --- -autocommands( --------------------------------------------------------{{{
@@ -411,7 +419,7 @@ local ColorMode = {
     Light = 2,
 }
 
-local mode = ColorMode.Dark
+local mode = ColorMode.TimeBased
 
 -- If not forcing light mode, then check if forcing dark. If not, then use the
 -- time-based approach.
