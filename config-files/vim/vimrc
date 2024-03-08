@@ -300,7 +300,7 @@ let mapleader = ","
 let maplocalleader = " "
 
 " Execute last macro recorded in register 'q'.
-" nnoremap <space> @q
+nnoremap <space><space> @q
 
 " Easily source my vimrc.
 nnoremap <leader><leader>sv :source $MYVIMRC<cr>
