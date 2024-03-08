@@ -40,6 +40,8 @@
   "editor.hover.delay": 1000,
   "editor.inlineSuggest.enabled": true,
   "editor.wordWrap": "on",
+  "editor.lineHeight": 1.6,
+  "editor.roundedSelection": false,
   // ) editor-
 
   // -explorer (
@@ -82,22 +84,13 @@
 
   // -workbench (
   "workbench.colorCustomizations": {
-    "[Solarized Dark]": {
-      "tree.indentGuidesStroke": "#00ffff",
-      "tree.inactiveIndentGuidesStroke": "#444",
-      "editorIndentGuide.activeBackground1": "#00ffff",
-      "editorIndentGuide.background1": "#444",
-      "editor.lineHighlightBorder": "#00ffff44",
-      "editor.lineHighlightBackground": "#00ffff22"
-    },
-    "[Solarized Light]": {
-      "tree.indentGuidesStroke": "#00ffff",
-      "tree.inactiveIndentGuidesStroke": "#d8d8d8",
-      "editorIndentGuide.activeBackground1": "#00ffff",
-      "editorIndentGuide.background1": "#eee",
-      "editor.lineHighlightBorder": "#00ffff22",
-      "editor.lineHighlightBackground": "#00ffff22"
-    }
+    "editorCursor.foreground": "#fff", //{:dark "#fff" :light "#ff00ea" :dark-opt "#51ff00"}
+    "tree.indentGuidesStroke": "#0084ff",
+    "tree.inactiveIndentGuidesStroke": "#444", //{:dark "#444" :light "#d8d8d8"}
+    "editorIndentGuide.activeBackground1": "#ff00c8", //{:dark "#ff00c8" :light "#00ffff"}
+    "editorIndentGuide.background1": "#333", //{:dark "#333" :light "#eee"}
+    "editor.lineHighlightBorder": "#ff00c833", //{:dark "#ff00c833" :light "#00ffff22"}
+    "editor.lineHighlightBackground": "#ff00c822" //{:dark "#ff00c822" :light "#00ffff22"}
   },
   "workbench.startupEditor": "newUntitledFile",
   "workbench.tree.indent": 20,
