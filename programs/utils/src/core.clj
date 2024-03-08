@@ -2,13 +2,67 @@
 ;; vim: autoindent expandtab tabstop=2 shiftwidth=2
 ;;
 ;; Command line utils.
+(ns core
+  (:require
+    [clojure.java.shell :refer [sh]]
+    [clojure.string :as s]
+    [babashka.fs :as fs]
+    [babashka.cli :as cli]
+    [clojure.java.io :as io]
+    [clojure.repl :refer [doc]]))
 
-(require
-  '[clojure.java.shell :refer [sh]]
-  '[clojure.string :as str]
-  '[babashka.fs :as fs]
-  '[babashka.cli :as cli]
-  '[clojure.java.io :as io])
+(def templates-dir
+  (-> (System/getenv "MCRA_CLI_UTILS_PATH")
+      (fs/parent)
+      (fs/file)
+      (io/file "templates")
+      (.toString)
+
+      ;; When you don't know the api, you end up coding more. For the same
+      ;; thing above, initially I wrote the code below (which wasn't working,
+      ;; btw).
+
+      ; (io/file)
+      ; (fs/components)
+      ; (->> (map #(.toString %)))
+      ; (drop-last)
+      ; (reverse)
+      ; (conj "templates")
+      ; (reverse)
+      ; (->> (apply io/file))
+      ; (fs/absolutize)
+      ; (.toString))
+      ))
+
+(comment
+  (-> (fs/list-dir templates-dir)
+      (->> (map #(.toString %)))
+      (->> (s/join "\n"))
+      (println))
+
+  ;; rcf - rich comment form
+  )
+
+(defn produce-file-path
+  [name]
+  (-> templates-dir
+      (io/file name)
+      (.toString)))
+
+(def file-names
+  {:bb "bb.edn"
+   :prettier ".prettierrc.json"})
+
+(def template-files
+  {:bb (produce-file-path (:bb file-names))
+   :prettier {"js" (produce-file-path (:prettier file-names))}})
+
+(defn file-to-write [name]
+  (-> (fs/cwd)
+      (.toString)
+      (io/file name)
+      (.toString)))
+
 
 ;; -----------------------------------------------------------------------------
 ;; -----------------------------------------------------------------------------
@@ -43,56 +97,17 @@
 ;; -----------------------------------------------------------------------------
 ;; -----------------------------------------------------------------------------
 
-(def
-  prettierrc-content
-  {"js" "{
-  \"arrowParens\": \"always\",
-  \"bracketSpacing\": true,
-  \"endOfLine\": \"lf\",
-  \"htmlWhitespaceSensitivity\": \"css\",
-  \"insertPragma\": false,
-  \"singleAttributePerLine\": false,
-  \"bracketSameLine\": false,
-  \"jsxBracketSameLine\": false,
-  \"jsxSingleQuote\": false,
-  \"printWidth\": 120,
-  \"proseWrap\": \"preserve\",
-  \"quoteProps\": \"as-needed\",
-  \"requirePragma\": false,
-  \"semi\": true,
-  \"singleQuote\": false,
-  \"tabWidth\": 2,
-  \"trailingComma\": \"es5\",
-  \"useTabs\": false,
-  \"embeddedLanguageFormatting\": \"auto\",
-  \"vueIndentScriptAndStyle\": false,
-  \"overrides\": [
-    {
-      \"files\": \"*.md\",
-      \"options\": {
-        \"printWidth\": 80,
-        \"proseWrap\": \"always\",
-        \"parser\": \"markdown\"
-      }
-    }
-  ]
-}"
-   })
-
-
 (defn pretty
   "Creates a prettierrc file for one of the following languages (use the options from the parenthesis): JavaScript (default or :js)."
   []
-  (let [lang (:lang parsed-cli-args)
-        content (get prettierrc-content lang)]
-    (if (nil? content)
-      (println (str "Option '" lang "' not available. See help."))
-      (spit
-        (-> (fs/cwd) 
-            (.toString)
-            (io/file ".prettierrc")
-            (.toString))
-        content))))
+  (let [file-name (file-to-write (:prettier file-names))] 
+    (if (fs/exists? file-name)
+      (println (format "File '%s' exists. Aborting." file-name))
+      (let [lang (:lang parsed-cli-args)
+            content (fs/read-all-bytes (get-in template-files [:prettier lang] (get-in template-files [:prettier "js"])))]
+        (if (nil? content)
+          (println (str "Option '" lang "' not available. See help."))
+          (fs/write-bytes file-name content))))))
 
 
 ;; -----------------------------------------------------------------------------
@@ -122,60 +137,17 @@
 ;; -----------------------------------------------------------------------------
 ;; -----------------------------------------------------------------------------
 
-(def bb-template
-  "{:min-bb-version \"1.3.188\"
-
- :tasks
- {:requires ([babashka.fs :as fs]
-             [babashka.cli :as cli])
-  :init (do 
-          (def cli-options
-            {:hello {:default \"hello, world!\"}})
-          (def parsed-cli-args (cli/parse-opts *command-line-args* {:spec cli-options}))
-
-          (defn now
-            \"Creates a date and time string for the current moment.\"
-            [& {:keys [format-str]}]
-            (let [date (java.util.Date.)]
-              (-> (java.text.SimpleDateFormat. (if (nil? format-str)
-                                                 \"yyyy-MM-dd HH:mm:ss.SSS\"
-                                                 format-str))
-                  (.format date))))
-
-          (defn logging
-            \"Logs timestamp with task name.\"
-            [text-to-log]
-            (let [log (Object.)
-                  current-task-name (:name (current-task))] 
-              (locking log
-                (println 
-                  (format 
-                    \"[ %s | %s ] %s\"
-                    (now)
-                    (if (nil? current-task-name) \"global\" current-task-name)
-                    text-to-log)))))
-
-          (logging parsed-cli-args))
-  :enter (logging \"starting\")
-  :leave (logging \"done!\")
-
-  dev {:doc \"Run these during development.\"
-       :task (run '-dev {:parallel true})}
- 
-  -dev {:depends [-dev-cmd1 -dev-cmd2]}
-  -dev-cmd1 {:task (shell \"bun d\")}
-  -dev-cmd2 {:task (shell \"bun t\")}
-
-  ;; Next task above this line.
- }
- 
- ;; Next bb setting above this line.
-}")
-
 (defn bb
   "Creates a new bb.edn file in the current directory."
   []
-  (println bb-template))
+  (let [file-name (file-to-write (:bb file-names))] 
+    (if (fs/exists? file-name)
+      (println (format "File '%s' exists. Aborting." file-name))
+      (let [lang (:lang parsed-cli-args)
+            content (fs/read-all-bytes (get template-files :bb))]
+        (if (nil? content)
+          (println (str "Option '" lang "' not available. See help."))
+          (fs/write-bytes file-name content))))))
 
 
 ;; -----------------------------------------------------------------------------
@@ -222,7 +194,7 @@
 (defn help []
   (println
     (str "Choose one of the commands below: \n\n"
-         (str/join "\n"
+         (s/join "\n"
                    (map #(format "%-25s%s" (:name %) (:doc %))
                         [(meta #'free-ram)
                          (meta #'pretty)
@@ -238,4 +210,41 @@
     (if (nil? fn-to-run)
       (help)
       (fn-to-run))))
+
+
+;; -----------------------------------------------------------------------------
+;; -----------------------------------------------------------------------------
+;; -----------------------------------------------------------------------------
+;; PLAYGROUND!! :)
+
+(comment
+  (def templates-dir (-> (fs/cwd)
+                         (.toString)
+                         (io/file "src" "templates")
+                         (.toString)))
+
+  ;; creates one file for each of the templates
+  (->
+    templates-dir
+    (io/file "bb.edn")
+    (fs/write-bytes (.getBytes bb-template)))
+
+  (->
+    templates-dir
+    (io/file ".prettierrc.json")
+    (fs/write-bytes (.getBytes (get prettierrc-content "js"))))
+
+  ;; creates a dir for templates if it doesn't exists and/or returns its content
+  (->
+    templates-dir
+    (fs/create-dirs)
+    (fs/list-dir))
+  
+
+
+  (-> (fs/cwd) 
+      (.toString))
+
+  ;; rcf - rich comment form
+  )
 
