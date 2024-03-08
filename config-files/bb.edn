@@ -7,7 +7,8 @@
           (def cli-options
             {:cljs-ns {:default "core"}
              :time {:default "30m"}
-             :text {:default "Olá, mundo!"}})
+             :text {:default "Olá, mundo!"}
+             :name {:default "hello-world"}})
           (def parsed-cli-args (cli/parse-opts *command-line-args* {:spec cli-options}))
 
           (defn now
@@ -109,6 +110,86 @@
            (shell (format "sleep '%s'" (:time parsed-cli-args)))
            (shell (format "spd-say -w -l pt-BR -p 100 -r -30 -R 100 -m all '%s'" (:text parsed-cli-args))))}
 
+  new-fable
+  {:doc "Creates a new F# Fable project, ready to compile for JavaScript"
+   :task (let [project-name (:name parsed-cli-args)]
+           (do
+             (println "Run the following commands, in this order: \n\n")
+             (println (format "mkdir %s" project-name))
+             (println (format "cd %s" project-name))
+             (println "dotnet new console -lang F#
+dotnet new tool-manifest
+
+dotnet tool install fable
+
+dotnet tool install fantomas
+
+dotnet add package Fable.Core
+
+dotnet fable  # or --lang=typescript or --lang=python
+
+---
+
+At this point you should have a fully functioning example.
+To create a full JavaScript example, keep going:
+
+Create a project with `npm init -y` and make sure it has
+`type: \"module\"` in the package.json
+
+You should be able to run `node Program.fs.js`
+
+Add node bindings: dotnet add package Fable.Node
+
+Update the Program.fs file to use some of those:
+
+open Node.Api
+fs.writeFileSync(\"test.txt\",  \"Hello World\")
+
+Run in watch mode: dotnet fable watch
+
+---
+
+To use in the browser with vite:
+
+npm i -D vite
+
+Create a vite.config.ts with the following content:
+
+import { defineConfig } from 'vite'
+// https://vitejs.dev/config/
+export default defineConfig({
+    clearScreen: false,
+    server: {
+        watch: {
+            ignored: [
+                \"**/*.fs\" // Don't watch F# files
+            ]
+        }
+    }
+})
+
+Then an html:
+
+<!DOCTYPE html>
+<html lang=\"en\">
+  <head>
+    <meta charset=\"UTF-8\" />
+    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" />
+    <title>Fable</title>
+  </head>
+  <body>
+    <div id=\"root\"></div>
+    <script type=\"module\" src=\"/Program.fs.js\"></script>
+  </body>
+</html>
+                      
+Finally, run vite: npx vite
+                      
+")))}
 
   ;; Write next task above this comment.
-  }}
+  }
+
+
+ ;; Write next setting above this comment.
+ }
