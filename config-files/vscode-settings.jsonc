@@ -586,9 +586,11 @@
   "svelte.enable-ts-plugin": true,
   "go.formatTool": "goimports",
   "workbench.colorTheme": "GitHub Dark Dimmed",
-  "workbench.activityBar.location": "hidden",
   "vim.enableNeovim": true,
-  "vim.neovimUseConfigFile": true
+  "vim.neovimUseConfigFile": true,
+  "workbench.activityBar.location": "hidden",
+  "FSharp.inlayHints.parameterNames": false,
+  "FSharp.inlayHints.typeAnnotations": false
 
   // ) misc-
 
