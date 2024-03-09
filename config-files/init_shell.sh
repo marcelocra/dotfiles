@@ -290,6 +290,7 @@ alias gd='git d'
 
 alias gpl="git pull"
 alias gps="git push"
+alias gpsso="git push --set-upstream origin main"
 alias gpd='git push --dry-run'
 
 alias gld="git log --graph --pretty='%Cred%h%Creset -%C(auto)%d%Creset %s %Cgreen(%ad) %C(bold blue)<%an>%Creset'"
