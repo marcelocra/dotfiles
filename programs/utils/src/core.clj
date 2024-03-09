@@ -50,12 +50,15 @@
       (.toString)))
 
 (def file-names
+  "IMPORTANT: update the `template-files` too."
   {:bb "bb.edn"
-   :prettier ".prettierrc.json"})
+   :prettier ".prettierrc.json"
+   :shadow-cljs "shadow-cljs.edn"})
 
 (def template-files
   {:bb (produce-file-path (:bb file-names))
-   :prettier {"js" (produce-file-path (:prettier file-names))}})
+   :prettier {"js" (produce-file-path (:prettier file-names))}
+   :shadow-cljs (produce-file-path (:shadow-cljs file-names))})
 
 (defn file-to-write [name]
   (-> (fs/cwd)
@@ -180,6 +183,21 @@
 ;; -----------------------------------------------------------------------------
 ;; -----------------------------------------------------------------------------
 ;; -----------------------------------------------------------------------------
+
+(defn shadow
+  "Creates a new shadow-cljs.edn file in the current directory."
+  []
+  (let [template :shadow-cljs
+        file-name (file-to-write (template file-names))] 
+    (if (fs/exists? file-name)
+      (println (format "File '%s' exists. Aborting." file-name))
+      (let [content (fs/read-all-bytes (get template-files template))]
+        (fs/write-bytes file-name content)))))
+
+
+;; -----------------------------------------------------------------------------
+;; -----------------------------------------------------------------------------
+;; -----------------------------------------------------------------------------
 ;; Next command here.
 
 
@@ -200,7 +218,8 @@
                          (meta #'pretty)
                          (meta #'time-in)
                          (meta #'bb)
-                         (meta #'toggle-notifications)])))))
+                         (meta #'toggle-notifications)
+                         (meta #'shadow)])))))
 
 
 ;; Run the selected command.

@@ -1,0 +1,31 @@
+;; shadow-cljs configuration. For details, see:
+;; https://shadow-cljs.github.io/docs/UsersGuide.html
+
+{:source-paths
+ ["src"]
+
+ :dependencies
+ []
+
+ :dev-http
+ {8080 "public"}
+
+ :builds
+ {:script
+  {:target :node-script
+   :main core/main
+   :output-to "main.js"}
+
+  :app {:target :browser
+        :output-dir "public/assets/app/js"
+        :asset-path "/assets/app/js"
+        :modules {:main {:init-fn core/main}}}
+
+
+  ;; New targets above this line.
+  }
+
+
+ ;; This might be necessary to use pnpm, which symlink packages in node_modules.
+ ;; :js-options {:allow-nested-packages false}
+ }
