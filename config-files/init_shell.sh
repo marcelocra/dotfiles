@@ -257,6 +257,10 @@ alias bbge="v ~/.config/babashka/bb.edn"
 
 alias colines='echo "Columns: $COLUMNS, Lines: $LINES"'
 
+alias shad='npx shadow-cljs'
+alias shads='shad server'
+alias shadw='shad watch'
+
 # Next aliases above!
 
 
