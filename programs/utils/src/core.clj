@@ -11,6 +11,13 @@
     [clojure.java.io :as io]
     [clojure.repl :refer [doc]]))
 
+(if (nil? (System/getenv "MCRA_CLI_UTILS_PATH"))
+  (do
+    (println "Please, define MCRA_CLI_UTILS_PATH env variable and try again.")
+    (println "It should point to the `utils` script from the `dev` project.")
+    (System/exit 1))
+  nil)
+
 (def templates-dir
   (-> (System/getenv "MCRA_CLI_UTILS_PATH")
       (fs/parent)
