@@ -21,7 +21,7 @@
   "editor.defaultFormatter": "esbenp.prettier-vscode",
   "editor.cursorStyle": "line-thin",
   "editor.cursorBlinking": "phase",
-  "editor.rulers": [100, 120],
+  "editor.rulers": [80, 100, 120],
   "editor.minimap.maxColumn": 60,
   "editor.minimap.renderCharacters": false,
   "editor.minimap.showSlider": "always",
@@ -90,7 +90,10 @@
     "editorIndentGuide.activeBackground1": "#ff00c8", //{:dark "#ff00c8" :light "#00ffff"}
     "editorIndentGuide.background1": "#333", //{:dark "#333" :light "#eee"}
     "editor.lineHighlightBorder": "#ff00c833", //{:dark "#ff00c833" :light "#00ffff22"}
-    "editor.lineHighlightBackground": "#ff00c822" //{:dark "#ff00c822" :light "#00ffff22"}
+    "editor.lineHighlightBackground": "#ff00c822", //{:dark "#ff00c822" :light "#00ffff22"}
+    "editor.selectionBackground": "#ff00c855" //{:dark "#ff00c855" :light "#00ffff77"}
+    // TODO: figure out how to get this working.
+    // "editor.selectionForeground": "#f00" //{:dark "#ff00c8" :light "#fff"}
   },
   "workbench.startupEditor": "newUntitledFile",
   "workbench.tree.indent": 20,
@@ -583,11 +586,19 @@
   "workbench.colorTheme": "GitHub Dark Dimmed",
   "vim.enableNeovim": true,
   "vim.neovimUseConfigFile": true,
-  "workbench.activityBar.location": "hidden",
   "FSharp.inlayHints.parameterNames": false,
-  "FSharp.inlayHints.typeAnnotations": false
-
+  "FSharp.inlayHints.typeAnnotations": false,
+  "workbench.activityBar.location": "hidden",
   // ) misc-
+
+  // -javascript(
+  "[javascript]": {
+    "editor.rulers": [100, 120]
+  },
+  "[javascriptreact]": {
+    "editor.rulers": [100, 120]
+  }
+  // )javascript-
 
   // -comments (
 
