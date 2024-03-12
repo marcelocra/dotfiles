@@ -267,8 +267,8 @@ vnoremap <c-d> y:%s/<c-r>"
 iab shebang #!/usr/bin/env
 
 " Vim modeline with my preferred defaults.
-iab vimmode vim: foldmethod=marker foldmarker={{{,}}} foldlevel=1 foldenable autoindent expandtab tabstop=4 shiftwidth=4
-iab vimmodemd filetype=markdown textwidth=80
+iab vimmode vim: fdm=marker:fmr={{{,}}}:fdl=1:fen:ai:et:ts=4:sw=4
+iab vimmodemd filetype=markdown:tw=80
 
 " Comment to prevent clojure auto-formatters from wrapping sexps.
 iab noparenwrap ;; Prevents auto-formatter from wrapping.
