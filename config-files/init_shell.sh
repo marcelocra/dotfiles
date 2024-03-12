@@ -135,6 +135,45 @@ else
 fi
 
 
+# Desktop notification to help me change tasks.
+function timer_notification() {
+    local summary="$1"
+    local default_summary='TEMPO ACABOU!'
+    local content="$2"
+    local default_content="Pronto! Hora de ir para a próxima tarefa!\n\nSe controla e faz isso, pra realmente conseguir avançar e não se sentir mal mais.\n\n\n----- IGNORE BELOW -----\n\n\nAgora vai um monte de texto, só pra isso ocupar bastante da tela e encher o saco. Agora vai um monte de texto, só pra isso ocupar bastante da tela e encher o saco. Agora vai um monte de texto, só pra isso ocupar bastante da tela e encher o saco. Agora vai um monte de texto, só pra isso ocupar bastante da tela e encher o saco. Agora vai um monte de texto, só pra isso ocupar bastante da tela e encher o saco. Agora vai um monte de texto, só pra isso ocupar bastante da tela e encher o saco. Agora vai um monte de texto, só pra isso ocupar bastante da tela e encher o saco. Agora vai um monte de texto, só pra isso ocupar bastante da tela e encher o saco. Agora vai um monte de texto, só pra isso ocupar bastante da tela e encher o saco. Agora vai um monte de texto, só pra isso ocupar bastante da tela e encher o saco. Agora vai um monte de texto, só pra isso ocupar bastante da tela e encher o saco. Agora vai um monte de texto, só pra isso ocupar bastante da tela e encher o saco. Agora vai um monte de texto, só pra isso ocupar bastante da tela e encher o saco. Agora vai um monte de texto, só pra isso ocupar bastante da tela e encher o saco. Agora vai um monte de texto, só pra isso ocupar bastante da tela e encher o saco. Agora vai um monte de texto, só pra isso ocupar bastante da tela e encher o saco. Agora vai um monte de texto, só pra isso ocupar bastante da tela e encher o saco. Agora vai um monte de texto, só pra isso ocupar bastante da tela e encher o saco. Agora vai um monte de texto, só pra isso ocupar bastante da tela e encher o saco. Agora vai um monte de texto, só pra isso ocupar bastante da tela e encher o saco. Agora vai um monte de texto, só pra isso ocupar bastante da tela e encher o saco. Agora vai um monte de texto, só pra isso ocupar bastante da tela e encher o saco. Agora vai um monte de texto, só pra isso ocupar bastante da tela e encher o saco. Agora vai um monte de texto, só pra isso ocupar bastante da tela e encher o saco. Agora vai um monte de texto, só pra isso ocupar bastante da tela e encher o saco. Agora vai um monte de texto, só pra isso ocupar bastante da tela e encher o saco. Agora vai um monte de texto, só pra isso ocupar bastante da tela e encher o saco. Agora vai um monte de texto, só pra isso ocupar bastante da tela e encher o saco."
+
+    if [ -z "$summary" ]; then
+        summary=$default_summary
+    else
+        summary="$(echo $summary | tr '[:lower:]' '[:upper:]')"
+        summary="$summary - $default_summary"
+    fi
+
+    if [ -z "$content" ]; then
+        content="$default_content"
+    fi
+
+    notify-send -u critical "$summary" "$content"
+}
+
+function timer() {
+    local time="$1"
+    local default_time="30m"
+
+    if [[ -z "$time" ]]; then
+        echo "Not time provided, using default ($default_time). You can either provide a value (format: 1s, 20m, 2h, 1h20m) or use an existing template (currently: t1, t5, t15, t30, t60) all in minutes."
+        time="$default_time"
+    fi
+
+    sleep "$time" && timer_notification
+}
+alias t1="sleep 1m && timer_notification"
+alias t5="sleep 5m && timer_notification"
+alias t15="sleep 15m && timer_notification"
+alias t30="sleep 30m && timer_notification"
+alias t60="sleep 1h && timer_notification"
+
+
 
 # }}}
 # [ Aliases ] ---------------------------------------------------------------{{{
