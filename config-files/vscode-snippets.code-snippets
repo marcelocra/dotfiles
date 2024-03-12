@@ -217,4 +217,18 @@
     "prefix": "err",
     "body": ["// @ts-expect-error"]
   },
+
+  "js, ts, jsx, tsx snippet": {
+    "scope": "snippets",
+    "prefix": "jss",
+    "body": [
+      "\"${1:text that appears when showing the snippet before completion}\": {",
+      "  \"scope\": \"${2:snippets}\",",
+      "  \"prefix\": \"${3:trig}\",",
+      "  \"body\": [",
+      "    \"$4\"",
+      "  ]",
+      "},",
+    ]
+  },
 }
