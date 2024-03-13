@@ -73,6 +73,9 @@ Plug 'justinmk/vim-sneak'
 
 Plug 'nvim-treesitter/nvim-treesitter', { 'do': ':TSUpdate' }
 
+" Colorscheme.
+Plug 'folke/tokyonight.nvim'
+
 " Plugins for Clojure and other lisps.
 Plug 'Olical/conjure', { 'for': ['clojure', 'python'] }
 Plug 'guns/vim-sexp', { 'for': ['clojure'] } 
@@ -260,6 +263,9 @@ nnoremap Ç :echo 'wrong keyboard layout!'<cr>
 " Simulate multiple cursors.
 vnoremap <c-d> y:%s/<c-r>"
 
+" Insert current time.
+"nnoremap <a-h> r!bb '(-> "HH:mm" (java.text.SimpleDateFormat.) (.format (java.util.Date.)) (str/replace (re-pattern ":") "h") (println))'
+
 " )mappings- }}}
 " --- -abbreviations( -------------------------------------------------------{{{
 
@@ -346,7 +352,9 @@ nnoremap <c-p> :Files<cr>
 nnoremap <c-b> :Buffers<cr>
 
 " Search lines in all open buffers.
-nnoremap <leader>l :Lines<cr>
+nnoremap <localleader>l :Lines<cr>
+
+nnoremap <localleader>c :Commands<cr>
 
 " vim-sneak mapping ----------------------------------------
 
@@ -356,7 +364,6 @@ map t <Plug>Sneak_t
 map T <Plug>Sneak_T
 
 " conjure mapping ----------------------------------------
-nnoremap <c-c> :Commands<cr>
 
 " )plugin-mappings- }}}
 " --- -plugin-settings( -----------------------------------------------------{{{
@@ -406,7 +413,7 @@ augroup END
 
 if has('nvim')
 
-lua << LUACODE
+lua <<LUACODE
 
 local hour_now = tonumber(os.date("%H"))
 local daylight_ends = 17
@@ -423,22 +430,23 @@ local mode = ColorMode.TimeBased
 
 -- If not forcing light mode, then check if forcing dark. If not, then use the
 -- time-based approach.
+--
+-- Try to make paranthesis matching useful and less confusing (hi MatchParen
+-- needs to be changed after setting a colorscheme).
 if mode ~= ColorMode.Light and (mode == ColorMode.Dark or hour_now < daylight_starts or hour_now >= daylight_ends) then
-    vim.cmd("colorscheme slate")
-    -- vim.cmd("colorscheme elflord")
-
-    -- Try to make paranthesis matching useful and less confusing.
-    -- This needs to be after selecting a colorscheme, which is why it is here.
-    vim.cmd("hi MatchParen ctermfg=red ctermbg=black")
-    vim.cmd("hi ColorColumn ctermfg=gray ctermbg=black")
+    vim.cmd[[
+        colorscheme slate
+        colorscheme elflord
+        hi MatchParen ctermfg=red ctermbg=black
+        hi ColorColumn ctermfg=gray ctermbg=black
+    ]]
 
 else
-    vim.cmd("colorscheme zellner")
-
-    -- Try to make paranthesis matching useful and less confusing.
-    -- This needs to be after selecting a colorscheme, which is why it is here.
-    vim.cmd("hi MatchParen ctermfg=black ctermbg=lightgreen")
-    vim.cmd("hi ColorColumn ctermfg=gray ctermbg=white")
+    vim.cmd([[
+        colorscheme tokyonight
+        hi MatchParen ctermfg=black ctermbg=lightgreen
+        hi ColorColumn ctermfg=gray ctermbg=white
+    ]])
 
 end
 
