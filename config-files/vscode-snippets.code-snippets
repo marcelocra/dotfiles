@@ -218,9 +218,9 @@
     "body": ["// @ts-expect-error"]
   },
 
-  "js, ts, jsx, tsx snippet": {
+  "snippet to create snippets": {
     "scope": "snippets",
-    "prefix": "jss",
+    "prefix": "snip",
     "body": [
       "\"${1:text that appears when showing the snippet before completion}\": {",
       "  \"scope\": \"${2:snippets}\",",
@@ -229,6 +229,50 @@
       "    \"$4\"",
       "  ]",
       "},",
+    ]
+  },
+
+  "linguist detectable": {
+    "scope": "properties",
+    "prefix": "lde",
+    "body": [
+      "${1:linguist-detectable}"
+    ]
+  },
+  "linguist documentation": {
+    "scope": "properties",
+    "prefix": "ldo",
+    "body": [
+      "${1:linguist-documentation}"
+    ]
+  },
+  "linguist generated": {
+    "scope": "properties",
+    "prefix": "lge",
+    "body": [
+      "${1:linguist-generated}"
+    ]
+  },
+  "linguist language": {
+    "scope": "properties",
+    "prefix": "lla",
+    "body": [
+      "${1:linguist-language=${0:name}}"
+    ]
+  },
+  "linguist vendored": {
+    "scope": "properties",
+    "prefix": "lve",
+    "body": [
+      "${0:linguist-vendored}"
+    ]
+  },
+  
+  "simplify commenting forms in clojure": {
+    "scope": "clojure,clojurescript,cljs,clj",
+    "prefix": "c",
+    "body": [
+      "#_"
     ]
   },
 }
