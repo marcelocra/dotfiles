@@ -11,6 +11,8 @@
     [clojure.java.io :as io]
     [clojure.repl :refer [doc]]))
 
+(def debug false)
+
 (if (nil? (System/getenv "MCRA_CLI_UTILS_PATH"))
   (do
     (println "Please, define MCRA_CLI_UTILS_PATH env variable and try again.")
@@ -69,7 +71,9 @@
    :shadow-cljs (produce-file-path (:shadow-cljs file-names))
    :build (produce-file-path (:build file-names))})
 
-(defn file-to-write [name]
+(defn file-to-write
+  "Prepares a filename for the given name in the current path."
+  [name]
   (-> (fs/cwd)
       (.toString)
       (io/file name)
@@ -192,15 +196,26 @@
 ;; -----------------------------------------------------------------------------
 ;; -----------------------------------------------------------------------------
 ;; -----------------------------------------------------------------------------
-(defn shadow
-  "Creates a new shadow-cljs.edn file in the current directory."
-  []
-  (let [template :shadow-cljs
-        file-name (file-to-write (template file-names))] 
-    (if (fs/exists? file-name)
-      (println (format "File '%s' exists. Aborting." file-name))
-      (let [content (fs/read-all-bytes (get template-files template))]
+(defn create-file-from-template
+  "Creates a file with `file-name` from the `template` in the current directory, if the file doesn't already exists. If it does, shows a message and aborts."
+  [file-name template]
+  (if (fs/exists? file-name)
+    (println (format "File '%s' exists. Aborting." file-name))
+    (let [content (fs/read-all-bytes (produce-file-path (or template file-name)))]
+      (if debug 
+        (println (str "DEBUG mode:\ncreate "
+                      file-name
+                      "\nwith content:\n\n"
+                      (String. content)))
         (fs/write-bytes file-name content)))))
+
+(defn shadow
+  "Creates a shadow-cljs.edn file and a .gitignore in the current directory."
+  []
+  (doseq [{:keys [file-name template]} [{:file-name "shadow-cljs.edn"} 
+                                        {:file-name ".gitignore"
+                                         :template "shadow-cljs.gitignore"}]]
+    (create-file-from-template file-name template)))
 
 
 ;; -----------------------------------------------------------------------------
