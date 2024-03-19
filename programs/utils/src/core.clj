@@ -60,12 +60,14 @@
   "IMPORTANT: update the `template-files` too."
   {:bb "bb.edn"
    :prettier ".prettierrc.json"
-   :shadow-cljs "shadow-cljs.edn"})
+   :shadow-cljs "shadow-cljs.edn"
+   :build "build.clj"})
 
 (def template-files
   {:bb (produce-file-path (:bb file-names))
    :prettier {"js" (produce-file-path (:prettier file-names))}
-   :shadow-cljs (produce-file-path (:shadow-cljs file-names))})
+   :shadow-cljs (produce-file-path (:shadow-cljs file-names))
+   :build (produce-file-path (:build file-names))})
 
 (defn file-to-write [name]
   (-> (fs/cwd)
@@ -190,11 +192,24 @@
 ;; -----------------------------------------------------------------------------
 ;; -----------------------------------------------------------------------------
 ;; -----------------------------------------------------------------------------
-
 (defn shadow
   "Creates a new shadow-cljs.edn file in the current directory."
   []
   (let [template :shadow-cljs
+        file-name (file-to-write (template file-names))] 
+    (if (fs/exists? file-name)
+      (println (format "File '%s' exists. Aborting." file-name))
+      (let [content (fs/read-all-bytes (get template-files template))]
+        (fs/write-bytes file-name content)))))
+
+
+;; -----------------------------------------------------------------------------
+;; -----------------------------------------------------------------------------
+;; -----------------------------------------------------------------------------
+(defn build
+  "Creates a build.clj file in the current directory, to help running commands."
+  []
+  (let [template :build
         file-name (file-to-write (template file-names))] 
     (if (fs/exists? file-name)
       (println (format "File '%s' exists. Aborting." file-name))
