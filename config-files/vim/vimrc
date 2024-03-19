@@ -426,7 +426,7 @@ local ColorMode = {
     Light = 2,
 }
 
-local mode = ColorMode.TimeBased
+local mode = ColorMode.Dark
 
 -- If not forcing light mode, then check if forcing dark. If not, then use the
 -- time-based approach.
@@ -437,12 +437,14 @@ if mode ~= ColorMode.Light and (mode == ColorMode.Dark or hour_now < daylight_st
     vim.cmd[[
         colorscheme slate
         colorscheme elflord
+        colorscheme tokyonight
         hi MatchParen ctermfg=red ctermbg=black
         hi ColorColumn ctermfg=gray ctermbg=black
     ]]
 
 else
     vim.cmd([[
+        colorscheme zellner
         colorscheme tokyonight
         hi MatchParen ctermfg=black ctermbg=lightgreen
         hi ColorColumn ctermfg=gray ctermbg=white
