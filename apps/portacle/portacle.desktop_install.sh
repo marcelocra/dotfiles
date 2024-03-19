@@ -8,15 +8,15 @@
 
 # Create a top level binary, to be automatically exported in
 # your PATH (I export ${HOME}/bin in my .zshrc.
-ln -s ${HOME}/bin/portacle/portacle.run \
-    ${HOME}/bin/Portacle
+ln -s ${HOME}/bin/packages/portacle/portacle.run \
+    ${HOME}/bin/portacle
 
 # Copy the desktop entry to the global desktop entry folder.
-ln -s ${HOME}/projects/personal/dev/config-files/portacle.desktop \
+ln -s ${MCRA_DOTFILES_FOLDER}/apps/portacle/portacle.desktop \
     ${HOME}/.local/share/applications/portacle.desktop
 
 # Copy the icon to the global icon folder.
-ln -s ${HOME}/projects/personal/dev/config-files/portacle.svg \
+ln -s ${MCRA_DOTFILES_FOLDER}/apps/portacle/portacle.svg \
     ${HOME}/.local/share/icons/portacle.svg 
 
 # Update desktop files database. After this, searching for
