@@ -1,0 +1,9 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=ClickUp
+Comment=Project Management
+TryExec=clickup
+Exec=clickup
+Icon=clickup
+MimeType=x-scheme-handler/clickup

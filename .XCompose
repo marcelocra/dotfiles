@@ -1,0 +1,14 @@
+# bring in the default sequences
+include "%L"
+
+# add some greek letters
+<Multi_key> <g> <a> : "α"
+<Multi_key> <g> <b> : "β"
+<Multi_key> <g> <g> : "γ"
+
+# add cedilla (it seems like this didn't make any
+# difference, so I'm commenting it to test).
+
+<dead_acute> <c>     : "ç"
+<dead_acute> <C>     : "Ç"
+
