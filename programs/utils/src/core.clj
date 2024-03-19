@@ -86,7 +86,8 @@
 ;; CLI helper
 
 (def cli-options
-  {:lang {:default "js"}})
+  {:lang {:default "js"}
+   :fix {:default false}})
 
 ;; Made dynamic to simplify testing.
 (def ^:dynamic parsed-cli-args
@@ -230,6 +231,19 @@
       (println (format "File '%s' exists. Aborting." file-name))
       (let [content (fs/read-all-bytes (get template-files template))]
         (fs/write-bytes file-name content)))))
+
+
+;; -----------------------------------------------------------------------------
+;; -----------------------------------------------------------------------------
+;; -----------------------------------------------------------------------------
+(defn fmt
+  "Formats Clojure files using cljfmt."
+  []
+  (println 
+    (apply sh (-> 
+                "clj -Tcljfmt %s" 
+                (format (if (:fix parsed-cli-args) "fix" "check"))
+                (s/split #" ")))))
 
 
 ;; -----------------------------------------------------------------------------
