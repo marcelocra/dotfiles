@@ -33,7 +33,7 @@
   "editor.quickSuggestions": {
     "other": false,
     "comments": false,
-    "strings": false
+    "strings": "on"
   },
   "editor.renderWhitespace": "none",
   "editor.acceptSuggestionOnCommitCharacter": false,
@@ -124,18 +124,17 @@
   // ) eslint-
 
   // -tailwind (
-  "tailwindCSS.colorDecorators": false,
   "tailwindCSS.emmetCompletions": true,
-  "tailwindCSS.files.exclude": [
-    // Default.
-    "**/.git/**",
-    "**/node_modules/**",
-    "**/.hg/**",
-    "**/.svn/**",
-
-    // Custom.
-    "**/*.md"
+  "tailwindCSS.colorDecorators": false,
+  "tailwindCSS.experimental.classRegex": [
+    ":class\\s+\"([^\"]*)\"",
+    ":[\\w-.#>]+\\.([\\w-]*)"
   ],
+  "tailwindCSS.includeLanguages": {
+    "clojure": "html",
+    "cljs": "html"
+  },
+
   // ) tailwind-
 
   // -dart(
