@@ -363,8 +363,6 @@ map F <Plug>Sneak_F
 map t <Plug>Sneak_t
 map T <Plug>Sneak_T
 
-" conjure mapping ----------------------------------------
-
 " )plugin-mappings- }}}
 " --- -plugin-settings( -----------------------------------------------------{{{
 " vim-sneak settings ---------------------------------------
@@ -378,7 +376,7 @@ let g:conjure#client_on_load = 0
 let g:conjure#log#jump_to_latest#enabled = 0
 let g:conjure#log#jump_to_latest#cursor_scroll_position = 'center'
 let g:conjure#log#wrap = 1
-let g:conjure#log#fold#enabled = 1
+" let g:conjure#log#fold#enabled = 1
 
 " )plugin-settings- }}}
 " --- -autocommands( --------------------------------------------------------{{{
