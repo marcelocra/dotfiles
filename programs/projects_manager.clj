@@ -9,31 +9,15 @@
     [clojure.java.io :as io]))
 
 (defonce projects-dir (System/getenv "MCRA_PROJECTS_FOLDER"))
-
-;; algo:
-;; 
-;; 1 - run `git status` in each repo
-;; 2 - see if the following string is in the output of `git status`:
-;; 
-;; :out "On branch main\nYour branch is up to date with 'origin/main'.\n\nnothing to commit, working tree clean\n"
-;; 
-;; 3 - mark this folder as backed up
-;; 4 - any folder without that string is added to a review list
-;; 5 - the review list is printed out
-
 (defonce files (fs/list-dir projects-dir))
 
-(def init-db {:backed-up #{}
-              :to-review #{} 
-              :total-files (count files) 
-              :total-files-touched 0
-              })
-(comment
-  (reset! db init-db)
-  (swap! db assoc :visited 0)
-  
-  ;; rcf - rich comment form 
-  )
+(def folder-categories {:backed-up #{}
+                        :to-review #{} 
+                        :no-git #{}})
+
+(def init-db (merge folder-categories 
+                    {:total-files (count files) 
+                     :total-files-touched 0}))
 
 (def db (atom init-db))
 
@@ -47,17 +31,26 @@
         nil  ;; File already processed, nothing to do.
         (if (not (fs/directory? file))
           (swap! db update :total-files-touched inc)  ;; Bail, we only care for directories.
-          (let [out (:out (sh "git" "status" :dir (.toString file)))
-                backed-up (= out (str "On branch main\n"
-                                      "Your branch is up to date with 'origin/main'.\n\n"
-                                      "nothing to commit, working tree clean\n"))]
-            (swap! db update (if backed-up :backed-up :to-review) conj file))))))
+          (let [{:keys [out err]} (sh "git" "status" :dir (.toString file))
+                to-update (cond
+                            (not (empty? err))
+                            (if (re-find #"fatal: not a git repository" err)
+                              :no-git
+                              :unknown-error)
+
+                            (and (re-find #"Your branch is up to date with" out)
+                                 (re-find #"nothing to commit, working tree clean" out))
+                            :backed-up
+
+                            :else
+                            :to-review)]
+            (swap! db update to-update conj file))))))
   (swap! db update :total-files-touched 
          (fn [initial-value] 
            (reduce + initial-value 
                    (map 
                      #(count (% @db)) 
-                     [:backed-up :to-review]))))
+                     (keys folder-categories)))))
   (p @db))
 
 
