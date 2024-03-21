@@ -300,6 +300,8 @@ alias shad='npx shadow-cljs'
 alias shads='shad server'
 alias shadw='shad watch'
 
+alias path="echo $PATH | tr ':' '\n'"
+
 # Next aliases above!
 
 
@@ -402,15 +404,6 @@ docker_images_sorted() {
 # }}}
 # }}}
 # [ Commands ] --------------------------------------------------------------{{{
-
-# Ignore commands for Mac and run them in Ubuntu (should work in other Unixes
-# too, but I haven't tested).
-if [[ ! `uname` == "Darwin" ]]; then
-    # Activate Linuxbrew.
-    if [ -f /home/linuxbrew/.linuxbrew/bin/brew ]; then
-        eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
-    fi
-fi
 
 # next commands above
 
