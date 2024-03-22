@@ -675,26 +675,31 @@
     "key": "ctrl+shift+`",
     "command": "workbench.action.terminal.new",
     "when": "!terminalFocus && (terminalProcessSupported || terminalWebExtensionContributedProfile)"
+  },
+  {
+    "key": "ctrl+shift+capslock ctrl+shift+f",
+    "command": "workbench.action.terminal.focusFind",
+    "when": "terminalFindFocused && terminalHasBeenCreated || terminalFindFocused && terminalProcessSupported || terminalFocusInAny && terminalHasBeenCreated || terminalFocusInAny && terminalProcessSupported"
+  },
+  {
+    "key": "ctrl+f",
+    "command": "-workbench.action.terminal.focusFind",
+    "when": "terminalFindFocused && terminalHasBeenCreated || terminalFindFocused && terminalProcessSupported || terminalFocusInAny && terminalHasBeenCreated || terminalFocusInAny && terminalProcessSupported"
+  },
+  {
+    "key": "ctrl+p",
+    "command": "workbench.action.quickOpen",
+    "when": "!terminalFocus"
+  },
+  {
+    "key": "ctrl+p",
+    "command": "-workbench.action.quickOpen"
+  },
+  {
+    "key": "tab",
+    "command": "-calva-fmt.formatCurrentForm",
+    "when": "calva:keybindingsEnabled && editorTextFocus && !editorReadOnly && !hasOtherSuggestions && !inSnippetMode && !inlineSuggestionVisible && !suggestWidgetVisible && editorLangId == 'clojure'"
   }
-  // {
-  //   "key": "ctrl+shift+capslock ctrl+shift+f",
-  //   "command": "workbench.action.terminal.focusFind",
-  //   "when": "terminalFindFocused && terminalHasBeenCreated || terminalFindFocused && terminalProcessSupported || terminalFocusInAny && terminalHasBeenCreated || terminalFocusInAny && terminalProcessSupported"
-  // },
-  // {
-  //   "key": "ctrl+f",
-  //   "command": "-workbench.action.terminal.focusFind",
-  //   "when": "terminalFindFocused && terminalHasBeenCreated || terminalFindFocused && terminalProcessSupported || terminalFocusInAny && terminalHasBeenCreated || terminalFocusInAny && terminalProcessSupported"
-  // }
-  // {
-  //   "key": "ctrl+p",
-  //   "command": "workbench.action.quickOpen",
-  //   "when": "!terminalFocus"
-  // },
-  // {
-  //   "key": "ctrl+p",
-  //   "command": "-workbench.action.quickOpen"
-  // },
   // {
   //   "key": "ctrl+k",
   //   "command": "workbench.action.terminal.sendSequence",

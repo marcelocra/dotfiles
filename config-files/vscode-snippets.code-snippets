@@ -194,6 +194,11 @@
     "body": ["- [ ] "]
   },
 
+  "md numbered checkbox": {
+    "scope": "markdown",
+    "prefix": ["k"],
+    "body": ["1. [ ] "]
+  },
 
   "config comment block": {
     "scope": "json,jsonc",
@@ -273,6 +278,19 @@
     "prefix": "c",
     "body": [
       "#_"
+    ]
+  },
+
+  "rich comment": {
+    "scope": "clojure,clojurescript",
+    "prefix": "rich",
+    "body": [
+      ";; playground!",
+      "(comment",
+      "",
+      "  $0",
+      "",
+      "  #_(\"do not wrap me!\"))",
     ]
   },
 }
