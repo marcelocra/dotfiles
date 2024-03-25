@@ -293,4 +293,70 @@
       "  #_(\"do not wrap me!\"))",
     ]
   },
+
+  "add tailwindcss play cdn conditionally to re-frame app": {
+    "scope": "clojure,clojurescript",
+    "prefix": "re-tw",
+    "body": [
+      ";; Lets use TailwindCSS CDN during development, for simplicity.",
+      "(when config/debug?",
+      "  (let [body (.-body js/document)",
+      "        script (.createElement js/document \"script\")]",
+      "    (.setAttribute script \"src\" \"https://cdn.tailwindcss.com\")",
+      "    (.setAttribute body \"class\" \"container min-w-[700] min-h-screen mx-auto\")",
+      "    (.appendChild body script)))",
+    ]
+  },
+
+  "clojure and clojurescript snippets scope": {
+    "scope": "snippets",
+    "prefix": "clj+",
+    "body": [
+      "clojure,clojurescript,clj,cljs"
+    ]
+  },
+
+  "snippet to add json and jsonc": {
+    "scope": "snippets",
+    "prefix": "json",
+    "body": [
+      "json,jsonc"
+    ]
+  },
+
+  "shadow watch with cider": {
+    "scope": "clojure,clojurescript,clj,cljs",
+    "prefix": "shadow+cider",
+    "body": [
+      "shadow-cljs -d cider/cider-nrepl:0.28.5 watch"
+    ]
+  },
+
+  "add keybinding for a particular vim mode": {
+    "scope": "json,jsonc",
+    "prefix": "vimmode",
+    "body": [
+      "vim.active && vim.mode == '$1'${2: && }$0"
+    ]
+  },
+
+  "simplify adding a new keybinding": {
+    "scope": "json,jsonc",
+    "prefix": "key",
+    "body": [
+      "{",
+      "  \"key\": \"$1\",",
+      "  \"command\": \"$2\",",
+      "  \"when\": \"$3\"",
+      "},$0",
+    ]
+  },
+
+  "classname for jsx and tsx": {
+    "scope": "javascriptreact,typescriptreact",
+    "prefix": "c",
+    "body": [
+      "className=\"$1\"${0: }"
+    ]
+  },
 }
