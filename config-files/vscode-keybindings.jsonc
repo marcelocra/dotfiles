@@ -82,6 +82,14 @@
   //   "command": "workbench.action.togglePanel",
   //   "when": "!activePanel"
   // },
+  // {
+  //   "key": "ctrl+k",
+  //   "command": "workbench.action.terminal.sendSequence",
+  //   "args": {
+  //     "text": "^k"
+  //   },
+  //   "when": "terminalFocus"
+  // },
   // // )terminal-
   {
     "key": "ctrl+j",
@@ -139,135 +147,95 @@
   //============================================================================
   //= calva - start
   //============================================================================
+  // -calva(
 
-  // {
-  //   "key": "ctrl+enter",
-  //   "command": "calva.evaluateSelection",
-  //   "when": "calva:connected && editorTextFocus && editorLangId == clojure"
-  // },
-  // {
-  //   "key": "shift+alt+f",
-  //   "command": "calva.sendCurrentFormToOutputWindow",
-  //   "when": "calva:connected && calva:connected && !calva:outputWindowActive && editorLangId == 'clojure'"
-  // },
-  // {
-  //   "key": "ctrl+alt+c ctrl+alt+v",
-  //   "command": "-calva.sendCurrentFormToOutputWindow",
-  //   "when": "calva:connected && calva:connected && !calva:outputWindowActive && editorLangId == 'clojure'"
-  // },
-  // {
-  //   "key": "shift+alt+p",
-  //   "command": "calva.sendCurrentTopLevelFormToOutputWindow",
-  //   "when": "calva:connected && calva:connected && !calva:outputWindowActive && editorLangId == 'clojure'"
-  // },
-  // {
-  //   "key": "ctrl+alt+c ctrl+alt+space",
-  //   "command": "-calva.sendCurrentTopLevelFormToOutputWindow",
-  //   "when": "calva:connected && calva:connected && !calva:outputWindowActive && editorLangId == 'clojure'"
-  // },
-  // {
-  //   "key": "shift+alt+l",
-  //   "command": "calva.loadFile",
-  //   "when": "calva:connected"
-  // },
-  // {
-  //   "key": "ctrl+alt+c enter",
-  //   "command": "-calva.loadFile",
-  //   "when": "calva:connected"
-  // },
+  {
+    "key": "space e b",
+    "command": "calva.loadFile",
+    "when": "vim.active && vim.mode == 'Normal' && calva:connected && calva:keybindingsEnabled && editorTextFocus && editorLangId == 'clojure' && paredit:keyMap =~ /original|strict/"
+  },
+  {
+    "key": "ctrl+alt+c enter",
+    "command": "-calva.loadFile",
+    "when": "vim.active && vim.mode == 'Normal' && calva:connected && calva:keybindingsEnabled && editorTextFocus && editorLangId == 'clojure' && paredit:keyMap =~ /original|strict/"
+  },
+
+  // Slurp and barf using <( >( >) <).
   {
     "key": "shift+, shift+9",
     "command": "paredit.slurpSexpBackward",
-    "when": "vim.mode == 'Normal' && calva:keybindingsEnabled && editorTextFocus && editorLangId == 'clojure' && paredit:keyMap =~ /original|strict/"
+    "when": "vim.active && vim.mode == 'Normal' && calva:keybindingsEnabled && editorTextFocus && editorLangId == 'clojure' && paredit:keyMap =~ /original|strict/"
   },
   {
     "key": "ctrl+shift+alt+left",
     "command": "-paredit.slurpSexpBackward",
-    "when": "vim.mode == 'Normal' && calva:keybindingsEnabled && editorTextFocus && editorLangId == 'clojure' && paredit:keyMap =~ /original|strict/"
+    "when": "vim.active && vim.mode == 'Normal' && calva:keybindingsEnabled && editorTextFocus && editorLangId == 'clojure' && paredit:keyMap =~ /original|strict/"
   },
   {
     "key": "shift+. shift+0",
     "command": "paredit.slurpSexpForward",
-    "when": "vim.mode == 'Normal' && calva:keybindingsEnabled && editorTextFocus && editorLangId == 'clojure' && paredit:keyMap =~ /original|strict/"
+    "when": "vim.active && vim.mode == 'Normal' && calva:keybindingsEnabled && editorTextFocus && editorLangId == 'clojure' && paredit:keyMap =~ /original|strict/"
   },
   {
     "key": "ctrl+alt+.",
     "command": "-paredit.slurpSexpForward",
-    "when": "vim.mode == 'Normal' && calva:keybindingsEnabled && editorTextFocus && editorLangId == 'clojure' && paredit:keyMap =~ /original|strict/"
+    "when": "vim.active && vim.mode == 'Normal' && calva:keybindingsEnabled && editorTextFocus && editorLangId == 'clojure' && paredit:keyMap =~ /original|strict/"
   },
   {
     "key": "shift+, shift+0",
     "command": "paredit.barfSexpForward",
-    "when": "vim.mode == 'Normal' && calva:keybindingsEnabled && editorTextFocus && editorLangId == 'clojure' && paredit:keyMap =~ /original|strict/"
+    "when": "vim.active && vim.mode == 'Normal' && calva:keybindingsEnabled && editorTextFocus && editorLangId == 'clojure' && paredit:keyMap =~ /original|strict/"
   },
   {
     "key": "ctrl+alt+,",
     "command": "-paredit.barfSexpForward",
-    "when": "vim.mode == 'Normal' && calva:keybindingsEnabled && editorTextFocus && editorLangId == 'clojure' && paredit:keyMap =~ /original|strict/"
+    "when": "vim.active && vim.mode == 'Normal' && calva:keybindingsEnabled && editorTextFocus && editorLangId == 'clojure' && paredit:keyMap =~ /original|strict/"
   },
   {
     "key": "shift+. shift+9",
     "command": "paredit.barfSexpBackward",
-    "when": "vim.mode == 'Normal' && calva:keybindingsEnabled && editorTextFocus && editorLangId == 'clojure' && paredit:keyMap =~ /original|strict/"
+    "when": "vim.active && vim.mode == 'Normal' && calva:keybindingsEnabled && editorTextFocus && editorLangId == 'clojure' && paredit:keyMap =~ /original|strict/"
   },
-  // {
-  //   // VSCodeVim supports this with gh.
-  //   "key": "alt+i",
-  //   "command": "editor.action.showHover",
-  //   "when": "calva:keybindingsEnabled && editorTextFocus && editorLangId == 'clojure' && paredit:keyMap =~ /original|strict/"
-  // },
   {
     "key": "ctrl+shift+alt+right",
     "command": "-paredit.barfSexpBackward",
     "when": "vim.mode == 'Normal' && calva:keybindingsEnabled && editorTextFocus && editorLangId == 'clojure' && paredit:keyMap =~ /original|strict/"
   },
+  // End slurp and barf changes.
+
   {
-    "key": "ctrl+i",
-    "command": "-calva-fmt.tabIndent",
-    "when": "calva:keybindingsEnabled && editorTextFocus && !editorReadOnly && !hasOtherSuggestions && !suggestWidgetVisible && editorLangId == 'clojure'"
+    // Replicate Conjure behavior.
+    "key": "space w",
+    "command": "paredit.wrapAroundParens",
+    "when": "vim.active && vim.mode == 'Normal' && calva:keybindingsEnabled && editorTextFocus && editorLangId == 'clojure' && paredit:keyMap =~ /original|strict/"
   },
   {
-    "key": "ctrl+backspace",
-    "command": "-paredit.killListBackward",
-    "when": "calva:keybindingsEnabled && editorTextFocus && editorLangId == 'clojure' && paredit:keyMap =~ /original|strict/"
+    // Replicate Conjure behavior.
+    "key": "space o",
+    "command": "paredit.raiseSexp",
+    "when": "vim.active && vim.mode == 'Normal' && calva:keybindingsEnabled && editorTextFocus && editorLangId == 'clojure' && paredit:keyMap =~ /original|strict/"
   },
+
   {
-    "key": "ctrl+delete",
-    "command": "-paredit.killListForward",
-    "when": "calva:keybindingsEnabled && editorTextFocus && editorLangId == 'clojure' && paredit:keyMap =~ /original|strict/"
-  },
-  {
-    "key": "backspace",
-    "command": "-paredit.deleteBackward",
-    "when": "calva:keybindingsEnabled && editorTextFocus && !calva:cursorInComment && !editorHasMultipleSelections && !editorReadOnly && editorLangId == 'clojure' && paredit:keyMap == 'strict'"
-  },
-  {
-    "key": "backspace",
-    "command": "-paredit.deleteBackward",
-    "when": "(vim.mode == 'Normal' || vim.mode == 'SearchInProgressMode') && calva:keybindingsEnabled && editorTextFocus && !calva:cursorInComment && !editorHasMultipleSelections && !editorReadOnly && editorLangId == 'clojure' && paredit:keyMap == 'strict'"
-  },
-  {
+    // Prevents Calva from stealing ctrl+shift+t, which I use to reopen closed tabs.
     "key": "ctrl+shift+t t",
-    "command": "calva.tapSelection",
-    "when": "vim.mode != 'Normal' && calva:connected && calva:keybindingsEnabled && editorTextFocus && editorLangId == 'clojure'"
+    "command": "-calva.tapSelection",
+    "when": "calva:connected && calva:keybindingsEnabled && editorTextFocus && editorLangId == 'clojure'"
   },
   {
-    "key": "ctrl+shift+t space",
-    "command": "calva.tapCurrentTopLevelForm",
-    "when": "vim.mode != 'Normal' && calva:connected && calva:keybindingsEnabled && editorTextFocus && editorLangId == 'clojure'"
-  },
-  {
+    // Prevents Calva from stealing ctrl+shift+t, which I use to reopen closed tabs.
     "key": "ctrl+shift+t space",
     "command": "-calva.tapCurrentTopLevelForm",
     "when": "calva:connected && calva:keybindingsEnabled && editorTextFocus && editorLangId == 'clojure'"
   },
   {
-    "key": "ctrl+shift+t t",
-    "command": "-calva.tapSelection",
-    "when": "calva:connected && calva:keybindingsEnabled && editorTextFocus && editorLangId == 'clojure'"
+    // Prevents Calva from stealing ctrl+backspace, which I used extensively to delete words.
+    "key": "ctrl+backspace",
+    "command": "-paredit.killListBackward",
+    "when": "calva:keybindingsEnabled && editorTextFocus && editorLangId == 'clojure' && paredit:keyMap =~ /original|strict/"
   },
 
-  // calvaend
+  // )calva-
 
   //============================================================================
   //= paredit
@@ -694,35 +662,5 @@
   {
     "key": "ctrl+p",
     "command": "-workbench.action.quickOpen"
-  },
-  {
-    "key": "tab",
-    "command": "-calva-fmt.formatCurrentForm",
-    "when": "calva:keybindingsEnabled && editorTextFocus && !editorReadOnly && !hasOtherSuggestions && !inSnippetMode && !inlineSuggestionVisible && !suggestWidgetVisible && editorLangId == 'clojure'"
   }
-  // {
-  //   "key": "ctrl+k",
-  //   "command": "workbench.action.terminal.sendSequence",
-  //   "args": {
-  //     "text": "^k"
-  //   },
-  //   "when": "terminalFocus"
-  // }
-
-  // {
-  //   "key": "shift+alt+l",
-  //   "command": "workbench.action.toggleLightDarkThemes"
-  // }
-  // {
-  //   "key": "shift+alt+l",
-  //   "command": "workbench.extensions.action.setColorTheme",
-  //   "args": {
-  //     "themeId": "GitHub Dark Dimmed"
-  //   }
-  // }
-  // {
-  //   "key": "shift+alt+l",
-  //   "command": "workbench.extensions.action.setColorTheme",
-  //   "args": "GitHub Dark Dimmed"
-  // }
 ]
