@@ -266,6 +266,10 @@ vnoremap <c-d> y:%s/<c-r>"
 " Insert current time.
 "nnoremap <a-h> r!bb '(-> "HH:mm" (java.text.SimpleDateFormat.) (.format (java.util.Date.)) (str/replace (re-pattern ":") "h") (println))'
 
+" Resize splits.
+nnoremap <leader>> <c-w>10+
+nnoremap <leader>< <c-w>10-
+
 " )mappings- }}}
 " --- -abbreviations( -------------------------------------------------------{{{
 
