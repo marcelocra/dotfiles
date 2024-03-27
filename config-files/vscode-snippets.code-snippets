@@ -359,4 +359,36 @@
       "className=\"$1\"${0: }"
     ]
   },
+
+  "tailwind center stuff on page": {
+    "scope": "html,javascriptreact, typescriptreact",
+    "prefix": "center",
+    "body": [
+      "min-h-screen mx-auto flex justify-center items-center"
+    ]
+  },
+
+  "eslint allow no explicit any": {
+    "scope": "javascript,javascriptreact,typescript,typescriptreact",
+    "prefix": "eslint-nea",
+    "body": [
+      "// eslint-disable-next-line @typescript-eslint/no-explicit-any"
+    ]
+  },
+
+  "eslint disable next line": {
+    "scope": "javascript,javascriptreact,typescript,typescriptreact",
+    "prefix": "dnl",
+    "body": [
+      "// eslint-disable-next-line ${1:@typescript-eslint/no-explicit-any}$0"
+    ]
+  },
+
+  "(java|type)script(react|)": {
+    "scope": "snippets",
+    "prefix": "js",
+    "body": [
+      "javascript,javascriptreact,typescript,typescriptreact"
+    ]
+  },
 }
