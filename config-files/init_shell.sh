@@ -1,10 +1,11 @@
 #!/usr/bin/env bash
-# vim: foldmethod=marker foldmarker={{{,}}} foldlevel=1 foldenable autoindent expandtab tabstop=4 shiftwidth=4
 #
 # TODO: this file is too big already. Perhaps move each section to its own
 # file, in the shell subdir?
 
-# Important environment variables to make this work correctly:
+# envs and programs(((
+
+# Important envs and programs that I need:
 
 is_defined() {
     if [[ -z "$1" ]]; then
@@ -18,7 +19,24 @@ is_defined "$MCRA_LOCAL_SHELL" "MCRA_LOCAL_SHELL"
 is_defined "$MCRA_TMP_PLAYGROUND" "MCRA_TMP_PLAYGROUND"
 
 
-# [ Exports ] ---------------------------------------------------------------{{{
+# Defines pnpm home for globally installed scripts.
+if [[ -z "$PNPM_HOME" ]]; then
+    export PNPM_HOME="/home/marcelocra/.local/share/pnpm"
+    case ":$PATH:" in
+      *":$PNPM_HOME:"*) ;;
+      *) export PATH="$PNPM_HOME:$PATH" ;;
+    esac
+fi
+
+# Node version manager.
+if [[ -z "$NVM_DIR" ]]; then
+    export NVM_DIR="$HOME/.nvm"
+    [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+    [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+fi
+
+# )))envs and programs
+# exports(((
 
 # dotnet.
 export DOTNET_ROOT="${HOME}/bin/dotnet"
@@ -72,11 +90,8 @@ export PATH="$GEM_HOME/bin:$PATH"
 export BUN_INSTALL="$HOME/.bun"
 export PATH="$BUN_INSTALL/bin:$PATH"
 
-# next export
-
-
-# }}}
-# [ Functions ] -------------------------------------------------------------{{{
+# )))exports
+# functions(((
 
 # Simplifies working with tmux. Tries to create
 # a new session and if it already exists, just
@@ -175,9 +190,9 @@ alias t60="sleep 1h && timer_notification"
 
 
 
-# }}}
-# [ Aliases ] ---------------------------------------------------------------{{{
-# One lettered aliases. {{{
+# )))functions
+# aliases(((
+# one lettered(((
 
 # Used in the next sections:
 
@@ -192,8 +207,8 @@ alias t60="sleep 1h && timer_notification"
 
 alias x="npx"
 
-# }}}
-# General stuff {{{
+# )))one lettered
+# general(((
 
 alias vim="$EDITOR"
 alias vi=vim
@@ -208,8 +223,6 @@ fi
 #     same as running tmux with -2: `tmux -2`.
 # alias tmux='TERM=xterm-256color tmux -T 256'
 # alias tmux='tmux -2'
-
-alias pip=pip3
 
 if [[ `uname` == "Darwin" ]]; then
     # Mac doesn't support the --time-style flag.
@@ -253,9 +266,6 @@ alias falar="spd-say -w -l pt-BR -p 100 -r -30 -R 100 -m all"
 alias asciidoctor="docker run --rm -it -v $(pwd):/documents/ asciidoctor/docker-asciidoctor"
 alias asciidoctor-gen="docker run --rm -v $(pwd):/documents/ asciidoctor/docker-asciidoctor asciidoctor-pdf index.adoc"
 
-# Supabase.
-alias sup="supabase"
-
 # Always use sed with extended regexes.
 if [[ `uname` == "Darwin" ]]; then
     alias sed='sed -E'
@@ -285,6 +295,8 @@ js () {
         npm "$@"
     elif [[ -f 'yarn.lock' ]]; then
         yarn "$@"
+    elif [[ -f 'bun.lockb' ]]; then
+        bun "$@"
     else
         echo 'This project does not have a lockfile'
     fi
@@ -305,9 +317,8 @@ alias path="echo $PATH | tr ':' '\n'"
 # Next aliases above!
 
 
-# }}}
-# Git: shortcuts I use frequently {{{
-# -----------------------------------
+# )))general
+# git frequent(((
 
 alias gs='git status'
 # simple and resumed, no branches
@@ -376,16 +387,14 @@ alias gchanges='git whatchanged -p --abbrev-commit --pretty=medium'
 
 alias git-undo-last='git reset HEAD~'
 
-# }}}
-# Git lfs {{{
-# -----------
+# )))git frequent
+# git lfs(((
 
 alias glfsdry="git lfs push origin main --dry-run --all"
 alias glfss="git lfs status"
 
-# }}}
-# Docker {{{
-# ----------
+# )))git lfs
+# docker(((
 
 alias dc="docker compose"
 alias docker-prune-month-old-images='docker image prune -a --filter "until=720h"'
@@ -401,11 +410,13 @@ docker_images_sorted() {
 
             alias di='docker_images_sorted'
 
-# }}}
-# }}}
-# [ Commands ] --------------------------------------------------------------{{{
+# )))docker
+# )))aliases
+# commands(((
 
-# next commands above
+# Homebrew
+eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 
-# }}}
+# )))commands
 
+# vim: foldmethod=marker foldmarker=(((,))) foldlevel=1 foldenable autoindent expandtab tabstop=4 shiftwidth=4
