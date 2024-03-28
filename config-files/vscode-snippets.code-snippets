@@ -325,7 +325,7 @@
   },
 
   "shadow watch with cider": {
-    "scope": "clojure,clojurescript,clj,cljs",
+    "scope": "clojure,clojurescript,clj,cljs,json,jsonc",
     "prefix": "shadow+cider",
     "body": [
       "shadow-cljs -d cider/cider-nrepl:0.28.5 watch"
