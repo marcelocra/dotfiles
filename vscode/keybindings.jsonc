@@ -1,0 +1,723 @@
+// Place your key bindings in this file to override the defaults.
+[
+  // -reviewed(
+  // -navigation(
+  {
+    "key": "ctrl+,",
+    "command": "workbench.action.navigateBack"
+  },
+  {
+    "key": "ctrl+alt+-",
+    "command": "-workbench.action.navigateBack"
+  },
+  {
+    "key": "ctrl+.",
+    "command": "workbench.action.navigateForward"
+  },
+  {
+    "key": "ctrl+shift+-",
+    "command": "-workbench.action.navigateForward"
+  },
+  // )navigation-
+
+  {
+    "key": "ctrl+,",
+    "command": "-workbench.action.openSettings"
+  },
+  {
+    "key": "ctrl+shift+,",
+    "command": "workbench.action.openSettings"
+  },
+  // )reviewed-
+
+  {
+    "key": "alt+shift+m",
+    "command": "workbench.action.toggleMaximizedPanel",
+    "when": "terminalFocus && !isMac"
+  },
+
+  // -macos(
+  {
+    "key": "cmd+shift+m",
+    "command": "workbench.action.toggleMaximizedPanel",
+    "when": "terminalFocus && isMac"
+  },
+  {
+    "key": "cmd+shift+m",
+    "command": "-workbench.actions.view.problems",
+    "when": "workbench.panel.markers.view.active && isMac"
+  },
+  // )macos-
+
+  {
+    "key": "ctrl+r",
+    "command": "workbench.action.debug.restart",
+    "when": "inDebugMode"
+  },
+  {
+    "key": "ctrl+e",
+    "command": "-workbench.action.quickOpen"
+  },
+  // // Terminal panel behavior. -terminal(
+  // {
+  //   "key": "ctrl+t",
+  //   "command": "-workbench.action.showAllSymbols"
+  // },
+  {
+    "key": "ctrl+shift+m",
+    "command": "workbench.action.focusLastEditorGroup",
+    "when": "activePanel && terminalFocus"
+  },
+  // {
+  //   "key": "ctrl+t",
+  //   "command": "workbench.action.togglePanel"
+  // },
+  {
+    "key": "ctrl+shift+m",
+    "command": "workbench.action.terminal.focus",
+    "when": "activePanel && !terminalFocus"
+  },
+  // {
+  //   "key": "alt+t",
+  //   "command": "workbench.action.togglePanel",
+  //   "when": "!activePanel"
+  // },
+  // // )terminal-
+  {
+    "key": "ctrl+j",
+    "command": "-workbench.action.togglePanel"
+  },
+  // {
+  //   "key": "ctrl+c",
+  //   "command": "workbench.action.terminal.copySelection",
+  //   "when": "terminalFocus"
+  // },
+  // {
+  //   "key": "ctrl+v",
+  //   "command": "workbench.action.terminal.paste",
+  //   "when": "terminalFocus"
+  // },
+  // {
+  //   "key": "ctrl+shift+c",
+  //   "command": "workbench.action.terminal.sendSequence",
+  //   "args": {
+  //     "text": "\u0003"
+  //   },
+  //   "when": "terminalFocus"
+  // },
+
+  //============================================================================
+  //= editor
+  //============================================================================
+
+  {
+    "key": "ctrl+shift+,",
+    "command": "-editor.action.inPlaceReplace.up",
+    "when": "editorTextFocus && !editorReadonly"
+  },
+  {
+    "key": "ctrl+.",
+    "command": "-editor.action.quickFix",
+    "when": "editorHasCodeActionsProvider && editorTextFocus && !editorReadonly"
+  },
+  {
+    "key": "ctrl+k ctrl+x",
+    "command": "-editor.action.trimTrailingWhitespace",
+    "when": "editorTextFocus && !editorReadonly"
+  },
+  {
+    "key": "ctrl+d",
+    "command": "editor.action.addSelectionToNextFindMatch",
+    "when": "editorTextFocus && vim.active && vim.mode == 'Insert' || vim.mode == 'Visual'"
+  },
+  {
+    "key": "ctrl+x",
+    "command": "editor.action.moveSelectionToNextFindMatch",
+    "when": "editorTextFocus && vim.active && vim.mode == 'Insert' || vim.mode == 'Visual'"
+  },
+
+  //============================================================================
+  //= calva - start
+  //============================================================================
+
+  // {
+  //   "key": "ctrl+enter",
+  //   "command": "calva.evaluateSelection",
+  //   "when": "calva:connected && editorTextFocus && editorLangId == clojure"
+  // },
+  // {
+  //   "key": "shift+alt+f",
+  //   "command": "calva.sendCurrentFormToOutputWindow",
+  //   "when": "calva:connected && calva:connected && !calva:outputWindowActive && editorLangId == 'clojure'"
+  // },
+  // {
+  //   "key": "ctrl+alt+c ctrl+alt+v",
+  //   "command": "-calva.sendCurrentFormToOutputWindow",
+  //   "when": "calva:connected && calva:connected && !calva:outputWindowActive && editorLangId == 'clojure'"
+  // },
+  // {
+  //   "key": "shift+alt+p",
+  //   "command": "calva.sendCurrentTopLevelFormToOutputWindow",
+  //   "when": "calva:connected && calva:connected && !calva:outputWindowActive && editorLangId == 'clojure'"
+  // },
+  // {
+  //   "key": "ctrl+alt+c ctrl+alt+space",
+  //   "command": "-calva.sendCurrentTopLevelFormToOutputWindow",
+  //   "when": "calva:connected && calva:connected && !calva:outputWindowActive && editorLangId == 'clojure'"
+  // },
+  // {
+  //   "key": "shift+alt+l",
+  //   "command": "calva.loadFile",
+  //   "when": "calva:connected"
+  // },
+  // {
+  //   "key": "ctrl+alt+c enter",
+  //   "command": "-calva.loadFile",
+  //   "when": "calva:connected"
+  // },
+  {
+    "key": "shift+, shift+9",
+    "command": "paredit.slurpSexpBackward",
+    "when": "vim.mode == 'Normal' && calva:keybindingsEnabled && editorTextFocus && editorLangId == 'clojure' && paredit:keyMap =~ /original|strict/"
+  },
+  {
+    "key": "ctrl+shift+alt+left",
+    "command": "-paredit.slurpSexpBackward",
+    "when": "vim.mode == 'Normal' && calva:keybindingsEnabled && editorTextFocus && editorLangId == 'clojure' && paredit:keyMap =~ /original|strict/"
+  },
+  {
+    "key": "shift+. shift+0",
+    "command": "paredit.slurpSexpForward",
+    "when": "vim.mode == 'Normal' && calva:keybindingsEnabled && editorTextFocus && editorLangId == 'clojure' && paredit:keyMap =~ /original|strict/"
+  },
+  {
+    "key": "ctrl+alt+.",
+    "command": "-paredit.slurpSexpForward",
+    "when": "vim.mode == 'Normal' && calva:keybindingsEnabled && editorTextFocus && editorLangId == 'clojure' && paredit:keyMap =~ /original|strict/"
+  },
+  {
+    "key": "shift+, shift+0",
+    "command": "paredit.barfSexpForward",
+    "when": "vim.mode == 'Normal' && calva:keybindingsEnabled && editorTextFocus && editorLangId == 'clojure' && paredit:keyMap =~ /original|strict/"
+  },
+  {
+    "key": "ctrl+alt+,",
+    "command": "-paredit.barfSexpForward",
+    "when": "vim.mode == 'Normal' && calva:keybindingsEnabled && editorTextFocus && editorLangId == 'clojure' && paredit:keyMap =~ /original|strict/"
+  },
+  {
+    "key": "shift+. shift+9",
+    "command": "paredit.barfSexpBackward",
+    "when": "vim.mode == 'Normal' && calva:keybindingsEnabled && editorTextFocus && editorLangId == 'clojure' && paredit:keyMap =~ /original|strict/"
+  },
+  // {
+  //   // VSCodeVim supports this with gh.
+  //   "key": "alt+i",
+  //   "command": "editor.action.showHover",
+  //   "when": "calva:keybindingsEnabled && editorTextFocus && editorLangId == 'clojure' && paredit:keyMap =~ /original|strict/"
+  // },
+  {
+    "key": "ctrl+shift+alt+right",
+    "command": "-paredit.barfSexpBackward",
+    "when": "vim.mode == 'Normal' && calva:keybindingsEnabled && editorTextFocus && editorLangId == 'clojure' && paredit:keyMap =~ /original|strict/"
+  },
+  {
+    "key": "ctrl+i",
+    "command": "-calva-fmt.tabIndent",
+    "when": "calva:keybindingsEnabled && editorTextFocus && !editorReadOnly && !hasOtherSuggestions && !suggestWidgetVisible && editorLangId == 'clojure'"
+  },
+  {
+    "key": "ctrl+backspace",
+    "command": "-paredit.killListBackward",
+    "when": "calva:keybindingsEnabled && editorTextFocus && editorLangId == 'clojure' && paredit:keyMap =~ /original|strict/"
+  },
+  {
+    "key": "ctrl+delete",
+    "command": "-paredit.killListForward",
+    "when": "calva:keybindingsEnabled && editorTextFocus && editorLangId == 'clojure' && paredit:keyMap =~ /original|strict/"
+  },
+  {
+    "key": "backspace",
+    "command": "-paredit.deleteBackward",
+    "when": "calva:keybindingsEnabled && editorTextFocus && !calva:cursorInComment && !editorHasMultipleSelections && !editorReadOnly && editorLangId == 'clojure' && paredit:keyMap == 'strict'"
+  },
+  {
+    "key": "backspace",
+    "command": "-paredit.deleteBackward",
+    "when": "(vim.mode == 'Normal' || vim.mode == 'SearchInProgressMode') && calva:keybindingsEnabled && editorTextFocus && !calva:cursorInComment && !editorHasMultipleSelections && !editorReadOnly && editorLangId == 'clojure' && paredit:keyMap == 'strict'"
+  },
+  {
+    "key": "ctrl+shift+t t",
+    "command": "calva.tapSelection",
+    "when": "vim.mode != 'Normal' && calva:connected && calva:keybindingsEnabled && editorTextFocus && editorLangId == 'clojure'"
+  },
+  {
+    "key": "ctrl+shift+t space",
+    "command": "calva.tapCurrentTopLevelForm",
+    "when": "vim.mode != 'Normal' && calva:connected && calva:keybindingsEnabled && editorTextFocus && editorLangId == 'clojure'"
+  },
+  {
+    "key": "ctrl+shift+t space",
+    "command": "-calva.tapCurrentTopLevelForm",
+    "when": "calva:connected && calva:keybindingsEnabled && editorTextFocus && editorLangId == 'clojure'"
+  },
+  {
+    "key": "ctrl+shift+t t",
+    "command": "-calva.tapSelection",
+    "when": "calva:connected && calva:keybindingsEnabled && editorTextFocus && editorLangId == 'clojure'"
+  },
+
+  // calvaend
+
+  //============================================================================
+  //= paredit
+  //============================================================================
+
+  // {
+  //   "key": "ctrl+backspace",
+  //   "command": "-paredit.killListBackward",
+  //   "when": "editorTextFocus && editorLangId == 'clojure' && paredit:keyMap =~ /original|strict/"
+  // },
+  // {
+  //   "key": "shift+alt+left",
+  //   "command": "paredit.barfSexpForward",
+  //   "when": "editorTextFocus && editorLangId == 'clojure' && paredit:keyMap =~ /original|strict/"
+  // },
+  // {
+  //   "key": "ctrl+left",
+  //   "command": "-paredit.barfSexpForward",
+  //   "when": "editorTextFocus && editorLangId == 'clojure' && paredit:keyMap =~ /original|strict/"
+  // },
+  // {
+  //   "key": "shift+alt+right",
+  //   "command": "paredit.slurpSexpForward",
+  //   "when": "editorTextFocus && editorLangId == 'clojure' && paredit:keyMap =~ /original|strict/"
+  // },
+  // {
+  //   "key": "ctrl+right",
+  //   "command": "-paredit.slurpSexpForward",
+  //   "when": "editorTextFocus && editorLangId == 'clojure' && paredit:keyMap =~ /original|strict/"
+  // },
+  // {
+  //   "key": "alt+s",
+  //   "command": "paredit.spliceSexp",
+  //   "when": "editorTextFocus && editorLangId == 'clojure' && paredit:keyMap =~ /original|strict/"
+  // },
+  // {
+  //   "key": "ctrl+alt+s",
+  //   "command": "-paredit.spliceSexp",
+  //   "when": "editorTextFocus && editorLangId == 'clojure' && paredit:keyMap =~ /original|strict/"
+  // },
+  // {
+  //   "key": "shift+alt+s",
+  //   "command": "paredit.splitSexp",
+  //   "when": "editorTextFocus && editorLangId == 'clojure' && paredit:keyMap =~ /original|strict/"
+  // },
+  // {
+  //   "key": "ctrl+shift+s",
+  //   "command": "-paredit.splitSexp",
+  //   "when": "editorTextFocus && editorLangId == 'clojure' && paredit:keyMap =~ /original|strict/"
+  // },
+
+  //============================================================================
+  //= camelCase movements between humps, aka cursorWordPart.
+  //============================================================================
+
+  {
+    "key": "ctrl+alt+l",
+    "command": "cursorWordPartRight",
+    "when": "textInputFocus"
+  },
+  {
+    "key": "ctrl+alt+shift+l",
+    "command": "cursorWordPartRightSelect",
+    "when": "textInputFocus"
+  },
+  {
+    "key": "ctrl+alt+h",
+    "command": "cursorWordPartStartLeft",
+    "when": "textInputFocus"
+  },
+  {
+    "key": "ctrl+alt+shift+h",
+    "command": "cursorWordPartStartLeftSelect",
+    "when": "textInputFocus"
+  },
+  {
+    "key": "ctrl+alt+backspace",
+    "command": "deleteWordPartLeft",
+    "when": "textInputFocus && !editorReadonly"
+  },
+  {
+    "key": "ctrl+alt+delete",
+    "command": "deleteWordPartRight",
+    "when": "textInputFocus && !editorReadonly"
+  },
+
+  //============================================================================
+  //= alt stuff
+  //============================================================================
+  {
+    "key": "alt+s",
+    "command": "workbench.action.gotoSymbol"
+  },
+  {
+    "key": "alt+b",
+    "command": "workbench.action.toggleSidebarVisibility"
+  },
+  {
+    "key": "alt+x",
+    "command": "workbench.view.extensions",
+    "when": "!sideBarFocus || activeViewlet != 'workbench.view.extensions'"
+  },
+  {
+    "key": "alt+x",
+    "command": "workbench.action.focusLastEditorGroup",
+    "when": "sideBarFocus && activeViewlet == 'workbench.view.extensions'"
+  },
+  {
+    "key": "alt+v",
+    "command": "toggleVim"
+  },
+  {
+    "key": "alt+m",
+    "command": "editor.action.toggleMinimap"
+  },
+  {
+    "key": "alt+g",
+    "command": "workbench.view.scm",
+    "when": "!sideBarFocus || activeViewlet != 'workbench.view.scm'"
+  },
+  {
+    "key": "alt+g",
+    "command": "workbench.action.focusLastEditorGroup",
+    "when": "sideBarFocus && activeViewlet == 'workbench.view.scm'"
+  },
+  {
+    "key": "alt+e",
+    "command": "workbench.view.explorer",
+    "when": "!sideBarFocus || activeViewlet != 'workbench.view.explorer'"
+  },
+  {
+    "key": "alt+e",
+    "command": "workbench.action.focusLastEditorGroup",
+    "when": "sideBarFocus && activeViewlet == 'workbench.view.explorer'"
+  },
+  {
+    "key": "alt+o",
+    "command": "runCommands",
+    "args": {
+      "commands": ["outline.focus", "outline.focus"]
+    },
+    "when": "focusedView != 'outline'"
+  },
+  {
+    "key": "alt+o",
+    "command": "workbench.action.focusLastEditorGroup",
+    "when": "focusedView == 'outline'"
+  },
+  {
+    "key": "alt+f",
+    "command": "workbench.view.search",
+    "when": "!sideBarFocus || activeViewlet != 'workbench.view.search'"
+  },
+  {
+    "key": "alt+f",
+    "command": "workbench.action.focusLastEditorGroup",
+    "when": "sideBarFocus && activeViewlet == 'workbench.view.search'"
+  },
+  {
+    "key": "alt+a",
+    "command": "workbench.action.toggleActivityBarVisibility"
+  },
+  {
+    "key": "alt+p",
+    "command": "issue.copyGithubPermalink"
+  },
+  // {
+  //   // Enabling this, vscodevim ctrl+f is overwritten.
+  //   "key": "ctrl+f",
+  //   "command": "actions.find"
+  // },
+  {
+    "key": "ctrl+h",
+    "command": "editor.action.startFindReplaceAction",
+    "when": "vim.mode == 'Insert' && textInputFocus"
+  },
+  {
+    "key": "ctrl+w",
+    "command": "workbench.action.closeActiveEditor",
+    "when": "vim.mode == 'Normal' && textInputFocus"
+  },
+  // TODO: play more with this. The idea is to always open the keybindings file
+  // in a new VSCode window. Current problem is that if we are in a dev
+  // container, the keybindings file is opened in a new window with the same dev
+  // container. This means that it will automatically try to connect to the
+  // container, install all extensions and so on. That takes much more time than
+  // simply opening the file.
+  // {
+  //   "key": "shift+alt+k",
+  //   "command": "runCommands",
+  //   "args": {
+  //     "commands": [
+  //       "workbench.action.openGlobalKeybindingsFile",
+  //       "workbench.action.files.showOpenedFileInNewWindow",
+  //       "workbench.action.closeActiveEditor"
+  //     ]
+  //   }
+  // },
+  {
+    "key": "shift+alt+s f",
+    "command": "workbench.action.openApplicationSettingsJson"
+  },
+  {
+    "key": "shift+alt+s s",
+    "command": "workbench.action.openGlobalSettings"
+  },
+  // {
+  //   "key": "shift+alt+s",
+  //   "command": "runCommands",
+  //   "args": {
+  //     "commands": [
+  //       "workbench.action.openApplicationSettingsJson",
+  //       "workbench.action.openGlobalSettings",
+  //       "workbench.action.openApplicationSettingsJson",
+  //     ]
+  //   }
+  // },
+  {
+    "key": "shift+alt+k",
+    "command": "runCommands",
+    "args": {
+      "commands": [
+        "workbench.action.openGlobalKeybindingsFile",
+        "workbench.action.openGlobalKeybindings",
+        "workbench.action.openGlobalKeybindingsFile"
+      ]
+    }
+  },
+  {
+    "key": "shift+alt+w",
+    "command": "workbench.action.closeAllEditors"
+  },
+  {
+    "key": "alt+h",
+    "command": "workbench.action.replaceInFiles",
+    "when": "editorTextFocus"
+  },
+  {
+    "key": "alt+h",
+    "command": "workbench.action.focusLastEditorGroup",
+    "when": "!editorTextFocus"
+  },
+  {
+    "key": "alt+r",
+    "command": "runCommands",
+    "when": "editorTextFocus",
+    "args": {
+      "commands": [
+        "typescript.restartTsServer",
+        "eslint.restart",
+        "svelte.restartLanguageServer"
+      ]
+    }
+  },
+  {
+    "key": "shift+alt+r",
+    "command": "workbench.action.reloadWindow"
+  },
+  {
+    "key": "alt+k",
+    "command": "-keybindings.editor.recordSearchKeys",
+    "when": "inKeybindings && inKeybindingsSearch"
+  },
+  {
+    "key": "alt+k",
+    "command": "workbench.action.nextEditor"
+  },
+  {
+    "key": "alt+j",
+    "command": "workbench.action.previousEditor"
+  },
+  {
+    "key": "alt+c",
+    "command": "workbench.files.action.collapseExplorerFolders",
+    "when": "sideBarFocus && activeViewlet == 'workbench.view.explorer'"
+  },
+  {
+    "key": "shift+alt+b",
+    "command": "workbench.action.toggleAuxiliaryBar"
+  },
+
+  // nextalt next alt
+
+  // {
+  //   "key": "alt+c",
+  //   "command": "list.collapseAll",
+  //   "when": "sideBarFocus && activeViewlet == 'workbench.view.scm'"
+  // },
+
+  //============================================================================
+  //= misc
+  //============================================================================
+
+  {
+    "key": "ctrl+.",
+    "command": "-problems.action.showQuickFixes",
+    "when": "problemFocus"
+  },
+  {
+    "key": "ctrl+.",
+    "command": "-settings.action.editFocusedSetting",
+    "when": "inSettingsSearch"
+  },
+  {
+    "key": "ctrl+alt+j",
+    "command": "cursorDown",
+    "when": "textInputFocus"
+  },
+  {
+    "key": "ctrl+alt+k",
+    "command": "cursorUp",
+    "when": "textInputFocus"
+  },
+  {
+    "key": "ctrl+k ctrl+f",
+    "command": "workbench.action.toggleFullScreen",
+    "when": "!isIOS"
+  },
+  {
+    "key": "alt+z",
+    "command": "workbench.action.toggleZenMode"
+  },
+  {
+    "key": "ctrl+.",
+    "command": "editor.action.quickFix",
+    "when": "textInputFocus && !editorReadonly"
+  },
+  {
+    "key": "ctrl+enter",
+    "command": "-github.copilot.generate",
+    "when": "editorTextFocus && github.copilot.activated && !inInteractiveInput && !interactiveEditorFocused"
+  },
+  {
+    "key": "ctrl+enter",
+    "command": "notebook.cell.execute",
+    "when": "notebookCellListFocused && notebookMissingKernelExtension && !notebookCellExecuting && notebookCellType == 'code' || notebookCellListFocused && !notebookCellExecuting && notebookCellType == 'code' && notebookKernelCount > 0 || notebookCellListFocused && !notebookCellExecuting && notebookCellType == 'code' && notebookKernelSourceCount > 0"
+  },
+  {
+    "key": "meta+enter",
+    "command": "-notebook.cell.execute",
+    "when": "notebookCellListFocused && notebookMissingKernelExtension && !notebookCellExecuting && notebookCellType == 'code' || notebookCellListFocused && !notebookCellExecuting && notebookCellType == 'code' && notebookKernelCount > 0 || notebookCellListFocused && !notebookCellExecuting && notebookCellType == 'code' && notebookKernelSourceCount > 0"
+  },
+  {
+    "key": "ctrl+[",
+    "command": "workbench.action.navigateBack"
+  },
+  {
+    "key": "ctrl+]",
+    "command": "workbench.action.navigateForward"
+  },
+  {
+    "key": "ctrl+k",
+    "command": "selectPrevSuggestion",
+    "when": "suggestWidgetMultipleSuggestions && suggestWidgetVisible && textInputFocus || suggestWidgetVisible && textInputFocus && !suggestWidgetHasFocusedSuggestion"
+  },
+  {
+    "key": "ctrl+k",
+    "command": "workbench.action.focusAboveGroup",
+    "when": "vim.mode == 'Normal' && editorTextFocus && vim.active"
+  },
+  {
+    "key": "alt+l",
+    "command": "workbench.action.quickOpenPreviousRecentlyUsedEditorInGroup",
+    "when": "!activeEditorGroupEmpty"
+  },
+  {
+    "key": "shift+alt+b",
+    "command": "-gitlens.toggleCodeLens",
+    "when": "editorTextFocus && !gitlens:disabled && !gitlens:disabledToggleCodeLens && config.gitlens.keymap == 'alternate'"
+  },
+  {
+    "key": "ctrl+j",
+    "command": "selectNextSuggestion",
+    "when": "(vim.mode == 'Normal' && vim.active) && (suggestWidgetMultipleSuggestions && suggestWidgetVisible && textInputFocus || suggestWidgetVisible && textInputFocus && !suggestWidgetHasFocusedSuggestion)"
+  },
+  {
+    "key": "alt+w",
+    "command": "editor.action.toggleWordWrap"
+  },
+  {
+    "key": "alt+z",
+    "command": "-editor.action.toggleWordWrap"
+  },
+  {
+    "key": "ctrl+i",
+    "command": "extension.vim_ctrl+i",
+    "when": "editorTextFocus && vim.active && vim.use<C-i> && !inDebugRepl && vim.mode == 'Normal'"
+  },
+  {
+    "key": "ctrl+i",
+    "command": "-extension.vim_ctrl+i",
+    "when": "editorTextFocus && vim.active && vim.use<C-i> && !inDebugRepl"
+  },
+  {
+    "key": "shift+alt+l",
+    "command": "workbench.action.tasks.runTask",
+    "args": "toggle-light-dark"
+  },
+  {
+    "key": "ctrl+shift+`",
+    "command": "workbench.action.toggleMaximizedPanel",
+    "when": "terminalFocus && (terminalProcessSupported || terminalWebExtensionContributedProfile)"
+  },
+  {
+    "key": "ctrl+shift+`",
+    "command": "workbench.action.terminal.new",
+    "when": "!terminalFocus && (terminalProcessSupported || terminalWebExtensionContributedProfile)"
+  }
+  // {
+  //   "key": "ctrl+shift+capslock ctrl+shift+f",
+  //   "command": "workbench.action.terminal.focusFind",
+  //   "when": "terminalFindFocused && terminalHasBeenCreated || terminalFindFocused && terminalProcessSupported || terminalFocusInAny && terminalHasBeenCreated || terminalFocusInAny && terminalProcessSupported"
+  // },
+  // {
+  //   "key": "ctrl+f",
+  //   "command": "-workbench.action.terminal.focusFind",
+  //   "when": "terminalFindFocused && terminalHasBeenCreated || terminalFindFocused && terminalProcessSupported || terminalFocusInAny && terminalHasBeenCreated || terminalFocusInAny && terminalProcessSupported"
+  // }
+  // {
+  //   "key": "ctrl+p",
+  //   "command": "workbench.action.quickOpen",
+  //   "when": "!terminalFocus"
+  // },
+  // {
+  //   "key": "ctrl+p",
+  //   "command": "-workbench.action.quickOpen"
+  // },
+  // {
+  //   "key": "ctrl+k",
+  //   "command": "workbench.action.terminal.sendSequence",
+  //   "args": {
+  //     "text": "^k"
+  //   },
+  //   "when": "terminalFocus"
+  // }
+
+  // {
+  //   "key": "shift+alt+l",
+  //   "command": "workbench.action.toggleLightDarkThemes"
+  // }
+  // {
+  //   "key": "shift+alt+l",
+  //   "command": "workbench.extensions.action.setColorTheme",
+  //   "args": {
+  //     "themeId": "GitHub Dark Dimmed"
+  //   }
+  // }
+  // {
+  //   "key": "shift+alt+l",
+  //   "command": "workbench.extensions.action.setColorTheme",
+  //   "args": "GitHub Dark Dimmed"
+  // }
+]

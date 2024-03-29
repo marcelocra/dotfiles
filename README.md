@@ -1,7 +1,10 @@
-# Dev
+# dotfiles
 
-All my development stuff, from settings to custom programs.
+Configuration files that I consider essential.
 
-## How to use
+## Refactoring the repo and renaming from `dev` to `dotfiles`
 
-Depends on what do you want to use. Take a look at the folders.
+1. [x] Move files from `config-files` to the appropriate folders or root
+1. [ ] Check existing symlinks to `config-files` and add a command for them in
+       the `dotfiles-installer.sh` script
+1. [ ] Delete the `config-files` folder

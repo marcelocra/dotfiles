@@ -1,0 +1,464 @@
+" vim: foldmethod=marker foldmarker={{{,}}} foldlevel=0 foldenable autoindent expandtab tabstop=4 shiftwidth=4 textwidth=80
+"
+" Details on how to use vim-plug, with examples. {{{
+"
+" The default plugin directory will be as follows:
+"   - Vim (Linux/macOS): '~/.vim/plugged'
+"   - Vim (Windows): '~/vimfiles/plugged'
+"   - Neovim (Linux/macOS/Windows): stdpath('data') . '/plugged'
+"
+" You can specify a custom plugin directory by passing it as the argument
+"   - e.g. `call plug#begin('~/.vim/plugged')`
+"   - Avoid using standard Vim directory names like 'plugin'
+"
+" In your plugin paths, make sure you use single quotes.
+"
+" 
+" Plugin example usage:
+"
+"   " Shorthand notation; fetches https://github.com/junegunn/vim-easy-align
+"   Plug 'junegunn/vim-easy-align'
+"
+"   " Multiple Plug commands can be written in a single line using | separators
+"   Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
+"
+"   " On-demand loading
+"   Plug 'tpope/vim-fireplace', { 'for': 'clojure' }
+"
+"   " Using a tagged release; wildcard allowed (requires git 1.9.2 or above)
+"   Plug 'fatih/vim-go', { 'tag': '*' }
+"   Plug 'nsf/gocode', { 'tag': 'v.20150303', 'rtp': 'vim' }
+"
+"   " Plugin outside ~/.vim/plugged with post-update hook
+"   Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+"   Plug 'junegunn/fzf.vim'
+"
+" Previously used plugins, to keep in mind:
+"
+"   " Allows one to easily traverse files.
+"   Plug 'Lokaltog/vim-easymotion'
+"
+"   " JavaScript stuff.
+"   Plug 'dense-analysis/ale'
+"   Plug 'prettier/vim-prettier', { 'do': 'yarn install' }
+"   Plug 'ternjs/tern_for_vim', { 'do': 'yarn install' }
+"
+"   " Makes commenting easier on Vim.
+"   Plug 'scrooloose/nerdcommenter'
+"
+"   " Colorschemes
+"   Plug 'altercation/vim-colors-solarized'
+"   Plug 'sjl/badwolf'
+"   Plug 'tomasr/molokai'
+"   Plug 'tpope/vim-vividchalk'
+"   Plug 'marcelocra/vim-colorscheme'
+"
+" }}}
+" --- -vim-plug( ----------------------------------------{{{
+
+call plug#begin()  
+
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plug 'junegunn/fzf.vim'
+
+Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-unimpaired'
+Plug 'tpope/vim-surround'
+Plug 'tpope/vim-commentary'
+Plug 'tpope/vim-repeat'
+
+Plug 'bling/vim-airline'
+
+Plug 'justinmk/vim-sneak'
+
+Plug 'nvim-treesitter/nvim-treesitter', { 'do': ':TSUpdate' }
+
+" Colorscheme.
+Plug 'folke/tokyonight.nvim'
+
+" Plugins for Clojure and other lisps.
+Plug 'Olical/conjure', { 'for': ['clojure', 'python'] }
+Plug 'guns/vim-sexp', { 'for': ['clojure'] } 
+Plug 'tpope/vim-sexp-mappings-for-regular-people', { 'for': ['clojure'] } 
+
+call plug#end()
+
+
+" )vim-plug- }}}
+" --- -settings( ------------------------------------------------------------{{{
+
+" Syntax highlighting.
+syntax enable
+
+" When inserting a tab in the beggining of the line, it will be N spaces long
+" and a backspace will go back N spaces also (where N is the chosen number).
+set smarttab
+set shiftwidth=4
+set tabstop=4
+
+" Use spaces instead of tabs.
+set expandtab
+
+" Indentation.
+set autoindent
+
+" Disable annoying error noise (now it blinks).
+set vb t_vb=
+
+" Lines with number and with a particular width (no variation when
+" increasing).
+set number
+set norelativenumber 
+
+" Show line and column.
+set ruler
+set colorcolumn=60,80,100,120
+
+" Highlight search matches as you type.
+set hlsearch
+set incsearch
+
+" Always show the status line.
+set laststatus=2
+
+" Use utf-8 encoding.
+set encoding=utf-8
+
+" Change tab and trail characters.
+" let &showbreak = '+++ '
+set listchars=eol:↲,tab:→\ ,trail:·,extends:>,precedes:<,nbsp:%
+"set listchars=eol:$,tab:».,trail:.,extends:>,precedes:<,nbsp:_
+set nolist
+
+" Highlight the cursor line.
+set cursorline
+
+" Allow backspace to work like in every text editor.
+set backspace=2
+
+" Visual autocomplete for command menu.
+set wildmenu
+
+" Redraw only when needed to.
+set lazyredraw
+
+" Change Vim default splits (to bottom right).
+set splitbelow
+set splitright
+
+" Set line endings using Unix style.
+set fileformats=unix
+
+" Set proper colors.
+set t_Co=256
+
+
+" My current favourite preeinstalled theme.
+colorscheme slate  " git diffs works properly
+colorscheme zellner  " light
+
+" Set how the status line will be shown in the bottom of Vim. (Not needed if
+" using airline.)
+"set statusline=%<%F\ %m%r%h\ %=lines:%l/%L\ col:%c%V
+
+" Use the system clipboard to copy to/from.
+set clipboard+=unnamedplus
+
+" )settings- }}}
+" --- -mappings( ------------------------------------------------------------{{{
+
+" Use normal regex.
+nnoremap / /\v\c
+vnoremap / /\v\c
+
+" Simpler way to go to command mode from insert mode.
+inoremap <c-n> <esc>
+inoremap jf <esc>
+inoremap fj <esc>
+
+" Quicker window movement.
+nnoremap <c-j> <c-w><c-j>
+nnoremap <c-k> <c-w><c-k>
+nnoremap <c-h> <c-w><c-h>
+nnoremap <c-l> <c-w><c-l>
+
+" Move vertically by visual line (not jumping long lines).
+nnoremap j gj
+nnoremap k gk
+nnoremap $ g$
+nnoremap 0 g0
+
+vnoremap j gj
+vnoremap k gk
+vnoremap $ g$
+vnoremap 0 g0
+
+" Highlight last inserted text.
+nnoremap gV `[v`]
+
+" Allow fast indenting when there is a chunck of text selected.
+vnoremap < <gv
+vnoremap > >gv
+
+" Use alt to change tabs.
+" TODO(marcelocra): figure how to avoid this conflicting with vim-sexp.
+" nnoremap <m-j> :tabprevious<cr>
+" nnoremap <m-k> :tabnext<cr>
+" inoremap <m-j> <esc>:tabprevious<cr>
+" inoremap <m-k> <esc>:tabnext<cr>
+
+inoremap <a-j> <esc>:tabprevious<cr>
+inoremap <a-k> <esc>:tabnext<cr>
+nnoremap <a-j> :tabprevious<cr>
+nnoremap <a-k> :tabnext<cr>
+
+" Search for the selected text.
+vnoremap // y/\V<c-r>=escape(@",'/\')<cr><cr>
+
+" Count occurrences. In normal mode, count occurrences for the word where the
+" cursor is in. In visual mode, count occurrences for the selected text.
+nnoremap <leader><leader>c *N:%s///gn<cr>
+vnoremap <leader><leader>c y/\V<c-r>=escape(@",'/\')<cr><cr>:%s///gn<cr>
+
+" Use alt-c to toggle folds.
+nnoremap <a-c> za
+
+" Use - and | to split in normal mode.
+nnoremap - :split<cr>
+nnoremap \| :vsplit<cr>
+
+" Avoids replacing the clipboard content with the selected content. Does this
+" by deleting the selected content to the blackhole register and then pasting
+" the clipboard content to before the cursor position.
+vnoremap p "_dP
+
+" Clear last search.
+" TODO: understand why I used this instead of :nohl, as it allows
+" us to search again for the same string (seems better).
+" nnoremap <silent> <c-c> :let @/ = ""<cr>
+nnoremap <silent> <c-n> :nohl<cr>
+"inoremap <silent> <c-c> <esc>:nohl<cr>a
+
+" Go to the Nth tab.
+nnoremap <a-1> :tabn 1<cr>
+nnoremap <a-2> :tabn 2<cr>
+nnoremap <a-3> :tabn 3<cr>
+nnoremap <a-4> :tabn 4<cr>
+nnoremap <a-5> :tabn 5<cr>
+nnoremap <a-6> :tabn 6<cr>
+nnoremap <a-7> :tabn 7<cr>
+nnoremap <a-8> :tabn 8<cr>
+nnoremap <a-9> :tabn 9<cr>
+
+" Change tabs.
+nnoremap [t :tabprevious<cr>
+nnoremap ]t :tabnext<cr>
+
+" Change generic autocomplete mapping.
+inoremap <c-space> <c-n>
+
+" Reminder that I'm using the wrong keyboard layout.
+nnoremap Ç :echo 'wrong keyboard layout!'<cr>
+
+" Simulate multiple cursors.
+vnoremap <c-d> y:%s/<c-r>"
+
+" Insert current time.
+"nnoremap <a-h> r!bb '(-> "HH:mm" (java.text.SimpleDateFormat.) (.format (java.util.Date.)) (str/replace (re-pattern ":") "h") (println))'
+
+" Resize splits.
+nnoremap <leader>> <c-w>10+
+nnoremap <leader>< <c-w>10-
+
+" )mappings- }}}
+" --- -abbreviations( -------------------------------------------------------{{{
+
+" Shebang.
+iab shebang #!/usr/bin/env
+
+" Vim modeline with my preferred defaults.
+iab vimmode vim: fdm=marker:fmr={{{,}}}:fdl=1:fen:ai:et:ts=4:sw=4
+iab vimmodemd filetype=markdown:tw=80
+
+" Comment to prevent clojure auto-formatters from wrapping sexps.
+iab noparenwrap ;; Prevents auto-formatter from wrapping.
+
+" Create better bash scripts with these options at the top
+" of them.
+"
+" -e: exit on error
+" -u: exit on undefined variable
+" -o pipefail: exits on command pipe failures
+" -x: print commands before execution
+iab euxo set -euxo pipefail
+
+" Printing all commands make it very verbose and hard to read.
+iab euo set -euo pipefail
+
+" Add Rich Hickey comment block comment.
+iab rich ;; rcf - rich comment form
+
+" Always open help in a new tab.
+cab help tab help
+cab h tab help
+
+" )abbreviations- }}}
+" --- -leader-mappings( -----------------------------------------------------{{{
+
+" Change leader.
+let mapleader = ","
+let maplocalleader = " "
+
+" Execute last macro recorded in register 'q'.
+nnoremap <space><space> @q
+
+" Easily source my vimrc.
+nnoremap <leader><leader>sv :source $MYVIMRC<cr>
+" Easily edit my vimrc.
+nnoremap <leader><leader>ev :vspl $MYVIMRC<cr>
+nnoremap <leader><leader>etv :tabe $MYVIMRC<cr>
+
+" Save while in insert mode without leaving insert mode.
+nnoremap <leader>s :w<cr>
+nnoremap <c-s> :w<cr>
+inoremap <leader>s <esc>:w<cr>
+inoremap <leader><leader>s <esc>:w<cr>a
+inoremap <c-s> <esc>:w<cr>a
+
+
+" Quit easily.
+nnoremap <leader>q :q<cr>
+nnoremap <leader><leader>q :qa<cr>
+inoremap <leader>q <esc>:q<cr>
+
+" Save and quit easily.
+inoremap <leader>x <esc>:x<cr>
+nnoremap <leader>x :x<cr>
+
+" Select all.
+nnoremap <leader>a ggVG
+
+" Delete current buffer
+noremap <silent><leader>d :bd<cr>
+
+" )leader-mappings- }}}
+" --- -plugin-mappings( -----------------------------------------------------{{{
+
+" vscode-vim settings --------------------------------------
+" For vscode-neovim. Settings that should be enabled only in
+" cmdline vim should go here.
+if !exists('g:vscode')
+endif
+
+" fzf settings ---------------------------------------------
+
+nnoremap <c-p> :Files<cr>
+" " Ignore <c-b>, as I want to get used to <c-u>.
+" nnoremap <c-b> :echo 'use <' . 'c-u> instead!'<cr>
+" Use c-b to list buffers!
+nnoremap <c-b> :Buffers<cr>
+
+" Search lines in all open buffers.
+nnoremap <localleader>l :Lines<cr>
+
+nnoremap <localleader>c :Commands<cr>
+
+" vim-sneak mapping ----------------------------------------
+
+map f <Plug>Sneak_f
+map F <Plug>Sneak_F
+map t <Plug>Sneak_t
+map T <Plug>Sneak_T
+
+" )plugin-mappings- }}}
+" --- -plugin-settings( -----------------------------------------------------{{{
+" vim-sneak settings ---------------------------------------
+
+let g:sneak#label = 1
+let g:sneak#s_next = 1
+
+" conjure settings -----------------------------------------
+
+let g:conjure#client_on_load = 0
+let g:conjure#log#jump_to_latest#enabled = 0
+let g:conjure#log#jump_to_latest#cursor_scroll_position = 'center'
+let g:conjure#log#wrap = 1
+" let g:conjure#log#fold#enabled = 1
+
+" )plugin-settings- }}}
+" --- -autocommands( --------------------------------------------------------{{{
+
+augroup myautocommands
+    autocmd!
+    autocmd FileType gitcommit set colorcolumn=51
+augroup END
+
+" )autocommands- }}}
+" --- -functions( -----------------------------------------------------------{{{
+
+"" From StackOverflow, in case changing the highlight colors doesn't work:
+""
+""   https://stackoverflow.com/a/47361068/1814970
+""
+" set noshowmatch
+
+" function! g:FuckThatMatchParen ()
+"     if exists(":NoMatchParen")
+"         :NoMatchParen
+"     endif
+" endfunction
+
+" augroup plugin_initialize
+"     autocmd!
+"     autocmd VimEnter * call FuckThatMatchParen()
+" augroup END
+
+" )functions- }}}
+" --- -lua( -----------------------------------------------------------------{{{
+
+if has('nvim')
+
+lua <<LUACODE
+
+local hour_now = tonumber(os.date("%H"))
+local daylight_ends = 17
+local daylight_starts = 6
+
+-- Use this to either choose a mode or allow it to be time based. Options:
+local ColorMode = {
+    TimeBased = 0,
+    Dark = 1,
+    Light = 2,
+}
+
+local mode = ColorMode.Dark
+
+-- If not forcing light mode, then check if forcing dark. If not, then use the
+-- time-based approach.
+--
+-- Try to make paranthesis matching useful and less confusing (hi MatchParen
+-- needs to be changed after setting a colorscheme).
+if mode ~= ColorMode.Light and (mode == ColorMode.Dark or hour_now < daylight_starts or hour_now >= daylight_ends) then
+    vim.cmd[[
+        colorscheme slate
+        colorscheme elflord
+        colorscheme tokyonight
+        hi MatchParen ctermfg=red ctermbg=black
+        hi ColorColumn ctermfg=gray ctermbg=black
+    ]]
+
+else
+    vim.cmd([[
+        colorscheme zellner
+        colorscheme tokyonight
+        hi MatchParen ctermfg=black ctermbg=lightgreen
+        hi ColorColumn ctermfg=gray ctermbg=white
+    ]])
+
+end
+
+LUACODE
+
+endif
+
+" )lua- }}}
