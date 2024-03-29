@@ -194,6 +194,11 @@
     "body": ["- [ ] "]
   },
 
+  "md numbered checkbox": {
+    "scope": "markdown",
+    "prefix": ["k"],
+    "body": ["1. [ ] "]
+  },
 
   "config comment block": {
     "scope": "json,jsonc",
@@ -218,9 +223,9 @@
     "body": ["// @ts-expect-error"]
   },
 
-  "js, ts, jsx, tsx snippet": {
+  "snippet to create snippets": {
     "scope": "snippets",
-    "prefix": "jss",
+    "prefix": "snip",
     "body": [
       "\"${1:text that appears when showing the snippet before completion}\": {",
       "  \"scope\": \"${2:snippets}\",",
@@ -267,5 +272,123 @@
       "${0:linguist-vendored}"
     ]
   },
+  
+  "simplify commenting forms in clojure": {
+    "scope": "clojure,clojurescript,cljs,clj",
+    "prefix": "c",
+    "body": [
+      "#_"
+    ]
+  },
 
+  "rich comment": {
+    "scope": "clojure,clojurescript",
+    "prefix": "rich",
+    "body": [
+      ";; playground!",
+      "(comment",
+      "",
+      "  $0",
+      "",
+      "  #_(\"do not wrap me!\"))",
+    ]
+  },
+
+  "add tailwindcss play cdn conditionally to re-frame app": {
+    "scope": "clojure,clojurescript",
+    "prefix": "re-tw",
+    "body": [
+      ";; Lets use TailwindCSS CDN during development, for simplicity.",
+      "(when config/debug?",
+      "  (let [body (.-body js/document)",
+      "        script (.createElement js/document \"script\")]",
+      "    (.setAttribute script \"src\" \"https://cdn.tailwindcss.com\")",
+      "    (.setAttribute body \"class\" \"container min-w-[700] min-h-screen mx-auto\")",
+      "    (.appendChild body script)))",
+    ]
+  },
+
+  "clojure and clojurescript snippets scope": {
+    "scope": "snippets",
+    "prefix": "clj+",
+    "body": [
+      "clojure,clojurescript,clj,cljs"
+    ]
+  },
+
+  "snippet to add json and jsonc": {
+    "scope": "snippets",
+    "prefix": "json",
+    "body": [
+      "json,jsonc"
+    ]
+  },
+
+  "shadow watch with cider": {
+    "scope": "clojure,clojurescript,clj,cljs,json,jsonc",
+    "prefix": "shadow+cider",
+    "body": [
+      "shadow-cljs -d cider/cider-nrepl:0.28.5 watch"
+    ]
+  },
+
+  "add keybinding for a particular vim mode": {
+    "scope": "json,jsonc",
+    "prefix": "vimmode",
+    "body": [
+      "vim.active && vim.mode == '$1'${2: && }$0"
+    ]
+  },
+
+  "simplify adding a new keybinding": {
+    "scope": "json,jsonc",
+    "prefix": "key",
+    "body": [
+      "{",
+      "  \"key\": \"$1\",",
+      "  \"command\": \"$2\",",
+      "  \"when\": \"$3\"",
+      "},$0",
+    ]
+  },
+
+  "classname for jsx and tsx": {
+    "scope": "javascriptreact,typescriptreact",
+    "prefix": "c",
+    "body": [
+      "className=\"$1\"${0: }"
+    ]
+  },
+
+  "tailwind center stuff on page": {
+    "scope": "html,javascriptreact, typescriptreact",
+    "prefix": "center",
+    "body": [
+      "min-h-screen mx-auto flex justify-center items-center"
+    ]
+  },
+
+  "eslint allow no explicit any": {
+    "scope": "javascript,javascriptreact,typescript,typescriptreact",
+    "prefix": "eslint-nea",
+    "body": [
+      "// eslint-disable-next-line @typescript-eslint/no-explicit-any"
+    ]
+  },
+
+  "eslint disable next line": {
+    "scope": "javascript,javascriptreact,typescript,typescriptreact",
+    "prefix": "dnl",
+    "body": [
+      "// eslint-disable-next-line ${1:@typescript-eslint/no-explicit-any}$0"
+    ]
+  },
+
+  "(java|type)script(react|)": {
+    "scope": "snippets",
+    "prefix": "js",
+    "body": [
+      "javascript,javascriptreact,typescript,typescriptreact"
+    ]
+  },
 }

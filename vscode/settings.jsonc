@@ -1,12 +1,12 @@
 {
   // -editor (
-  // "editor.fontFamily": "'MonaspiceAr Nerd Font', 'MonaspiceNe Nerd Font', 'MonaspiceKr Nerd Font'",
-  // "editor.fontLigatures": "'calt', 'liga', 'dlig', 'ss01', 'ss02', 'ss03', 'ss04', 'ss05', 'ss06', 'ss07'",
-  // "editor.fontSize": 11,
-  // "editor.fontFamily": "CodeNewRoman Nerd Font",  // => -> <> <=>
-  "editor.fontFamily": "'MesloLGS Nerd Font', 'MesloLGS NF', monospace",
+  "editor.fontFamily": "'MonaspiceAr Nerd Font', 'MonaspiceNe Nerd Font', 'MonaspiceKr Nerd Font'",
   "editor.fontLigatures": "'calt', 'liga', 'dlig', 'ss01', 'ss02', 'ss03', 'ss04', 'ss05', 'ss06', 'ss07'",
-  "editor.fontSize": 13,
+  // "editor.fontSize": 11,
+  // "editor.fontFamily": "CodeNewRoman Nerd Font",
+  // ligature tests: => -> <> <= >= != !== === |> <- --> ||
+  "editor.fontSize": 11,
+  "editor.fontWeight": "100",
   "editor.codeActionsOnSave": {
     "source.fixAll.eslint": "explicit",
     "source.fixAll": "explicit"
@@ -48,8 +48,8 @@
 
   // -explorer (
   "explorer.openEditors.visible": 1,
-  "explorer.excludeGitIgnore": false,
   "explorer.confirmDragAndDrop": false,
+  "explorer.excludeGitIgnore": true,
   // ) explorer-
 
   // -files (
@@ -72,7 +72,8 @@
   // -terminal (
   "terminal.integrated.tabs.enabled": true,
   "terminal.integrated.fontFamily": "'MesloLGS Nerd Font', 'MesloLGS NF', monospace",
-  "terminal.integrated.fontSize": 13,
+  "terminal.integrated.fontSize": 9,
+  "terminal.integrated.fontWeight": "100",
   "terminal.integrated.macOptionClickForcesSelection": true,
   "terminal.integrated.allowChords": false,
   "terminal.integrated.sendKeybindingsToShell": true,
@@ -534,17 +535,20 @@
   },
   "html.suggest.html5": false,
   "[markdown]": {
-    "editor.wordWrap": "wordWrapColumn",
-    "editor.wordWrapColumn": 80,
+    "editor.wordWrap": "bounded",
+    "editor.wordWrapColumn": 100,
     "editor.wrappingIndent": "same",
     "editor.rulers": [80, 100, 120],
     "editor.tabSize": 4,
     "editor.insertSpaces": true
   },
   "[asciidoc]": {
-    "editor.wordWrap": "wordWrapColumn",
-    "editor.wordWrapColumn": 80,
-    "editor.wrappingIndent": "same"
+    "editor.wordWrap": "bounded",
+    "editor.wordWrapColumn": 100,
+    "editor.wrappingIndent": "same",
+    "editor.rulers": [80, 100, 120],
+    "editor.tabSize": 4,
+    "editor.insertSpaces": true
   },
 
   // -fsharp(
@@ -556,12 +560,9 @@
 
   // -clojure(
   "[clojure]": {
-    // "editor.wordSeparators": "\t()\"':,;~@#$%^&{}[]`.+-/<>",
+    "editor.wordSeparators": "\t()\"':,;~@#$%^&{}[]`.+/<>",
     "editor.autoClosingBrackets": "always",
     "editor.autoClosingQuotes": "always",
-    "editor.formatOnType": true,
-    "editor.autoIndent": "full",
-    "editor.formatOnPaste": true,
     "files.trimTrailingWhitespace": false,
     "editor.parameterHints.enabled": false,
     "editor.unicodeHighlight.allowedCharacters": {
