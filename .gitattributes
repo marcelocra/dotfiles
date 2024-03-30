@@ -5,6 +5,8 @@
 # Ignore these, as they are not really code code.
 archives/                   linguist-generated
 
+apps/                       linguist-vendored
+
 Dockerfile*                 linguist-vendored
 
 **/*.sh                     linguist-vendored
