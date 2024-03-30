@@ -3,8 +3,9 @@
 
 
 # Ignore these, as they are not really code code.
-copy-pastes/** linguist-vendored
-Dockerfile* linguist-vendored
-config-files/vim/vimrc linguist-vendored
-**/*.sh linguist-vendored
-**/*.ps1 linguist-vendored
+archives/                   linguist-generated
+
+Dockerfile*                 linguist-vendored
+
+**/*.sh                     linguist-vendored
+**/*.ps1                    linguist-vendored
