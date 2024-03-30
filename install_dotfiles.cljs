@@ -1,10 +1,29 @@
-#!/usr/bin/env bb
+#!/usr/bin/env nbb
 (ns install-dotfiles
   (:require
-    [babashka.fs :as fs]))
+    ["node:fs/promises" :as fs]
+    ["node:path" :as path]
+    [clojure.pprint :as pp :refer [pprint] :rename {pprint p}]
+    [nbb.core :refer [await]]
+    [promesa.core :as p]))
+
+(comment
+
+    (fs/readFile ".")
+
+    (let [something (fs/readdir (path/join "."))]
+        (p/then something #(p/then % js/console.log))) 
+
+
+
+    (await (fs/readdir '.'))
+
+    (js/console.log "hey")
+    
+    )
 
 (def content-to-append-to-rc-files 
-  (format  "
+  (str "
 
 # -----------------------------------------------------------------------------
 # My shell settings.
@@ -14,12 +33,11 @@
 # -----------------------------------------------------------------------------
 export MCRA_INIT_SHELL=$MCRA_INIT_SHELL
 export MCRA_LOCAL_SHELL=$MCRA_LOCAL_SHELL
-export MCRA_TMP_PLAYGROUND="/tmp/mcra-tmp-playground"
 
 # Local should be first, as the other one checks for some expected MCRA_* env
 # variables.
-source \$MCRA_LOCAL_SHELL
-source \$MCRA_INIT_SHELL
+source $MCRA_LOCAL_SHELL
+source $MCRA_INIT_SHELL
 # -----------------------------------------------------------------------------
 
 
