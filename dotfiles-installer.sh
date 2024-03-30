@@ -130,11 +130,19 @@ vscode_dotfiles() {
     fi
 }
 
-obsidian_app() {
+# Install Obsidian.
+obsidian() {
+    # Download the latest version of Obsidian.
+    local obsidian_dir="$MCRA_PACKAGES/obsidian"
+
+    curl -O --output-dir $obsidian_dir https://github.com/obsidianmd/obsidian-releases/releases/download/v1.5.11/Obsidian-1.5.11.AppImage
+
     # -A list all files except . and .. 
     # -r reverse order while sorting
     # -t sort by time, newest first
     local latest="$(ls -Art $MCRA_PACKAGES/obsidian | tail -n 1)"
+    
+    
 
     # Creates a symbolic link to the latest version of Obsidian, to avoid having
     # references to fixed versions.
@@ -160,7 +168,7 @@ all_dotfiles() {
     vim_dotfiles
     shell_dotfiles
     vscode_dotfiles
-    obsidian_app
+    obsidian
 }
 
 while [[ "$#" -gt 0 ]]; do
@@ -172,7 +180,7 @@ while [[ "$#" -gt 0 ]]; do
         --vim) vim_dotfiles ;;
         --shell) shell_dotfiles ;;
         --vscode) vscode_dotfiles ;;
-        --obsidian) obsidian_app ;;
+        --obsidian) obsidian ;;
         *) echo "Unknown parameter passed: $1"; exit 1 ;;
     esac
     shift
