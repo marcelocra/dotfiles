@@ -3,94 +3,24 @@
 # TODO: this file is too big already. Perhaps move each section to its own
 # file, in the shell subdir?
 
-# envs and programs(((
+# Required envs.
 
-# Important envs and programs that I need:
+verify_defined() {
+    local env_name="$1"
+    local env_value
+    eval env_value=\$$1
 
-is_defined() {
-    if [[ -z "$1" ]]; then
-        echo "'$2' is not defined"
+    if [[ -z "$env_value" ]]; then
+        echo "'$env_name' is not defined"
+        exit 1
     fi
 }
 
-is_defined "$MCRA_PROJECTS_FOLDER" "MCRA_PROJECTS_FOLDER"
-is_defined "$MCRA_INIT_SHELL" "MCRA_INIT_SHELL"
-is_defined "$MCRA_LOCAL_SHELL" "MCRA_LOCAL_SHELL"
-is_defined "$MCRA_TMP_PLAYGROUND" "MCRA_TMP_PLAYGROUND"
+verify_defined "MCRA_PROJECTS_FOLDER"
+verify_defined "MCRA_INIT_SHELL"
+verify_defined "MCRA_LOCAL_SHELL"
+verify_defined "MCRA_TMP_PLAYGROUND"
 
-
-# Defines pnpm home for globally installed scripts.
-if [[ -z "$PNPM_HOME" ]]; then
-    export PNPM_HOME="/home/marcelocra/.local/share/pnpm"
-    case ":$PATH:" in
-      *":$PNPM_HOME:"*) ;;
-      *) export PATH="$PNPM_HOME:$PATH" ;;
-    esac
-fi
-
-# Node version manager.
-if [[ -z "$NVM_DIR" ]]; then
-    export NVM_DIR="$HOME/.nvm"
-    [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-    [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
-fi
-
-# )))envs and programs
-# exports(((
-
-# dotnet.
-export DOTNET_ROOT="${HOME}/bin/dotnet"
-export DOTNET_CLI_TELEMETRY_OPTOUT=true
-export PATH="${PATH}:${DOTNET_ROOT}"
-
-# Homebrew.
-export HOMEBREW_NO_ANALYTICS=1
-
-# Flutter.
-export FLUTTER_SDK="${HOME}/bin/flutter"
-export FLUTTER_ROOT="${FLUTTER_SDK}/bin"
-export PATH="${PATH}:${FLUTTER_ROOT}"
-
-# Deno.
-export DENO_INSTALL="$HOME/.deno"
-export PATH="$DENO_INSTALL/bin:$PATH"
-
-# Fly.io.
-export FLYCTL_INSTALL="/home/marcelocra/.fly"
-export PATH="$FLYCTL_INSTALL/bin:$PATH"
-
-# Path.
-export PATH="${PATH}:${HOME}/bin"
-
-# fzf.
-# # TODO: set this up only for tmux above 3.2
-# # export FZF_TMUX_OPTS='-p80%,60%'
-# export FZF_TMUX_OPTS='-d50%'
-export FZF_TMUX=0
-export FZF_DEFAULT_OPTS='--height 40% --layout=reverse --border'
-
-# Nextjs.
-# Print what would be collected to stderr without sending it. Set this to 0 to
-# allow telemetry, along with a 0 in the next one.
-# export NEXT_TELEMETRY_DEBUG=0
-# Disable telemetry by setting this to 1.
-export NEXT_TELEMETRY_DISABLED=1
-
-# Astro.build
-# Disable telemetry by setting this to 1.
-export ASTRO_TELEMETRY_DISABLED=1
-
-# Install Ruby Gems to ~/bin/packages/ruby/gems
-export GEM_HOME="$HOME/bin/packages/ruby/gems"
-if [[ ! -d "$GEM_HOME" ]]; then mkdir -p "$GEM_HOME"; fi
-export PATH="$GEM_HOME/bin:$PATH"
-
-# bun
-[ -s "/home/marcelocra/.bun/_bun" ] && source "/home/marcelocra/.bun/_bun"  # completions
-export BUN_INSTALL="$HOME/.bun"
-export PATH="$BUN_INSTALL/bin:$PATH"
-
-# )))exports
 # functions(((
 
 # Simplifies working with tmux. Tries to create
@@ -243,7 +173,7 @@ if [[ ! -z "${MCRA_INIT_SHELL}" && ! -z "${MCRA_LOCAL_SHELL}" ]]; then
     alias rcl='vim $MCRA_LOCAL_SHELL'
     alias rcz='vim ~/.zshrc'
     alias rcb='vim ~/.bashrc'
-    alias rc.='source $MCRA_INIT_SHELL && source $MCRA_LOCAL_SHELL'
+    alias rc.='source $MCRA_LOCAL_SHELL && source $MCRA_INIT_SHELL'
 else
     alias rc="echo 'Define \$MCRA_INIT_SHELL and \$MCRA_LOCAL_SHELL in your rc file'"
     alias rcl=rc
@@ -251,12 +181,6 @@ else
     alias rcb=rc
     alias rc.=rc
 fi
-
-# alias code="code-insiders"
-alias code="code"
-alias p1="code \$MCRA_P1"
-
-alias td="turbo dev --filter"
 
 # Speech synthesizer.
 alias fala="spd-say -w -l pt-BR -p 100 -r -30 -R 100 -m all"
@@ -308,14 +232,7 @@ alias bbge="v ~/.config/babashka/bb.edn"
 
 alias colines='echo "Columns: $COLUMNS, Lines: $LINES"'
 
-alias shad='npx shadow-cljs'
-alias shads='shad server'
-alias shadw='shad watch'
-
-alias path="echo $PATH | tr ':' '\n'"
-
-# Next aliases above!
-
+alias ppath="echo $PATH | tr ':' '\n'"
 
 # )))general
 # git frequent(((
@@ -411,14 +328,15 @@ docker_images_sorted() {
             alias di='docker_images_sorted'
 
 # )))docker
+# to avoid dangerous commands - overrides(((
+
+alias really-npx="$(which npx)"
+alias really-bunx="$(which bunx)"
+
+alias npx='echo "are you sure? if so, use `really-npx`"'
+alias bunx='echo "are you sure? if so, use `really-bunx`"'
+
+# )))overrides
 # )))aliases
-# commands(((
-
-# Homebrew
-if [[ -d /home/linuxbrew/.linuxbrew ]]; then
-    eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
-fi
-
-# )))commands
 
 # vim: foldmethod=marker foldmarker=(((,))) foldlevel=1 foldenable autoindent expandtab tabstop=4 shiftwidth=4
