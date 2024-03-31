@@ -132,21 +132,28 @@ vscode_dotfiles() {
 
 # Install Obsidian.
 obsidian() {
-    # Download the latest version of Obsidian.
+    # Download the latest version of Obsidian to this location.
     local obsidian_dir="$MCRA_PACKAGES/obsidian"
+    local obsidian_release_url="$(./play.clj --obsidian)"
 
-    curl -O --output-dir $obsidian_dir https://github.com/obsidianmd/obsidian-releases/releases/download/v1.5.11/Obsidian-1.5.11.AppImage
+    wget --directory-prefix $obsidian_dir $obsidian_release_url
 
     # -A list all files except . and .. 
     # -r reverse order while sorting
     # -t sort by time, newest first
-    local latest="$(ls -Art $MCRA_PACKAGES/obsidian | tail -n 1)"
-    
-    
+    local latest_bin="$(ls -Art $MCRA_PACKAGES/obsidian | tail -n 1)"
 
-    # Creates a symbolic link to the latest version of Obsidian, to avoid having
-    # references to fixed versions.
-    ln -s $latest $MCRA_BINARIES/obsidian
+    if [[ -z "$latest_bin" ]]
+    then
+        echo "obsidian_dir=$obsidian_dir"
+        echo "obsidian_release_url=$obsidian_release_url"
+        echo "latest_bin=$latest_bin"
+        exit 1
+    fi
+
+    # Symlink the latest binary, desktop entry and icon.
+
+    ln -s $latest_bin $MCRA_BINARIES/obsidian
 
     ln -s $(pwd)/apps/obsidian/obsidian.desktop \
         ${HOME}/.local/share/applications/obsidian.desktop
@@ -156,8 +163,8 @@ obsidian() {
     ln -s $(pwd)/apps/obsidian/obsidian.png \
         ${HOME}/.local/share/icons/obsidian.png 
 
-    # Update desktop files database. This is what actually show things in the
-    # ui.
+    # Update desktop files database.
+    # This is what actually show things in the ui.
     update-desktop-database ~/.local/share/applications
 }
 
