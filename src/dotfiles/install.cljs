@@ -1,5 +1,5 @@
 #!/usr/bin/env nbb
-(ns install-dotfiles
+(ns dotfiles.install
   (:require
     ["node:fs/promises" :as fs]
     ["node:path" :as path]
@@ -7,9 +7,13 @@
     [nbb.core :refer [await]]
     [promesa.core :as p]))
 
+(defn usage [])
+
 (comment
 
-    (fs/readFile ".")
+    js/process.env.HOME
+
+    (await (fs/readdir "."))
 
     (let [something (fs/readdir (path/join "."))]
         (p/then something #(p/then % js/console.log))) 

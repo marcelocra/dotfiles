@@ -16,3 +16,6 @@
 __pycache__
 
 .fake
+
+# Node.
+node_modules/
