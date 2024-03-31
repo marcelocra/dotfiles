@@ -1,8 +1,0 @@
-import { loadFile, loadString, registerModule } from 'nbb'
-import * as node_COLON_path from 'node:path'
-registerModule(node_COLON_path, 'node:path')
-import * as node_COLON_fs_SLASH_promises from 'node:fs/promises'
-registerModule(node_COLON_fs_SLASH_promises, 'node:fs/promises')
-import 'nbb/lib/./nbb_pprint.js'
-import 'nbb/lib/./nbb_promesa.js'
-await loadString("#!/usr/bin/env nbb\n(ns install-dotfiles\n  (:require\n    [\"node:fs/promises\" :as fs]\n    [\"node:path\" :as path]\n    [clojure.pprint :as pp :refer [pprint] :rename {pprint p}]\n    [nbb.core :refer [await]]\n    [promesa.core :as p]))\n\n(defn usage [])\n\n(comment\n\n    js/process.env.HOME\n\n    (await (fs/readdir \".\"))\n\n    (let [something (fs/readdir (path/join \".\"))]\n        (p/then something #(p/then % js/console.log))) \n\n\n\n    (await (fs/readdir '.'))\n\n    (js/console.log \"hey\")\n    \n    )\n\n(def content-to-append-to-rc-files \n  (str \"\n\n# -----------------------------------------------------------------------------\n# My shell settings.\n# ------------------\n# To add local stuff, DO NOT add here, but in the local shell file (use the\n# alias rcl to open it to edit directly.\n# -----------------------------------------------------------------------------\nexport MCRA_INIT_SHELL=$MCRA_INIT_SHELL\nexport MCRA_LOCAL_SHELL=$MCRA_LOCAL_SHELL\n\n# Local should be first, as the other one checks for some expected MCRA_* env\n# variables.\nsource $MCRA_LOCAL_SHELL\nsource $MCRA_INIT_SHELL\n# -----------------------------------------------------------------------------\n\n\n\"))\n\n\n\n;; vim: fdm=marker:fmr={{{,}}}:fdl=1:fen:ai:et:ts=4:sw=4:filetype=clojure\n\n")

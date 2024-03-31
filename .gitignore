@@ -8,6 +8,7 @@
 .nrepl-port
 .cpcache/
 .rebel_readline_history
+out/
 
 # Mac stuff.
 .DS_Store
