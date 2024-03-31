@@ -20,15 +20,23 @@
 {
   // -- ESLINT -----
 
-  "eslint disable next line": {
+  "eslint disable next line without reason": {
     "scope": "javascript,typescript,javascriptreact,typescriptreact",
-    "prefix": "ed-next-line",
+    "prefix": "ednl",
     "body": ["// eslint-disable-next-line"]
+  },
+
+  "eslint disable next line with reason": {
+    "scope": "javascript,javascriptreact,typescript,typescriptreact",
+    "prefix": "ednlr",
+    "body": [
+      "// eslint-disable-next-line ${1:@typescript-eslint/no-explicit-any}$0"
+    ]
   },
 
   "eslint disable next line useEffect exhaustive deps": {
     "scope": "javascript,typescript,javascriptreact,typescriptreact",
-    "prefix": "ed-next-line-exhaustive-deps",
+    "prefix": "ednlex",
     "body": ["// eslint-disable-next-line react-hooks/exhaustive-deps"]
   },
 
@@ -376,19 +384,20 @@
     ]
   },
 
-  "eslint disable next line": {
-    "scope": "javascript,javascriptreact,typescript,typescriptreact",
-    "prefix": "dnl",
-    "body": [
-      "// eslint-disable-next-line ${1:@typescript-eslint/no-explicit-any}$0"
-    ]
-  },
-
   "(java|type)script(react|)": {
     "scope": "snippets",
     "prefix": "js",
     "body": [
       "javascript,javascriptreact,typescript,typescriptreact"
+    ]
+  },
+
+  "search comments that also fold in vim": {
+    "prefix": "co",
+    "body": [
+      "${1:#} $2(((",
+      "$0",
+      "${1:#} )))$2"
     ]
   },
 }
