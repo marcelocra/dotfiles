@@ -2,7 +2,7 @@
 (ns dotfiles.install
   (:require
    ["node:fs" :as fs]
-   ["node:path" :as path]
+   ["node:path" :as p]
    ["shelljs$default" :as sh]
    [clojure.pprint :as pp :refer [pprint] :rename {pprint p}]
    [clojure.string :as s]
@@ -10,7 +10,7 @@
    [nbb.core :refer [await]]
    [promesa.core :as p]))
 
-(if (not= (path/basename (.cwd js/process)) "dotfiles")
+(if (not= (p/basename (.cwd js/process)) "dotfiles")
   (do
     (println "Please, run this script from the root (dotfiles) directory")
     (js/process.exit 1))
@@ -18,8 +18,8 @@
 
 (def debug true)
 (def home js/process.env.HOME)
-(def pwd (.cwd js/process))
-(def zshrc (path/join home ".zshrc"))
+(def config-dir (p/join (.cwd js/process)))
+(def zshrc (p/basename home ".zshrc"))
 
 
 (def cli-options
@@ -55,8 +55,8 @@
         "# To add local stuff, DO NOT add here, but in the local shell file (use the",
         "# alias rcl to open it to edit directly.",
         "# -----------------------------------------------------------------------------",
-        (str "export MCRA_INIT_SHELL=" (path/join home ".rc")),
-        (str "export MCRA_LOCAL_SHELL=" (path/join home ".rc.local")),
+        (str "export MCRA_INIT_SHELL=" (p/join home ".rc")),
+        (str "export MCRA_LOCAL_SHELL=" (p/join home ".rc.local")),
         "",
         "# Local should be first, as the other one checks for some expected MCRA_* env",
         "# variables.",
@@ -71,6 +71,16 @@
   nil)
 
 ;; shell init 
+(and
+ (let [in-path [:options :shell]]
+   (get-in (if debug
+             (assoc-in parsed-opts in-path true)
+             parsed-opts)
+           in-path))
+ (let [filename ".rc"
+       result (sh/ln "-s" (p/join config-dir filename) (p/join home filename))]
+   (or (.-stderr result) (.-stdout result))))
+
 
 ;; .gitconfig
 (and
@@ -80,7 +90,7 @@
              parsed-opts)
            in-path))
  (let [filename ".gitconfig"
-       result (sh/ln "-s" (path/join pwd filename) (path/join home filename))]
+       result (sh/ln "-s" (p/join config-dir filename) (p/join home filename))]
    (or (.-stderr result) (.-stdout result))))
 
 ;; .tmux.conf
@@ -91,10 +101,23 @@
              parsed-opts)
            in-path))
  (let [filename ".tmux.conf"
-       result (sh/ln "-s" (path/join pwd filename) (path/join home filename))]
+       result (sh/ln "-s" (p/join config-dir filename) (p/join home filename))]
    (or (.-stderr result) (.-stdout result))))
 
 ;; clojure deps
+(and 
+ (and
+  (not (fs/existsSync (p/join home ".clojure"))) 
+  (fs/mkdirSync (p/join home ".clojure")))
+ (fs/symlinkSync (p/join config-dir "deps.edn") (p/join home ".clojure/deps.edn")))
+ 
+    ;; if [[ ! -d ~/.clojure ]]; then
+    ;;     mkdir ~/.clojure
+    ;; else
+    ;;     echo '~/.clojure already exists... continuing.'
+    ;; fi
+
+    ;; symlink_cmd $(config-dir)/deps.edn ~/.clojure/deps.edn
 
 ;; vim
 
@@ -105,11 +128,11 @@
 (comment
 
   (def home js/process.env.HOME)
-  (path/join home ".rc")
+  (p/join home ".rc")
 
   (js->clj (await (fs/readdir ".")))
 
-  (let [something (fs/readdir (path/join "."))]
+  (let [something (fs/readdir (p/join "."))]
     (p/then something #(p/then % js/console.log)))
 
   (await (fs/readdir '.'))
