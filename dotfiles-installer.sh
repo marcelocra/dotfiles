@@ -7,6 +7,10 @@
 # -o pipefail: exits on command pipe failures
 # set -eo pipefail
 
+
+##### CHECK STUFF FIRST #####
+
+
 if [[ "$(basename $(pwd))" != "dotfiles" ]]
 then
     echo 'Please, run this script from the root (dotfiles) directory'
@@ -63,16 +67,37 @@ source \$MCRA_INIT_SHELL
     echo "$MCRA_TO_SOURCE" >> ~/.bashrc
 fi
 
+
+##### DEFINE SOME HELPER FUNCTIONS #####
+
+
+my_date() {
+    date "+%F_%T" | tr ':' '-'
+}
+
+
+symlink_cmd_with_saving() {
+    echo "Trying to create symlink for: '$2'..."
+    # Check if it is a file or symlink.
+    if [[ -e "$2" ]]; then
+        echo "'$2' exists... backing up to '$2.bak.<now-date>'..."
+        mv "$2" "$2.bak.$(my_date)"
+        echo 'Done!'
+    fi
+    ln -s "$1" "$2" && echo 'Done successfully!'
+    echo
+}
+
 symlink_cmd() {
-    echo "Trying to create symlink for: '${@:2}'..."
-    ln -s "$@" && echo 'Done successfully!'
+    echo "Trying to create symlink for: '$2'..."
+    ln -f -s "$1" "$2" && echo 'Done!'
     echo
 }
     
 # dotfiles.
 
 git_dotfiles() {
-    symlink_cmd $(pwd)/.gitconfig ~/.gitconfig
+    symlink_cmd "$(pwd)/.gitconfig" "$HOME/.gitconfig"
 }
 
 tmux_dotfiles() {
@@ -120,7 +145,7 @@ vscode_dotfiles() {
         # dir, back it up, warn you and then symlink the new one.
         local snippets_path="$vscode_config_path/snippets"
         if [[ -d $snippets_path ]]; then
-            local old_snippets_path="$vscode_config_path/old-snippets-$(date "+%F_%T" | tr ':' '-')"
+            local old_snippets_path="$vscode_config_path/old-snippets-$(my_date)"
             mv $snippets_path $old_snippets_path
             echo "Existing snippets directory found. Moved it to:"
             echo "$old_snippets_path"
@@ -175,7 +200,7 @@ all_dotfiles() {
     vim_dotfiles
     shell_dotfiles
     vscode_dotfiles
-    obsidian
+    # obsidian
 }
 
 while [[ "$#" -gt 0 ]]; do
