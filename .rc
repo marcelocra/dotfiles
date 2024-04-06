@@ -1,21 +1,10 @@
 #!/usr/bin/env bash
+# vim: fdm=marker:fmr={{{,}}}:fdl=1:fen:ai:et:ts=4:sw=4:filetype=bash
 #
 # TODO: this file is too big already. Perhaps move each section to its own
 # file, in the shell subdir?
 
-# Required envs.
-
-# Create the example env, listing all shell envs required to run this script.
-example_env=./.example.env
-
-echo '##################################################
-##### GENERATED FILE. DO NOT MODIFY BY HAND. #####
-##################################################
-# AUTOMATICALLY GENERATED WITH ESSENTIAL ENVS.
-# READ THE ~/.rc FILE TO FIGURE HOW THEY ARE USED
-# AND DEFINE THEM SOMEWHERE, AS NO .env FILE IS
-# BEING USED YET.
-' > $example_env
+REQUIRED_ENVS=''
 
 verify_defined() {
     local env_name="$1"
@@ -23,18 +12,19 @@ verify_defined() {
     eval env_value=\$$1
 
     if [[ -z "$env_value" ]]; then
-        echo "'$env_name' is not defined"
-        exit 1
+        REQUIRED_ENVS="${REQUIRED_ENVS}'$env_name' must be defined with the $2.\n\n"
     fi
-
-    echo "$2" >> $example_env
-    echo "$env_name=\"please, update this with a valid value\"" >> $example_env
 }
 
-verify_defined "MCRA_PROJECTS_FOLDER" '# Path to the folder where you put all your programming projects.'
-verify_defined "MCRA_INIT_SHELL" '# Path to your shell init. I use the `.rc` file in this repo.'
-verify_defined "MCRA_LOCAL_SHELL" '# Path to your local shell init, with stuff that you do not want tracked in a public repo.'
-verify_defined "MCRA_TMP_PLAYGROUND" '# Path to a folder that you can use as a playground. I use /tmp/playground or something like this.'
+verify_defined "MCRA_PROJECTS_FOLDER" 'path to the folder where you put all your programming projects'
+verify_defined "MCRA_INIT_SHELL" 'path to your shell init. I use the `.rc` file in this repo'
+verify_defined "MCRA_LOCAL_SHELL" 'path to your local shell init, with stuff that you do not want tracked in a public repo'
+verify_defined "MCRA_TMP_PLAYGROUND" 'path to a folder that you can use as a playground. I use /tmp/playground or something like this'
+
+if [[ ! -z "$REQUIRED_ENVS" ]]; then
+    echo $REQUIRED_ENVS
+    return 1
+fi
 
 # functions(((
 
@@ -354,4 +344,3 @@ alias bunx='echo "are you sure? if so, use `really-bunx`"'
 # )))overrides
 # )))aliases
 
-# vim: foldmethod=marker foldmarker=(((,))) foldlevel=1 foldenable autoindent expandtab tabstop=4 shiftwidth=4
