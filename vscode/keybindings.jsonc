@@ -481,7 +481,6 @@
   {
     "key": "alt+r",
     "command": "runCommands",
-    "when": "editorTextFocus",
     "args": {
       "commands": [
         "typescript.restartTsServer",

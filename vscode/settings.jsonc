@@ -103,6 +103,8 @@
   "workbench.tree.renderIndentGuides": "always",
   "workbench.list.horizontalScrolling": true,
   "workbench.sideBar.location": "left",
+  "workbench.activityBar.location": "hidden",
+  "workbench.colorTheme": "GitHub Dark Dimmed",
   // ) workbench-
 
   // -eslint (
@@ -577,12 +579,10 @@
   },
   "svelte.enable-ts-plugin": true,
   "go.formatTool": "goimports",
-  "workbench.colorTheme": "GitHub Dark Dimmed",
   "vim.enableNeovim": true,
   "vim.neovimUseConfigFile": true,
   "FSharp.inlayHints.parameterNames": false,
   "FSharp.inlayHints.typeAnnotations": false,
-  "workbench.activityBar.location": "hidden",
   // ) misc-
 
   // -javascript(
