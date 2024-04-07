@@ -49,7 +49,7 @@
   // -explorer (
   "explorer.openEditors.visible": 1,
   "explorer.confirmDragAndDrop": false,
-  "explorer.excludeGitIgnore": true,
+  "explorer.excludeGitIgnore": false,
   // ) explorer-
 
   // -files (
@@ -120,13 +120,21 @@
     "markdown",
     "svelte"
   ],
-  "eslint.validate": ["javascript", "javascriptreact", "typescript", "typescriptreact"],
+  "eslint.validate": [
+    "javascript",
+    "javascriptreact",
+    "typescript",
+    "typescriptreact"
+  ],
   // ) eslint-
 
   // -tailwind (
   "tailwindCSS.emmetCompletions": true,
   "tailwindCSS.colorDecorators": false,
-  "tailwindCSS.experimental.classRegex": [":class\\s+\"([^\"]*)\"", ":[\\w-.#>]+\\.([\\w-]*)"],
+  "tailwindCSS.experimental.classRegex": [
+    ":class\\s+\"([^\"]*)\"",
+    ":[\\w-.#>]+\\.([\\w-]*)"
+  ],
   "tailwindCSS.includeLanguages": {
     "clojure": "html",
     "cljs": "html"
