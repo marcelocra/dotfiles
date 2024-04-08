@@ -30,12 +30,6 @@
   },
   // )reviewed-
 
-  {
-    "key": "alt+shift+m",
-    "command": "workbench.action.toggleMaximizedPanel",
-    "when": "terminalFocus && !isMac"
-  },
-
   // -macos(
   {
     "key": "cmd+shift+m",
@@ -59,6 +53,11 @@
     "command": "-workbench.action.quickOpen"
   },
   // // Terminal panel behavior. -terminal(
+  {
+    "key": "alt+shift+m",
+    "command": "workbench.action.toggleMaximizedPanel",
+    "when": "terminalFocus && !isMac"
+  },
   // {
   //   "key": "ctrl+t",
   //   "command": "-workbench.action.showAllSymbols"
@@ -90,7 +89,31 @@
   //   },
   //   "when": "terminalFocus"
   // },
-  // // )terminal-
+  {
+    "key": "ctrl+shift+`",
+    "command": "workbench.action.toggleMaximizedPanel",
+    "when": "terminalFocus && (terminalProcessSupported || terminalWebExtensionContributedProfile)"
+  },
+  {
+    "key": "ctrl+shift+`",
+    "command": "workbench.action.terminal.new",
+    "when": "!terminalFocus && (terminalProcessSupported || terminalWebExtensionContributedProfile)"
+  },
+  {
+    "key": "ctrl+shift+f",
+    "command": "workbench.action.terminal.focusFind",
+    "when": "terminalFindFocused && terminalHasBeenCreated || terminalFindFocused && terminalProcessSupported || terminalFocusInAny && terminalHasBeenCreated || terminalFocusInAny && terminalProcessSupported"
+  },
+  {
+    "key": "ctrl+f",
+    "command": "-workbench.action.terminal.focusFind",
+    "when": "terminalFindFocused && terminalHasBeenCreated || terminalFindFocused && terminalProcessSupported || terminalFocusInAny && terminalHasBeenCreated || terminalFocusInAny && terminalProcessSupported"
+  },
+  {
+    "key": "ctrl+p",
+    "command": "workbench.action.quickOpen",
+    "when": "!terminalFocus"
+  },
   {
     "key": "ctrl+j",
     "command": "-workbench.action.togglePanel"
@@ -113,6 +136,8 @@
   //   },
   //   "when": "terminalFocus"
   // },
+
+  // // )terminal-
 
   //============================================================================
   //= editor
@@ -632,31 +657,6 @@
     "key": "shift+alt+l",
     "command": "workbench.action.tasks.runTask",
     "args": "toggle-light-dark"
-  },
-  {
-    "key": "ctrl+shift+`",
-    "command": "workbench.action.toggleMaximizedPanel",
-    "when": "terminalFocus && (terminalProcessSupported || terminalWebExtensionContributedProfile)"
-  },
-  {
-    "key": "ctrl+shift+`",
-    "command": "workbench.action.terminal.new",
-    "when": "!terminalFocus && (terminalProcessSupported || terminalWebExtensionContributedProfile)"
-  },
-  {
-    "key": "ctrl+shift+capslock ctrl+shift+f",
-    "command": "workbench.action.terminal.focusFind",
-    "when": "terminalFindFocused && terminalHasBeenCreated || terminalFindFocused && terminalProcessSupported || terminalFocusInAny && terminalHasBeenCreated || terminalFocusInAny && terminalProcessSupported"
-  },
-  {
-    "key": "ctrl+f",
-    "command": "-workbench.action.terminal.focusFind",
-    "when": "terminalFindFocused && terminalHasBeenCreated || terminalFindFocused && terminalProcessSupported || terminalFocusInAny && terminalHasBeenCreated || terminalFocusInAny && terminalProcessSupported"
-  },
-  {
-    "key": "ctrl+p",
-    "command": "workbench.action.quickOpen",
-    "when": "!terminalFocus"
   },
   {
     "key": "ctrl+p",
