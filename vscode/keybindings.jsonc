@@ -424,6 +424,10 @@
     "command": "workbench.action.toggleActivityBarVisibility"
   },
   {
+    "key": "alt+i",
+    "command": "ionide.projectExplorerInActivity.focus"
+  },
+  {
     "key": "alt+p",
     "command": "issue.copyGithubPermalink"
   },
