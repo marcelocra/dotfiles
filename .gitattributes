@@ -2,11 +2,18 @@
 *.ico filter=lfs diff=lfs merge=lfs -text
 
 # Ignore these, as they are not really code code.
-archives/                   linguist-generated
-apps/                       linguist-vendored
-Dockerfile*                 linguist-vendored
-**/*.sh                     linguist-vendored
-**/*.ps1                    linguist-vendored
+apps/** linguist-vendored
+archives/** linguist-generated
+docs/** linguist-vendored
+sublime-text/** linguist-vendored
+vim/** linguist-vendored
+vscode/** linguist-vendored
+windows/** linguist-vendored
+**/*.json linguist-vendored
+.rc* linguist-vendored
+bun.lockb linguist-generated
+.tmux.conf linguist-vendored
+.npmrc linguist-vendored
+.gitconfig linguist-vendored
+.XCompose linguist-vendored
 
-# Generated from src/dotfiles/install.cljs
-index.js                    linguist-generated
