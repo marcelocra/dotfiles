@@ -10,6 +10,7 @@ vim/** linguist-vendored
 vscode/** linguist-vendored
 windows/** linguist-vendored
 **/*.json linguist-vendored
+**/*.sh linguist-vendored
 .rc* linguist-vendored
 bun.lockb linguist-generated
 .tmux.conf linguist-vendored
