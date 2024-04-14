@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# vim: fdm=marker:fmr={{{,}}}:fdl=1:fen:ai:et:ts=4:sw=4:filetype=bash
+# vim: fdm=marker:fmr=(((,))):fdl=1:fen:ai:et:ts=4:sw=4:filetype=bash
 #
 # TODO: this file is too big already. Perhaps move each section to its own
 # file, in the shell subdir?
@@ -344,3 +344,4 @@ alias bunx='echo "are you sure? if so, use `really-bunx`"'
 # )))overrides
 # )))aliases
 
+return 0
