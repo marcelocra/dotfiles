@@ -1,8 +1,10 @@
 #!/usr/bin/env bash
 # vim: ai:et:ts=4:sw=4
 #
-# Get my Clojure Babashka working, so I can get shit done without ever having
-# to touch bash again.
+# Creates a minimal dev environment for writing system code in Clojure instead
+# of Bash.
+#
+# Currently it uses Babashka and Neovim with the Conjure plugin.
 
 
 # -e: exit on error
@@ -11,7 +13,7 @@ set -eo pipefail
 
 
 # ----------------------------------------------------------
-# Install babashka
+# Install Babashka
 # ----------------------------------------------------------
 
 if [[ "$(which bb)" != "$HOME/bin/bb" ]]; then
@@ -48,7 +50,7 @@ fi
 
 
 # ----------------------------------------------------------
-# Install Neovim, Vim Plug and configurations
+# Install Neovim and Vim Plug
 # ----------------------------------------------------------
 
 if [[ "$(which nvim)" != "$HOME/bin/nvim" ]]; then
@@ -78,14 +80,14 @@ if [[ "$(which nvim)" != "$HOME/bin/nvim" ]]; then
            https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
 
 else
-    echo 'NeoVim already installed!'
+    echo 'Neovim already installed!'
 fi
 
 # ----------------------------------------------------------
-# Install vim configs and plugins.
+# Install my Neovim configuration
 # ----------------------------------------------------------
 
-mkdir -p ~/vim && ln -f -s $(pwd)/vim/vimrc ~/.config/nvim/init.vim
+mkdir -p ~/.config/nvim && ln -f -s $(pwd)/vim/vimrc ~/.config/nvim/init.vim
 
 
 #mkdir ~/.clojure/ && ln -s $(pwd)/deps.edn ~/.clojure/deps.edn
