@@ -44,6 +44,8 @@
   "editor.wordWrap": "on",
   "editor.lineHeight": 1.6,
   "editor.roundedSelection": false,
+  "editor.autoIndent": "full",
+  "FSharp.smartIndent": true,
   // ) editor-
 
   // -explorer (
@@ -72,7 +74,7 @@
   // -terminal (
   "terminal.integrated.tabs.enabled": true,
   "terminal.integrated.fontFamily": "'MesloLGS Nerd Font', 'MesloLGS NF', monospace",
-  "terminal.integrated.fontSize": 9,
+  "terminal.integrated.fontSize": 11,
   "terminal.integrated.fontWeight": "100",
   "terminal.integrated.macOptionClickForcesSelection": true,
   "terminal.integrated.allowChords": false,
@@ -103,7 +105,6 @@
   "workbench.tree.renderIndentGuides": "always",
   "workbench.list.horizontalScrolling": true,
   "workbench.sideBar.location": "left",
-  "workbench.activityBar.location": "hidden",
   "workbench.colorTheme": "GitHub Dark Dimmed",
   // ) workbench-
 
@@ -515,7 +516,7 @@
   },
   "emmet.triggerExpansionOnTab": true,
   "github.copilot.enable": {
-    "*": false,
+    "*": true,
     "plaintext": false,
     "markdown": false,
     "scminput": false
@@ -599,7 +600,8 @@
   },
   "[javascriptreact]": {
     "editor.rulers": [100, 120]
-  }
+  },
+  "workbench.activityBar.location": "hidden"
   // )javascript-
 
   // -comments (
