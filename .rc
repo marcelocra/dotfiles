@@ -338,8 +338,8 @@ docker_images_sorted() {
 alias really-npx="$(which npx)"
 alias really-bunx="$(which bunx)"
 
-alias npx='echo "are you sure? if so, use `really-npx`"'
-alias bunx='echo "are you sure? if so, use `really-bunx`"'
+alias npx="echo 'are you sure? if so, use: \n\$ really-npx'"
+alias bunx="echo 'are you sure? if so, use: \n\$ really-bunx'"
 
 # )))overrides
 # )))aliases
