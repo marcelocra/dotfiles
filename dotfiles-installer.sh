@@ -155,8 +155,23 @@ vscode_dotfiles() {
     fi
 }
 
+# Install Obsidian desktop entry and icons.
+obsidian_prepare_desktop() {
+    ln -s $(pwd)/apps/obsidian/obsidian.desktop \
+        ${HOME}/.local/share/applications/obsidian.desktop
+
+    # Credits to the creator of the icons here:
+    # https://forum.obsidian.md/t/big-sur-icon/8121
+    ln -s $(pwd)/apps/obsidian/obsidian.png \
+        ${HOME}/.local/share/icons/obsidian.png 
+
+    # Update desktop files database.
+    # This is what actually show things in the ui.
+    update-desktop-database ~/.local/share/applications
+}
+
 # Install Obsidian.
-obsidian() {
+obsidian_install() {
     # Download the latest version of Obsidian to this location.
     local obsidian_dir="$MCRA_PACKAGES/obsidian"
     local obsidian_release_url="$(./play.clj --obsidian)"
@@ -180,16 +195,50 @@ obsidian() {
 
     ln -s $latest_bin $MCRA_BINARIES/obsidian
 
-    ln -s $(pwd)/apps/obsidian/obsidian.desktop \
-        ${HOME}/.local/share/applications/obsidian.desktop
+    obsidian_prepare_desktop
+}
 
-    # Credits to the creator of the icons here:
-    # https://forum.obsidian.md/t/big-sur-icon/8121
-    ln -s $(pwd)/apps/obsidian/obsidian.png \
-        ${HOME}/.local/share/icons/obsidian.png 
+# Prepare Logseq desktop entry and icons.
+logseq_prepare_desktop() {
+    ln-s $(pwd)/apps/logseq/logseq.desktop \
+        ${HOME}/.local/share/applications/logseq.desktop
 
-    # Update desktop files database.
-    # This is what actually show things in the ui.
+    ln -s $(pwd)/apps/logseq/logseq.png \
+        ${HOME}/.local/share/icons/logseq.png 
+
+    update-desktop-database ~/.local/share/applications
+}
+
+# Prepare Clickup desktop entry and icons.
+clickup_prepare_desktop() {
+    ln -s $(pwd)/apps/clickup/clickup.desktop \
+        ${HOME}/.local/share/applications/clickup.desktop
+
+    ln -s $(pwd)/apps/clickup/icons/desktop-gradient-circle-2x.png \
+        ${HOME}/.local/share/icons/clickup.png 
+
+    update-desktop-database ~/.local/share/applications
+}
+
+# Prepare Portacle desktop entry and icons.
+portacle_prepare_desktop() {
+    ln -s $(pwd)/apps/portacle/portacle.desktop \
+        ${HOME}/.local/share/applications/portacle.desktop
+
+    ln -s $(pwd)/apps/portacle/portacle.svg \
+        ${HOME}/.local/share/icons/portacle.svg 
+
+    update-desktop-database ~/.local/share/applications
+}
+
+# Prepare Todoist desktop entry and icons.
+todoist_prepare_desktop() {
+    ln -s $(pwd)/apps/todoist/todoist.desktop \
+        ${HOME}/.local/share/applications/todoist.desktop
+
+    ln -s $(pwd)/apps/todoist/todoist.png \
+        ${HOME}/.local/share/icons/todoist.png 
+
     update-desktop-database ~/.local/share/applications
 }
 
@@ -200,7 +249,7 @@ all_dotfiles() {
     vim_dotfiles
     shell_dotfiles
     vscode_dotfiles
-    # obsidian
+    obsidian_install
 }
 
 while [[ "$#" -gt 0 ]]; do
@@ -212,7 +261,12 @@ while [[ "$#" -gt 0 ]]; do
         --vim) vim_dotfiles ;;
         --shell) shell_dotfiles ;;
         --vscode) vscode_dotfiles ;;
-        --obsidian) obsidian ;;
+        --obsidian-install) obsidian_install ;;
+        --obsidian-prepare-desktop) obsidian_prepare_desktop ;;
+        --logseq-prepare-desktop) logseq_prepare_desktop ;;
+        --clickup-prepare-desktop) clickup_prepare_desktop ;;
+        --portacle-prepare-desktop) portacle_prepare_desktop ;;
+        --todoist-prepare-desktop) todoist_prepare_desktop ;;
         *) echo "Unknown parameter passed: $1"; exit 1 ;;
     esac
     shift
