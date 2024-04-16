@@ -358,10 +358,10 @@
       "after": ["g", "$"]
     },
     // -- visual lines - end
-    // {
-    //   "before": ["s"],
-    //   "after": ["leader", "leader", "s"]
-    // },
+    {
+      "before": ["s"],
+      "after": ["leader", "leader", "s"]
+    },
     {
       "before": ["<c-a>"],
       "after": ["gg", "V", "G"]
@@ -539,7 +539,7 @@
   "html.suggest.html5": false,
   "[markdown]": {
     "editor.wordWrap": "bounded",
-    "editor.wordWrapColumn": 100,
+    "editor.wordWrapColumn": 120,
     "editor.wrappingIndent": "same",
     "editor.rulers": [80, 100, 120],
     "editor.tabSize": 4,
@@ -575,6 +575,12 @@
     "editor.defaultFormatter": "betterthantomorrow.calva"
   },
   // )clojure-
+
+  // snippets(((
+  "[snippets]": {
+    "editor.defaultFormatter": "vscode.json-language-features"
+  },
+  // )))snippets
 
   "[python]": {
     "editor.tabSize": 4,
