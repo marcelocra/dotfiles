@@ -19,13 +19,13 @@
 //  }
 {
   // -- ESLINT -----
-
   "eslint disable next line without reason": {
     "scope": "javascript,typescript,javascriptreact,typescriptreact",
     "prefix": "ednl",
-    "body": ["// eslint-disable-next-line"]
+    "body": [
+      "// eslint-disable-next-line"
+    ]
   },
-
   "eslint disable next line with reason": {
     "scope": "javascript,javascriptreact,typescript,typescriptreact",
     "prefix": "ednlr",
@@ -33,41 +33,45 @@
       "// eslint-disable-next-line ${1:@typescript-eslint/no-explicit-any}$0"
     ]
   },
-
   "eslint disable next line useEffect exhaustive deps": {
     "scope": "javascript,typescript,javascriptreact,typescriptreact",
     "prefix": "ednlex",
-    "body": ["// eslint-disable-next-line react-hooks/exhaustive-deps"]
+    "body": [
+      "// eslint-disable-next-line react-hooks/exhaustive-deps"
+    ]
   },
-
   // -- REACT -----
-
   "react useState hook": {
     "scope": "javascript,typescript,javascriptreact,typescriptreact",
     "prefix": "us",
-    "body": ["const [$1, set${1/(.*)/${1:/capitalize}/}] = useState($2)"]
+    "body": [
+      "const [$1, set${1/(.*)/${1:/capitalize}/}] = useState($2)"
+    ]
   },
-
   "react useEffect hook": {
     "scope": "javascript,typescript,javascriptreact,typescriptreact",
     "prefix": "ue",
-    "body": ["useEffect(() => {", "  $1", "}, [$2])"]
+    "body": [
+      "useEffect(() => {",
+      "  $1",
+      "}, [$2])"
+    ]
   },
-
   "react const with function": {
     "scope": "javascript,typescript,javascriptreact,typescriptreact",
     "prefix": "const",
-    "body": ["const $2 = $1()"]
+    "body": [
+      "const $2 = $1()"
+    ]
   },
-
   "delay promise": {
     "scope": "javascript,typescript,javascriptreact,typescriptreact",
     "prefix": "delay",
-    "body": ["await new Promise((resolve) => setTimeout(resolve, $1))"]
+    "body": [
+      "await new Promise((resolve) => setTimeout(resolve, $1))"
+    ]
   },
-
   // -- PRETTIER -----
-
   "prettier essentials": {
     "scope": "json",
     "description": "All projects should use these.",
@@ -81,7 +85,6 @@
       "\"rulers\": [80]"
     ]
   },
-
   "prettier global overrides": {
     "scope": "json",
     "prefix": "prettier-global-overrides",
@@ -104,7 +107,6 @@
       "]"
     ]
   },
-
   "prettier javascript defaults": {
     "scope": "json",
     "prefix": "prettier-javascript-defaults",
@@ -125,9 +127,7 @@
       "\"vueIndentScriptAndStyle\": false,"
     ]
   },
-
   // -- DOCKERFILE -----
-
   "dockerfile essentials": {
     "scope": "dockerfile",
     "prefix": "init",
@@ -162,7 +162,6 @@
       ""
     ]
   },
-
   "dockerfile rust": {
     "scope": "dockerfile",
     "prefix": "rust",
@@ -172,42 +171,56 @@
       ""
     ]
   },
-
   "javascript type": {
     "scope": "javascript,typescript,javascriptreact,typescriptreact",
     "prefix": "type",
-    "body": ["/** @type {$1} */ $2"]
+    "body": [
+      "/** @type {$1} */ $2"
+    ]
   },
-
   "tsignore": {
     "scope": "javascript,typescript,javascriptreact,typescriptreact",
     "prefix": "tsi",
-    "body": ["// @ts-ignore"]
+    "body": [
+      "// @ts-ignore"
+    ]
   },
-
   "md fold region": {
     "scope": "markdown",
-    "prefix": ["fold", "region"],
-    "body": ["<!-- #region $1 -->", "$2", "<!-- #endregion -->"]
+    "prefix": [
+      "fold",
+      "region"
+    ],
+    "body": [
+      "<!-- #region $1 -->",
+      "$2",
+      "<!-- #endregion -->"
+    ]
   },
-
   "shebang": {
     "prefix": "shebang",
-    "body": ["#!/usr/bin/env $1"]
+    "body": [
+      "#!/usr/bin/env $1"
+    ]
   },
-
   "md checkbox": {
     "scope": "markdown",
-    "prefix": ["--"],
-    "body": ["- [ ] "]
+    "prefix": [
+      "--"
+    ],
+    "body": [
+      "- [ ] "
+    ]
   },
-
   "md numbered checkbox": {
     "scope": "markdown",
-    "prefix": ["k"],
-    "body": ["1. [ ] "]
+    "prefix": [
+      "k"
+    ],
+    "body": [
+      "1. [ ] "
+    ]
   },
-
   "config comment block": {
     "scope": "json,jsonc",
     "description": "Create simple comment to make parts of a config easier to find. The parenthesis also simplify jumping between start and finish of the block.",
@@ -218,19 +231,20 @@
       "// )$1-"
     ]
   },
-
   "ts ignore": {
     "scope": "javascript,typescript,javascriptreact,typescriptreact",
     "prefix": "ig",
-    "body": ["// @ts-ignore"]
+    "body": [
+      "// @ts-ignore"
+    ]
   },
-
   "ts expect error": {
     "scope": "javascript,typescript,javascriptreact,typescriptreact",
     "prefix": "err",
-    "body": ["// @ts-expect-error"]
+    "body": [
+      "// @ts-expect-error"
+    ]
   },
-
   "snippet to create snippets": {
     "scope": "snippets",
     "prefix": "snip",
@@ -244,7 +258,6 @@
       "},",
     ]
   },
-
   "linguist detectable": {
     "scope": "properties",
     "prefix": "lde",
@@ -280,7 +293,6 @@
       "${0:linguist-vendored}"
     ]
   },
-  
   "simplify commenting forms in clojure": {
     "scope": "clojure,clojurescript,cljs,clj",
     "prefix": "c",
@@ -288,7 +300,6 @@
       "#_"
     ]
   },
-
   "rich comment": {
     "scope": "clojure,clojurescript",
     "prefix": "rich",
@@ -301,7 +312,6 @@
       "  #_(\"do not wrap me!\"))",
     ]
   },
-
   "add tailwindcss play cdn conditionally to re-frame app": {
     "scope": "clojure,clojurescript",
     "prefix": "re-tw",
@@ -315,7 +325,6 @@
       "    (.appendChild body script)))",
     ]
   },
-
   "clojure and clojurescript snippets scope": {
     "scope": "snippets",
     "prefix": "clj+",
@@ -323,7 +332,6 @@
       "clojure,clojurescript,clj,cljs"
     ]
   },
-
   "snippet to add json and jsonc": {
     "scope": "snippets",
     "prefix": "json",
@@ -331,7 +339,6 @@
       "json,jsonc"
     ]
   },
-
   "shadow watch with cider": {
     "scope": "clojure,clojurescript,clj,cljs,json,jsonc",
     "prefix": "shadow+cider",
@@ -339,7 +346,6 @@
       "shadow-cljs -d cider/cider-nrepl:0.28.5 watch"
     ]
   },
-
   "add keybinding for a particular vim mode": {
     "scope": "json,jsonc",
     "prefix": "vimmode",
@@ -347,7 +353,6 @@
       "vim.active && vim.mode == '$1'${2: && }$0"
     ]
   },
-
   "simplify adding a new keybinding": {
     "scope": "json,jsonc",
     "prefix": "key",
@@ -359,7 +364,6 @@
       "},$0",
     ]
   },
-
   "classname for jsx and tsx": {
     "scope": "javascriptreact,typescriptreact",
     "prefix": "c",
@@ -367,7 +371,6 @@
       "className=\"$1\"${0: }"
     ]
   },
-
   "tailwind center stuff on page": {
     "scope": "html,javascriptreact, typescriptreact",
     "prefix": "center",
@@ -375,7 +378,6 @@
       "min-h-screen mx-auto flex justify-center items-center"
     ]
   },
-
   "eslint allow no explicit any": {
     "scope": "javascript,javascriptreact,typescript,typescriptreact",
     "prefix": "eslint-nea",
@@ -383,7 +385,6 @@
       "// eslint-disable-next-line @typescript-eslint/no-explicit-any"
     ]
   },
-
   "(java|type)script(react|)": {
     "scope": "snippets",
     "prefix": "js",
@@ -391,13 +392,30 @@
       "javascript,javascriptreact,typescript,typescriptreact"
     ]
   },
-
   "search comments that also fold in vim": {
     "prefix": "co",
     "body": [
       "${1:#} $2(((",
       "$0",
       "${1:#} )))$2"
+    ]
+  },
+  "improve how bash scripts deal with errors by adding these to the top of the file": {
+    "scope": "shellscript",
+    "prefix": "euxo",
+    "body": [
+      "${2:# -e: exit on error}",
+      "${4:# -u: exit on undefined variable}",
+      "${6:# -x: print commands before execution}",
+      "${8:# -o pipefail: exits on command pipe failures}",
+      "set -${1:e}${3:u}${5:x}${7:o pipefail}$0"
+    ]
+  },
+  "json with comments - linguist": {
+    "scope": "json,jsonc",
+    "prefix": "linguistjson",
+    "body": [
+      "linguist-language=JSON-with-Comments"
     ]
   },
 }
