@@ -175,11 +175,6 @@
   // -calva(
 
   {
-    "key": "space e b",
-    "command": "calva.loadFile",
-    "when": "vim.active && vim.mode == 'Normal' && calva:connected && calva:keybindingsEnabled && editorTextFocus && editorLangId == 'clojure' && paredit:keyMap =~ /original|strict/"
-  },
-  {
     "key": "ctrl+alt+c enter",
     "command": "-calva.loadFile",
     "when": "vim.active && vim.mode == 'Normal' && calva:connected && calva:keybindingsEnabled && editorTextFocus && editorLangId == 'clojure' && paredit:keyMap =~ /original|strict/"
@@ -230,6 +225,12 @@
 
   {
     // Replicate Conjure behavior.
+    "key": "space e b",
+    "command": "calva.loadFile",
+    "when": "vim.active && vim.mode == 'Normal' && calva:connected && calva:keybindingsEnabled && editorTextFocus && editorLangId == 'clojure' && paredit:keyMap =~ /original|strict/"
+  },
+  {
+    // Replicate Conjure behavior.
     "key": "space w",
     "command": "paredit.wrapAroundParens",
     "when": "vim.active && vim.mode == 'Normal' && calva:keybindingsEnabled && editorTextFocus && editorLangId == 'clojure' && paredit:keyMap =~ /original|strict/"
@@ -238,6 +239,18 @@
     // Replicate Conjure behavior.
     "key": "space o",
     "command": "paredit.raiseSexp",
+    "when": "vim.active && vim.mode == 'Normal' && calva:keybindingsEnabled && editorTextFocus && editorLangId == 'clojure' && paredit:keyMap =~ /original|strict/"
+  },
+  {
+    // Replicate Conjure behavior.
+    "key": "space e e",
+    "command": "calva.evaluateSelection",
+    "when": "vim.active && vim.mode == 'Normal' && calva:keybindingsEnabled && editorTextFocus && editorLangId == 'clojure' && paredit:keyMap =~ /original|strict/"
+  },
+  {
+    // Replicate Conjure behavior.
+    "key": "space e r",
+    "command": "calva.evaluateCurrentTopLevelForm",
     "when": "vim.active && vim.mode == 'Normal' && calva:keybindingsEnabled && editorTextFocus && editorLangId == 'clojure' && paredit:keyMap =~ /original|strict/"
   },
 
