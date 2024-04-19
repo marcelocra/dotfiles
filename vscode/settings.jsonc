@@ -1,7 +1,7 @@
 {
   // -editor (
   "editor.fontFamily": "'MonaspiceAr Nerd Font', 'MonaspiceNe Nerd Font', 'MonaspiceKr Nerd Font'",
-  "editor.fontLigatures": "'calt', 'liga', 'dlig', 'ss01', 'ss02', 'ss03', 'ss04', 'ss05', 'ss06', 'ss07'",
+  // "editor.fontLigatures": "'calt', 'liga', 'dlig', 'ss01', 'ss02', 'ss03', 'ss04', 'ss05', 'ss06', 'ss07'",
   // "editor.fontSize": 11,
   // "editor.fontFamily": "CodeNewRoman Nerd Font",
   // ligature tests: => -> <> <= >= != !== === |> <- --> ||
@@ -28,7 +28,6 @@
   "editor.minimap.renderCharacters": false,
   "editor.minimap.showSlider": "always",
   "editor.minimap.size": "fill",
-  "editor.minimap.enabled": false,
   "editor.formatOnSave": true,
   "editor.tabCompletion": "onlySnippets",
   "editor.suggest.snippetsPreventQuickSuggestions": false,
@@ -607,7 +606,8 @@
   "[javascriptreact]": {
     "editor.rulers": [100, 120]
   },
-  "workbench.activityBar.location": "hidden"
+  "workbench.activityBar.location": "hidden",
+  "editor.minimap.enabled": false
   // )javascript-
 
   // -comments (
