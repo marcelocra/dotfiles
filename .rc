@@ -123,6 +123,82 @@ alias t15="sleep 15m && timer_notification"
 alias t30="sleep 30m && timer_notification"
 alias t60="sleep 1h && timer_notification"
 
+function force_rm() {
+    local target="$(realpath $1)"
+
+    # Verify that the target is not empty.
+    if [[ -z "$target" ]]; then
+        echo 'Please, provide the path to a file or folder.'
+        return 1
+    fi
+
+    echo -n "> Verifying if target is valid for '$target': "
+
+    # Verify that the target is inside the user home dir or the chosen tmp dir,
+    # to avoid removing system stuff.
+    case $target in
+        $HOME/* ) echo -n 'valid.'; echo ;;
+        $MCRA_TMP_PLAYGROUND/* ) echo -n 'valid.'; echo ;;
+        /* ) echo -n 'invalid.'; echo; echo; echo "All paths should be within '$HOME' or '$MCRA_TMP_PLAYGROUND'. If you want to remove something above it, do manually (and BE SURE to know what you are doing!)"; return 1;;
+    esac
+
+    # Verify that the target is a file/symlink or a directory.
+    if [[ ! -e "$target" && ! -d "$target" ]]; then
+        echo 'What you are trying to remove is not a file nor a directory:'
+        echo
+        echo "  $target"
+        echo
+        echo 'Aborting...'
+
+        return 1
+    fi
+
+    echo "> Running 'ls -la $target' ..."
+    echo
+    ls -la $target
+    echo
+    # while true; do
+    #     read 'Are you sure you wish to permanentely remove it all? [yN] ' yn
+    #     case $yn in
+    #         [Yy]* ) rm -rf ${target}; break;;
+    #         [Nn]* ) return 0;;
+    #         * ) return 0;;
+    #     esac
+    # done
+    echo '> Are you sure you wish to permanentely remove it all? [yN]'
+    echo
+    select yn in "y" "n"; do
+        case $yn in
+            y ) echo; echo "> Running 'rm -rf $target' ..."; rm -rf $target; return 0;;
+            n|* ) echo; echo 'Aborting...'; return 1;;
+        esac
+    done
+
+    # Other idea:
+    # 
+    #local valid_prefixes=($HOME $MCRA_TMP_PLAYGROUND)
+
+    #echo "> Target should have one of the valid path prefixes:" 
+    #echo
+    #echo "$target"
+    #echo
+
+    #for valid in "${valid_prefixes[@]}"; do
+    #    if [[ $target == $valid/* ]]; then
+    #        echo "\t[x] valid"
+    #        echo "\t[ ] invalid"
+    #    else
+    #        echo "\t[ ] valid"
+    #        echo "\t[x] invalid"
+    #        echo
+    #        echo "All paths should be within '$HOME' or '$MCRA_TMP_PLAYGROUND'. If you want to remove something above it, do manually (and BE SURE to know what you are doing!)"
+
+    #        return 1
+    #    fi
+    #done
+
+    return 1
+}
 
 
 # )))functions
