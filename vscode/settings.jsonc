@@ -621,7 +621,13 @@
     "editor.rulers": [100, 120]
   },
   "workbench.activityBar.location": "hidden",
-  "editor.minimap.enabled": false
+  "editor.minimap.enabled": false,
+  "[cpp]": {
+    "editor.defaultFormatter": "ms-vscode.cpptools"
+  },
+  "C_Cpp.clang_format_fallbackStyle": "Google",
+  "C_Cpp.clang_format_sortIncludes": true,
+  "C_Cpp.clang_format_style": "Google"
   // )javascript-
 
   // -comments (
