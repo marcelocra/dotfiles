@@ -455,6 +455,24 @@
 
   // -vimvisual(
   "vim.visualModeKeyBindingsNonRecursive": [
+    // -- visual lines - Move using visual lines.
+    {
+      "before": ["j"],
+      "after": ["g", "j"]
+    },
+    {
+      "before": ["k"],
+      "after": ["g", "k"]
+    },
+    {
+      "before": ["0"],
+      "after": ["g", "0"]
+    },
+    {
+      "before": ["$"],
+      "after": ["g", "$"]
+    },
+    // -- visual lines - end
     {
       "before": ["<leader>", "s"],
       "commands": [":w"],
