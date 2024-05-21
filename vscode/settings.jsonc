@@ -1,12 +1,50 @@
 {
   // -editor (
-  "editor.fontFamily": "'MonaspiceAr Nerd Font', 'MonaspiceNe Nerd Font', 'MonaspiceKr Nerd Font'",
+
+  // "editor.fontFamily": "MonaspiceAr Nerd Font", // 17
+  // "editor.fontFamily": "MonaspiceNe Nerd Font", // 17
+  // "editor.fontFamily": "MonaspiceKr Nerd Font", // 17
   // "editor.fontLigatures": "'calt', 'liga', 'dlig', 'ss01', 'ss02', 'ss03', 'ss04', 'ss05', 'ss06', 'ss07'",
-  // "editor.fontSize": 11,
-  // "editor.fontFamily": "CodeNewRoman Nerd Font",
   // ligature tests: => -> <> <= >= != !== === |> <- --> ||
-  "editor.fontSize": 11,
-  "editor.fontWeight": "100",
+
+  // "editor.fontFamily": "Roboto Mono", // 15
+  // "editor.fontFamily": "Inconsolata", // 16
+  // "editor.fontFamily": "JetBrains Mono", // 13
+
+  // "editor.fontFamily": "Fira Code Light", // 13
+  // "editor.fontLigatures": false,
+
+  // "editor.fontFamily": "Fira Code", // 15
+  // "editor.fontFamily": "Fantasque Sans Mono", // 15
+  // "editor.fontFamily": "IBM Plex Mono", // 13
+  // "editor.fontFamily": "Anonymous Pro", // 15
+  // "editor.fontFamily": "Consolas", // 14
+
+  // "editor.fontFamily": "Cascadia Code PL Light", // 15
+  // // ss19: dashed zero; ss01: stylistic alternates for italics.
+  // // not sure what 'calt' does, but it is reccomended in the docs:
+  // // https://github.com/microsoft/cascadia-code#to-enable-the-cursive-form-of-the-italic-heres-the-code-you-should-use
+  // // "editor.fontLigatures": "'ss19', 'calt', 'ss01'",
+  // // "editor.fontLigatures": "'ss19'",
+
+  // "editor.fontFamily": "MesloLGS Nerd Font", // 17
+  // "editor.fontSize": 19, // Notebook
+  // "editor.fontWeight": "100", // Notebook
+
+  "editor.fontFamily": "CaskaydiaCove NF",
+  "editor.fontSize": 19, // Notebook
+  "editor.fontWeight": "300", // Notebook
+
+  // ss19: dashed zero; ss01: stylistic alternates for italics.
+  // not sure what 'calt' does, but it is reccomended in the docs:
+  // https://github.com/microsoft/cascadia-code#to-enable-the-cursive-form-of-the-italic-heres-the-code-you-should-use
+  // "editor.fontLigatures": "'ss19', 'calt', 'ss01'",
+  // "editor.fontLigatures": true,
+  // ligature tests: => -> <> <= >= != !== === |> <- --> ||
+
+  // "editor.wordWrap": "wordWrapColumn",
+  // "editor.wordWrapColumn": 120,
+
   "editor.codeActionsOnSave": {
     "source.fixAll.eslint": "explicit",
     "source.fixAll": "explicit"
@@ -42,9 +80,11 @@
   "editor.inlineSuggest.enabled": true,
   "editor.wordWrap": "on",
   "editor.lineHeight": 1.6,
+  // "editor.letterSpacing": -0.8,
   "editor.roundedSelection": false,
   "editor.autoIndent": "full",
   "FSharp.smartIndent": true,
+
   // ) editor-
 
   // -explorer (
@@ -73,7 +113,7 @@
   // -terminal (
   "terminal.integrated.tabs.enabled": true,
   "terminal.integrated.fontFamily": "'MesloLGS Nerd Font', 'MesloLGS NF', monospace",
-  "terminal.integrated.fontSize": 11,
+  "terminal.integrated.fontSize": 17,
   "terminal.integrated.fontWeight": "100",
   "terminal.integrated.macOptionClickForcesSelection": true,
   "terminal.integrated.allowChords": false,
@@ -120,7 +160,12 @@
     "markdown",
     "svelte"
   ],
-  "eslint.validate": ["javascript", "javascriptreact", "typescript", "typescriptreact"],
+  "eslint.validate": [
+    "javascript",
+    "javascriptreact",
+    "typescript",
+    "typescriptreact"
+  ],
   // ) eslint-
 
   // -tailwind (
@@ -620,66 +665,12 @@
   "[javascriptreact]": {
     "editor.rulers": [100, 120]
   },
-  "workbench.activityBar.location": "hidden",
   "editor.minimap.enabled": false,
   "[cpp]": {
     "editor.defaultFormatter": "ms-vscode.cpptools"
   },
   "C_Cpp.clang_format_fallbackStyle": "Google",
   "C_Cpp.clang_format_sortIncludes": true,
-  "C_Cpp.clang_format_style": "Google"
-  // )javascript-
-
-  // -comments (
-
-  // "editor.fontFamily": "Roboto Mono",
-  // "editor.fontSize": 15,
-
-  // "editor.fontFamily": "Inconsolata",
-  // "editor.fontSize": 16,
-
-  // "editor.fontFamily": "JetBrains Mono",
-  // "editor.fontSize": 13,
-
-  // "editor.fontFamily": "Fira Code Light",
-  // "editor.fontLigatures": false,
-  // "editor.fontSize": 13,
-
-  // "editor.fontFamily": "Fira Code",
-  // "editor.fontSize": 15,
-
-  // "editor.fontFamily": "Fantasque Sans Mono",
-  // "editor.fontSize": 15,
-
-  // "editor.fontFamily": "IBM Plex Mono",
-  // "editor.fontSize": 13,
-
-  // "editor.fontFamily": "Anonymous Pro",
-  // "editor.fontSize": 15,
-
-  // "editor.fontFamily": "Consolas",
-  // "editor.fontSize": 14,
-
-  // "editor.fontFamily": "Cascadia Code PL Light", // Good size: 15
-  // // ss19: dashed zero; ss01: stylistic alternates for italics.
-  // // not sure what 'calt' does, but it is reccomended in the docs:
-  // // https://github.com/microsoft/cascadia-code#to-enable-the-cursive-form-of-the-italic-heres-the-code-you-should-use
-  // // "editor.fontLigatures": "'ss19', 'calt', 'ss01'",
-  // // "editor.fontLigatures": "'ss19'",
-  // "editor.fontSize": 15,
-
-  // "editor.fontFamily": "'MonaspiceAr Nerd Font', 'MonaspiceNe Nerd Font', 'MonaspiceKr Nerd Font'",
-  // "editor.fontLigatures": "'calt', 'liga', 'dlig', 'ss01', 'ss02', 'ss03', 'ss04', 'ss05', 'ss06', 'ss07'",
-  // "editor.fontSize": 13,
-
-  // "editor.fontFamily": "'MesloLGS Nerd Font', 'MesloLGS NF', monospace",
-  // "editor.fontSize": 13,
-
-  // "editor.wordWrap": "wordWrapColumn",
-  // "editor.wordWrapColumn": 120,
-  // "editor.lineHeight": 16,
-  // "editor.letterSpacing": -0.8,
-  // "editor.fontWeight": "900",
-
-  // ) comments-
+  "C_Cpp.clang_format_style": "Google",
+  "workbench.activityBar.location": "hidden"
 }
