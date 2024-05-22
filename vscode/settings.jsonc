@@ -1,53 +1,15 @@
 {
   // -editor (
 
-  // "editor.fontFamily": "MonaspiceAr Nerd Font",
-  // "editor.fontSize": 13, // Desktop
-  // // "editor.fontFamily": "MonaspiceNe Nerd Font", // 17
-  // // "editor.fontFamily": "MonaspiceKr Nerd Font", // 17
-  // "editor.fontLigatures": "'liga', '-dlig', 'ss01', 'ss02', 'ss03', 'ss04', 'ss05', 'ss06', 'ss07'",
-  // // Ligature tests:
-  // //  ! " # $ % & ' ( ) * + , - . / : ; < = > ? @ [ \ ] ^ _ ` { | } ~
-  // //  ~ < > = + _ _ ( ) * & ^ % $ # @ ! { } [ ] \ | / ? : ; , . ` ' " ´ ` ˜
-  // //  => -> <> <= >= != !== === |> <- --> ||
-
-  // "editor.fontFamily": "Roboto Mono", // 15
-  // "editor.fontFamily": "Inconsolata", // 16
-  // "editor.fontFamily": "JetBrains Mono", // 13
-
-  // "editor.fontFamily": "Fira Code Light", // 13
-  // // "editor.fontLigatures": false,
-  // // Ligature tests:
-  // //  ! " # $ % & ' ( ) * + , - . / : ; < = > ? @ [ \ ] ^ _ ` { | } ~
-  // //  ~ < > = + _ _ ( ) * & ^ % $ # @ ! { } [ ] \ | / ? : ; , . ` ' " ´ ` ˜
-  // //  => -> <> <= >= != !== === |> <- --> ||
-
-  // "editor.fontFamily": "Fira Code", // 15
-  // "editor.fontFamily": "Fantasque Sans Mono", // 15
-  // "editor.fontFamily": "IBM Plex Mono", // 13
-  // "editor.fontFamily": "Anonymous Pro", // 15
-  // "editor.fontFamily": "Consolas", // 14
-
-  // "editor.fontFamily": "MesloLGS Nerd Font",
-  // // "editor.fontSize": 19, // Notebook
-  // "editor.fontSize": 12, // Desktop
-
-  // "editor.fontFamily": "CaskaydiaCove NF",
-  // // "editor.fontSize": 19, // Notebook
-  // "editor.fontSize": 13, // Desktop
-  // "editor.fontWeight": "300", // Notebook & Desktop
-  // // ss19: dashed zero; ss01: stylistic alternates for italics.
-  // // not sure what 'calt' does, but it is reccomended in the docs:
-  // // https://github.com/microsoft/cascadia-code#to-enable-the-cursive-form-of-the-italic-heres-the-code-you-should-use
-  // "editor.fontLigatures": "'calt', 'ss01', 'ss02', 'ss03', 'ss19', 'ss20'",
-  // // ligature tests: => -> <> <= >= != !== === |> <- --> ||
-
-  "editor.fontFamily": "'Noto Sans Mono', monospace",
+  "editor.fontFamily": "Cascadia Code NF",
   // "editor.fontSize": ??, // Notebook
   "editor.fontSize": 15, // Desktop
-
-  // "editor.wordWrap": "wordWrapColumn",
-  // "editor.wordWrapColumn": 120,
+  "editor.fontWeight": "300",
+  "editor.fontLigatures": "'calt', 'ss01', 'ss02', 'ss03', 'ss19', 'ss20'",
+  // Ligature tests:
+  //  ! " # $ % & ' ( ) * + , - . / : ; < = > ? @ [ \ ] ^ _ ` { | } ~
+  //  ~ < > = + _ _ ( ) * & ^ % $ # @ ! { } [ ] \ | / ? : ; , . ` ' " ´ ` ˜
+  //  => -> <> <= >= != !== === |> <- --> ||
 
   "editor.codeActionsOnSave": {
     "source.fixAll.eslint": "explicit",
