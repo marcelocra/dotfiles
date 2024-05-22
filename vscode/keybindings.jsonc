@@ -678,5 +678,11 @@
   {
     "key": "ctrl+p",
     "command": "-workbench.action.quickOpen"
+  },
+  {
+    "key": "ctrl+n",
+    "command": "workbench.action.tasks.runTask",
+    "args": "run-node-for-current-file",
+    "when": "vim.mode == 'Insert'"
   }
 ]

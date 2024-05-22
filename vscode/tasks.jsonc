@@ -10,6 +10,14 @@
       "presentation": {
         "reveal": "never"
       }
+    },
+    {
+      "label": "run-node-for-current-file",
+      "type": "shell",
+      "command": "node ${file}",
+      "presentation": {
+        "reveal": "always"
+      }
     }
   ]
 }
