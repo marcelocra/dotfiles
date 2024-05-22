@@ -418,4 +418,16 @@
       "linguist-language=JSON-with-Comments"
     ]
   },
+  "typescript name": {
+    "prefix": "ts",
+    "body": [
+      "TypeScript"
+    ]
+  },
+  "javascript name": {
+    "prefix": "js",
+    "body": [
+      "JavaScript"
+    ]
+  },
 }
