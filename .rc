@@ -268,8 +268,13 @@ function now() {
 
 alias vim="$EDITOR"
 alias vi=vim
-if [[ $EDITOR == "nvim" ]]; then
-    alias vimdiff="nvim -d"
+
+if command -v code &> /dev/null; then
+    alias vimdiff="code -d"
+else
+    if [[ $EDITOR == "nvim" ]]; then
+        alias vimdiff="nvim -d"
+    fi
 fi
 
 # The -T option sets terminal features for the client. Uses csv format.
