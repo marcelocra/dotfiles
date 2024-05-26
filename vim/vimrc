@@ -302,6 +302,8 @@ iab rich ;; rcf - rich comment form
 cab help tab help
 cab h tab help
 
+iab -k - [ ]
+
 " )abbreviations- }}}
 " --- -leader-mappings( -----------------------------------------------------{{{
 
