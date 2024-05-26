@@ -1,8 +1,41 @@
 #!/usr/bin/env bash
 # vim: fdm=marker:fmr=(((,))):fdl=1:fen:ai:et:ts=4:sw=4:filetype=bash
 #
+# Terminal configuration script. Read below for details (((
+#
 # TODO: this file is too big already. Perhaps move each section to its own
 # file, in the shell subdir?
+#
+# ===========
+# bash how-to
+# ===========
+#
+# Discard commands outputs
+# ------------------------
+#
+# - stdout: `> /dev/null`
+# - stderr: `2> /dev/null`
+# - both:
+#   - more portable: `> /dev/null 2>&1`
+#   - less portable (but good enough), shorter: `&> /dev/null`
+#
+# Scripts and functions arguments
+# -------------------------------
+#
+# - each argument get a number: `$1`, `$2`, `$3` ...
+# - for all arguments:
+#   - `$*` => `$1 $2 ... ${N}`
+#   - `$@` => `$1 $2 ... ${N}`
+#   - `"$*"` => `"$1c$2c ... ${N}`
+#   - `"$@"` => `"$1" "$2" ... "${N}"`
+#
+# Still want to learn
+# -------------------
+#
+# - difference between `if [[` and `if [`
+# 
+# )))
+
 
 REQUIRED_ENVS=''
 
@@ -80,8 +113,10 @@ elif command -v vim &> /dev/null; then
     export EDITOR=vim
 elif command -v vi &> /dev/null; then
     export EDITOR=vi
+elif command -v nano &> /dev/null; then
+    export EDITOR=nano
 else
-    echo "You don't have neovim, vim or vi installed. EDITOR env not defined"
+    echo "You don't have 'neovim', 'vim', 'vi' or 'nano' installed. EDITOR env not defined"
 fi
 
 
@@ -220,16 +255,12 @@ function now() {
 # s = reserved
 # t = go to my temp dir
 # v = vim
-# x = npx
-
-alias x="npx"
 
 # )))one lettered
 # general(((
 
 alias vim="$EDITOR"
 alias vi=vim
-alias v=vim
 if [[ $EDITOR == "nvim" ]]; then
     alias vimdiff="nvim -d"
 fi
@@ -270,6 +301,7 @@ else
 fi
 
 # Speech synthesizer.
+alias say="spd-say -w -l pt-BR -p 100 -r -30 -R 100 -m all"
 alias fala="spd-say -w -l pt-BR -p 100 -r -30 -R 100 -m all"
 alias falar="spd-say -w -l pt-BR -p 100 -r -30 -R 100 -m all"
 
@@ -417,11 +449,11 @@ docker_images_sorted() {
 # )))docker
 # to avoid dangerous commands - overrides(((
 
-alias really-npx="$(which npx)"
-alias really-bunx="$(which bunx)"
-
-alias npx="echo 'are you sure? if so, use: \n\$ really-npx'"
-alias bunx="echo 'are you sure? if so, use: \n\$ really-bunx'"
+#alias really-npx="$(which npx)"
+#alias really-bunx="$(which bunx)"
+#
+#alias npx="echo 'are you sure? if so, use: \n\$ really-npx'"
+#alias bunx="echo 'are you sure? if so, use: \n\$ really-bunx'"
 
 # )))overrides
 # )))aliases
