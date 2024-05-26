@@ -1,17 +1,19 @@
 #!/usr/bin/env bash
 # vim: fdm=marker:fmr=(((,))):fdl=1:fen:ai:et:ts=4:sw=4:filetype=bash
 #
-# Terminal configuration script. Read below for details (((
+# # Terminal configuration script docs. (((
+# ## TODO (((
 #
-# TODO: this file is too big already. Perhaps move each section to its own
-# file, in the shell subdir?
+# Some ideas:
 #
-# ===========
-# bash how-to
-# ===========
+# - add documentation on how this file works
+# - split it per sections?
+# - use a different language?
 #
-# Discard commands outputs
-# ------------------------
+# )))
+# ## Bash **HOW-TO** (((
+#
+# ### Discard commands outputs (((
 #
 # - stdout: `> /dev/null`
 # - stderr: `2> /dev/null`
@@ -19,8 +21,9 @@
 #   - more portable: `> /dev/null 2>&1`
 #   - less portable (but good enough), shorter: `&> /dev/null`
 #
-# Scripts and functions arguments
-# -------------------------------
+# )))
+#
+# ### Scripts and functions arguments (((
 #
 # - each argument get a number: `$1`, `$2`, `$3` ...
 # - for all arguments:
@@ -29,11 +32,15 @@
 #   - `"$*"` => `"$1c$2c ... ${N}`
 #   - `"$@"` => `"$1" "$2" ... "${N}"`
 #
-# Still want to learn
-# -------------------
+# ))) )))
+# ## Still need to learn (((
+# 
+# Once I figure these out, I can move them above.
 #
 # - difference between `if [[` and `if [`
+# - 
 # 
+# )))
 # )))
 
 
