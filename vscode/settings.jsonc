@@ -651,7 +651,8 @@
   "emmet.showExpandedAbbreviation": "inMarkupAndStylesheetFilesOnly",
   "emmet.showSuggestionsAsSnippets": true,
   "editor.screenReaderAnnounceInlineSuggestion": false,
-  "editor.snippetSuggestions": "bottom"
+  "editor.snippetSuggestions": "bottom",
+  "github.copilot.editor.enableAutoCompletions": true
 }
 
 // #region Ligature description
