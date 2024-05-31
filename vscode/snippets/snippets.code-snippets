@@ -182,7 +182,7 @@
     "scope": "javascript,typescript,javascriptreact,typescriptreact",
     "prefix": "tsi",
     "body": [
-      "// @ts-ignore"
+      "//@ts-ignore"
     ]
   },
   "md fold region": {
@@ -240,9 +240,9 @@
   },
   "ts expect error": {
     "scope": "javascript,typescript,javascriptreact,typescriptreact",
-    "prefix": "err",
+    "prefix": "tse",
     "body": [
-      "// @ts-expect-error"
+      "//@ts-expect-error - ${1:expected error} ${0:reason}"
     ]
   },
   "snippet to create snippets": {
