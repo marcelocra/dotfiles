@@ -430,4 +430,12 @@
       "JavaScript"
     ]
   },
+  "node test imports": {
+    "scope": "typescript,javascript",
+    "prefix": "node-test",
+    "body": [
+      "import { strict as assert } from \"node:assert\";",
+      "import { test } from \"node:test\";",
+    ]
+  },
 }

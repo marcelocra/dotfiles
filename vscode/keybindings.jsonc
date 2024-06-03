@@ -684,5 +684,30 @@
     "command": "workbench.action.tasks.runTask",
     "args": "run-node-for-current-file",
     "when": "vim.mode == 'Insert'"
+  },
+  {
+    "key": "tab",
+    "command": "-calva-fmt.formatCurrentForm",
+    "when": "calva:keybindingsEnabled && editorTextFocus && !editorReadOnly && !hasOtherSuggestions && !inSnippetMode && !inlineSuggestionVisible && !suggestWidgetVisible && editorLangId == 'clojure'"
+  },
+  {
+    "key": "ctrl+i",
+    "command": "-calva-fmt.tabIndent",
+    "when": "calva:keybindingsEnabled && editorTextFocus && !editorReadOnly && !hasOtherSuggestions && !suggestWidgetVisible && editorLangId == 'clojure'"
+  },
+  {
+    "key": "ctrl+alt+p i",
+    "command": "-calva-fmt.inferParens",
+    "when": "calva:keybindingsEnabled && editorTextFocus && !editorReadOnly && !hasOtherSuggestions && !suggestWidgetVisible && editorLangId == 'clojure'"
+  },
+  {
+    "key": "ctrl+alt+l",
+    "command": "-calva-fmt.alignCurrentForm",
+    "when": "calva:keybindingsEnabled && editorTextFocus && !editorReadOnly && !hasOtherSuggestions && !suggestWidgetVisible && editorLangId == 'clojure'"
+  },
+  {
+    "key": "shift+tab",
+    "command": "-calva-fmt.tabDedent",
+    "when": "calva:keybindingsEnabled && editorTextFocus && !editorReadOnly && !hasOtherSuggestions && !suggestWidgetVisible && editorLangId == 'clojure'"
   }
 ]

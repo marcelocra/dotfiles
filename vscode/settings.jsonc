@@ -3,7 +3,7 @@
 
   "editor.fontFamily": "Cascadia Code NF",
   "editor.fontSize": 15, // edn{:desktop 15 :notebook 19}
-  "editor.lineNumbers": "off",
+  "editor.lineNumbers": "on",
   "editor.fontWeight": "300", // edn{:desktop "300" :notebook "300"}
   "editor.fontLigatures": "'calt', 'ss01', 'ss02', 'ss03', 'ss19', 'ss20'",
   // Ligature tests:
@@ -106,9 +106,11 @@
     "editorIndentGuide.background1": "#333", // edn{:dark "#333" :light "#eee"}
     "editor.lineHighlightBorder": "#ff00c833", // edn{:dark "#ff00c833" :light "#00ffff22"}
     "editor.lineHighlightBackground": "#ff00c822", // edn{:dark "#ff00c822" :light "#00ffff22"}
-    "editor.selectionBackground": "#ff00c855" // edn{:dark "#ff00c855" :light "#00ffff77"}
+    "editor.selectionBackground": "#ff00c855", // edn{:dark "#ff00c855" :light "#00ffff77"}
     // TODO: figure out how to get this working.
     // "editor.selectionForeground": "#f00" // edn{:dark "#ff00c8" :light "#fff"}
+    "calva.inlineErrorForegroundColor": "#ff0000",
+    "calva.inlineForegroundColor": "#ff9000"
   },
   "workbench.startupEditor": "newUntitledFile",
   "workbench.tree.indent": 20,
@@ -131,7 +133,12 @@
     "markdown",
     "svelte"
   ],
-  "eslint.validate": ["javascript", "javascriptreact", "typescript", "typescriptreact"],
+  "eslint.validate": [
+    "javascript",
+    "javascriptreact",
+    "typescript",
+    "typescriptreact"
+  ],
   // ) eslint-
 
   // -tailwind (
@@ -209,8 +216,7 @@
   "calva.prettyPrintingOptions": {
     "printEngine": "pprint",
     "enabled": true,
-    "width": 120,
-    "maxLength": 50
+    "width": 40
   },
   // ) calva-
 
@@ -544,7 +550,7 @@
   "emmet.triggerExpansionOnTab": true,
   "github.copilot.editor.enableAutoCompletions": true,
   "github.copilot.enable": {
-    "*": true,
+    "*": false,
     "plaintext": false,
     "markdown": false,
     "scminput": false
@@ -592,15 +598,21 @@
 
   // -clojure(
   "[clojure]": {
-    "editor.wordSeparators": "\t()\"':,;~@#$%^&{}[]`.+/<>",
+    "editor.wordSeparators": "\t ()\"':,;~@#$%^&{}[]`",
     "editor.autoClosingBrackets": "always",
+    "editor.autoClosingOvertype": "always",
     "editor.autoClosingQuotes": "always",
-    "files.trimTrailingWhitespace": false,
+    "editor.formatOnType": true,
+    "editor.autoIndent": "full",
+    "editor.formatOnPaste": true,
+    "editor.matchBrackets": "never",
+    "editor.guides.indentation": false,
     "editor.parameterHints.enabled": false,
     "editor.unicodeHighlight.allowedCharacters": {
-      " ": true,
+      " ": true,
       "꞉": true
     },
+    "editor.foldingStrategy": "indentation",
     "editor.defaultFormatter": "betterthantomorrow.calva"
   },
   // )clojure-
