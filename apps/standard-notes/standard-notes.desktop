@@ -1,0 +1,11 @@
+[Desktop Entry]
+Version=1.0
+Terminal=false
+Name=Standard Notes
+Comment=Secure, Privacy-First Note Taking App
+GenericName=Text Editor
+Type=Application
+Exec=standard-notes %U
+Icon=standard-notes
+StartupWMClass=standard-notes
+MimeType=x-scheme-handler/standard-notes;

@@ -304,6 +304,8 @@ cab h tab help
 
 iab -k - [ ]
 
+iab devnull &>/dev/null
+
 " )abbreviations- }}}
 " --- -leader-mappings( -----------------------------------------------------{{{
 

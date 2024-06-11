@@ -159,7 +159,6 @@ function timer() {
 
     sleep "$time" && timer_notification
 }
-alias t1="sleep 1m && timer_notification"
 alias t5="sleep 5m && timer_notification"
 alias t15="sleep 15m && timer_notification"
 alias t30="sleep 30m && timer_notification"
@@ -246,6 +245,44 @@ function force_rm() {
 function now() {
     echo "$(date +%F_%T | tr ':' '-')"
 
+    return 0
+}
+
+zip-dir-usage() {
+    echo "Usage: zip-dir <folder-to-zip> <zip-name=folder-to-zip>
+
+Error: $1
+"
+}
+
+zip-dir() {
+    local folder_to_zip
+    local zip_name
+
+    folder_to_zip="$1"
+    zip_name="$2"
+
+    if [ -z "$folder_to_zip" ]; then
+        zip-dir-usage 'The first argument is the directory to zip. The second
+argument is optional: if not provided, the first is used in its place.'
+        return 1
+    fi
+
+    if [ ! -d "$folder_to_zip" ]; then
+        zip-dir-usage "'$folder_to_zip' is not a directory."
+        return 1
+    fi
+
+    if [ -z "$zip_name" ]; then
+        zip_name=$(basename "$folder_to_zip")
+    fi
+
+    if ! command -v zip &>/dev/null; then
+        echo 'zip is not installed or not in the path'
+        return 1
+    fi
+
+    (cd $(dirname $folder_to_zip); zip -r "$zip_name" "$zip_name")
     return 0
 }
 
@@ -364,6 +401,9 @@ alias bbge="vim ~/.config/babashka/bb.edn"
 alias colines='echo "Columns: $COLUMNS, Lines: $LINES"'
 
 alias ppath="echo $PATH | tr ':' '\n'"
+
+alias t1="tree -L 1"
+alias t2="tree -L 2"
 
 # )))general
 # git frequent(((
