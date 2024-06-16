@@ -58,29 +58,25 @@
     "command": "workbench.action.toggleMaximizedPanel",
     "when": "terminalFocus && !isMac"
   },
-  // {
-  //   "key": "ctrl+t",
-  //   "command": "-workbench.action.showAllSymbols"
-  // },
   {
-    "key": "ctrl+shift+m",
+    "key": "ctrl+t",
     "command": "workbench.action.focusLastEditorGroup",
     "when": "activePanel && terminalFocus"
   },
-  // {
-  //   "key": "ctrl+t",
-  //   "command": "workbench.action.togglePanel"
-  // },
   {
-    "key": "ctrl+shift+m",
+    "key": "ctrl+t",
     "command": "workbench.action.terminal.focus",
     "when": "activePanel && !terminalFocus"
   },
-  // {
-  //   "key": "alt+t",
-  //   "command": "workbench.action.togglePanel",
-  //   "when": "!activePanel"
-  // },
+  {
+    "key": "ctrl+t",
+    "command": "workbench.action.togglePanel",
+    "when": "!activePanel"
+  },
+  {
+    "key": "alt+t",
+    "command": "workbench.action.togglePanel"
+  },
   // {
   //   "key": "ctrl+k",
   //   "command": "workbench.action.terminal.sendSequence",
@@ -89,16 +85,6 @@
   //   },
   //   "when": "terminalFocus"
   // },
-  {
-    "key": "ctrl+shift+`",
-    "command": "workbench.action.toggleMaximizedPanel",
-    "when": "terminalFocus && (terminalProcessSupported || terminalWebExtensionContributedProfile)"
-  },
-  {
-    "key": "ctrl+shift+`",
-    "command": "workbench.action.terminal.new",
-    "when": "!terminalFocus && (terminalProcessSupported || terminalWebExtensionContributedProfile)"
-  },
   {
     "key": "ctrl+shift+f",
     "command": "workbench.action.terminal.focusFind",
@@ -444,11 +430,11 @@
     "key": "alt+p",
     "command": "issue.copyGithubPermalink"
   },
-  // {
-  //   // Enabling this, vscodevim ctrl+f is overwritten.
-  //   "key": "ctrl+f",
-  //   "command": "actions.find"
-  // },
+  {
+    // Enabling this, vscodevim ctrl+f is overwritten.
+    "key": "ctrl+f",
+    "command": "actions.find"
+  },
   {
     "key": "ctrl+h",
     "command": "editor.action.startFindReplaceAction",

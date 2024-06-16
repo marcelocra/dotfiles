@@ -84,7 +84,9 @@
   "terminal.integrated.fontWeight": "normal",
   "terminal.integrated.macOptionClickForcesSelection": true,
   "terminal.integrated.allowChords": false,
-  "terminal.integrated.sendKeybindingsToShell": true,
+  // "terminal.integrated.sendKeybindingsToShell": true,
+  "terminal.integrated.commandsToSkipShell": [""],
+  "terminal.integrated.shellIntegration.enabled": true,
   "terminal.integrated.drawBoldTextInBrightColors": true,
   "terminal.integrated.minimumContrastRatio": 1,
   "terminal.integrated.enableVisualBell": true,
@@ -117,7 +119,7 @@
   "workbench.tree.renderIndentGuides": "always",
   "workbench.list.horizontalScrolling": true,
   "workbench.sideBar.location": "left",
-  "workbench.colorTheme": "GitHub Dark Dimmed",
+  "workbench.colorTheme": "GitHub Dark Default",
   // ) workbench-
 
   // -eslint (
@@ -231,7 +233,7 @@
   "vim.smartRelativeLine": false,
   "vim.foldfix": true,
   "vim.camelCaseMotion.enable": true,
-  "vim.textwidth": 100,
+  "vim.textwidth": 80,
 
   // This is VERY, PAINFULLY, UNUSABLY slow in Ubuntu 20.04. It uses gdbus, as shown in the
   // following link. I also got the scripts (get-im and set-im) from there:
@@ -656,12 +658,12 @@
   "C_Cpp.clang_format_fallbackStyle": "Google",
   "C_Cpp.clang_format_sortIncludes": true,
   "C_Cpp.clang_format_style": "Google",
-  "workbench.activityBar.location": "hidden",
   "javascript.preferences.importModuleSpecifierEnding": "js",
   "emmet.showExpandedAbbreviation": "inMarkupAndStylesheetFilesOnly",
   "emmet.showSuggestionsAsSnippets": true,
   "editor.screenReaderAnnounceInlineSuggestion": false,
-  "editor.snippetSuggestions": "bottom"
+  "editor.snippetSuggestions": "bottom",
+  "workbench.activityBar.location": "hidden"
 }
 
 // #region Ligature description
