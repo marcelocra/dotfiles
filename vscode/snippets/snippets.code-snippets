@@ -438,4 +438,38 @@
       "import { test } from \"node:test\";",
     ]
   },
+  // 
+  // Elm spacing settings are very aesthetic and visually pleasing, combining
+  // 3 and 2 spaces before and after some elements or comments. Example below:
+  //
+  // ```elm
+  //
+  //   main =
+  //      Browser.sandbox { init = init, update = update, view = view }
+  // 
+  // 
+  // 
+  //   -- MODEL
+  // 
+  // 
+  //   type alias Model = Int
+  //
+  // ```
+  // 
+  // Here we use comments for this, so that we can still use Prettier for
+  // automatic formatting but still get some of the visual benefits.
+  //
+  "elm-like spacing (using comments) for json(c)": {
+    "scope": "json,jsonc",
+    "prefix": "c",
+    "body": [
+      "",
+      "//",
+      "//",
+      "// $1",
+      "//",
+      "$0",
+      "",
+    ]
+  },
 }
