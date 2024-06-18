@@ -1,128 +1,194 @@
 {
-  // -editor (
+  //////////////////////////////////////////////////////////////////////////////
+  // Language and framework specific settings
+  // #region
 
-  "editor.fontFamily": "Cascadia Code NF",
-  "editor.fontSize": 15, // edn{:desktop 15 :notebook 19}
-  "editor.lineNumbers": "on",
-  "editor.fontWeight": "300", // edn{:desktop "300" :notebook "300"}
-  "editor.fontLigatures": "'calt', 'ss01', 'ss02', 'ss03', 'ss19', 'ss20'",
-  // Ligature tests:
-  //  ! " # $ % & ' ( ) * + , - . / : ; < = > ? @ [ \ ] ^ _ ` { | } ~
-  //  ~ < > = + _ _ ( ) * & ^ % $ # @ ! { } [ ] \ | / ? : ; , . ` ' " ´ ` ˜
-  //  => -> <> <= >= != !== === |> <- --> ||
+  //
+  //
+  // JavaScript
+  //
 
-  "editor.codeActionsOnSave": {
-    "source.fixAll.eslint": "explicit",
-    "source.fixAll": "explicit"
+  "javascript.preferences.importModuleSpecifierEnding": "js",
+  "javascript.updateImportsOnFileMove.enabled": "never",
+  "[javascript]": {
+    "editor.rulers": [100, 120]
   },
-  "editor.parameterHints.enabled": false,
-  "editor.guides.bracketPairs": "active",
-  "editor.bracketPairColorization.enabled": true,
-  "editor.guides.indentation": true,
-  "editor.guides.highlightActiveIndentation": true,
-  "editor.semanticHighlighting.enabled": true,
-  "editor.tabSize": 2,
-  "editor.insertSpaces": true,
-  "editor.detectIndentation": true,
-  "editor.defaultFormatter": "esbenp.prettier-vscode",
-  "editor.cursorStyle": "line-thin",
-  "editor.cursorBlinking": "smooth",
-  "editor.rulers": [80, 100, 120],
-  "editor.minimap.maxColumn": 60,
-  "editor.minimap.renderCharacters": false,
-  "editor.minimap.showSlider": "always",
-  "editor.minimap.size": "fill",
-  "editor.formatOnSave": true,
-  "editor.tabCompletion": "onlySnippets",
-  "editor.suggest.snippetsPreventQuickSuggestions": false,
-  "editor.quickSuggestions": {
-    "other": false,
-    "comments": false,
-    "strings": "on"
+
+  "[javascriptreact]": {
+    "editor.rulers": [100, 120]
   },
-  "editor.renderWhitespace": "none",
-  "editor.acceptSuggestionOnCommitCharacter": false,
-  "editor.hover.delay": 1000,
-  "editor.inlineSuggest.enabled": true,
-  "editor.wordWrap": "on",
-  "editor.lineHeight": 1.6,
-  // "editor.letterSpacing": -0.8,
-  "editor.roundedSelection": false,
-  "editor.autoIndent": "full",
+
+  //
+  //
+  // TypeScript
+  //
+
+  "typescript.tsserver.experimental.enableProjectDiagnostics": true,
+  "typescript.updateImportsOnFileMove.enabled": "always",
+  "typescript.preferences.importModuleSpecifier": "non-relative",
+  "[typescript]": {
+    "editor.rulers": [100, 120]
+  },
+
+  "[typescriptreact]": {
+    "editor.rulers": [100, 120]
+  },
+
+  //
+  //
+  // Clojure / ClojureScript
+  //
+
+  "[clojure]": {
+    "editor.wordSeparators": "\t ()\"':,;~@#$%^&{}[]/-`.",
+    "editor.autoClosingBrackets": "always",
+    "editor.autoClosingOvertype": "always",
+    "editor.autoClosingQuotes": "always",
+    "editor.formatOnType": true,
+    "editor.autoIndent": "full",
+    "editor.formatOnPaste": true,
+    "editor.matchBrackets": "never",
+    "editor.guides.indentation": false,
+    "editor.parameterHints.enabled": false,
+    "editor.unicodeHighlight.allowedCharacters": {
+      " ": true,
+      "꞉": true
+    },
+    "editor.foldingStrategy": "indentation",
+    "editor.defaultFormatter": "betterthantomorrow.calva"
+  },
+
+  //
+  //
+  // Calva
+  //
+
+  "calva.paredit.defaultKeyMap": "original",
+  "calva.replConnectSequences": [],
+  "calva.showCalvaSaysOnStart": false,
+  "calva.prettyPrintingOptions": {
+    "printEngine": "pprint",
+    "enabled": true,
+    "width": 40
+  },
+
+  //
+  //
+  // F# / FSharp
+  //
+
   "FSharp.smartIndent": true,
-
-  // ) editor-
-
-  // -explorer (
-  "explorer.openEditors.visible": 1,
-  "explorer.confirmDragAndDrop": false,
-  "explorer.excludeGitIgnore": false,
-  // ) explorer-
-
-  // -files (
-  "files.associations": {
-    "*.erb": "erb",
-    "*.css": "css",
-    "vimrc": "vimrc",
-    "json5": "jsonc",
-    "*.liquid": "html",
-    "*.mdx": "markdown"
+  "FSharp.inlayHints.parameterNames": false,
+  "FSharp.inlayHints.typeAnnotations": false,
+  "[fsharp]": {
+    "editor.defaultFormatter": "Ionide.Ionide-fsharp",
+    "editor.tabSize": 4
   },
-  "files.eol": "\n",
-  // ) files-
 
-  // -git (
-  "git.ignoreMissingGitWarning": true,
-  "git.confirmSync": false,
-  "git.openRepositoryInParentFolders": "never",
-  // ) git-
+  //
+  //
+  // Svelte
+  //
 
-  // -terminal (
-  "terminal.integrated.tabs.enabled": true,
-  "terminal.integrated.fontFamily": "'MesloLGS Nerd Font', 'MesloLGS NF', monospace",
-  "terminal.integrated.fontSize": 13, // edn{:desktop 13 :notebook 19}
-  "terminal.integrated.fontWeight": "normal",
-  "terminal.integrated.macOptionClickForcesSelection": true,
-  "terminal.integrated.allowChords": false,
-  // "terminal.integrated.sendKeybindingsToShell": true,
-  "terminal.integrated.commandsToSkipShell": [""],
-  "terminal.integrated.shellIntegration.enabled": true,
-  "terminal.integrated.drawBoldTextInBrightColors": true,
-  "terminal.integrated.minimumContrastRatio": 1,
-  "terminal.integrated.enableVisualBell": true,
-  "terminal.integrated.bellDuration": 3000,
-  // ) terminal-
-
-  // -window (
-  "window.title": "${dirty}${activeEditorLong}${separator}${appName}",
-  "window.newWindowDimensions": "inherit",
-  "window.restoreWindows": "none",
-  "window.menuBarVisibility": "toggle",
-
-  // -workbench (
-  "workbench.colorCustomizations": {
-    "editorCursor.foreground": "#ff00ea", // edn{:dark "#fff" :light "#ff00ea" :dark-opt "#51ff00"}
-    "tree.indentGuidesStroke": "#0084ff",
-    "tree.inactiveIndentGuidesStroke": "#d8d8d8", // edn{:dark "#444" :light "#d8d8d8"}
-    "editorIndentGuide.activeBackground1": "#00ffff", // edn{:dark "#ff00c8" :light "#00ffff"}
-    "editorIndentGuide.background1": "#eee", // edn{:dark "#333" :light "#eee"}
-    "editor.lineHighlightBorder": "#00ffff22", // edn{:dark "#ff00c833" :light "#00ffff22"}
-    "editor.lineHighlightBackground": "#00ffff22", // edn{:dark "#ff00c822" :light "#00ffff22"}
-    "editor.selectionBackground": "#00ffff77", // edn{:dark "#ff00c855" :light "#00ffff77"}
-    // TODO: figure out how to get this working.
-    // "editor.selectionForeground": "#f00" // edn{:dark "#ff00c8" :light "#fff"}
-    "calva.inlineErrorForegroundColor": "#ff0000",
-    "calva.inlineForegroundColor": "#ff9000"
+  "svelte.enable-ts-plugin": true,
+  "[svelte]": {
+    "editor.defaultFormatter": "svelte.svelte-vscode"
   },
-  "workbench.startupEditor": "newUntitledFile",
-  "workbench.tree.indent": 20,
-  "workbench.tree.renderIndentGuides": "always",
-  "workbench.list.horizontalScrolling": true,
-  "workbench.sideBar.location": "left",
-  "workbench.colorTheme": "Solarized Light",
-  // ) workbench-
 
-  // -eslint (
+  //
+  //
+  // Python
+  //
+
+  "[python]": {
+    "editor.tabSize": 4,
+    "editor.defaultFormatter": "ms-python.black-formatter"
+  },
+
+  //
+  //
+  // Dart
+  //
+
+  "dart.openDevTools": "flutter",
+  "dart.debugExternalPackageLibraries": false,
+  "dart.debugSdkLibraries": false,
+  "dart.flutterSdkPath": "${env:FLUTTER_SDK}",
+  "[dart]": {
+    "editor.formatOnSave": true,
+    "editor.formatOnType": true,
+    "editor.selectionHighlight": false,
+    "editor.suggest.snippetsPreventQuickSuggestions": false,
+    "editor.suggestSelection": "first",
+    "editor.tabCompletion": "onlySnippets",
+    "editor.wordBasedSuggestions": "off",
+    "editor.defaultFormatter": "Dart-Code.dart-code"
+  },
+
+  //
+  //
+  // C++ / Cpp
+  //
+
+  "C_Cpp.clang_format_fallbackStyle": "Google",
+  "C_Cpp.clang_format_sortIncludes": true,
+  "C_Cpp.clang_format_style": "Google",
+  "[cpp]": {
+    "editor.defaultFormatter": "ms-vscode.cpptools"
+  },
+
+  //
+  //
+  // Haskell
+  //
+
+  "haskell.manageHLS": "GHCup",
+
+  //
+  //
+  // Go / Golang
+  //
+
+  "go.formatTool": "goimports",
+
+  //
+  //
+  // Markdown (MD) / Asciidoc
+  //
+
+  "[markdown]": {
+    "editor.wordWrap": "bounded",
+    "editor.wordWrapColumn": 80,
+    "editor.wrappingIndent": "same",
+    "editor.rulers": [80, 100, 120],
+    "editor.tabSize": 2,
+    "editor.insertSpaces": true
+  },
+
+  "[asciidoc]": {
+    "editor.defaultFormatter": "asciidoctor.asciidoctor-vscode",
+    "editor.wordWrap": "bounded",
+    "editor.wordWrapColumn": 80,
+    "editor.wrappingIndent": "same",
+    "editor.rulers": [80, 100, 120],
+    "editor.tabSize": 4,
+    "editor.insertSpaces": true
+  },
+
+  //
+  //
+  // Astro
+  //
+
+  "[astro]": {
+    "editor.defaultFormatter": "astro-build.astro-vscode"
+  },
+
+  //
+  //
+  // Eslint
+  //
+
   "eslint.enable": true,
   "eslint.format.enable": true,
   "eslint.probe": [
@@ -135,21 +201,23 @@
     "markdown",
     "svelte"
   ],
-  "eslint.validate": [
-    "javascript",
-    "javascriptreact",
-    "typescript",
-    "typescriptreact"
-  ],
-  // ) eslint-
+  "eslint.validate": ["javascript", "javascriptreact", "typescript", "typescriptreact"],
 
-  // -tailwind (
+  //
+  //
+  // TailwindCSS
+  //
+
   "tailwindCSS.emmetCompletions": true,
   "tailwindCSS.colorDecorators": false,
   "tailwindCSS.experimental.classRegex": [
     ":class\\s+\"([^\"]*)\"",
-    // ":([^\"]*)[cC]lass\"([^\"]*)\"",
+
+    // For Clojure and Hiccup.
+    ":([^\"]*)[cC]lass\"([^\"]*)\"",
     ":[\\w-.#>]+\\.([\\w-]*)"
+
+    // For class-variant-authority. TODO: check if it works.
     // ["cva\\(([^)]*)\\)", "[\"'`]([^\"'`]*).*?[\"'`]"],
     // ["cx\\(([^)]*)\\)", "(?:'|\"|`)([^']*)(?:'|\"|`)"]
   ],
@@ -158,71 +226,28 @@
     "cljs": "html"
   },
 
-  // ) tailwind-
+  //
+  //
+  // Ruby
+  //
 
-  // -dart(
-  "dart.openDevTools": "flutter",
-  "dart.debugExternalPackageLibraries": false,
-  "dart.debugSdkLibraries": false,
-  "[dart]": {
-    "editor.formatOnSave": true,
-    "editor.formatOnType": true,
-    "editor.selectionHighlight": false,
-    "editor.suggest.snippetsPreventQuickSuggestions": false,
-    "editor.suggestSelection": "first",
-    "editor.tabCompletion": "onlySnippets",
-    "editor.wordBasedSuggestions": "off",
-    "editor.defaultFormatter": "Dart-Code.dart-code"
-  },
-  "dart.flutterSdkPath": "${env:FLUTTER_SDK}",
-  // ) dart-
+  "rubyLsp.rubyVersionManager": "asdf",
 
-  // -gitlens (
-  "gitlens.defaultDateLocale": "pt-BR",
-  "gitlens.defaultDateStyle": "absolute",
-  "gitlens.defaultDateFormat": "DDMMMYY HH:mm",
-  "gitlens.defaultDateShortFormat": "DDMMMYY",
-  "gitlens.views.searchAndCompare.pullRequests.showForCommits": false,
-  "gitlens.views.searchAndCompare.pullRequests.enabled": false,
-  "gitlens.views.contributors.pullRequests.showForCommits": false,
-  "gitlens.views.contributors.pullRequests.enabled": false,
-  "gitlens.views.worktrees.pullRequests.showForCommits": false,
-  "gitlens.views.worktrees.pullRequests.showForBranches": false,
-  "gitlens.views.worktrees.pullRequests.enabled": false,
-  "gitlens.views.remotes.pullRequests.showForCommits": false,
-  "gitlens.views.remotes.pullRequests.showForBranches": false,
-  "gitlens.views.remotes.pullRequests.enabled": false,
-  "gitlens.views.branches.pullRequests.showForCommits": false,
-  "gitlens.views.branches.pullRequests.showForBranches": false,
-  "gitlens.views.branches.pullRequests.enabled": false,
-  "gitlens.views.repositories.pullRequests.showForCommits": false,
-  "gitlens.views.repositories.pullRequests.showForBranches": false,
-  "gitlens.views.repositories.pullRequests.enabled": false,
-  "gitlens.views.commits.pullRequests.showForBranches": false,
-  "gitlens.views.commits.pullRequests.enabled": false,
-  "gitlens.hovers.autolinks.enhanced": false,
-  "gitlens.hovers.pullRequests.enabled": false,
-  "gitlens.hovers.enabled": false,
-  "gitlens.statusBar.pullRequests.enabled": false,
-  "gitlens.currentLine.pullRequests.enabled": false,
-  "gitlens.currentLine.enabled": false,
-  "gitlens.views.commits.pullRequests.showForCommits": false,
-  "gitlens.codeLens.authors.enabled": false,
-  "gitlens.codeLens.recentChange.enabled": false,
-  // ) gitlens-
+  //
+  // Next language or framework specific setting above.
+  // #endregion
+  //////////////////////////////////////////////////////////////////////////////
 
-  // -calva (
-  "calva.paredit.defaultKeyMap": "original",
-  "calva.replConnectSequences": [],
-  "calva.showCalvaSaysOnStart": false,
-  "calva.prettyPrintingOptions": {
-    "printEngine": "pprint",
-    "enabled": true,
-    "width": 40
-  },
-  // ) calva-
+  //////////////////////////////////////////////////////////////////////////////
+  // Tools
+  // #region
 
-  // -vim (
+  //
+  //
+  // Vim
+  //
+
+  "vim.leader": ",",
   "vim.easymotion": true,
   "vim.sneak": true,
   "vim.surround": true,
@@ -235,6 +260,9 @@
   "vim.camelCaseMotion.enable": true,
   "vim.textwidth": 80,
 
+  "vim.enableNeovim": true,
+  "vim.neovimUseConfigFile": true,
+
   // This is VERY, PAINFULLY, UNUSABLY slow in Ubuntu 20.04. It uses gdbus, as shown in the
   // following link. I also got the scripts (get-im and set-im) from there:
   //
@@ -245,7 +273,7 @@
   // "vim.autoSwitchInputMethod.obtainIMCmd": "/home/marcelocra/bin/get-im",
   // "vim.autoSwitchInputMethod.switchIMCmd": "/home/marcelocra/bin/set-im {im}",
 
-  // -viminsert(
+  // -viminsert
   "vim.insertModeKeyBindingsNonRecursive": [
     {
       "before": ["j", "f"],
@@ -283,10 +311,10 @@
       "before": ["<leader>", "x"],
       "commands": [":x"]
     }
-    // )viminsert-
   ],
+  // viminsert-
 
-  // -vimnormal(
+  // -vimnormal
   "vim.normalModeKeyBindingsNonRecursive": [
     {
       "before": ["<leader>", "j"],
@@ -437,9 +465,6 @@
       "before": [" ", "d", "b"],
       "commands": ["paredit.spliceSexpKillBackward"]
     },
-    {
-      // nextcalva
-    },
     // --- calva keybindings end
 
     // The following three commands are mimicking the behavior of Vimium. First
@@ -473,9 +498,9 @@
       "after": ["/"]
     }
   ],
-  // )vimnormal-
+  // vimnormal-
 
-  // -vimvisual(
+  // -vimvisual
   "vim.visualModeKeyBindingsNonRecursive": [
     // -- visual lines - Move using visual lines.
     {
@@ -530,26 +555,35 @@
     //   "commands": ["calva.evaluateSelectionToSelectionEnd"]
     // },
   ],
-  // )vimvisual-
+  // vimvisual-
 
-  "vim.leader": ",",
-  // ) vim-
+  //
+  //
+  // Snippets
+  //
 
-  // -misc (
+  "[snippets]": {
+    "editor.defaultFormatter": "vscode.json-language-features"
+  },
 
-  "telemetry.telemetryLevel": "off",
-  "nxConsole.enableTelemetry": false,
-  "problems.showCurrentInStatus": true,
-  "remoteHub.commitDirectlyWarning": "off",
-  "scm.diffDecorationsGutterWidth": 5,
-  "diffEditor.renderSideBySide": true,
-  "diffEditor.ignoreTrimWhitespace": false,
-  "rubyLsp.rubyVersionManager": "asdf",
+  //
+  //
+  // Emmet
+  //
+
+  "emmet.triggerExpansionOnTab": true,
+  "emmet.showExpandedAbbreviation": "inMarkupAndStylesheetFilesOnly",
+  "emmet.showSuggestionsAsSnippets": true,
   "emmet.includeLanguages": {
     "erb": "html",
     "svelte": "html"
   },
-  "emmet.triggerExpansionOnTab": true,
+
+  //
+  //
+  // Copilot
+  //
+
   "github.copilot.editor.enableAutoCompletions": true,
   "github.copilot.enable": {
     "*": false,
@@ -557,11 +591,42 @@
     "markdown": false,
     "scminput": false
   },
+
+  //
+  //
+  // Misc tools
+  //
+
+  // TODO: figure out from what extension this comes from. Perhaps the Dev
+  // Container one.
+  "remoteHub.commitDirectlyWarning": "off",
+
+  // From Nx plugin.
+  "nxConsole.enableTelemetry": false,
+
+  //
+  // Next tool setting above.
+  // #endregion
+  //////////////////////////////////////////////////////////////////////////////
+
+  //////////////////////////////////////////////////////////////////////////////
+  // All editor, workspace, terminal, etc, settings.
+  // #region
+
+  //
+  //
+  // Misc
+  //
+  // Random one-off settings that doesn't make sense to put in a separate
+  // category.
+  //
+
+  "telemetry.telemetryLevel": "off",
+  "problems.showCurrentInStatus": true,
+  "scm.diffDecorationsGutterWidth": 5,
+  "diffEditor.renderSideBySide": true,
+  "diffEditor.ignoreTrimWhitespace": false,
   "outline.collapseItems": "alwaysCollapse",
-  "haskell.manageHLS": "GHCup",
-  "[astro]": {
-    "editor.defaultFormatter": "astro-build.astro-vscode"
-  },
   "notebook.lineNumbers": "on",
   "search.exclude": {
     ".calva/": true,
@@ -573,102 +638,215 @@
     "**/out": true
   },
   "html.suggest.html5": false,
-  "[markdown]": {
-    "editor.wordWrap": "bounded",
-    "editor.wordWrapColumn": 80,
-    "editor.wrappingIndent": "same",
-    "editor.rulers": [80, 100, 120],
-    "editor.tabSize": 2,
-    "editor.insertSpaces": true
-  },
-  "[asciidoc]": {
-    "editor.defaultFormatter": "asciidoctor.asciidoctor-vscode",
-    "editor.wordWrap": "bounded",
-    "editor.wordWrapColumn": 80,
-    "editor.wrappingIndent": "same",
-    "editor.rulers": [80, 100, 120],
-    "editor.tabSize": 4,
-    "editor.insertSpaces": true
-  },
 
-  // -fsharp(
-  "[fsharp]": {
-    "editor.defaultFormatter": "Ionide.Ionide-fsharp",
-    "editor.tabSize": 4
-  },
-  // )fsharp-
+  //
+  //
+  // Editor
+  //
 
-  // -clojure(
-  "[clojure]": {
-    "editor.wordSeparators": "\t ()\"':,;~@#$%^&{}[]/-`.",
-    "editor.autoClosingBrackets": "always",
-    "editor.autoClosingOvertype": "always",
-    "editor.autoClosingQuotes": "always",
-    "editor.formatOnType": true,
-    "editor.autoIndent": "full",
-    "editor.formatOnPaste": true,
-    "editor.matchBrackets": "never",
-    "editor.guides.indentation": false,
-    "editor.parameterHints.enabled": false,
-    "editor.unicodeHighlight.allowedCharacters": {
-      " ": true,
-      "꞉": true
-    },
-    "editor.foldingStrategy": "indentation",
-    "editor.defaultFormatter": "betterthantomorrow.calva"
-  },
-  // )clojure-
+  "editor.fontFamily": "Cascadia Code NF",
+  "editor.fontSize": 15, // edn{:desktop 15 :notebook 19}
+  "editor.lineNumbers": "on",
+  "editor.fontWeight": "300", // edn{:desktop "300" :notebook "300"}
+  "editor.fontLigatures": "'calt', 'ss01', 'ss02', 'ss03', 'ss19', 'ss20'",
+  // Ligature tests:
+  //  ! " # $ % & ' ( ) * + , - . / : ; < = > ? @ [ \ ] ^ _ ` { | } ~
+  //  ~ < > = + _ _ ( ) * & ^ % $ # @ ! { } [ ] \ | / ? : ; , . ` ' " ´ ` ˜
+  //  => -> <> <= >= != !== === |> <- --> ||
 
-  // snippets(((
-  "[snippets]": {
-    "editor.defaultFormatter": "vscode.json-language-features"
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": "explicit",
+    "source.fixAll": "explicit"
   },
-  // )))snippets
-
-  "[python]": {
-    "editor.tabSize": 4,
-    "editor.defaultFormatter": "ms-python.black-formatter"
+  "editor.parameterHints.enabled": false,
+  "editor.guides.bracketPairs": "active",
+  "editor.bracketPairColorization.enabled": true,
+  "editor.guides.indentation": true,
+  "editor.guides.highlightActiveIndentation": true,
+  "editor.semanticHighlighting.enabled": true,
+  "editor.tabSize": 2,
+  "editor.insertSpaces": true,
+  "editor.detectIndentation": true,
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.cursorStyle": "line-thin",
+  "editor.cursorBlinking": "smooth",
+  "editor.rulers": [80, 100, 120],
+  "editor.minimap.maxColumn": 60,
+  "editor.minimap.renderCharacters": false,
+  "editor.minimap.showSlider": "always",
+  "editor.minimap.size": "fill",
+  "editor.formatOnSave": true,
+  "editor.tabCompletion": "onlySnippets",
+  "editor.suggest.snippetsPreventQuickSuggestions": false,
+  "editor.quickSuggestions": {
+    "other": false,
+    "comments": false,
+    "strings": "on"
   },
-  "javascript.updateImportsOnFileMove.enabled": "never",
-  "typescript.tsserver.experimental.enableProjectDiagnostics": true,
-  "typescript.updateImportsOnFileMove.enabled": "always",
-  "typescript.preferences.importModuleSpecifier": "non-relative",
-  "[svelte]": {
-    "editor.defaultFormatter": "svelte.svelte-vscode"
-  },
-  "svelte.enable-ts-plugin": true,
-  "go.formatTool": "goimports",
-  "vim.enableNeovim": true,
-  "vim.neovimUseConfigFile": true,
-  "FSharp.inlayHints.parameterNames": false,
-  "FSharp.inlayHints.typeAnnotations": false,
-  // ) misc-
-
-  // -javascript(
-  "[javascript]": {
-    "editor.rulers": [100, 120]
-  },
-  "[javascriptreact]": {
-    "editor.rulers": [100, 120]
-  },
+  "editor.renderWhitespace": "none",
+  "editor.acceptSuggestionOnCommitCharacter": false,
+  "editor.hover.delay": 1000,
+  "editor.inlineSuggest.enabled": true,
+  "editor.wordWrap": "on",
+  "editor.lineHeight": 1.6,
+  // "editor.letterSpacing": -0.8,
+  "editor.roundedSelection": false,
+  "editor.autoIndent": "full",
   "editor.minimap.enabled": false,
-  "[cpp]": {
-    "editor.defaultFormatter": "ms-vscode.cpptools"
-  },
-  "C_Cpp.clang_format_fallbackStyle": "Google",
-  "C_Cpp.clang_format_sortIncludes": true,
-  "C_Cpp.clang_format_style": "Google",
-  "javascript.preferences.importModuleSpecifierEnding": "js",
-  "emmet.showExpandedAbbreviation": "inMarkupAndStylesheetFilesOnly",
-  "emmet.showSuggestionsAsSnippets": true,
   "editor.screenReaderAnnounceInlineSuggestion": false,
   "editor.snippetSuggestions": "bottom",
+
+  //
+  //
+  // Explorer
+  //
+
+  "explorer.openEditors.visible": 1,
+  "explorer.confirmDragAndDrop": false,
+  "explorer.excludeGitIgnore": false,
+
+  //
+  //
+  // Files
+  //
+
+  "files.associations": {
+    "*.erb": "erb",
+    "*.css": "css",
+    "vimrc": "vimrc",
+    "json5": "jsonc",
+    "*.liquid": "html",
+    "*.mdx": "markdown"
+  },
+  "files.eol": "\n",
+
+  //
+  //
+  // Git and GitLens
+  //
+
+  "git.ignoreMissingGitWarning": true,
+  "git.confirmSync": false,
+  "git.openRepositoryInParentFolders": "never",
+
+  "gitlens.defaultDateLocale": "pt-BR",
+  "gitlens.defaultDateStyle": "absolute",
+  "gitlens.defaultDateFormat": "DDMMMYY HH:mm",
+  "gitlens.defaultDateShortFormat": "DDMMMYY",
+  "gitlens.views.searchAndCompare.pullRequests.showForCommits": false,
+  "gitlens.views.searchAndCompare.pullRequests.enabled": false,
+  "gitlens.views.contributors.pullRequests.showForCommits": false,
+  "gitlens.views.contributors.pullRequests.enabled": false,
+  "gitlens.views.worktrees.pullRequests.showForCommits": false,
+  "gitlens.views.worktrees.pullRequests.showForBranches": false,
+  "gitlens.views.worktrees.pullRequests.enabled": false,
+  "gitlens.views.remotes.pullRequests.showForCommits": false,
+  "gitlens.views.remotes.pullRequests.showForBranches": false,
+  "gitlens.views.remotes.pullRequests.enabled": false,
+  "gitlens.views.branches.pullRequests.showForCommits": false,
+  "gitlens.views.branches.pullRequests.showForBranches": false,
+  "gitlens.views.branches.pullRequests.enabled": false,
+  "gitlens.views.repositories.pullRequests.showForCommits": false,
+  "gitlens.views.repositories.pullRequests.showForBranches": false,
+  "gitlens.views.repositories.pullRequests.enabled": false,
+  "gitlens.views.commits.pullRequests.showForBranches": false,
+  "gitlens.views.commits.pullRequests.enabled": false,
+  "gitlens.hovers.autolinks.enhanced": false,
+  "gitlens.hovers.pullRequests.enabled": false,
+  "gitlens.hovers.enabled": false,
+  "gitlens.statusBar.pullRequests.enabled": false,
+  "gitlens.currentLine.pullRequests.enabled": false,
+  "gitlens.currentLine.enabled": false,
+  "gitlens.views.commits.pullRequests.showForCommits": false,
+  "gitlens.codeLens.authors.enabled": false,
+  "gitlens.codeLens.recentChange.enabled": false,
+
+  //
+  //
+  // Terminal
+  //
+
+  "terminal.integrated.tabs.enabled": true,
+  "terminal.integrated.fontFamily": "'MesloLGS Nerd Font', 'MesloLGS NF', monospace",
+  "terminal.integrated.fontSize": 13, // edn{:desktop 13 :notebook 19}
+  "terminal.integrated.fontWeight": "normal",
+  "terminal.integrated.macOptionClickForcesSelection": true,
+  "terminal.integrated.allowChords": false,
+  // "terminal.integrated.sendKeybindingsToShell": true,
+  "terminal.integrated.commandsToSkipShell": [""],
+  "terminal.integrated.shellIntegration.enabled": true,
+  "terminal.integrated.drawBoldTextInBrightColors": true,
+  "terminal.integrated.minimumContrastRatio": 1,
+  "terminal.integrated.enableVisualBell": true,
+  "terminal.integrated.bellDuration": 3000,
+
+  //
+  //
+  // Window
+  //
+
+  "window.title": "${dirty}${activeEditorLong}${separator}${appName}",
+  "window.newWindowDimensions": "inherit",
+  "window.restoreWindows": "none",
+  "window.menuBarVisibility": "toggle",
+
+  //
+  //
+  // Workbench
+  //
+
+  "workbench.colorCustomizations": {
+    "editorCursor.foreground": "#fff", // edn{:dark "#fff" :light "#ff00ea" :dark-opt "#51ff00"}
+    "tree.indentGuidesStroke": "#0084ff",
+    "tree.inactiveIndentGuidesStroke": "#444", // edn{:dark "#444" :light "#d8d8d8"}
+    "editorIndentGuide.activeBackground1": "#ff00c8", // edn{:dark "#ff00c8" :light "#00ffff"}
+    "editorIndentGuide.background1": "#333", // edn{:dark "#333" :light "#eee"}
+    "editor.lineHighlightBorder": "#ff00c833", // edn{:dark "#ff00c833" :light "#00ffff22"}
+    "editor.lineHighlightBackground": "#ff00c822", // edn{:dark "#ff00c822" :light "#00ffff22"}
+    "editor.selectionBackground": "#ff00c855", // edn{:dark "#ff00c855" :light "#00ffff77"}
+    // TODO: figure out how to get this working.
+    // "editor.selectionForeground": "#f00" // edn{:dark "#ff00c8" :light "#fff"}
+    "calva.inlineErrorForegroundColor": "#ff0000",
+    "calva.inlineForegroundColor": "#ff9000"
+  },
+
+  "workbench.startupEditor": "newUntitledFile",
+  "workbench.tree.indent": 20,
+  "workbench.tree.renderIndentGuides": "always",
+  "workbench.list.horizontalScrolling": true,
+  "workbench.sideBar.location": "left",
+  "workbench.colorTheme": "GitHub Dark Dimmed",
+  "workbench.panel.defaultLocation": "right",
   "workbench.activityBar.location": "hidden"
+
+  //
+  // Next editor setting.
+  // #endregion
+  //////////////////////////////////////////////////////////////////////////////
+
+  //////////////////////////////////////////////////////////////////////////////
+  // Misc temporary stuff added by a keyboard shortcut or a change in the
+  // settings UI.
+  // #region
+  //
+  // TODO: Move it to the appropriate section above.
+  //
 }
 
-// #region Ligature description
+// #endregion
+
+////////////////////////////////////////////////////////////////////////////////
+// Some VSCode documentation that I consider relevant to keep here.
+// #region
 //
-// Ligature description, according to ChatGPT:
+
+//
+//
+// Ligatures
+//
+
+//
+// According to ChatGPT:
 //
 // ---
 // In Visual Studio Code, the `editor.fontLigatures` option can be customized
@@ -695,4 +873,7 @@
 // Seems to be possible to remove a particular ligature by using the ["-zero"]
 // syntax.
 //
+
+//
 // #endregion
+////////////////////////////////////////////////////////////////////////////////
