@@ -215,7 +215,15 @@
 
     // For Clojure and Hiccup.
     ":([^\"]*)[cC]lass\"([^\"]*)\"",
-    ":[\\w-.#>]+\\.([\\w-]*)"
+    ":[\\w-.#>]+\\.([\\w-]*)",
+
+    // For JS variables ending in [cC]lass.
+    "const.+[cC]lass = \"([^\"]*)\"",
+    "let.+[cC]lass = \"([^\"]*)\"",
+    "var.+[cC]lass = \"([^\"]*)\"",
+
+    // For JS classList manipulation.
+    "\\.classList\\.[^\\(]*\\(\"([^\"]*)\"\\)"
 
     // For class-variant-authority. TODO: check if it works.
     // ["cva\\(([^)]*)\\)", "[\"'`]([^\"'`]*).*?[\"'`]"],
@@ -817,7 +825,6 @@
   "workbench.sideBar.location": "left",
   "workbench.colorTheme": "GitHub Dark Dimmed",
   "workbench.panel.defaultLocation": "right",
-  "workbench.activityBar.location": "hidden"
 
   //
   // Next editor setting.
@@ -827,13 +834,12 @@
   //////////////////////////////////////////////////////////////////////////////
   // Misc temporary stuff added by a keyboard shortcut or a change in the
   // settings UI.
-  // #region
   //
   // TODO: Move it to the appropriate section above.
   //
+  "workbench.activityBar.location": "hidden"
+  //////////////////////////////////////////////////////////////////////////////
 }
-
-// #endregion
 
 ////////////////////////////////////////////////////////////////////////////////
 // Some VSCode documentation that I consider relevant to keep here.
