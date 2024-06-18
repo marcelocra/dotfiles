@@ -65,6 +65,11 @@
   },
   {
     "key": "ctrl+t",
+    "command": "workbench.action.togglePanel",
+    "when": "activePanel && terminalFocus && panelMaximized"
+  },
+  {
+    "key": "ctrl+t",
     "command": "workbench.action.terminal.focus",
     "when": "activePanel && !terminalFocus"
   },
@@ -72,6 +77,11 @@
     "key": "ctrl+t",
     "command": "workbench.action.togglePanel",
     "when": "!activePanel"
+  },
+  {
+    "key": "ctrl+`",
+    "command": "workbench.action.togglePanel",
+    "when": "terminal.active"
   },
   {
     "key": "alt+t",
@@ -230,6 +240,12 @@
   {
     // Replicate Conjure behavior.
     "key": "space e e",
+    "command": "calva.evaluateSelection",
+    "when": "vim.active && vim.mode == 'Normal' && calva:keybindingsEnabled && editorTextFocus && editorLangId == 'clojure' && paredit:keyMap =~ /original|strict/"
+  },
+  {
+    // Replicate Conjure behavior.
+    "key": "space e w",
     "command": "calva.evaluateSelection",
     "when": "vim.active && vim.mode == 'Normal' && calva:keybindingsEnabled && editorTextFocus && editorLangId == 'clojure' && paredit:keyMap =~ /original|strict/"
   },

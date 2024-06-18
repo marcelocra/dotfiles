@@ -101,14 +101,14 @@
 
   // -workbench (
   "workbench.colorCustomizations": {
-    "editorCursor.foreground": "#fff", // edn{:dark "#fff" :light "#ff00ea" :dark-opt "#51ff00"}
+    "editorCursor.foreground": "#ff00ea", // edn{:dark "#fff" :light "#ff00ea" :dark-opt "#51ff00"}
     "tree.indentGuidesStroke": "#0084ff",
-    "tree.inactiveIndentGuidesStroke": "#444", // edn{:dark "#444" :light "#d8d8d8"}
-    "editorIndentGuide.activeBackground1": "#ff00c8", // edn{:dark "#ff00c8" :light "#00ffff"}
-    "editorIndentGuide.background1": "#333", // edn{:dark "#333" :light "#eee"}
-    "editor.lineHighlightBorder": "#ff00c833", // edn{:dark "#ff00c833" :light "#00ffff22"}
-    "editor.lineHighlightBackground": "#ff00c822", // edn{:dark "#ff00c822" :light "#00ffff22"}
-    "editor.selectionBackground": "#ff00c855", // edn{:dark "#ff00c855" :light "#00ffff77"}
+    "tree.inactiveIndentGuidesStroke": "#d8d8d8", // edn{:dark "#444" :light "#d8d8d8"}
+    "editorIndentGuide.activeBackground1": "#00ffff", // edn{:dark "#ff00c8" :light "#00ffff"}
+    "editorIndentGuide.background1": "#eee", // edn{:dark "#333" :light "#eee"}
+    "editor.lineHighlightBorder": "#00ffff22", // edn{:dark "#ff00c833" :light "#00ffff22"}
+    "editor.lineHighlightBackground": "#00ffff22", // edn{:dark "#ff00c822" :light "#00ffff22"}
+    "editor.selectionBackground": "#00ffff77", // edn{:dark "#ff00c855" :light "#00ffff77"}
     // TODO: figure out how to get this working.
     // "editor.selectionForeground": "#f00" // edn{:dark "#ff00c8" :light "#fff"}
     "calva.inlineErrorForegroundColor": "#ff0000",
@@ -119,7 +119,7 @@
   "workbench.tree.renderIndentGuides": "always",
   "workbench.list.horizontalScrolling": true,
   "workbench.sideBar.location": "left",
-  "workbench.colorTheme": "GitHub Dark Default",
+  "workbench.colorTheme": "Solarized Light",
   // ) workbench-
 
   // -eslint (
@@ -600,7 +600,7 @@
 
   // -clojure(
   "[clojure]": {
-    "editor.wordSeparators": "\t ()\"':,;~@#$%^&{}[]`",
+    "editor.wordSeparators": "\t ()\"':,;~@#$%^&{}[]/-`.",
     "editor.autoClosingBrackets": "always",
     "editor.autoClosingOvertype": "always",
     "editor.autoClosingQuotes": "always",
