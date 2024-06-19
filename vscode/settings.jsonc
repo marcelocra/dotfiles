@@ -758,7 +758,8 @@
     "vimrc": "vimrc",
     "json5": "jsonc",
     "*.liquid": "html",
-    "*.mdx": "markdown"
+    "*.mdx": "markdown",
+    "*.svg": "html"
   },
   "files.eol": "\n",
 
