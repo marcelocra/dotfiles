@@ -287,7 +287,7 @@
   //   "when": "editorTextFocus && editorLangId == 'clojure' && paredit:keyMap =~ /original|strict/"
   // },
   // {
-  //   "key": "shift+alt+left",
+  //   "key": "alt+shift+left",
   //   "command": "paredit.barfSexpForward",
   //   "when": "editorTextFocus && editorLangId == 'clojure' && paredit:keyMap =~ /original|strict/"
   // },
@@ -297,7 +297,7 @@
   //   "when": "editorTextFocus && editorLangId == 'clojure' && paredit:keyMap =~ /original|strict/"
   // },
   // {
-  //   "key": "shift+alt+right",
+  //   "key": "alt+shift+right",
   //   "command": "paredit.slurpSexpForward",
   //   "when": "editorTextFocus && editorLangId == 'clojure' && paredit:keyMap =~ /original|strict/"
   // },
@@ -317,7 +317,7 @@
   //   "when": "editorTextFocus && editorLangId == 'clojure' && paredit:keyMap =~ /original|strict/"
   // },
   // {
-  //   "key": "shift+alt+s",
+  //   "key": "alt+shift+s",
   //   "command": "paredit.splitSexp",
   //   "when": "editorTextFocus && editorLangId == 'clojure' && paredit:keyMap =~ /original|strict/"
   // },
@@ -468,7 +468,7 @@
   // container, install all extensions and so on. That takes much more time than
   // simply opening the file.
   // {
-  //   "key": "shift+alt+k",
+  //   "key": "alt+shift+k",
   //   "command": "runCommands",
   //   "args": {
   //     "commands": [
@@ -478,38 +478,52 @@
   //     ]
   //   }
   // },
-  {
-    "key": "shift+alt+s f",
-    "command": "workbench.action.openApplicationSettingsJson"
-  },
-  {
-    "key": "shift+alt+s s",
-    "command": "workbench.action.openGlobalSettings"
-  },
   // {
-  //   "key": "shift+alt+s",
-  //   "command": "runCommands",
+  //   "key": "alt+shift+s f",
+  //   "command": "workbench.action.openApplicationSettingsJson"
+  // },
+  // {
+  //   "key": "alt+shift+s s",
+  //   "command": "workbench.action.openGlobalSettings"
+  // },
+  // {
+  //   "key": "alt+shift+s",
+  //   "command": "workbench.action.files.openFolder",
   //   "args": {
-  //     "commands": [
-  //       "workbench.action.openApplicationSettingsJson",
-  //       "workbench.action.openGlobalSettings",
-  //       "workbench.action.openApplicationSettingsJson",
-  //     ]
+  //     "uri": "${",
+  //     "options": {
+  //       "forceNewWindow": true
+  //     }
   //   }
   // },
   {
-    "key": "shift+alt+k",
+    "key": "alt+shift+s",
     "command": "runCommands",
     "args": {
       "commands": [
+        "workbench.action.newGroupRight",
+        "workbench.action.openApplicationSettingsJson",
+        "workbench.action.openGlobalSettings",
+        "workbench.action.moveEditorGroupToNewWindow",
+        "workbench.action.openApplicationSettingsJson"
+      ]
+    }
+  },
+  {
+    "key": "alt+shift+k",
+    "command": "runCommands",
+    "args": {
+      "commands": [
+        "workbench.action.newGroupRight",
         "workbench.action.openGlobalKeybindingsFile",
         "workbench.action.openGlobalKeybindings",
+        "workbench.action.moveEditorGroupToNewWindow",
         "workbench.action.openGlobalKeybindingsFile"
       ]
     }
   },
   {
-    "key": "shift+alt+w",
+    "key": "alt+shift+w",
     "command": "workbench.action.closeAllEditors"
   },
   {
@@ -534,7 +548,7 @@
     }
   },
   {
-    "key": "shift+alt+r",
+    "key": "alt+shift+r",
     "command": "workbench.action.reloadWindow"
   },
   {
@@ -556,7 +570,7 @@
     "when": "sideBarFocus && activeViewlet == 'workbench.view.explorer'"
   },
   {
-    "key": "shift+alt+b",
+    "key": "alt+shift+b",
     "command": "workbench.action.toggleAuxiliaryBar"
   },
 
@@ -645,7 +659,7 @@
     "when": "!activeEditorGroupEmpty"
   },
   {
-    "key": "shift+alt+b",
+    "key": "alt+shift+b",
     "command": "-gitlens.toggleCodeLens",
     "when": "editorTextFocus && !gitlens:disabled && !gitlens:disabledToggleCodeLens && config.gitlens.keymap == 'alternate'"
   },
@@ -673,7 +687,7 @@
     "when": "editorTextFocus && vim.active && vim.use<C-i> && !inDebugRepl"
   },
   {
-    "key": "shift+alt+l",
+    "key": "alt+shift+l",
     "command": "workbench.action.tasks.runTask",
     "args": "toggle-light-dark"
   },
