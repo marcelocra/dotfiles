@@ -502,8 +502,8 @@
       "commands": ["workbench.action.splitEditorDown"]
     },
     {
-      "before": ["<c-f>"],
-      "after": ["/"]
+      "before": ["/"],
+      "commands": ["actions.find"]
     }
   ],
   // vimnormal-
