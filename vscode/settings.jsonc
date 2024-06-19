@@ -652,15 +652,49 @@
   // Editor
   //
 
-  "editor.fontFamily": "Cascadia Code NF",
-  "editor.fontSize": 15, // edn{:desktop 15 :notebook 19}
+  //
+  //
+  // Cascadia Code font
+  //
+
+  // "editor.fontFamily": "Cascadia Code NF",
+  // "editor.fontSize": 11, // edn{:desktop 15 :notebook 19 :small 11}
+  // "editor.lineNumbers": "on",
+  // "editor.fontWeight": "100", // edn{:desktop "300" :notebook "300" :small "100"}
+  // "editor.fontLigatures": "'ss01', 'ss19', 'ss20', 'calt' 0",
+  // // Available stylistic sets:
+  // // - cursive italics: 'ss01'
+  // // - alternate not equal: 'ss02' ~= (appears as !=)
+  // // - serbian locl forms (italic only): 'ss03'
+  // // - slashed zero: 'ss19'
+  // // - graphical control characters: 'ss20'
+  // // Ligature test:
+  // //  ! " # $ % & ' ( ) * + , - . / : ; < = > ? @ [ \ ] ^ _ ` { | } ~
+  // //  ~ < > = + _ _ ( ) * & ^ % $ # @ ! { } [ ] \ | / ? : ; , . ` ' " ´ ` ˜
+  // //  => -> <> <= >= != !== === ~= |> <- --> || .- :- .= {..}
+
+  //
+  //
+  // Fira Code font
+  //
+  "editor.fontFamily": "Fira Code",
+  "editor.fontSize": 15, // edn{:desktop 15 :notebook ?? :small 11}
   "editor.lineNumbers": "on",
-  "editor.fontWeight": "300", // edn{:desktop "300" :notebook "300"}
-  "editor.fontLigatures": "'calt', 'ss01', 'ss02', 'ss03', 'ss19', 'ss20'",
-  // Ligature tests:
+  "editor.fontWeight": "400", // edn{:desktop "400" :notebook "300" :small "100"}
+  "editor.fontLigatures": "'calt' 0, 'cv01', 'cv02', 'cv05', 'cv09', 'ss05', 'ss03', 'cv16', 'cv31', 'cv29', 'cv30', 'calt' 0, 'cv25', 'cv26', 'cv32', 'cv27', 'cv28', 'ss10'",
+  // Available stylistic sets:
+  // - cv01: a | cv02: g | cv03...06: i | cv07..10: l | ss01: r | zero: dotted zero
+  // - cv11..13: empty zero, reverse dashed zero, long dotted zero
+  // - cv14: 3 | onum: numbers not middle aligned | cv17: ~ height | ss05: @
+  // - ss04: $ | cv18: % | ss03: & | cv15..16: * | cv31: () | cv29: {}
+  // - cv30: longer vertical bar | ss02: <= >= | cv19..20: <= | cv23: >=
+  // - cv21..22: =< | ss08: == === != !== | cv24: /= | ss09: >>= <<= ||= |=
+  // - cv25: .- | cv26: :- | cv32: .= | cv27: [] | cv28: {..} | ss06: \\
+  // - ss07: =~ !~ | ss10: Fl Tl fi fj fl ft
+  // Ligature test:
   //  ! " # $ % & ' ( ) * + , - . / : ; < = > ? @ [ \ ] ^ _ ` { | } ~
   //  ~ < > = + _ _ ( ) * & ^ % $ # @ ! { } [ ] \ | / ? : ; , . ` ' " ´ ` ˜
-  //  => -> <> <= >= != !== === |> <- --> ||
+  //  => -> <> <= >= != !== === ~= |> <- --> || .- :- .= {..}
 
   "editor.codeActionsOnSave": {
     "source.fixAll.eslint": "explicit",
