@@ -223,7 +223,10 @@
     "var.+[cC]lass = \"([^\"]*)\"",
 
     // For JS classList manipulation.
-    "\\.classList\\.[^\\(]*\\(\"([^\"]*)\"\\)"
+    "\\.classList\\.[^\\(]*\\(\"([^\"]*)\"\\)",
+
+    // For html-like attributes.
+    ".+[cC]lass=\"([^\"]*)\""
 
     // For class-variant-authority. TODO: check if it works.
     // ["cva\\(([^)]*)\\)", "[\"'`]([^\"'`]*).*?[\"'`]"],
