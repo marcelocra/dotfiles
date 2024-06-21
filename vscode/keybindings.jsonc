@@ -504,7 +504,7 @@
         "workbench.action.newGroupRight",
         "workbench.action.openApplicationSettingsJson",
         "workbench.action.openGlobalSettings",
-        "workbench.action.moveEditorGroupToNewWindow",
+        // "workbench.action.moveEditorGroupToNewWindow",
         "workbench.action.openApplicationSettingsJson"
       ]
     }
@@ -517,7 +517,7 @@
         "workbench.action.newGroupRight",
         "workbench.action.openGlobalKeybindingsFile",
         "workbench.action.openGlobalKeybindings",
-        "workbench.action.moveEditorGroupToNewWindow",
+        // "workbench.action.moveEditorGroupToNewWindow",
         "workbench.action.openGlobalKeybindingsFile"
       ]
     }
