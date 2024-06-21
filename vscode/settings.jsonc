@@ -684,7 +684,7 @@
   "editor.fontSize": 13, // edn{:desktop 15 :notebook ?? :small 11}
   "editor.lineNumbers": "on",
   "editor.fontWeight": "100", // edn{:desktop "400" :notebook "300" :small "100"}
-  "editor.fontLigatures": "'calt' 0, 'cv01', 'cv02', 'cv05', 'cv09', 'ss05', 'ss03', 'cv16', 'cv31', 'cv29', 'cv30', 'cv25', 'cv26', 'cv32', 'cv27', 'cv28', 'ss10', 'cv14', 'cv12'",
+  "editor.fontLigatures": "'calt' 0, 'cv01', 'cv02', 'cv05', 'cv09', 'ss05', 'ss03', 'cv16', 'cv30', 'cv25', 'cv26', 'cv32', 'cv28', 'ss10', 'cv14', 'cv12'",
   // Available stylistic sets:
   // - | cv01: a      | cv02: g  | cv03...06: i | cv07..10: l | ss01: r
   // - | zero: dot    | cv11..13: empty zero, reverse dashed zero, long dot zero

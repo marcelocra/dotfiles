@@ -9,8 +9,15 @@
   // "font_face": "Cascadia Code PL Light",   // Good size: 11
   // "font_face": "Iosevka SS04 Light",          // Good size: 11
   // "font_face": "Source Code Pro",   // Good size: 11
-  "font_face": "CodeNewRoman Nerd Font",   // Good size: 11
-  "font_size": 12,
+  // "font_face": "Cascadia Code NF",   // Good size: 11
+
+  "font_face": "Fira Code",   // Good size: 11
+  "font_options": [ // -> => <> <=>
+    "calt",
+    "cv01", "cv02", "cv05", "cv09", "ss05", "ss03", "cv16","cv31", "cv29",
+    "cv30", "cv25", "cv26", "cv32", "cv27", "cv28", "ss10", "cv14", "cv12",
+  ],
+  "font_size": 11,
 
   // These settings control the size of the caret
   "caret_extra_top": 0,
@@ -242,11 +249,11 @@
   // Mac-only options: ->
   //  - "no_round": Don't round glyph widths for monospace fonts when
   //        "font_size" is small.
-  "font_options": ["ss01", "ss02", "ss03", "ss04", "ss05", "ss06", "ss07"],
+  // "font_options": ["ss01", "ss02", "ss03", "ss04", "ss05", "ss06", "ss07"],
 
 
   "ignored_packages": [
-    "Vintage"
+    "Vintage",
   ],
 
 
