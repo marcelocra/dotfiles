@@ -501,7 +501,7 @@
     "command": "runCommands",
     "args": {
       "commands": [
-        "workbench.action.newGroupRight",
+        // "workbench.action.newGroupRight",
         "workbench.action.openApplicationSettingsJson",
         "workbench.action.openGlobalSettings",
         // "workbench.action.moveEditorGroupToNewWindow",
@@ -514,7 +514,7 @@
     "command": "runCommands",
     "args": {
       "commands": [
-        "workbench.action.newGroupRight",
+        // "workbench.action.newGroupRight",
         "workbench.action.openGlobalKeybindingsFile",
         "workbench.action.openGlobalKeybindings",
         // "workbench.action.moveEditorGroupToNewWindow",
@@ -540,11 +540,7 @@
     "key": "alt+r",
     "command": "runCommands",
     "args": {
-      "commands": [
-        "typescript.restartTsServer",
-        "eslint.restart",
-        "svelte.restartLanguageServer"
-      ]
+      "commands": ["typescript.restartTsServer", "eslint.restart", "svelte.restartLanguageServer"]
     }
   },
   {
@@ -699,7 +695,7 @@
     "key": "ctrl+n",
     "command": "workbench.action.tasks.runTask",
     "args": "run-node-for-current-file",
-    "when": "vim.mode == 'Insert'"
+    "when": "vim.mode == 'Insert' && editorTextFocus"
   },
   {
     "key": "tab",
@@ -725,5 +721,32 @@
     "key": "shift+tab",
     "command": "-calva-fmt.tabDedent",
     "when": "calva:keybindingsEnabled && editorTextFocus && !editorReadOnly && !hasOtherSuggestions && !suggestWidgetVisible && editorLangId == 'clojure'"
+  },
+  {
+    "key": "shift+alt+n",
+    "command": "workbench.action.files.newUntitledFile"
+  },
+  {
+    "key": "ctrl+n",
+    "command": "-workbench.action.files.newUntitledFile"
+  },
+  {
+    "key": "ctrl+p",
+    "command": "search.action.focusPreviousSearchResult",
+    "when": "inSearchEditor"
+  },
+  {
+    "key": "ctrl+k",
+    "command": "workbench.action.quickTextSearch"
+  },
+  {
+    "key": "ctrl+j",
+    "command": "quickInput.next",
+    "when": "inQuickInput && quickInputType == 'quickPick'"
+  },
+  {
+    "key": "ctrl+k",
+    "command": "quickInput.previous",
+    "when": "inQuickInput && quickInputType == 'quickPick'"
   }
 ]
