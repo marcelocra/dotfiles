@@ -284,7 +284,8 @@ iab shebang #!/usr/bin/env
 " Vim modeline with my preferred defaults.
 iab vimmode vim: fdm=marker:fmr={{{,}}}:fdl=1:fen:ai:et:ts=4:sw=4
 iab vimmodejs vim:fdm=marker:fmr={,}:fdl=1:fen:ai:et:ts=2:sw=2
-iab vimmodemd filetype=markdown:tw=80
+iab vimmodemd filetype=markdown
+iab vimmodew tw=80
 
 " Comment to prevent clojure auto-formatters from wrapping sexps.
 iab noparenwrap ;; Prevents auto-formatter from wrapping.
