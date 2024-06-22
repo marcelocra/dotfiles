@@ -840,20 +840,45 @@
 
   //
   //
+  // Search
+  //
+
+  "search.defaultViewMode": "tree",
+  "search.mode": "reuseEditor",
+  "search.searchOnTypeDebouncePeriod": 500,
+  "search.showLineNumbers": true,
+  "search.smartCase": true,
+
+  //
+  //
   // Workbench
   //
 
   "workbench.colorCustomizations": {
-    "editorCursor.foreground": "#ff00ea", // edn{:dark "#fff" :light "#ff00ea" :dark-opt "#51ff00"}
+    "editorCursor.foreground": "#fff", // edn{:dark "#fff" :light "#ff00ea" :dark-opt "#51ff00"}
+
     "tree.indentGuidesStroke": "#0084ff",
-    "tree.inactiveIndentGuidesStroke": "#d8d8d8", // edn{:dark "#444" :light "#d8d8d8"}
-    "editorIndentGuide.activeBackground1": "#00ffff", // edn{:dark "#ff00c8" :light "#00ffff"}
-    "editorIndentGuide.background1": "#eee", // edn{:dark "#333" :light "#eee"}
-    "editor.lineHighlightBorder": "#00ffff22", // edn{:dark "#ff00c833" :light "#00ffff22"}
-    "editor.lineHighlightBackground": "#00ffff22", // edn{:dark "#ff00c822" :light "#00ffff22"}
-    "editor.selectionBackground": "#00ffff77", // edn{:dark "#ff00c855" :light "#00ffff77"}
+    "tree.inactiveIndentGuidesStroke": "#444", // edn{:dark "#444" :light "#d8d8d8"}
+
+    "editorIndentGuide.activeBackground1": "#ff00c8", // edn{:dark "#ff00c8" :light "#00ffff"}
+    "editorIndentGuide.background1": "#333", // edn{:dark "#333" :light "#eee"}
+
+    "editor.lineHighlightBorder": "#ff00c833", // edn{:dark "#ff00c833" :light "#00ffff22"}
+    "editor.lineHighlightBackground": "#ff00c822", // edn{:dark "#ff00c822" :light "#00ffff22"}
+
     // TODO: figure out how to get this working.
-    // "editor.selectionForeground": "#f00" // edn{:dark "#ff00c8" :light "#fff"}
+    // "editor.selectionForeground": "#ff00c8" // edn{:dark "#ff00c8" :light "#fff"}
+    "editor.selectionBackground": "#ff00c855", // edn{:dark "#ff00c855" :light "#00ffff77"}
+
+    "editor.selectionHighlightBorder": "#ffffff81", // edn{:dark "#ffffff81" :light "#ffffffdd"}
+    "editor.selectionHighlightBackground": "#ffffff36", // edn{:dark "#ffffff36" :light "#ffffff36"}
+
+    "editor.wordHighlightBorder": "#ffffff66", // edn{:dark "#ffffff66" :light "#00000033"}
+    "editor.wordHighlightBackground": "#00000066", // edn{:dark "#00000066" :light "#ffffff44"}
+
+    "editor.findMatchBackground": "#ffffffe8", // edn{:dark "#ffffffe8" :light "#000000e8"}
+    "editor.findMatchHighlightBackground": "#d400ff56", // edn{:dark "#d400ff56" :light "#d400ff56"}
+
     "calva.inlineErrorForegroundColor": "#ff0000",
     "calva.inlineForegroundColor": "#ff9000"
   },
@@ -863,21 +888,9 @@
   "workbench.tree.renderIndentGuides": "always",
   "workbench.list.horizontalScrolling": true,
   "workbench.sideBar.location": "left",
-  "workbench.colorTheme": "Solarized Light",
-  "workbench.panel.defaultLocation": "right",
+  "workbench.colorTheme": "GitHub Dark Dimmed",
+  "workbench.panel.defaultLocation": "right"
 
-  //
-  // Next editor setting.
-  // #endregion
-  //////////////////////////////////////////////////////////////////////////////
-
-  //////////////////////////////////////////////////////////////////////////////
-  // Misc temporary stuff added by a keyboard shortcut or a change in the
-  // settings UI.
-  //
-  // TODO: Move it to the appropriate section above.
-  //
-  "workbench.activityBar.location": "hidden"
   //////////////////////////////////////////////////////////////////////////////
 }
 
