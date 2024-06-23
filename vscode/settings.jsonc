@@ -876,7 +876,7 @@
     "editor.wordHighlightBorder": "#ffffff66", // edn{:dark "#ffffff66" :light "#00000033"}
     "editor.wordHighlightBackground": "#00000066", // edn{:dark "#00000066" :light "#ffffff44"}
 
-    "editor.findMatchBackground": "#ffffffe8", // edn{:dark "#ffffffe8" :light "#000000e8"}
+    "editor.findMatchBackground": "#d400ff88", // edn{:dark "#d400ff88" :light "#000000e8"}
     "editor.findMatchHighlightBackground": "#d400ff56", // edn{:dark "#d400ff56" :light "#d400ff56"}
 
     "calva.inlineErrorForegroundColor": "#ff0000",
