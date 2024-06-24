@@ -743,7 +743,8 @@
   },
   {
     "key": "ctrl+k",
-    "command": "workbench.action.quickTextSearch"
+    "command": "workbench.action.quickTextSearch",
+    "when": "!suggestWidgetVisible"
   },
   {
     "key": "ctrl+j",
