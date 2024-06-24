@@ -508,6 +508,10 @@
       "before": ["/"],
       "commands": ["actions.find"]
     }
+    // {
+    //   "before": ["/"],
+    //   "commands": ["actions.find"]
+    // }
   ],
   // vimnormal-
 
