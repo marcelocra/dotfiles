@@ -157,12 +157,17 @@
   {
     "key": "ctrl+d",
     "command": "editor.action.addSelectionToNextFindMatch",
-    "when": "editorTextFocus && vim.active && vim.mode == 'Insert' || vim.mode == 'Visual'"
+    "when": "editorTextFocus && vim.active && (vim.mode == 'Insert' || vim.mode == 'Visual')"
   },
   {
-    "key": "ctrl+x",
+    "key": "ctrl+n",
     "command": "editor.action.moveSelectionToNextFindMatch",
-    "when": "editorTextFocus && vim.active && vim.mode == 'Insert' || vim.mode == 'Visual'"
+    "when": "editorTextFocus && vim.active && (vim.mode == 'Insert' || vim.mode == 'Visual')"
+  },
+  {
+    "key": "ctrl+p",
+    "command": "editor.action.moveSelectionToPreviousFindMatch",
+    "when": "editorTextFocus && vim.active && (vim.mode == 'Insert' || vim.mode == 'Visual')"
   },
 
   //============================================================================
@@ -541,7 +546,8 @@
     "command": "runCommands",
     "args": {
       "commands": ["typescript.restartTsServer", "eslint.restart", "svelte.restartLanguageServer"]
-    }
+    },
+    "when": "editorTextFocus && (vim.mode == 'Normal' || vim.mode == 'Insert')"
   },
   {
     "key": "alt+shift+r",
