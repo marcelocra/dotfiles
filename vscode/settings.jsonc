@@ -503,10 +503,6 @@
     {
       "before": ["-"],
       "commands": ["workbench.action.splitEditorDown"]
-    },
-    {
-      "before": ["/"],
-      "commands": ["actions.find"]
     }
     // {
     //   "before": ["/"],
@@ -643,15 +639,6 @@
   "diffEditor.ignoreTrimWhitespace": false,
   "outline.collapseItems": "alwaysCollapse",
   "notebook.lineNumbers": "on",
-  "search.exclude": {
-    ".calva/": true,
-    "**/.clj-kondo": true,
-    "**/.lsp": true,
-    "**/*.code-search": true,
-    "**/bower_components": true,
-    "**/node_modules": true,
-    "**/out": true
-  },
   "html.suggest.html5": false,
 
   //
@@ -664,21 +651,21 @@
   // Cascadia Code font
   //
 
-  "editor.fontFamily": "Cascadia Code NF",
-  "editor.fontSize": 13, // edn{:desktop 13 :notebook 19 :small 11}
-  "editor.lineNumbers": "on",
-  "editor.fontWeight": "300", // edn{:desktop "300" :notebook "300" :small "100"}
-  "editor.fontLigatures": "'ss01', 'ss19', 'ss20', 'calt' 0",
-  // Available stylistic sets:
-  // - cursive italics: 'ss01'
-  // - alternate not equal: 'ss02' ~= (appears as !=)
-  // - serbian locl forms (italic only): 'ss03'
-  // - slashed zero: 'ss19'
-  // - graphical control characters: 'ss20'
-  // Ligature test:
-  //  ! " # $ % & ' ( ) * + , - . / : ; < = > ? @ [ \ ] ^ _ ` { | } ~
-  //  ~ < > = + _ _ ( ) * & ^ % $ # @ ! { } [ ] \ | / ? : ; , . ` ' " ´ ` ˜
-  //  => -> <> <= >= != !== === ~= |> <- --> || .- :- .= {..}
+  // "editor.fontFamily": "Cascadia Code NF",
+  // "editor.fontSize": 13, // edn{:desktop 13 :notebook 19 :small 11}
+  // "editor.lineNumbers": "on",
+  // "editor.fontWeight": "300", // edn{:desktop "300" :notebook "300" :small "100"}
+  // "editor.fontLigatures": "'ss01', 'ss19', 'ss20', 'calt' 0",
+  // // Available stylistic sets:
+  // // - cursive italics: 'ss01'
+  // // - alternate not equal: 'ss02' ~= (appears as !=)
+  // // - serbian locl forms (italic only): 'ss03'
+  // // - slashed zero: 'ss19'
+  // // - graphical control characters: 'ss20'
+  // // Ligature test:
+  // //  ! " # $ % & ' ( ) * + , - . / : ; < = > ? @ [ \ ] ^ _ ` { | } ~
+  // //  ~ < > = + _ _ ( ) * & ^ % $ # @ ! { } [ ] \ | / ? : ; , . ` ' " ´ ` ˜
+  // //  => -> <> <= >= != !== === ~= |> <- --> || .- :- .= {..}
 
   //
   //
@@ -688,7 +675,7 @@
   // "editor.fontFamily": "Fira Code",
   // "editor.fontSize": 13, // edn{:desktop 15 :notebook ?? :small 11}
   // "editor.lineNumbers": "on",
-  // "editor.fontWeight": "100", // edn{:desktop "400" :notebook "300" :small "100"}
+  // "editor.fontWeight": "100", // edn{:desktop "400" :notebook "??" :small "100"}
   // "editor.fontLigatures": "'calt' 0, 'cv01', 'cv02', 'cv05', 'cv09', 'ss05', 'ss03', 'cv16', 'cv30', 'cv25', 'cv26', 'cv32', 'cv28', 'ss10', 'cv14', 'cv12'",
   // // Available stylistic sets:
   // // - | cv01: a      | cv02: g  | cv03...06: i | cv07..10: l | ss01: r
@@ -704,6 +691,31 @@
   // //  ! " # $ % & ' ( ) * + , - . / : ; < = > ? @ [ \ ] ^ _ ` { | } ~
   // //  ~ < > = + _ _ ( ) * & ^ % $ # @ ! { } [ ] \ | / ? : ; , . ` ' " ´ ` ˜
   // //  => -> <> <= >= != !== === ~= |> <- --> || .- :- .= {..}
+
+  //
+  //
+  // JetBrainsMono font
+  //
+
+  "editor.fontFamily": "JetBrains Mono",
+  "editor.fontSize": 13, // edn{:desktop 13 :notebook ?? :small 11}
+  "editor.lineNumbers": "on",
+  "editor.fontWeight": "200", // edn{:desktop "200" :notebook "??" :small "100"}
+  "editor.fontLigatures": "'ss02', 'ss19', 'ss20', 'zero', 'cv03', 'cv04', 'cv16', 'cv19', 'cv20', 'cv99'",
+  // Available stylistic sets:
+  // - | cv01,05: l | cv02: t | cv03: g | cv04: j | cv06: m  | cv07: w | cv08: k
+  // - | cv09,17: f | cv10: r | cv11: y | cv12: u | cv14: $¢ | cv15: & | cv16: Q
+  // - | cv18: 269  | cv19: 8 | cv20: 5 | cv99: bg inverted color
+  // - ss01: classic construction
+  // - ss02: closed construction
+  // - ss19: broken equals ligatures (yay!)
+  // - ss20: raised bar f
+  // - zero: slashed zero
+  // - frac: fractions
+  // Ligature test:
+  //  ! " # $ % & ' ( ) * + , - . / : ; < = > ? @ [ \ ] ^ _ ` { | } ~
+  //  ~ < > = + _ _ ( ) * & ^ % $ # @ ! { } [ ] \ | / ? : ; , . ` ' " ´ ` ˜
+  //  => -> <> <= >= != !== === ~= |> <- --> || .- :- .= {..}
 
   "editor.codeActionsOnSave": {
     "source.fixAll.eslint": "explicit",
@@ -852,6 +864,17 @@
   "search.searchOnTypeDebouncePeriod": 500,
   "search.showLineNumbers": true,
   "search.smartCase": true,
+  "search.exclude": {
+    "**/.calva/": true,
+    "**/.clj-kondo/": true,
+    "**/.lsp/": true,
+    "**/*.code-search": true,
+    "**/bower_components/": true,
+    "**/node_modules/": true,
+    "**/dist/": true,
+    "**/target/": true,
+    "**/out/": true
+  },
 
   //
   //
@@ -893,7 +916,8 @@
   "workbench.list.horizontalScrolling": true,
   "workbench.sideBar.location": "left",
   "workbench.colorTheme": "GitHub Dark Dimmed",
-  "workbench.panel.defaultLocation": "right"
+  "workbench.panel.defaultLocation": "right",
+  "workbench.activityBar.location": "hidden"
 
   //////////////////////////////////////////////////////////////////////////////
 }
