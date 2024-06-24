@@ -831,7 +831,7 @@
   //
 
   "terminal.integrated.tabs.enabled": true,
-  "terminal.integrated.fontFamily": "'MesloLGS Nerd Font', 'MesloLGS NF', monospace",
+  "terminal.integrated.fontFamily": "'JetBrains Mono', 'MesloLGS Nerd Font', 'MesloLGS NF', monospace",
   "terminal.integrated.fontSize": 13, // edn{:desktop 13 :notebook 19}
   "terminal.integrated.fontWeight": "normal",
   "terminal.integrated.macOptionClickForcesSelection": true,
@@ -843,6 +843,10 @@
   "terminal.integrated.minimumContrastRatio": 1,
   "terminal.integrated.enableVisualBell": true,
   "terminal.integrated.bellDuration": 3000,
+  "terminal.integrated.cursorStyle": "line",
+  "terminal.integrated.cursorStyleInactive": "outline",
+  "terminal.integrated.cursorWidth": 1,
+  "terminal.integrated.cursorBlinking": true,
 
   //
   //
