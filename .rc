@@ -381,14 +381,10 @@ alias t="pushd $MCRA_TMP_PLAYGROUND"
 alias b="popd"
 
 js () {
-    if [[ -f 'pnpm-lock.yaml' ]]; then
-        pnpm "$@"
+    if [[ -f 'bun.lockb' || -f 'yarn.lock' || -f 'pnpm-lock.yaml' ]]; then
+        echo 'Consider converting this project to use `npm` because it works'
     elif [[ -f 'package-lock.json' ]]; then
         npm "$@"
-    elif [[ -f 'yarn.lock' ]]; then
-        yarn "$@"
-    elif [[ -f 'bun.lockb' ]]; then
-        bun "$@"
     else
         echo 'This project does not have a lockfile'
     fi
