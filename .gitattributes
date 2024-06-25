@@ -1,9 +1,18 @@
-*.png filter=lfs diff=lfs merge=lfs -text
-*.ico filter=lfs diff=lfs merge=lfs -text
+# Linguist examples
+# -----------------
+# linguist-detectable        languages.yml         Included in stats, even if language's type is data or prose
+# linguist-documentation     documentation.yml     Excluded from stats
+# linguist-generated         generated.rb          Excluded from stats, hidden in diffs
+# linguist-language=name     languages.yml         Highlighted and classified as name
+# linguist-vendored          vendor.yml            Excluded from stats
+
+# Force GitHub to show json as jsonc, to avoid weird red highlighting.
+**/*.json linguist-language=jsonc
 
 # Ignore these, as they are not really code code.
+
+# vendored
 apps/** linguist-vendored
-archives/** linguist-generated
 docs/** linguist-vendored
 sublime-text/** linguist-vendored
 vim/** linguist-vendored
@@ -12,9 +21,18 @@ windows/** linguist-vendored
 **/*.json linguist-vendored
 **/*.sh linguist-vendored
 .rc* linguist-vendored
-bun.lockb linguist-generated
 .tmux.conf linguist-vendored
 .npmrc linguist-vendored
 .gitconfig linguist-vendored
 .XCompose linguist-vendored
 
+# generated
+archives/** linguist-generated
+bun.lockb linguist-generated
+
+
+# Git LFS
+# -------
+
+*.png filter=lfs diff=lfs merge=lfs -text
+*.ico filter=lfs diff=lfs merge=lfs -text
