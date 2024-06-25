@@ -1,0 +1,56 @@
+{
+	// Place your snippets for dockerfile here. Each snippet is defined under a snippet name and has a prefix, body and 
+	// description. The prefix is what is used to trigger the snippet and the body will be expanded and inserted. Possible variables are:
+	// $1, $2 for tab stops, $0 for the final cursor position, and ${1:label}, ${2:another} for placeholders. Placeholders with the 
+	// same ids are connected.
+	// Example:
+	// "Print to console": {
+	// 	"prefix": "log",
+	// 	"body": [
+	// 		"console.log('$1');",
+	// 		"$2"
+	// 	],
+	// 	"description": "Log output to console"
+	// }
+	"dockerfile essentials": {
+		"prefix": "init",
+		"body": [
+			"# syntax=docker/dockerfile:1",
+			"FROM ubuntu:22.04",
+			"",
+			"ENV HOME=\"/root\"",
+			"",
+			"ARG shell_rc=\"\\${HOME}/.bashrc\"",
+			"",
+			"# Create a reasonably decent prompt line.",
+			"RUN echo 'PS1=\"\\\\$(printf \\\"=%.0s\\\" \\\\$(seq 1 \\\\\\${COLUMNS}))\\n[\\\\$(TZ=\\\"America/Sao_Paulo\\\" date \\\"+%F %T\\\")] [\\w]\\n# \"' >> \\${shell_rc}",
+			"",
+			"# Update and install essentials.",
+			"RUN apt-get update",
+			"RUN apt-get install -y wget git tmux ripgrep curl unzip neovim less xz-utils fontconfig",
+			"",
+			"# Install git-lfs.",
+			"RUN wget https://github.com/git-lfs/git-lfs/releases/download/v3.3.0/git-lfs-linux-amd64-v3.3.0.tar.gz",
+			"RUN tar zxf git-lfs-linux-amd64-v3.3.0.tar.gz",
+			"RUN mv git-lfs-3.3.0/git-lfs /usr/bin",
+			"RUN rm -f ./git-lfs-linux-amd64-v3.3.0.tar.gz",
+			"RUN rm -rf ./git-lfs-3.3.0/",
+			"",
+			"# Download my helpers.",
+			"RUN wget https://raw.githubusercontent.com/marcelocra/dev/main/config-files/.tmux.conf -P ~",
+			"RUN wget https://raw.githubusercontent.com/marcelocra/dev/main/config-files/.gitconfig -P ~",
+			"RUN wget https://raw.githubusercontent.com/marcelocra/dev/main/config-files/.gitconfig.personal.gitconfig -P ~",
+			"RUN wget https://raw.githubusercontent.com/marcelocra/dev/main/config-files/init_shell.sh -P ~",
+			"RUN echo 'source ~/init_shell.sh' >> \\${shell_rc}",
+			""
+		]
+	},
+	"dockerfile rust": {
+		"prefix": "rust",
+		"body": [
+			"# Install Rust. '-y' is for non-interactive mode.",
+			"RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y",
+			""
+		]
+	},
+}

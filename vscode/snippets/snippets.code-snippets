@@ -1,8 +1,8 @@
 // Place your global snippets here. Each snippet is defined under a snippet name
 // and has a scope, prefix, body and description. Add comma separated ids of the
-// languages where the snippet is applicable in the scope field. If scope is left
-// empty or omitted, the snippet gets applied to all languages. The prefix is
-// what is used to trigger the snippet and the body will be expanded and
+// languages where the snippet is applicable in the scope field. If scope is
+// left empty or omitted, the snippet gets applied to all languages. The prefix
+// is what is used to trigger the snippet and the body will be expanded and
 // inserted. Possible variables are: $1, $2 for tab stops, $0 for the final
 // cursor position, and ${1:label}, ${2:another} for placeholders. Placeholders
 // with the same ids are connected.
@@ -71,106 +71,6 @@
       "await new Promise((resolve) => setTimeout(resolve, $1))"
     ]
   },
-  // -- PRETTIER -----
-  "prettier essentials": {
-    "scope": "json",
-    "description": "All projects should use these.",
-    "prefix": "prettier-essentials",
-    "body": [
-      "\"endOfLine\": \"lf\",",
-      "\"printWidth\": 80,",
-      "\"proseWrap\": \"preserve\",",
-      "\"tabWidth\": 2,",
-      "\"useTabs\": false,",
-      "\"rulers\": [80]"
-    ]
-  },
-  "prettier global overrides": {
-    "scope": "json",
-    "prefix": "prettier-global-overrides",
-    "body": [
-      "\"overrides\": [",
-      "  {",
-      "    \"files\": \"*.md\",",
-      "    \"options\": {",
-      "      \"parser\": \"markdown\",",
-      "      \"printWidth\": 80,",
-      "      \"proseWrap\": \"always\"",
-      "    }",
-      "  },",
-      "  {",
-      "    \"files\": [\".prettierrc\"],",
-      "    \"options\": {",
-      "      \"parser\": \"json\"",
-      "    }",
-      "  }",
-      "]"
-    ]
-  },
-  "prettier javascript defaults": {
-    "scope": "json",
-    "prefix": "prettier-javascript-defaults",
-    "body": [
-      "\"arrowParens\": \"always\",",
-      "\"bracketSpacing\": true,",
-      "\"insertPragma\": false,",
-      "\"singleAttributePerLine\": false,",
-      "\"bracketSameLine\": false,",
-      "\"quoteProps\": \"as-needed\",",
-      "\"requirePragma\": false,",
-      "\"semi\": true,",
-      "\"singleQuote\": true,",
-      "\"trailingComma\": \"es5\",",
-      "\"htmlWhitespaceSensitivity\": \"css\",",
-      "\"jsxBracketSameLine\": false,",
-      "\"jsxSingleQuote\": false,",
-      "\"vueIndentScriptAndStyle\": false,"
-    ]
-  },
-  // -- DOCKERFILE -----
-  "dockerfile essentials": {
-    "scope": "dockerfile",
-    "prefix": "init",
-    "body": [
-      "# syntax=docker/dockerfile:1",
-      "FROM ubuntu:22.04",
-      "",
-      "ENV HOME=\"/root\"",
-      "",
-      "ARG shell_rc=\"\\${HOME}/.bashrc\"",
-      "",
-      "# Create a reasonably decent prompt line.",
-      "RUN echo 'PS1=\"\\\\$(printf \\\"=%.0s\\\" \\\\$(seq 1 \\\\\\${COLUMNS}))\\n[\\\\$(TZ=\\\"America/Sao_Paulo\\\" date \\\"+%F %T\\\")] [\\w]\\n# \"' >> \\${shell_rc}",
-      "",
-      "# Update and install essentials.",
-      "RUN apt-get update",
-      "RUN apt-get install -y wget git tmux ripgrep curl unzip neovim less xz-utils fontconfig",
-      "",
-      "# Install git-lfs.",
-      "RUN wget https://github.com/git-lfs/git-lfs/releases/download/v3.3.0/git-lfs-linux-amd64-v3.3.0.tar.gz",
-      "RUN tar zxf git-lfs-linux-amd64-v3.3.0.tar.gz",
-      "RUN mv git-lfs-3.3.0/git-lfs /usr/bin",
-      "RUN rm -f ./git-lfs-linux-amd64-v3.3.0.tar.gz",
-      "RUN rm -rf ./git-lfs-3.3.0/",
-      "",
-      "# Download my helpers.",
-      "RUN wget https://raw.githubusercontent.com/marcelocra/dev/main/config-files/.tmux.conf -P ~",
-      "RUN wget https://raw.githubusercontent.com/marcelocra/dev/main/config-files/.gitconfig -P ~",
-      "RUN wget https://raw.githubusercontent.com/marcelocra/dev/main/config-files/.gitconfig.personal.gitconfig -P ~",
-      "RUN wget https://raw.githubusercontent.com/marcelocra/dev/main/config-files/init_shell.sh -P ~",
-      "RUN echo 'source ~/init_shell.sh' >> \\${shell_rc}",
-      ""
-    ]
-  },
-  "dockerfile rust": {
-    "scope": "dockerfile",
-    "prefix": "rust",
-    "body": [
-      "# Install Rust. '-y' is for non-interactive mode.",
-      "RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y",
-      ""
-    ]
-  },
   "javascript type": {
     "scope": "javascript,typescript,javascriptreact,typescriptreact",
     "prefix": "type",
@@ -185,40 +85,10 @@
       "//@ts-ignore"
     ]
   },
-  "md fold region": {
-    "scope": "markdown",
-    "prefix": [
-      "fold",
-      "region"
-    ],
-    "body": [
-      "<!-- #region $1 -->",
-      "$2",
-      "<!-- #endregion -->"
-    ]
-  },
   "shebang": {
     "prefix": "shebang",
     "body": [
       "#!/usr/bin/env $1"
-    ]
-  },
-  "md checkbox": {
-    "scope": "markdown",
-    "prefix": [
-      "--"
-    ],
-    "body": [
-      "- [ ] "
-    ]
-  },
-  "md numbered checkbox": {
-    "scope": "markdown",
-    "prefix": [
-      "k"
-    ],
-    "body": [
-      "1. [ ] "
     ]
   },
   "config comment block": {
@@ -243,54 +113,6 @@
     "prefix": "tse",
     "body": [
       "//@ts-expect-error - ${1:expected error} ${0:reason}"
-    ]
-  },
-  "snippet to create snippets": {
-    "scope": "snippets",
-    "prefix": "snip",
-    "body": [
-      "\"${1:text that appears when showing the snippet before completion}\": {",
-      "  \"scope\": \"${2:snippets}\",",
-      "  \"prefix\": \"${3:trig}\",",
-      "  \"body\": [",
-      "    \"$4\"",
-      "  ]",
-      "},",
-    ]
-  },
-  "linguist detectable": {
-    "scope": "properties",
-    "prefix": "lde",
-    "body": [
-      "${1:linguist-detectable}"
-    ]
-  },
-  "linguist documentation": {
-    "scope": "properties",
-    "prefix": "ldo",
-    "body": [
-      "${1:linguist-documentation}"
-    ]
-  },
-  "linguist generated": {
-    "scope": "properties",
-    "prefix": "lge",
-    "body": [
-      "${1:linguist-generated}"
-    ]
-  },
-  "linguist language": {
-    "scope": "properties",
-    "prefix": "lla",
-    "body": [
-      "${1:linguist-language=${0:name}}"
-    ]
-  },
-  "linguist vendored": {
-    "scope": "properties",
-    "prefix": "lve",
-    "body": [
-      "${0:linguist-vendored}"
     ]
   },
   "simplify commenting forms in clojure": {
@@ -323,20 +145,6 @@
       "    (.setAttribute script \"src\" \"https://cdn.tailwindcss.com\")",
       "    (.setAttribute body \"class\" \"container min-w-[700] min-h-screen mx-auto\")",
       "    (.appendChild body script)))",
-    ]
-  },
-  "clojure and clojurescript snippets scope": {
-    "scope": "snippets",
-    "prefix": "clj+",
-    "body": [
-      "clojure,clojurescript,clj,cljs"
-    ]
-  },
-  "snippet to add json and jsonc": {
-    "scope": "snippets",
-    "prefix": "json",
-    "body": [
-      "json,jsonc"
     ]
   },
   "shadow watch with cider": {
@@ -385,30 +193,12 @@
       "// eslint-disable-next-line @typescript-eslint/no-explicit-any"
     ]
   },
-  "(java|type)script(react|)": {
-    "scope": "snippets",
-    "prefix": "js",
-    "body": [
-      "javascript,javascriptreact,typescript,typescriptreact"
-    ]
-  },
   "search comments that also fold in vim": {
     "prefix": "co",
     "body": [
       "${1:#} $2(((",
       "$0",
       "${1:#} )))$2"
-    ]
-  },
-  "improve how bash scripts deal with errors by adding these to the top of the file": {
-    "scope": "shellscript",
-    "prefix": "euxo",
-    "body": [
-      "${2:# -e: exit on error}",
-      "${4:# -u: exit on undefined variable}",
-      "${6:# -x: print commands before execution}",
-      "${8:# -o pipefail: exits on command pipe failures}",
-      "set -${1:e}${3:u}${5:x}${7:o pipefail}$0"
     ]
   },
   "json with comments - linguist": {
@@ -460,7 +250,7 @@
   // automatic formatting but still get some of the visual benefits.
   //
   "elm-like spacing (using comments) for json(c)": {
-    "scope": "json,jsonc",
+    "scope": "json,jsonc,snippets",
     "prefix": "c",
     "body": [
       "",
@@ -470,6 +260,29 @@
       "//",
       "$0",
       "",
+    ]
+  },
+  //
+  //
+  // Try to use the same node and npm versions throughout my projects.
+  //
+  "package.json node and npm configuration": {
+    "scope": "json,jsonc",
+    "prefix": "node",
+    "body": [
+      "\"engines\": {",
+      "  \"node\": \">=20\"",
+      "},",
+      "\"engineStrict\": true,",
+      "\"packageManager\": \"npm@10.5.0\",",
+      "\"author\": {",
+      "  \"name\": \"Marcelo Almeida\",",
+      "  \"email\": \"${1:2532492+marcelocra@users.noreply.github.com}\",",
+      "},",
+      "\"repository\": {",
+      "  \"type\": \"git\",",
+      "  \"url\": \"https://github.com/marcelocra${2:/site}\"",
+      "}"
     ]
   },
 }
