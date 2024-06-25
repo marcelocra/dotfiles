@@ -222,6 +222,9 @@
     "let.+[cC]lass = \"([^\"]*)\"",
     "var.+[cC]lass = \"([^\"]*)\"",
 
+    // For JS objects with properties ending in [cC]lass.
+    ".+[cC]lass:\\s+\"([^\"]*)\"",
+
     // For JS classList manipulation.
     "\\.classList\\.[^\\(]*\\(\"([^\"]*)\"\\)",
 
