@@ -42,4 +42,30 @@
 			"${0:linguist-vendored}"
 		]
 	},
+	"GitHub linguist examples to use as reference at the top of `.gitattributes` files": {
+		"prefix": "linguist",
+		"body": [
+			"# Linguist examples",
+			"# -----------------",
+			"# linguist-detectable        languages.yml         Included in stats, even if language's type is data or prose",
+			"# linguist-documentation     documentation.yml     Excluded from stats",
+			"# linguist-generated         generated.rb          Excluded from stats, hidden in diffs",
+			"# linguist-language=name     languages.yml         Highlighted and classified as name",
+			"# linguist-vendored          vendor.yml            Excluded from stats",
+			"",
+			"$0"
+		]
+	},
+	"Creates a Git LFS section for use in `.gitattributes` files": {
+		"prefix": "lfs",
+		"body": [
+			"# Git LFS",
+			"# -------",
+			"# Examples:",
+			"# *.png filter=lfs diff=lfs merge=lfs -text",
+			"# *.ico filter=lfs diff=lfs merge=lfs -text",
+			"",
+			"$0"
+		]
+	},
 }
