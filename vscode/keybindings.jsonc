@@ -58,35 +58,35 @@
     "command": "workbench.action.toggleMaximizedPanel",
     "when": "terminalFocus && !isMac"
   },
+
+  //
+  //
+  // ========================================================================= {
+  // Toggle terminal
+  // ---------------
+  // Uses `ctrl+t` keybindings to toggle the terminal panel.
+  //
+
   {
+    // If panel is not active, open it.
     "key": "ctrl+t",
-    "command": "workbench.action.focusLastEditorGroup",
-    "when": "activePanel && terminalFocus"
+    "command": "workbench.action.togglePanel"
   },
   {
-    "key": "ctrl+t",
-    "command": "workbench.action.togglePanel",
-    "when": "activePanel && terminalFocus && panelMaximized"
-  },
-  {
+    // If the panel is active but the terminal is not focused, focus it.
     "key": "ctrl+t",
     "command": "workbench.action.terminal.focus",
     "when": "activePanel && !terminalFocus"
   },
   {
-    "key": "ctrl+t",
-    "command": "workbench.action.togglePanel",
-    "when": "!activePanel"
+    // If the panel is active, but not maximized, maximize it.
+    "key": "ctrl+m",
+    "command": "workbench.action.toggleMaximizedPanel",
+    "when": "activePanel && terminalFocus"
   },
-  {
-    "key": "ctrl+`",
-    "command": "workbench.action.togglePanel",
-    "when": "terminal.active"
-  },
-  {
-    "key": "alt+t",
-    "command": "workbench.action.togglePanel"
-  },
+
+  // } // Toggle terminal
+
   // {
   //   "key": "ctrl+k",
   //   "command": "workbench.action.terminal.sendSequence",
@@ -95,6 +95,7 @@
   //   },
   //   "when": "terminalFocus"
   // },
+
   {
     "key": "ctrl+shift+f",
     "command": "workbench.action.terminal.focusFind",
@@ -704,31 +705,6 @@
     "when": "vim.mode == 'Insert' && editorTextFocus"
   },
   {
-    "key": "tab",
-    "command": "-calva-fmt.formatCurrentForm",
-    "when": "calva:keybindingsEnabled && editorTextFocus && !editorReadOnly && !hasOtherSuggestions && !inSnippetMode && !inlineSuggestionVisible && !suggestWidgetVisible && editorLangId == 'clojure'"
-  },
-  {
-    "key": "ctrl+i",
-    "command": "-calva-fmt.tabIndent",
-    "when": "calva:keybindingsEnabled && editorTextFocus && !editorReadOnly && !hasOtherSuggestions && !suggestWidgetVisible && editorLangId == 'clojure'"
-  },
-  {
-    "key": "ctrl+alt+p i",
-    "command": "-calva-fmt.inferParens",
-    "when": "calva:keybindingsEnabled && editorTextFocus && !editorReadOnly && !hasOtherSuggestions && !suggestWidgetVisible && editorLangId == 'clojure'"
-  },
-  {
-    "key": "ctrl+alt+l",
-    "command": "-calva-fmt.alignCurrentForm",
-    "when": "calva:keybindingsEnabled && editorTextFocus && !editorReadOnly && !hasOtherSuggestions && !suggestWidgetVisible && editorLangId == 'clojure'"
-  },
-  {
-    "key": "shift+tab",
-    "command": "-calva-fmt.tabDedent",
-    "when": "calva:keybindingsEnabled && editorTextFocus && !editorReadOnly && !hasOtherSuggestions && !suggestWidgetVisible && editorLangId == 'clojure'"
-  },
-  {
     "key": "shift+alt+n",
     "command": "workbench.action.files.newUntitledFile"
   },
@@ -755,5 +731,9 @@
     "key": "ctrl+k",
     "command": "quickInput.previous",
     "when": "inQuickInput && quickInputType == 'quickPick'"
+  },
+  {
+    "key": "ctrl+m",
+    "command": "-editor.action.toggleTabFocusMode"
   }
 ]
