@@ -274,6 +274,12 @@ nnoremap <leader>< <c-w>10-
 nnoremap <a-w> :set wrap!<cr>
 inoremap <a-w> <esc>:set wrap!<cr>a
 
+" Add date to current buffer.
+inoremap <a-d> <c-r>=strftime("%Y-%m-%d")<cr>
+
+" Add time to current buffer.
+inoremap <a-h> <c-r>=strftime("%Hh%M")<cr>
+
 
 " )mappings- }}}
 " --- -abbreviations( -------------------------------------------------------{{{
@@ -309,7 +315,7 @@ iab rich ;; rcf - rich comment form
 cab help tab help
 cab h tab help
 
-iab -- - [ ]
+iab m_ch - [ ]
 iab u_ch ✓
 iab e_ch ✅️ 
 iab e_not ⛔️
