@@ -11,11 +11,17 @@
   // "font_face": "Source Code Pro",   // Good size: 11
   // "font_face": "Cascadia Code NF",   // Good size: 11
 
-  "font_face": "Fira Code",   // Good size: 11
+  // "font_face": "Fira Code",   // Good size: 11
+  // "font_options": [ // -> => <> <=>
+  //   "calt",
+  //   "cv01", "cv02", "cv05", "cv09", "ss05", "ss03", "cv16","cv31", "cv29",
+  //   "cv30", "cv25", "cv26", "cv32", "cv27", "cv28", "ss10", "cv14", "cv12",
+  // ],
+
+  "font_face": "JetBrains Mono",   // Good size: 11
   "font_options": [ // -> => <> <=>
-    "calt",
-    "cv01", "cv02", "cv05", "cv09", "ss05", "ss03", "cv16","cv31", "cv29",
-    "cv30", "cv25", "cv26", "cv32", "cv27", "cv28", "ss10", "cv14", "cv12",
+    "ss02", "ss19", "ss20", "zero", "cv03", "cv04", "cv16", "cv19", "cv20",
+    "cv99"
   ],
   "font_size": 11,
 
