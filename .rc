@@ -242,8 +242,20 @@ function force_rm() {
 }
 
 
-function now() {
+now() {
     echo "$(date +%F_%T | tr ':' '-')"
+
+    return 0
+}
+
+mm_today() {
+    echo "$(date +%F)"
+
+    return 0
+}
+
+mm_time() {
+    echo "$(date +%Hh%M)"
 
     return 0
 }
