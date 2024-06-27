@@ -204,17 +204,11 @@
   ],
   "eslint.validate": ["javascript", "javascriptreact", "typescript", "typescriptreact"],
 
-  //
-  //
-  // TailwindCSS
-  //
-
-  "tailwindCSS.emmetCompletions": true,
-  "tailwindCSS.colorDecorators": false,
+  "tailwindCSS.emmetCompletions": false, // I don't use these.
+  "tailwindCSS.colorDecorators": true, // They are useful, though annoying.
   "tailwindCSS.experimental.classRegex": [
+    // For Clojure and Hiccup (not working).
     ":class\\s+\"([^\"]*)\"",
-
-    // For Clojure and Hiccup.
     ":([^\"]*)[cC]lass\"([^\"]*)\"",
     ":[\\w-.#>]+\\.([\\w-]*)",
 
@@ -231,14 +225,9 @@
 
     // For html-like attributes.
     ".+[cC]lass=\"([^\"]*)\""
-
-    // For class-variant-authority. TODO: check if it works.
-    // ["cva\\(([^)]*)\\)", "[\"'`]([^\"'`]*).*?[\"'`]"],
-    // ["cx\\(([^)]*)\\)", "(?:'|\"|`)([^']*)(?:'|\"|`)"]
   ],
   "tailwindCSS.includeLanguages": {
-    "clojure": "html",
-    "cljs": "html"
+    "clojure": "html"
   },
 
   //
