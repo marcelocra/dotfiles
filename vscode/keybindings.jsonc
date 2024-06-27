@@ -48,10 +48,11 @@
     "command": "workbench.action.debug.restart",
     "when": "inDebugMode"
   },
-  {
-    "key": "ctrl+e",
-    "command": "-workbench.action.quickOpen"
-  },
+  // {
+  //   // TODO: figure out what does this do.
+  //   "key": "ctrl+e",
+  //   "command": "-workbench.action.quickOpen"
+  // },
   // // Terminal panel behavior. -terminal(
   {
     "key": "alt+shift+m",
@@ -67,16 +68,22 @@
   // Uses `ctrl+t` keybindings to toggle the terminal panel.
   //
 
+  // {
+  //   // If panel is not active, open it.
+  //   "key": "ctrl+t",
+  //   "command": "workbench.action.togglePanel"
+  // },
+  // {
+  //   // If the panel is active but the terminal is not focused, focus it.
+  //   "key": "ctrl+t",
+  //   "command": "workbench.action.terminal.focus",
+  //   "when": "activePanel && !terminalFocus"
+  // },
   {
-    // If panel is not active, open it.
-    "key": "ctrl+t",
-    "command": "workbench.action.togglePanel"
-  },
-  {
-    // If the panel is active but the terminal is not focused, focus it.
-    "key": "ctrl+t",
-    "command": "workbench.action.terminal.focus",
-    "when": "activePanel && !terminalFocus"
+    // If terminal is opened and active, focus on the text editor.
+    "key": "ctrl+e",
+    "command": "workbench.action.focusLastEditorGroup",
+    "when": "activePanel && terminalFocus"
   },
   {
     // If the panel is active, but not maximized, maximize it.
@@ -84,8 +91,6 @@
     "command": "workbench.action.toggleMaximizedPanel",
     "when": "activePanel && terminalFocus"
   },
-
-  // } // Toggle terminal
 
   // {
   //   "key": "ctrl+k",
@@ -546,7 +551,11 @@
     "key": "alt+r",
     "command": "runCommands",
     "args": {
-      "commands": ["typescript.restartTsServer", "eslint.restart", "svelte.restartLanguageServer"]
+      "commands": [
+        "typescript.restartTsServer",
+        "eslint.restart",
+        "svelte.restartLanguageServer"
+      ]
     },
     "when": "editorTextFocus && (vim.mode == 'Normal' || vim.mode == 'Insert')"
   },
@@ -735,5 +744,14 @@
   {
     "key": "ctrl+m",
     "command": "-editor.action.toggleTabFocusMode"
+  },
+  {
+    "key": "ctrl+t",
+    "command": "workbench.action.showAllSymbols",
+    "when": "editorTextFocus"
+  },
+  {
+    "key": "ctrl+t",
+    "command": "-workbench.action.showAllSymbols"
   }
 ]
