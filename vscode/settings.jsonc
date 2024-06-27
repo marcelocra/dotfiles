@@ -315,6 +315,10 @@
       "before": ["<leader>", "x"],
       "commands": [":x"]
     }
+    // {
+    //   "before": ["<c-t>"],
+    //   "commands": ["workbench.action.showAllSymbols"]
+    // }
   ],
   // viminsert-
 
@@ -485,6 +489,10 @@
     //   "before": ["K"],
     //   "commands": [":tabn"]
     // }
+    // {
+    //   "before": ["<c-t>"],
+    //   "commands": ["workbench.action.showAllSymbols"]
+    // },
     {
       "before": ["<c-b>"],
       "commands": [""]
@@ -576,8 +584,8 @@
   //
 
   "emmet.triggerExpansionOnTab": true,
-  "emmet.showExpandedAbbreviation": "inMarkupAndStylesheetFilesOnly",
-  "emmet.showSuggestionsAsSnippets": true,
+  "emmet.showExpandedAbbreviation": "never",
+  "emmet.showSuggestionsAsSnippets": false,
   "emmet.includeLanguages": {
     "erb": "html",
     "svelte": "html"
@@ -590,7 +598,7 @@
 
   "github.copilot.editor.enableAutoCompletions": true,
   "github.copilot.enable": {
-    "*": false,
+    "*": true,
     "plaintext": false,
     "markdown": false,
     "scminput": false
@@ -733,7 +741,7 @@
   "editor.minimap.size": "fill",
   "editor.formatOnSave": true,
   "editor.tabCompletion": "onlySnippets",
-  "editor.suggest.snippetsPreventQuickSuggestions": false,
+  "editor.suggest.snippetsPreventQuickSuggestions": true,
   "editor.quickSuggestions": {
     "other": false,
     "comments": false,
@@ -750,7 +758,7 @@
   "editor.autoIndent": "full",
   "editor.minimap.enabled": false,
   "editor.screenReaderAnnounceInlineSuggestion": false,
-  "editor.snippetSuggestions": "bottom",
+  "editor.snippetSuggestions": "top",
 
   //
   //
