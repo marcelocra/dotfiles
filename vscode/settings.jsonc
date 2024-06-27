@@ -823,19 +823,23 @@
   // Terminal
   //
 
-  "terminal.integrated.tabs.enabled": true,
+  "terminal.integrated.tabs.enabled": false,
   "terminal.integrated.fontFamily": "'JetBrains Mono', 'MesloLGS Nerd Font', 'MesloLGS NF', monospace",
   "terminal.integrated.fontSize": 13, // edn{:desktop 13 :notebook 19}
   "terminal.integrated.fontWeight": "normal",
   "terminal.integrated.macOptionClickForcesSelection": true,
   "terminal.integrated.allowChords": false,
-  // "terminal.integrated.sendKeybindingsToShell": true,
-  "terminal.integrated.commandsToSkipShell": [""],
+  // "terminal.integrated.sendKeybindingsToShell": false,
+  // "terminal.integrated.commandsToSkipShell": [
+  //   "workbench.action.toggleMaximizedPanel"
+  // ],
   "terminal.integrated.shellIntegration.enabled": true,
   "terminal.integrated.drawBoldTextInBrightColors": true,
   "terminal.integrated.minimumContrastRatio": 1,
   "terminal.integrated.enableVisualBell": true,
   "terminal.integrated.bellDuration": 3000,
+
+  // cursor
   "terminal.integrated.cursorStyle": "line",
   "terminal.integrated.cursorStyleInactive": "outline",
   "terminal.integrated.cursorWidth": 1,
@@ -913,7 +917,7 @@
   "workbench.list.horizontalScrolling": true,
   "workbench.sideBar.location": "left",
   "workbench.colorTheme": "GitHub Dark Dimmed",
-  "workbench.panel.defaultLocation": "right",
+  "workbench.panel.defaultLocation": "bottom",
   "workbench.activityBar.location": "hidden"
 
   //////////////////////////////////////////////////////////////////////////////
