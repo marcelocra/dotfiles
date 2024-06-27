@@ -292,6 +292,16 @@ iab vimmode vim: fdm=marker:fmr={{{,}}}:fdl=1:fen:ai:et:ts=4:sw=4
 iab vimmodejs vim:fdm=marker:fmr={,}:fdl=1:fen:ai:et:ts=2:sw=2
 iab vimmodemd filetype=markdown
 iab vimmodew tw=80
+" iab note <!-- vim: fdm=marker:fmr={,}:fdl=1:fen:ai:et:ts=4:sw=4:tw=80:wrap --><left><left><left><cr><esc><left>o
+" iab note <!-- vim: fdm=marker:fmr={,}:fdl=1:fen:ai:et:ts=4:sw=4:tw=80:wrap --><left><left><left><cr><left>o
+" iab note <!-- vim: fdm=marker:fmr={,}:fdl=1:fen:ai:et:ts=4:sw=4:tw=80:wrap --><left><left><left><bs><cr>
+" iab note <!-- vim: fdm=marker:fmr={,}:fdl=1:fen:ai:et:ts=4:sw=4:tw=80:wrap<cr>--><cr><c-u>
+" iab note <!-- vim: fdm=marker:fmr={,}:fdl=1:fen:ai:et:ts=4:sw=4:tw=80:wrap<cr>--><cr><bs>
+" iab note <!-- vim: fdm=marker:fmr={,}:fdl=1:fen:ai:et:ts=4:sw=4:tw=80:wrap<cr>--><cr><left>
+"
+" So far, this is the best one, but doesn't leave the cursor exactly where I
+" want yet.
+" iab note <!-- vim: fdm=marker:fmr={,}:fdl=1:fen:ai:et:ts=4:sw=4:tw=80:wrap<cr>--><cr>
 
 " Comment to prevent clojure auto-formatters from wrapping sexps.
 iab noparenwrap ;; Prevents auto-formatter from wrapping.
@@ -315,7 +325,7 @@ iab rich ;; rcf - rich comment form
 cab help tab help
 cab h tab help
 
-iab m_ch - [ ]
+iab -k - [ ]
 iab u_ch ✓
 iab e_ch ✅️ 
 iab e_not ⛔️
@@ -364,7 +374,7 @@ nnoremap <leader>x :x<cr>
 nnoremap <leader>a ggVG
 
 " Delete current buffer
-noremap <silent><leader>d :bd<cr>
+noremap <silent><leader><leader>d :bd<cr>
 
 " )leader-mappings- }}}
 " --- -plugin-mappings( -----------------------------------------------------{{{
@@ -416,7 +426,25 @@ let g:conjure#log#hud#width = 1.0
 
 augroup myautocommands
     autocmd!
+
+    " Git commit messages.
     autocmd FileType gitcommit set colorcolumn=51
+
+    " Markdown.
+    function SetMarkdownOptions()
+        set fdm=marker
+        set fmr={,}
+        set fdl=1
+        set fen
+        set ai
+        set et
+        set ts=4
+        set sw=4
+        set tw=80
+        set wrap
+    endfunction
+    autocmd FileType markdown call SetMarkdownOptions()
+        
 augroup END
 
 " )autocommands- }}}
