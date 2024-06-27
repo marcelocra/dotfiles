@@ -23,7 +23,8 @@
   // TypeScript
   //
 
-  "typescript.tsserver.experimental.enableProjectDiagnostics": true,
+  // // Causes deno extension to report import errors.
+  // "typescript.tsserver.experimental.enableProjectDiagnostics": true,
   "typescript.updateImportsOnFileMove.enabled": "always",
   "typescript.preferences.importModuleSpecifier": "non-relative",
   "[typescript]": {
