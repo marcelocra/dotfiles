@@ -1,46 +1,60 @@
 #!/usr/bin/env sh
 # vim:ts=4:et:ai:fen:fdm=marker:fmr={{{,}}}:fdl=0 
 #
-# This script was meant to be associated to a shortcut key,
-# like F10 or INSERT, for example (from now on, <shortcut>).
+# This script was meant to be associated to a shortcut key, like F10 or INSERT,
+# for example (from now on, <shortcut>).
 #
-# Then, whenever you press <shortcut> one of three things
-# will happen:
+# Then, whenever you press <shortcut> one of three things will happen:
 #
-#   1. The first time you hit <shortcut>, it will open a new
-#      terminal window with tmux attached.
+#   1. The first time you hit <shortcut>, it will open a new terminal window
+#      with tmux attached.
 #
-#   2. If you press <shortcut> again, that tmux session will
-#      be detached and the terminal window will be closed.
+#   2. If you press <shortcut> again, that tmux session will be detached and
+#      the terminal window will be closed.
 #
-#   3. If you press <shortcut> again, a new terminal window
-#      will be opened, but attached to the same tmux session
-#      created in 1. Unless you kill this tmux session,
-#      whenever you press <shortcut>, it will be used.
+#   3. If you press <shortcut> again, a new terminal window will be opened, but
+#      attached to the same tmux session created in 1. Unless you kill this
+#      tmux session, whenever you press <shortcut>, it will be used.
 #
-# Gotcha: if you do not press <shortcut> to close the
-# scratch terminal window (e.g. you alt+tab away from it)
-# and then press <shortcut>, it will close the existing (and
-# unfocused) window, which might be confusing. Just press
+# Gotcha: if you do not press <shortcut> to close the scratch terminal window
+# (e.g. you alt+tab away from it) and then press <shortcut>, it will close the
+# existing (and unfocused) window, which might be confusing. Just press
 # <shortcut> again :).
 #
-# When creating a shortcut for gnome-terminal, use the
-# following command, replacing <path-to-this> with the
-# actual path to this file in your system:
+# When creating a shortcut for gnome-terminal, use the following command,
+# replacing <path-to-this> with the actual path to this file in your system.
+# Choose the font size appropriately appropriately.
 #
-#   # For MesloLGS NF Regular, size 13:
-#   gnome-terminal --geometry 91x45--26+4 -- sh -c "<path-to-this>"
+# const geometryPerFontAndSize = {
+#     "MesloLGS NF Regular": {
+#         13: "91x45--26+4",
+#         11: "103x55--26+4",
+#         10: {
+#             normalScreen: "115x60--26+4",
+#             wideScreen: "155x60--26+4",
+#         },
+#         9: "131x65--26+4",
+#         8: {
+#             wideScreen: "209x84--26+4"
+#         },
+#     },
+#     "JetBrains Mono": {
+#         13: "91x45--26+4",
+#         11: "103x55--26+4",
+#         10: {
+#             normalScreen: "115x60--26+4",
+#             wideScreen: "157x60--26+4",    // verified
+#         },
+#         9: "131x65--26+4",
+#         8: {
+#             wideScreen: "209x84--26+4"     // verified
+#         },
+#     },
+# }
 #
-#   # For MesloLGS NF Regular, size 11:
-#   gnome-terminal --geometry 103x55--26+4 -- sh -c "<path-to-this>"
+# const geometry = geometryPerFontAndSize[fontName][fontSize]
 #
-#   # For MesloLGS NF Regular, size 10:
-#   gnome-terminal --geometry 115x60--26+4 -- sh -c "<path-to-this>"
-#   # wide screen:
-#   gnome-terminal --geometry 155x60--26+4 -- sh -c "<path-to-this>"
-#
-#   # For MesloLGS NF Regular, size 9:
-#   gnome-terminal --geometry 131x65--26+4 -- sh -c "<path-to-this>"
+# gnome-terminal --geometry ${geometry} -- sh -c "<path-to-this>"
 #
 
 SCRATCHPAD_SESSION_NAME="scratch"
