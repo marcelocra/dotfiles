@@ -172,7 +172,7 @@ nnoremap / /\v\c
 vnoremap / /\v\c
 
 " Simpler way to go to command mode from insert mode.
-inoremap <c-n> <esc>
+" inoremap <c-n> <esc>
 inoremap jf <esc>
 inoremap fj <esc>
 
