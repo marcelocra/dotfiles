@@ -81,7 +81,7 @@
   // },
   {
     // If terminal is opened and active, focus on the text editor.
-    "key": "ctrl+e",
+    "key": "ctrl+space",
     "command": "workbench.action.focusLastEditorGroup",
     "when": "activePanel && terminalFocus"
   },
