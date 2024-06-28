@@ -163,7 +163,8 @@
     "editor.wrappingIndent": "same",
     "editor.rulers": [80, 100, 120],
     "editor.tabSize": 2,
-    "editor.insertSpaces": true
+    "editor.insertSpaces": true,
+    "editor.autoClosingBrackets": "never"
   },
 
   "[asciidoc]": {
@@ -652,21 +653,21 @@
   // Cascadia Code font
   //
 
-  // "editor.fontFamily": "Cascadia Code NF",
-  // "editor.fontSize": 13, // edn{:desktop 13 :notebook 19 :small 11}
-  // "editor.lineNumbers": "on",
-  // "editor.fontWeight": "300", // edn{:desktop "300" :notebook "300" :small "100"}
-  // "editor.fontLigatures": "'ss01', 'ss19', 'ss20', 'calt' 0",
-  // // Available stylistic sets:
-  // // - cursive italics: 'ss01'
-  // // - alternate not equal: 'ss02' ~= (appears as !=)
-  // // - serbian locl forms (italic only): 'ss03'
-  // // - slashed zero: 'ss19'
-  // // - graphical control characters: 'ss20'
-  // // Ligature test:
-  // //  ! " # $ % & ' ( ) * + , - . / : ; < = > ? @ [ \ ] ^ _ ` { | } ~
-  // //  ~ < > = + _ _ ( ) * & ^ % $ # @ ! { } [ ] \ | / ? : ; , . ` ' " ´ ` ˜
-  // //  => -> <> <= >= != !== === ~= |> <- --> || .- :- .= {..}
+  "editor.fontFamily": "Cascadia Code NF",
+  "editor.fontSize": 13, // edn{:desktop 13 :notebook 19 :small 11}
+  "editor.lineNumbers": "on",
+  "editor.fontWeight": "300", // edn{:desktop "300" :notebook "300" :small "100"}
+  "editor.fontLigatures": "'ss01', 'ss19', 'ss20', 'calt' 0",
+  // Available stylistic sets:
+  // - cursive italics: 'ss01'
+  // - alternate not equal: 'ss02' ~= (appears as !=)
+  // - serbian locl forms (italic only): 'ss03'
+  // - slashed zero: 'ss19'
+  // - graphical control characters: 'ss20'
+  // Ligature test:
+  //  ! " # $ % & ' ( ) * + , - . / : ; < = > ? @ [ \ ] ^ _ ` { | } ~
+  //  ~ < > = + _ _ ( ) * & ^ % $ # @ ! { } [ ] \ | / ? : ; , . ` ' " ´ ` ˜
+  //  => -> <> <= >= != !== === ~= |> <- --> || .- :- .= {..}
 
   //
   //
@@ -698,25 +699,25 @@
   // JetBrainsMono font
   //
 
-  "editor.fontFamily": "JetBrains Mono",
-  "editor.fontSize": 13, // edn{:desktop 13 :notebook ?? :small 11}
-  "editor.lineNumbers": "on",
-  "editor.fontWeight": "200", // edn{:desktop "200" :notebook "??" :small "100"}
-  "editor.fontLigatures": "'ss02', 'ss19', 'ss20', 'zero', 'cv03', 'cv04', 'cv16', 'cv19', 'cv20', 'cv99'",
-  // Available stylistic sets:
-  // - | cv01,05: l | cv02: t | cv03: g | cv04: j | cv06: m  | cv07: w | cv08: k
-  // - | cv09,17: f | cv10: r | cv11: y | cv12: u | cv14: $¢ | cv15: & | cv16: Q
-  // - | cv18: 269  | cv19: 8 | cv20: 5 | cv99: bg inverted color
-  // - ss01: classic construction
-  // - ss02: closed construction
-  // - ss19: broken equals ligatures (yay!)
-  // - ss20: raised bar f
-  // - zero: slashed zero
-  // - frac: fractions
-  // Ligature test:
-  //  ! " # $ % & ' ( ) * + , - . / : ; < = > ? @ [ \ ] ^ _ ` { | } ~
-  //  ~ < > = + _ _ ( ) * & ^ % $ # @ ! { } [ ] \ | / ? : ; , . ` ' " ´ ` ˜
-  //  => -> <> <= >= != !== === ~= |> <- --> || .- :- .= {..}
+  // "editor.fontFamily": "JetBrains Mono",
+  // "editor.fontSize": 13, // edn{:desktop 13 :notebook ?? :small 11}
+  // "editor.lineNumbers": "on",
+  // "editor.fontWeight": "200", // edn{:desktop "200" :notebook "??" :small "100"}
+  // "editor.fontLigatures": "'ss02', 'ss19', 'ss20', 'zero', 'cv03', 'cv04', 'cv16', 'cv19', 'cv20', 'cv99'",
+  // // Available stylistic sets:
+  // // - | cv01,05: l | cv02: t | cv03: g | cv04: j | cv06: m  | cv07: w | cv08: k
+  // // - | cv09,17: f | cv10: r | cv11: y | cv12: u | cv14: $¢ | cv15: & | cv16: Q
+  // // - | cv18: 269  | cv19: 8 | cv20: 5 | cv99: bg inverted color
+  // // - ss01: classic construction
+  // // - ss02: closed construction
+  // // - ss19: broken equals ligatures (yay!)
+  // // - ss20: raised bar f
+  // // - zero: slashed zero
+  // // - frac: fractions
+  // // Ligature test:
+  // //  ! " # $ % & ' ( ) * + , - . / : ; < = > ? @ [ \ ] ^ _ ` { | } ~
+  // //  ~ < > = + _ _ ( ) * & ^ % $ # @ ! { } [ ] \ | / ? : ; , . ` ' " ´ ` ˜
+  // //  => -> <> <= >= != !== === ~= |> <- --> || .- :- .= {..}
 
   "editor.codeActionsOnSave": {
     "source.fixAll.eslint": "explicit",
@@ -869,7 +870,7 @@
   //
 
   "search.defaultViewMode": "tree",
-  "search.mode": "reuseEditor",
+  "search.mode": "newEditor",
   "search.searchOnTypeDebouncePeriod": 500,
   "search.showLineNumbers": true,
   "search.smartCase": true,
@@ -891,28 +892,28 @@
   //
 
   "workbench.colorCustomizations": {
-    "editorCursor.foreground": "#fff", // edn{:dark "#fff" :light "#ff00ea" :dark-opt "#51ff00"}
+    "editorCursor.foreground": "#ff00ea", // edn{:dark "#fff" :light "#ff00ea" :dark-opt "#51ff00"}
 
     "tree.indentGuidesStroke": "#0084ff",
-    "tree.inactiveIndentGuidesStroke": "#444", // edn{:dark "#444" :light "#d8d8d8"}
+    "tree.inactiveIndentGuidesStroke": "#d8d8d8", // edn{:dark "#444" :light "#d8d8d8"}
 
-    "editorIndentGuide.activeBackground1": "#ff00c8", // edn{:dark "#ff00c8" :light "#00ffff"}
-    "editorIndentGuide.background1": "#333", // edn{:dark "#333" :light "#eee"}
+    "editorIndentGuide.activeBackground1": "#00ffff", // edn{:dark "#ff00c8" :light "#00ffff"}
+    "editorIndentGuide.background1": "#eee", // edn{:dark "#333" :light "#eee"}
 
-    "editor.lineHighlightBorder": "#ff00c833", // edn{:dark "#ff00c833" :light "#00ffff22"}
-    "editor.lineHighlightBackground": "#ff00c822", // edn{:dark "#ff00c822" :light "#00ffff22"}
+    "editor.lineHighlightBorder": "#00ffff22", // edn{:dark "#ff00c833" :light "#00ffff22"}
+    "editor.lineHighlightBackground": "#00ffff22", // edn{:dark "#ff00c822" :light "#00ffff22"}
 
     // TODO: figure out how to get this working.
-    // "editor.selectionForeground": "#ff00c8" // edn{:dark "#ff00c8" :light "#fff"}
-    "editor.selectionBackground": "#ff00c855", // edn{:dark "#ff00c855" :light "#00ffff77"}
+    // "editor.selectionForeground": "#fff" // edn{:dark "#ff00c8" :light "#fff"}
+    "editor.selectionBackground": "#00ffff77", // edn{:dark "#ff00c855" :light "#00ffff77"}
 
-    "editor.selectionHighlightBorder": "#ffffff81", // edn{:dark "#ffffff81" :light "#ffffffdd"}
+    "editor.selectionHighlightBorder": "#ffffffdd", // edn{:dark "#ffffff81" :light "#ffffffdd"}
     "editor.selectionHighlightBackground": "#ffffff36", // edn{:dark "#ffffff36" :light "#ffffff36"}
 
-    "editor.wordHighlightBorder": "#ffffff66", // edn{:dark "#ffffff66" :light "#00000033"}
-    "editor.wordHighlightBackground": "#00000066", // edn{:dark "#00000066" :light "#ffffff44"}
+    "editor.wordHighlightBorder": "#00000033", // edn{:dark "#ffffff66" :light "#00000033"}
+    "editor.wordHighlightBackground": "#ffffff44", // edn{:dark "#00000066" :light "#ffffff44"}
 
-    "editor.findMatchBackground": "#d400ff88", // edn{:dark "#d400ff88" :light "#000000e8"}
+    "editor.findMatchBackground": "#000000e8", // edn{:dark "#d400ff88" :light "#000000e8"}
     "editor.findMatchHighlightBackground": "#d400ff56", // edn{:dark "#d400ff56" :light "#d400ff56"}
 
     "calva.inlineErrorForegroundColor": "#ff0000",
@@ -924,7 +925,7 @@
   "workbench.tree.renderIndentGuides": "always",
   "workbench.list.horizontalScrolling": true,
   "workbench.sideBar.location": "left",
-  "workbench.colorTheme": "GitHub Dark Dimmed",
+  "workbench.colorTheme": "GitHub Dark",
   "workbench.panel.defaultLocation": "bottom",
   "workbench.activityBar.location": "hidden"
 
