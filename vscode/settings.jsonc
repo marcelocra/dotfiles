@@ -895,10 +895,10 @@
     "editorCursor.foreground": "#ff00ea", // edn{:dark "#fff" :light "#ff00ea" :dark-opt "#51ff00"}
 
     "tree.indentGuidesStroke": "#0084ff",
-    "tree.inactiveIndentGuidesStroke": "#d8d8d8", // edn{:dark "#444" :light "#d8d8d8"}
+    "tree.inactiveIndentGuidesStroke": "#555", // edn{:dark "#444" :light "#d8d8d8" "GitHub Dark" "#555"}
 
     "editorIndentGuide.activeBackground1": "#00ffff", // edn{:dark "#ff00c8" :light "#00ffff"}
-    "editorIndentGuide.background1": "#eee", // edn{:dark "#333" :light "#eee"}
+    "editorIndentGuide.background1": "#555", // edn{:dark "#333" :light "#eee" "GitHub Dark" "#555"}
 
     "editor.lineHighlightBorder": "#00ffff22", // edn{:dark "#ff00c833" :light "#00ffff22"}
     "editor.lineHighlightBackground": "#00ffff22", // edn{:dark "#ff00c822" :light "#00ffff22"}
@@ -927,7 +927,10 @@
   "workbench.sideBar.location": "left",
   "workbench.colorTheme": "GitHub Dark",
   "workbench.panel.defaultLocation": "bottom",
-  "workbench.activityBar.location": "hidden"
+  "workbench.activityBar.location": "hidden",
+  "[aspnetcorerazor]": {
+    "editor.defaultFormatter": "ms-dotnettools.csharp"
+  }
 
   //////////////////////////////////////////////////////////////////////////////
 }
