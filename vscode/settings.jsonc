@@ -114,7 +114,6 @@
   "dart.openDevTools": "flutter",
   "dart.debugExternalPackageLibraries": false,
   "dart.debugSdkLibraries": false,
-  "dart.flutterSdkPath": "${env:FLUTTER_SDK}",
   "[dart]": {
     "editor.formatOnSave": true,
     "editor.formatOnType": true,
