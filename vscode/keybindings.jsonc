@@ -43,11 +43,6 @@
   },
   // )macos-
 
-  {
-    "key": "ctrl+r",
-    "command": "workbench.action.debug.restart",
-    "when": "inDebugMode"
-  },
   // {
   //   // TODO: figure out what does this do.
   //   "key": "ctrl+e",
@@ -753,5 +748,9 @@
   {
     "key": "ctrl+t",
     "command": "-workbench.action.showAllSymbols"
+  },
+  {
+    "key": "ctrl+e",
+    "command": "-workbench.action.quickOpen"
   }
 ]
