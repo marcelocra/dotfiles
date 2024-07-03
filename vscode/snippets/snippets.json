@@ -16,10 +16,10 @@
 		"prefix": "snip",
 		"body": [
 			"\"${1:text that appears when showing the snippet before completion}\": {",
-			"  \"scope\": \"${2:snippets}\",",
-			"  \"prefix\": \"${3:trig}\",",
+			"  ${2:\"scope\": \"${3:snippets}\",}",
+			"  \"prefix\": \"${4:trig}\",",
 			"  \"body\": [",
-			"    \"$4\"",
+			"    \"$0\"",
 			"  ]",
 			"},",
 		]
