@@ -832,8 +832,8 @@
   // Terminal
   //
 
-  "terminal.integrated.tabs.enabled": false,
   "terminal.integrated.fontFamily": "'JetBrains Mono', 'MesloLGS Nerd Font', 'MesloLGS NF', monospace",
+  "terminal.integrated.tabs.enabled": false,
   "terminal.integrated.fontSize": 13, // edn{:desktop 13 :notebook 19}
   "terminal.integrated.fontWeight": "normal",
   "terminal.integrated.macOptionClickForcesSelection": true,
