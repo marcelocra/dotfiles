@@ -114,7 +114,6 @@
   "dart.openDevTools": "flutter",
   "dart.debugExternalPackageLibraries": false,
   "dart.debugSdkLibraries": false,
-  "dart.flutterSdkPath": "${env:FLUTTER_SDK}",
   "[dart]": {
     "editor.formatOnSave": true,
     "editor.formatOnType": true,
@@ -653,21 +652,21 @@
   // Cascadia Code font
   //
 
-  "editor.fontFamily": "Cascadia Code NF",
-  "editor.fontSize": 13, // edn{:desktop 13 :notebook 19 :small 11}
-  "editor.lineNumbers": "on",
-  "editor.fontWeight": "300", // edn{:desktop "300" :notebook "300" :small "100"}
-  "editor.fontLigatures": "'ss01', 'ss19', 'ss20', 'calt' 0",
-  // Available stylistic sets:
-  // - cursive italics: 'ss01'
-  // - alternate not equal: 'ss02' ~= (appears as !=)
-  // - serbian locl forms (italic only): 'ss03'
-  // - slashed zero: 'ss19'
-  // - graphical control characters: 'ss20'
-  // Ligature test:
-  //  ! " # $ % & ' ( ) * + , - . / : ; < = > ? @ [ \ ] ^ _ ` { | } ~
-  //  ~ < > = + _ _ ( ) * & ^ % $ # @ ! { } [ ] \ | / ? : ; , . ` ' " ´ ` ˜
-  //  => -> <> <= >= != !== === ~= |> <- --> || .- :- .= {..}
+  // "editor.fontFamily": "Cascadia Code NF",
+  // "editor.fontSize": 13, // edn{:desktop 13 :notebook 19 :small 11}
+  // "editor.lineNumbers": "on",
+  // "editor.fontWeight": "400", // edn{:desktop "400" :notebook "300" :small "100"}
+  // "editor.fontLigatures": "'ss01', 'ss19', 'ss20', 'calt' 0",
+  // // Available stylistic sets:
+  // // - cursive italics: 'ss01'
+  // // - alternate not equal: 'ss02' ~= (appears as !=)
+  // // - serbian locl forms (italic only): 'ss03'
+  // // - slashed zero: 'ss19'
+  // // - graphical control characters: 'ss20'
+  // // Ligature test:
+  // //  ! " # $ % & ' ( ) * + , - . / : ; < = > ? @ [ \ ] ^ _ ` { | } ~
+  // //  ~ < > = + _ _ ( ) * & ^ % $ # @ ! { } [ ] \ | / ? : ; , . ` ' " ´ ` ˜
+  // //  => -> <> <= >= != !== === ~= |> <- --> || .- :- .= {..}
 
   //
   //
@@ -699,25 +698,26 @@
   // JetBrainsMono font
   //
 
-  // "editor.fontFamily": "JetBrains Mono",
-  // "editor.fontSize": 13, // edn{:desktop 13 :notebook ?? :small 11}
-  // "editor.lineNumbers": "on",
-  // "editor.fontWeight": "200", // edn{:desktop "200" :notebook "??" :small "100"}
-  // "editor.fontLigatures": "'ss02', 'ss19', 'ss20', 'zero', 'cv03', 'cv04', 'cv16', 'cv19', 'cv20', 'cv99'",
-  // // Available stylistic sets:
-  // // - | cv01,05: l | cv02: t | cv03: g | cv04: j | cv06: m  | cv07: w | cv08: k
-  // // - | cv09,17: f | cv10: r | cv11: y | cv12: u | cv14: $¢ | cv15: & | cv16: Q
-  // // - | cv18: 269  | cv19: 8 | cv20: 5 | cv99: bg inverted color
-  // // - ss01: classic construction
-  // // - ss02: closed construction
-  // // - ss19: broken equals ligatures (yay!)
-  // // - ss20: raised bar f
-  // // - zero: slashed zero
-  // // - frac: fractions
-  // // Ligature test:
-  // //  ! " # $ % & ' ( ) * + , - . / : ; < = > ? @ [ \ ] ^ _ ` { | } ~
-  // //  ~ < > = + _ _ ( ) * & ^ % $ # @ ! { } [ ] \ | / ? : ; , . ` ' " ´ ` ˜
-  // //  => -> <> <= >= != !== === ~= |> <- --> || .- :- .= {..}
+  "editor.fontFamily": "JetBrains Mono",
+  "editor.fontSize": 13, // edn{:desktop 13 :notebook ?? :small 11}
+  "editor.lineNumbers": "on",
+  "editor.fontWeight": "200", // edn{:desktop "200" :notebook "??" :small "100"}
+  "editor.fontLigatures": "'ss02', 'ss19', 'ss20', 'zero', 'cv03', 'cv04', 'cv16', 'cv19', 'cv20', 'cv99'",
+  // Available stylistic sets:
+  // - | cv01,05: l | cv02: t | cv03: g | cv04: j | cv06: m  | cv07: w | cv08: k
+  // - | cv09,17: f | cv10: r | cv11: y | cv12: u | cv14: $¢ | cv15: & | cv16: Q
+  // - | cv18: 269  | cv19: 8 | cv20: 5 | cv99: bg inverted color to
+  //                                            differentiate some gliphs
+  // - ss01: classic construction
+  // - ss02: closed construction
+  // - ss19: broken equals ligatures (yay!)
+  // - ss20: raised bar f
+  // - zero: slashed zero
+  // - frac: fractions
+  // Ligature test:
+  //  ! " # $ % & ' ( ) * + , - . / : ; < = > ? @ [ \ ] ^ _ ` { | } ~
+  //  ~ < > = + _ _ ( ) * & ^ % $ # @ ! { } [ ] \ | / ? : ; , . ` ' " ´ ` ˜
+  //  => -> <> <= >= != !== === ~= |> <- --> || .- :- .= {..}
 
   "editor.codeActionsOnSave": {
     "source.fixAll.eslint": "explicit",
@@ -832,8 +832,8 @@
   // Terminal
   //
 
-  "terminal.integrated.tabs.enabled": false,
   "terminal.integrated.fontFamily": "'JetBrains Mono', 'MesloLGS Nerd Font', 'MesloLGS NF', monospace",
+  "terminal.integrated.tabs.enabled": false,
   "terminal.integrated.fontSize": 13, // edn{:desktop 13 :notebook 19}
   "terminal.integrated.fontWeight": "normal",
   "terminal.integrated.macOptionClickForcesSelection": true,
@@ -895,10 +895,10 @@
     "editorCursor.foreground": "#ff00ea", // edn{:dark "#fff" :light "#ff00ea" :dark-opt "#51ff00"}
 
     "tree.indentGuidesStroke": "#0084ff",
-    "tree.inactiveIndentGuidesStroke": "#d8d8d8", // edn{:dark "#444" :light "#d8d8d8"}
+    "tree.inactiveIndentGuidesStroke": "#555", // edn{:dark "#444" :light "#d8d8d8" "GitHub Dark" "#555"}
 
     "editorIndentGuide.activeBackground1": "#00ffff", // edn{:dark "#ff00c8" :light "#00ffff"}
-    "editorIndentGuide.background1": "#eee", // edn{:dark "#333" :light "#eee"}
+    "editorIndentGuide.background1": "#555", // edn{:dark "#333" :light "#eee" "GitHub Dark" "#555"}
 
     "editor.lineHighlightBorder": "#00ffff22", // edn{:dark "#ff00c833" :light "#00ffff22"}
     "editor.lineHighlightBackground": "#00ffff22", // edn{:dark "#ff00c822" :light "#00ffff22"}
@@ -927,7 +927,10 @@
   "workbench.sideBar.location": "left",
   "workbench.colorTheme": "GitHub Dark",
   "workbench.panel.defaultLocation": "bottom",
-  "workbench.activityBar.location": "hidden"
+  "workbench.activityBar.location": "hidden",
+  "[aspnetcorerazor]": {
+    "editor.defaultFormatter": "ms-dotnettools.csharp"
+  }
 
   //////////////////////////////////////////////////////////////////////////////
 }

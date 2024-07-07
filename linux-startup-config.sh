@@ -140,11 +140,35 @@ reduce_speed_of_logitech_mouse() {
 # gone, but I need to double check this. In any case, if the binary link is ok,
 # I guess the .desktop won't be an issue.
 symlink_todoist_again() {
-  ln -f -s "${HOME}/bin/binaries/todoist/$(ls ~/bin/binaries/todoist | sort -V -r | head -n1)" "${HOME}/bin/Todoist-latest"
+    local my_packages_dir="$HOME/bin/binaries"
+
+    if [ ! -d $my_packages_dir ]; then
+        my_packages_dir="$HOME/bin/packages"
+    fi
+
+    if [ ! -d $my_packages_dir ]; then
+        # No packages found. Nothing to do.
+        return
+    fi
+
+    local todoist_dir="$my_packages_dir/todoist"
+    if [ ! -d $todoist_dir ]; then
+        # todoist_dir not found. Nothing to do.
+        return
+    fi
+
+    local todoist_latest_bin="$(ls $todoist_dir | sort -V -r | head -n1 | grep -E '^Todoist.+AppImage$')"
+
+    if [ -z $todoist_latest_bin ]; then
+        # No binary available. Nothing to do.
+        return
+    fi
+
+    ln -f -s $todoist_dir/$todoist_latest_bin $HOME/bin/todoist
 }
 
 setup_expert_mouse
 setup_evoluent_mouse
 reduce_speed_of_logitech_mouse
-# symlink_todoist_again
+symlink_todoist_again
 
