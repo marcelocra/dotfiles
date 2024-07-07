@@ -413,9 +413,15 @@ alias ppath="echo $PATH | tr ':' '\n'"
 alias t1="tree -L 1"
 alias t2="tree -L 2"
 
-alias python=python3
-alias py=python3
-
+if command -v python3.12 &> /dev/null; then
+    alias python=python3.12
+elif command -v python3 &> /dev/null; then
+    alias python=python3
+else
+    alias python="echo 'check for python3'"
+fi
+alias py=python
+ 
 # )))general
 # git frequent(((
 
