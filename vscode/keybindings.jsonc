@@ -112,6 +112,10 @@
     "when": "!terminalFocus"
   },
   {
+    "key": "ctrl+e",
+    "command": "-workbench.action.quickOpen"
+  },
+  {
     "key": "ctrl+j",
     "command": "-workbench.action.togglePanel"
   },
@@ -158,24 +162,18 @@
   {
     "key": "ctrl+d",
     "command": "editor.action.addSelectionToNextFindMatch",
-    "when": "editorTextFocus && vim.active && (vim.mode == 'Insert' || vim.mode == 'Visual')"
+    "when": "vim.mode == 'Visual'"
   },
   {
     "key": "ctrl+n",
     "command": "editor.action.moveSelectionToNextFindMatch",
-    "when": "editorTextFocus && vim.active && (vim.mode == 'Insert' || vim.mode == 'Visual')"
+    "when": "vim.mode == 'Visual'"
   },
   {
     "key": "ctrl+p",
     "command": "editor.action.moveSelectionToPreviousFindMatch",
-    "when": "editorTextFocus && vim.active && (vim.mode == 'Insert' || vim.mode == 'Visual')"
+    "when": "vim.mode == 'Visual'"
   },
-
-  //============================================================================
-  //= calva - start
-  //============================================================================
-  // -calva(
-
   {
     "key": "ctrl+alt+c enter",
     "command": "-calva.loadFile",
@@ -465,43 +463,8 @@
   {
     "key": "ctrl+w",
     "command": "workbench.action.closeActiveEditor",
-    "when": "vim.mode == 'Normal' && textInputFocus"
+    "when": "textInputFocus && vim.mode != 'Insert'"
   },
-  // TODO: play more with this. The idea is to always open the keybindings file
-  // in a new VSCode window. Current problem is that if we are in a dev
-  // container, the keybindings file is opened in a new window with the same dev
-  // container. This means that it will automatically try to connect to the
-  // container, install all extensions and so on. That takes much more time than
-  // simply opening the file.
-  // {
-  //   "key": "alt+shift+k",
-  //   "command": "runCommands",
-  //   "args": {
-  //     "commands": [
-  //       "workbench.action.openGlobalKeybindingsFile",
-  //       "workbench.action.files.showOpenedFileInNewWindow",
-  //       "workbench.action.closeActiveEditor"
-  //     ]
-  //   }
-  // },
-  // {
-  //   "key": "alt+shift+s f",
-  //   "command": "workbench.action.openApplicationSettingsJson"
-  // },
-  // {
-  //   "key": "alt+shift+s s",
-  //   "command": "workbench.action.openGlobalSettings"
-  // },
-  // {
-  //   "key": "alt+shift+s",
-  //   "command": "workbench.action.files.openFolder",
-  //   "args": {
-  //     "uri": "${",
-  //     "options": {
-  //       "forceNewWindow": true
-  //     }
-  //   }
-  // },
   {
     "key": "alt+shift+s",
     "command": "runCommands",
@@ -699,10 +662,6 @@
     "args": "toggle-light-dark"
   },
   {
-    "key": "ctrl+p",
-    "command": "-workbench.action.quickOpen"
-  },
-  {
     "key": "ctrl+n",
     "command": "workbench.action.tasks.runTask",
     "args": "run-node-for-current-file",
@@ -750,7 +709,11 @@
     "command": "-workbench.action.showAllSymbols"
   },
   {
-    "key": "ctrl+e",
-    "command": "-workbench.action.quickOpen"
+    "key": "ctrl+p",
+    "command": "workbench.action.terminal.sendSequence",
+    "args": {
+      "text": "\u0010"
+    },
+    "when": "terminalFocus"
   }
 ]
