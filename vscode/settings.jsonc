@@ -202,17 +202,7 @@
     "markdown",
     "svelte"
   ],
-  "eslint.validate": [
-    "javascript",
-    "javascriptreact",
-    "typescript",
-    "typescriptreact"
-  ],
-
-  //
-  //
-  // TailwindCSS
-  //
+  "eslint.validate": ["javascript", "javascriptreact", "typescript", "typescriptreact"],
 
   "tailwindCSS.emmetCompletions": false, // I don't use these.
   "tailwindCSS.colorDecorators": true, // They are useful, though annoying.
