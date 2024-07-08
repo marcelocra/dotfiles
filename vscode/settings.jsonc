@@ -202,7 +202,17 @@
     "markdown",
     "svelte"
   ],
-  "eslint.validate": ["javascript", "javascriptreact", "typescript", "typescriptreact"],
+  "eslint.validate": [
+    "javascript",
+    "javascriptreact",
+    "typescript",
+    "typescriptreact"
+  ],
+
+  //
+  //
+  // TailwindCSS
+  //
 
   "tailwindCSS.emmetCompletions": false, // I don't use these.
   "tailwindCSS.colorDecorators": true, // They are useful, though annoying.
@@ -213,9 +223,9 @@
     ":[\\w-.#>]+\\.([\\w-]*)",
 
     // For JS variables ending in [cC]lass.
-    "const.+[cC]lass = \"([^\"]*)\"",
-    "let.+[cC]lass = \"([^\"]*)\"",
-    "var.+[cC]lass = \"([^\"]*)\"",
+    "const.+[cC]lass =\\s+\"([^\"]*)\"",
+    "let.+[cC]lass =\\s+\"([^\"]*)\"",
+    "var.+[cC]lass =\\s+\"([^\"]*)\"",
 
     // For JS objects with properties ending in [cC]lass.
     ".+[cC]lass:\\s+\"([^\"]*)\"",
@@ -647,14 +657,10 @@
   // Editor
   //
 
-  //
-  //
   // Cascadia Code font
   //
-
   // "editor.fontFamily": "Cascadia Code NF",
   // "editor.fontSize": 13, // edn{:desktop 13 :notebook 19 :small 11}
-  // "editor.lineNumbers": "on",
   // "editor.fontWeight": "400", // edn{:desktop "400" :notebook "300" :small "100"}
   // "editor.fontLigatures": "'ss01', 'ss19', 'ss20', 'calt' 0",
   // // Available stylistic sets:
@@ -668,14 +674,10 @@
   // //  ~ < > = + _ _ ( ) * & ^ % $ # @ ! { } [ ] \ | / ? : ; , . ` ' " ´ ` ˜
   // //  => -> <> <= >= != !== === ~= |> <- --> || .- :- .= {..}
 
-  //
-  //
   // Fira Code font
   //
-
   // "editor.fontFamily": "Fira Code",
   // "editor.fontSize": 13, // edn{:desktop 15 :notebook ?? :small 11}
-  // "editor.lineNumbers": "on",
   // "editor.fontWeight": "100", // edn{:desktop "400" :notebook "??" :small "100"}
   // "editor.fontLigatures": "'calt' 0, 'cv01', 'cv02', 'cv05', 'cv09', 'ss05', 'ss03', 'cv16', 'cv30', 'cv25', 'cv26', 'cv32', 'cv28', 'ss10', 'cv14', 'cv12'",
   // // Available stylistic sets:
@@ -693,36 +695,54 @@
   // //  ~ < > = + _ _ ( ) * & ^ % $ # @ ! { } [ ] \ | / ? : ; , . ` ' " ´ ` ˜
   // //  => -> <> <= >= != !== === ~= |> <- --> || .- :- .= {..}
 
-  //
-  //
   // JetBrainsMono font
   //
+  // "editor.fontFamily": "JetBrains Mono",
+  // "editor.fontSize": 13, // edn{:desktop 13 :notebook ?? :small 11}
+  // "editor.fontWeight": "400", // edn{:desktop "200" :notebook "??" :small "100"}
+  // "editor.fontLigatures": "'ss02', 'ss19', 'ss20', 'zero', 'cv03', 'cv04', 'cv16', 'cv19', 'cv20', 'cv99'",
+  // // Available stylistic sets:
+  // // - | cv01,05: l | cv02: t | cv03: g | cv04: j | cv06: m  | cv07: w | cv08: k
+  // // - | cv09,17: f | cv10: r | cv11: y | cv12: u | cv14: $¢ | cv15: & | cv16: Q
+  // // - | cv18: 269  | cv19: 8 | cv20: 5 | cv99: bg inverted color to
+  // //                                            differentiate some gliphs
+  // // - ss01: classic construction
+  // // - ss02: closed construction
+  // // - ss19: broken equals ligatures (yay!)
+  // // - ss20: raised bar f
+  // // - zero: slashed zero
+  // // - frac: fractions
+  // // Ligature test:
+  // //  ! " # $ % & ' ( ) * + , - . / : ; < = > ? @ [ \ ] ^ _ ` { | } ~
+  // //  ~ < > = + _ _ ( ) * & ^ % $ # @ ! { } [ ] \ | / ? : ; , . ` ' " ´ ` ˜
+  // //  => -> <> <= >= != !== === ~= |> <- --> || .- :- .= {..}
 
-  "editor.fontFamily": "JetBrains Mono",
+  // Noto Sans Mono font
+  //
+  // "editor.fontFamily": "Noto Sans Mono",
+  // "editor.fontSize": 13, // edn{:desktop 13 :notebook ?? :small 11}
+  // "editor.fontWeight": "400", // edn{:desktop "200" :notebook "??" :small "100"}
+
+  // Geist Mono font
+  //
+  "editor.fontFamily": "Geist Mono",
   "editor.fontSize": 13, // edn{:desktop 13 :notebook ?? :small 11}
-  "editor.lineNumbers": "on",
-  "editor.fontWeight": "200", // edn{:desktop "200" :notebook "??" :small "100"}
-  "editor.fontLigatures": "'ss02', 'ss19', 'ss20', 'zero', 'cv03', 'cv04', 'cv16', 'cv19', 'cv20', 'cv99'",
-  // Available stylistic sets:
-  // - | cv01,05: l | cv02: t | cv03: g | cv04: j | cv06: m  | cv07: w | cv08: k
-  // - | cv09,17: f | cv10: r | cv11: y | cv12: u | cv14: $¢ | cv15: & | cv16: Q
-  // - | cv18: 269  | cv19: 8 | cv20: 5 | cv99: bg inverted color to
-  //                                            differentiate some gliphs
-  // - ss01: classic construction
-  // - ss02: closed construction
-  // - ss19: broken equals ligatures (yay!)
-  // - ss20: raised bar f
-  // - zero: slashed zero
-  // - frac: fractions
-  // Ligature test:
-  //  ! " # $ % & ' ( ) * + , - . / : ; < = > ? @ [ \ ] ^ _ ` { | } ~
-  //  ~ < > = + _ _ ( ) * & ^ % $ # @ ! { } [ ] \ | / ? : ; , . ` ' " ´ ` ˜
-  //  => -> <> <= >= != !== === ~= |> <- --> || .- :- .= {..}
+  "editor.fontWeight": "400", // edn{:desktop "400" :notebook "??" :small "100"}
+  "editor.fontLigatures": "'ss02', 'ss03', 'ss06', 'ss13', 'liga' 0",
+  // // Available stylistic sets:
+  // // - | ss01: normal | ss02: circular a | ss03: non-1-like l |
+  // // - | ss06: circular uppercase G      | ss08: compact (semi) colon
+  // // - | ss09: non slashed zero          |
+  // // Ligature test:
+  // //  ! " # $ % & ' ( ) * + , - . / : ; < = > ? @ [ \ ] ^ _ ` { | } ~
+  // //  ~ < > = + _ _ ( ) * & ^ % $ # @ ! { } [ ] \ | / ? : ; , . ` ' " ´ ` ˜
+  // //  => -> <> <= >= != !== === ~= |> <- --> || .- :- .= {..}
 
   "editor.codeActionsOnSave": {
     "source.fixAll.eslint": "explicit",
     "source.fixAll": "explicit"
   },
+  "editor.lineNumbers": "on",
   "editor.parameterHints.enabled": false,
   "editor.guides.bracketPairs": "active",
   "editor.bracketPairColorization.enabled": true,
@@ -832,7 +852,7 @@
   // Terminal
   //
 
-  "terminal.integrated.fontFamily": "'JetBrains Mono', 'MesloLGS Nerd Font', 'MesloLGS NF', monospace",
+  "terminal.integrated.fontFamily": "'Geist Mono', 'JetBrains Mono', 'MesloLGS Nerd Font', 'MesloLGS NF', monospace",
   "terminal.integrated.tabs.enabled": false,
   "terminal.integrated.fontSize": 13, // edn{:desktop 13 :notebook 19}
   "terminal.integrated.fontWeight": "normal",
