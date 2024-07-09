@@ -13,7 +13,7 @@
 "
 " In your plugin paths, make sure you use single quotes.
 "
-" 
+"
 " Plugin example usage:
 "
 "   " Shorthand notation; fetches https://github.com/junegunn/vim-easy-align
@@ -56,7 +56,7 @@
 " }}}
 " --- -vim-plug( ----------------------------------------{{{
 
-call plug#begin()  
+call plug#begin()
 
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
@@ -78,8 +78,8 @@ Plug 'folke/tokyonight.nvim'
 
 " Plugins for Clojure and other lisps.
 Plug 'Olical/conjure', { 'for': ['clojure', 'python'] }
-Plug 'guns/vim-sexp', { 'for': ['clojure'] } 
-Plug 'tpope/vim-sexp-mappings-for-regular-people', { 'for': ['clojure'] } 
+Plug 'guns/vim-sexp', { 'for': ['clojure'] }
+Plug 'tpope/vim-sexp-mappings-for-regular-people', { 'for': ['clojure'] }
 
 call plug#end()
 
@@ -90,15 +90,6 @@ call plug#end()
 " Syntax highlighting.
 syntax enable
 
-" When inserting a tab in the beggining of the line, it will be N spaces long
-" and a backspace will go back N spaces also (where N is the chosen number).
-set smarttab
-set shiftwidth=4
-set tabstop=4
-
-" Use spaces instead of tabs.
-set expandtab
-
 " Indentation.
 set autoindent
 
@@ -108,7 +99,7 @@ set vb t_vb=
 " Lines with number and with a particular width (no variation when
 " increasing).
 set number
-set norelativenumber 
+set norelativenumber
 
 " Show line and column.
 set ruler
@@ -163,6 +154,28 @@ colorscheme zellner  " light
 
 " Use the system clipboard to copy to/from.
 set clipboard+=unnamedplus
+
+" " Enable python3.
+" let g:python3_host_prog = '/usr/bin/python3'
+
+" If no .editorconfig is found, use these. -noeditorconfig( {{{
+
+if !filereadable(expand("~/.editorconfig"))
+    " When inserting a tab in the beggining of the line, it will be N spaces long
+    " and a backspace will go back N spaces also (where N is the chosen number).
+    set smarttab
+    set shiftwidth=4
+    set tabstop=4
+
+    " Use spaces instead of tabs.
+    set expandtab
+
+    " brazilians unite!
+    set spelllang=pt_br,en
+endif
+
+" )noeditorconfig- }}}
+
 
 " )settings- }}}
 " --- -mappings( ------------------------------------------------------------{{{
@@ -327,7 +340,7 @@ cab h tab help
 
 iab -k - [ ]
 iab u_ch ✓
-iab e_ch ✅️ 
+iab e_ch ✅️
 iab e_not ⛔️
 iab e_star ⭐️
 iab e_bolt ⚡️
@@ -444,7 +457,7 @@ augroup myautocommands
         set wrap
     endfunction
     autocmd FileType markdown call SetMarkdownOptions()
-        
+
 augroup END
 
 " )autocommands- }}}
@@ -516,7 +529,7 @@ end
 
 define_colorscheme(vim.g.colorsheme_mode)
 
-vim.keymap.set('n', '<a-L>', function() 
+vim.keymap.set('n', '<a-L>', function()
     if vim.g.colorsheme_mode == ColorMode.Dark
     then
         vim.g.colorsheme_mode = ColorMode.Light

@@ -10,7 +10,21 @@ insert_final_newline = true
 trim_trailing_whitespace = true
 end_of_line = lf
 charset = utf-8
+spelling_language = pt-BR
+max_line_length = 100
 
 [*.py]
 indent_size = 4
+max_line_length = 80
+
+[package.json]
+insert_final_newline = false
+
+[*.{md,markdown}]
+trim_trailing_whitespace = false
+
+# I don't use make, but kept this as an example.
+[Makefile]
+indent_style = tab
+tab_width = 1
 
