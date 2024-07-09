@@ -34,12 +34,12 @@
 #
 # ))) )))
 # ## Still need to learn (((
-# 
+#
 # Once I figure these out, I can move them above.
 #
 # - difference between `if [[` and `if [`
-# - 
-# 
+# -
+#
 # )))
 # )))
 
@@ -216,10 +216,10 @@ function force_rm() {
     done
 
     # Other idea:
-    # 
+    #
     #local valid_prefixes=($HOME $MCRA_TMP_PLAYGROUND)
 
-    #echo "> Target should have one of the valid path prefixes:" 
+    #echo "> Target should have one of the valid path prefixes:"
     #echo
     #echo "$target"
     #echo
@@ -421,7 +421,7 @@ else
     alias python="echo 'check for python3'"
 fi
 alias py=python
- 
+
 # )))general
 # git frequent(((
 
@@ -451,7 +451,7 @@ alias gd='git d'
 
 alias gpl="git pull"
 alias gps="git push"
-alias gpsso="git push --set-upstream origin main"
+alias gpss="git push --set-upstream"
 alias gpd='git push --dry-run'
 
 alias gld="git log --graph --pretty='%Cred%h%Creset -%C(auto)%d%Creset %s %Cgreen(%ad) %C(bold blue)<%an>%Creset'"
