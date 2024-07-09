@@ -9,7 +9,6 @@
   //
 
   "javascript.preferences.importModuleSpecifierEnding": "js",
-  "javascript.updateImportsOnFileMove.enabled": "never",
   "[javascript]": {
     "editor.rulers": [100, 120]
   },
@@ -25,7 +24,6 @@
 
   // // Causes deno extension to report import errors.
   // "typescript.tsserver.experimental.enableProjectDiagnostics": true,
-  "typescript.updateImportsOnFileMove.enabled": "always",
   "typescript.preferences.importModuleSpecifier": "non-relative",
   "[typescript]": {
     "editor.rulers": [100, 120]
