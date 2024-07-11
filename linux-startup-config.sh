@@ -1,5 +1,5 @@
-#!/usr/bin/env sh
-#
+#!/bin/sh
+
 # Commands to run during system startup.
 #
 # To set them up, use Ubuntu's Startup Application app (also present in Linux
@@ -12,7 +12,7 @@
 # In those cases, add a delay to the command. Linux Mint provide a 'delay'
 # option directly in the UI. If that's not the case for the distro you are
 # using, do something like this:
-# 
+#
 #   /bin/sh -c "sleep 3 && /path-to-this-file/init_system_linux.sh"
 #
 # For more details, take a look at: https://askubuntu.com/a/708043/121101.
@@ -21,9 +21,54 @@
 
 # -- [ Configure hardware ] ----------------------------------------------------
 
+set -e
+
+valid_args="all expert evoluent logitech todoist"
+
+usage() {
+  echo 'Usage: ./linux-startup-config.sh [options]
+
+options:
+  - expert: setup expert mouse to have more intuitive usage settings
+  - evoluent: setup evoluent mouse to have more intuitive usage settings
+  - logitech: reduce speed of logitech mouse
+  - todoist: symlink todoist again after an update
+  - all: do everything'
+}
+
+error() {
+  echo
+  echo 'ERROR: ---------------------------------------------------------------'
+  echo "ERROR: $1"
+  echo 'ERROR: ---------------------------------------------------------------'
+  echo
+}
+
+if [ $# -ne 1 ]; then
+  error 'Use only one argument.'
+  usage
+  return 1
+fi
+
+arg="$@"
+found=0
+
+for valid_arg in $valid_args; do
+  if [ "$arg" = "$valid_arg" ]; then
+    found=1
+    break
+  fi
+done
+
+if [ $found -eq 0 ]; then
+  error 'Invalid option!'
+  usage
+  return 1
+fi
 
 # Commands need xinput, so check that first.
 if [ -f "${HOME}/.no-xinput-found" ]; then
+  error 'xinput not available. install that first'
   return 1
 fi
 
@@ -48,7 +93,7 @@ setup_expert_mouse() {
         | head -n1)
     if [ ! -z "$device_id" ]; then
         # In this device, buttons are originally as follows:
-        # 
+        #
         #  / 2 | 8 \
         # |----O----|
         #  \ 1 | 3 /
@@ -106,7 +151,7 @@ setup_evoluent_mouse() {
     fi
 
     # This is a good value that I found by testing different ones.
-    xinput set-prop $device_id $prop_id -0.75 
+    xinput set-prop $device_id $prop_id -0.75
 }
 
 reduce_speed_of_logitech_mouse() {
@@ -167,8 +212,30 @@ symlink_todoist_again() {
     ln -f -s $todoist_dir/$todoist_latest_bin $HOME/bin/todoist
 }
 
-setup_expert_mouse
-setup_evoluent_mouse
-reduce_speed_of_logitech_mouse
-symlink_todoist_again
+if [ "$arg" = "expert" ] || [ "$arg" = "all" ]; then
 
+  setup_expert_mouse
+
+elif [ "$arg" = "evoluent" ] || [ "$arg" = "all" ]; then
+
+  setup_evoluent_mouse
+
+elif [ "$arg" = "logitech" ] || [ "$arg" = "all" ]; then
+
+  reduce_speed_of_logitech_mouse
+
+elif [ "$arg" = "todoist" ] || [ "$arg" = "all" ]; then
+
+  symlink_todoist_again
+
+else
+
+  echo
+  echo 'Should NOT get here!'
+  echo
+  usage
+  return 1
+
+fi
+
+return 0
