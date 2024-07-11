@@ -299,6 +299,7 @@ inoremap <a-h> <c-r>=strftime("%Hh%M")<cr>
 
 " Shebang.
 iab shebang #!/usr/bin/env
+iab posix #!/bin/sh
 
 " Vim modeline with my preferred defaults.
 iab vimmode vim: fdm=marker:fmr={{{,}}}:fdl=1:fen:ai:et:ts=4:sw=4
