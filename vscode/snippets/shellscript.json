@@ -1,25 +1,83 @@
 {
-	// Place your snippets for shellscript here. Each snippet is defined under a snippet name and has a prefix, body and 
-	// description. The prefix is what is used to trigger the snippet and the body will be expanded and inserted. Possible variables are:
-	// $1, $2 for tab stops, $0 for the final cursor position, and ${1:label}, ${2:another} for placeholders. Placeholders with the 
-	// same ids are connected.
-	// Example:
-	// "Print to console": {
-	// 	"prefix": "log",
-	// 	"body": [
-	// 		"console.log('$1');",
-	// 		"$2"
-	// 	],
-	// 	"description": "Log output to console"
-	// }
-	"improve how bash scripts deal with errors by adding these to the top of the file": {
-		"prefix": "set",
-		"body": [
-			"${2:# -e: exit on error}",
-			"${4:# -u: exit on undefined variable}",
-			"${6:# -x: print commands before execution}",
-			"${8:# -o pipefail: exits on command pipe failures}",
-			"set -${1:e}${3:u}${5:x}${7:o pipefail}$0"
-		]
-	},
+  // Place your snippets for shellscript here. Each snippet is defined under a snippet name and has a prefix, body and
+  // description. The prefix is what is used to trigger the snippet and the body will be expanded and inserted. Possible variables are:
+  // $1, $2 for tab stops, $0 for the final cursor position, and ${1:label}, ${2:another} for placeholders. Placeholders with the
+  // same ids are connected.
+  // Example:
+  // "Print to console": {
+  // 	"prefix": "log",
+  // 	"body": [
+  // 		"console.log('$1');",
+  // 		"$2"
+  // 	],
+  // 	"description": "Log output to console"
+  // }
+  "improve how bash scripts deal with errors by adding these to the top of the file": {
+    "prefix": "set",
+    "body": [
+      "${2:# -e: exit on error}",
+      "${4:# -u: exit on undefined variable}",
+      "${6:# -x: print commands before execution}",
+      "${8:# -o pipefail: exits on command pipe failures}",
+      "set -${1:e}${3:u}${5:x}${7:o pipefail}$0"
+    ]
+  },
+  "posix shell shebang": {
+    "prefix": "posix",
+    "body": [
+      "#!/bin/sh",
+      "",
+      "$0"
+    ]
+  },
+  "start a new shell file": {
+    "prefix": "init",
+    "body": [
+      "#!/bin/sh",
+      "",
+      "# Exits on error, and undefined variable.",
+      "set -eu",
+      "",
+      "# Helpers.",
+      "",
+      "error() {",
+      "  local sep=\"$(printf \"%.0s-\" $(seq 1 80))\"",
+      "",
+      "  echo \"\\${sep}\"",
+      "  echo \"Error:\" >&2",
+      "  echo \"Error: \\$1\" >&2",
+      "  echo \"Error:\" >&2",
+      "  echo \"\\${sep}\"",
+      "}",
+      "",
+      "usage() {",
+      "",
+      "  echo -n 'Usage: <script name> [options] [arguments]",
+      "",
+      "options:",
+      "- ",
+      "",
+      "arguments:",
+      "- ",
+      "'",
+      "}",
+      "",
+      "main() {",
+      "  local args=\"$@\"",
+      "  ",
+      "  $0",
+      "  ",
+      "  if [ $# -eq 0 ]; then",
+      "    usage",
+      "    error 'No arguments provided.'",
+      "    return 1",
+      "  fi",
+      "}",
+      "",
+      "main \"$@\"",
+      "",
+      "# Exits successfully if the script gets here.",
+      "return 0"
+    ]
+  },
 }
