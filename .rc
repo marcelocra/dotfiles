@@ -342,10 +342,10 @@ else
     # -h: print human readable sizes (using K, M, G instead of bytes).
     # -t: sort by time, most recently updated first.
     # --time-style: how to show time. Currently, 30mar23[22:10].
-    alias l='ls -lFh -t --time-style="+%d%b%y[%H:%M]"'
+    alias l='ls -lFh -t --time-style="+%d%b%y[%H:%M]" --group-directories-first'
 fi
 
-alias ll='l -a'
+alias ll='l -A'
 
 if [[ ! -z "${MCRA_INIT_SHELL}" && ! -z "${MCRA_LOCAL_SHELL}" ]]; then
     alias rc='vim $MCRA_INIT_SHELL'
