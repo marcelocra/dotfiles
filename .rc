@@ -492,6 +492,10 @@ alias gchanges='git whatchanged -p --abbrev-commit --pretty=medium'
 
 alias git-undo-last='git reset HEAD~'
 
+alias gr='git remote'
+alias grc='gr set-url'
+alias grco='grc origin'
+
 # )))git frequent
 # git lfs(((
 
