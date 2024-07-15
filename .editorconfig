@@ -22,6 +22,7 @@ insert_final_newline = false
 
 [*.{md,markdown}]
 trim_trailing_whitespace = false
+max_line_length = unset
 
 # I don't use make, but kept this as an example.
 [Makefile]
