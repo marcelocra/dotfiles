@@ -288,10 +288,13 @@ nnoremap <a-w> :set wrap!<cr>
 inoremap <a-w> <esc>:set wrap!<cr>a
 
 " Add date to current buffer.
-inoremap <a-d> <c-r>=strftime("%Y-%m-%d")<cr>
+inoremap <a-d> <c-r>=strftime("[[%Y-%m-%d]]")<cr>
 
 " Add time to current buffer.
 inoremap <a-h> <c-r>=strftime("%Hh%M")<cr>
+
+" Add a divider and the current time.
+inoremap <a-s> <c-r>=strftime("\n\n---\n\n%Hh%M\n\n")<cr>
 
 
 " )mappings- }}}
@@ -445,19 +448,20 @@ augroup myautocommands
     autocmd FileType gitcommit set colorcolumn=51
 
     " Markdown.
-    function SetMarkdownOptions()
-        set fdm=marker
-        set fmr={,}
-        set fdl=1
-        set fen
-        set ai
-        set et
-        set ts=4
-        set sw=4
-        set tw=80
-        set wrap
-    endfunction
-    autocmd FileType markdown call SetMarkdownOptions()
+    " Ignoring this for now, leaving it to EditorConfig.
+    " function SetMarkdownOptions()
+    "     set fdm=marker
+    "     set fmr={,}
+    "     set fdl=1
+    "     set fen
+    "     set ai
+    "     set et
+    "     set ts=4
+    "     set sw=4
+    "     set tw=80
+    "     set wrap
+    " endfunction
+    " autocmd FileType markdown call SetMarkdownOptions()
 
 augroup END
 
