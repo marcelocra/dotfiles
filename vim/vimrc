@@ -1,4 +1,4 @@
-" vim: foldmethod=marker foldmarker={{{,}}} foldlevel=0 foldenable autoindent expandtab tabstop=4 shiftwidth=4 textwidth=80
+" vim: foldmethod=marker foldmarker={{{,}}} foldlevel=0 foldenable
 "
 " Details on how to use vim-plug, with examples. {{{
 "
@@ -268,7 +268,10 @@ nnoremap [t :tabprevious<cr>
 nnoremap ]t :tabnext<cr>
 
 " Change generic autocomplete mapping.
-inoremap <c-space> <c-n>
+" inoremap <c-space> <c-n>
+
+" Change default lsp autocomplete mapping.
+inoremap <c-space> <c-x><c-o><c-p>
 
 " Reminder that I'm using the wrong keyboard layout.
 nnoremap Ç :echo 'wrong keyboard layout!'<cr>
@@ -288,7 +291,7 @@ nnoremap <a-w> :set wrap!<cr>
 inoremap <a-w> <esc>:set wrap!<cr>a
 
 " Add date to current buffer.
-inoremap <a-d> <c-r>=strftime("[[%Y-%m-%d]]")<cr>
+inoremap <a-d> <c-r>=strftime("%Y-%m-%d")<cr>
 
 " Add time to current buffer.
 inoremap <a-h> <c-r>=strftime("%Hh%M")<cr>
@@ -296,13 +299,18 @@ inoremap <a-h> <c-r>=strftime("%Hh%M")<cr>
 " Add a divider and the current time.
 inoremap <a-s> <c-r>=strftime("\n\n---\n\n%Hh%M\n\n")<cr>
 
+" Add current date and time.
+inoremap <a-n> <c-r>=strftime("%Y-%m-%d %H:%M")<cr>
+
 
 " )mappings- }}}
 " --- -abbreviations( -------------------------------------------------------{{{
 
 " Shebang.
 iab shebang #!/usr/bin/env
-iab posix #!/bin/sh
+iab posix #!/usr/bin/env sh
+iab deno #!/usr/bin/env -S deno run --allow-read
+iab fsx #!/usr/bin/env -S dotnet fsi
 
 " Vim modeline with my preferred defaults.
 iab vimmode vim: fdm=marker:fmr={{{,}}}:fdl=1:fen:ai:et:ts=4:sw=4
@@ -504,7 +512,7 @@ local ColorMode = {
 }
 
 -- local mode = ColorMode.Dark
-vim.g.colorsheme_mode = ColorMode.Dark
+vim.g.colorsheme_mode = ColorMode.TimeBased
 
 function define_colorscheme(mode)
     -- If not forcing light mode, then check if forcing dark. If not, then use the
