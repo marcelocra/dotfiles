@@ -25,7 +25,7 @@
   "posix shell shebang": {
     "prefix": "posix",
     "body": [
-      "#!/bin/sh",
+      "#!/usr/bin/env sh",
       "",
       "$0"
     ]
@@ -33,7 +33,7 @@
   "start a new shell file": {
     "prefix": "init",
     "body": [
-      "#!/bin/sh",
+      "#!/usr/bin/env sh",
       "",
       "# Exits on error, and undefined variable.",
       "set -eu",
