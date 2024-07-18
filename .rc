@@ -1,47 +1,48 @@
-#!/usr/bin/env bash
-# vim: fdm=marker:fmr=(((,))):fdl=1:fen:ai:et:ts=4:sw=4:filetype=bash
+#!/bin/sh
+# vim: fdm=marker:fmr={,}:fdl=1:fen:filetype=sh
 #
-# # Terminal configuration script docs. (((
-# ## TODO (((
+# Main shell configuration script.
+
 #
-# Some ideas:
+# Some ideas for this file
+# ------------------------
 #
-# - add documentation on how this file works
-# - split it per sections?
-# - use a different language?
+# - [ ] add documentation on how this file works
+# - [ ] split files per sections?
+# - [ ] use a different programming language for some stuff?
 #
-# )))
-# ## Bash **HOW-TO** (((
+# Shell HOW-TO
+# ------------
 #
-# ### Discard commands outputs (((
+# - Discard commands outputs
+#   - stdout: > /dev/null
+#   - stderr: 2> /dev/null
+#   - both
+#     - more portable: > /dev/null 2>&1
+#     - less portable (but good enough), shorter: &> /dev/null
+# - Scripts and functions arguments
+#   - each argument get a number: $1, $2, $3 ...
+#   - for all arguments:
+#     - $* => $1 $2 ... ${N}
+#     - $@ => $1 $2 ... ${N}
+#     - "$*" => "$1c$2c ... ${N}
+#     - "$@" => "$1" "$2" ... "${N}"
+# - Difference between [[ and [
+#   - [ is posix
+#   - [[ is bash, inspired by the korn shell
+#   - there are a lot of differences, described in more details in the answer below
+#     - https://stackoverflow.com/a/47576482/1814970
+#   - the recommendation is to always use [], as it is more portable and it has equivalents for
+#     everything from [[]]
 #
-# - stdout: `> /dev/null`
-# - stderr: `2> /dev/null`
-# - both:
-#   - more portable: `> /dev/null 2>&1`
-#   - less portable (but good enough), shorter: `&> /dev/null`
 #
-# )))
+# To learn
+# --------
 #
-# ### Scripts and functions arguments (((
+# Move stuff from here to the section above after learning!
 #
-# - each argument get a number: `$1`, `$2`, `$3` ...
-# - for all arguments:
-#   - `$*` => `$1 $2 ... ${N}`
-#   - `$@` => `$1 $2 ... ${N}`
-#   - `"$*"` => `"$1c$2c ... ${N}`
-#   - `"$@"` => `"$1" "$2" ... "${N}"`
+# - more posix stuff!
 #
-# ))) )))
-# ## Still need to learn (((
-#
-# Once I figure these out, I can move them above.
-#
-# - difference between `if [[` and `if [`
-# -
-#
-# )))
-# )))
 
 
 REQUIRED_ENVS=''
@@ -51,7 +52,7 @@ verify_defined() {
     local env_value
     eval env_value=\$$1
 
-    if [[ -z "$env_value" ]]; then
+    if [ -z "$env_value" ]; then
         REQUIRED_ENVS="${REQUIRED_ENVS}'$env_name' must be defined with the $2.\n\n"
     fi
 }
@@ -61,7 +62,7 @@ verify_defined "MCRA_INIT_SHELL" 'path to your shell init. I use the `.rc` file 
 verify_defined "MCRA_LOCAL_SHELL" 'path to your local shell init, with stuff that you do not want tracked in a public repo'
 verify_defined "MCRA_TMP_PLAYGROUND" 'path to a folder that you can use as a playground. I use /tmp/playground or something like this'
 
-if [[ ! -z "$REQUIRED_ENVS" ]]; then
+if [ ! -z "$REQUIRED_ENVS" ]; then
     echo $REQUIRED_ENVS
     return 1
 fi
@@ -394,7 +395,7 @@ alias b="popd"
 
 js () {
     if [[ -f 'bun.lockb' || -f 'yarn.lock' || -f 'pnpm-lock.yaml' ]]; then
-        echo 'Consider converting this project to use `npm` because it works'
+        echo 'Consider converting this project to use `npm` because it works!'
     elif [[ -f 'package-lock.json' ]]; then
         npm "$@"
     else
