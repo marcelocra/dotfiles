@@ -23,10 +23,16 @@
 
 set -e
 
-valid_args="all expert evoluent logitech todoist"
+error() {
+  echo
+  echo 'ERROR: ---------------------------------------------------------------'
+  echo "ERROR: $1"
+  echo 'ERROR: ---------------------------------------------------------------'
+  echo
+}
 
 usage() {
-  echo 'Usage: ./linux-startup-config.sh [options]
+  echo 'Usage: ./linux-startup-config.sh [options = all (if no arg is provided)]
 
 options:
   - expert: setup expert mouse to have more intuitive usage settings
@@ -36,34 +42,26 @@ options:
   - all: do everything'
 }
 
-error() {
-  echo
-  echo 'ERROR: ---------------------------------------------------------------'
-  echo "ERROR: $1"
-  echo 'ERROR: ---------------------------------------------------------------'
-  echo
-}
 
-if [ $# -ne 1 ]; then
-  error 'Use only one argument.'
-  usage
-  return 1
-fi
+if [ $# -eq 0 ]; then
+  arg='all'
+else
+  arg="$@"
 
-arg="$@"
-found=0
+  found=0
 
-for valid_arg in $valid_args; do
-  if [ "$arg" = "$valid_arg" ]; then
-    found=1
-    break
+  for valid_arg in "all expert evoluent logitech todoist"; do
+    if [ "$arg" = "$valid_arg" ]; then
+      found=1
+      break
+    fi
+  done
+
+  if [ $found -eq 0 ]; then
+    error 'Invalid option!'
+    usage
+    return 1
   fi
-done
-
-if [ $found -eq 0 ]; then
-  error 'Invalid option!'
-  usage
-  return 1
 fi
 
 # Commands need xinput, so check that first.
@@ -212,29 +210,38 @@ symlink_todoist_again() {
     ln -f -s $todoist_dir/$todoist_latest_bin $HOME/bin/todoist
 }
 
+echo "\nProvided argument: '$arg'\n"
+
 if [ "$arg" = "expert" ] || [ "$arg" = "all" ]; then
 
+
+  echo "Running 'expert'..."
   setup_expert_mouse
+  echo 'Done!'
 
-elif [ "$arg" = "evoluent" ] || [ "$arg" = "all" ]; then
+fi
 
+if [ "$arg" = "evoluent" ] || [ "$arg" = "all" ]; then
+
+  echo "Running 'evoluent'..."
   setup_evoluent_mouse
+  echo 'Done!'
 
-elif [ "$arg" = "logitech" ] || [ "$arg" = "all" ]; then
+fi
 
+if [ "$arg" = "logitech" ] || [ "$arg" = "all" ]; then
+
+  echo "Running 'logitech'..."
   reduce_speed_of_logitech_mouse
+  echo 'Done!'
 
-elif [ "$arg" = "todoist" ] || [ "$arg" = "all" ]; then
+fi
 
+if [ "$arg" = "todoist" ] || [ "$arg" = "all" ]; then
+
+  echo "Running 'todoist'..."
   symlink_todoist_again
-
-else
-
-  echo
-  echo 'Should NOT get here!'
-  echo
-  usage
-  return 1
+  echo 'Done!'
 
 fi
 
