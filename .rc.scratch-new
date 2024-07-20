@@ -96,23 +96,47 @@
 #     gsettings get org.cinnamon.desktop.wm.preferences titlebar-font
 #
 
-MCRA_SSN="scratch"
+main() {
+  script_running_from="$(dirname "$0")"
 
-# TODO: figure out why this is not working or try an alternative that works.
-gnome-terminal --geometry '157x60--26+4' -- sh -c <(cat <<EOF
+  # Get the default profile ID.
+  profile_id=$(gsettings get org.gnome.Terminal.ProfilesList default | tr -d \')
 
-echo $MCRA_SSN
+  # Get the font setting for the default profile.
+  font=$(dconf read /org/gnome/terminal/legacy/profiles:/:$profile_id/font)
 
-# If session exists, connect to it. Otherwise, create it.
-if tmux has -t $MCRA_SSN > /dev/null 2>&1; then
-  if tmux lsc | grep $MCRA_SSN > /dev/null 2>&1; then
-    tmux detach -s $MCRA_SSN
-  else
-    tmux attach -t $MCRA_SSN > /dev/null 2>&1
-  fi
-else
-  tmux new -s $MCRA_SSN > /dev/null 2>&1
-fi
+  # Extract the font size.
+  font_size=$(echo $font | grep -o '[0-9]\+')
 
-EOF
-)
+  # Estimate character dimensions (these values can vary depending on the font).
+  char_width=$((font_size))
+  char_height=$font_size
+
+  # Get the current screen resolution.
+  resolution=$(xrandr | grep '*' | awk '{print $1}')
+  screen_width=$(echo $resolution | cut -d'x' -f1)
+  screen_height=$(echo $resolution | cut -d'x' -f2)
+
+  # Calculate the width for the right half.
+  half_width=$((screen_width / 2))
+
+  # Convert pixel dimensions to terminal columns and rows using the estimated character dimensions.
+  columns=$((half_width / char_width))
+  rows=$((screen_height / char_height))
+
+  echo "column:$columns | rows:$rows | width:$half_width"
+
+  # original
+  # --geometry '157x81--26+4'
+
+  # TODO: figure out the correct factor to apply to the char width and height, otherwise the
+  # geometry is incorrect.
+  #
+  # # Start gnome-terminal on the right half of the screen.
+  # gnome-terminal \
+  #   --title 'scratchpad' \
+  #   --geometry "${columns}x${rows}+$half_width+0" \
+  #   -- sh $script_running_from/.rc.scratch-new2
+}
+
+main

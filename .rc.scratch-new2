@@ -1,0 +1,14 @@
+#!/usr/bin/env sh
+
+MCRA_SSN="scratch"
+
+# If session exists, connect to it. Otherwise, create it.
+if tmux has -t $MCRA_SSN > /dev/null 2>&1; then
+  if tmux lsc | grep $MCRA_SSN > /dev/null 2>&1; then
+    tmux detach -s $MCRA_SSN
+  else
+    tmux attach -t $MCRA_SSN > /dev/null 2>&1
+  fi
+else
+  tmux new -s $MCRA_SSN > /dev/null 2>&1
+fi
