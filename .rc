@@ -1,8 +1,9 @@
 #!/bin/sh
-# vim: fdm=marker:fmr={,}:fdl=1:fen:filetype=sh
+# vim: fdm=marker:fmr=(((,))):fdl=0:fen:filetype=sh
 #
 # Main shell configuration script.
 
+# Some file docs. (((
 #
 # Some ideas for this file
 # ------------------------
@@ -43,6 +44,7 @@
 #
 # - more posix stuff!
 #
+# )))
 
 
 REQUIRED_ENVS=''
@@ -116,17 +118,24 @@ alias j="easy_jump_to_project"
 
 # Setup the default text editor based on what is installed.
 if command -v nvim &> /dev/null; then
-    export EDITOR=nvim
+  export EDITOR=nvim
 elif command -v vim &> /dev/null; then
-    export EDITOR=vim
+  export EDITOR=vim
 elif command -v vi &> /dev/null; then
-    export EDITOR=vi
+  export EDITOR=vi
 elif command -v nano &> /dev/null; then
-    export EDITOR=nano
+  export EDITOR=nano
 else
-    echo "You don't have 'neovim', 'vim', 'vi' or 'nano' installed. EDITOR env not defined"
+  echo "You don't have 'neovim', 'vim', 'vi' or 'nano' installed. No idea what the EDITOR env will be haha."
+  echo "Actually, take a look: $EDITOR"
 fi
 
+if [ "$EDITOR" = "nvim" ] || [ "$EDITOR" = "vim" ]
+then
+  alias vim="$EDITOR"
+  alias vi=vim
+  alias v=vim
+fi
 
 # Desktop notification to help me change tasks.
 function timer_notification() {
@@ -312,19 +321,21 @@ argument is optional: if not provided, the first is used in its place.'
 # s = reserved
 # t = go to my temp dir
 # v = vim
+# g = some type of grep
 
 # )))one lettered
 # general(((
 
-alias vim="$EDITOR"
-alias vi=vim
+# Show diffs between files.
 
 if command -v code &> /dev/null; then
-    alias vimdiff="code -d"
-else
-    if [[ $EDITOR == "nvim" ]]; then
-        alias vimdiff="nvim -d"
-    fi
+  # VSCode diff is great!
+  alias diff-code="code -d"
+fi
+
+if [ "$EDITOR" = "nvim" ]; then
+  # Neovim diff is good too.
+  alias vimdiff="nvim -d"
 fi
 
 # The -T option sets terminal features for the client. Uses csv format.
@@ -394,13 +405,13 @@ alias t="pushd $MCRA_TMP_PLAYGROUND"
 alias b="popd"
 
 js () {
-    if [[ -f 'bun.lockb' || -f 'yarn.lock' || -f 'pnpm-lock.yaml' ]]; then
-        echo 'Consider converting this project to use `npm` because it works!'
-    elif [[ -f 'package-lock.json' ]]; then
-        npm "$@"
-    else
-        echo 'This project does not have a lockfile'
-    fi
+  if [[ -f 'bun.lockb' || -f 'yarn.lock' || -f 'pnpm-lock.yaml' ]]; then
+    echo 'Consider using npm for node projets. It usually works! XD'
+  elif [[ -f 'package-lock.json' ]]; then
+    npm "$@"
+  else
+    echo 'This project does not have a lockfile'
+  fi
 }
 alias r="js run"
 
@@ -422,6 +433,15 @@ else
     alias python="echo 'check for python3'"
 fi
 alias py=python
+
+
+if command -v rg >/dev/null 2>&1; then
+  alias g=rg
+elif command -v egrep >/dev/null 2>&1; then
+  alias g=egrep
+elif command -v grep >/dev/null 2>&1; then
+  alias g=grep
+fi
 
 # )))general
 # git frequent(((
@@ -510,26 +530,19 @@ alias dc="docker compose"
 alias docker-prune-month-old-images='docker image prune -a --filter "until=720h"'
 alias docker-prune-two-week-old-images='docker image prune -a --filter "until=336h"'
 
-docker_images_sorted() {
-    docker images --format "table {{.ID}}\t{{.Size}}\t{{.Repository}}:{{.Tag}}" \
-        | head -n1
-            docker images --format "{{.ID}}\t{{.Size}}\t{{.Repository}}:{{.Tag}}" \
-                | awk '{match($2, /([0-9.]+)([KMG]?B)/, a); size = a[1]; unit = a[2]; if (unit == "GB") size *= 1024; else if (unit == "KB") size /= 1024; printf "%s\t%09.2f MB\t%s \n", $1, size, $3}' \
-                | (sed -u 1q; sort -k 2 -h)
-            }
-
-            alias di='docker_images_sorted'
+# # TODO: figure out what does this really do and whether or not I need it here. Formatting was all
+# # weird and it seemed to be broken.
+# docker_images_sorted() {
+#   docker images --format "table {{.ID}}\t{{.Size}}\t{{.Repository}}:{{.Tag}}" \
+#     | head -n1
+#
+#   docker images --format "{{.ID}}\t{{.Size}}\t{{.Repository}}:{{.Tag}}" \
+#     | awk '{match($2, /([0-9.]+)([KMG]?B)/, a); size = a[1]; unit = a[2]; if (unit == "GB") size *= 1024; else if (unit == "KB") size /= 1024; printf "%s\t%09.2f MB\t%s \n", $1, size, $3}' \
+#     | (sed -u 1q; sort -k 2 -h)
+# }
+# alias di='docker_images_sorted'
 
 # )))docker
-# to avoid dangerous commands - overrides(((
-
-#alias really-npx="$(which npx)"
-#alias really-bunx="$(which bunx)"
-#
-#alias npx="echo 'are you sure? if so, use: \n\$ really-npx'"
-#alias bunx="echo 'are you sure? if so, use: \n\$ really-bunx'"
-
-# )))overrides
 # )))aliases
 
 return 0
