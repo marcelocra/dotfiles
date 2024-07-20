@@ -1,0 +1,17 @@
+#!/usr/bin/env sh
+# vim: fdm=marker:fmr={,}:fdl=1:fen:filetype=sh
+#
+# Common stuff used by all my shell scripts.
+
+debug() {
+  if [ "$MCRA_DEBUG" = "" ] || [ "$MCRA_DEBUG" = "false" ] || [ "$MCRA_DEBUG" = "0" ]
+  then
+    return 0
+  fi
+
+  notify-send -u warning 'Debugging...' "$@"
+}
+
+error() {
+  # TODO: add code here.
+}
