@@ -116,9 +116,9 @@ set laststatus=2
 set encoding=utf-8
 
 " Change tab and trail characters.
-" let &showbreak = '+++ '
-set listchars=eol:↲,tab:→\ ,trail:·,extends:>,precedes:<,nbsp:%
-"set listchars=eol:$,tab:».,trail:.,extends:>,precedes:<,nbsp:_
+let &showbreak = '+++ '
+set listchars=eol:↲,tab:→\ ,trail:·,extends:>,precedes:<,nbsp:_
+"set listchars=eol:$,tab:».,trail:.,extends:>,precedes:<,nbsp:%
 set nolist
 
 " Highlight the cursor line.
@@ -159,7 +159,6 @@ set clipboard+=unnamedplus
 " let g:python3_host_prog = '/usr/bin/python3'
 
 " If no .editorconfig is found, use these. -noeditorconfig( {{{
-
 if !filereadable(expand("~/.editorconfig"))
     " When inserting a tab in the beggining of the line, it will be N spaces long
     " and a backspace will go back N spaces also (where N is the chosen number).
@@ -175,8 +174,6 @@ if !filereadable(expand("~/.editorconfig"))
 endif
 
 " )noeditorconfig- }}}
-
-
 " )settings- }}}
 " --- -mappings( ------------------------------------------------------------{{{
 
@@ -302,21 +299,47 @@ inoremap <a-s> <c-r>=strftime("\n\n---\n\n%Hh%M\n\n")<cr>
 " Add current date and time.
 inoremap <a-n> <c-r>=strftime("%Y-%m-%d %H:%M")<cr>
 
+" Copy current file path to clipboard, trying to replace user home path with $HOME.
+nnoremap <leader><leader>p :let @+ = substitute(expand('%'), expand('~'), '$HOME', '')<cr>:echo @+<cr>
+
 
 " )mappings- }}}
 " --- -abbreviations( -------------------------------------------------------{{{
 
-" Shebang.
-iab shebang #!/usr/bin/env
-iab posix #!/usr/bin/env sh
-iab deno #!/usr/bin/env -S deno run --allow-read
-iab fsx #!/usr/bin/env -S dotnet fsi
+
+
+" ///// CODE ABBREVIATIONS /////////////////////////////////////////////////////////////////////////
+"
+" Prefix all of them with capital c, to avoid replacing when typing variables, comments, etc.
+
+
+" Shebangs.
+
+
+iab Cshebang #!/usr/bin/env
+iab Csb #!/usr/bin/env
+
+iab Cposix #!/usr/bin/env sh
+iab Cps #!/usr/bin/env sh
+
+iab Cdeno #!/usr/bin/env -S deno run --allow-read
+
+iab Cfsx #!/usr/bin/env -S dotnet fsi
+
 
 " Vim modeline with my preferred defaults.
-iab vimmode vim: fdm=marker:fmr={{{,}}}:fdl=1:fen:ai:et:ts=4:sw=4
-iab vimmodejs vim:fdm=marker:fmr={,}:fdl=1:fen:ai:et:ts=2:sw=2
-iab vimmodemd filetype=markdown
-iab vimmodew tw=80
+"
+" EDIT: now I put the defaults in the ~/.editorconfig, which superseeds modelines, as they work in
+" all editors.
+
+
+iab Cvimmode vim: fdm=marker:fmr={,}:fdl=1:fen
+iab Cvimmodemd filetype=markdown
+
+iab Cvimmodeold vim: fdm=marker:fmr={{{,}}}:fdl=1:fen:ai:et:ts=4:sw=4
+iab Cvimmodeoldjs vim:fdm=marker:fmr={,}:fdl=1:fen:ai:et:ts=2:sw=2
+
+" " Trying to automatically create a modeline that works for notes in md.
 " iab note <!-- vim: fdm=marker:fmr={,}:fdl=1:fen:ai:et:ts=4:sw=4:tw=80:wrap --><left><left><left><cr><esc><left>o
 " iab note <!-- vim: fdm=marker:fmr={,}:fdl=1:fen:ai:et:ts=4:sw=4:tw=80:wrap --><left><left><left><cr><left>o
 " iab note <!-- vim: fdm=marker:fmr={,}:fdl=1:fen:ai:et:ts=4:sw=4:tw=80:wrap --><left><left><left><bs><cr>
@@ -328,39 +351,54 @@ iab vimmodew tw=80
 " want yet.
 " iab note <!-- vim: fdm=marker:fmr={,}:fdl=1:fen:ai:et:ts=4:sw=4:tw=80:wrap<cr>--><cr>
 
-" Comment to prevent clojure auto-formatters from wrapping sexps.
-iab noparenwrap ;; Prevents auto-formatter from wrapping.
 
 " Create better bash scripts with these options at the top
 " of them.
 "
+" EDIT: I'm replacing my bash scripts with posix, see below.
 " -e: exit on error
 " -u: exit on undefined variable
 " -o pipefail: exits on command pipe failures
 " -x: print commands before execution
-iab euxo set -euxo pipefail
+iab Ceuxo set -euxo pipefail
 
 " Printing all commands make it very verbose and hard to read.
-iab euo set -euo pipefail
+iab Ceuo set -euo pipefail
 
 " Add Rich Hickey comment block comment.
-iab rich ;; rcf - rich comment form
+iab Crich ;; rcf - rich comment form
+
+
+" Shell stuff.
+
+iab Cdevnull &>/dev/null
+
+" Simplify writing shell command checks.
+iab Cout >/dev/null 2>&1; then
+iab Ccommand command -v Cout
+
+
+" Unicode, emoji, etc.
+
+iab Cch ✓
+iab Cch ✅️
+iab Cnot ⛔️
+iab Cstar ⭐️
+iab Cbolt ⚡️
+iab Ccros ❌️
+iab Cheartp 💜️
+iab Cheartw 🤍️
+iab C-- - [ ]
+
+
+" ///// COMMAND ABBREVIATIONS //////////////////////////////////////////////////////////////////////
+
 
 " Always open help in a new tab.
+
 cab help tab help
 cab h tab help
 
-iab -k - [ ]
-iab u_ch ✓
-iab e_ch ✅️
-iab e_not ⛔️
-iab e_star ⭐️
-iab e_bolt ⚡️
-iab e_cros ❌️
-iab e_heartp 💜️
-iab e_heartw 🤍️
-
-iab devnull &>/dev/null
 
 " )abbreviations- }}}
 " --- -leader-mappings( -----------------------------------------------------{{{
