@@ -1,0 +1,118 @@
+#!/usr/bin/env sh
+# vim:ts=4:et:ai:fen:fdm=marker:fmr={{{,}}}:fdl=0
+#
+# This script was meant to be associated to a shortcut key, like F10 or INSERT,
+# for example (from now on, <shortcut>).
+#
+# Then, whenever you press <shortcut> one of three things will happen:
+#
+#   1. The first time you hit <shortcut>, it will open a new terminal window
+#      with tmux attached.
+#
+#   2. If you press <shortcut> again, that tmux session will be detached and
+#      the terminal window will be closed.
+#
+#   3. If you press <shortcut> again, a new terminal window will be opened, but
+#      attached to the same tmux session created in 1. Unless you kill this
+#      tmux session, whenever you press <shortcut>, it will be used.
+#
+# Gotcha: if you do not press <shortcut> to close the scratch terminal window
+# (e.g. you alt+tab away from it) and then press <shortcut>, it will close the
+# existing (and unfocused) window, which might be confusing. Just press
+# <shortcut> again :).
+#
+# When creating a shortcut for gnome-terminal, use the following command,
+# replacing <path-to-this> with the actual path to this file in your system.
+# Choose the font size appropriately appropriately.
+#
+# const geometryPerFontAndSize = {
+#     "MesloLGS NF Regular": {
+#         13: "91x45--26+4",
+#         11: "103x55--26+4",
+#         10: {
+#             normalScreen: "115x60--26+4",
+#             wideScreen: "155x60--26+4",
+#         },
+#         9: "131x65--26+4",
+#         8: {
+#             wideScreen: "209x84--26+4"
+#         },
+#     },
+#     "JetBrains Mono": {
+#         // unverified 13: "91x45--26+4",
+#         // unverified 11: "103x55--26+4",
+#         10: {
+#             normalScreen: "115x60--26+4",
+#             wideScreen: "157x60--26+4",
+#         },
+#         // unverified 9: "131x65--26+4",
+#         8: {
+#             wideScreen: "209x84--26+4"
+#         },
+#     },
+#     "Geist Mono": {
+#         // unverified 13: "91x45--26+4",
+#         // unverified 11: "103x55--26+4",
+#         10: {
+#             // unverified normalScreen: "115x60--26+4",
+#             wideScreen: "157x60--26+4",
+#         },
+#         // unverified 9: "131x65--26+4",
+#         // unverified 8: {
+#             wideScreen: "209x84--26+4"
+#         },
+#     },
+# }
+#
+# const geometry = geometryPerFontAndSize[fontName][fontSize]
+#
+# gnome-terminal --geometry ${geometry} -- sh -c "<path-to-this>"
+#
+#
+# Current command
+# ===============
+#
+# gnome-terminal --geometry 157x60--26+4 -- sh -c "<path-to-this>"
+#
+#
+# System Font Selection
+# =====================
+#
+# Ordered as shown in the UI:
+#
+#   Default font:
+#     gsettings get org.cinnamon.desktop.interface font-name
+#
+#   Desktop font:
+#     gsettings get org.nemo.desktop font
+#
+#   Document font:
+#     gsettings get org.gnome.desktop.interface document-font-name
+#
+#   Monospace font:
+#     gsettings get org.gnome.desktop.interface monospace-font-name
+#
+#   Window title font:
+#     gsettings get org.cinnamon.desktop.wm.preferences titlebar-font
+#
+
+MCRA_SSN="scratch"
+
+# TODO: figure out why this is not working or try an alternative that works.
+gnome-terminal --geometry '157x60--26+4' -- sh -c <(cat <<EOF
+
+echo $MCRA_SSN
+
+# If session exists, connect to it. Otherwise, create it.
+if tmux has -t $MCRA_SSN > /dev/null 2>&1; then
+  if tmux lsc | grep $MCRA_SSN > /dev/null 2>&1; then
+    tmux detach -s $MCRA_SSN
+  else
+    tmux attach -t $MCRA_SSN > /dev/null 2>&1
+  fi
+else
+  tmux new -s $MCRA_SSN > /dev/null 2>&1
+fi
+
+EOF
+)
