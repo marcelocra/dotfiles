@@ -95,20 +95,25 @@
 #   Window title font:
 #     gsettings get org.cinnamon.desktop.wm.preferences titlebar-font
 #
+THIS_FILE_DIRECTORY="$(command -v readlink >/dev/null 2>&1 && dirname $(readlink -f "$0") || dirname "$0")"
 
 main() {
-  script_running_from="$(dirname "$0")"
-
   # Get the default profile ID.
   profile_id=$(gsettings get org.gnome.Terminal.ProfilesList default | tr -d \')
 
   # Get the font setting for the default profile.
   font=$(dconf read /org/gnome/terminal/legacy/profiles:/:$profile_id/font)
 
-  # Extract the font size.
+  # Extract the font family and its size.
+  font_family=$(echo $font | sed -e "s/'([^0-9]+) [^ ]+'/\1/g")
   font_size=$(echo $font | grep -o '[0-9]\+')
 
-  # Estimate character dimensions (these values can vary depending on the font).
+  # TODO: move this to commons.
+  if [ "${font_family#Geist}" != "$font_family" ]; then
+    # doesn't match geist
+  else
+    # match geist
+  fi
   char_width=$((font_size))
   char_height=$font_size
 
@@ -136,7 +141,7 @@ main() {
   # gnome-terminal \
   #   --title 'scratchpad' \
   #   --geometry "${columns}x${rows}+$half_width+0" \
-  #   -- sh $script_running_from/.rc.scratch-new2
+  #   -- sh $THIS_FILE_DIRECTORY/.rc.scratch-new2
 }
 
 main
