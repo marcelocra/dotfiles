@@ -3,6 +3,8 @@
 #
 # This script is meant to be associated with a shortcut key, like INSERT (from now one, <shortcut>).
 #
+# Open this fold for more details. -{
+#
 # Then, whenever you press <shortcut> one of three things will happen:
 #
 #   1. The first time you hit <shortcut>, it will open a new terminal window with tmux attached.
@@ -39,11 +41,18 @@
 #
 #   Window title font:
 #     gsettings get org.cinnamon.desktop.wm.preferences titlebar-font
+# }-
 #
+
 . $HOME/bin/.rc.common
 THIS_FILE_DIRECTORY=$(get_this_file_dir "$0")
 
 main() {
+  scratch="scratch"
+  if [ ! -z "$1" ]; then
+    scratch="$1"
+  fi
+
   # Get the default profile ID.
   profile_id=$(gsettings get org.gnome.Terminal.ProfilesList default | tr -d \')
 
@@ -114,7 +123,7 @@ main() {
   cmd="gnome-terminal \
     --title 'scratchpad' \
     --geometry \"${columns}x${rows}+$half_width+0\" \
-    -- sh $THIS_FILE_DIRECTORY/.rc.scratch-new2"
+    -- sh $THIS_FILE_DIRECTORY/.rc.scratch-new2 $scratch"
 
   if is_debug; then
     debug "Would run the following command:\n\n$(echo "$cmd" | sed -E -e 's/ [ ]+/\n  /g')\n"
@@ -123,4 +132,4 @@ main() {
   fi
 }
 
-main
+main "$@"
