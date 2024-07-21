@@ -1,9 +1,12 @@
-# EditorConfig is awesome: https://editorconfig.org
+# EditorConfig settings.
 
-# Top-most EditorConfig file, to be put at "$HOME/.editorconfig".
+# Tells EditorConfig to stop looking upwards for other settings.
 root = true
 
+
 [*]
+# Creates a base setting for all files, to be overriden for specific files in the next sections.
+
 indent_style = space
 indent_size = 2
 insert_final_newline = true
@@ -13,19 +16,16 @@ charset = utf-8
 spelling_language = pt-BR
 max_line_length = 100
 
-[*.py]
+
+[*.{py,sh,zsh,bash}]
+
 indent_size = 4
 max_line_length = 80
 
-[package.json]
-insert_final_newline = false
 
-[*.{md,markdown}]
-trim_trailing_whitespace = false
-max_line_length = unset
-
-# I don't use make, but kept this as an example.
 [Makefile]
+# I don't use `make`, but kept this as an example on how to use tabs.
+
 indent_style = tab
 tab_width = 1
 
