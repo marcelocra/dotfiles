@@ -1,82 +1,27 @@
 #!/usr/bin/env sh
-# vim:ts=4:et:ai:fen:fdm=marker:fmr={{{,}}}:fdl=0
+# vim: fdm=marker:fmr=-{,}-:fdl=1:fen
 #
-# This script was meant to be associated to a shortcut key, like F10 or INSERT,
-# for example (from now on, <shortcut>).
+# This script is meant to be associated with a shortcut key, like INSERT (from now one, <shortcut>).
 #
 # Then, whenever you press <shortcut> one of three things will happen:
 #
-#   1. The first time you hit <shortcut>, it will open a new terminal window
-#      with tmux attached.
+#   1. The first time you hit <shortcut>, it will open a new terminal window with tmux attached.
 #
-#   2. If you press <shortcut> again, that tmux session will be detached and
-#      the terminal window will be closed.
+#   2. If you press <shortcut> again, that tmux session will be detached and the terminal window
+#      will be closed.
 #
-#   3. If you press <shortcut> again, a new terminal window will be opened, but
-#      attached to the same tmux session created in 1. Unless you kill this
-#      tmux session, whenever you press <shortcut>, it will be used.
+#   3. If you press <shortcut> again, a new terminal window will be opened, but attached to the same
+#      tmux session created in 1. Unless you kill this tmux session, whenever you press <shortcut>,
+#      it will be used.
 #
-# Gotcha: if you do not press <shortcut> to close the scratch terminal window
-# (e.g. you alt+tab away from it) and then press <shortcut>, it will close the
-# existing (and unfocused) window, which might be confusing. Just press
-# <shortcut> again :).
-#
-# When creating a shortcut for gnome-terminal, use the following command,
-# replacing <path-to-this> with the actual path to this file in your system.
-# Choose the font size appropriately appropriately.
-#
-# const geometryPerFontAndSize = {
-#     "MesloLGS NF Regular": {
-#         13: "91x45--26+4",
-#         11: "103x55--26+4",
-#         10: {
-#             normalScreen: "115x60--26+4",
-#             wideScreen: "155x60--26+4",
-#         },
-#         9: "131x65--26+4",
-#         8: {
-#             wideScreen: "209x84--26+4"
-#         },
-#     },
-#     "JetBrains Mono": {
-#         // unverified 13: "91x45--26+4",
-#         // unverified 11: "103x55--26+4",
-#         10: {
-#             normalScreen: "115x60--26+4",
-#             wideScreen: "157x60--26+4",
-#         },
-#         // unverified 9: "131x65--26+4",
-#         8: {
-#             wideScreen: "209x84--26+4"
-#         },
-#     },
-#     "Geist Mono": {
-#         // unverified 13: "91x45--26+4",
-#         // unverified 11: "103x55--26+4",
-#         10: {
-#             // unverified normalScreen: "115x60--26+4",
-#             wideScreen: "157x60--26+4",
-#         },
-#         // unverified 9: "131x65--26+4",
-#         // unverified 8: {
-#             wideScreen: "209x84--26+4"
-#         },
-#     },
-# }
-#
-# const geometry = geometryPerFontAndSize[fontName][fontSize]
-#
-# gnome-terminal --geometry ${geometry} -- sh -c "<path-to-this>"
-#
-#
-# Current command
-# ===============
-#
-# gnome-terminal --geometry 157x60--26+4 -- sh -c "<path-to-this>"
-#
+# Gotcha: if you do not press <shortcut> to close the scratch terminal window (e.g. you alt+tab away
+# from it) and then press <shortcut>, it will close the existing (and unfocused) window, which might
+# be confusing. Just press <shortcut> again :).
 #
 # System Font Selection
 # =====================
+#
+# TODO: migrate this to somewhere else.
 #
 # Ordered as shown in the UI:
 #
@@ -95,7 +40,8 @@
 #   Window title font:
 #     gsettings get org.cinnamon.desktop.wm.preferences titlebar-font
 #
-THIS_FILE_DIRECTORY="$(command -v readlink >/dev/null 2>&1 && dirname $(readlink -f "$0") || dirname "$0")"
+. $HOME/bin/.rc.common
+THIS_FILE_DIRECTORY=$(get_this_file_dir "$0")
 
 main() {
   # Get the default profile ID.
@@ -105,43 +51,76 @@ main() {
   font=$(dconf read /org/gnome/terminal/legacy/profiles:/:$profile_id/font)
 
   # Extract the font family and its size.
-  font_family=$(echo $font | sed -e "s/'([^0-9]+) [^ ]+'/\1/g")
+  font_family=$(echo $font | sed -E -e "s/'([^0-9]+) [0-9]+'/\1/g")
   font_size=$(echo $font | grep -o '[0-9]\+')
 
-  # TODO: move this to commons.
-  if [ "${font_family#Geist}" != "$font_family" ]; then
-    # doesn't match geist
-  else
-    # match geist
-  fi
-  char_width=$((font_size))
-  char_height=$font_size
+  # Default values.
+  columns=150
+  rows=60
 
-  # Get the current screen resolution.
+  # TODO: eventually I can play with this to figure the char width and height dynamically. Then
+  # the rest of the commented stuff might help.
+  # char_width=8
+  # char_height=12
+
+  if has_prefix "$font_family" 'Geist'; then
+    if [ $font_size -eq 10 ]; then
+      columns=157
+      rows=81
+    fi
+  elif has_prefix "$font_family" 'Meslo'; then
+    if [ $font_size -eq 13 ]; then
+      columns=91
+      rows=45
+    elif [ $font_size -eq 11 ]; then
+      columns=103
+      rows=55
+    elif [ $font_size -eq 10 ]; then
+      columns=155  # widescreen. In normal: 115
+      rows=60  # widescreen. In normal screen: 60
+    elif [ $font_size -eq 9 ]; then
+      columns=131
+      rows=65
+    elif [ $font_size -eq 8 ]; then
+      columns=209  # widescreen. In normal: ?
+      rows=84  # widescreen. In normal screen: ?
+    fi
+  elif has_prefix "$font_family" 'JetBrains'; then
+    if [ $font_size -eq 10 ]; then
+      columns=157  # widescreen. In normal: ?
+      rows=60  # widescreen. In normal screen: ?
+    elif [ $font_size -eq 8 ]; then
+      columns=209  # widescreen. In normal: ?
+      rows=84  # widescreen. In normal screen: ?
+    fi
+  fi
+
+  # # Get the current screen resolution.
   resolution=$(xrandr | grep '*' | awk '{print $1}')
   screen_width=$(echo $resolution | cut -d'x' -f1)
-  screen_height=$(echo $resolution | cut -d'x' -f2)
+  # screen_height=$(echo $resolution | cut -d'x' -f2)
 
-  # Calculate the width for the right half.
+  # # Calculate the width for the right half.
   half_width=$((screen_width / 2))
 
-  # Convert pixel dimensions to terminal columns and rows using the estimated character dimensions.
-  columns=$((half_width / char_width))
-  rows=$((screen_height / char_height))
+  # # Convert pixel dimensions to terminal columns and rows using the estimated character dimensions.
+  # columns=$((half_width / char_width))
+  # rows=$((screen_height / char_height))
 
-  echo "column:$columns | rows:$rows | width:$half_width"
 
-  # original
-  # --geometry '157x81--26+4'
+  debug "column:$columns | rows:$rows | width:$half_width"
 
-  # TODO: figure out the correct factor to apply to the char width and height, otherwise the
-  # geometry is incorrect.
-  #
-  # # Start gnome-terminal on the right half of the screen.
-  # gnome-terminal \
-  #   --title 'scratchpad' \
-  #   --geometry "${columns}x${rows}+$half_width+0" \
-  #   -- sh $THIS_FILE_DIRECTORY/.rc.scratch-new2
+  # Start gnome-terminal on the right half of the screen.
+  cmd="gnome-terminal \
+    --title 'scratchpad' \
+    --geometry \"${columns}x${rows}+$half_width+0\" \
+    -- sh $THIS_FILE_DIRECTORY/.rc.scratch-new2"
+
+  if is_debug; then
+    debug "Would run the following command:\n\n$(echo "$cmd" | sed -E -e 's/ [ ]+/\n  /g')\n"
+  else
+    sh -c "$cmd"
+  fi
 }
 
 main
