@@ -6,22 +6,36 @@
 
 set -e
 
+# In shell, for return values, 0 is success (eq to true in a conditional) and 1 is failure (eq
+# to false in a conditional).
 is_debug() {
   # If the variable is empty, we are not in debug mode.
   if [ -z "$MCRA_DEBUG" ]; then
-    echo false
+    # Not debug mode.
+    return 1
   else
-    echo true
+    # Debug mode.
+    return 0
   fi
 }
 
 debug() {
-  if [ "$(is_debug)" = 'false' ]; then
+  if ! is_debug; then
     return 0
   fi
 
-  echo "[$(date '+%F %T')] $@"
+  echo "[$(date '+%F %T')] [debug] $@"
 }
+
+if is_debug; then
+  echo '----------------------------------------------------------------------------'
+  echo 'DEBUG MODE ENABLED!'
+  echo '----------------------------------------------------------------------------'
+
+  if [ "$MCRA_DEBUG" = "test" ]; then
+    debug '$MCRA_DEBUG == test: tests will run'
+  fi
+fi
 
 error() {
   debug $1
@@ -37,13 +51,40 @@ has_prefix() {
   if [ "${1#$2}" != "$1" ]; then
     # The `${1#$2}` substitution replaces $2 at the beginning of $1, making it different from
     # itself, hence entering this branch and confirming that $2 is a prefix on $1.
-    echo true
+    return 0  # true
   else
-    echo false
+    return 1  # false
   fi
 }
 
+count=1
+assert() {
+  if ! is_debug; then
+    return 0
+  fi
 
+  test_name=$1
+  expected=$2
+  actual=$3
+
+  echo -n "[$(date '+%F %T')] [test] $count "
+  if [ "$expected" != "$actual" ]; then
+    echo -n "failure: $test_name\n\n"
+    echo "expected:\n\n$expected\n"
+    echo "actual:\n\n$actual"
+  else
+    echo -n "success: $test_name"
+  fi
+
+  echo
+
+  count=$((count + 1))
+}
+
+
+get_this_file_dir() {
+  echo "$(command -v readlink >/dev/null 2>&1 && dirname $(readlink -f "$1") || dirname "$1")"
+}
 
 # /////////////////////////////////////////////////////////////////////////
 # Tests.
@@ -52,29 +93,14 @@ has_prefix() {
 # Functions are tested here, but ignored when debug is disabled.
 
 # If not in debug mode, and we got here, success!
-if [ "$(is_debug)" = 'false' ]; then
+if ! is_debug || [ "$MCRA_DEBUG" != "test" ]
+then
   return 0
 fi
 
-count=1
+has_prefix "hello world" "hello" && assert "prefix match" $? 0
+has_prefix "hello world" "world" || assert "prefix doesn't match" $? 1
+has_prefix "hello world" "not there" || assert "prefix doesn't match with completely different strings" $? 1
 
-assert() {
-  test_name=$1
-  expected=$2
-  actual=$3
+assert "get_this_file_dir" $(get_this_file_dir $0) "$HOME/projects/dotfiles"
 
-  echo -n "$count $test_name: "
-  if [ "$expected" != "$actual" ]; then
-    echo -n 'fail'
-  else
-    echo -n 'success'
-  fi
-
-  echo
-
-  count=$((count + 1))
-}
-
-assert "prefix match" $(has_prefix "hello world" "hello") true
-assert "prefix doesn't match but string is there" $(! has_prefix "hello world" "world") false
-assert "prefix doesn't match with different strings" $(! has_prefix "hello world" "not there") false
