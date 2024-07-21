@@ -1,5 +1,5 @@
 #!/usr/bin/env sh
-# vim: fdm=marker:fmr=-{,}-:fdl=1:fen
+# vim: fdm=marker:fmr=-{,}-:fdl=0:fen
 #
 # This script is meant to be associated with a shortcut key, like INSERT (from now one, <shortcut>).
 #
