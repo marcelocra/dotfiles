@@ -307,6 +307,10 @@ nnoremap <leader><leader>p :let @+ = substitute(expand('%'), expand('~'), '$HOME
 " --- -abbreviations( -------------------------------------------------------{{{
 
 
+" ///// TEXT ABBREVIATIONS /////////////////////////////////////////////////////////////////////////
+
+
+iab cao ção
 
 " ///// CODE ABBREVIATIONS /////////////////////////////////////////////////////////////////////////
 "
@@ -394,9 +398,7 @@ iab C-- - [ ]
 " ///// COMMAND ABBREVIATIONS //////////////////////////////////////////////////////////////////////
 
 
-" Always open help in a new tab.
-
-cab help tab help
+" Open help in a new tab, unless it is typed fully ("help").
 cab h tab help
 
 

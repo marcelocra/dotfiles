@@ -1,7 +1,15 @@
 #!/usr/bin/env sh
 # vim: fdm=marker:fmr=-{,}-:fdl=0:fen
 #
-# This script is meant to be associated with a shortcut key, like INSERT (from now one, <shortcut>).
+# Opens the `gnome-terminal` snapped to the right side of the screen when a configured shortcut is
+# pressed (I use the `insert` key, but in the next comments I'll refer to it as <shortcut>).
+#
+# TODO
+# ----
+#
+# - [ ] create alternative mappings to open the window snapped to the right, left or center
+#
+# - [ ] parameterize the terminal application and its required arguments
 #
 # Open this fold for more details. -{
 #
@@ -49,6 +57,8 @@ THIS_FILE_DIRECTORY=$(get_this_file_dir "$0")
 
 main() {
   scratch="scratch"
+  placement="right"
+
   if [ ! -z "$1" ]; then
     scratch="$1"
   fi
@@ -76,6 +86,10 @@ main() {
     if [ $font_size -eq 10 ]; then
       columns=157
       rows=81
+    fi
+    if [ $font_size -eq 8 ]; then
+      columns=209  # widescreen. In normal: ?
+      rows=84  # widescreen. In normal screen: ?
     fi
   elif has_prefix "$font_family" 'Meslo'; then
     if [ $font_size -eq 13 ]; then
@@ -109,13 +123,14 @@ main() {
   screen_width=$(echo $resolution | cut -d'x' -f1)
   # screen_height=$(echo $resolution | cut -d'x' -f2)
 
-  # # Calculate the width for the right half.
-  half_width=$((screen_width / 2))
+  # Calculate half the screen width. `gnome-terminal` prioritizes the number of columns and rows
+  # over starting point. Therefore, we can push the window all the way to the right and still have
+  # it loading where we want if we get the correct values for rows and columns.
+  half_width=$((screen_width))
 
   # # Convert pixel dimensions to terminal columns and rows using the estimated character dimensions.
   # columns=$((half_width / char_width))
   # rows=$((screen_height / char_height))
-
 
   debug "column:$columns | rows:$rows | width:$half_width"
 

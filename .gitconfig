@@ -23,7 +23,14 @@
   rebase = false
 
 [diff]
-  submodule = log
+  tool = nvim -d
+  ; submodule = log
+
+[difftool]
+  prompt = false
+
+[color]
+  ui = true
 
 # [ Aliases ] ------------------------------------------------------------------
 
@@ -107,10 +114,10 @@
 
 
 [credential "https://github.com"]
-	helper = 
+	helper =
 	helper = !/usr/bin/gh auth git-credential
 
 [credential "https://gist.github.com"]
-	helper = 
+	helper =
 	helper = !/usr/bin/gh auth git-credential
 

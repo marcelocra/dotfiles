@@ -23,12 +23,23 @@
 
 set -e
 
+# TODO: move this and the following ideas to `.rc.common`.
+now() {
+    echo "$(date '+%F_%T')"
+}
+
+logfile="$HOME/.log.linux-startup-config.$(now).txt"
+
+prefix() {
+    echo -n "[$(now | sed -E -e 's/_/ /')] [$@]"
+}
+
 error() {
-  echo
-  echo 'ERROR: ---------------------------------------------------------------'
-  echo "ERROR: $1"
-  echo 'ERROR: ---------------------------------------------------------------'
-  echo
+    echo -n "$(prefix error) $@\n" | tee -a $logfile
+}
+
+debug() {
+    echo -n "$(prefix debug) $@\n" | tee -a $logfile
 }
 
 usage() {
@@ -210,38 +221,38 @@ symlink_todoist_again() {
     ln -f -s $todoist_dir/$todoist_latest_bin $HOME/bin/todoist
 }
 
-echo "\nProvided argument: '$arg'\n"
+debug "Provided argument: '$arg'\n"
 
 if [ "$arg" = "expert" ] || [ "$arg" = "all" ]; then
 
 
-  echo "Running 'expert'..."
+  debug "Running 'expert'..."
   setup_expert_mouse
-  echo 'Done!'
+  debug 'Done!'
 
 fi
 
 if [ "$arg" = "evoluent" ] || [ "$arg" = "all" ]; then
 
-  echo "Running 'evoluent'..."
+  debug "Running 'evoluent'..."
   setup_evoluent_mouse
-  echo 'Done!'
+  debug 'Done!'
 
 fi
 
 if [ "$arg" = "logitech" ] || [ "$arg" = "all" ]; then
 
-  echo "Running 'logitech'..."
+  debug "Running 'logitech'..."
   reduce_speed_of_logitech_mouse
-  echo 'Done!'
+  debug 'Done!'
 
 fi
 
 if [ "$arg" = "todoist" ] || [ "$arg" = "all" ]; then
 
-  echo "Running 'todoist'..."
+  debug "Running 'todoist'..."
   symlink_todoist_again
-  echo 'Done!'
+  debug 'Done!'
 
 fi
 
