@@ -66,7 +66,7 @@ main() {
   # Get the default profile ID.
   profile_id=$(gsettings get org.gnome.Terminal.ProfilesList default | tr -d \')
 
-  # Get the font setting for the default profile.
+  # Get the font setting for the default terminal profile.
   font=$(dconf read /org/gnome/terminal/legacy/profiles:/:$profile_id/font)
 
   # Extract the font family and its size.
@@ -137,6 +137,7 @@ main() {
   # Start gnome-terminal on the right half of the screen.
   cmd="gnome-terminal \
     --title 'scratchpad' \
+    --hide-menubar \
     --geometry \"${columns}x${rows}+$half_width+0\" \
     -- sh $THIS_FILE_DIRECTORY/.rc.scratch-new2 $scratch"
 

@@ -1,4 +1,6 @@
 #!/usr/bin/env sh
+#
+# Controls whether to create a new tmux session or re-open an existing one.
 
 if [ $# -ne 1 ]; then
   echo 'Accept only 1 argument, which will be the tmux session name.'
@@ -12,13 +14,17 @@ scratch="$1"
 #   scratch="$MCRA_SCRATCH_SESSION_NAME"
 # fi
 
-# If session exists, connect to it. Otherwise, create it.
-if tmux has -t $scratch > /dev/null 2>&1; then
-  if tmux lsc | grep $scratch > /dev/null 2>&1; then
+# If a session with that name exists, connect to it. Otherwise, create it.
+if tmux has -t $scratch >/dev/null 2>&1; then
+  # Session exists.
+  if tmux lsc | grep $scratch >/dev/null 2>&1; then
+    # Session is currently connected. If you can't see it, it is probably in
+    # other workspace.
     tmux detach -s $scratch
   else
-    tmux attach -t $scratch > /dev/null 2>&1
+    tmux attach -t $scratch >/dev/null 2>&1
   fi
 else
-  tmux new -s $scratch > /dev/null 2>&1
+  # Create a session.
+  tmux new -s $scratch >/dev/null 2>&1
 fi
