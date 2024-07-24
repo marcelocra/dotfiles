@@ -4,7 +4,37 @@
 # Utilities to use across shell scripts.
 #
 
-set -e
+# Defaults to 'set -e'.
+mm_set() {
+  mode="$1"
+
+  if [ "$mode" = "all" ]; then
+    set -euxo pipefail
+  elif  [ "$mode" = "u" ]; then
+    # Exit on undefined variable.
+    set -u
+  elif  [ "$mode" = "x" ]; then
+    # Print all commands before execution.
+    set -x
+  else
+    # Exit on error.
+    set -e
+  fi
+}
+
+
+mm_now() {
+  mode="$1"
+
+  if [ "$mode" = "--for-folder" ]; then
+    echo "$(date '+%F_%T' | tr ':' '-')"
+  else
+    if [ -z "$mode" ]; then
+      mode='+%F %T'
+    fi
+    echo "$(date "$mode")"
+  fi
+}
 
 # In shell, for return values, 0 is success (eq to true in a conditional) and 1 is failure (eq
 # to false in a conditional).
@@ -27,6 +57,9 @@ debug() {
   echo "[$(date '+%F %T')] [debug] $@"
 }
 
+alias mm_debug=debug
+alias mm_is_debug=is_debug
+
 if is_debug; then
   echo '----------------------------------------------------------------------------'
   echo 'DEBUG MODE ENABLED!'
@@ -40,7 +73,7 @@ fi
 error() {
   debug $1
 
-  exit 1
+  return 1
 }
 
 has_prefix() {
@@ -86,21 +119,38 @@ get_this_file_dir() {
   echo "$(command -v readlink >/dev/null 2>&1 && dirname $(readlink -f "$1") || dirname "$1")"
 }
 
+mm_is_command() {
+  command -v "$1" >/dev/null 2>&1
+}
+
+mm_grep() {
+  grep_cmd='grep' # Default.
+
+  echo 'rg egrep' | tr ' ' '\n' | while read cmd; do
+    if mm_is_command $cmd; then
+      grep_cmd="$cmd"
+      break
+    fi
+  done
+
+  $grep_cmd "$@"
+}
+
+# Next commands above.
+
 # /////////////////////////////////////////////////////////////////////////
 # Tests.
 # /////////////////////////////////////////////////////////////////////////
 #
 # Functions are tested here, but ignored when debug is disabled.
 
-# If not in debug mode, and we got here, success!
-if ! is_debug || [ "$MCRA_DEBUG" != "test" ]
+# Run tests.
+if [ "$MCRA_DEBUG" = "test" ]
 then
-  return 0
+  has_prefix "hello world" "hello" && assert "prefix match" $? 0
+  has_prefix "hello world" "world" || assert "prefix doesn't match" $? 1
+  has_prefix "hello world" "not there" || assert "prefix doesn't match with completely different strings" $? 1
+
+  assert "get_this_file_dir" $(get_this_file_dir $0) "$HOME/projects/dotfiles"
 fi
-
-has_prefix "hello world" "hello" && assert "prefix match" $? 0
-has_prefix "hello world" "world" || assert "prefix doesn't match" $? 1
-has_prefix "hello world" "not there" || assert "prefix doesn't match with completely different strings" $? 1
-
-assert "get_this_file_dir" $(get_this_file_dir $0) "$HOME/projects/dotfiles"
 

@@ -69,6 +69,9 @@ if [ ! -z "$REQUIRED_ENVS" ]; then
     return 1
 fi
 
+# Load commons.
+. $HOME/bin/.rc.common
+
 # functions(((
 
 # Simplifies working with tmux. Tries to create
@@ -251,12 +254,6 @@ function force_rm() {
     return 1
 }
 
-
-now() {
-    echo "$(date +%F_%T | tr ':' '-')"
-
-    return 0
-}
 
 mm_today() {
     echo "$(date +%F)"
