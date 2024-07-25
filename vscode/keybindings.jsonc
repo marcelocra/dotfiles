@@ -76,9 +76,16 @@
   // },
   {
     // If terminal is opened and active, focus on the text editor.
-    "key": "ctrl+space",
+    "key": "ctrl+`",
     "command": "workbench.action.focusLastEditorGroup",
     "when": "activePanel && terminalFocus"
+  },
+  {
+    // If terminal is opened and active, close it. This is the default behavior for ctrl+`, but I
+    // replaced by this because most likely I'll want to have it opened more than closed.
+    "key": "ctrl+space",
+    "command": "workbench.action.togglePanel",
+    "when": "activePanel && panelFocus"
   },
   {
     // If the panel is active, but not maximized, maximize it.
@@ -509,11 +516,7 @@
     "key": "alt+r",
     "command": "runCommands",
     "args": {
-      "commands": [
-        "typescript.restartTsServer",
-        "eslint.restart",
-        "svelte.restartLanguageServer"
-      ]
+      "commands": ["typescript.restartTsServer", "eslint.restart", "svelte.restartLanguageServer"]
     },
     "when": "editorTextFocus && (vim.mode == 'Normal' || vim.mode == 'Insert')"
   },
