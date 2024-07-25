@@ -2,18 +2,24 @@
 # vim: fdm=marker:fmr=(((,))):fdl=0:fen:filetype=sh
 #
 # Main shell configuration script.
-
-# Some file docs. (((
 #
-# Some ideas for this file
-# ------------------------
+# File docs and posix shell how-to. (((
 #
-# - [ ] add documentation on how this file works
+#
+#
+# TODO: ideas
+# -----------
+#
+#
+# - [ ] add documentation on how this file works?
 # - [ ] split files per sections?
 # - [ ] use a different programming language for some stuff?
 #
+#
+#
 # Shell HOW-TO
 # ------------
+#
 #
 # - Discard commands outputs
 #   - stdout: > /dev/null
@@ -35,14 +41,18 @@
 #     - https://stackoverflow.com/a/47576482/1814970
 #   - the recommendation is to always use [], as it is more portable and it has equivalents for
 #     everything from [[]]
+# - Function variables are not scoped to the function unless they are defined with `local`
+#
 #
 #
 # To learn
 # --------
 #
+#
 # Move stuff from here to the section above after learning!
 #
 # - more posix stuff!
+#
 #
 # )))
 
@@ -309,7 +319,7 @@ argument is optional: if not provided, the first is used in its place.'
 # aliases(((
 # one lettered(((
 
-# Used in the next sections:
+# Used in the following sections:
 
 # b = popd
 # l = ls ...
@@ -432,14 +442,25 @@ fi
 alias py=python
 
 
-if command -v rg >/dev/null 2>&1; then
+if mm_is_command rg; then
   alias g=rg
-elif command -v egrep >/dev/null 2>&1; then
+elif mm_is_command egrep; then
   alias g=egrep
-elif command -v grep >/dev/null 2>&1; then
+elif mm_is_command grep; then
   alias g=grep
 fi
 
+# Prefer neovim/vim as pager.
+if mm_is_command nvim; then
+  alias less='nvim -R -'  # -R: readonly, -: read from stdin
+elif mm_is_command vim; then
+  alias less='vim -R -'
+fi
+
+# Clear the screen before listing the files.
+alias cl="clear && l"
+
+# next alias above, unless they fit in one of the other sections.
 # )))general
 # git frequent(((
 
