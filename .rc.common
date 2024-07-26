@@ -1,8 +1,14 @@
-#!/usr/bin/env sh
+#!/usr/sh
 # vim: fdm=marker:fmr=-{,}-:fdl=1:fen
 #
 # Utilities to use across shell scripts.
 #
+# More stuff to do here. -{
+#
+#   - [ ] improve function names
+#   - [ ]
+#
+# }-
 
 # Defaults to 'set -e'.
 mm_set() {
@@ -21,7 +27,6 @@ mm_set() {
     set -e
   fi
 }
-
 
 mm_now() {
   mode="$1"

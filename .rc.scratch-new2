@@ -1,30 +1,74 @@
 #!/usr/bin/env sh
 #
 # Controls whether to create a new tmux session or re-open an existing one.
+echo '0' >> ~/.log.scratch.txt
+. $HOME/bin/.rc.common
 
-if [ $# -ne 1 ]; then
-  echo 'Accept only 1 argument, which will be the tmux session name.'
-  exit 1
-fi
+echo '1' >> ~/.log.scratch.txt
+
+verify_requirements() {
+  if [ $# -ne 1 ]; then
+    fatal 'Accept only 1 argument, which will be the tmux session name.'
+  fi
+
+  local msg=''
+
+  local tool='xdotool'
+  if ! mm_is_command $tool; then
+    msg="'$tool'"
+  fi
+
+  tool='xprop'
+  if ! mm_is_command $tool; then
+    msg="$msg, '$tool'"
+  fi
+
+  if [ "$msg" != "" ]; then
+    fatal "Required tools not found: $msg"
+  fi
+}
+
+verify_requirements "$@"
+
+echo '2' >> ~/.log.scratch.txt
 
 scratch="$1"
+
+# Get the active window ID.
+active_window=$(xdotool getactivewindow)
+
+# Get the window name.
+window_name=$(xprop -id "$active_window" WM_NAME)
+
+# Check if the window name is the one we defined.
+term_focused=false
+case "$window_name" in
+    *"scratchpad"*) term_focused=true ;;
+esac
+
+echo '3' >> ~/.log.scratch.txt
 
 # TODO: allow additional scratch sessions to be created?
 # if [ ! -z "$MCRA_SCRATCH_SESSION_NAME" ]; then
 #   scratch="$MCRA_SCRATCH_SESSION_NAME"
 # fi
 
-# If a session with that name exists, connect to it. Otherwise, create it.
+# If a session with that name does not exists, create it. If it exists and is
+# focused, do nothing. Otherwise, close and reopen it, to focus.
 if tmux has -t $scratch >/dev/null 2>&1; then
   # Session exists.
-  if tmux lsc | grep $scratch >/dev/null 2>&1; then
-    # Session is currently connected. If you can't see it, it is probably in
-    # other workspace.
+  echo '4' >> ~/.log.scratch.txt
+
+  if term_focused; then
     tmux detach -s $scratch
+    echo '5' >> ~/.log.scratch.txt
   else
+    tmux detach -s $scratch
     tmux attach -t $scratch >/dev/null 2>&1
+    echo '6' >> ~/.log.scratch.txt
   fi
 else
   # Create a session.
+  echo '7' >> ~/.log.scratch.txt
   tmux new -s $scratch >/dev/null 2>&1
 fi
