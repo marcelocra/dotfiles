@@ -1,4 +1,4 @@
-" vim: foldmethod=marker foldmarker={{{,}}} foldlevel=0 foldenable
+" vim:fdm=marker:fmr={{{,}}}:fdl=0:fen:ai:et:ts=2:sw=2:tw=80:ff=unix:fenc=utf-8:et:fixeol:eol:
 "
 " Details on how to use vim-plug, with examples. {{{
 "
@@ -306,13 +306,7 @@ nnoremap <leader><leader>p :let @+ = substitute(expand('%'), expand('~'), '$HOME
 " )mappings- }}}
 " --- -abbreviations( -------------------------------------------------------{{{
 
-
-" ///// TEXT ABBREVIATIONS /////////////////////////////////////////////////////////////////////////
-
-
-iab cao ção
-
-" ///// CODE ABBREVIATIONS /////////////////////////////////////////////////////////////////////////
+" ///// CODE ///////////////////////////////////////////////////////////////////
 "
 " Prefix all of them with capital c, to avoid replacing when typing variables, comments, etc.
 
@@ -337,11 +331,15 @@ iab Cfsx #!/usr/bin/env -S dotnet fsi
 " all editors.
 
 
-iab Cvimmode vim: fdm=marker:fmr={,}:fdl=1:fen
-iab Cvimmodemd filetype=markdown
+" Lets use the default marker, as recommended by Vim.
+iab Cfold vim:fdm=marker:fmr={{{,}}}:fdl=0:fen:
+iab Cfoldmd ft=markdown:
 
-iab Cvimmodeold vim: fdm=marker:fmr={{{,}}}:fdl=1:fen:ai:et:ts=4:sw=4
-iab Cvimmodeoldjs vim:fdm=marker:fmr={,}:fdl=1:fen:ai:et:ts=2:sw=2
+" When EditorConfig is not available, creates a modeline with my prefs.
+" For most languages, I use the next line.
+iab Cec  vim:tw=100:ts=2:sw=2:ai:et:ff=unix:fenc=utf-8:et:fixeol:eol:fdm=marker:fdl=0:fen:
+" Mostly for Python, shells, Vimscript and Lua.
+iab Cecpy vim:tw=80:ts=4:sw=4:ai:et:ff=unix:fenc=utf-8:et:fixeol:eol:fdm=marker:fdl=0:fen:
 
 " " Trying to automatically create a modeline that works for notes in md.
 " iab note <!-- vim: fdm=marker:fmr={,}:fdl=1:fen:ai:et:ts=4:sw=4:tw=80:wrap --><left><left><left><cr><esc><left>o
@@ -392,10 +390,11 @@ iab Cbolt ⚡️
 iab Ccros ❌️
 iab Cheartp 💜️
 iab Cheartw 🤍️
-iab C-- - [ ]
+iab Ck - [ ]
+iab C- - [ ]
 
 
-" ///// COMMAND ABBREVIATIONS //////////////////////////////////////////////////////////////////////
+" ///// COMMAND ////////////////////////////////////////////////////////////////
 
 
 " Open help in a new tab, unless it is typed fully ("help").
