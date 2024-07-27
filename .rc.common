@@ -1,14 +1,13 @@
-#!/usr/sh
-# vim: fdm=marker:fmr=-{,}-:fdl=1:fen
+#!/usr/bin/env sh
+# vim:tw=80:ts=4:sw=4:ai:et:ff=unix:fenc=utf-8:et:fixeol:eol:fdm=marker:fdl=0:fen:
 #
-# Utilities to use across shell scripts.
+# Utilities for all shell scripts.
 #
-# More stuff to do here. -{
+# More stuff to do here. {{{
 #
-#   - [ ] improve function names
-#   - [ ]
+# - [ ] figure out a better way to name functions (shell doesn't have namespaces)
 #
-# }-
+# }}}
 
 # Defaults to 'set -e'.
 mm_set() {
@@ -161,6 +160,27 @@ mm_grep() {
 
   $grep_cmd "$@"
 }
+
+mm_logfile() {
+  local logfile="$1"
+
+  if [ ! -f $logfile ]; then
+    touch $logfile
+  fi
+
+  echo "\n\n[$(mm_now)]\n\n" >> $logfile
+  echo "$logfile"
+}
+
+mm_stdout() {
+  mm_logfile "/tmp/mcra.stdout.txt"
+}
+
+mm_stderr() {
+  mm_logfile "/tmp/mcra.stderr.txt"
+}
+
+
 
 # Next commands above.
 
