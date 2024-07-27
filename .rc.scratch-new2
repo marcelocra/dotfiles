@@ -1,74 +1,82 @@
 #!/usr/bin/env sh
+# vim:tw=80:ts=4:sw=4:ai:et:ff=unix:fenc=utf-8:et:fixeol:eol:fdm=marker:fdl=0:fen:
 #
 # Controls whether to create a new tmux session or re-open an existing one.
-echo '0' >> ~/.log.scratch.txt
+
 . $HOME/bin/.rc.common
 
-echo '1' >> ~/.log.scratch.txt
+mcra_logfile="$(mm_stderr)"
 
 verify_requirements() {
-  if [ $# -ne 1 ]; then
-    fatal 'Accept only 1 argument, which will be the tmux session name.'
-  fi
+    if [ $# -ne 1 ]; then
+        fatal 'Accept only 1 argument, which will be the tmux session name.'
+    fi
 
-  local msg=''
+    local msg=''
 
-  local tool='xdotool'
-  if ! mm_is_command $tool; then
-    msg="'$tool'"
-  fi
+    local tool='xdotool'
+    if ! mm_is_command $tool; then
+        msg="'$tool'"
+    fi
 
-  tool='xprop'
-  if ! mm_is_command $tool; then
-    msg="$msg, '$tool'"
-  fi
+    tool='xprop'
+    if ! mm_is_command $tool; then
+        msg="$msg, '$tool'"
+    fi
 
-  if [ "$msg" != "" ]; then
-    fatal "Required tools not found: $msg"
-  fi
+    if [ "$msg" != "" ]; then
+        fatal "Required tools not found: $msg"
+    fi
 }
 
 verify_requirements "$@"
 
-echo '2' >> ~/.log.scratch.txt
+main() {
+    local scratch="$1"
 
-scratch="$1"
+    # Get the active window ID.
+    local active_window=$(xdotool getactivewindow)
 
-# Get the active window ID.
-active_window=$(xdotool getactivewindow)
+    # Get the window name.
+    local window_name=$(xprop -id "$active_window" WM_NAME)
 
-# Get the window name.
-window_name=$(xprop -id "$active_window" WM_NAME)
+    # Check if the window name is the one we defined.
+    local term_focused=false
+    case "$window_name" in
+        *"scratchpad"*) term_focused=true ;;
+    esac
 
-# Check if the window name is the one we defined.
-term_focused=false
-case "$window_name" in
-    *"scratchpad"*) term_focused=true ;;
-esac
 
-echo '3' >> ~/.log.scratch.txt
+    # TODO: allow additional scratch sessions to be created?
+    # if [ ! -z "$MCRA_SCRATCH_SESSION_NAME" ]; then
+    #   scratch="$MCRA_SCRATCH_SESSION_NAME"
+    # fi
+    #
+    # TODO: try an alternative method, using the window id:
+    #
+    #   window_to_focus="$(xdotool search --limit 1 --name scratchpad)"
+    #   xdotool windowactivate $window_to_focus
+    #
+    # Has the pottential problem that the command itself changes the name of the
+    # window, but since this script is run without a window, perhaps it won't
+    # have that problem.
 
-# TODO: allow additional scratch sessions to be created?
-# if [ ! -z "$MCRA_SCRATCH_SESSION_NAME" ]; then
-#   scratch="$MCRA_SCRATCH_SESSION_NAME"
-# fi
+    # If a session with that name does not exists, create it.
+    if ! tmux has -t $scratch >/dev/null 2>&1; then
+        tmux new -s $scratch >/dev/null 2>&1
+        exit
+    fi
 
-# If a session with that name does not exists, create it. If it exists and is
-# focused, do nothing. Otherwise, close and reopen it, to focus.
-if tmux has -t $scratch >/dev/null 2>&1; then
-  # Session exists.
-  echo '4' >> ~/.log.scratch.txt
-
-  if term_focused; then
+    # If a session with that name exists, either it is focused or not.
+    # When it is focused (term_focused=true), we simply detach from it, removing
+    # the focus. When it is not focused (term_focused=false), we also need to
+    # detach from it, so that reattaching will bring focus. This could be done
+    # differently (see TODO above), but this works and is fast.
     tmux detach -s $scratch
-    echo '5' >> ~/.log.scratch.txt
-  else
-    tmux detach -s $scratch
-    tmux attach -t $scratch >/dev/null 2>&1
-    echo '6' >> ~/.log.scratch.txt
-  fi
-else
-  # Create a session.
-  echo '7' >> ~/.log.scratch.txt
-  tmux new -s $scratch >/dev/null 2>&1
-fi
+
+    if ! $term_focused; then
+        tmux attach -t $scratch >/dev/null 2>&1
+    fi
+}
+
+main "$@"
