@@ -9,6 +9,11 @@
 #
 # }}}
 
+# Source personal stuff.
+if [ -f "$HOME/bin/commonp.sh" ]; then
+    . "$HOME/bin/commonp.sh"
+fi
+
 # Defaults to 'set -e'.
 mm_set() {
   mode="$1"
@@ -41,6 +46,7 @@ mm_now() {
         echo "$(date "$mode")"
     fi
 }
+alias mcra_now=mm_now
 
 # In shell, for return values, 0 is success (eq to true in a conditional) and 1 is failure (eq
 # to false in a conditional).
@@ -163,25 +169,6 @@ mm_grep() {
   $grep_cmd "$@"
 }
 
-mm_logfile() {
-  local logfile="$1"
-
-  if [ ! -f $logfile ]; then
-    touch $logfile
-  fi
-
-  echo "\n\n[$(mm_now)]\n\n" >> $logfile
-  echo "$logfile"
-}
-
-mm_stdout() {
-  mm_logfile "/tmp/mcra.stdout.txt"
-}
-
-mm_stderr() {
-  mm_logfile "/tmp/mcra.stderr.txt"
-}
-
 mm_remove_leading_spaces() {
     local num_spaces="${1:-8}"
     local usage="\nUsage: $0 [num]\n\nRemoves [num] leading spaces (default=8)."
@@ -215,12 +202,12 @@ mm_trim() {
     echo "${output2%"\n"}"
 }
 
-mm_docs() {
+mcra_doc() {
     local usage="
         USAGE:
 
-            mm_docs \$@ '<docs>'
-            mm_docs \$@ \"<docs>\"
+            mcra_doc \$@ '<docs>'
+            mcra_doc \$@ \"<docs>\"
 
         NOTES:
 
@@ -232,7 +219,7 @@ mm_docs() {
             leading spaces, as the function will remove them for you. For
             example:
 
-            mm_docs \$@ '
+            mcra_doc \$@ '
                 Here goes your function documentation. The first newline (above)
                 along with up to 8 leading spaces
                 <--- here
@@ -275,20 +262,98 @@ mm_docs() {
 }
 
 mm_example_documented_function() {
-    mm_docs $@ "
+    mcra_doc $@ "
         NAME: $0
 
         DESCRIPTION:
 
-            Shows some example \"mm_docs\" usage and output.
+            Shows some example \"mcra_doc\" usage and output.
 
             Run this with different arguments to see different behaviors.
-    " || return 1
+    " || return 0
 
     echo 'Print this if first argument above is not "help|-h|--help"'
 }
 
-# Next commands above.
+this_file="$0"
+editor="${EDITOR:-vi}"
+
+main() {
+    mcra_get_last_edit() {
+        date '+%F_%T' -r "$1" | tr ':' '-'
+    }
+
+    local this_file_last_edit_time="$(mcra_get_last_edit "$this_file")"
+
+    if [ "$MCRA_COMMON" = "$this_file_last_edit_time" ]; then
+        # No need to rerun this file, as it wasn't editted since last run.
+        return 0
+    fi
+
+    export MCRA_COMMON="$this_file_last_edit_time"
+    export MCRA_LOGFILE="$HOME/.mcra.logfile.txt"
+
+    mcra_log_base() {
+        if [ -z "$1" ] || [ -z "$2" ]
+        then
+            mm_trim "
+                Usage: $0 [mode] [message to log] [additional info (optional)]
+
+                Mode:
+                    - log: append to logfile as log and return 0
+                    - err: append to logfile as err and return 1
+
+                Additional info:
+                    Any extra arguments after [mode] and [message] will be
+                    appended to the logfile as provided.
+            "
+            return 1
+        fi
+
+        local logfile="$MCRA_LOGFILE"
+
+        if [ ! -f $logfile ]; then
+            touch $logfile
+        fi
+
+        local mode=log
+        local msg="$1"
+        if [ "$1" = "err" ]; then
+            mode=err
+            msg="$2"
+        elif [ "$1" = "cat" ]; then
+            cat $MCRA_LOGFILE
+            return 0
+        elif [ "$1" = "edit" ]; then
+            echo $editor hahaha
+            $editor $MCRA_LOGFILE
+            return 0
+        fi
+
+        echo "[$(mm_now)] [$mode] $msg" >> $logfile
+
+        shift; shift;  # Ignore the first two arguments and use all the others.
+        count=1
+        while [ $# -ne 0 ]; do
+            echo -n "\n    [metadata $count] $1" >> $logfile
+            count=$((count+1))
+            shift
+        done
+
+        if [ $count -gt 1 ]; then
+            echo '\n' >> $logfile
+        fi
+    }
+
+    alias mcra_log="mcra_log_base log"
+    alias mcra_err="mcra_log_base err"
+
+    #
+    # Next function above this line.
+    #
+}
+
+main "$@"
 
 # /////////////////////////////////////////////////////////////////////////
 # Tests.
