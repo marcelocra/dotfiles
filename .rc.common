@@ -180,7 +180,111 @@ mm_stderr() {
   mm_logfile "/tmp/mcra.stderr.txt"
 }
 
+mm_remove_leading_spaces() {
+    local num_spaces="${1:-8}"
+    local usage="\nUsage: $0 [num]\n\nRemoves [num] leading spaces (default=8)."
 
+    case "$num_spaces" in
+        help|-h|--help)
+            echo $usage
+            return 1
+            ;;
+    esac
+
+    local check_number="$(echo "$num_spaces" | sed -E -e 's/[1-9][0-9]*//')"
+
+    if [ ! -z "$check_number" ]; then
+        echo $usage
+        echo "\nInvalid [num]: $1"
+        return 1
+    fi
+
+    sed -E -e "s/^\s{0,$num_spaces}//"
+}
+
+mm_trim() {
+    # Remove leading spaces.
+    local output1="$(echo "$1" | mm_remove_leading_spaces "$2")"
+
+    # Remove first newline character.
+    local output2="${output1#"\n"}"
+
+    # Remove last newline character and output.
+    echo "${output2%"\n"}"
+}
+
+mm_docs() {
+    local usage="
+        USAGE:
+
+            mm_docs \$@ '<docs>'
+            mm_docs \$@ \"<docs>\"
+
+        NOTES:
+
+            1) The first argument should be literally that. It is what detects
+            whether the user wants more information about the function (by
+            detecting '-h', '--help' and 'help').
+
+            2) If you want, you can write the <docs> part using newlines and
+            leading spaces, as the function will remove them for you. For
+            example:
+
+            mm_docs \$@ '
+                Here goes your function documentation. The first newline (above)
+                along with up to 8 leading spaces
+                <--- here
+                will be removed for you, as will the last newline right after
+                this line.
+                <--- here.
+            '
+
+            3) You might want to use variable/process substitution, in which
+            case you would use the second variation (with double quotes). You
+            can still write it as described in 2 above, just replace the single
+            quotes for double. In this case, remember to escape double quotes or
+            other stuff that should be displayed literally.
+
+            4) If you want a full example, check the following function in this
+            file: mm_example_documented_function. It provides the common use
+            case for this function.
+    "
+
+    # Either this will be called with one or two arguments.
+    #
+    # If called with only one, the user is trying to get info about this
+    # particular function, so show the help.
+    #
+    # If called with two, the user is documenting their function. In this case,
+    # if later the function is called with the first argument being one of the
+    # help ones, print the help.
+    case "$1" in
+        help|-h|--help)
+            if [ -z "$2" ]; then
+                mm_trim $usage
+                return 1
+            fi
+
+            mm_trim "$2"
+            return 1
+            ;;
+    esac
+    return 0
+}
+
+mm_example_documented_function() {
+    mm_docs $@ "
+        NAME: $0
+
+        DESCRIPTION:
+
+            Shows some example \"mm_docs\" usage and output.
+
+            Run this with different arguments to see different behaviors.
+    " || return 1
+
+    echo 'Print this if first argument above is not "help|-h|--help"'
+}
 
 # Next commands above.
 
