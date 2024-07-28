@@ -28,16 +28,18 @@ mm_set() {
 }
 
 mm_now() {
-  mode="$1"
+    mode="$1"
 
-  if [ "$mode" = "--path" ]; then
-    echo "$(date '+%F_%T' | tr ':' '-')"
-  else
-    if [ -z "$mode" ]; then
-      mode='+%F %T'
+    if [ "$mode" = "--path" ]; then
+        echo "$(date '+%F_%T' | tr ':' '-')"
+    elif [ "$mode" = "--simple" ]; then
+        echo "$(date '+%d%b%y/%Hh%M')"
+    else
+        if [ -z "$mode" ]; then
+            mode='+%F %T'
+        fi
+        echo "$(date "$mode")"
     fi
-    echo "$(date "$mode")"
-  fi
 }
 
 # In shell, for return values, 0 is success (eq to true in a conditional) and 1 is failure (eq
