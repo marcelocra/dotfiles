@@ -411,19 +411,25 @@ let maplocalleader = " "
 " Execute last macro recorded in register 'q'.
 nnoremap <space><space> @q
 
-" Easily source my vimrc.
-nnoremap <leader><leader>sv :source $MYVIMRC<cr>
+" Easily source my vimrc. As I like it folded by default, run za after sourcing
+" to reopen the file exactly where I was.
+inoremap <leader><leader>sv <esc>:w<cr>:source $MYVIMRC<cr>zazza
+nnoremap <leader><leader>sv :source $MYVIMRC<cr>zazz
 " Easily edit my vimrc.
 nnoremap <leader><leader>ev :vspl $MYVIMRC<cr>
 nnoremap <leader><leader>etv :tabe $MYVIMRC<cr>
 
-" Save while in insert mode without leaving insert mode.
+" Creates a number of save mappings, using leader+s and ctrl+s.
 nnoremap <leader>s :w<cr>
 nnoremap <c-s> :w<cr>
+" Save and exit insert mode.
 inoremap <leader>s <esc>:w<cr>
-inoremap <leader><leader>s <esc>:w<cr>a
+" Save but stay in insert mode.
+inoremap <leader>s <esc>:w<cr>a
 inoremap <c-s> <esc>:w<cr>a
 
+" Save and reload the file
+inoremap <leader>e <esc>:w<cr>:e<cr>
 
 " Quit easily.
 nnoremap <leader>q :q<cr>
@@ -531,6 +537,50 @@ augroup END
 "     autocmd!
 "     autocmd VimEnter * call FuckThatMatchParen()
 " augroup END
+
+function! MyFoldText()
+  set fillchars=fold:\ ,
+  let foldlevel = v:foldlevel
+  if foldclosed(v:foldstart)
+    return foldlevel.' ▶ '.getline(v:foldstart)
+  else
+    " TODO: Currently this doesn't work, as opened folds do not have a
+    " v:foldstart value.
+    echo foldlevel.' ▼ '.getline(v:foldstart)
+  endif
+endfunction
+
+" function! MyFoldText()
+"   let foldlevel = v:foldlevel
+"   let linecount = v:foldend - v:foldstart + 1
+"   if foldclosed(v:foldstart)
+"     return '▶ '.foldlevel.' ('.linecount.' lines) '.getline(v:foldstart)
+"   else
+"     return '▼ '.foldlevel.' ('.linecount.' lines) '.getline(v:foldstart)
+"   endif
+" endfunction
+
+setlocal foldtext=MyFoldText()
+
+" TODO: This was suggested by Gemini. Figure out alternatives for FoldEnter
+" and FoldLeave, as they do not exist.
+"
+" function! MyFoldSign(event)
+"   if a:event ==# 'opened'
+"     exe 'sign unplace '.v:foldstart
+"   else
+"     exe 'sign place '.v:foldstart.' line='.v:foldstart.' name=myfoldmarker'
+"   endif
+" endfunction
+
+" augroup MyFoldSigns
+"   autocmd!
+"   autocmd FoldEnter * call MyFoldSign('enter')
+"   autocmd FoldLeave * call MyFoldSign('leave')
+"   autocmd BufWinLeave * sign unplace *
+" augroup END
+
+" sign define myfoldmarker text=▶ texthl=FoldColumn
 
 " )functions- }}}
 " --- -lua( -----------------------------------------------------------------{{{
