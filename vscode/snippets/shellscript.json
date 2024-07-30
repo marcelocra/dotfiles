@@ -31,7 +31,7 @@
     ]
   },
   "start a new shell file": {
-    "prefix": "init",
+    "prefix": "posix-init",
     "body": [
       "#!/usr/bin/env sh",
       "",

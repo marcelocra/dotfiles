@@ -599,7 +599,7 @@
 
   "github.copilot.editor.enableAutoCompletions": true,
   "github.copilot.enable": {
-    "*": true,
+    "*": false,
     "plaintext": false,
     "markdown": false,
     "scminput": false
@@ -914,7 +914,7 @@
     "tree.inactiveIndentGuidesStroke": "#555", // edn{:dark "#444" :light "#d8d8d8" "GitHub Dark" "#555"}
 
     "editorIndentGuide.activeBackground1": "#00ffff", // edn{:dark "#ff00c8" :light "#00ffff"}
-    "editorIndentGuide.background1": "#555", // edn{:dark "#333" :light "#eee" "GitHub Dark" "#555"}
+    "editorIndentGuide.background1": "#ccc", // edn{:dark "#555" :light "#ccc" "GitHub Dark" "#555" "Solarized Light" "#ccc" }
 
     "editor.lineHighlightBorder": "#00ffff22", // edn{:dark "#ff00c833" :light "#00ffff22"}
     "editor.lineHighlightBackground": "#00ffff22", // edn{:dark "#ff00c822" :light "#00ffff22"}
@@ -941,7 +941,7 @@
   "workbench.tree.renderIndentGuides": "always",
   "workbench.list.horizontalScrolling": true,
   "workbench.sideBar.location": "left",
-  "workbench.colorTheme": "GitHub Dark",
+  "workbench.colorTheme": "Solarized Light",
   "workbench.panel.defaultLocation": "right",
   "workbench.activityBar.location": "hidden"
 
