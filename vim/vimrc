@@ -425,7 +425,6 @@ nnoremap <c-s> :w<cr>
 " Save and exit insert mode.
 inoremap <leader>s <esc>:w<cr>
 " Save but stay in insert mode.
-inoremap <leader>s <esc>:w<cr>a
 inoremap <c-s> <esc>:w<cr>a
 
 " Save and reload the file
