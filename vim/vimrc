@@ -429,6 +429,7 @@ inoremap <c-s> <esc>:w<cr>a
 
 " Save and reload the file
 inoremap <leader>e <esc>:w<cr>:e<cr>
+nnoremap <leader>e :w<cr>:e<cr>
 
 " Quit easily.
 nnoremap <leader>q :q<cr>
