@@ -260,7 +260,6 @@
   "vim.smartRelativeLine": false,
   "vim.foldfix": true,
   "vim.camelCaseMotion.enable": true,
-  "vim.textwidth": 100,
 
   "vim.enableNeovim": true,
   "vim.neovimUseConfigFile": true,
