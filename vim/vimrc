@@ -58,19 +58,35 @@
 
 call plug#begin()
 
+" Fuzzy searching (files, lines, buffers, commands, etc).
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
 
+" Git support.
 Plug 'tpope/vim-fugitive'
+
+" Improved mappings for default stuff.
 Plug 'tpope/vim-unimpaired'
+
+" Simplify handling of stuff that wraps code (parens, [curly]braces, quotes,
+" etc).
 Plug 'tpope/vim-surround'
+
+" Simplify (un)commenting stuff out.
 Plug 'tpope/vim-commentary'
+
+" Improve repeat support (e.g. for surrounding stuff).
 Plug 'tpope/vim-repeat'
 
-Plug 'bling/vim-airline'
+" Widely used simple status line.
+Plug 'vim-airline/vim-airline'
 
+" Simplify jumping to stuff. Made by a NeoVim maintainer.
 Plug 'justinmk/vim-sneak'
 
+" Improved support for many language stuff, like highlighting, ast manipulation,
+" etc. Originally created at GitHub for use in the Atom editor:
+"   https://getpage.in/tree-sitter
 Plug 'nvim-treesitter/nvim-treesitter', { 'do': ':TSUpdate' }
 
 " Colorscheme.
@@ -81,8 +97,26 @@ Plug 'Olical/conjure', { 'for': ['clojure', 'python'] }
 Plug 'guns/vim-sexp', { 'for': ['clojure'] }
 Plug 'tpope/vim-sexp-mappings-for-regular-people', { 'for': ['clojure'] }
 
-call plug#end()
 
+
+" Dart support
+" ============
+
+
+" Official plugin:
+"   https://github.com/dart-lang/dart-vim-plugin
+Plug 'dart-lang/dart-vim-plugin'
+
+
+" Recommended by the official plugin:
+"   https://github.com/dart-lang/dart-vim-plugin/blob/4bdc04e2540edf90fda2812434c11d19dc04bc8f/README.md?plain=1#L100
+" Also, the creator is a Googler:
+"   https://github.com/natebosch
+Plug 'natebosch/vim-lsc'
+Plug 'natebosch/vim-lsc-dart'
+
+
+call plug#end()
 
 " )vim-plug- }}}
 " --- -settings( ------------------------------------------------------------{{{
@@ -477,12 +511,12 @@ map T <Plug>Sneak_T
 
 " )plugin-mappings- }}}
 " --- -plugin-settings( -----------------------------------------------------{{{
-" vim-sneak settings ---------------------------------------
+" vim-sneak settings -----------------------------------------------------------
 
 let g:sneak#label = 1
 let g:sneak#s_next = 1
 
-" conjure settings -----------------------------------------
+" conjure settings -------------------------------------------------------------
 
 let g:conjure#client_on_load = 0
 let g:conjure#log#jump_to_latest#enabled = 0
@@ -490,6 +524,13 @@ let g:conjure#log#jump_to_latest#cursor_scroll_position = 'center'
 let g:conjure#log#wrap = 1
 let g:conjure#log#hud#anchor = "SE"
 let g:conjure#log#hud#width = 1.0
+
+" dart-vim-pluging settings ----------------------------------------------------
+
+let g:dart_html_in_string = v:true
+let g:dart_style_guide = 2
+let g:dart_format_on_save = v:true
+" configure format options with `let g:dartfmt_options = ...`
 
 " )plugin-settings- }}}
 " --- -autocommands( --------------------------------------------------------{{{

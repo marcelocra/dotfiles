@@ -82,7 +82,14 @@
     "scope": "javascript,typescript,javascriptreact,typescriptreact",
     "prefix": "tsi",
     "body": [
-      "//@ts-ignore"
+      "// @ts-ignore"
+    ]
+  },
+  "ts expect error": {
+    "scope": "javascript,typescript,javascriptreact,typescriptreact",
+    "prefix": "tse",
+    "body": [
+      "// @ts-expect-error - ${1:expected error}${0: - reason}"
     ]
   },
   "shebang": {
@@ -99,20 +106,6 @@
       "// -$1(",
       "$0",
       "// )$1-"
-    ]
-  },
-  "ts ignore": {
-    "scope": "javascript,typescript,javascriptreact,typescriptreact",
-    "prefix": "ig",
-    "body": [
-      "// @ts-ignore"
-    ]
-  },
-  "ts expect error": {
-    "scope": "javascript,typescript,javascriptreact,typescriptreact",
-    "prefix": "tse",
-    "body": [
-      "//@ts-expect-error - ${1:expected error} ${0:reason}"
     ]
   },
   "simplify commenting forms in clojure": {

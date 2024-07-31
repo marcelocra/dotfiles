@@ -385,9 +385,9 @@ alias say="spd-say -w -l pt-BR -p 100 -r -30 -R 100 -m all"
 alias fala="spd-say -w -l pt-BR -p 100 -r -30 -R 100 -m all"
 alias falar="spd-say -w -l pt-BR -p 100 -r -30 -R 100 -m all"
 
-# AsciiDoc.
-alias asciidoctor="docker run --rm -it -v $(pwd):/documents/ asciidoctor/docker-asciidoctor"
-alias asciidoctor-gen="docker run --rm -v $(pwd):/documents/ asciidoctor/docker-asciidoctor asciidoctor-pdf index.adoc"
+# # AsciiDoc.
+# alias asciidoctor="docker run --rm -it -v $(pwd):/documents/ asciidoctor/docker-asciidoctor"
+# alias asciidoctor-gen="docker run --rm -v $(pwd):/documents/ asciidoctor/docker-asciidoctor asciidoctor-pdf index.adoc"
 
 # Always use sed with extended regexes.
 if [[ `uname` == "Darwin" ]]; then
