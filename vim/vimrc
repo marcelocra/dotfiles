@@ -102,18 +102,18 @@ Plug 'tpope/vim-sexp-mappings-for-regular-people', { 'for': ['clojure'] }
 " Dart support
 " ============
 
-
 " Official plugin:
 "   https://github.com/dart-lang/dart-vim-plugin
 Plug 'dart-lang/dart-vim-plugin'
 
 
+" TODO: figure out why it is not working (and then, uncomment).
 " Recommended by the official plugin:
 "   https://github.com/dart-lang/dart-vim-plugin/blob/4bdc04e2540edf90fda2812434c11d19dc04bc8f/README.md?plain=1#L100
 " Also, the creator is a Googler:
 "   https://github.com/natebosch
-Plug 'natebosch/vim-lsc'
-Plug 'natebosch/vim-lsc-dart'
+" Plug 'natebosch/vim-lsc'
+" Plug 'natebosch/vim-lsc-dart'
 
 
 call plug#end()
@@ -511,6 +511,7 @@ map T <Plug>Sneak_T
 
 " )plugin-mappings- }}}
 " --- -plugin-settings( -----------------------------------------------------{{{
+
 " vim-sneak settings -----------------------------------------------------------
 
 let g:sneak#label = 1
@@ -529,8 +530,12 @@ let g:conjure#log#hud#width = 1.0
 
 let g:dart_html_in_string = v:true
 let g:dart_style_guide = 2
-let g:dart_format_on_save = v:true
+" let g:dart_format_on_save = v:true
 " configure format options with `let g:dartfmt_options = ...`
+
+" vim-lsc settings -------------------------------------------------------------
+
+" let g:lsc_auto_map = v:true
 
 " )plugin-settings- }}}
 " --- -autocommands( --------------------------------------------------------{{{
