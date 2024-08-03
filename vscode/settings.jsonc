@@ -843,6 +843,7 @@
   "gitlens.views.commits.pullRequests.showForCommits": false,
   "gitlens.codeLens.authors.enabled": false,
   "gitlens.codeLens.recentChange.enabled": false,
+  "gitlens.telemetry.enabled": false,
 
   //
   //
