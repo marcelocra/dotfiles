@@ -315,6 +315,107 @@ argument is optional: if not provided, the first is used in its place.'
     return 0
 }
 
+# help() {
+#   local args="$@"
+#   local the_cmd="$1"
+
+#   # The first argument MUST be a command.
+#   if ! mm_is_command $the_cmd; then
+#     echo "It seems like '$the_cmd' is not a command."
+#     return 1
+#   fi
+
+#   # Already saved the first argument.
+#   shift
+
+#   local default_help_opt='help'
+#   local default_pager='nvim -R -'
+#   local default_manpager="nvim '+Man!'"
+
+#   local help_opt="$default_help_opt"
+#   if ! $the_cmd $help_opt >/dev/null 2>&1; then
+#     help_opt='--help'
+#   fi
+
+#   if ! $the_cmd $help >/dev/null 2>&1; then
+#     help_opt='-h'
+#   fi
+
+#   if ! $the_cmd $help >/dev/null 2>&1; then
+#     help_opt=''
+#   fi
+
+#   local pager="$default_pager"
+#   local use_man=$_FALSE
+#   local manpager="$default_manpager"
+#   while [ $# -ne 0 ]; do
+#     case "$1" in
+#       help|--help|-h)
+#         help_opt="$2"; shift
+
+#         ;;
+#       pager|--pager|-p)
+#         if $use_man; then break; fi # Ignore option if using man.
+#         pager="$2"; shift
+#         ;;
+#       manpager|--manpager|-mp)
+#         manpager="$2"; shift
+#         ;;
+#       man|-m)
+#         use_man=$_TRUE
+#         pager="$manpager"
+
+#         shift
+#         ;;
+#       *)
+#         ;;
+#     esac
+#     shift
+#   done
+
+#   if [ -z "$help_opt" ] || [ -z "$pager" ] || [ -z "$manpager" ]
+#   then
+#     mm_trim "
+#       ERROR:
+#           Args: $@
+#           help_opt: $help_opt
+#           pager: $pager
+#           manpager: $manpager
+
+#       Usage: $0 <cmd> [opts]
+
+#       Opts:
+
+#       -h,--help,help <help option/cmd name> (default '$default_help_opt')
+
+#           The function already tests 'help', '--help' and '-h'. If those don't
+#           work, provide another one with this option.
+
+#           Example: help some_cmd -h 'info' (some_cmd help command is called 'info')
+
+#       -p,--pager,pager <pager to use> (default '$default_pager')
+
+#           Choose a different pager.
+
+#           Example: help some_cmd -p less
+
+#       -m (default: false)
+
+#           Use a manpager.
+
+#       -mp,--manpager,manpager <manpager to use> (default: '$default_manpager')
+
+#           Chooses a different manpager. When used, the -p option is ignored.
+#           Ignored if -m is not provided.
+
+#           Example: help some_cmd -m -mp less
+#     " 4
+#     return 1
+#   fi
+
+#   $the_cmd $help_opt | $pager
+# }
+
 # )))functions
 # aliases(((
 # one lettered(((
