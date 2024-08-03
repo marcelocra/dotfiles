@@ -92,6 +92,13 @@
       "// @ts-expect-error - ${1:expected error}${0: - reason}"
     ]
   },
+  "ts nocheck - ignore current file (should be in the first line)": {
+    "scope": "javascript,typescript,javascriptreact,typescriptreact",
+    "prefix": "tsno",
+    "body": [
+      "// @ts-nocheck",
+    ]
+  },
   "shebang": {
     "prefix": "shebang",
     "body": [
