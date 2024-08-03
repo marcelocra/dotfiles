@@ -9,6 +9,10 @@
 #
 # }}}
 
+if [ -z "$_THIS_FILE" ]; then
+    _THIS_FILE="$0"; readonly _THIS_FILE
+fi
+
 # Source personal stuff.
 if [ -f "$HOME/bin/commonp.sh" ]; then
     . "$HOME/bin/commonp.sh"
@@ -16,7 +20,7 @@ fi
 
 # Defaults to 'set -e'.
 mm_set() {
-  mode="$1"
+  local mode="$1"
 
   if [ "$mode" = "all" ]; then
     set -euxo pipefail
@@ -33,7 +37,7 @@ mm_set() {
 }
 
 mm_now() {
-    mode="$1"
+    local mode="$1"
 
     if [ "$mode" = "--path" ]; then
         echo "$(date '+%F_%T' | tr ':' '-')"
@@ -114,9 +118,9 @@ assert() {
     return 0
   fi
 
-  test_name=$1
-  expected=$2
-  actual=$3
+  local test_name=$1
+  local expected=$2
+  local actual=$3
 
   echo -n "[$(date '+%F %T')] [test] $count "
   if [ "$expected" != "$actual" ]; then
@@ -136,19 +140,20 @@ assert() {
 get_this_file_dir() {
   echo "$(command -v readlink >/dev/null 2>&1 && dirname $(readlink -f "$1") || dirname "$1")"
 }
+alias mm_this_file_dir=get_this_file_dir
 
 mm_is_command() {
   command -v "$1" >/dev/null 2>&1
 }
 
 mm_file_path() {
-  path=$1
-  if mm_is_command readline; then
-    echo "$(readlink -f "$path")"
+  local filepath="$1"
+  if mm_is_command readlink; then
+    echo "$(readlink -f "$filepath")"
   elif mm_is_command realpath; then
-    echo "$(realpath "$path")"
+    echo "$(realpath "$filepath")"
   else
-    fatal "Need 'readlink' or 'realpath' and they were not found."
+    echo "Need 'readlink' or 'realpath' and they were not found."
   fi
 }
 
@@ -157,7 +162,7 @@ mm_dir_path() {
 }
 
 mm_grep() {
-  grep_cmd='grep' # Default.
+  local grep_cmd='grep' # Default.
 
   echo 'rg egrep' | tr ' ' '\n' | while read cmd; do
     if mm_is_command $cmd; then
@@ -275,15 +280,14 @@ mm_example_documented_function() {
     echo 'Print this if first argument above is not "help|-h|--help"'
 }
 
-this_file="$0"
-editor="${EDITOR:-vi}"
-
 main() {
+    local editor="${EDITOR:-vi}"
+
     mcra_get_last_edit() {
         date '+%F_%T' -r "$1" | tr ':' '-'
     }
 
-    local this_file_last_edit_time="$(mcra_get_last_edit "$this_file")"
+    local this_file_last_edit_time="$(mcra_get_last_edit "$_THIS_FILE")"
 
     if [ "$MCRA_COMMON" = "$this_file_last_edit_time" ]; then
         # No need to rerun this file, as it wasn't editted since last run.
@@ -325,7 +329,6 @@ main() {
             cat $MCRA_LOGFILE
             return 0
         elif [ "$1" = "edit" ]; then
-            echo $editor hahaha
             $editor $MCRA_LOGFILE
             return 0
         fi
