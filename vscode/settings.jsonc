@@ -623,6 +623,10 @@
   },
   "polyglot-notebook.defaultNotebookLanguage": "fsharp",
 
+  "[prisma]": {
+    "editor.defaultFormatter": "Prisma.prisma"
+  },
+
   //
   // Next tool setting above.
   // #endregion
