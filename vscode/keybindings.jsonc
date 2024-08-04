@@ -664,12 +664,12 @@
     "command": "workbench.action.tasks.runTask",
     "args": "toggle-light-dark"
   },
-  {
-    "key": "ctrl+n",
-    "command": "workbench.action.tasks.runTask",
-    "args": "run-node-for-current-file",
-    "when": "vim.mode == 'Insert' && editorTextFocus"
-  },
+  // {
+  //   "key": "ctrl+n",
+  //   "command": "workbench.action.tasks.runTask",
+  //   "args": "run-node-for-current-file",
+  //   "when": "vim.mode == 'Insert' && editorTextFocus"
+  // },
   {
     "key": "shift+alt+n",
     "command": "workbench.action.files.newUntitledFile"
