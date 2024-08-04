@@ -285,4 +285,11 @@
       "}"
     ]
   },
+  "yaml json schema link": {
+    "scope": "yaml,yml",
+    "prefix": "schema",
+    "body": [
+      "# yaml-language-server: \\$schema=https://json.schemastore.org/package.json"
+    ]
+  },
 }
