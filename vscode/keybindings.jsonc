@@ -83,9 +83,8 @@
   {
     // If terminal is opened and active, close it. This is the default behavior for ctrl+`, but I
     // replaced by this because most likely I'll want to have it opened more than closed.
-    "key": "ctrl+space",
-    "command": "workbench.action.togglePanel",
-    "when": "activePanel && panelFocus"
+    "key": "ctrl+alt+`",
+    "command": "workbench.action.togglePanel"
   },
   {
     // If the panel is active, but not maximized, maximize it.

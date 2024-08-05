@@ -513,9 +513,14 @@ alias t="pushd $MCRA_TMP_PLAYGROUND"
 alias b="popd"
 
 js () {
-  if [[ -f 'bun.lockb' || -f 'yarn.lock' || -f 'pnpm-lock.yaml' ]]; then
+  if [ -f "bun.lockb" ] \
+    || [ -f "yarn.lock" ] \
+    || [ -f "pnpm-lock.json" ] \
+    || [ -f "pnpm-lock.yaml" ] \
+    || [ -f "pnpm-lock.yml" ]
+  then
     echo 'Consider using npm for node projets. It usually works! XD'
-  elif [[ -f 'package-lock.json' ]]; then
+  elif [ -f "package-lock.json" ]; then
     npm "$@"
   else
     echo 'This project does not have a lockfile'
