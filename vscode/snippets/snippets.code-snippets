@@ -99,6 +99,18 @@
       "// @ts-nocheck",
     ]
   },
+  "ts check - check this file (should be in the first line)": {
+    "scope": "javascript,typescript,javascriptreact,typescriptreact",
+    "prefix": [
+      "tscheck",
+      "check",
+      "tsch",
+      "ch"
+    ],
+    "body": [
+      "// @ts-check",
+    ]
+  },
   "shebang": {
     "prefix": "shebang",
     "body": [
@@ -290,6 +302,35 @@
     "prefix": "schema",
     "body": [
       "# yaml-language-server: \\$schema=https://json.schemastore.org/package.json"
+    ]
+  },
+  "deno shebang": {
+    "scope": "javascript,javascriptreact,typescript,typescriptreact",
+    "prefix": "deno",
+    "body": [
+      "#!/usr/bin/env -S deno run ${0:}",
+      "// TODO: Use the examples below to write your permissions and delete them afterwards. They are",
+      "// only meant as a reference.",
+      "//",
+      "// For most permissions you can provide a CSV list to detail EXACTLY which resource to make",
+      "// available. For example, --allow-read='/some/path/here' will only allow the program to read the",
+      "// folder/file '/some/path/here'. Same idea applies for the other permissions. When a bare",
+      "// permission is used, it applies to all resources of that type: --allow-read will allow the program",
+      "// to read all files it wants to. Be careful when using this.",
+      "//",
+      "// Some commonly used permissions (see docs for all):",
+      "//   --allow-read[=csv-list]",
+      "//   --allow-write[=csv-list]",
+      "//   --allow-sys[=csv-list]",
+      "//   --allow-net[=csv-list]",
+      "//   --allow-env[=csv-list]",
+      "//   --env: read from .env",
+    ]
+  },
+  "localhost address ipv4": {
+    "prefix": "localhost",
+    "body": [
+      "127.0.0.1"
     ]
   },
 }

@@ -101,7 +101,12 @@
 
   "[python]": {
     "editor.tabSize": 4,
-    "editor.defaultFormatter": "ms-python.black-formatter"
+    "editor.defaultFormatter": "ms-python.black-formatter",
+    "vim.textwidth": 80
+  },
+
+  "[shellscript]": {
+    "vim.textwidth": 80
   },
 
   //
@@ -261,6 +266,11 @@
   "vim.foldfix": true,
   "vim.camelCaseMotion.enable": true,
 
+  // Use this for most languages and files. I change it for some particular file
+  // types in their sessions, search for it here to see (e.g. Python and Shell).
+  // Ideally, it should be in sync with preferences from the .editorconfig file.
+  "vim.textwidth": 100,
+
   "vim.enableNeovim": true,
   "vim.neovimUseConfigFile": true,
 
@@ -408,11 +418,11 @@
       "after": ["g", "$"]
     },
     // -- visual lines - end
-    // {
-    //   // Use `s` to trigger easymotion full search.
-    //   "before": ["s"],
-    //   "after": ["leader", "leader", "s"]
-    // },
+    {
+      // Use `s` to trigger easymotion full search.
+      "before": ["s"],
+      "after": ["leader", "leader", "s"]
+    },
     {
       "before": ["<c-a>"],
       "after": ["gg", "V", "G"]
@@ -600,7 +610,7 @@
 
   "github.copilot.editor.enableAutoCompletions": true,
   "github.copilot.enable": {
-    "*": false,
+    "*": true,
     "plaintext": false,
     "markdown": false,
     "scminput": false
@@ -763,11 +773,11 @@
   "editor.minimap.size": "fill",
   "editor.formatOnSave": true,
   "editor.tabCompletion": "onlySnippets",
-  "editor.suggest.snippetsPreventQuickSuggestions": true,
+  "editor.suggest.snippetsPreventQuickSuggestions": false,
   "editor.quickSuggestions": {
-    "other": false,
-    "comments": false,
-    "strings": "on"
+    "other": "off",
+    "comments": "off",
+    "strings": "off"
   },
   "editor.renderWhitespace": "none",
   "editor.acceptSuggestionOnCommitCharacter": false,
@@ -780,7 +790,7 @@
   "editor.autoIndent": "full",
   "editor.minimap.enabled": false,
   "editor.screenReaderAnnounceInlineSuggestion": false,
-  "editor.snippetSuggestions": "top",
+  "editor.snippetSuggestions": "inline",
 
   //
   //
@@ -914,28 +924,28 @@
   //
 
   "workbench.colorCustomizations": {
-    "editorCursor.foreground": "#fff", // edn{:dark "#fff" :light "#ff00ea" :dark-opt "#51ff00"}
+    "editorCursor.foreground": "#ff00ea", // edn{:dark "#fff" :light "#ff00ea" :dark-opt "#51ff00"}
 
     "tree.indentGuidesStroke": "#0084ff",
     "tree.inactiveIndentGuidesStroke": "#555", // edn{:dark "#444" :light "#d8d8d8" "GitHub Dark" "#555"}
 
-    "editorIndentGuide.activeBackground1": "#ff00c8", // edn{:dark "#ff00c8" :light "#00ffff"}
-    "editorIndentGuide.background1": "#555", // edn{:dark "#555" :light "#ccc" "GitHub Dark" "#555" "GitHub Dark Dimmed" "#ccc" }
+    "editorIndentGuide.activeBackground1": "#00ffff", // edn{:dark "#ff00c8" :light "#00ffff"}
+    "editorIndentGuide.background1": "#ccc", // edn{:dark "#555" :light "#ccc" "GitHub Dark" "#555" "Solarized Light" "#ccc" }
 
-    "editor.lineHighlightBorder": "#ff00c833", // edn{:dark "#ff00c833" :light "#00ffff22"}
-    "editor.lineHighlightBackground": "#ff00c822", // edn{:dark "#ff00c822" :light "#00ffff22"}
+    "editor.lineHighlightBorder": "#00ffff22", // edn{:dark "#ff00c833" :light "#00ffff22"}
+    "editor.lineHighlightBackground": "#00ffff22", // edn{:dark "#ff00c822" :light "#00ffff22"}
 
     // TODO: figure out how to get this working.
-    // "editor.selectionForeground": "#ff00c8" // edn{:dark "#ff00c8" :light "#fff"}
-    "editor.selectionBackground": "#ff00c855", // edn{:dark "#ff00c855" :light "#00ffff77"}
+    // "editor.selectionForeground": "#fff" // edn{:dark "#ff00c8" :light "#fff"}
+    "editor.selectionBackground": "#00ffff77", // edn{:dark "#ff00c855" :light "#00ffff77"}
 
-    "editor.selectionHighlightBorder": "#ffffff81", // edn{:dark "#ffffff81" :light "#ffffffdd"}
+    "editor.selectionHighlightBorder": "#ffffffdd", // edn{:dark "#ffffff81" :light "#ffffffdd"}
     "editor.selectionHighlightBackground": "#ffffff36", // edn{:dark "#ffffff36" :light "#ffffff36"}
 
-    "editor.wordHighlightBorder": "#ffffff66", // edn{:dark "#ffffff66" :light "#00000033"}
-    "editor.wordHighlightBackground": "#00000066", // edn{:dark "#00000066" :light "#ffffff44"}
+    "editor.wordHighlightBorder": "#00000033", // edn{:dark "#ffffff66" :light "#00000033"}
+    "editor.wordHighlightBackground": "#ffffff44", // edn{:dark "#00000066" :light "#ffffff44"}
 
-    "editor.findMatchBackground": "#d400ff88", // edn{:dark "#d400ff88" :light "#000000e8"}
+    "editor.findMatchBackground": "#000000e8", // edn{:dark "#d400ff88" :light "#000000e8"}
     "editor.findMatchHighlightBackground": "#d400ff56", // edn{:dark "#d400ff56" :light "#d400ff56"}
 
     "calva.inlineErrorForegroundColor": "#ff0000",
@@ -947,7 +957,7 @@
   "workbench.tree.renderIndentGuides": "always",
   "workbench.list.horizontalScrolling": true,
   "workbench.sideBar.location": "left",
-  "workbench.colorTheme": "GitHub Dark Dimmed",
+  "workbench.colorTheme": "Solarized Light",
   "workbench.panel.defaultLocation": "right",
   "workbench.activityBar.location": "hidden"
 
