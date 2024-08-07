@@ -407,7 +407,11 @@ iab Crich ;; rcf - rich comment form
 
 " Shell stuff.
 
-iab Cdevnull &>/dev/null
+" Not as portable as the ones below.
+iab Cdevnullshort &>/dev/null
+" More portable.
+iab Cdevnull &>/dev/null 2>&1
+iab Cdnposix &>/dev/null 2>&1
 
 " Simplify writing shell command checks.
 iab Cout >/dev/null 2>&1; then

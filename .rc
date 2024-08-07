@@ -1,11 +1,9 @@
 #!/bin/sh
-# vim: fdm=marker:fmr=(((,))):fdl=0:fen:filetype=sh
+# vim:tw=80:ts=4:sw=4:ai:et:ff=unix:fenc=utf-8:et:fixeol:eol:fdm=marker:fdl=0:fen:ft=sh
 #
 # Main shell configuration script.
 #
-# File docs and posix shell how-to. (((
-#
-#
+# File docs and posix shell how-to. {{{
 #
 # TODO: ideas
 # -----------
@@ -32,7 +30,7 @@
 #   - for all arguments:
 #     - $* => $1 $2 ... ${N}
 #     - $@ => $1 $2 ... ${N}
-#     - "$*" => "$1c$2c ... ${N}
+#     - "$*" => "$1c$2c ... ${N}"
 #     - "$@" => "$1" "$2" ... "${N}"
 # - Difference between [[ and [
 #   - [ is posix
@@ -53,8 +51,7 @@
 #
 # - more posix stuff!
 #
-#
-# )))
+# }}}
 
 
 REQUIRED_ENVS=''
@@ -82,7 +79,7 @@ fi
 # Load commons.
 . $HOME/bin/.rc.common
 
-# functions(((
+# functions{{{
 
 # Simplifies working with tmux. Tries to create
 # a new session and if it already exists, just
@@ -416,9 +413,9 @@ argument is optional: if not provided, the first is used in its place.'
 #   $the_cmd $help_opt | $pager
 # }
 
-# )))functions
-# aliases(((
-# one lettered(((
+# }}}functions
+# aliases{{{
+# one lettered{{{
 
 # Used in the following sections:
 
@@ -431,8 +428,8 @@ argument is optional: if not provided, the first is used in its place.'
 # v = vim
 # g = some type of grep
 
-# )))one lettered
-# general(((
+# }}}one lettered
+# general{{{
 
 # Show diffs between files.
 
@@ -567,8 +564,8 @@ fi
 alias cl="clear && l"
 
 # next alias above, unless they fit in one of the other sections.
-# )))general
-# git frequent(((
+# }}}general
+# git frequent{{{
 
 alias gs='git status'
 # simple and resumed, no branches
@@ -641,14 +638,16 @@ alias gr='git remote'
 alias grc='gr set-url'
 alias grco='grc origin'
 
-# )))git frequent
-# git lfs(((
+alias gcct="echo 'git conventional commit types (gcct): fix, feat, build, chore, ci, docs, style, refactor, perf, test'"
+
+# }}}git frequent
+# git lfs{{{
 
 alias glfsdry="git lfs push origin main --dry-run --all"
 alias glfss="git lfs status"
 
-# )))git lfs
-# docker(((
+# }}}git lfs
+# docker{{{
 
 alias dc="docker compose"
 alias docker-prune-month-old-images='docker image prune -a --filter "until=720h"'
@@ -666,7 +665,14 @@ alias docker-prune-two-week-old-images='docker image prune -a --filter "until=33
 # }
 # alias di='docker_images_sorted'
 
-# )))docker
-# )))aliases
+# }}}docker
+# }}}aliases
 
+
+
+# The end.
+
+# Must be last, otherwise any failure above could cause the script to return non zero, which could
+# have weird consequences.
 return 0
+
