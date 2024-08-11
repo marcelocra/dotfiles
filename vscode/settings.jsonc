@@ -179,6 +179,8 @@
     "editor.insertSpaces": true
   },
 
+  "asciidoc.antora.enableAntoraSupport": false,
+
   //
   //
   // Astro
@@ -239,6 +241,18 @@
   //
 
   "rubyLsp.rubyVersionManager": "asdf",
+
+  //
+  //
+  // Nim
+  //
+  "[nim]": {
+    "editor.defaultFormatter": "NimLang.nimlang"
+  },
+
+  "[nimble]": {
+    "editor.defaultFormatter": "NimLang.nimlang"
+  },
 
   //
   // Next language or framework specific setting above.
@@ -959,7 +973,15 @@
   "workbench.sideBar.location": "left",
   "workbench.colorTheme": "GitHub Dark Dimmed",
   "workbench.panel.defaultLocation": "right",
-  "workbench.activityBar.location": "hidden"
+  "workbench.activityBar.location": "hidden",
+  "json.schemas": [
+    {
+      // Chrome Extensions. Point to extension files in a workspace if this is not working
+      // correctly.
+      "fileMatch": ["manifest.json"],
+      "url": "https://json.schemastore.org/chrome-manifest.json"
+    }
+  ]
 
   //////////////////////////////////////////////////////////////////////////////
 }

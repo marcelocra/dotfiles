@@ -112,7 +112,10 @@
     ]
   },
   "shebang": {
-    "prefix": "shebang",
+    "prefix": [
+      "sb",
+      "shebang"
+    ],
     "body": [
       "#!/usr/bin/env $1"
     ]

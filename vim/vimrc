@@ -97,15 +97,12 @@ Plug 'Olical/conjure', { 'for': ['clojure', 'python'] }
 Plug 'guns/vim-sexp', { 'for': ['clojure'] }
 Plug 'tpope/vim-sexp-mappings-for-regular-people', { 'for': ['clojure'] }
 
-
-
 " Dart support
 " ============
 
 " Official plugin:
 "   https://github.com/dart-lang/dart-vim-plugin
 Plug 'dart-lang/dart-vim-plugin'
-
 
 " TODO: figure out why it is not working (and then, uncomment).
 " Recommended by the official plugin:
@@ -115,6 +112,8 @@ Plug 'dart-lang/dart-vim-plugin'
 " Plug 'natebosch/vim-lsc'
 " Plug 'natebosch/vim-lsc-dart'
 
+" Lsp support.
+Plug 'neovim/nvim-lspconfig'
 
 call plug#end()
 
@@ -691,6 +690,15 @@ vim.keymap.set('n', '<a-L>', function()
     define_colorscheme(vim.g.colorsheme_mode)
 end)
 
+require'lspconfig'.nim_langserver.setup{
+  settings = {
+    nim = {
+      nimsuggestPath = "~/.nimble/bin/custom_lang_server_build"
+    }
+  }
+}
+
+-- next lua code above
 LUACODE
 
 endif
