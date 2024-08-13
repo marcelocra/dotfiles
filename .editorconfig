@@ -41,3 +41,9 @@ indent_size = 4
 indent_size = unset
 max_line_length = unset
 
+
+[*.{md,markdown,adoc,asciidoc}]
+# I don't want these files with hard wrapped text.
+
+max_line_length = unset
+

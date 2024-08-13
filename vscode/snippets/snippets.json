@@ -1,45 +1,45 @@
 {
-	// Place your snippets for snippets here. Each snippet is defined under a snippet name and has a prefix, body and 
-	// description. The prefix is what is used to trigger the snippet and the body will be expanded and inserted. Possible variables are:
-	// $1, $2 for tab stops, $0 for the final cursor position, and ${1:label}, ${2:another} for placeholders. Placeholders with the 
-	// same ids are connected.
-	// Example:
-	// "Print to console": {
-	// 	"prefix": "log",
-	// 	"body": [
-	// 		"console.log('$1');",
-	// 		"$2"
-	// 	],
-	// 	"description": "Log output to console"
-	// }
-	"snippet to create snippets": {
-		"prefix": "snip",
-		"body": [
-			"\"${1:text that appears when showing the snippet before completion}\": {",
-			"  ${2:\"scope\": \"${3:snippets}\",}",
-			"  \"prefix\": \"${4:trig}\",",
-			"  \"body\": [",
-			"    \"$0\"",
-			"  ]",
-			"},",
-		]
-	},
-	"clojure and clojurescript snippets scope": {
-		"prefix": "clj+",
-		"body": [
-			"clojure,clojurescript,clj,cljs"
-		]
-	},
-	"snippet to add json and jsonc": {
-		"prefix": "json",
-		"body": [
-			"json,jsonc"
-		]
-	},
-	"(java|type)script(react|)": {
-		"prefix": "js",
-		"body": [
-			"javascript,javascriptreact,typescript,typescriptreact"
-		]
-	},
+  // Place your snippets for snippets here. Each snippet is defined under a snippet name and has a prefix, body and
+  // description. The prefix is what is used to trigger the snippet and the body will be expanded and inserted. Possible variables are:
+  // $1, $2 for tab stops, $0 for the final cursor position, and ${1:label}, ${2:another} for placeholders. Placeholders with the
+  // same ids are connected.
+  // Example:
+  // "Print to console": {
+  // 	"prefix": "log",
+  // 	"body": [
+  // 		"console.log('$1');",
+  // 		"$2"
+  // 	],
+  // 	"description": "Log output to console"
+  // }
+  "snippet to create snippets": {
+    "prefix": "snip",
+    "body": [
+      "\"${1:text that appears when showing the snippet before completion}\": {",
+      "  ${2:\"scope\": \"${3:snippets}\",}",
+      "  \"prefix\": [\"${4:trig}\"],",
+      "  \"body\": [",
+      "    \"$0\"",
+      "  ]",
+      "},",
+    ]
+  },
+  "clojure and clojurescript snippets scope": {
+    "prefix": "clj+",
+    "body": [
+      "clojure,clojurescript,clj,cljs"
+    ]
+  },
+  "snippet to add json and jsonc": {
+    "prefix": "json",
+    "body": [
+      "json,jsonc"
+    ]
+  },
+  "(java|type)script(react|)": {
+    "prefix": "js",
+    "body": [
+      "javascript,javascriptreact,typescript,typescriptreact"
+    ]
+  },
 }

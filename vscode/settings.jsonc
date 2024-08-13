@@ -255,6 +255,12 @@
   },
 
   //
+  //
+  // Vue
+  //
+  "vue.server.hybridMode": "auto",
+
+  //
   // Next language or framework specific setting above.
   // #endregion
   //////////////////////////////////////////////////////////////////////////////
@@ -720,12 +726,32 @@
   // //  ~ < > = + _ _ ( ) * & ^ % $ # @ ! { } [ ] \ | / ? : ; , . ` ' " ´ ` ˜
   // //  => -> <> <= >= != !== === ~= |> <- --> || .- :- .= {..}
 
+  // DM Mono
+  //
+  // "editor.fontFamily": "DM Mono",
+  // "editor.fontSize": 14, // edn{:desktop 15 :notebook ?? :small 11}
+  // "editor.fontWeight": "300", // edn{:desktop "300" :notebook "??" :small "100"}
+  // "editor.fontLigatures": "'ss01','ss03','ss04'",
+  // // Available stylistic sets:
+  // // ss01: curved comma; ss02: curved a; ss03: curved g; ss04: less rounded
+  // // numbers; ss05: remove rounded borders of f;
+
+  // Source Code Pro
+  //
+  "editor.fontFamily": "SourceCodeVF",
+  "editor.fontSize": 13, // edn{:desktop 15 :notebook ?? :small 11}
+  "editor.fontWeight": "400", // edn{:desktop "400" :notebook "??" :small "100"}
+  "editor.fontLigatures": "'cv17','cv01','cv02','zero'",
+  // // Available stylistic sets:
+  // // - | cv17: improved 1 | cv01 and cv02: clearer 'a' and 'g' |
+  // // - | zero: reverse dashed zero
+
   // JetBrainsMono font
   //
-  "editor.fontFamily": "JetBrains Mono",
-  "editor.fontSize": 13, // edn{:desktop 13 :notebook ?? :small 11}
-  "editor.fontWeight": "200", // edn{:desktop "200" :notebook "??" :small "100"}
-  "editor.fontLigatures": "'ss02', 'ss19', 'ss20', 'zero', 'cv03', 'cv04', 'cv16', 'cv19', 'cv20', 'cv99'",
+  // "editor.fontFamily": "JetBrains Mono",
+  // "editor.fontSize": 13, // edn{:desktop 13 :notebook ?? :small 11}
+  // "editor.fontWeight": "200", // edn{:desktop "200" :notebook "??" :small "100"}
+  // "editor.fontLigatures": "'ss02', 'ss19', 'ss20', 'zero', 'cv03', 'cv04', 'cv16', 'cv19', 'cv20', 'cv99'",
   // // Available stylistic sets:
   // // - | cv01,05: l | cv02: t | cv03: g | cv04: j | cv06: m  | cv07: w | cv08: k
   // // - | cv09,17: f | cv10: r | cv11: y | cv12: u | cv14: $¢ | cv15: & | cv16: Q
@@ -938,28 +964,28 @@
   //
 
   "workbench.colorCustomizations": {
-    "editorCursor.foreground": "#fff", // edn{:dark "#fff" :light "#ff00ea" :dark-opt "#51ff00"}
+    "editorCursor.foreground": "#ff00ea", // edn{:dark "#fff" :light "#ff00ea" :dark-opt "#51ff00"}
 
     "tree.indentGuidesStroke": "#0084ff",
     "tree.inactiveIndentGuidesStroke": "#555", // edn{:dark "#444" :light "#d8d8d8" "GitHub Dark" "#555"}
 
-    "editorIndentGuide.activeBackground1": "#ff00c8", // edn{:dark "#ff00c8" :light "#00ffff"}
-    "editorIndentGuide.background1": "#555", // edn{:dark "#555" :light "#ccc" "GitHub Dark" "#555" "GitHub Dark Dimmed" "#ccc" }
+    "editorIndentGuide.activeBackground1": "#00ffff", // edn{:dark "#ff00c8" :light "#00ffff"}
+    "editorIndentGuide.background1": "#ccc", // edn{:dark "#555" :light "#ccc" "GitHub Dark" "#555" "Solarized Light" "#ccc" }
 
-    "editor.lineHighlightBorder": "#ff00c833", // edn{:dark "#ff00c833" :light "#00ffff22"}
-    "editor.lineHighlightBackground": "#ff00c822", // edn{:dark "#ff00c822" :light "#00ffff22"}
+    "editor.lineHighlightBorder": "#00ffff22", // edn{:dark "#ff00c833" :light "#00ffff22"}
+    "editor.lineHighlightBackground": "#00ffff22", // edn{:dark "#ff00c822" :light "#00ffff22"}
 
     // TODO: figure out how to get this working.
-    // "editor.selectionForeground": "#ff00c8" // edn{:dark "#ff00c8" :light "#fff"}
-    "editor.selectionBackground": "#ff00c855", // edn{:dark "#ff00c855" :light "#00ffff77"}
+    // "editor.selectionForeground": "#fff" // edn{:dark "#ff00c8" :light "#fff"}
+    "editor.selectionBackground": "#00ffff77", // edn{:dark "#ff00c855" :light "#00ffff77"}
 
-    "editor.selectionHighlightBorder": "#ffffff81", // edn{:dark "#ffffff81" :light "#ffffffdd"}
+    "editor.selectionHighlightBorder": "#ffffffdd", // edn{:dark "#ffffff81" :light "#ffffffdd"}
     "editor.selectionHighlightBackground": "#ffffff36", // edn{:dark "#ffffff36" :light "#ffffff36"}
 
-    "editor.wordHighlightBorder": "#ffffff66", // edn{:dark "#ffffff66" :light "#00000033"}
-    "editor.wordHighlightBackground": "#00000066", // edn{:dark "#00000066" :light "#ffffff44"}
+    "editor.wordHighlightBorder": "#00000033", // edn{:dark "#ffffff66" :light "#00000033"}
+    "editor.wordHighlightBackground": "#ffffff44", // edn{:dark "#00000066" :light "#ffffff44"}
 
-    "editor.findMatchBackground": "#d400ff88", // edn{:dark "#d400ff88" :light "#000000e8"}
+    "editor.findMatchBackground": "#000000e8", // edn{:dark "#d400ff88" :light "#000000e8"}
     "editor.findMatchHighlightBackground": "#d400ff56", // edn{:dark "#d400ff56" :light "#d400ff56"}
 
     "calva.inlineErrorForegroundColor": "#ff0000",
@@ -971,9 +997,8 @@
   "workbench.tree.renderIndentGuides": "always",
   "workbench.list.horizontalScrolling": true,
   "workbench.sideBar.location": "left",
-  "workbench.colorTheme": "GitHub Dark Dimmed",
+  "workbench.colorTheme": "Quiet Light",
   "workbench.panel.defaultLocation": "right",
-  "workbench.activityBar.location": "hidden",
   "json.schemas": [
     {
       // Chrome Extensions. Point to extension files in a workspace if this is not working
@@ -981,7 +1006,8 @@
       "fileMatch": ["manifest.json"],
       "url": "https://json.schemastore.org/chrome-manifest.json"
     }
-  ]
+  ],
+  "workbench.activityBar.location": "hidden"
 
   //////////////////////////////////////////////////////////////////////////////
 }

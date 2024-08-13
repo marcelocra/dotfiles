@@ -61,11 +61,26 @@ main() {
     # window, but since this script is run without a window, perhaps it won't
     # have that problem.
 
-    # If a session with that name does not exists, create it.
+    # If a session with that name does not exists, create it. This will
+    # automatically attach to the session.
     if ! tmux has -t $scratch >/dev/null 2>&1; then
         tmux new -s $scratch >/dev/null 2>&1
         exit
     fi
+
+    # # IDEA: use xdotool to detach from this once the window loses focus.
+
+    # local window_id="$(xdotool search --limit 1 --name scratchpad)"
+
+    # # If the window loses focus (blur), detach from it.
+    # xdotool $window_id behave blur tmux detach -s $scratch
+
+    # # Attach to the session when it already exists (got here, so the if-check
+    # # above failed, meaning there's an existing session).
+    # tmux attach -t $scratch >/dev/null 2>&1
+
+    # Previous approach below, for reference.
+
 
     # If a session with that name exists, either it is focused or not.
     # When it is focused (term_focused=true), we simply detach from it, removing

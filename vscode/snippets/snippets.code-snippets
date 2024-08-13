@@ -311,15 +311,16 @@
     "scope": "javascript,javascriptreact,typescript,typescriptreact",
     "prefix": "deno",
     "body": [
-      "#!/usr/bin/env -S deno run ${0:}",
-      "// TODO: Use the examples below to write your permissions and delete them afterwards. They are",
-      "// only meant as a reference.",
+      "#!/usr/bin/env -S deno run ${0:--allow-read --allow-write --allow-run --allow-env --env}",
+      "// The example above includes common permissions for a Node-like run.",
       "//",
-      "// For most permissions you can provide a CSV list to detail EXACTLY which resource to make",
-      "// available. For example, --allow-read='/some/path/here' will only allow the program to read the",
-      "// folder/file '/some/path/here'. Same idea applies for the other permissions. When a bare",
-      "// permission is used, it applies to all resources of that type: --allow-read will allow the program",
-      "// to read all files it wants to. Be careful when using this.",
+      "// Use the docs below to write fine-grained permissions. For most of",
+      "// them you can provide a CSV list detailing exactly which resources to",
+      "// make available. For example, --allow-read='/some/path/here' will",
+      "only allow the program to read from that particular path. Without the",
+      "// '=csv,list,here', the permission applies to all resources of that",
+      "// type: --allow-read allows the program to read all files it wants to.",
+      "// Be careful when using them.",
       "//",
       "// Some commonly used permissions (see docs for all):",
       "//   --allow-read[=csv-list]",
@@ -327,6 +328,7 @@
       "//   --allow-sys[=csv-list]",
       "//   --allow-net[=csv-list]",
       "//   --allow-env[=csv-list]",
+      "//   --allow-run[=csv-list]",
       "//   --env: read from .env",
     ]
   },
@@ -334,6 +336,81 @@
     "prefix": "localhost",
     "body": [
       "127.0.0.1"
+    ]
+  },
+  "add 'unlicensed' lincense and copyright notice text": {
+    "prefix": [
+      "unlicensed",
+      "no-permission",
+      "no-license"
+    ],
+    "body": [
+      "// https://choosealicense.com/no-permission/",
+      "",
+      "© 2024 Marcelo Almeida (https://marcelocra.dev). All rights reserved.",
+      "",
+      "This software and associated documentation files (the \"Software\") are the exclusive property of Marcelo Almeida (https://marcelocra.dev). Unauthorized copying, modification, distribution, or any other form of use of the Software, in whole or in part, is strictly prohibited without the prior written consent of Marcelo Almeida (https://marcelocra.dev).",
+      "",
+      "THE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES, OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF, OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.",
+      "",
+    ]
+  },
+  "add unlicensed copyright notice to a file": {
+    "prefix": [
+      "cr-unl",
+      "copy-unl",
+      "copyright-unl"
+    ],
+    "body": [
+      "© 2024 Marcelo Almeida (https://marcelocra.dev). All rights reserved.",
+    ]
+  },
+  "add copyright notice to a file": {
+    "prefix": [
+      "cr",
+      "copy",
+      "copyright"
+    ],
+    "body": [
+      "Copyright (C) 2024 Marcelo Almeida (https://marcelocra.dev)",
+    ]
+  },
+  "package.json scripts entry": {
+    "scope": "json,jsonc,snippets",
+    "prefix": [
+      "script",
+      "s"
+    ],
+    "body": [
+      "\"$1\"${2:: \"$3\"},$0"
+    ]
+  },
+  "deno ignore file": {
+    "scope": "javascript,javascriptreact,typescript,typescriptreact",
+    "prefix": [
+      "denoif",
+    ],
+    "body": [
+      "// deno-lint-ignore-file ${1:prefer-const}$0"
+    ]
+  },
+  "deno ignore next line": {
+    "scope": "javascript,javascriptreact,typescript,typescriptreact",
+    "prefix": [
+      "denoi",
+    ],
+    "body": [
+      "// deno-lint-ignore ${1:prefer-const}$0"
+    ]
+  },
+  "create an immidiately invoked function expression": {
+    "scope": "javascript,javascriptreact,typescript,typescriptreact",
+    "prefix": [
+      "iife",
+      "i"
+    ],
+    "body": [
+      "(${1:async} ($2) => {$0})($2)"
     ]
   },
 }

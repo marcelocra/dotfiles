@@ -92,6 +92,12 @@ Plug 'nvim-treesitter/nvim-treesitter', { 'do': ':TSUpdate' }
 " Colorscheme.
 Plug 'folke/tokyonight.nvim'
 
+" Lsp support.
+Plug 'neovim/nvim-lspconfig'
+
+" Clojure and Python support
+" ==========================
+
 " Plugins for Clojure and other lisps.
 Plug 'Olical/conjure', { 'for': ['clojure', 'python'] }
 Plug 'guns/vim-sexp', { 'for': ['clojure'] }
@@ -112,8 +118,10 @@ Plug 'dart-lang/dart-vim-plugin'
 " Plug 'natebosch/vim-lsc'
 " Plug 'natebosch/vim-lsc-dart'
 
-" Lsp support.
-Plug 'neovim/nvim-lspconfig'
+" F# support
+" ==========
+
+Plug 'ionide/Ionide-vim'
 
 call plug#end()
 
@@ -335,6 +343,12 @@ inoremap <a-n> <c-r>=strftime("%Y-%m-%d %H:%M")<cr>
 " Copy current file path to clipboard, trying to replace user home path with $HOME.
 nnoremap <leader><leader>p :let @+ = substitute(expand('%'), expand('~'), '$HOME', '')<cr>:echo @+<cr>
 
+" Execute last macro recorded in register 'q'.
+nnoremap <space> @q
+
+" I prefer c-j/k instead of c-n/p.
+inoremap <silent> <c-k> <c-p>
+inoremap <silent> <c-j> <c-n>
 
 " )mappings- }}}
 " --- -abbreviations( -------------------------------------------------------{{{
@@ -445,9 +459,6 @@ cab h tab help
 let mapleader = ","
 let maplocalleader = " "
 
-" Execute last macro recorded in register 'q'.
-nnoremap <space><space> @q
-
 " Easily source my vimrc. As I like it folded by default, run za after sourcing
 " to reopen the file exactly where I was.
 inoremap <leader><leader>sv <esc>:w<cr>:source $MYVIMRC<cr>zazza
@@ -540,6 +551,24 @@ let g:dart_style_guide = 2
 
 " let g:lsc_auto_map = v:true
 
+" fsharp f# --------------------------------------------------------------------
+let g:fsharp#backend = "nvim"
+let g:fsharp#fsautocomplete_command =
+      \ [ 'dotnet',
+      \   'fsautocomplete',
+      \   '--background-service-enabled'
+      \ ]
+
+" Custom mapping example. The default is vscode.
+" let g:fsharp#fsi_keymap = "custom"  " vscode
+" let g:fsharp#fsi_keymap_send   = "<C-e>"  " vscode: Alt+Enter
+" let g:fsharp#fsi_keymap_toggle = "<C-@>"  " vscode: Alt+Shift+2 (Alt+@)
+
+" lsp settings ---------------------
+
+" Show full lsp error msg.
+nnoremap <space>e :lua vim.diagnostic.open_float(0, {scope="line"})<cr>
+
 " )plugin-settings- }}}
 " --- -autocommands( --------------------------------------------------------{{{
 
@@ -564,6 +593,12 @@ augroup myautocommands
     "     set wrap
     " endfunction
     " autocmd FileType markdown call SetMarkdownOptions()
+
+    " F# FSharp
+    " =========
+    " When in a F# file, keep the signcolumn always present, otherwise it keeps
+    " shifting code when warnings/errors appear.
+    autocmd FileType fsharp set signcolumn=yes
 
 augroup END
 
@@ -690,13 +725,14 @@ vim.keymap.set('n', '<a-L>', function()
     define_colorscheme(vim.g.colorsheme_mode)
 end)
 
-require'lspconfig'.nim_langserver.setup{
-  settings = {
-    nim = {
-      nimsuggestPath = "~/.nimble/bin/custom_lang_server_build"
-    }
-  }
-}
+-- -- Nim lsp setup.
+-- require'lspconfig'.nim_langserver.setup{
+--   settings = {
+--     nim = {
+--       nimsuggestPath = "~/.nimble/bin/custom_lang_server_build"
+--     }
+--   }
+-- }
 
 -- next lua code above
 LUACODE
