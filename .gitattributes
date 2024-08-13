@@ -25,6 +25,7 @@ windows/** linguist-vendored
 .npmrc linguist-vendored
 .gitconfig linguist-vendored
 .XCompose linguist-vendored
+bin/ linguist-vendored
 
 # generated
 archives/** linguist-generated
@@ -36,3 +37,4 @@ bun.lockb linguist-generated
 
 *.png filter=lfs diff=lfs merge=lfs -text
 *.ico filter=lfs diff=lfs merge=lfs -text
+bin/ filter=lfs diff=lfs merge=lfs -text
