@@ -578,7 +578,10 @@ augroup myautocommands
     " Git commit messages.
     autocmd FileType gitcommit set colorcolumn=51
 
-    " Markdown.
+
+    " Markdown
+    " ========
+
     " Ignoring this for now, leaving it to EditorConfig.
     " function SetMarkdownOptions()
     "     set fdm=marker
@@ -594,11 +597,15 @@ augroup myautocommands
     " endfunction
     " autocmd FileType markdown call SetMarkdownOptions()
 
+
     " F# FSharp
     " =========
+
     " When in a F# file, keep the signcolumn always present, otherwise it keeps
     " shifting code when warnings/errors appear.
     autocmd FileType fsharp set signcolumn=yes
+
+    autocmd BufNewFile,BufRead *.fs,*.fsx,*.fsi set filetype=fsharp
 
 augroup END
 
