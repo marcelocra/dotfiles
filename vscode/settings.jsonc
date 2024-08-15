@@ -936,7 +936,7 @@
   "window.title": "${dirty}${activeEditorLong}${separator}${appName}",
   "window.newWindowDimensions": "inherit",
   "window.restoreWindows": "none",
-  "window.menuBarVisibility": "toggle",
+  "window.menuBarVisibility": "hidden",
 
   //
   //
