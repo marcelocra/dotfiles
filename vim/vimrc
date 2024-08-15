@@ -552,17 +552,20 @@ let g:dart_style_guide = 2
 " let g:lsc_auto_map = v:true
 
 " fsharp f# --------------------------------------------------------------------
-let g:fsharp#backend = "nvim"
 let g:fsharp#fsautocomplete_command =
       \ [ 'dotnet',
       \   'fsautocomplete',
-      \   '--background-service-enabled'
+      \   '--background-service-enabled',
       \ ]
 
 " Custom mapping example. The default is vscode.
 " let g:fsharp#fsi_keymap = "custom"  " vscode
 " let g:fsharp#fsi_keymap_send   = "<C-e>"  " vscode: Alt+Enter
 " let g:fsharp#fsi_keymap_toggle = "<C-@>"  " vscode: Alt+Shift+2 (Alt+@)
+
+let g:fsharp#exclude_project_directories = ['paket-files']
+" let g:fsharp#fsi_command = "dotnet fsi --compilertool:~/.nuget/packages/paket/8.0.3/tools/netcoreapp2.1/any/"
+" let g:fsharp#use_sdk_scripts = 0 " for net462 FSI
 
 " lsp settings ---------------------
 
