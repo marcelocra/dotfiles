@@ -74,21 +74,29 @@
   //   "command": "workbench.action.terminal.focus",
   //   "when": "activePanel && !terminalFocus"
   // },
+  // // Previous behavior. {{{
+  // {
+  //   // If terminal is opened and active, focus on the text editor.
+  //   "key": "ctrl+`",
+  //   "command": "workbench.action.focusLastEditorGroup",
+  //   "when": "activePanel && terminalFocus"
+  // },
+  // {
+  //   // If terminal is opened and active, close it. This is the default behavior for ctrl+`, but I
+  //   // replaced by this because most likely I'll want to have it opened more than closed.
+  //   "key": "ctrl+m",
+  //   "command": "workbench.action.togglePanel"
+  // },
+  // }}}
   {
     // If terminal is opened and active, focus on the text editor.
-    "key": "ctrl+`",
+    "key": "ctrl+m",
     "command": "workbench.action.focusLastEditorGroup",
     "when": "activePanel && terminalFocus"
   },
   {
-    // If terminal is opened and active, close it. This is the default behavior for ctrl+`, but I
-    // replaced by this because most likely I'll want to have it opened more than closed.
-    "key": "ctrl+alt+`",
-    "command": "workbench.action.togglePanel"
-  },
-  {
     // If the panel is active, but not maximized, maximize it.
-    "key": "ctrl+m",
+    "key": "ctrl+alt+`",
     "command": "workbench.action.toggleMaximizedPanel",
     "when": "activePanel && terminalFocus"
   },
@@ -717,5 +725,15 @@
       "text": "\u0010"
     },
     "when": "terminalFocus"
+  },
+  {
+    "key": "ctrl+i",
+    "command": "-workbench.action.terminal.chat.focusInput",
+    "when": "terminalChatFocus && !inlineChatFocused"
+  },
+  {
+    "key": "ctrl+i",
+    "command": "-workbench.action.terminal.chat.start",
+    "when": "terminalChatAgentRegistered && terminalFocusInAny && terminalHasBeenCreated || terminalChatAgentRegistered && terminalFocusInAny && terminalProcessSupported"
   }
 ]
