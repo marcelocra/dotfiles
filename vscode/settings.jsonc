@@ -832,6 +832,7 @@
   "editor.minimap.enabled": false,
   "editor.screenReaderAnnounceInlineSuggestion": false,
   "editor.snippetSuggestions": "inline",
+  "editor.multiCursorModifier": "ctrlCmd",
 
   //
   //
