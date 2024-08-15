@@ -93,9 +93,10 @@ error() {
 }
 
 fatal() {
-  echo "$@"
+    echo
+    echo "$@"
 
-  exit 1
+    exit 1
 }
 
 has_prefix() {
