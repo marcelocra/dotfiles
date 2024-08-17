@@ -89,10 +89,16 @@
   // },
   // }}}
   {
-    // If terminal is opened and active, focus on the text editor.
+    // If terminal is opened and active, focus on the text editor ...
     "key": "ctrl+m",
     "command": "workbench.action.focusLastEditorGroup",
     "when": "activePanel && terminalFocus"
+  },
+  {
+    // ... otherwise, focus on the panel.
+    "key": "ctrl+m",
+    "command": "workbench.action.terminal.focus",
+    "when": "activePanel && !terminalFocus"
   },
   {
     // If the panel is active, but not maximized, maximize it.
@@ -383,10 +389,6 @@
   //============================================================================
   //= alt stuff
   //============================================================================
-  {
-    "key": "alt+s",
-    "command": "workbench.action.gotoSymbol"
-  },
   {
     "key": "alt+b",
     "command": "workbench.action.toggleSidebarVisibility"
@@ -711,11 +713,6 @@
   },
   {
     "key": "ctrl+t",
-    "command": "workbench.action.showAllSymbols",
-    "when": "editorTextFocus"
-  },
-  {
-    "key": "ctrl+t",
     "command": "-workbench.action.showAllSymbols"
   },
   {
@@ -735,5 +732,20 @@
     "key": "ctrl+i",
     "command": "-workbench.action.terminal.chat.start",
     "when": "terminalChatAgentRegistered && terminalFocusInAny && terminalHasBeenCreated || terminalChatAgentRegistered && terminalFocusInAny && terminalProcessSupported"
+  },
+  {
+    "key": "ctrl+t",
+    "command": "workbench.action.gotoSymbol",
+    "when": "!accessibilityHelpIsShown && !accessibleViewIsShown"
+  },
+  {
+    "key": "ctrl+shift+o",
+    "command": "workbench.action.showAllSymbols",
+    "when": "editorTextFocus"
+  },
+  {
+    "key": "ctrl+shift+o",
+    "command": "-workbench.action.gotoSymbol",
+    "when": "!accessibilityHelpIsShown && !accessibleViewIsShown"
   }
 ]

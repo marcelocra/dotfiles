@@ -262,6 +262,14 @@
   "vue.server.hybridMode": "auto",
 
   //
+  //
+  // YAML
+  //
+  "[yaml]": {
+    "editor.defaultFormatter": "redhat.vscode-yaml"
+  },
+
+  //
   // Next language or framework specific setting above.
   // #endregion
   //////////////////////////////////////////////////////////////////////////////
