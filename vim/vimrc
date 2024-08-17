@@ -329,10 +329,11 @@ nnoremap <a-w> :set wrap!<cr>
 inoremap <a-w> <esc>:set wrap!<cr>a
 
 " Add date to current buffer.
-inoremap <a-d> <c-r>=strftime("%Y-%m-%d")<cr>
+" inoremap <a-d> <c-r>=strftime("%Y-%m-%d")<cr>
+inoremap <a-d> <c-r>=strftime("%d%b%y")<cr>
 
 " Add time to current buffer.
-inoremap <a-h> <c-r>=strftime("%Hh%M")<cr>
+inoremap <a-t> <c-r>=strftime("%Hh%M")<cr>
 
 " Add a divider and the current time.
 inoremap <a-s> <c-r>=strftime("\n\n---\n\n%Hh%M\n\n")<cr>
@@ -358,8 +359,8 @@ inoremap <silent> <c-j> <c-n>
 " Prefix all of them with capital c, to avoid replacing when typing variables, comments, etc.
 
 
-" Shebangs.
-
+" Shebangs
+" ========
 
 iab Cshebang #!/usr/bin/env
 iab Csb #!/usr/bin/env
@@ -373,6 +374,7 @@ iab Cfsx #!/usr/bin/env -S dotnet fsi
 
 
 " Vim modeline with my preferred defaults.
+" ============
 "
 " EDIT: now I put the defaults in the ~/.editorconfig, which superseeds modelines, as they work in
 " all editors.
@@ -401,6 +403,8 @@ iab Cecpy vim:tw=80:ts=4:sw=4:ai:et:ff=unix:fenc=utf-8:et:fixeol:eol:fdm=marker:
 " iab note <!-- vim: fdm=marker:fmr={,}:fdl=1:fen:ai:et:ts=4:sw=4:tw=80:wrap<cr>--><cr>
 
 
+" Shell stuff
+" ===========
 " Create better bash scripts with these options at the top
 " of them.
 "
@@ -417,9 +421,6 @@ iab Ceuo set -euo pipefail
 " Add Rich Hickey comment block comment.
 iab Crich ;; rcf - rich comment form
 
-
-" Shell stuff.
-
 " Not as portable as the ones below.
 iab Cdevnullshort &>/dev/null
 " More portable.
@@ -430,8 +431,8 @@ iab Cdnposix &>/dev/null 2>&1
 iab Cout >/dev/null 2>&1; then
 iab Ccommand command -v Cout
 
-
 " Unicode, emoji, etc.
+" ====================
 
 iab Cch ✓
 iab Cch ✅️
@@ -443,6 +444,7 @@ iab Cheartp 💜️
 iab Cheartw 🤍️
 iab Ck - [ ]
 iab C- - [ ]
+iab Cret ↲
 
 
 " ///// COMMAND ////////////////////////////////////////////////////////////////
@@ -632,17 +634,18 @@ augroup END
 "     autocmd VimEnter * call FuckThatMatchParen()
 " augroup END
 
-function! MyFoldText()
-  set fillchars=fold:\ ,
-  let foldlevel = v:foldlevel
-  if foldclosed(v:foldstart)
-    return foldlevel.' ▶ '.getline(v:foldstart)
-  else
-    " TODO: Currently this doesn't work, as opened folds do not have a
-    " v:foldstart value.
-    echo foldlevel.' ▼ '.getline(v:foldstart)
-  endif
-endfunction
+" function! MyFoldText()
+"   set fillchars=fold:\ ,
+"   let foldlevel = v:foldlevel
+"   if foldclosed(v:foldstart)
+"     return foldlevel.' ▶ '.getline(v:foldstart)
+"   else
+"     " TODO: Currently this doesn't work, as opened folds do not have a
+"     " v:foldstart value.
+"     echo foldlevel.' ▼ '.getline(v:foldstart)
+"   endif
+" endfunction
+" setlocal foldtext=MyFoldText()
 
 " function! MyFoldText()
 "   let foldlevel = v:foldlevel
@@ -653,8 +656,6 @@ endfunction
 "     return '▼ '.foldlevel.' ('.linecount.' lines) '.getline(v:foldstart)
 "   endif
 " endfunction
-
-setlocal foldtext=MyFoldText()
 
 " TODO: This was suggested by Gemini. Figure out alternatives for FoldEnter
 " and FoldLeave, as they do not exist.
@@ -695,7 +696,7 @@ local ColorMode = {
 }
 
 -- local mode = ColorMode.Dark
-vim.g.colorsheme_mode = ColorMode.TimeBased
+vim.g.colorsheme_mode = ColorMode.Dark
 
 function define_colorscheme(mode)
     -- If not forcing light mode, then check if forcing dark. If not, then use the
