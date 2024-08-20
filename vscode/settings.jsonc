@@ -219,21 +219,22 @@
     ":[\\w-.#>]+\\.([\\w-]*)",
 
     // For JS variables ending in [cC]lass.
-    "const.+[cC]lass =\\s+\"([^\"]*)\"",
-    "let.+[cC]lass =\\s+\"([^\"]*)\"",
-    "var.+[cC]lass =\\s+\"([^\"]*)\"",
+    "const.+[cC]lass =\\s+[\"']([^\"']*)[\"']",
+    "let.+[cC]lass =\\s+[\"']([^\"']*)[\"']",
+    "var.+[cC]lass =\\s+[\"']([^\"']*)[\"']",
 
     // For JS objects with properties ending in [cC]lass.
     ".*[cC]lass:\\s+[\"']([^\"']*)[\"']",
 
     // For JS classList manipulation.
-    "\\.classList\\.[^\\(]*\\(\"([^\"]*)\"\\)",
+    "\\.classList\\.[^\\(]*\\([\"']([^\"']*)[\"']\\)",
 
     // For html-like attributes.
     ".+[cC]lass=\"([^\"]*)\""
   ],
   "tailwindCSS.includeLanguages": {
-    "clojure": "html"
+    "clojure": "html",
+    "vue": "html"
   },
 
   //
