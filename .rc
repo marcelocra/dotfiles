@@ -509,22 +509,12 @@ alias t="pushd $MCRA_TMP_PLAYGROUND"
 # As in 'back'.
 alias b="popd"
 
-js () {
-    if [ -f "bun.lockb" ] || [ -f "yarn.lock" ]; then
-        echo 'Consider using npm for node projets. It usually works! XD'
-    elif [ -f "package-lock.json" ]; then
-        npm "$@"
-    elif [ -f "pnpm-lock.json" ] || [ -f "pnpm-lock.yaml" ] || [ -f "pnpm-lock.yml" ]; then
-        pnpm "$@"
-    else
-        echo 'This project does not have a lockfile'
-    fi
-}
-alias r="js run"
 alias p="pnpm"
 alias pf="pnpm --filter"
-alias pr="pnpm run"
-alias prf="pnpm run --filter"
+alias r="pnpm run"
+# For use in workspaces.
+alias rf="pnpm run --filter"
+
 
 alias bbg="bb --config ~/.config/babashka/bb.edn"
 alias bbge="vim ~/.config/babashka/bb.edn"
