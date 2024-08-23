@@ -693,7 +693,7 @@
     "when": "inSearchEditor"
   },
   {
-    "key": "ctrl+k",
+    "key": "ctrl+shift+k",
     "command": "workbench.action.quickTextSearch",
     "when": "!suggestWidgetVisible"
   },
