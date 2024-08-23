@@ -18,6 +18,15 @@
       "presentation": {
         "reveal": "always"
       }
+    },
+    {
+      "label": "remove all commends from current file",
+      "type": "shell",
+      "command": "sed -E -e 's_^\\s+(/[/]+|/\\*[^\\*]*\\*/)__g' -i ${file}",
+      "presentation": {
+        "reveal": "always"
+      },
+      "problemMatcher": []
     }
   ]
 }
