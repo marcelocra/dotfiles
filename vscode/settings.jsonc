@@ -255,6 +255,7 @@
   // Vue
   //
   "vue.server.hybridMode": "typeScriptPluginOnly",
+  "lit-html.tags": ["html", "css", "vue"],
 
   //
   //
@@ -859,7 +860,8 @@
     "*.liquid": "html",
     "*.mdx": "markdown",
     "*.svg": "html",
-    "*.adoc": "asciidoc"
+    "*.adoc": "asciidoc",
+    "*.vue": "vue"
   },
   "files.eol": "\n",
 
