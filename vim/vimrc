@@ -690,8 +690,36 @@ augroup END
 " --- -lua( -----------------------------------------------------------------{{{
 
 if has('nvim')
-  " Until I convert everything to lua.
-  luafile ~/.config/nvim/config.lua
+
+  if filereadable(expand("~/.config/nvim/config.lua"))
+    luafile ~/.config/nvim/config.lua
+  else
+    echom 'Please, install the config.lua in ~/.config/nvim/config.lua'
+  endif
+
+
+
+" lua <<LUACODE
+
+" -- Until I convert everything to lua, use it as an additional config.
+" function file_exists(name)
+"     local f=io.open(name,"r")
+"     if f~=nil then io.close(f) return true else return false end
+" end
+
+" function load_lua_config()
+"     local luaconfig = "~/.config/nvim/config.lua"
+
+"     if file_exists(luaconfig) then
+"         require(luaconfig)
+"         return
+"     end 
+
+"     print('Please, install the config.lua in ~/.config/nvim/config.lua')
+" end
+
+" LUACODE
+
 endif
 
 " )lua- }}}
