@@ -1,4 +1,4 @@
-" vim:fdm=marker:fmr={{{,}}}:fdl=0:fen:ai:et:ts=2:sw=2:tw=80:ff=unix:fenc=utf-8:et:fixeol:eol:
+" vim:fdm=marker:fmr={{{,}}}:fdl=0:fen:ai:et:ts=2:sw=2:tw=80:ff=unix:fenc=utf8:et:fixeol:eol:
 "
 " Details on how to use vim-plug, with examples. {{{
 "
@@ -442,10 +442,15 @@ iab Cbolt ⚡️
 iab Ccros ❌️
 iab Cheartp 💜️
 iab Cheartw 🤍️
+iab Chanddown 👇🏽️
+iab Chandup 👆🏽️
 iab Ck - [ ]
 iab C- - [ ]
 iab Cret ↲
 
+" Text.
+iab js JavaScript
+iab ts TypeScript
 
 " ///// COMMAND ////////////////////////////////////////////////////////////////
 
@@ -496,6 +501,10 @@ nnoremap <leader>a ggVG
 " Delete current buffer
 noremap <silent><leader><leader>d :bd<cr>
 
+" Eval current selection/file with Node/Deno.
+let g:mcra#eval_with = 'node'
+nnoremap <leader>er :exe "normal vip:w !node"
+
 " )leader-mappings- }}}
 " --- -plugin-mappings( -----------------------------------------------------{{{
 
@@ -535,7 +544,7 @@ let g:sneak#s_next = 1
 
 " conjure settings -------------------------------------------------------------
 
-let g:conjure#client_on_load = 0
+" let g:conjure#client_on_load = 0
 let g:conjure#log#jump_to_latest#enabled = 0
 let g:conjure#log#jump_to_latest#cursor_scroll_position = 'center'
 let g:conjure#log#wrap = 1
@@ -572,7 +581,7 @@ let g:fsharp#exclude_project_directories = ['paket-files']
 " lsp settings ---------------------
 
 " Show full lsp error msg.
-nnoremap <space>e :lua vim.diagnostic.open_float(0, {scope="line"})<cr>
+" nnoremap <leader><leader>e :lua vim.diagnostic.open_float(0, {scope="line"})<cr>
 
 " )plugin-settings- }}}
 " --- -autocommands( --------------------------------------------------------{{{
@@ -681,73 +690,8 @@ augroup END
 " --- -lua( -----------------------------------------------------------------{{{
 
 if has('nvim')
-
-lua <<LUACODE
-
-local hour_now = tonumber(os.date("%H"))
-local daylight_ends = 17
-local daylight_starts = 6
-
--- Use this to either choose a mode or allow it to be time based. Options:
-local ColorMode = {
-    TimeBased = 0,
-    Dark = 1,
-    Light = 2,
-}
-
--- local mode = ColorMode.Dark
-vim.g.colorsheme_mode = ColorMode.Dark
-
-function define_colorscheme(mode)
-    -- If not forcing light mode, then check if forcing dark. If not, then use the
-    -- time-based approach.
-    --
-    -- Try to make paranthesis matching useful and less confusing (hi MatchParen
-    -- needs to be changed after setting a colorscheme).
-    if mode ~= ColorMode.Light and (mode == ColorMode.Dark or hour_now < daylight_starts or hour_now >= daylight_ends) then
-        vim.cmd[[
-            colorscheme slate
-            colorscheme elflord
-            colorscheme tokyonight
-            hi MatchParen ctermfg=red ctermbg=black
-            hi ColorColumn ctermfg=gray ctermbg=black
-        ]]
-
-    else
-        vim.cmd([[
-            colorscheme zellner
-            colorscheme tokyonight
-            hi MatchParen ctermfg=black ctermbg=lightgreen
-            hi ColorColumn ctermfg=gray ctermbg=white
-        ]])
-
-    end
-end
-
-define_colorscheme(vim.g.colorsheme_mode)
-
-vim.keymap.set('n', '<a-L>', function()
-    if vim.g.colorsheme_mode == ColorMode.Dark
-    then
-        vim.g.colorsheme_mode = ColorMode.Light
-    else
-        vim.g.colorsheme_mode = ColorMode.Dark
-    end
-    define_colorscheme(vim.g.colorsheme_mode)
-end)
-
--- -- Nim lsp setup.
--- require'lspconfig'.nim_langserver.setup{
---   settings = {
---     nim = {
---       nimsuggestPath = "~/.nimble/bin/custom_lang_server_build"
---     }
---   }
--- }
-
--- next lua code above
-LUACODE
-
+  " Until I convert everything to lua.
+  luafile ~/.config/nvim/config.lua
 endif
 
 " )lua- }}}
