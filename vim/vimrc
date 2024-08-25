@@ -187,7 +187,7 @@ set t_Co=256
 
 " My current favourite preeinstalled theme.
 colorscheme slate  " git diffs works properly
-colorscheme zellner  " light
+colorscheme tokyonight-night
 
 " Set how the status line will be shown in the bottom of Vim. (Not needed if
 " using airline.)
