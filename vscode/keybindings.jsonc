@@ -243,6 +243,7 @@
   },
   // End slurp and barf changes.
 
+  // Conjure.
   {
     // Replicate Conjure behavior.
     "key": "space e b",
@@ -279,6 +280,16 @@
     "command": "calva.evaluateCurrentTopLevelForm",
     "when": "vim.active && vim.mode == 'Normal' && calva:keybindingsEnabled && editorTextFocus && editorLangId == 'clojure' && paredit:keyMap =~ /original|strict/"
   },
+  // Conjure end.
+
+  // JavaScript eval (similar to Conjure).
+  {
+    "key": "space e r",
+    "command": "workbench.action.tasks.runTask",
+    "args": "exec-with-deno",
+    "when": "vim.active && (vim.mode == 'Visual' || vim.mode == 'VisualLine') && editorTextFocus && (editorLangId == 'javascript' || editorLangId == 'javascriptreact' || editorLangId == 'typescript' || editorLangId == 'typescriptreact')"
+  },
+  // JavaScript eval end.
 
   {
     // Prevents Calva from stealing ctrl+shift+t, which I use to reopen closed tabs.
@@ -540,11 +551,13 @@
   },
   {
     "key": "alt+k",
-    "command": "workbench.action.nextEditor"
+    "command": "workbench.action.nextEditor",
+    "when": "!terminalFocus"
   },
   {
     "key": "alt+j",
-    "command": "workbench.action.previousEditor"
+    "command": "workbench.action.previousEditor",
+    "when": "!terminalFocus"
   },
   {
     "key": "alt+c",
