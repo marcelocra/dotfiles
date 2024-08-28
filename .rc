@@ -130,24 +130,26 @@ easy_jump_to_project() {
 alias j="easy_jump_to_project"
 
 # Setup the default text editor based on what is installed.
-if command -v nvim &> /dev/null; then
-  export EDITOR=nvim
-elif command -v vim &> /dev/null; then
-  export EDITOR=vim
-elif command -v vi &> /dev/null; then
-  export EDITOR=vi
-elif command -v nano &> /dev/null; then
-  export EDITOR=nano
-else
-  echo "You don't have 'neovim', 'vim', 'vi' or 'nano' installed. No idea what the EDITOR env will be haha."
-  echo "Actually, take a look: $EDITOR"
-fi
+if mm_is_command nvim; then
+    export EDITOR=nvim
 
-if [ "$EDITOR" = "nvim" ] || [ "$EDITOR" = "vim" ]
-then
-  alias vim="$EDITOR"
-  alias vi=vim
-  alias v=vim
+    alias vim="$EDITOR"
+    alias vi=vim
+    alias v=vim
+elif mm_is_command vim; then
+    export EDITOR=vim
+
+    alias vim="$EDITOR"
+    alias vi=vim
+    alias v=vim
+elif mm_is_command vi; then
+    export EDITOR=vi
+elif mm_is_command nano; then
+    export EDITOR=nano
+else
+    echo "You don't have 'neovim' (nvim), 'vim', 'vi' or 'nano' installed."
+    echo "No idea what the EDITOR env will be haha. Actually, take a look:"
+    echo "$EDITOR"
 fi
 
 # Desktop notification to help me change tasks.
