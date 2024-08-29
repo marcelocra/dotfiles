@@ -803,22 +803,13 @@
   "editor.fontWeight": "400", // edn{:desktop "400" :notebook "??" :small "100"}
   "editor.fontLigatures": "'ss01', 'ss02', 'ss06', 'ss07', 'ss11', 'ss12', 'case', 'frac'",
   // // - dlig: ligatures - => && === ff it ti (more below)
-  // // - ss01: a
-  // // - ss02: g
-  // // - ss03: f
-  // // - ss04: i
-  // // - ss05: l
-  // // - ss06: r
-  // // - ss07: simplified italic diagonals - kwxyz
-  // // - ss08: no-serif on L and Z
-  // // - ss09: less rounded six and nine - 6 9
-  // // - ss10: dotted zero
-  // // - ss11: 1 without the bottom line
-  // // - ss12: simpler @
+  // // - ss01: a | ss02: g | ss03: f | ss04: i | ss05: l | ss06: r
+  // // - ss07: simplified italic diagonals - kwxyz | ss08: no-serif on L and Z
+  // // - ss09: less rounded six and nine - 6 9 | ss10: dotted zero
+  // // - ss11: 1 without the bottom line | ss12: simpler @
   // // - case: uppercase punctuation (put punctuation around mid-line)
   // // - frac: contextual fractions - 1/2 3/4 9/74
-  // // - afrc: alternative fractions
-  // // - ordn: ordinals - 1.o 8.a
+  // // - afrc: alternative fractions | ordn: ordinals - 1.o 8.a
   // // - titl: Q leg to the right instead of down
   // // - sups, numr: superior/numerators - H0123456789
   // // - sinf, dnom: inferior/denominators
