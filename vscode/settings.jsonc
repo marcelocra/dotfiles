@@ -211,6 +211,8 @@
     // ":class\\s+\"([^\"]*)\"",
     // ":([^\"]*)[cC]lass\"([^\"]*)\"",
     // ":[\\w-.#>]+\\.([\\w-]*)",
+    "c`([^`]+)`",
+    "tw`([^`]+)`",
 
     // For JS variables ending in [cC]lass.
     "const.+[cC]lass =\\s+[\"']([^\"']*)[\"']",
@@ -753,10 +755,10 @@
 
   // JetBrainsMono font
   //
-  "editor.fontFamily": "JetBrains Mono",
-  "editor.fontSize": 11, // edn{:desktop 13 :notebook ?? :small 11}
-  "editor.fontWeight": "400", // edn{:desktop "200" :notebook "??" :small "100"}
-  "editor.fontLigatures": "'ss02', 'ss19', 'ss20', 'zero', 'cv03', 'cv04', 'cv16', 'cv19', 'cv20', 'cv99'",
+  // "editor.fontFamily": "JetBrains Mono",
+  // "editor.fontSize": 11, // edn{:desktop 13 :notebook ?? :small 11}
+  // "editor.fontWeight": "400", // edn{:desktop "200" :notebook "??" :small "100"}
+  // "editor.fontLigatures": "'ss02', 'ss19', 'ss20', 'zero', 'cv03', 'cv04', 'cv16', 'cv19', 'cv20', 'cv99'",
   // // Available stylistic sets:
   // // - | cv01,05: l | cv02: t | cv03: g | cv04: j | cv06: m  | cv07: w | cv08: k
   // // - | cv09,17: f | cv10: r | cv11: y | cv12: u | cv14: $¢ | cv15: & | cv16: Q
@@ -789,6 +791,37 @@
   // // - | ss01: normal | ss02: circular a | ss03: non-1-like l |
   // // - | ss06: circular uppercase G      | ss08: compact (semi) colon
   // // - | ss09: non slashed zero          |
+  // // Ligature test:
+  // //  ! " # $ % & ' ( ) * + , - . / : ; < = > ? @ [ \ ] ^ _ ` { | } ~
+  // //  ~ < > = + _ _ ( ) * & ^ % $ # @ ! { } [ ] \ | / ? : ; , . ` ' " ´ ` ˜
+  // //  => -> <> <= >= != !== === ~= |> <- --> || .- :- .= {..}
+
+  // Recursive font
+  //
+  "editor.fontFamily": "Recursive",
+  "editor.fontSize": 13, // edn{:desktop 13 :notebook ?? :small 11}
+  "editor.fontWeight": "400", // edn{:desktop "400" :notebook "??" :small "100"}
+  "editor.fontLigatures": "'ss01', 'ss02', 'ss06', 'ss07', 'ss11', 'ss12', 'case', 'frac'",
+  // // - dlig: ligatures - => && === ff it ti (more below)
+  // // - ss01: a
+  // // - ss02: g
+  // // - ss03: f
+  // // - ss04: i
+  // // - ss05: l
+  // // - ss06: r
+  // // - ss07: simplified italic diagonals - kwxyz
+  // // - ss08: no-serif on L and Z
+  // // - ss09: less rounded six and nine - 6 9
+  // // - ss10: dotted zero
+  // // - ss11: 1 without the bottom line
+  // // - ss12: simpler @
+  // // - case: uppercase punctuation (put punctuation around mid-line)
+  // // - frac: contextual fractions - 1/2 3/4 9/74
+  // // - afrc: alternative fractions
+  // // - ordn: ordinals - 1.o 8.a
+  // // - titl: Q leg to the right instead of down
+  // // - sups, numr: superior/numerators - H0123456789
+  // // - sinf, dnom: inferior/denominators
   // // Ligature test:
   // //  ! " # $ % & ' ( ) * + , - . / : ; < = > ? @ [ \ ] ^ _ ` { | } ~
   // //  ~ < > = + _ _ ( ) * & ^ % $ # @ ! { } [ ] \ | / ? : ; , . ` ' " ´ ` ˜
