@@ -1,122 +1,72 @@
 {
-  // Note that the font_face and font_size are overridden in the platform
-  // specific settings file, for example, "Preferences (Linux).sublime-settings".
-  // Because of this, setting them here will have no effect: you must set them
-  // in your User File Preferences.
-  // "font_face": "Fira Code Light", // Good size: 12
-  // "font_face": "Anonymous Pro",            // Good size: 13
-  // "font_face": "IBM Plex Mono",            // Good size: 11
-  // "font_face": "Cascadia Code PL Light",   // Good size: 11
-  // "font_face": "Iosevka SS04 Light",          // Good size: 11
-  // "font_face": "Source Code Pro",   // Good size: 11
-  // "font_face": "Cascadia Code NF",   // Good size: 11
+  //
+  //
+  // NOTE: this file only defines settings that are different from the defaults.
+  //
+  // Examples: -> => <> <=>
+  //
 
-  // "font_face": "Fira Code",   // Good size: 11
-  // "font_options": [ // -> => <> <=>
+  // ---
+
+  // "font_face": "Fira Code",
+  // "font_options": [
   //   "calt",
   //   "cv01", "cv02", "cv05", "cv09", "ss05", "ss03", "cv16","cv31", "cv29",
   //   "cv30", "cv25", "cv26", "cv32", "cv27", "cv28", "ss10", "cv14", "cv12",
   // ],
 
-  // "JetBrains Mono" => Good size: 11
-  // "Recursive" => Good size: ??
+  // ---
 
-  "font_face": "Recursive",   
-  "font_options": [ // -> => <> <=>
+  // "font_face": "JetBrains Mono",
+  // "font_face": "Anonymous Pro",
+  // "font_face": "Cascadia Code PL Light",
+  // "font_face": "Cascadia Code NF",
+  // "font_face": "Source Code Pro",
+
+
+  // ---
+  
+  "font_face": "Recursive",
+  "font_size": 11,
+  "font_options": [ // Examples to test: -> => <> <=>
     "ss01", "ss02", "ss06", "ss07", "ss11", "ss12", "case", "frac"
   ],
-  "font_size": 11,
 
-  // These settings control the size of the caret
-  "caret_extra_top": 0,
-  "caret_extra_bottom": 0,
+  "caret_extra_top": 4,
+  "caret_extra_bottom": 4,
   "caret_extra_width": 0,
 
-  // If enabled, will highlight any line with a caret
   "highlight_line": true,
 
-  // Valid values are "smooth", "phase", "blink" and "solid". Previous
-  // versions of Sublime Text used "smooth" by default.
-  "caret_style": "phase",
-
-  // When files are opened from a file explorer or from the command line, this
-  // controls whether a new window is created or not.
-  // - "never": Never open a new window unless no window is open.
-  // - "always": Always open files in a new window.
-  // - "finder_only": (macOS only) Only open files in a new window when
-  //                  opening them from finder or dragging onto the dock icon.
-  //
-  // On Mac, this value is overridden in the platform specific settings.
   "open_files_in_new_window": "always",
 
-  // Always visualise the viewport on the minimap, as opposed to only
-  // showing it on mouse over
   "always_show_minimap_viewport": true,
 
-  // By default, auto complete will commit the current completion on enter.
-  // This setting can be used to make it complete on tab instead.
-  // Completing on tab is generally a superior option, as it removes
-  // ambiguity between committing the completion and inserting a newline.
   "auto_complete_commit_on_tab": true,
 
-  // Show folders in the side bar in bold
   "bold_folder_labels": true,
 
-  // Set to true to draw a border around the visible rectangle on the minimap.
-  // The color of the border will be determined by the "minimap_border" key
-  // in the color scheme
   "draw_minimap_border": true,
 
-  // Allows tabs to scroll left and right, instead of simply shrinking
   "enable_tab_scrolling": false,
 
-  // Hides the fold buttons unless the mouse is over the gutter
   "fade_fold_buttons": false,
 
   // Makes tabs with modified files more visible
   "highlight_modified_tabs": true,
 
-  // Controls how the indent guides are drawn. Options may be combined, with
-  // valid options being:
-  //  - "draw_normal" - will draw plain indent guides for every indentation
-  //    group
-  //  - "draw_active" - will draw indent guides for the group
-  //    containing the caret in a different color
-  //  - "draw_active_single" - will draw the right-most indent guide in the
-  //    group containing the caret in a different color
-  //  - "solid" - can be combined with any of the draw_* options to draw
-  //    solid instead of stippled lines
   "indent_guide_options": ["draw_active"],
 
   // Adds whitespace up to the first open bracket when indenting. Requires
   // auto_indent to be enabled.
   "indent_to_bracket": true,
 
-  // Additional spacing at the top of each line, in pixels
-  // Additional spacing at the bottom of each line, in pixels
-  "line_padding_bottom": 1,
-  "line_padding_top": 1,
+  "rulers": [80, 100, 120],
 
-  // Valid values are "system", "enabled" and "disabled"
-  "overlay_scroll_bars": "disabled",
-
-  // Columns in which to display vertical rulers
-  "rulers": [80],
-
-  // By default, shift+tab will only unindent if the selection spans
-  // multiple lines. When pressing shift+tab at other times, it'll insert a
-  // tab character - this allows tabs to be inserted when tab_completion is
-  // enabled. Set this to true to make shift+tab always unindent, instead of
-  // inserting tabs.
-  "shift_tab_unindent": false,
+  "shift_tab_unindent": true,
 
   // Display file encoding in the status bar
   "show_encoding": true,
-
-  // Show the full path to files in the title bar. On Mac, this value is
-  // overridden in the platform specific settings, with a default value of
-  // false.
-  "show_full_path": false,
 
   // Show the relative path to files in the title bar. This overrides
   // show_full_path for files that are listed in the side bar, however
@@ -126,149 +76,32 @@
   // Display line endings in the status bar
   "show_line_endings": true,
 
-  // The number of spaces a tab is considered equal to
-  "tab_size": 2,
-
-  // Set to true to insert spaces when tab is pressed
-  "translate_tabs_to_spaces": true,
-
-  // When Vintage, the vi emulation package, is enabled
-  // (see ignored_packages, below), this setting controls if files are opened
-  // in command mode or insert mode by default
-  "vintage_start_in_command_mode": true,
-
-  // Yank commands can place the text in either an internal register, or in
-  // the system clipboard.
-  "vintage_use_clipboard": false,
-
-  // By default Vintage will interpret all ctrl+<key> key bindings as
-  // regular Sublime Text key bindings. Set this to true to make ctrl keys
-  // act as they do in vim, instead (e.g., ctrl+f to move forward a page).
-  "vintage_ctrl_keys": true,
-
-  // Enables hardware accelerated rendering. This moves rendering to your GPU,
-  // allowing for faster rendering at higher resolutions. Changing this
-  // setting requires an application restart to take effect.
-  // - "none": Performs CPU rendering.
-  // - "opengl": Uses OpenGL for rendering. Minimum required version is 4.1
-  //
-  // On Mac, this value is overridden in the platform specific settings.
   "hardware_acceleration": "opengl",
 
-  // Words that should be ignored by the spell checker.
   "ignored_words": ["reusability"],
 
-  // Exiting the application with hot_exit enabled will cause it to close
-  // immediately without prompting. Unsaved modifications and open files will
-  // be preserved and restored when next starting.
-  //
-  // Closing a window with an associated project will also close the window
-  // without prompting, preserving unsaved changes in the workspace file
-  // alongside the project.
-  //
-  // Hot exit has different modes to choose from:
-  // - "always": Always perform a hot exit when the application exits. This
-  //             includes when the last window is closed on relevant
-  //             platforms.
-  // - "only_on_quit": Only perform a hot exit when the application is asked
-  //                   to exit, not when the last window is closed. This
-  //                   setting is only used on Windows and Linux.
-  // - "disabled": Disable hot exit.
   "hot_exit": "disabled",
 
-  // Set to true to close windows as soon as the last file is closed, unless
-  // there's a folder open within the window.
-  // On Mac, this value is overridden in the platform specific settings, so
-  // you'll need to place this line in your user settings to override it.
+  "remember_layout": true,
+
   "close_windows_when_empty": true,
 
-  // Controls when white space is drawn. Any of the following options may be
-  // combined:
-  // - "selection": Draw white space under the current selection.
-  // - "leading": Draw any white space between the beginning of a line and the
-  //              first character.
-  // - "enclosed": Draw white space enclosed by other characters.
-  // - "trailing": Draw white space following the last character on a line.
-  // - "isolated": Draw white space on lines containing no other characters.
-  // - "all": All of the above, ie. always draw white space.
-  //
-  // These options may be further refined by appending any of the following
-  // separated by an underscore:
-  // - "none": Don't draw this kind of white space.
-  // - "tabs": Only draw tabs here.
-  // - "spaces": Only draw spaces here.
-  // - "mixed": Only draw white space that does not match the indentation
-  //            style. For example if "translate_tabs_to_spaces" is true only
-  //            draw tabs.
-  // - "mixed_tabs": Like "mixed" but only draw tabs.
-  // - "mixed_spaces": Like "mixed" but only draw spaces.
-  // - "all": Draw both tabs and spaces. This is the default.
-  //
-  // Note that options are applied in sequence. So a later option may override
-  // an earlier one.
-  //
-  // Examples:
-  // - ["selection", "trailing", "isolated"]:
-  //     Draw white space at the end of any lines and under the selection.
-  //
-  // - ["all_tabs", "selection"]:
-  //     Draw tabs anywhere and any white space under the selection.
-  //
-  // - ["all_mixed"]:
-  //     Draw any white space that does not match the indentation style.
-  //
-  // - ["leading_mixed", "isolated_mixed"]:
-  //     Draw any indentation that does not match the indentation style.
-  //
-  // - ["selection_mixed_tabs"]:
-  //     Draw only tabs under the selection and only if the indentation style
-  //     is spaces.
-  //
-  // - ["all_tabs", "selection"]:
-  //     Draw all tabs and any white space under the selection.
-  //
-  // - ["all", "selection_none"]:
-  //     Inverse of the default. Draw white space everywhere except under the
-  //     selection.
-  "draw_white_space": ["selection"],
+  "draw_white_space": ["all"],
+  "trim_trailing_white_space_on_save": true,
 
-  // Valid options on all platforms are:
-  //  - "no_bold": Disables bold text
-  //  - "no_italic": Disables italic text
-  // Antialiasing options:
-  //  - "no_antialias": Disables antialiasing
-  //  - "gray_antialias": Uses grayscale antialiasing instead of subpixel
-  // Ligature options:
-  //  - "no_liga": Disables standard ligatures (OpenType liga feature)
-  //  - "no_clig": Disables contextual ligatures (OpenType clig feature)
-  //  - "no_calt": Disables contextual alternatives (OpenType calt feature)
-  //  - "dlig": Enables discretionary ligatures (OpenType dlig feature)
-  //  - "ss01": Enables OpenType stylistic set 1. Can enable sets 1 to 10
-  //        by changing the last two digits.
-  // Windows-only options:
-  //  - "directwrite": (default) Use DirectWrite for font rendering
-  //  - "gdi": Use GDI for font rendering
-  //  - "dwrite_cleartype_classic": Only applicable to "directwrite" mode,
-  //        should render fonts similar to traditional GDI
-  //  - "dwrite_cleartype_natural": Only applicable to "directwrite" mode,
-  //        should render fonts similar to ClearType "natural quality" GDI
-  //  - "subpixel_antialias": Force ClearType antialiasing when disabled
-  //        at system level
-  // Mac-only options: ->
-  //  - "no_round": Don't round glyph widths for monospace fonts when
-  //        "font_size" is small.
-  // "font_options": ["ss01", "ss02", "ss03", "ss04", "ss05", "ss06", "ss07"],
+  // Vi mode.
 
-
+  "vintage_start_in_command_mode": true,
+  "vintage_use_clipboard": true,
+  "vintage_ctrl_keys": true,
   "ignored_packages": [
     "Vintage",
   ],
 
+  "file_tab_style": "square",
 
+  "auto_hide_menu": true,
+  "reveal_menu": false,
 
-  // Vintage
-
-
-  /*"vintage_start_in_command_mode": true,*/
-  "index_files": true,
+  "goto_anything_exclude_gitignore": true,
 }

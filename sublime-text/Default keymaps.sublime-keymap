@@ -27,7 +27,7 @@
     ]
   },
   {
-    "keys": ["alt+shift+f"],
+    "keys": ["ctrl+shift+i"],
     "command": "reindent", 
     "args": {
       "single_line": false
