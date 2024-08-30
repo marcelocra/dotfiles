@@ -1,5 +1,17 @@
 " vim:fdm=marker:fmr={{{,}}}:fdl=0:fen:ai:et:ts=2:sw=2:tw=80:ff=unix:fenc=utf8:et:fixeol:eol:
 "
+
+" Before all.
+
+let g:mcra_debug = 0
+
+function! _mcra_debug(text)
+  if g:mcra_debug
+    echom a:text
+  endif
+endfunction
+
+
 " Details on how to use vim-plug, with examples. {{{
 "
 " The default plugin directory will be as follows:
@@ -55,6 +67,7 @@
 "
 " }}}
 " --- -vim-plug( ----------------------------------------{{{
+call _mcra_debug(1)
 
 call plug#begin()
 
@@ -124,6 +137,8 @@ Plug 'dart-lang/dart-vim-plugin'
 Plug 'ionide/Ionide-vim'
 
 call plug#end()
+
+call _mcra_debug(2)
 
 " )vim-plug- }}}
 " --- -settings( ------------------------------------------------------------{{{
@@ -218,6 +233,8 @@ endif
 " )settings- }}}
 " --- -mappings( ------------------------------------------------------------{{{
 
+call _mcra_debug(3)
+
 " Use normal regex.
 nnoremap / /\v\c
 vnoremap / /\v\c
@@ -268,8 +285,13 @@ vnoremap // y/\V<c-r>=escape(@",'/\')<cr><cr>
 
 " Count occurrences. In normal mode, count occurrences for the word where the
 " cursor is in. In visual mode, count occurrences for the selected text.
-nnoremap <leader><leader>c *N:%s///gn<cr>
-vnoremap <leader><leader>c y/\V<c-r>=escape(@",'/\')<cr><cr>:%s///gn<cr>
+"
+" Note: this can be easily achieved by selecting whatever, pressing '/' twice
+" and looking at the bottom right: it will show something like '[1/N]', where N
+" is the number of matches.
+"
+" nnoremap <leader><leader>c *N:%s///gn<cr>
+" vnoremap <leader><leader>c y/\V<c-r>=escape(@",'/\')<cr><cr>:%s///gn<cr>
 
 " Use alt-c to toggle folds.
 nnoremap <a-c> za
@@ -284,9 +306,9 @@ nnoremap \| :vsplit<cr>
 vnoremap p "_dP
 
 " Clear last search.
-" TODO: understand why I used this instead of :nohl, as it allows
+" TODO: understand why I was using this instead of :nohl, as it allows
 " us to search again for the same string (seems better).
-" nnoremap <silent> <c-c> :let @/ = ""<cr>
+" nnoremap <silent> <c-n> :let @/ = ""<cr>
 nnoremap <silent> <c-n> :nohl<cr>
 "inoremap <silent> <c-c> <esc>:nohl<cr>a
 
@@ -343,6 +365,7 @@ inoremap <a-n> <c-r>=strftime("%Y-%m-%d %H:%M")<cr>
 
 " Copy current file path to clipboard, trying to replace user home path with $HOME.
 nnoremap <leader><leader>p :let @+ = substitute(expand('%'), expand('~'), '$HOME', '')<cr>:echo @+<cr>
+nnoremap <leader><leader>c :echo getcwd()<cr>
 
 " Execute last macro recorded in register 'q'.
 nnoremap <space> @q
@@ -351,6 +374,8 @@ nnoremap <space> @q
 inoremap <silent> <c-k> <c-p>
 inoremap <silent> <c-j> <c-n>
 
+call _mcra_debug(4)
+
 " )mappings- }}}
 " --- -abbreviations( -------------------------------------------------------{{{
 
@@ -358,6 +383,7 @@ inoremap <silent> <c-j> <c-n>
 "
 " Prefix all of them with capital c, to avoid replacing when typing variables, comments, etc.
 
+call _mcra_debug(5)
 
 " Shebangs
 " ========
@@ -458,9 +484,12 @@ iab ts TypeScript
 " Open help in a new tab, unless it is typed fully ("help").
 cab h tab help
 
+call _mcra_debug(6)
 
 " )abbreviations- }}}
 " --- -leader-mappings( -----------------------------------------------------{{{
+
+call _mcra_debug(7)
 
 " Change leader.
 let mapleader = ","
@@ -505,8 +534,12 @@ noremap <silent><leader><leader>d :bd<cr>
 let g:mcra#eval_with = 'node'
 nnoremap <leader>er :exe "normal vip:w !node"
 
+call _mcra_debug(8)
+
 " )leader-mappings- }}}
 " --- -plugin-mappings( -----------------------------------------------------{{{
+
+call _mcra_debug(9)
 
 " vscode-vim settings --------------------------------------
 " For vscode-neovim. Settings that should be enabled only in
@@ -534,8 +567,12 @@ map F <Plug>Sneak_F
 map t <Plug>Sneak_t
 map T <Plug>Sneak_T
 
+call _mcra_debug(10)
+
 " )plugin-mappings- }}}
 " --- -plugin-settings( -----------------------------------------------------{{{
+
+call _mcra_debug(11)
 
 " vim-sneak settings -----------------------------------------------------------
 
@@ -583,8 +620,12 @@ let g:fsharp#exclude_project_directories = ['paket-files']
 " Show full lsp error msg.
 " nnoremap <leader><leader>e :lua vim.diagnostic.open_float(0, {scope="line"})<cr>
 
+call _mcra_debug(12)
+
 " )plugin-settings- }}}
 " --- -autocommands( --------------------------------------------------------{{{
+
+call _mcra_debug(13)
 
 augroup myautocommands
     autocmd!
@@ -622,6 +663,8 @@ augroup myautocommands
     autocmd BufNewFile,BufRead *.fs,*.fsx,*.fsi set filetype=fsharp
 
 augroup END
+
+call _mcra_debug(14)
 
 " )autocommands- }}}
 " --- -functions( -----------------------------------------------------------{{{
@@ -689,6 +732,8 @@ augroup END
 " )functions- }}}
 " --- -lua( -----------------------------------------------------------------{{{
 
+call _mcra_debug(15)
+
 if has('nvim')
 
   if filereadable(expand("~/.config/nvim/config.lua"))
@@ -713,7 +758,7 @@ if has('nvim')
 "     if file_exists(luaconfig) then
 "         require(luaconfig)
 "         return
-"     end 
+"     end
 
 "     print('Please, install the config.lua in ~/.config/nvim/config.lua')
 " end
@@ -721,5 +766,7 @@ if has('nvim')
 " LUACODE
 
 endif
+
+call _mcra_debug(16)
 
 " )lua- }}}
