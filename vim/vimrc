@@ -308,8 +308,8 @@ vnoremap p "_dP
 " Clear last search.
 " TODO: understand why I was using this instead of :nohl, as it allows
 " us to search again for the same string (seems better).
-" nnoremap <silent> <c-n> :let @/ = ""<cr>
-nnoremap <silent> <c-n> :nohl<cr>
+nnoremap <silent> <leader><leader>cl :let @/ = ""<cr>
+" nnoremap <silent> <c-n> :nohl<cr>
 "inoremap <silent> <c-c> <esc>:nohl<cr>a
 
 " Go to the Nth tab.
@@ -365,7 +365,7 @@ inoremap <a-n> <c-r>=strftime("%Y-%m-%d %H:%M")<cr>
 
 " Copy current file path to clipboard, trying to replace user home path with $HOME.
 nnoremap <leader><leader>p :let @+ = substitute(expand('%'), expand('~'), '$HOME', '')<cr>:echo @+<cr>
-nnoremap <leader><leader>c :echo getcwd()<cr>
+nnoremap <leader><leader>cw :echo getcwd()<cr>
 
 " Execute last macro recorded in register 'q'.
 nnoremap <space> @q
