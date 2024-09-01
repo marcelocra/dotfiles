@@ -35,5 +35,7 @@
   },
   { 
     "keys": ["alt+b"], "command": "toggle_side_bar" 
-  }
+  },
+  { "keys": ["alt+k"], "command": "next_view" },
+  { "keys": ["alt+j"], "command": "prev_view" }
 ]
