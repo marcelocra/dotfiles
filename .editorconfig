@@ -19,9 +19,10 @@ max_line_length = 80
 [Makefile]
 # Example of a different indent.
 indent_style = tab
+# Not implemented in Sublime (always 1).
 tab_width = 1
 
-[*.{fs,fsi,fsx}]
+[*.{fs,fsi,fsx,elm}]
 indent_size = 4
 
 [*.{clj,cljs,cljc}]
