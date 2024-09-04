@@ -23,13 +23,20 @@
   // "font_face": "Cascadia Code NF",
   // "font_face": "Source Code Pro",
 
-
   // ---
-  
+
   "font_face": "Recursive",
   "font_size": 11,
-  "font_options": [ // Examples to test: -> => <> <=>
-    "ss01", "ss02", "ss06", "ss07", "ss11", "ss12", "case", "frac"
+  "font_options": [
+    // Examples to test: -> => <> <=>
+    "ss01",
+    "ss02",
+    "ss06",
+    "ss07",
+    "ss11",
+    "ss12",
+    "case",
+    "frac"
   ],
 
   "caret_extra_top": 4,
@@ -86,7 +93,7 @@
 
   "close_windows_when_empty": true,
 
-  "draw_white_space": ["all"],
+  "draw_white_space": ["trailing_all", "all_tabs"],
   "trim_trailing_white_space_on_save": true,
 
   // Vi mode.
@@ -94,9 +101,7 @@
   "vintage_start_in_command_mode": true,
   "vintage_use_clipboard": true,
   "vintage_ctrl_keys": true,
-  "ignored_packages": [
-    "Vintage",
-  ],
+  "ignored_packages": ["Vintage"],
 
   "file_tab_style": "square",
 
@@ -110,5 +115,5 @@
 
   "color_scheme": "auto",
   "dark_color_scheme": "Clojure Sublimed Dark.sublime-color-scheme",
-  "light_color_scheme": "Clojure Sublimed Dark.sublime-color-scheme",
+  "light_color_scheme": "Clojure Sublimed Dark.sublime-color-scheme"
 }
