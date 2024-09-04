@@ -1,33 +1,33 @@
 # Sublime Text settings
 
-This is the Sublime Text 4 `User` directory, to be found in Linux at (usually)
-the user's `~/config` dir.
+The `PackagesUser` folder contains Sublime Text 4's `User` directory, to be found at the user's `~/config/sublime-text` dir (usually) on Linux machines.
 
-To use this files, remove the existing user folder (if there's any. Make sure to
-back it up if needed) and copy stuff there.
+Copy these files to that location (or other appropriate), backing up existing content when needed.
 
 ```sh
 ST_USER_FOLDER="$HOME/.config/sublime-text/Packages/User"
 ST_USER_FOLDER_CONTENT="$(pwd)/sublime-text/"
 
-# Backup existing folder.
-if [ -d "$ST_USER_FOLDER" ]; then
-    mv $ST_USER_FOLDER "${ST_USER_FOLDER}.bak"
-else
-    mkdir -p $ST_USER_FOLDER
-fi
+# (Optional) If folder exits, back it up somewhere.
+[ -d $HOME/.tmp ] && mkdir $HOME/.tmp
+mv $ST_USER_FOLDER ~/.tmp/backup-sublime-settings
 
-# Copy stuff.
+# Copy stuff to User folder.
 cp $ST_USER_FOLDER_CONTENT/* $ST_USER_FOLDER
 ```
 
 Create a cronjob to backup stuff from the user folder to here.
 
-```cron
+```sh
+
+# Edit the crontab file and copy there the contents below the command.
+crontab -e
+
+# Copy the lines below, updating times to whatever you prefer.
+
 #
 #
-# Backup Sublime Text `User` directory content.
+# Backup Sublime Text `User` content frequently.
 #
 */60 * * * * cp -r $HOME/.config/sublime-text/Packages/User/* $HOME/projects/dotfiles/sublime-text/
-
 ```
