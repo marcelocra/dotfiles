@@ -1,5 +1,5 @@
 #!/usr/bin/env sh
-# vim: fdm=marker:fmr=-{,}-:fdl=0:fen
+# vim: fdm=marker:fmr=-{,}-:fdl=0:fen:ft=sh
 #
 # Opens the `gnome-terminal` snapped to the right side of the screen when a configured shortcut is
 # pressed (I use the `insert` key, but in the next comments I'll refer to it as <shortcut>).
