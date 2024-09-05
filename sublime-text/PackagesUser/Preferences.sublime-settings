@@ -29,14 +29,7 @@
   "font_size": 11,
   "font_options": [
     // Examples to test: -> => <> <=>
-    "ss01",
-    "ss02",
-    "ss06",
-    "ss07",
-    "ss11",
-    "ss12",
-    "case",
-    "frac"
+    "ss01", "ss02", "ss03", "ss04", "ss05", "ss06", "ss07", "ss11", "ss12", "case", "frac"
   ],
 
   "caret_extra_top": 4,
