@@ -116,6 +116,23 @@ main() {
       columns=209  # widescreen. In normal: ?
       rows=84  # widescreen. In normal screen: ?
     fi
+  elif has_prefix "$font_family" 'Cascadia Code NF'; then
+    # Widescreen. Normal?
+    if [ $font_size -eq 10 ]; then
+      columns=156
+      rows=62
+    elif [ $font_size -eq 9 ]; then
+      columns=179
+      rows=70
+    elif [ $font_size -eq 8 ]; then
+      columns=209
+      rows=84
+    fi
+  elif has_prefix "$font_family" 'Monaspace Neon Var'; then
+    if [ $font_size -eq 9 ]; then
+      columns=179
+      rows=69
+    fi
   fi
 
   # # Get the current screen resolution.
