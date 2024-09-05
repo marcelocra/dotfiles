@@ -89,7 +89,7 @@ main() {
     fi
     if [ $font_size -eq 8 ]; then
       columns=209  # widescreen. In normal: ?
-      rows=84  # widescreen. In normal screen: ?
+      rows=84
     fi
   elif has_prefix "$font_family" 'Meslo'; then
     if [ $font_size -eq 13 ]; then
@@ -100,21 +100,24 @@ main() {
       rows=55
     elif [ $font_size -eq 10 ]; then
       columns=155  # widescreen. In normal: 115
-      rows=60  # widescreen. In normal screen: 60
+      rows=60
     elif [ $font_size -eq 9 ]; then
       columns=131
       rows=65
     elif [ $font_size -eq 8 ]; then
       columns=209  # widescreen. In normal: ?
-      rows=84  # widescreen. In normal screen: ?
+      rows=84
     fi
   elif has_prefix "$font_family" 'JetBrains'; then
     if [ $font_size -eq 10 ]; then
       columns=157  # widescreen. In normal: ?
-      rows=60  # widescreen. In normal screen: ?
+      rows=60
+    elif [ $font_size -eq 11 ]; then
+      columns=139  # wide
+      rows=55
     elif [ $font_size -eq 8 ]; then
       columns=209  # widescreen. In normal: ?
-      rows=84  # widescreen. In normal screen: ?
+      rows=84
     fi
   elif has_prefix "$font_family" 'Cascadia Code NF'; then
     # Widescreen. Normal?
