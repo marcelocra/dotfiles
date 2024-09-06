@@ -305,12 +305,13 @@ nnoremap \| :vsplit<cr>
 " the clipboard content to before the cursor position.
 vnoremap p "_dP
 
-" Clear last search.
-" TODO: understand why I was using this instead of :nohl, as it allows
-" us to search again for the same string (seems better).
-nnoremap <silent> <leader><leader>cl :let @/ = ""<cr>
-" nnoremap <silent> <c-n> :nohl<cr>
+" Remove last search highlight.
+nnoremap <silent> <c-n> :nohl<cr>
 "inoremap <silent> <c-c> <esc>:nohl<cr>a
+
+" Clear last search (really.. it will erase the search and pressing 'n' won't
+" show it again).
+nnoremap <silent> <leader><leader>cl :let @/ = ""<cr>
 
 " Go to the Nth tab.
 nnoremap <a-1> :tabn 1<cr>
