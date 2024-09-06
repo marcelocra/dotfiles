@@ -29,7 +29,9 @@
   "font_size": 11,
   "font_options": [
     // Examples to test: -> => <> <=>
-    "ss01", "ss02", "ss03", "ss04", "ss05", "ss06", "ss07", "ss11", "ss12", "case", "frac"
+    // // Changes a, g, f, l, i, r, simpler italics, 1, @, higher punctuations, crazy fractions
+    // "ss01", "ss02", "ss03", "ss04", "ss05", "ss06", "ss07", "ss11", "ss12", "case", "frac"
+    "frac"
   ],
 
   "caret_extra_top": 4,
@@ -98,9 +100,6 @@
   ],
 
   "file_tab_style": "square",
-
-  "auto_hide_menu": true,
-  "reveal_menu": false,
 
   "goto_anything_exclude_gitignore": true,
   "index_files": true,
