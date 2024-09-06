@@ -235,7 +235,8 @@
   ],
   "tailwindCSS.includeLanguages": {
     "clojure": "html",
-    "vue": "html"
+    "vue": "html",
+    "plaintext": "html" // For Elm
   },
 
   //
