@@ -155,7 +155,7 @@
 
   //
   //
-  // Clojure Sublimed end.
+  // End Clojure Sublimed.
   //
   // Global kbs.
   //
@@ -178,42 +178,22 @@
     ]
   },
 
-  {
-    "keys": ["enter"],
-    "command": "clojure_sublimed_insert_newline",
-    "context": [
-      {
-        "key": "selector",
-        "operator": "equal",
-        "operand": "source.edn | source.clojure"
-      },
-      {
-        "key": "auto_complete_visible",
-        "operator": "equal",
-        "operand": false
-      },
-      {
-        "key": "panel_has_focus",
-        "operator": "equal",
-        "operand": false
-      }
-    ]
-  },
+  { "keys": ["ctrl+shift+i"], "command": "reindent", "args": { "single_line": false } },
 
-  {
-    "keys": ["ctrl+shift+i"],
-    "command": "reindent",
-    "args": {
-      "single_line": false
-    }
-  },
+  { "keys": ["alt+b"], "command": "toggle_side_bar" },
 
-  {
-    "keys": ["alt+b"],
-    "command": "toggle_side_bar"
-  },
-
+  // Go to the next or previous tabs (respectively).
   { "keys": ["alt+k"], "command": "next_view" },
   { "keys": ["alt+j"], "command": "prev_view" },
-  { "keys": ["ctrl+t"], "command": "show_overlay", "args": { "overlay": "goto", "text": "@" } }
+
+  // Search symbols in current file.
+  { "keys": ["ctrl+t"], "command": "show_overlay", "args": { "overlay": "goto", "text": "@" } },
+
+  // Move lines up/down.
+  { "keys": ["alt+up"], "command": "swap_line_up" },
+  { "keys": ["alt+down"], "command": "swap_line_down" },
+
+  // Expand selection. There's no shrink, so go back to starting position instead.
+  { "keys": ["ctrl+shift+up"], "command": "expand_selection", "args": {"to": "smart"} },
+  { "keys": ["ctrl+shift+down"], "command": "jump_back" },
 ]
