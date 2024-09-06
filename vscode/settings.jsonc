@@ -211,8 +211,13 @@
     // ":class\\s+\"([^\"]*)\"",
     // ":([^\"]*)[cC]lass\"([^\"]*)\"",
     // ":[\\w-.#>]+\\.([\\w-]*)",
+
+    // Always detect when wrapping strings with Tailwind-specific tagged literals.
     "c`([^`]+)`",
     "tw`([^`]+)`",
+
+    // Try to generalize.
+    "[cC]lass[^\"']+[\"']([^\"']*)[\"']",
 
     // For JS variables ending in [cC]lass.
     "const.+[cC]lass =\\s+[\"']([^\"']*)[\"']",
