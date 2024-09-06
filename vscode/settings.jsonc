@@ -236,7 +236,7 @@
   "tailwindCSS.includeLanguages": {
     "clojure": "html",
     "vue": "html",
-    "plaintext": "html" // For Elm
+    "elm": "html"
   },
 
   //
@@ -271,6 +271,14 @@
   //
   "[yaml]": {
     "editor.defaultFormatter": "redhat.vscode-yaml"
+  },
+
+  //
+  //
+  // Elm
+  //
+  "[elm]": {
+    "editor.defaultFormatter": "elmTooling.elm-ls-vscode"
   },
 
   //
@@ -1011,7 +1019,7 @@
   //   "tree.inactiveIndentGuidesStroke": "#555", // edn{:dark "#444" :light "#d8d8d8" "GitHub Dark" "#555"}
 
   //   "editorIndentGuide.activeBackground1": "#ff00c8", // edn{:dark "#ff00c8" :light "#00ffff"}
-  //   "editorIndentGuide.background1": "#555", // edn{:dark "#555" :light "#ccc" "GitHub Dark" "#555" "GitHub Dark Dimmed" "#ccc" }
+  //   "editorIndentGuide.background1": "#555", // edn{:dark "#555" :light "#ccc" "GitHub Dark" "#555" "Solarized Light" "#ccc" }
 
   //   "editor.lineHighlightBorder": "#ff00c833", // edn{:dark "#ff00c833" :light "#00ffff22"}
   //   "editor.lineHighlightBackground": "#ff00c822", // edn{:dark "#ff00c822" :light "#00ffff22"}
@@ -1038,7 +1046,7 @@
   "workbench.tree.renderIndentGuides": "always",
   "workbench.list.horizontalScrolling": true,
   "workbench.sideBar.location": "left",
-  "workbench.colorTheme": "Night Owl",
+  "workbench.colorTheme": "GitHub Light",
   "workbench.panel.defaultLocation": "right",
   "json.schemas": [
     {
