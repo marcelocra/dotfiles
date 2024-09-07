@@ -1,30 +1,31 @@
 " vim:fdm=marker:fmr={{{,}}}:fdl=0:fen:ai:et:ts=2:sw=2:tw=80:ff=unix:fenc=utf8:et:fixeol:eol:
 "
+"--------------------
+"   Basic Settings
+"--------------------
 
-" Before all.
+set nocompatible
 
+if has("syntax")
+  syntax on
+endif
+filetype plugin on
+
+set completeopt=menu,menuone,noselect
+
+" Debug function. Enable it by setting g:mcra_debug to 1.
 let g:mcra_debug = 0
-
 function! _mcra_debug(text)
   if g:mcra_debug
     echom a:text
   endif
 endfunction
 
+"-----------
+"  Plugins
+"-----------
 
 " Details on how to use vim-plug, with examples. {{{
-"
-" The default plugin directory will be as follows:
-"   - Vim (Linux/macOS): '~/.vim/plugged'
-"   - Vim (Windows): '~/vimfiles/plugged'
-"   - Neovim (Linux/macOS/Windows): stdpath('data') . '/plugged'
-"
-" You can specify a custom plugin directory by passing it as the argument
-"   - e.g. `call plug#begin('~/.vim/plugged')`
-"   - Avoid using standard Vim directory names like 'plugin'
-"
-" In your plugin paths, make sure you use single quotes.
-"
 "
 " Plugin example usage:
 "
@@ -69,74 +70,102 @@ endfunction
 " --- -vim-plug( ----------------------------------------{{{
 call _mcra_debug(1)
 
-call plug#begin()
+" Here we install the required plugins with vim-plug. {{{
+function! s:install()
 
-" Fuzzy searching (files, lines, buffers, commands, etc).
-Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
-Plug 'junegunn/fzf.vim'
+  " This installs vim-plug automatically when missing.
+  " Remove this if .. endif if you don't need this.
+  if empty(glob('~/.vim/autoload/plug.vim'))
+        \ || empty(glob('~/.local/share/nvim/site/autoload/plug.vim'))
+    silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
+        \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+    silent !curl -fLo ~/.local/share/nvim/site/autoload/plug.vim --create-dirs
+        \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+    autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+  endif
 
-" Git support.
-Plug 'tpope/vim-fugitive'
+  call plug#begin()
 
-" Improved mappings for default stuff.
-Plug 'tpope/vim-unimpaired'
+  " Fuzzy searching (files, lines, buffers, commands, etc).
+  Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+  Plug 'junegunn/fzf.vim'
 
-" Simplify handling of stuff that wraps code (parens, [curly]braces, quotes,
-" etc).
-Plug 'tpope/vim-surround'
+  " Git support.
+  Plug 'tpope/vim-fugitive'
 
-" Simplify (un)commenting stuff out.
-Plug 'tpope/vim-commentary'
+  " Improved mappings for default stuff.
+  Plug 'tpope/vim-unimpaired'
 
-" Improve repeat support (e.g. for surrounding stuff).
-Plug 'tpope/vim-repeat'
+  " Simplify handling of stuff that wraps code (parens, [curly]braces, quotes,
+  " etc).
+  Plug 'tpope/vim-surround'
 
-" Widely used simple status line.
-Plug 'vim-airline/vim-airline'
+  " Simplify (un)commenting stuff out.
+  Plug 'tpope/vim-commentary'
 
-" Simplify jumping to stuff. Made by a NeoVim maintainer.
-Plug 'justinmk/vim-sneak'
+  " Improve repeat support (e.g. for surrounding stuff).
+  Plug 'tpope/vim-repeat'
 
-" Improved support for many language stuff, like highlighting, ast manipulation,
-" etc. Originally created at GitHub for use in the Atom editor:
-"   https://getpage.in/tree-sitter
-Plug 'nvim-treesitter/nvim-treesitter', { 'do': ':TSUpdate' }
+  " Widely used simple status line.
+  Plug 'vim-airline/vim-airline'
 
-" Colorscheme.
-Plug 'folke/tokyonight.nvim'
+  " Simplify jumping to stuff. Made by a NeoVim maintainer.
+  Plug 'justinmk/vim-sneak'
 
-" Lsp support.
-Plug 'neovim/nvim-lspconfig'
+  " Improved support for many language stuff, like highlighting, ast manipulation,
+  " etc. Originally created at GitHub for use in the Atom editor:
+  "   https://getpage.in/tree-sitter
+  Plug 'nvim-treesitter/nvim-treesitter', { 'do': ':TSUpdate' }
 
-" Clojure and Python support
-" ==========================
+  " Lsp support.
+  Plug 'neovim/nvim-lspconfig'
 
-" Plugins for Clojure and other lisps.
-Plug 'Olical/conjure', { 'for': ['clojure', 'python'] }
-Plug 'guns/vim-sexp', { 'for': ['clojure'] }
-Plug 'tpope/vim-sexp-mappings-for-regular-people', { 'for': ['clojure'] }
+  " GitHub Copilot.
+  Plug 'github/copilot.vim'
 
-" Dart support
-" ============
+  " Align stuff.
+  Plug 'junegunn/vim-easy-align'
 
-" Official plugin:
-"   https://github.com/dart-lang/dart-vim-plugin
-Plug 'dart-lang/dart-vim-plugin'
+  " Colorschemes
+  " ------------
 
-" TODO: figure out why it is not working (and then, uncomment).
-" Recommended by the official plugin:
-"   https://github.com/dart-lang/dart-vim-plugin/blob/4bdc04e2540edf90fda2812434c11d19dc04bc8f/README.md?plain=1#L100
-" Also, the creator is a Googler:
-"   https://github.com/natebosch
-" Plug 'natebosch/vim-lsc'
-" Plug 'natebosch/vim-lsc-dart'
+  Plug 'folke/tokyonight.nvim'
+  Plug 'altercation/vim-colors-solarized'
+  Plug 'sjl/badwolf'
+  Plug 'tpope/vim-vividchalk'
 
-" F# support
-" ==========
+  " Clojure and Python support
+  " --------------------------
 
-Plug 'ionide/Ionide-vim'
+  " Plugins for Clojure and other lisps.
+  Plug 'Olical/conjure', { 'for': ['clojure', 'python'] }
+  Plug 'guns/vim-sexp', { 'for': ['clojure'] }
+  Plug 'tpope/vim-sexp-mappings-for-regular-people', { 'for': ['clojure'] }
 
-call plug#end()
+  " Dart support
+  " ------------
+
+  " Official plugin:
+  "   https://github.com/dart-lang/dart-vim-plugin
+  Plug 'dart-lang/dart-vim-plugin'
+
+  " TODO: figure out why it is not working (and then, uncomment).
+  " Recommended by the official plugin:
+  "   https://github.com/dart-lang/dart-vim-plugin/blob/4bdc04e2540edf90fda2812434c11d19dc04bc8f/README.md?plain=1#L100
+  " Also, the creator is a Googler:
+  "   https://github.com/natebosch
+  " Plug 'natebosch/vim-lsc'
+  " Plug 'natebosch/vim-lsc-dart'
+
+  " F# support
+  " ----------
+
+  Plug 'ionide/Ionide-vim'
+
+  call plug#end()
+endfunction  # }}}
+
+call s:install()
 
 call _mcra_debug(2)
 
@@ -375,6 +404,12 @@ nnoremap <space> @q
 inoremap <silent> <c-k> <c-p>
 inoremap <silent> <c-j> <c-n>
 
+" Start interactive EasyAlign in visual mode (e.g. vipga)
+xnoremap ga <Plug>(EasyAlign)
+
+" Start interactive EasyAlign for a motion/text object (e.g. gaip)
+nnoremap ga <Plug>(EasyAlign)
+
 call _mcra_debug(4)
 
 " )mappings- }}}
@@ -473,6 +508,7 @@ iab Chanddown 👇🏽️
 iab Chandup 👆🏽️
 iab Ck - [ ]
 iab C- - [ ]
+iab -- - [ ]
 iab Cret ↲
 
 " Text.
