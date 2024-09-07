@@ -1,5 +1,5 @@
 #!/usr/bin/env sh
-# vim: fdm=marker:fmr=-{,}-:fdl=0:fen:ft=sh
+# vim:tw=80:ts=4:sw=4:ai:et:ff=unix:fenc=utf-8:et:fixeol:eol:fdm=marker:fdl=0:fen:ft=sh
 #
 # Opens the `gnome-terminal` snapped to the right side of the screen when a configured shortcut is
 # pressed (I use the `insert` key, but in the next comments I'll refer to it as <shortcut>).
@@ -11,7 +11,7 @@
 #
 # - [ ] parameterize the terminal application and its required arguments
 #
-# Open this fold for more details. -{
+# Open this fold for more details. {{{
 #
 # Then, whenever you press <shortcut> one of three things will happen:
 #
@@ -49,19 +49,16 @@
 #
 #   Window title font:
 #     gsettings get org.cinnamon.desktop.wm.preferences titlebar-font
-# }-
+#
+# }}}
 #
 
 . $HOME/bin/.rc.common
 THIS_FILE_DIRECTORY=$(get_this_file_dir "$0")
 
 main() {
-  scratch="scratch"
+  scratch="${1:-scratch}"
   placement="right"
-
-  if [ ! -z "$1" ]; then
-    scratch="$1"
-  fi
 
   # Get the default profile ID.
   profile_id=$(gsettings get org.gnome.Terminal.ProfilesList default | tr -d \')
@@ -124,6 +121,9 @@ main() {
     if [ $font_size -eq 10 ]; then
       columns=156
       rows=62
+    elif [ $font_size -eq 11 ]; then
+      columns=104 # Notebook
+      rows=57
     elif [ $font_size -eq 9 ]; then
       columns=179
       rows=70
