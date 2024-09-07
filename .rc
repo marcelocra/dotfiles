@@ -97,7 +97,7 @@ tmx() {
     fi
 
     # Try to create a new session.
-    tmux new -s $session_name > /dev/null 2>&1
+    tmux new -s $session_name >/dev/null 2>&1
     if [ $? -eq 0 ]; then
         return 0
     fi
@@ -105,7 +105,7 @@ tmx() {
     echo "Trying to reuse session $session_name..."
     sleep 0.5
     # Try to load existing session.
-    tmux attach-session -t $session_name > /dev/null 2>&1
+    tmux attach-session -t $session_name >/dev/null 2>&1
     if [ $? -eq 0 ]; then
         return 0
     fi
@@ -447,13 +447,6 @@ if [ "$EDITOR" = "nvim" ]; then
   # Neovim diff is good too.
   alias vimdiff="nvim -d"
 fi
-
-# The -T option sets terminal features for the client. Uses csv format.
-# Features:
-#   - 256: forces tmux to assume the terminal supports 256 colors. It is the
-#     same as running tmux with -2: `tmux -2`.
-# alias tmux='TERM=xterm-256color tmux -T 256'
-# alias tmux='tmux -2'
 
 if [[ `uname` == "Darwin" ]]; then
     # Mac doesn't support the --time-style flag.
