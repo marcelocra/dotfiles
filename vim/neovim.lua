@@ -137,6 +137,7 @@ nvim_lsp()
 -- >>>
 
 
+
 -- ADJUST COLORSCHEME BASED ON TIME OF THE DAY
 
 
@@ -163,13 +164,13 @@ function define_colorscheme(mode)
     -- Try to make paranthesis matching useful and less confusing (hi MatchParen
     -- needs to be changed after setting a colorscheme).
     if mode ~= ColorMode.Light and (mode == ColorMode.Dark or hour_now < daylight_starts or hour_now >= daylight_ends) then
-        vim.cmd[[
+        vim.cmd([[
             colorscheme slate
             colorscheme elflord
             colorscheme tokyonight
             hi MatchParen ctermfg=red ctermbg=black
             hi ColorColumn ctermfg=gray ctermbg=black
-        ]]
+        ]])
 
     else
         vim.cmd([[
@@ -197,7 +198,24 @@ end)
 
 
 
--- ADD KEYBINDINGS TO LOAD CONFIG.LUA IN A NEW TAB OR VERTICAL SPLIT
+-- USE TRANSPARENT BACKGROUND
+
+-- Removes the background color for all highlight groups that have. This is a
+-- per-colorscheme thing.
+--
+-- Other possible groups:
+--
+--      highlight SignColumn ctermbg=NONE
+--      highlight LineNr ctermbg=NONE
+--      highlight CursorLine ctermbg=NONE
+
+vim.cmd([[
+    highlight Normal ctermbg=NONE
+]])
+
+
+
+-- ADD KEYBINDINGS TO LOAD NEOVIM.LUA IN A NEW TAB OR VERTICAL SPLIT
 
 
 -- Load lua init in a new tab. <<<
@@ -206,7 +224,7 @@ function load_init_lua(command)
     local myvimrc = vim.fn.expand("$MYVIMRC")
     -- TODO: use init.lua eventually. Can't use yet, otherwise it will conflict
     -- with init.vim.
-    local init_lua_path = myvimrc:gsub("init%.vim$", "config.lua")
+    local init_lua_path = myvimrc:gsub("init%.vim$", "neovim.lua")
     vim.cmd(command .. " " .. init_lua_path)
 end
 
@@ -342,5 +360,6 @@ end, { noremap = true, silent = true })
 -- >>>
 
 
-print('config.lua sourced!')
-
+vim.cmd([[
+  call _mcra_silent_echo('neovim.lua loaded!')
+]])
