@@ -83,8 +83,10 @@ main() {
     if [ $font_size -eq 10 ]; then
       columns=157
       rows=81
-    fi
-    if [ $font_size -eq 8 ]; then
+    elif [ $font_size -eq 11 ]; then
+      columns=139  # widescreen. In normal: ?
+      rows=54
+    elif [ $font_size -eq 8 ]; then
       columns=209  # widescreen. In normal: ?
       rows=84
     fi
