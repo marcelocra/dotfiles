@@ -117,9 +117,6 @@ function! s:install()
   "   https://getpage.in/tree-sitter
   Plug 'nvim-treesitter/nvim-treesitter', { 'do': ':TSUpdate' }
 
-  " Lsp support.
-  Plug 'neovim/nvim-lspconfig'
-
   " GitHub Copilot.
   Plug 'github/copilot.vim'
 
@@ -159,13 +156,54 @@ function! s:install()
 
   " F# support
   " ----------
+  "
+  " I followed Ionide's instructions to set up F# support in Vim, from here:
+  "
+  "   https://github.com/ionide/Ionide-vim/wiki/Configuration-Examples/c63dc429fb5160942da85a71282b76c03a76fa82#with-nvim-lspconfig-and-nvim-cmp-for-neovim-05
+  "
+  " The cmp-* plugins also work for other languages.
 
   Plug 'ionide/Ionide-vim'
 
-  call plug#end()
-endfunction  # }}}
+  " Lsp support.
+  Plug 'neovim/nvim-lspconfig'
 
+  " Completion plugins.
+  Plug 'hrsh7th/cmp-nvim-lsp', { 'branch': 'main' }
+  Plug 'hrsh7th/cmp-buffer', { 'branch': 'main' }
+  Plug 'hrsh7th/cmp-path', { 'branch': 'main' }
+  Plug 'hrsh7th/cmp-cmdline', { 'branch': 'main' }
+  Plug 'hrsh7th/nvim-cmp', { 'branch': 'main' }
+  Plug 'hrsh7th/cmp-vsnip', { 'branch': 'main' }
+  Plug 'hrsh7th/vim-vsnip'
+
+  call plug#end()
+endfunction  " }}}
+
+" Here we configure Ionide-vim. {{{
+function! s:fsharp()
+  " Required: to be used with nvim-cmp.
+  let g:fsharp#lsp_auto_setup = 0
+
+  " Recommended: show tooptip when you hold cursor over something for 1 second.
+  if has('nvim') && exists('*nvim_open_win')
+    set updatetime=1000
+    augroup FSharpShowTooltip
+      autocmd!
+      autocmd CursorHold *.fs,*.fsi,*.fsx call fsharp#showTooltip()
+    augroup END
+  endif
+
+  " Recommended: Paket files are excluded from the project loader.
+  let g:fsharp#exclude_project_directories = ['paket-files']
+endfunction " }}}
+
+" Finally, we call each functions.
+" The last two are executed in the config.lua file.
 call s:install()
+call s:fsharp()
+" call s:nvim_cmp()
+" call s:nvim_lsp()
 
 call _mcra_debug(2)
 
@@ -508,7 +546,6 @@ iab Chanddown 👇🏽️
 iab Chandup 👆🏽️
 iab Ck - [ ]
 iab C- - [ ]
-iab -- - [ ]
 iab Cret ↲
 
 " Text.
@@ -655,7 +692,7 @@ let g:fsharp#exclude_project_directories = ['paket-files']
 " lsp settings ---------------------
 
 " Show full lsp error msg.
-" nnoremap <leader><leader>e :lua vim.diagnostic.open_float(0, {scope="line"})<cr>
+ nnoremap <leader><leader>e :lua vim.diagnostic.open_float(0, {scope="line"})<cr>
 
 call _mcra_debug(12)
 
