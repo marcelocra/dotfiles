@@ -1,0 +1,9 @@
+{
+  "on_save": {
+    "including": ["src/"],
+    "excluding": [
+      "src/generated/",
+      "src/vendored/"
+    ]
+  }
+}
