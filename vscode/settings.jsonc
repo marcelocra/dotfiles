@@ -1046,7 +1046,7 @@
   "workbench.tree.renderIndentGuides": "always",
   "workbench.list.horizontalScrolling": true,
   "workbench.sideBar.location": "left",
-  "workbench.colorTheme": "GitHub Light",
+  "workbench.colorTheme": "Dracula Theme",
   "workbench.panel.defaultLocation": "right",
   "json.schemas": [
     {
