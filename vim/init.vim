@@ -74,5 +74,5 @@ call _mcra_silent_echo('Loading config files...')
 exec 'source ' .. s:neovim_vim
 exec 'source ' .. s:neovim_vimrc
 
-exec 'luafile' ..  s:neovim_lua
+exec 'luafile ' ..  s:neovim_lua
 
