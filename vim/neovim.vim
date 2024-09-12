@@ -439,7 +439,7 @@ nnoremap <leader><leader>p :let @+ = substitute(expand('%'), expand('~'), '$HOME
 nnoremap <leader><leader>cw :echo getcwd()<cr>
 
 " Execute last macro recorded in register 'q'.
-nnoremap <space> @q
+nnoremap <space><space>q @q
 
 " I prefer c-j/k instead of c-n/p.
 inoremap <silent> <c-k> <c-p>
