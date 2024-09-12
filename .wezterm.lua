@@ -145,6 +145,50 @@ end)
 --   end
 -- end)
 
+local function dark_schemes()
+  local schemes = wezterm.color.get_builtin_schemes()
+  local dark = {}
+  for name, scheme in pairs(schemes) do
+    if scheme.background then
+      -- parse into a color object
+      local bg = wezterm.color.parse(scheme.background)
+      -- and extract HSLA information
+      local h, s, l, a = bg:hsla()
+
+      -- `l` is the "lightness" of the color where 0 is darkest
+      -- and 1 is lightest.
+      if l < 0.4 then
+        table.insert(dark, name)
+      end
+    end
+  end
+
+  table.sort(dark)
+  return dark
+end
+
+local dark = dark_schemes()
+
+-- Fill this as I find schemes that I like. Later I can randomize only them.
+local my_favorite_schemes = {
+  'Dracula',
+}
+
+wezterm.on('window-config-reloaded', function(window, pane)
+  -- If there are no overrides, this is our first time seeing
+  -- this window, so we can pick a random scheme.
+  if not window:get_config_overrides() then
+    -- Pick a random scheme name
+
+    local scheme = dark[math.random(#dark)]
+    print('Chosen scheme: ' .. scheme)
+    window:set_config_overrides {
+      color_scheme = scheme,
+    }
+  end
+end)
+
+-- next event
 
 
 -- MAIN SETTINGS
