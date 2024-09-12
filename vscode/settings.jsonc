@@ -327,14 +327,14 @@
 
   // -viminsert
   "vim.insertModeKeyBindingsNonRecursive": [
-    {
-      "before": ["j", "f"],
-      "after": ["<esc>"]
-    },
-    {
-      "before": ["f", "j"],
-      "after": ["<esc>"]
-    },
+    // {
+    //   "before": ["j", "f"],
+    //   "after": ["<esc>"]
+    // },
+    // {
+    //   "before": ["f", "j"],
+    //   "after": ["<esc>"]
+    // },
     {
       // something to try...
       // TODO: review later
@@ -342,16 +342,16 @@
       "after": ["<esc>"]
     },
     {
+      // save and stay in insert mode
+      "before": ["<leader>", "w"],
+      "commands": [":w"],
+      "after": ["<esc>a"]
+    },
+    {
       // save and leave insert mode
       "before": ["<leader>", "s"],
       "commands": [":w"],
       "after": ["<esc>"]
-    },
-    {
-      // save but stay in insert mode
-      "before": ["<leader>", "<leader>", "s"],
-      "commands": [":w"],
-      "after": ["<esc>", "a"]
     },
     {
       // try to quit without saving
@@ -526,6 +526,22 @@
       "before": [" ", "d", "b"],
       "commands": ["paredit.spliceSexpKillBackward"]
     },
+    {
+      // save and stay in insert mode
+      "before": ["<leader>", "w"],
+      "commands": [":w"],
+      "after": ["<esc>a"]
+    },
+    {
+      // try to quit without saving
+      "before": ["<leader>", "q"],
+      "commands": [":q"]
+    },
+    {
+      // save and quit
+      "before": ["<leader>", "x"],
+      "commands": [":x"]
+    },
     // --- calva keybindings end
 
     // The following three commands are mimicking the behavior of Vimium. First
@@ -586,6 +602,7 @@
     },
     // -- visual lines - end
     {
+      // Save and leave visual mode.
       "before": ["<leader>", "s"],
       "commands": [":w"],
       "after": ["<esc>"]
@@ -953,7 +970,7 @@
   // Terminal
   //
 
-  "terminal.integrated.fontFamily": "'Geist Mono', 'JetBrains Mono', 'MesloLGS Nerd Font', 'MesloLGS NF', monospace",
+  "terminal.integrated.fontFamily": "'Recursive', 'Geist Mono', 'JetBrains Mono', 'MesloLGS Nerd Font', 'MesloLGS NF', monospace",
   "terminal.integrated.tabs.enabled": false,
   "terminal.integrated.fontSize": 13, // edn{:desktop 13 :notebook 19}
   "terminal.integrated.fontWeight": "normal",
@@ -1046,7 +1063,6 @@
   "workbench.tree.renderIndentGuides": "always",
   "workbench.list.horizontalScrolling": true,
   "workbench.sideBar.location": "left",
-  "workbench.colorTheme": "Dracula Theme",
   "workbench.panel.defaultLocation": "right",
   "json.schemas": [
     {
@@ -1056,7 +1072,8 @@
       "url": "https://json.schemastore.org/chrome-manifest.json"
     }
   ],
-  "workbench.activityBar.location": "hidden"
+  "workbench.activityBar.location": "hidden",
+  "workbench.colorTheme": "Dracula Theme"
 
   //////////////////////////////////////////////////////////////////////////////
 }

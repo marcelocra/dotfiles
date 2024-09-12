@@ -132,6 +132,7 @@ wezterm.on( 'format-tab-title', function(tab, tabs, panes, config, hover, max_wi
   }
 end)
 
+-- TODO: get this to work one day?
 -- wezterm.on('window-focus-changed', function(window, pane)
 --   if window:is_focused() then
 --     act.SpawnCommandInNewWindow {

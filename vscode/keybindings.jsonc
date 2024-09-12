@@ -630,14 +630,14 @@
     "command": "-notebook.cell.execute",
     "when": "notebookCellListFocused && notebookMissingKernelExtension && !notebookCellExecuting && notebookCellType == 'code' || notebookCellListFocused && !notebookCellExecuting && notebookCellType == 'code' && notebookKernelCount > 0 || notebookCellListFocused && !notebookCellExecuting && notebookCellType == 'code' && notebookKernelSourceCount > 0"
   },
-  {
-    "key": "ctrl+[",
-    "command": "workbench.action.navigateBack"
-  },
-  {
-    "key": "ctrl+]",
-    "command": "workbench.action.navigateForward"
-  },
+  // {
+  //   "key": "ctrl+[",
+  //   "command": "workbench.action.navigateBack"
+  // },
+  // {
+  //   "key": "ctrl+]",
+  //   "command": "workbench.action.navigateForward"
+  // },
   {
     "key": "ctrl+k",
     "command": "selectPrevSuggestion",
