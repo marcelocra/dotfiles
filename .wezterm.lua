@@ -172,6 +172,8 @@ local dark = dark_schemes()
 -- Fill this as I find schemes that I like. Later I can randomize only them.
 local my_favorite_schemes = {
   'Dracula',
+  'Dark Pastel',
+  'CrayonPonyFish',
 }
 
 wezterm.on('window-config-reloaded', function(window, pane)
