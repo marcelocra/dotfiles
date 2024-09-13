@@ -413,4 +413,19 @@
       "(${1:async} ($2) => {$0})($2)"
     ]
   },
+  "make ts": {
+    "scope": "javascript,javascriptreact,typescript,typescriptreact",
+    "prefix": [
+      "global"
+    ],
+    "body": [
+      "declare global {",
+      "   var Vue: any;  // Just an example. Replace by whatever.",
+      "                  // And yes, must be `var`.",
+      "}",
+      "",
+      "export {};",
+      "",
+    ]
+  },
 }
