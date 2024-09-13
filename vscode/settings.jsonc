@@ -327,14 +327,14 @@
 
   // -viminsert
   "vim.insertModeKeyBindingsNonRecursive": [
-    // {
-    //   "before": ["j", "f"],
-    //   "after": ["<esc>"]
-    // },
-    // {
-    //   "before": ["f", "j"],
-    //   "after": ["<esc>"]
-    // },
+    {
+      "before": ["j", "f"],
+      "after": ["<esc>"]
+    },
+    {
+      "before": ["f", "j"],
+      "after": ["<esc>"]
+    },
     {
       // something to try...
       // TODO: review later
