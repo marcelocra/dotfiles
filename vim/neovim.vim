@@ -4,6 +4,7 @@
 "   Basic Settings
 "--------------------
 
+
 set nocompatible
 
 if has("syntax")
@@ -13,9 +14,11 @@ filetype plugin on
 
 set completeopt=menu,menuone,noselect
 
+
 "-----------
 "  Plugins
 "-----------
+
 
 " Details on how to use vim-plug, with examples. {{{
 "
@@ -202,13 +205,13 @@ call _mcra_debug(2)
 " )vim-plug- }}}
 
 
-
 "------------
 "  Settings
 "------------
 
-" This config location.
-let s:mcra_neovim_dotvim = expand('~/.config/nvim/neovim.vim')
+
+" Source common Vim stuff before anything else, so we can override stuff.
+exec 'source ' .. g:mcra_vimrc
 
 
 " --- -settings( ------------------------------------------------------------{{{
@@ -398,12 +401,6 @@ nnoremap <a-9> :tabn 9<cr>
 nnoremap [t :tabprevious<cr>
 nnoremap ]t :tabnext<cr>
 
-" Change generic autocomplete mapping.
-" inoremap <c-space> <c-n>
-
-" Change default lsp autocomplete mapping.
-inoremap <c-space> <c-x><c-o><c-p>
-
 " Reminder that I'm using the wrong keyboard layout.
 nnoremap Ç :echo 'wrong keyboard layout!'<cr>
 
@@ -571,10 +568,6 @@ call _mcra_debug(7)
 " Change leader.
 let mapleader = ","
 let maplocalleader = " "
-
-" Easily edit my vimrc.
-nnoremap <leader><leader>ev :vspl expand()<cr>
-nnoremap <leader><leader>etv :tabe $MYVIMRC<cr>
 
 " Creates a number of save mappings, using leader+s and ctrl+s.
 nnoremap <leader>s :w<cr>
@@ -803,6 +796,11 @@ call _mcra_debug(14)
 " sign define myfoldmarker text=▶ texthl=FoldColumn
 
 " )functions- }}}
+
+
+" I'm moving stuff to lua slowly. For now it should be loaded last.
+exec 'luafile ' ..  g:mcra_neovim_init_lua
+
 
 call _mcra_silent_echo('neovim.vim loaded!')
 

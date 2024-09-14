@@ -1,6 +1,6 @@
 " vim:fdm=marker:fmr={{{,}}}:fdl=0:fen:ai:et:ts=2:sw=2:tw=80:ff=unix:fenc=utf8:et:fixeol:eol:
 "
-" Choose which files to load, based on where Neovim is running.
+" This file chooses which Vim/Neovim config files should load.
 
 
 
@@ -57,22 +57,22 @@ endif
 " NEOVIM SETTINGS
 
 
-let s:neovim_vim = expand("~/.config/nvim/neovim.vim")
-let s:neovim_vimrc = expand("~/.config/nvim/vimrc")
-let s:neovim_lua = expand("~/.config/nvim/neovim.lua")
+" We need all these files to exist. One is sourced here and the others are
+" sourced in it, the correct order.
+let g:mcra_neovim_init = expand("~/.config/nvim/neovim.vim")
+let g:mcra_vimrc = expand("~/.config/nvim/vimrc")
+let g:mcra_neovim_init_lua = expand("~/.config/nvim/neovim.lua")
 
 
-if !filereadable(s:neovim_vim)
-  \ || !filereadable(s:neovim_vimrc)
-  \ || !filereadable(s:neovim_lua)
-  echom 'Missing some config files in ~/.config/nvim. I expect all of these: neovim.vim, vimrc, neovim.lua'
+if !filereadable(g:mcra_vimrc)
+  \ || !filereadable(g:mcra_neovim_init)
+  \ || !filereadable(g:mcra_neovim_init_lua)
+  echom 'Missing some config files in ~/.config/nvim. I expect all of these: vimrc, neovim.vim, neovim.lua'
   finish
 endif
 
 call _mcra_silent_echo('Loading config files...')
 
-exec 'source ' .. s:neovim_vim
-exec 'source ' .. s:neovim_vimrc
-
-exec 'luafile ' ..  s:neovim_lua
+" This file source the other two.
+exec 'source ' .. g:mcra_neovim_init
 
