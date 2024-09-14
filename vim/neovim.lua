@@ -215,22 +215,25 @@ vim.cmd([[
 
 
 
--- ADD KEYBINDINGS TO LOAD NEOVIM.LUA IN A NEW TAB OR VERTICAL SPLIT
+-- KEYBINDINGS TO LOAD NEOVIM INIT FILES
 
 
--- Load lua init in a new tab. <<<
-function load_init_lua(command)
+-- Load init file in a new tab or split. <<<
+function load_init(command, init_filename)
     -- Use the path to $MYVIMRC to get the path to the lua file.
     local myvimrc = vim.fn.expand("$MYVIMRC")
     -- TODO: use init.lua eventually. Can't use yet, otherwise it will conflict
     -- with init.vim.
-    local init_lua_path = myvimrc:gsub("init%.vim$", "neovim.lua")
+    local init_lua_path = myvimrc:gsub("init%.vim$", init_filename)
     vim.cmd(command .. " " .. init_lua_path)
 end
 
--- Create a normal mode mapping to trigger this function.
-vim.api.nvim_set_keymap('n', '<leader><leader>etl', ':lua load_init_lua("tabedit")<cr>', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<leader><leader>el', ':lua load_init_lua("vspl")<cr>', { noremap = true, silent = true })
+-- Actual Neovim init.
+vim.api.nvim_set_keymap('n', '<leader><leader>etl', ':lua load_init("tabedit", "neovim.vim")<cr>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<leader><leader>el', ':lua load_init("vspl", "neovim.vim")<cr>', { noremap = true, silent = true })
+-- Additional settings (in Lua), loaded from the init above.
+vim.api.nvim_set_keymap('n', '<leader><leader>etl', ':lua load_init("tabedit", "neovim.lua")<cr>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<leader><leader>el', ':lua load_init("vspl", "neovim.lua")<cr>', { noremap = true, silent = true })
 
 -- >>>
 
@@ -363,3 +366,4 @@ end, { noremap = true, silent = true })
 vim.cmd([[
   call _mcra_silent_echo('neovim.lua loaded!')
 ]])
+
