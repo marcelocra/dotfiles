@@ -174,8 +174,10 @@ local my_favorite_schemes = {
   'Dracula',
   'Dark Pastel',
   'CrayonPonyFish',
+  'Heetch Dark (base16)',
 }
 
+-- Pick a theme at random and set it.
 wezterm.on('window-config-reloaded', function(window, pane)
   -- If there are no overrides, this is our first time seeing
   -- this window, so we can pick a random scheme.
@@ -196,7 +198,9 @@ end)
 -- MAIN SETTINGS
 
 
-config.window_background_opacity = 0.92
+local opacity = 0.9
+config.window_background_opacity = opacity
+config.text_background_opacity = opacity
 config.window_decorations = 'RESIZE'
 
 config.font = fonts.jb
