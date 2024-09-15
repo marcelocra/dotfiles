@@ -11,7 +11,7 @@ local wezterm = require 'wezterm'
 local act = wezterm.action
 local mux = wezterm.mux
 
--- Fonts I frequently use.
+-- Fonts I frequently use. {{{
 local fonts = {
   meslo = wezterm.font({
     family = 'MesloLGS NF',
@@ -26,8 +26,21 @@ local fonts = {
 
   jb = wezterm.font({
     family = 'JetBrains Mono',
+    -- Ligature test:
+    --  ! " # $ % & ' ( ) * + , - . / : ; < = > ? @ [ \ ] ^ _ ` { | } ~
+    --  ~ < > = + _ _ ( ) * & ^ % $ # @ ! { } [ ] \ | / ? : ; , . ` ' " ´ ` ˜
+    --  => -> <> <= >= != !== === ~= |> <- --> || .- :- .= {..} 1/2 3/8 100/48
+    --  a b c d e f g h i j k l m n o p q r s t u v x w y z
+    --  A B C D E F G H I J K L M N O P Q R S T U V X W Y Z
     harfbuzz_features = {
-      'ss02', 'ss19', 'ss20', 'zero', 'cv03', 'cv04', 'cv16', 'cv19', 'cv20', 'cv99'
+      -- Minimal: default style (ss01); no ligatures in `=` (ss19); raised bar `f` (ss20); dashed
+      -- zero (zero); highlight some weird glyphs (cv99). 
+      'ss01', 'ss19', 'ss20', 'zero', 'cv99',
+      
+      -- Different: closed construction (ss02); no ligatures in `=` (ss19); raised bar `f` (ss20);
+      -- dashed zero (zero); different `g`, `j`, `Q`, `8`, `5` (respectively); highlight some weird
+      -- glyphs (cv99).
+      -- 'ss02', 'ss19', 'ss20', 'zero', 'cv03', 'cv04', 'cv16', 'cv19', 'cv20', 'cv99',
     },
   }),
 
@@ -145,9 +158,16 @@ end)
 --   end
 -- end)
 
-local function dark_schemes()
+local function color_schemes_by_name(opts)
+  setmetatable(opts, {
+    __index = {
+      -- Defaults to darker colors.
+      lightness_threshold = 0.4
+    }
+  })
+
   local schemes = wezterm.color.get_builtin_schemes()
-  local dark = {}
+  local chosen_schemes = {}
   for name, scheme in pairs(schemes) do
     if scheme.background then
       -- parse into a color object
@@ -157,35 +177,47 @@ local function dark_schemes()
 
       -- `l` is the "lightness" of the color where 0 is darkest
       -- and 1 is lightest.
-      if l < 0.4 then
-        table.insert(dark, name)
+      if l <= opts.lightness_threshold then
+        table.insert(chosen_schemes, name)
       end
     end
   end
 
-  table.sort(dark)
-  return dark
+  table.sort(chosen_schemes)
+  return chosen_schemes
 end
 
-local dark = dark_schemes()
+local color_schemes_to_pick = color_schemes_by_name{lightness_threshold = 1}
 
 -- Fill this as I find schemes that I like. Later I can randomize only them.
-local my_favorite_schemes = {
-  'Dracula',
-  'Dark Pastel',
-  'CrayonPonyFish',
-  'Heetch Dark (base16)',
+local color_scheme_override = {
+  -- Use `false` to select a random color scheme or the index of the favorite to use as override.
+  override = false,  
+  favorites = {
+    'Dracula',                         -- Lua is 1-based, so this has index 1.
+    'Dark Pastel',                     -- 2
+    'CrayonPonyFish',                  -- 3
+    'Heetch Dark (base16)',            -- 4
+    'Canvased Pastel (terminal.sexy)', -- 5
+  }
 }
 
--- Pick a theme at random and set it.
 wezterm.on('window-config-reloaded', function(window, pane)
+  if color_scheme_override.override then
+    local scheme = color_scheme_override.favorites[color_scheme_override.override]
+    print('Overriden scheme: ' .. scheme)
+
+    window:set_config_overrides {
+      color_scheme = scheme
+    }
+  end
+
   -- If there are no overrides, this is our first time seeing
   -- this window, so we can pick a random scheme.
   if not window:get_config_overrides() then
     -- Pick a random scheme name
-
-    local scheme = dark[math.random(#dark)]
-    print('Chosen scheme: ' .. scheme)
+    local scheme = color_schemes_to_pick[math.random(#color_schemes_to_pick)]
+    print('Random scheme: ' .. scheme)
     window:set_config_overrides {
       color_scheme = scheme,
     }
@@ -198,7 +230,7 @@ end)
 -- MAIN SETTINGS
 
 
-local opacity = 0.9
+local opacity = 0.7
 config.window_background_opacity = opacity
 config.text_background_opacity = opacity
 config.window_decorations = 'RESIZE'
@@ -222,9 +254,14 @@ config.color_scheme = 'Dracula'
 
 config.default_gui_startup_args = { 'start', SCRATCH_SCRIPT }
 
-config.default_cursor_style = 'BlinkingUnderline'
-config.cursor_thickness = '0.1pt'
-config.cursor_blink_rate = 500
+local should_blink = false
+if should_blink then
+  config.default_cursor_style = 'BlinkingUnderline'
+  config.cursor_thickness = '0.1pt'
+  config.cursor_blink_rate = 500
+else
+  config.default_cursor_style = 'SteadyUnderline'
+end
 
 
 
