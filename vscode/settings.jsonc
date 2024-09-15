@@ -804,7 +804,7 @@
   // // Ligature test:
   // //  ! " # $ % & ' ( ) * + , - . / : ; < = > ? @ [ \ ] ^ _ ` { | } ~
   // //  ~ < > = + _ _ ( ) * & ^ % $ # @ ! { } [ ] \ | / ? : ; , . ` ' " ´ ` ˜
-  // //  => -> <> <= >= != !== === ~= |> <- --> || .- :- .= {..}
+  // //  => -> <> <= >= != !== === ~= |> <- --> || .- :- .= {..} 1/2 3/8 100/48
 
   // Noto Sans Mono font
   //
@@ -833,7 +833,7 @@
   "editor.fontSize": 13, // edn{:desktop 13 :notebook ?? :small 11}
   "editor.fontWeight": "400", // edn{:desktop "400" :notebook "??" :small "100"}
   // // Recursive with default values and almost no customization.
-  "editor.fontLigatures": "'frac'",
+  // "editor.fontLigatures": "'frac'",
   // // Some customizations that I like. See details below.
   // "editor.fontLigatures": "'ss01', 'ss02', 'ss03', 'ss04', 'ss05', 'ss06', 'ss07', 'ss11', 'ss12', 'case', 'frac'",
   // // - dlig: ligatures - => && === ff it ti (more below)
