@@ -35,6 +35,5 @@ indent_size = unset
 max_line_length = unset
 
 [*.{md,markdown,adoc,asciidoc,txt}]
-indent_size = 4
 # No hard wrap, please.
 max_line_length = unset
