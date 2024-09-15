@@ -1,4 +1,4 @@
--- vim:tw=100:ts=2:sw=2:ai:et:ff=unix:fenc=utf-8:et:fixeol:eol:fdm=marker:fdl=0:fen:
+-- vim:tw=100:ts=2:sw=2:ai:et:ff=unix:fenc=utf-8:et:fixeol:eol:fdm=marker:fdl=0:fen:fmr=<<(,)>>:
 --
 -- WezTerm configuration file.
 
@@ -11,7 +11,8 @@ local wezterm = require 'wezterm'
 local act = wezterm.action
 local mux = wezterm.mux
 
--- Fonts I frequently use. {{{
+
+-- Fonts I frequently use. <<(
 local fonts = {
   meslo = wezterm.font({
     family = 'MesloLGS NF',
@@ -34,9 +35,9 @@ local fonts = {
     --  A B C D E F G H I J K L M N O P Q R S T U V X W Y Z
     harfbuzz_features = {
       -- Minimal: default style (ss01); no ligatures in `=` (ss19); raised bar `f` (ss20); dashed
-      -- zero (zero); highlight some weird glyphs (cv99). 
+      -- zero (zero); highlight some weird glyphs (cv99).
       'ss01', 'ss19', 'ss20', 'zero', 'cv99',
-      
+
       -- Different: closed construction (ss02); no ligatures in `=` (ss19); raised bar `f` (ss20);
       -- dashed zero (zero); different `g`, `j`, `Q`, `8`, `5` (respectively); highlight some weird
       -- glyphs (cv99).
@@ -59,8 +60,11 @@ local fonts = {
     },
   }),
 }
+-- )>>
+
 
 local config = wezterm.config_builder()
+
 
 local SCRATCH_SCRIPT = '/home/marcelocra/projects/dotfiles/.rc.scratch'
 
@@ -87,7 +91,6 @@ wezterm.on('gui-startup', function(cmd)
     gui_window:set_inner_size(window_width, screen_height)
   end
 end)
-
 
 
 wezterm.on( 'format-tab-title', function(tab, tabs, panes, config, hover, max_width)
@@ -145,6 +148,7 @@ wezterm.on( 'format-tab-title', function(tab, tabs, panes, config, hover, max_wi
   }
 end)
 
+
 -- TODO: get this to work one day?
 -- wezterm.on('window-focus-changed', function(window, pane)
 --   if window:is_focused() then
@@ -157,6 +161,7 @@ end)
 --     }
 --   end
 -- end)
+
 
 local function color_schemes_by_name(opts)
   setmetatable(opts, {
@@ -187,42 +192,46 @@ local function color_schemes_by_name(opts)
   return chosen_schemes
 end
 
+
 local color_schemes_to_pick = color_schemes_by_name{lightness_threshold = 1}
+
 
 -- Fill this as I find schemes that I like. Later I can randomize only them.
 local color_scheme_override = {
   -- Use `false` to select a random color scheme or the index of the favorite to use as override.
-  override = false,  
+  override = false,
   favorites = {
-    'Dracula',                         -- Lua is 1-based, so this has index 1.
-    'Dark Pastel',                     -- 2
-    'CrayonPonyFish',                  -- 3
-    'Heetch Dark (base16)',            -- 4
-    'Canvased Pastel (terminal.sexy)', -- 5
+    'Dracula',                                -- Lua is 1-based, so this has index 1.
+    'Dark Pastel',                            -- 2
+    'CrayonPonyFish',                         -- 3
+    'Heetch Dark (base16)',                   -- 4
+    'Canvased Pastel (terminal.sexy)',        -- 5
+    'Synth Midnight Terminal Light (base16)', -- 6
+    'midnight-in-mojave',                     -- 7
   }
 }
 
+
 wezterm.on('window-config-reloaded', function(window, pane)
+  if window:get_config_overrides() then
+    return
+  end
+
+  local scheme = nil
+
   if color_scheme_override.override then
-    local scheme = color_scheme_override.favorites[color_scheme_override.override]
+    scheme = color_scheme_override.favorites[color_scheme_override.override]
     print('Overriden scheme: ' .. scheme)
-
-    window:set_config_overrides {
-      color_scheme = scheme
-    }
-  end
-
-  -- If there are no overrides, this is our first time seeing
-  -- this window, so we can pick a random scheme.
-  if not window:get_config_overrides() then
-    -- Pick a random scheme name
-    local scheme = color_schemes_to_pick[math.random(#color_schemes_to_pick)]
+  else
+    scheme = color_schemes_to_pick[math.random(#color_schemes_to_pick)]
     print('Random scheme: ' .. scheme)
-    window:set_config_overrides {
-      color_scheme = scheme,
-    }
   end
+
+  window:set_config_overrides {
+    color_scheme = scheme,
+  }
 end)
+
 
 -- next event
 
@@ -230,7 +239,7 @@ end)
 -- MAIN SETTINGS
 
 
-local opacity = 0.7
+local opacity = 1
 config.window_background_opacity = opacity
 config.text_background_opacity = opacity
 config.window_decorations = 'RESIZE'
