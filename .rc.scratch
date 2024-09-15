@@ -1,7 +1,7 @@
 #!/usr/bin/env sh
 # vim:tw=80:ts=4:sw=4:ai:et:ff=unix:fenc=utf-8:et:fixeol:eol:fdm=marker:fdl=0:fen:ft=sh
 
-SCRATCHPAD_SESSION_NAME="scratch"
+SCRATCHPAD_SESSION_NAME="scratch-wez"
 
 # If session exists, connect to it. Otherwise, create it.
 if tmux has -t $SCRATCHPAD_SESSION_NAME >/dev/null 2>&1; then

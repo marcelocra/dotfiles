@@ -114,6 +114,9 @@ main() {
     elif [ $font_size -eq 11 ]; then
       columns=139  # wide
       rows=55
+    elif [ $font_size -eq 9 ]; then
+      columns=179  # widescreen. In normal: ?
+      rows=61
     elif [ $font_size -eq 8 ]; then
       columns=209  # widescreen. In normal: ?
       rows=84
