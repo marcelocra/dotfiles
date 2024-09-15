@@ -1,16 +1,21 @@
 #!/usr/bin/env sh
 # vim:tw=80:ts=4:sw=4:ai:et:ff=unix:fenc=utf-8:et:fixeol:eol:fdm=marker:fdl=0:fen:ft=sh
 
-SCRATCHPAD_SESSION_NAME="scratch-wez"
 
-# If session exists, connect to it. Otherwise, create it.
-if tmux has -t $SCRATCHPAD_SESSION_NAME >/dev/null 2>&1; then
-    if tmux lsc | grep $SCRATCHPAD_SESSION_NAME >/dev/null 2>&1; then
-        tmux detach -s $SCRATCHPAD_SESSION_NAME
+main() {
+    local SCRATCHPAD_SESSION_NAME="scratch-wez"
+
+    # If session exists, connect to it. Otherwise, create it.
+    if tmux has -t $SCRATCHPAD_SESSION_NAME >/dev/null 2>&1; then
+        if tmux lsc | grep $SCRATCHPAD_SESSION_NAME >/dev/null 2>&1; then
+            tmux detach -s $SCRATCHPAD_SESSION_NAME
+        else
+            tmux attach -t $SCRATCHPAD_SESSION_NAME >/dev/null 2>&1
+        fi
     else
-        tmux attach -t $SCRATCHPAD_SESSION_NAME >/dev/null 2>&1
+        tmux new -s $SCRATCHPAD_SESSION_NAME >/dev/null 2>&1
     fi
-else
-    tmux new -s $SCRATCHPAD_SESSION_NAME >/dev/null 2>&1
-fi
+}
 
+
+main "$@"
