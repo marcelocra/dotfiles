@@ -3,17 +3,17 @@
 
 
 main() {
-    local SCRATCHPAD_SESSION_NAME="scratch-wez"
+    local name="scratch-wez"
 
     # If session exists, connect to it. Otherwise, create it.
-    if tmux has -t $SCRATCHPAD_SESSION_NAME >/dev/null 2>&1; then
-        if tmux lsc | grep $SCRATCHPAD_SESSION_NAME >/dev/null 2>&1; then
-            tmux detach -s $SCRATCHPAD_SESSION_NAME
+    if tmux has -t $name >/dev/null 2>&1; then
+        if tmux lsc | grep " $name " >/dev/null 2>&1; then
+            tmux detach -s $name
         else
-            tmux attach -t $SCRATCHPAD_SESSION_NAME >/dev/null 2>&1
+            tmux attach -t $name >/dev/null 2>&1
         fi
     else
-        tmux new -s $SCRATCHPAD_SESSION_NAME >/dev/null 2>&1
+        tmux new -s $name >/dev/null 2>&1
     fi
 }
 
