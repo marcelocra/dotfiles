@@ -485,10 +485,14 @@ iab Cfold vim:fdm=marker:fmr={{{,}}}:fdl=0:fen:
 iab Cfoldmd ft=markdown:
 
 " When EditorConfig is not available, creates a modeline with my prefs.
-" For most languages, I use the next line.
-iab Cec  vim:tw=100:ts=2:sw=2:ai:et:ff=unix:fenc=utf-8:et:fixeol:eol:fdm=marker:fdl=0:fen:
-" Mostly for Python, shells, Vimscript and Lua.
+" For most languages I use the next line.
+iab Cec vim:tw=100:ts=2:sw=2:ai:et:ff=unix:fenc=utf-8:et:fixeol:eol:fdm=marker:fdl=0:fen:
+" Change text and tab (spaces) width for some stuff (Python, shells, etc).
 iab Cecpy vim:tw=80:ts=4:sw=4:ai:et:ff=unix:fenc=utf-8:et:fixeol:eol:fdm=marker:fdl=0:fen:
+" To be used with one of the above (mostly for Lua, as the default breaks indentation).
+iab Clua fmr=<<(,)>>:
+" Define the filetype. I normally use for shell.
+iab Cft ft=sh:
 
 " " Trying to automatically create a modeline that works for notes in md.
 " iab note <!-- vim: fdm=marker:fmr={,}:fdl=1:fen:ai:et:ts=4:sw=4:tw=80:wrap --><left><left><left><cr><esc><left>o

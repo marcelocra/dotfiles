@@ -31,7 +31,7 @@ end
 
 
 
--- CONFIGURE COMPLETION PLUGIN
+-- CONFIGURE COMPLETION PLUGIN <<<
 
 
 -- Create a function to configure nvim-cmp.<<<
@@ -137,8 +137,11 @@ nvim_lsp()
 -- >>>
 
 
+-- >>>
 
--- ADJUST COLORSCHEME BASED ON TIME OF THE DAY
+
+
+-- ADJUST COLORSCHEME BASED ON TIME OF THE DAY <<<
 
 
 -- Adjust colorscheme based on time of the time of the day. <<<
@@ -197,8 +200,12 @@ end)
 -- >>>
 
 
+-- >>>
 
--- USE TRANSPARENT BACKGROUND
+
+
+-- USE TRANSPARENT BACKGROUND <<<
+
 
 -- Removes the background color for all highlight groups that have. This is a
 -- per-colorscheme thing.
@@ -209,16 +216,19 @@ end)
 --      highlight LineNr ctermbg=NONE
 --      highlight CursorLine ctermbg=NONE
 
-vim.cmd([[
-    highlight Normal ctermbg=NONE
-]])
+-- vim.cmd([[
+--     highlight Normal ctermbg=NONE
+-- ]])
+
+
+-- >>>
 
 
 
--- KEYBINDINGS TO LOAD NEOVIM INIT FILES
+-- KEYBINDINGS TO LOAD NEOVIM INIT FILES <<<
 
 
--- Load init file in a new tab or split. <<<
+-- Load init file in a new tab or split.
 function load_init(command, init_filename)
     -- Use the path to $MYVIMRC to get the path to the lua file.
     local myvimrc = vim.fn.expand("$MYVIMRC")
@@ -229,17 +239,20 @@ function load_init(command, init_filename)
 end
 
 -- Actual Neovim init.
-vim.api.nvim_set_keymap('n', '<leader><leader>etl', ':lua load_init("tabedit", "neovim.vim")<cr>', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<leader><leader>el', ':lua load_init("vspl", "neovim.vim")<cr>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<leader><leader>etv', ':lua load_init("tabedit", "neovim.vim")<cr>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<leader><leader>ev', ':lua load_init("vspl", "neovim.vim")<cr>', { noremap = true, silent = true })
 -- Additional settings (in Lua), loaded from the init above.
 vim.api.nvim_set_keymap('n', '<leader><leader>etl', ':lua load_init("tabedit", "neovim.lua")<cr>', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', '<leader><leader>el', ':lua load_init("vspl", "neovim.lua")<cr>', { noremap = true, silent = true })
+
+
+
 
 -- >>>
 
 
 
--- EVAL SOME JAVASCRIPT CODE
+-- EVAL SOME JAVASCRIPT CODE <<<
 
 
 -- -- Choose a JavaScript runtime to use. <<<
@@ -280,8 +293,11 @@ vim.api.nvim_set_keymap('n', '<localleader>ep', ':lua ExecuteJsBlock()<cr>', { n
 -- >>>
 
 
+-- >>>
 
--- CONFIGURE VIM-SEXP
+
+
+-- CONFIGURE VIM-SEXP <<<
 
 
 -- vim-sexp - Ignore the default keybindings that use alt (M). <<<
@@ -295,8 +311,11 @@ vim.g.sexp_mappings = {
 -- >>>
 
 
+-- >>>
 
--- CONFIGURE CLOJURE CONJURE
+
+
+-- CONFIGURE CLOJURE CONJURE <<<
 
 
 -- In Conjure, eval the current buffer up to the point where the cursor is. <<<
@@ -337,19 +356,38 @@ end, { noremap = true, silent = true })
 -- >>>
 
 
+-- >>>
 
--- CREATE A TEMPLATE FOR NEW SECTIONS HERE
+
+
+-- CREATE A TEMPLATE FOR NEW SECTIONS HERE <<<
 
 
 -- 🖨️ Copy/paste this template including the empty line below. <<<
 -- >>>
 
 
+-- >>>
 
--- ARCHIVED STUFF
 
 
--- Next 👆. Archived 👇. <<<
+-- CONFIGURE THE CURSOR <<<
+
+
+-- Default 'n-v-c-sm:block,i-ci-ve:ver25,r-cr-o:hor20'
+-- vim.opt.guicursor = table.concat({
+--     'n-v-c:block',
+--     'i-ci-ve:ver25',
+--     'r-cr:hor20',
+--     'o:hor50',
+--     'a:blinkwait700-blinkoff400-blinkon250-Cursor/lCursor',
+--     'sm:block-blinkwait175-blinkoff150-blinkon175',
+-- }, ",")
+
+-- >>>
+
+
+-- NEXT SECTION 👆 ARCHIVED 👇 <<<
 
 -- -- Nim lsp setup.
 -- require'lspconfig'.nim_langserver.setup{
@@ -363,7 +401,13 @@ end, { noremap = true, silent = true })
 -- >>>
 
 
+
+-- AT THE END <<<
+
+
 vim.cmd([[
   call _mcra_silent_echo('neovim.lua loaded!')
 ]])
 
+
+-- >>>
