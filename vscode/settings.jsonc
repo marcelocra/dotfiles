@@ -202,7 +202,12 @@
     "markdown",
     "svelte"
   ],
-  "eslint.validate": ["javascript", "javascriptreact", "typescript", "typescriptreact"],
+  "eslint.validate": [
+    "javascript",
+    "javascriptreact",
+    "typescript",
+    "typescriptreact"
+  ],
 
   "tailwindCSS.emmetCompletions": false, // I don't use these.
   "tailwindCSS.colorDecorators": true, // They are useful, though annoying.
@@ -720,6 +725,12 @@
   "outline.collapseItems": "alwaysCollapse",
   "notebook.lineNumbers": "on",
   "html.suggest.html5": false,
+  "[log][Log]": {
+    "editor.fontFamily": "JetBrains Mono",
+    "editor.fontSize": 13,
+    "editor.fontWeight": "100",
+    "editor.fontLigatures": "'ss01', 'ss19', 'ss20', 'zero', 'cv99'"
+  },
 
   //
   //
@@ -789,6 +800,9 @@
   // "editor.fontFamily": "JetBrains Mono",
   // "editor.fontSize": 11, // edn{:desktop 13 :notebook ?? :small 11}
   // "editor.fontWeight": "400", // edn{:desktop "200" :notebook "??" :small "100"}
+  // // Minimal.
+  // "editor.fontLigatures": "'ss01', 'ss19', 'ss20', 'zero', 'cv99'",
+  // // Very different from the default.
   // "editor.fontLigatures": "'ss02', 'ss19', 'ss20', 'zero', 'cv03', 'cv04', 'cv16', 'cv19', 'cv20', 'cv99'",
   // // Available stylistic sets:
   // // - | cv01,05: l | cv02: t | cv03: g | cv04: j | cv06: m  | cv07: w | cv08: k
