@@ -418,6 +418,20 @@ argument is optional: if not provided, the first is used in its place.'
 #   $the_cmd $help_opt | $pager
 # }
 
+regexfind() {
+    local dir="$1"
+    local regex="$2"
+
+    if [ ! -d "$dir" ]; then
+        echo "ERROR: '$dir' is not a directory"
+        return 1
+    fi
+
+    find "$dir" -regextype egrep -regex "$regex"
+}
+alias rfind=regexfind
+
+
 # }}}functions
 # aliases{{{
 # one lettered{{{
