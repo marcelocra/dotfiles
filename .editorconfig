@@ -1,4 +1,4 @@
-# Stop looking upwards for other settings.
+# Stop looking upwards for other `.editorconfig` files.
 root = true
 
 [*]
@@ -10,14 +10,6 @@ trim_trailing_whitespace = true
 end_of_line = lf
 charset = utf-8
 spelling_language = pt-BR
-max_line_length = 100
-
-[*.{py,sh,zsh,bash}]
-indent_size = 4
-max_line_length = 80
-
-[dev]
-indent_size = 4
 max_line_length = 80
 
 [Makefile]
@@ -26,14 +18,14 @@ indent_style = tab
 # Not implemented in Sublime (always 1).
 tab_width = 1
 
-[*.{fs,fsi,fsx,elm}]
+[*.{py,sh,zsh,bash}]
 indent_size = 4
 
-[*.{clj,cljs,cljc}]
-# Let auto-formatters figure out.
-indent_size = unset
-max_line_length = unset
+[dev]
+# I frequently use a `dev` script (shell) to run project commands.
+indent_size = 4
 
-[*.{md,markdown,adoc,asciidoc,txt}]
-# No hard wrap, please.
-max_line_length = unset
+[*.{fs,fsi,fsx,elm}]
+# F# configs.
+indent_size = 4
+
