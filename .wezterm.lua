@@ -93,7 +93,7 @@ wezterm.on('gui-startup', function(cmd)
 end)
 
 
-wezterm.on( 'format-tab-title', function(tab, tabs, panes, config, hover, max_width)
+wezterm.on('format-tab-title', function(tab, tabs, panes, config, hover, max_width)
   -- The filled in variant of the < symbol
   local solid_left_arrow = wezterm.nerdfonts.pl_right_hard_divider
 
@@ -167,7 +167,8 @@ local function color_schemes_by_name(opts)
   setmetatable(opts, {
     __index = {
       -- Defaults to darker colors.
-      lightness_threshold = 0.4
+      min_light = 0.0,
+      max_light = 0.4
     }
   })
 
@@ -182,7 +183,7 @@ local function color_schemes_by_name(opts)
 
       -- `l` is the "lightness" of the color where 0 is darkest
       -- and 1 is lightest.
-      if l <= opts.lightness_threshold then
+      if (opts.min_light <= l) and (l <= opts.max_light) then
         table.insert(chosen_schemes, name)
       end
     end
@@ -193,13 +194,16 @@ local function color_schemes_by_name(opts)
 end
 
 
-local color_schemes_to_pick = color_schemes_by_name{lightness_threshold = 1}
+local color_schemes_to_pick = color_schemes_by_name{
+  min_light = 0, 
+  max_light = 0.2
+}
 
 
 -- Fill this as I find schemes that I like. Later I can randomize only them.
 local color_scheme_override = {
   -- Use `false` to select a random color scheme or the index of the favorite to use as override.
-  override = 9,
+  override = false,
   favorites = {
     'Dracula',                                -- Lua is 1-based, so this has index 1.
     'Dark Pastel',                            -- 2
@@ -210,18 +214,19 @@ local color_scheme_override = {
     'midnight-in-mojave',                     -- 7
     'Slate (Gogh)',                           -- 8
     'tlh (terminal.sexy)',                    -- 9
+    'Man Page (Gogh)',                        -- 10
+    'Builtin Solarized Dark',                 -- 11
+    'Apathy (base16)',                        -- 12
+    'gooey (Gogh)',                           -- 13
+    'SynthwaveAlpha (Gogh)',                  -- 14
   }
 }
 
 
-wezterm.on('window-config-reloaded', function(window, pane)
-  if window:get_config_overrides() then
-    return
-  end
+function get_scheme(opts)
+  local scheme = 'Dracula' 
 
-  local scheme = nil
-
-  if color_scheme_override.override then
+  if not opts.force_random and color_scheme_override.override then
     scheme = color_scheme_override.favorites[color_scheme_override.override]
     print('Overriden scheme: ' .. scheme)
   else
@@ -229,9 +234,16 @@ wezterm.on('window-config-reloaded', function(window, pane)
     print('Random scheme: ' .. scheme)
   end
 
-  window:set_config_overrides {
-    color_scheme = scheme,
-  }
+  return scheme
+end
+
+
+wezterm.on('window-config-reloaded', function(window, pane)
+  if not window:get_config_overrides() then
+    window:set_config_overrides({
+      color_scheme = get_scheme{force_random = false}
+    })
+  end
 end)
 
 
@@ -241,9 +253,8 @@ end)
 -- MAIN SETTINGS
 
 
-local opacity = 1
-config.window_background_opacity = opacity
-config.text_background_opacity = opacity
+config.window_background_opacity = 1
+config.text_background_opacity = 1
 config.window_decorations = 'RESIZE'
 
 config.font = fonts.jb
@@ -261,7 +272,10 @@ config.window_padding = {
   bottom = 0,
 }
 
-config.color_scheme = 'Dracula'
+config.colors = {
+  cursor_bg = 'orange',
+  cursor_fg = 'black',
+}
 
 config.default_gui_startup_args = { 'start', SCRATCH_SCRIPT }
 
@@ -279,19 +293,17 @@ end
 -- KEYBINDINGS
 
 
+function change_color_scheme(window, pane)
+  wezterm.gui.gui_windows()[1]:set_config_overrides{ color_scheme = get_scheme{force_random = true} }
+end
+
+
 config.keys = {
-  {
-    key = 'h',
-    mods = 'SHIFT|CTRL',
-    action = wezterm.action.Search { Regex = 'hello' },
-  },
+  { key = 'h', mods = 'SHIFT|CTRL', action = wezterm.action.Search { Regex = 'hello' } },
   { key = 'j', mods = 'ALT|SHIFT', action = act.ActivateTabRelative(-1) },
   { key = 'k', mods = 'ALT|SHIFT', action = act.ActivateTabRelative(1) },
-  {
-    key = 't',
-    mods = 'SHIFT|ALT',
-    action = act.SpawnTab 'CurrentPaneDomain',
-  }
+  { key = 't', mods = 'SHIFT|ALT', action = act.SpawnTab 'CurrentPaneDomain' },
+  { key = 't', mods = 'SHIFT|CTRL', action = wezterm.action_callback(change_color_scheme) },
 }
 
 
