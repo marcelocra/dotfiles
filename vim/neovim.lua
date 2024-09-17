@@ -157,8 +157,8 @@ local ColorMode = {
     Light = 2,
 }
 
--- local mode = ColorMode.Dark
-vim.g.colorsheme_mode = ColorMode.TimeBased
+local mode = ColorMode.Dark
+vim.g.colorsheme_mode = mode
 
 function define_colorscheme(mode)
     -- If not forcing light mode, then check if forcing dark. If not, then use the
