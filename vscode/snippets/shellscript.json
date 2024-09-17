@@ -80,4 +80,81 @@
       "return 0"
     ]
   },
+  "create basic script structure": {
+    "prefix": [
+      "init"
+    ],
+    "body": [
+      "#!/usr/bin/env bash",
+      "#",
+      "# ${1:TODO: Add a description of the script}",
+      "",
+      "",
+      "",
+      "# DEFINITIONS",
+      "",
+      "",
+      "helpers() {",
+      "    # Change this to false when you're done debugging.",
+      "    is_debug() { true; }",
+      "    now() { echo -n \"[$(date '+%Y-%m-%d %H:%M:%S')] \"; }",
+      "}",
+      "",
+      "",
+      "setupAndValidation() {",
+      "    $2",
+      "}",
+      "",
+      "",
+      "main() {",
+      "    $3",
+      "}",
+      "",
+      "",
+      "",
+      "# SCRIPT",
+      "",
+      "",
+      "helpers",
+      "setupAndValidation",
+      "main \"$@\"",
+      "",
+    ]
+  },
+  "create an inotifywait watcher": {
+    "prefix": [
+      "watch"
+    ],
+    "body": [
+      "files_to_watch() {",
+      "    find ${1:.src} -regextype egrep -regex '${2:.*\\.(js|css|html)$}'",
+      "}",
+      "",
+      "process_file() {",
+      "    local file=\"\\$1\"",
+      "    ",
+      "    echo '!!!'",
+      "    echo -n '!!! '",
+      "    echo -n \"File changed: '\\$file'\"",
+      "    echo '!!!'",
+      "    ",
+      "    ${3:echo 'Do something with the \\$file here.'} \\",
+      "        && echo 'Success!' \\",
+      "        || echo 'Failed :('",
+      "}",
+      "",
+      "inotifywait -m -e close_write $(files_to_watch) | \\",
+      "    while read -r file _evt; do",
+      "        process_file \"\\$file\"",
+      "    done",
+    ],
+  },
+  "`find` using an `egrep` regex": {
+    "prefix": [
+      "find"
+    ],
+    "body": [
+      "find ${1:.} -regextype egrep -regex '${2:.*\\.(js|css|html)$}'$0",
+    ]
+  },
 }
