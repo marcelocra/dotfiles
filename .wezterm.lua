@@ -199,7 +199,7 @@ local color_schemes_to_pick = color_schemes_by_name{lightness_threshold = 1}
 -- Fill this as I find schemes that I like. Later I can randomize only them.
 local color_scheme_override = {
   -- Use `false` to select a random color scheme or the index of the favorite to use as override.
-  override = false,
+  override = 9,
   favorites = {
     'Dracula',                                -- Lua is 1-based, so this has index 1.
     'Dark Pastel',                            -- 2
@@ -208,6 +208,8 @@ local color_scheme_override = {
     'Canvased Pastel (terminal.sexy)',        -- 5
     'Synth Midnight Terminal Light (base16)', -- 6
     'midnight-in-mojave',                     -- 7
+    'Slate (Gogh)',                           -- 8
+    'tlh (terminal.sexy)',                    -- 9
   }
 }
 
