@@ -1077,7 +1077,7 @@
   "workbench.tree.renderIndentGuides": "always",
   "workbench.list.horizontalScrolling": true,
   "workbench.sideBar.location": "left",
-  "workbench.panel.defaultLocation": "right",
+  "workbench.panel.defaultLocation": "bottom",
   "json.schemas": [
     {
       // Chrome Extensions. Point to extension files in a workspace if this is not working
