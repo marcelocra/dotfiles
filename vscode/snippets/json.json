@@ -65,4 +65,31 @@
       "\"vueIndentScriptAndStyle\": false,"
     ]
   },
+  "example vscode settings config to hide folders from the explorer": {
+    "prefix": [
+      "vs-hide",
+      "vs-ig",
+      "vs-ignore"
+    ],
+    "body": [
+      "\"files.exclude\": {",
+      "//",
+      "//",
+      "// Code that I don't need to see right now.",
+      "//",
+      "",
+      "\"${1:**/some folder to hide}\": true,",
+      "\"${2:**/can have multiple entries here}\": true,",
+      "$0",
+      "",
+      "//",
+      "//",
+      "// Example, also used so I don't have to worry about trailing commas when",
+      "// modifying the list above.",
+      "//",
+      "",
+      "\"**/example*.js\": true",
+      "}",
+    ]
+  },
 }
