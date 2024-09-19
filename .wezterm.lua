@@ -220,6 +220,7 @@ local color_scheme_override = {
     'gooey (Gogh)',                           -- 13
     'SynthwaveAlpha (Gogh)',                  -- 14
     'Liquid Carbon Transparent (Gogh)',       -- 15
+    'Afterglow (Gogh)',                       -- 16
   }
 }
 
