@@ -917,7 +917,14 @@
 
   "explorer.openEditors.visible": 1,
   "explorer.confirmDragAndDrop": false,
-  "explorer.excludeGitIgnore": false,
+  "explorer.excludeGitIgnore": true,
+
+  // Nest some files in the explorer.
+  "explorer.fileNesting.enabled": true,
+  "explorer.fileNesting.patterns": {
+    ".vscode.md": "eslint*, .eslint*, .eslintignore, prettier*, .prettier*, .prettierignore, tsconfig*, .editorconfig, .gitattributes, .gitignore, LICENSE*, .env*, README*",
+    "package.json": "package-lock.json, yarn.lock, pnpm-lock.yaml, bun.lockb, pnpm-workspace.yaml, deno.json, deno.lock"
+  },
 
   //
   //
@@ -935,7 +942,32 @@
     "*.adoc": "asciidoc",
     "*.vue": "vue"
   },
+
   "files.eol": "\n",
+
+  "files.exclude": {
+    //
+    //
+    // Some support folders and files.
+    //
+
+    "**/node_modules": true,
+    "**/elm-stuff": true,
+    "**/.archives": true,
+    "**/.vscode": true,
+
+    //
+    //
+    // VSCode defaults (as of 19set24).
+    //
+
+    "**/.git": true,
+    "**/.svn": true,
+    "**/.hg": true,
+    "**/CVS": true,
+    "**/.DS_Store": true,
+    "**/Thumbs.db": true
+  },
 
   //
   //
@@ -1086,8 +1118,9 @@
       "url": "https://json.schemastore.org/chrome-manifest.json"
     }
   ],
-  "workbench.activityBar.location": "hidden",
-  "workbench.colorTheme": "Night Owl"
+  "workbench.colorTheme": "Solarized Dark",
+  "window.newWindowProfile": "Default",
+  "workbench.activityBar.location": "hidden"
 
   //////////////////////////////////////////////////////////////////////////////
 }
