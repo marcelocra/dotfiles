@@ -219,6 +219,7 @@ local color_scheme_override = {
     'Apathy (base16)',                        -- 12
     'gooey (Gogh)',                           -- 13
     'SynthwaveAlpha (Gogh)',                  -- 14
+    'Liquid Carbon Transparent (Gogh)',       -- 15
   }
 }
 
