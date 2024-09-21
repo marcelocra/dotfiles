@@ -1118,7 +1118,7 @@
       "url": "https://json.schemastore.org/chrome-manifest.json"
     }
   ],
-  "workbench.colorTheme": "Solarized Dark",
+  "workbench.colorTheme": "Night Owl",
   "window.newWindowProfile": "Default",
   "workbench.activityBar.location": "hidden"
 

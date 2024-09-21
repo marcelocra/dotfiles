@@ -450,4 +450,18 @@
       "$0"
     ]
   },
+  "Elm ports scaffolding": {
+    "scope": "javascript,javascriptreact,typescript,typescriptreact",
+    "prefix": [
+      "elm",
+      "ports",
+      "port"
+    ],
+    "body": [
+      "// Used to receive a `message` from Elm.",
+      "app.ports.sendJsonMessage.subscribe(function (/** @type {any} */ message) {});",
+      "// Used to `send` a message to Elm.",
+      "app.ports.messageReceiver.send(\"Hi to Elm from JS\");",
+    ]
+  },
 }
