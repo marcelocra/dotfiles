@@ -56,4 +56,13 @@
       "-}",
     ]
   },
+  "create a command that waits before triggering a new update": {
+    "prefix": [
+      "wait"
+    ],
+    "body": [
+      "Process.sleep 3000",
+      "  |> Task.perform (\\_ -> HideError)"
+    ]
+  },
 }

@@ -10,11 +10,13 @@
 
   "javascript.preferences.importModuleSpecifierEnding": "js",
   "[javascript]": {
-    "editor.rulers": [100, 120]
+    "editor.rulers": [100, 120],
+    "editor.wordWrapColumn": 100
   },
 
   "[javascriptreact]": {
-    "editor.rulers": [100, 120]
+    "editor.rulers": [100, 120],
+    "editor.wordWrapColumn": 100
   },
 
   //
@@ -26,11 +28,13 @@
   // "typescript.tsserver.experimental.enableProjectDiagnostics": true,
   "typescript.preferences.importModuleSpecifier": "non-relative",
   "[typescript]": {
-    "editor.rulers": [100, 120]
+    "editor.rulers": [100, 120],
+    "editor.wordWrapColumn": 100
   },
 
   "[typescriptreact]": {
-    "editor.rulers": [100, 120]
+    "editor.rulers": [100, 120],
+    "editor.wordWrapColumn": 100
   },
 
   //
@@ -161,10 +165,6 @@
   //
 
   "[markdown]": {
-    "editor.wordWrap": "bounded",
-    "editor.wordWrapColumn": 80,
-    "editor.wrappingIndent": "same",
-    "editor.rulers": [80, 100, 120],
     "editor.tabSize": 2,
     "editor.insertSpaces": true,
     "editor.autoClosingBrackets": "never"
@@ -900,7 +900,8 @@
   "editor.acceptSuggestionOnCommitCharacter": false,
   "editor.hover.delay": 1000,
   "editor.inlineSuggest.enabled": true,
-  "editor.wordWrap": "on",
+  "editor.wordWrap": "bounded",
+  "editor.wrappingIndent": "deepIndent",
   "editor.lineHeight": 1.6,
   // "editor.letterSpacing": -0.8,
   "editor.roundedSelection": false,
@@ -917,7 +918,7 @@
 
   "explorer.openEditors.visible": 1,
   "explorer.confirmDragAndDrop": false,
-  "explorer.excludeGitIgnore": true,
+  "explorer.excludeGitIgnore": false,
 
   // Nest some files in the explorer.
   "explorer.fileNesting.enabled": true,
