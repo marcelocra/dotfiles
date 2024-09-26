@@ -10,13 +10,13 @@
 
   "javascript.preferences.importModuleSpecifierEnding": "js",
   "[javascript]": {
-    "editor.rulers": [100, 120],
-    "editor.wordWrapColumn": 100
+    // "editor.rulers": [100, 120]
+    // "editor.wordWrapColumn": 100
   },
 
   "[javascriptreact]": {
-    "editor.rulers": [100, 120],
-    "editor.wordWrapColumn": 100
+    // "editor.rulers": [100, 120]
+    // "editor.wordWrapColumn": 100
   },
 
   //
@@ -28,13 +28,13 @@
   // "typescript.tsserver.experimental.enableProjectDiagnostics": true,
   "typescript.preferences.importModuleSpecifier": "non-relative",
   "[typescript]": {
-    "editor.rulers": [100, 120],
-    "editor.wordWrapColumn": 100
+    // "editor.rulers": [100, 120]
+    // "editor.wordWrapColumn": 100
   },
 
   "[typescriptreact]": {
-    "editor.rulers": [100, 120],
-    "editor.wordWrapColumn": 100
+    // "editor.rulers": [100, 120]
+    // "editor.wordWrapColumn": 100
   },
 
   //
@@ -106,12 +106,12 @@
 
   "[python]": {
     "editor.tabSize": 4,
-    "editor.defaultFormatter": "ms-python.black-formatter",
-    "vim.textwidth": 80
+    "editor.defaultFormatter": "ms-python.black-formatter"
+    // "vim.textwidth": 80
   },
 
   "[shellscript]": {
-    "vim.textwidth": 80
+    // "vim.textwidth": 80
   },
 
   //
@@ -171,7 +171,7 @@
   },
 
   "[asciidoc]": {
-    "editor.rulers": [80, 100, 120]
+    // "editor.rulers": [80, 100, 120]
   },
 
   "asciidoc.antora.enableAntoraSupport": false,
@@ -315,7 +315,7 @@
   // Use this for most languages and files. I change it for some particular file
   // types in their sessions, search for it here to see (e.g. Python and Shell).
   // Ideally, it should be in sync with preferences from the .editorconfig file.
-  "vim.textwidth": 100,
+  "vim.textwidth": 80,
 
   "vim.enableNeovim": true,
   "vim.neovimUseConfigFile": true,
@@ -902,7 +902,8 @@
   "editor.inlineSuggest.enabled": true,
   "editor.wordWrap": "bounded",
   "editor.wrappingIndent": "deepIndent",
-  "editor.lineHeight": 1.6,
+  "editor.wordWrapColumn": 80,
+  // "editor.lineHeight": 1.6,
   // "editor.letterSpacing": -0.8,
   "editor.roundedSelection": false,
   "editor.autoIndent": "full",
@@ -1119,7 +1120,7 @@
       "url": "https://json.schemastore.org/chrome-manifest.json"
     }
   ],
-  "workbench.colorTheme": "Night Owl",
+  "workbench.colorTheme": "Dracula Theme",
   "window.newWindowProfile": "Default",
   "workbench.activityBar.location": "hidden"
 

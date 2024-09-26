@@ -221,6 +221,7 @@ local color_scheme_override = {
     'SynthwaveAlpha (Gogh)',                  -- 14
     'Liquid Carbon Transparent (Gogh)',       -- 15
     'Afterglow (Gogh)',                       -- 16
+    'HaX0R_R3D',                              -- 17
   }
 }
 
@@ -255,8 +256,8 @@ end)
 -- MAIN SETTINGS
 
 
-config.window_background_opacity = 1
-config.text_background_opacity = 1
+config.window_background_opacity = 0.5
+config.text_background_opacity = 0.7
 config.window_decorations = 'RESIZE'
 
 config.font = fonts.jb

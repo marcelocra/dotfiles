@@ -536,7 +536,11 @@
     "key": "alt+r",
     "command": "runCommands",
     "args": {
-      "commands": ["typescript.restartTsServer", "eslint.restart", "svelte.restartLanguageServer"]
+      "commands": [
+        "typescript.restartTsServer",
+        "eslint.restart",
+        "svelte.restartLanguageServer"
+      ]
     },
     "when": "editorTextFocus && (vim.mode == 'Normal' || vim.mode == 'Insert')"
   },

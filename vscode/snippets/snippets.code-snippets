@@ -89,7 +89,7 @@
     "scope": "javascript,typescript,javascriptreact,typescriptreact",
     "prefix": "tse",
     "body": [
-      "// @ts-expect-error - ${1:expected error}${0: - reason}"
+      "// @ts-expect-error: $0"
     ]
   },
   "ts nocheck - ignore current file (should be in the first line)": {
