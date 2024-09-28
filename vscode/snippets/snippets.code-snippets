@@ -372,14 +372,24 @@
       "// deno-lint-ignore ${1:prefer-const}$0"
     ]
   },
-  "create an immidiately invoked function expression": {
+  "create an iife - immidiately invoked function expression": {
     "scope": "javascript,javascriptreact,typescript,typescriptreact",
     "prefix": [
-      "iife",
-      "i"
+      "fiife",
+      "fi"
     ],
     "body": [
       "(${1:async} ($2) => {$0})($2)"
+    ]
+  },
+  "create a simple iife - immidiately invoked function expression": {
+    "scope": "javascript,javascriptreact,typescript,typescriptreact",
+    "prefix": [
+      "iife",
+      "i",
+    ],
+    "body": [
+      "(() => {$0})()"
     ]
   },
   "make ts": {

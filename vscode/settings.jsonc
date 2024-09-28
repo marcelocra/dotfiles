@@ -8,6 +8,7 @@
   // JavaScript
   //
 
+  "js/ts.implicitProjectConfig.checkJs": true,
   "javascript.preferences.importModuleSpecifierEnding": "js",
   "[javascript]": {
     // "editor.rulers": [100, 120]
@@ -578,6 +579,14 @@
     {
       "before": ["-"],
       "commands": ["workbench.action.splitEditorDown"]
+    },
+    {
+      "before": ["g", "e"],
+      "commands": ["editor.action.marker.nextInFiles"]
+    },
+    {
+      "before": ["g", "E"],
+      "commands": ["editor.action.marker.prevInFiles"]
     }
     // {
     //   "before": ["/"],
@@ -902,7 +911,7 @@
   "editor.inlineSuggest.enabled": true,
   "editor.wordWrap": "bounded",
   "editor.wrappingIndent": "deepIndent",
-  "editor.wordWrapColumn": 80,
+  // "editor.wordWrapColumn": 80,
   // "editor.lineHeight": 1.6,
   // "editor.letterSpacing": -0.8,
   "editor.roundedSelection": false,
