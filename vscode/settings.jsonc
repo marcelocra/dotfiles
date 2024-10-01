@@ -213,31 +213,62 @@
   "tailwindCSS.emmetCompletions": false, // I don't use these.
   "tailwindCSS.colorDecorators": true, // They are useful, though annoying.
   "tailwindCSS.experimental.classRegex": [
-    // For Clojure and Hiccup (not working).
-    // ":class\\s+\"([^\"]*)\"",
-    // ":([^\"]*)[cC]lass\"([^\"]*)\"",
-    // ":[\\w-.#>]+\\.([\\w-]*)",
-
-    // Always detect when wrapping strings with Tailwind-specific tagged literals.
+    // Always detect when wrapping strings with Tailwind-specific tagged
+    // literals. You can define a simple identity function that receives a
+    // tagged string literal as an argument and returns it.
+    //
+    // The function can be as simple as:
+    //
+    //    const tw = (string) => string;
+    //
+    // Or if you are using type annotations or TypeScript:
+    //
+    //    /**
+    //     * Usage: tw`bg-red-500`
+    //     *
+    //     * @param {TemplateStringsArray} string
+    //     */
+    //    function tw(string) {
+    //      return string;
+    //    }
+    //
+    // The type annotation is useful because it will warn you if you use the
+    // function without a template literal:
+    //
+    //    tw('bg-red-500')  //=> Argument of type 'string' is not assignable to
+    //                      //=> parameter of type 'TemplateStringsArray'
+    //
     "c`([^`]+)`",
     "tw`([^`]+)`",
 
     // Try to generalize.
-    "[cC]lass[^\"']+[\"']([^\"']*)[\"']",
+    "[cC]lass[^\"'`]*[\"'`]([^\"'`]+)[\"'`]"
 
-    // For JS variables ending in [cC]lass.
-    "const.+[cC]lass =\\s+[\"']([^\"']*)[\"']",
-    "let.+[cC]lass =\\s+[\"']([^\"']*)[\"']",
-    "var.+[cC]lass =\\s+[\"']([^\"']*)[\"']",
-
-    // For JS objects with properties ending in [cC]lass.
-    ".*[cC]lass:\\s+[\"']([^\"']*)[\"']",
-
-    // For JS classList manipulation.
-    "\\.classList\\.[^\\(]*\\([\"']([^\"']*)[\"']\\)",
-
-    // For html-like attributes.
-    ".+[cC]lass=\"([^\"]*)\""
+    // Old tries for this, kept here as a reference of what **might** work.
+    //
+    //
+    // // For JS variables ending in [cC]lass.
+    // "const.+[cC]lass =\\s+[\"']([^\"']*)[\"']",
+    // "let.+[cC]lass =\\s+[\"']([^\"']*)[\"']",
+    // "var.+[cC]lass =\\s+[\"']([^\"']*)[\"']",
+    //
+    //
+    // // For JS objects with properties ending in [cC]lass.
+    // ".*[cC]lass:\\s+[\"']([^\"']*)[\"']",
+    //
+    //
+    // // For JS classList manipulation.
+    // "\\.classList\\.[^\\(]*\\([\"']([^\"']*)[\"']\\)",
+    //
+    //
+    // // For html-like attributes.
+    // ".+[cC]lass=\"([^\"]*)\""
+    //
+    //
+    // // For Clojure and Hiccup (not working).
+    // ":class\\s+\"([^\"]*)\"",
+    // ":([^\"]*)[cC]lass\"([^\"]*)\"",
+    // ":[\\w-.#>]+\\.([\\w-]*)",
   ],
   "tailwindCSS.includeLanguages": {
     "clojure": "html",
@@ -797,7 +828,7 @@
   // Source Code Pro
   //
   // "editor.fontFamily": "SourceCodeVF",
-  // "editor.fontSize": 13, // edn{:desktop 15 :notebook ?? :small 11}
+  // "editor.fontSize": 15, // edn{:desktop 15 :notebook ?? :small 11}
   // "editor.fontWeight": "400", // edn{:desktop "400" :notebook "??" :small "100"}
   // "editor.fontLigatures": "'cv17','cv01','cv02','zero'",
   // // Available stylistic sets:
@@ -853,7 +884,7 @@
   // Recursive font
   //
   "editor.fontFamily": "Recursive",
-  "editor.fontSize": 13, // edn{:desktop 13 :notebook ?? :small 11}
+  "editor.fontSize": 16, // edn{:desktop 13 :notebook ?? :small 11}
   "editor.fontWeight": "400", // edn{:desktop "400" :notebook "??" :small "100"}
   // // Recursive with default values and almost no customization.
   // "editor.fontLigatures": "'frac'",
@@ -909,9 +940,9 @@
   "editor.acceptSuggestionOnCommitCharacter": false,
   "editor.hover.delay": 1000,
   "editor.inlineSuggest.enabled": true,
-  "editor.wordWrap": "bounded",
+  "editor.wordWrap": "off",
   "editor.wrappingIndent": "deepIndent",
-  // "editor.wordWrapColumn": 80,
+  "editor.wordWrapColumn": 80,
   // "editor.lineHeight": 1.6,
   // "editor.letterSpacing": -0.8,
   "editor.roundedSelection": false,
@@ -920,6 +951,7 @@
   "editor.screenReaderAnnounceInlineSuggestion": false,
   "editor.snippetSuggestions": "inline",
   "editor.multiCursorModifier": "ctrlCmd",
+  "editor.renderLineHighlight": "all",
 
   //
   //
@@ -1086,34 +1118,26 @@
   // Workbench
   //
 
-  // "workbench.colorCustomizations": {
-  //   "editorCursor.foreground": "#fff", // edn{:dark "#fff" :light "#ff00ea" :dark-opt "#51ff00"}
-
-  //   "tree.indentGuidesStroke": "#0084ff",
-  //   "tree.inactiveIndentGuidesStroke": "#555", // edn{:dark "#444" :light "#d8d8d8" "GitHub Dark" "#555"}
-
-  //   "editorIndentGuide.activeBackground1": "#ff00c8", // edn{:dark "#ff00c8" :light "#00ffff"}
-  //   "editorIndentGuide.background1": "#555", // edn{:dark "#555" :light "#ccc" "GitHub Dark" "#555" "Solarized Light" "#ccc" }
-
-  //   "editor.lineHighlightBorder": "#ff00c833", // edn{:dark "#ff00c833" :light "#00ffff22"}
-  //   "editor.lineHighlightBackground": "#ff00c822", // edn{:dark "#ff00c822" :light "#00ffff22"}
-
-  //   // TODO: figure out how to get this working.
-  //   // "editor.selectionForeground": "#ff00c8" // edn{:dark "#ff00c8" :light "#fff"}
-  //   "editor.selectionBackground": "#ff00c855", // edn{:dark "#ff00c855" :light "#00ffff77"}
-
-  //   "editor.selectionHighlightBorder": "#ffffff81", // edn{:dark "#ffffff81" :light "#ffffffdd"}
-  //   "editor.selectionHighlightBackground": "#ffffff36", // edn{:dark "#ffffff36" :light "#ffffff36"}
-
-  //   "editor.wordHighlightBorder": "#ffffff66", // edn{:dark "#ffffff66" :light "#00000033"}
-  //   "editor.wordHighlightBackground": "#00000066", // edn{:dark "#00000066" :light "#ffffff44"}
-
-  //   "editor.findMatchBackground": "#d400ff88", // edn{:dark "#d400ff88" :light "#000000e8"}
-  //   "editor.findMatchHighlightBackground": "#d400ff56", // edn{:dark "#d400ff56" :light "#d400ff56"}
-
-  //   "calva.inlineErrorForegroundColor": "#ff0000",
-  //   "calva.inlineForegroundColor": "#ff9000"
-  // },
+  "workbench.colorCustomizations": {
+    // "editorCursor.foreground": "#fff", // edn{:dark "#fff" :light "#ff00ea" :dark-opt "#51ff00"}
+    // "tree.indentGuidesStroke": "#0084ff",
+    // "tree.inactiveIndentGuidesStroke": "#555", // edn{:dark "#444" :light "#d8d8d8" "GitHub Dark" "#555"}
+    "editorIndentGuide.activeBackground1": "#555d", // edn{:dark "#ff00c8" :light "#00ffff"}
+    "editorIndentGuide.background1": "#5551" // edn{:dark "#555" :light "#ccc" "GitHub Dark" "#555" "Solarized Light" "#ccc" }
+    // "editor.lineHighlightBorder": "#ff00c833", // edn{:dark "#ff00c833" :light "#00ffff22"}
+    // "editor.lineHighlightBackground": "#ff00c822" // edn{:dark "#ff00c822" :light "#00ffff22"}
+    // // TODO: figure out how to get this working.
+    // // "editor.selectionForeground": "#ff00c8" // edn{:dark "#ff00c8" :light "#fff"}
+    // "editor.selectionBackground": "#ff00c855", // edn{:dark "#ff00c855" :light "#00ffff77"}
+    // "editor.selectionHighlightBorder": "#ffffff81", // edn{:dark "#ffffff81" :light "#ffffffdd"}
+    // "editor.selectionHighlightBackground": "#ffffff36", // edn{:dark "#ffffff36" :light "#ffffff36"}
+    // "editor.wordHighlightBorder": "#ffffff66", // edn{:dark "#ffffff66" :light "#00000033"}
+    // "editor.wordHighlightBackground": "#00000066", // edn{:dark "#00000066" :light "#ffffff44"}
+    // "editor.findMatchBackground": "#d400ff88", // edn{:dark "#d400ff88" :light "#000000e8"}
+    // "editor.findMatchHighlightBackground": "#d400ff56", // edn{:dark "#d400ff56" :light "#d400ff56"}
+    // "calva.inlineErrorForegroundColor": "#ff0000",
+    // "calva.inlineForegroundColor": "#ff9000"
+  },
 
   "workbench.startupEditor": "newUntitledFile",
   "workbench.tree.indent": 20,
@@ -1129,7 +1153,7 @@
       "url": "https://json.schemastore.org/chrome-manifest.json"
     }
   ],
-  "workbench.colorTheme": "Dracula Theme",
+  "workbench.colorTheme": "Night Owl",
   "window.newWindowProfile": "Default",
   "workbench.activityBar.location": "hidden"
 
