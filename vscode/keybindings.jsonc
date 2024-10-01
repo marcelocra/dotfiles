@@ -533,13 +533,18 @@
     "when": "!editorTextFocus"
   },
   {
+    // Restart processes that might be using stale info.
+    //
+    // NOTE: It will show and error notification if some of them are not
+    // available in the current workspace. That is NOT problem, just close it.
     "key": "alt+r",
     "command": "runCommands",
     "args": {
       "commands": [
         "typescript.restartTsServer",
         "eslint.restart",
-        "svelte.restartLanguageServer"
+        "svelte.restartLanguageServer",
+        "elm.commands.restart"
       ]
     },
     "when": "editorTextFocus && (vim.mode == 'Normal' || vim.mode == 'Insert')"
