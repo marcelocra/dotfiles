@@ -59,6 +59,31 @@ local fonts = {
       'cv32', 'cv28', 'ss10', 'cv14', 'cv12',
     },
   }),
+
+  geist = wezterm.font({
+    family = 'Geist Mono',
+  }),
+
+  noto = wezterm.font({
+    family = 'Noto Sans Mono',
+    weight = 700,
+  }),
+
+  dm = wezterm.font({
+    family = 'DM Mono',
+    weight = 700,
+    harfbuzz_features = {
+      'ss01', 'ss03', 'ss04',
+    },
+  }),
+
+  scp = wezterm.font({
+    family = 'SourceCodeVF',
+    -- weight = 700,
+    harfbuzz_features = {
+      'cv17', 'cv01', 'cv02', 'zero'
+    },
+  }),
 }
 -- )>>
 
@@ -66,7 +91,7 @@ local fonts = {
 local config = wezterm.config_builder()
 
 
-local SCRATCH_SCRIPT = '/home/marcelocra/projects/dotfiles/.rc.scratch'
+local SCRATCH_SCRIPT = os.getenv('HOME') .. '/projects/dotfiles/.rc.scratch'
 
 
 
@@ -195,7 +220,7 @@ end
 
 
 local color_schemes_to_pick = color_schemes_by_name{
-  min_light = 0, 
+  min_light = 0,
   max_light = 0.2
 }
 
@@ -203,7 +228,7 @@ local color_schemes_to_pick = color_schemes_by_name{
 -- Fill this as I find schemes that I like. Later I can randomize only them.
 local color_scheme_override = {
   -- Use `false` to select a random color scheme or the index of the favorite to use as override.
-  override = false,
+  override = 2,
   favorites = {
     'Dracula',                                -- Lua is 1-based, so this has index 1.
     'Dark Pastel',                            -- 2
@@ -222,13 +247,13 @@ local color_scheme_override = {
     'Liquid Carbon Transparent (Gogh)',       -- 15
     'Afterglow (Gogh)',                       -- 16
     'HaX0R_R3D',                              -- 17
-    'Vice Alt (base16),'                      -- 18
+    'Vice Alt (base16)',                      -- 18
   }
 }
 
 
 function get_scheme(opts)
-  local scheme = 'Dracula' 
+  local scheme = 'Dracula'
 
   if not opts.force_random and color_scheme_override.override then
     scheme = color_scheme_override.favorites[color_scheme_override.override]
@@ -277,11 +302,13 @@ config.window_padding = {
 }
 
 config.colors = {
-  cursor_bg = 'orange',
+  cursor_bg = 'yellow',
   cursor_fg = 'black',
 }
 
-config.default_gui_startup_args = { 'start', SCRATCH_SCRIPT }
+-- The x is calculated as `(screen_width + panel_width) / 2`. See `gui-startup`
+-- above.
+-- config.default_gui_startup_args = { 'start', '--position', '1303,0', SCRATCH_SCRIPT, }
 
 local should_blink = false
 if should_blink then
