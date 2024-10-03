@@ -209,7 +209,31 @@
     // Navigate to the previous suggestion in menus.
     "key": "ctrl+k",
     "command": "selectPrevSuggestion",
-    "when": "suggestWidgetMultipleSuggestions && suggestWidgetVisible && textInputFocus || suggestWidgetVisible && textInputFocus && !suggestWidgetHasFocusedSuggestion"
+    "when": "(vim.mode == 'Normal' && vim.active) && (suggestWidgetMultipleSuggestions && suggestWidgetVisible && textInputFocus || suggestWidgetVisible && textInputFocus && !suggestWidgetHasFocusedSuggestion)"
+  },
+
+  {
+    "key": "ctrl+j",
+    "command": "quickInput.next",
+    "when": "inQuickInput && quickInputType == 'quickPick'"
+  },
+
+  {
+    "key": "ctrl+k",
+    "command": "quickInput.previous",
+    "when": "inQuickInput && quickInputType == 'quickPick'"
+  },
+
+  {
+    "key": "ctrl+j",
+    "command": "selectNextCodeAction",
+    "when": "codeActionMenuVisible"
+  },
+
+  {
+    "key": "ctrl+k",
+    "command": "selectPrevCodeAction",
+    "when": "codeActionMenuVisible"
   },
 
   {
@@ -663,19 +687,11 @@
   {
     "key": "ctrl+k",
     "command": "workbench.action.quickTextSearch",
-    "when": "!suggestWidgetVisible"
-  },
-
-  {
-    "key": "ctrl+j",
-    "command": "quickInput.next",
-    "when": "inQuickInput && quickInputType == 'quickPick'"
-  },
-
-  {
-    "key": "ctrl+k",
-    "command": "quickInput.previous",
-    "when": "inQuickInput && quickInputType == 'quickPick'"
+    // This is necessary because we use ctrl+k to navigate up in menus. This one
+    // must have a negative of the combination of all others, i.e., if they are
+    // `when: A`, `when: B`, `when: C`, this one must be `when: !A && !B && !C`,
+    // which is the same thing as `when: !(A || B || C)`.
+    "when": "!((suggestWidgetMultipleSuggestions && suggestWidgetVisible && textInputFocus || suggestWidgetVisible && textInputFocus && !suggestWidgetHasFocusedSuggestion) || (inQuickInput && quickInputType == 'quickPick') || (codeActionMenuVisible))"
   },
 
   {
