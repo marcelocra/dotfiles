@@ -92,4 +92,20 @@
       "}",
     ]
   },
+  "tells tailwind to detect custom tailwind config file": {
+    "prefix": [
+      "tw",
+      "tailwind",
+      "tw-config"
+    ],
+    "body": [
+      "\"tailwindCSS.experimental.configFile\": {",
+      "  \"./packages/chrome-ext-main/tailwind.base.config.js\": [",
+      "    \"./packages/chrome-ext-main/src/**/*.html\",",
+      "    \"./packages/chrome-ext-main/src/**/*.js\",",
+      "    \"./packages/chrome-ext-main/src/**/*.elm\"",
+      "  ]",
+      "},"
+    ]
+  },
 }

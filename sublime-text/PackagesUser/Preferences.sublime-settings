@@ -38,6 +38,9 @@
   "caret_extra_bottom": 4,
   "caret_extra_width": 0,
 
+  "line_padding_bottom": 3,
+  "line_padding_top": 3,
+
   "highlight_line": true,
 
   "open_files_in_new_window": "always",

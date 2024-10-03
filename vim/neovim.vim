@@ -448,6 +448,11 @@ xnoremap ga <Plug>(EasyAlign)
 " Start interactive EasyAlign for a motion/text object (e.g. gaip)
 nnoremap ga <Plug>(EasyAlign)
 
+" " Use c-/ to comment block.
+" nnoremap <c-\/> gcc
+" vnoremap <c-\/> gc
+" inoremap <c-\/> <esc>gcca
+
 call _mcra_debug(4)
 
 " )mappings- }}}

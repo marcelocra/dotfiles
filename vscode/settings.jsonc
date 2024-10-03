@@ -884,7 +884,7 @@
   // Recursive font
   //
   "editor.fontFamily": "Recursive",
-  "editor.fontSize": 16, // edn{:desktop 13 :notebook ?? :small 11}
+  "editor.fontSize": 13, // edn{:desktop 13 :notebook ?? :small 11}
   "editor.fontWeight": "400", // edn{:desktop "400" :notebook "??" :small "100"}
   // // Recursive with default values and almost no customization.
   // "editor.fontLigatures": "'frac'",
@@ -943,11 +943,10 @@
   "editor.wordWrap": "off",
   "editor.wrappingIndent": "deepIndent",
   "editor.wordWrapColumn": 80,
-  // "editor.lineHeight": 1.6,
+  "editor.lineHeight": 2.2, // Good values: 1.6; 2
   // "editor.letterSpacing": -0.8,
   "editor.roundedSelection": false,
   "editor.autoIndent": "full",
-  "editor.minimap.enabled": false,
   "editor.screenReaderAnnounceInlineSuggestion": false,
   "editor.snippetSuggestions": "inline",
   "editor.multiCursorModifier": "ctrlCmd",
@@ -987,30 +986,6 @@
   },
 
   "files.eol": "\n",
-
-  "files.exclude": {
-    //
-    //
-    // Some support folders and files.
-    //
-
-    "**/node_modules": true,
-    "**/elm-stuff": true,
-    "**/.archives": true,
-    "**/.vscode": true,
-
-    //
-    //
-    // VSCode defaults (as of 19set24).
-    //
-
-    "**/.git": true,
-    "**/.svn": true,
-    "**/.hg": true,
-    "**/CVS": true,
-    "**/.DS_Store": true,
-    "**/Thumbs.db": true
-  },
 
   //
   //
@@ -1102,15 +1077,22 @@
   "search.showLineNumbers": true,
   "search.smartCase": true,
   "search.exclude": {
+    // Other stuff.
+    "**/.archives": true,
+    "**/.vscode": true,
+    "**/dist/": true,
+
+    // Clojure.
     "**/.calva/": true,
     "**/.clj-kondo/": true,
     "**/.lsp/": true,
-    "**/*.code-search": true,
-    "**/bower_components/": true,
-    "**/node_modules/": true,
-    "**/dist/": true,
     "**/target/": true,
-    "**/out/": true
+    "**/out/": true,
+
+    // VSCode defaults (as of 2oct24).
+    "**/node_modules": true,
+    "**/bower_components": true,
+    "**/*.code-search": true
   },
 
   //
