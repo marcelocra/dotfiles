@@ -202,14 +202,14 @@
     // Navigate to the next suggestion in menus.
     "key": "ctrl+j",
     "command": "selectNextSuggestion",
-    "when": "(vim.mode == 'Normal' && vim.active) && (suggestWidgetMultipleSuggestions && suggestWidgetVisible && textInputFocus || suggestWidgetVisible && textInputFocus && !suggestWidgetHasFocusedSuggestion)"
+    "when": "suggestWidgetVisible"
   },
 
   {
     // Navigate to the previous suggestion in menus.
     "key": "ctrl+k",
     "command": "selectPrevSuggestion",
-    "when": "(vim.mode == 'Normal' && vim.active) && (suggestWidgetMultipleSuggestions && suggestWidgetVisible && textInputFocus || suggestWidgetVisible && textInputFocus && !suggestWidgetHasFocusedSuggestion)"
+    "when": "suggestWidgetVisible"
   },
 
   {
@@ -226,7 +226,7 @@
 
   {
     "key": "ctrl+j",
-    "command": "selectNextCodeAction",
+    "command": "selenext",
     "when": "codeActionMenuVisible"
   },
 
@@ -439,7 +439,7 @@
   },
 
   {
-    "key": "alt+shift+t",
+    "key": "alt+shift+r",
     "command": "workbench.action.tasks.runTask"
   },
 
@@ -595,11 +595,6 @@
   },
 
   {
-    "key": "alt+shift+r",
-    "command": "workbench.action.reloadWindow"
-  },
-
-  {
     "key": "alt+k",
     "command": "-keybindings.editor.recordSearchKeys",
     "when": "inKeybindings && inKeybindingsSearch"
@@ -691,7 +686,7 @@
     // must have a negative of the combination of all others, i.e., if they are
     // `when: A`, `when: B`, `when: C`, this one must be `when: !A && !B && !C`,
     // which is the same thing as `when: !(A || B || C)`.
-    "when": "!((suggestWidgetMultipleSuggestions && suggestWidgetVisible && textInputFocus || suggestWidgetVisible && textInputFocus && !suggestWidgetHasFocusedSuggestion) || (inQuickInput && quickInputType == 'quickPick') || (codeActionMenuVisible))"
+    "when": "!(suggestWidgetVisible || (inQuickInput && quickInputType == 'quickPick') || codeActionMenuVisible)"
   },
 
   {
@@ -701,27 +696,33 @@
   },
 
   {
-    // Amazing feature for productivity!
+    // Search through all symbols in a file. Amazing feature for productivity!
     "key": "ctrl+t",
     "command": "workbench.action.gotoSymbol",
     "when": "!accessibilityHelpIsShown && !accessibleViewIsShown"
   },
 
   {
-    // Same as above, but for the whole workspace! I remapped to ctrl+shift+o.
+    // Search through all symbols in a workspace.
     "key": "ctrl+t",
     "command": "-workbench.action.showAllSymbols"
   },
 
   {
-    // See above.
+    // Search through all symbols in a workspace.
     "key": "ctrl+shift+o",
     "command": "workbench.action.showAllSymbols",
     "when": "editorTextFocus"
   },
 
   {
-    // See above.
+    // Search through all symbols in a workspace.
+    "key": "alt+t",
+    "command": "workbench.action.showAllSymbols",
+    "when": "editorTextFocus"
+  },
+
+  {
     "key": "ctrl+shift+o",
     "command": "-workbench.action.gotoSymbol",
     "when": "!accessibilityHelpIsShown && !accessibleViewIsShown"

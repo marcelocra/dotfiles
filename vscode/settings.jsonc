@@ -1064,7 +1064,6 @@
   "window.title": "${dirty}${activeEditorLong}${separator}${appName}",
   "window.newWindowDimensions": "inherit",
   "window.restoreWindows": "none",
-  "window.menuBarVisibility": "hidden",
 
   //
   //
@@ -1135,9 +1134,11 @@
       "url": "https://json.schemastore.org/chrome-manifest.json"
     }
   ],
-  "workbench.colorTheme": "Night Owl",
+  "workbench.colorTheme": "Dracula Theme",
   "window.newWindowProfile": "Default",
-  "workbench.activityBar.location": "hidden"
+  "workbench.activityBar.location": "hidden",
+  "window.menuBarVisibility": "toggle",
+  "editor.minimap.enabled": false
 
   //////////////////////////////////////////////////////////////////////////////
 }
