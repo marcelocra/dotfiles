@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/bin/env bash
 # vim:tw=80:ts=4:sw=4:ai:et:ff=unix:fenc=utf-8:et:fixeol:eol:fdm=marker:fdl=0:fen:ft=sh
 #
 # Main shell configuration script.
@@ -430,6 +430,67 @@ regexfind() {
     find "$dir" -regextype egrep -regex "$regex"
 }
 alias rfind=regexfind
+
+
+count_lines_of_code() {
+    local to_count='(js|cjs|mjs|jsx|ts|cts|mts|tsx|elm|sh)$'
+    local to_ignore='(compiled|vendored|cypress|e2e|bundle|config|example|[Ii]cons)'
+    local md_wrap='sh'
+
+    while [[ $# -gt 0 ]]; do
+        case "$1" in
+            --count|-c)
+                to_count="$2"
+
+                shift
+                shift
+                ;;
+
+            --ignore|-i)
+                to_ignore="$2"
+
+                shift
+                shift
+                ;;
+
+            --md-wrap|-w)
+                md_wrap="$2"
+
+                shift
+                shift
+                ;;
+
+            --no-md-wrap|-no-w)
+                md_wrap=''
+
+                shift
+                ;;
+        esac
+    done
+
+    # Only look at files tracked by git, i.e., ignore what is in `.gitignore`.
+    local cmd="git ls-files \
+        | egrep \"$to_count\" \
+        | egrep -v \"$to_ignore\" \
+        | xargs wc -l"
+
+    if [ -n "$md_wrap" ]; then
+        echo '```'"$md_wrap"
+    fi
+
+    echo "looking at: $to_count"
+    echo "ignoring: $to_ignore"
+    echo "running command:\n  $cmd" | sed -E -e 's/\s{9}/\n    /g'
+    echo "result:"
+
+    bash -c "$cmd"
+
+    if [ -n "$md_wrap" ]; then
+        echo '```'
+    fi
+
+}
+alias loc=count_lines_of_code
 
 
 # }}}functions
