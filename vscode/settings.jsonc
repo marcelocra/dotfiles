@@ -107,12 +107,12 @@
 
   "[python]": {
     "editor.tabSize": 4,
-    "editor.defaultFormatter": "ms-python.black-formatter"
-    // "vim.textwidth": 80
+    "editor.defaultFormatter": "ms-python.black-formatter",
+    "vim.textwidth": 80
   },
 
   "[shellscript]": {
-    // "vim.textwidth": 80
+    "vim.textwidth": 80
   },
 
   //
@@ -203,12 +203,7 @@
     "markdown",
     "svelte"
   ],
-  "eslint.validate": [
-    "javascript",
-    "javascriptreact",
-    "typescript",
-    "typescriptreact"
-  ],
+  "eslint.validate": ["javascript", "javascriptreact", "typescript", "typescriptreact"],
 
   "tailwindCSS.emmetCompletions": false, // I don't use these.
   "tailwindCSS.colorDecorators": true, // They are useful, though annoying.
@@ -347,7 +342,7 @@
   // Use this for most languages and files. I change it for some particular file
   // types in their sessions, search for it here to see (e.g. Python and Shell).
   // Ideally, it should be in sync with preferences from the .editorconfig file.
-  "vim.textwidth": 80,
+  "vim.textwidth": 120,
 
   "vim.enableNeovim": true,
   "vim.neovimUseConfigFile": true,
@@ -1038,6 +1033,7 @@
   "terminal.integrated.tabs.enabled": false,
   "terminal.integrated.fontSize": 13, // edn{:desktop 13 :notebook 19}
   "terminal.integrated.fontWeight": "normal",
+  "terminal.integrated.lineHeight": 1.6, // Good values: 1.6; 2
   "terminal.integrated.macOptionClickForcesSelection": true,
   "terminal.integrated.allowChords": false,
   // "terminal.integrated.sendKeybindingsToShell": false,
@@ -1134,7 +1130,7 @@
       "url": "https://json.schemastore.org/chrome-manifest.json"
     }
   ],
-  "workbench.colorTheme": "Dracula Theme",
+  "workbench.colorTheme": "Solarized Dark",
   "window.newWindowProfile": "Default",
   "workbench.activityBar.location": "hidden",
   "window.menuBarVisibility": "toggle",
