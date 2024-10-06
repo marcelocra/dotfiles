@@ -558,8 +558,8 @@ iab C- - [ ]
 iab Cret ↲
 
 " Text.
-iab js JavaScript
-iab ts TypeScript
+" iab js JavaScript
+" iab ts TypeScript
 
 " ///// COMMAND ////////////////////////////////////////////////////////////////
 
