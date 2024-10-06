@@ -288,6 +288,7 @@ config.window_decorations = 'RESIZE'
 
 config.font = fonts.jb
 config.font_size = 10
+-- config.line_height = 1.2
 
 config.scrollback_lines = 5000
 
