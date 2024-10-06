@@ -10,7 +10,7 @@ trim_trailing_whitespace = true
 end_of_line = lf
 charset = utf-8
 spelling_language = pt-BR
-max_line_length = 80
+max_line_length = 120
 
 [Makefile]
 # Example of a different indent.
@@ -20,6 +20,7 @@ tab_width = 1
 
 [*.{py,sh,zsh,bash}]
 indent_size = 4
+max_line_length = 80
 
 [dev]
 # I frequently use a `dev` script (shell) to run project commands.
