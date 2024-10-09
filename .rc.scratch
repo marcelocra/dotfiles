@@ -31,17 +31,21 @@ has_prefix() {
 use_gnome_terminal() {
   # Get the default profile ID.
   local profile_id=$(gsettings get org.gnome.Terminal.ProfilesList default | tr -d \')
+  log "profile_id: $profile_id"
 
   # Get the font setting for the default terminal profile.
-  local font=$(dconf read /org/gnome/terminal/legacy/profiles:/:$profile_id/font)
+  local font="$(dconf read /org/gnome/terminal/legacy/profiles:/:$profile_id/font)"
+  log "font: $font"
 
   # Extract the font family and its size.
   local font_family=$(echo $font | sed -E -e "s/'([^0-9]+) [0-9]+'/\1/g")
   local font_size=$(echo $font | grep -o '[0-9]\+')
+  log "font_family: $font_family | font_size: $font_size"
 
   # Default values.
   local columns=150
   local rows=60
+  log "default columns: $columns | rows: $rows"
 
   # TODO: eventually I can play with this to figure the char width and height dynamically. Then
   # the rest of the commented stuff might help.
@@ -116,6 +120,7 @@ use_gnome_terminal() {
   local resolution=$(xrandr | grep '*' | awk '{print $1}')
   local screen_width=$(echo $resolution | cut -d'x' -f1)
   # screen_height=$(echo $resolution | cut -d'x' -f2)
+  log "screen_width: $screen_width"
 
   # Calculate half the screen width. `gnome-terminal` prioritizes the number of columns and rows
   # over starting point. Therefore, we can push the window all the way to the right and still have
@@ -134,7 +139,7 @@ use_gnome_terminal() {
     --geometry \"${columns}x${rows}+$half_width+0\" \
     --"
 
-  echo $cmd
+  echo "$cmd"
 }
 
 use_wezterm() {
