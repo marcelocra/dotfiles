@@ -27,6 +27,15 @@
         "reveal": "always"
       },
       "problemMatcher": []
+    },
+    {
+      "label": "create a valid json string from some text",
+      "type": "shell",
+      "command": "cli to-json-string '${selectedText}'",
+      "presentation": {
+        "reveal": "always"
+      },
+      "problemMatcher": []
     }
   ]
 }
