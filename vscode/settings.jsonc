@@ -1030,7 +1030,7 @@
   //
 
   "terminal.integrated.fontFamily": "'Recursive', 'Geist Mono', 'JetBrains Mono', 'MesloLGS Nerd Font', 'MesloLGS NF', monospace",
-  "terminal.integrated.tabs.enabled": false,
+  "terminal.integrated.tabs.enabled": true,
   "terminal.integrated.fontSize": 13, // edn{:desktop 13 :notebook 19}
   "terminal.integrated.fontWeight": "normal",
   "terminal.integrated.lineHeight": 1.6, // Good values: 1.6; 2
@@ -1040,9 +1040,9 @@
   // "terminal.integrated.commandsToSkipShell": [
   //   "workbench.action.toggleMaximizedPanel"
   // ],
-  "terminal.integrated.shellIntegration.enabled": true,
+  "terminal.integrated.shellIntegration.enabled": false,
   "terminal.integrated.drawBoldTextInBrightColors": true,
-  "terminal.integrated.minimumContrastRatio": 1,
+  "terminal.integrated.minimumContrastRatio": 4.5,
   "terminal.integrated.enableVisualBell": true,
   "terminal.integrated.bellDuration": 3000,
 
