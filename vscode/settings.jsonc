@@ -905,7 +905,7 @@
     "source.fixAll.eslint": "explicit",
     "source.fixAll": "explicit"
   },
-  "editor.lineNumbers": "on",
+  "editor.lineNumbers": "off",
   "editor.parameterHints.enabled": false,
   "editor.guides.bracketPairs": "active",
   "editor.bracketPairColorization.enabled": true,
