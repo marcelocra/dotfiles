@@ -1,7 +1,7 @@
-#!/usr/bin/env sh
+#!/usr/bin/env bash
 # vim:tw=80:ts=4:sw=4:ai:et:ff=unix:fenc=utf-8:et:fixeol:eol:fdm=marker:fdl=0:fen:ft=sh
 
-readonly TMP_LOGFILE='/tmp/wezterm.main.log'
+readonly TMP_LOGFILE='/tmp/mcra.custom.terminal.log'
 
 log() {
     echo "[$(date '+%F_%T')] $@" >> $TMP_LOGFILE
@@ -11,7 +11,7 @@ run() {
     local cmd_with_args="$@"
     log "run: cmd_with_args = [$cmd_with_args]"
 
-    sh -c "$cmd_with_args" >> $TMP_LOGFILE 2>&1
+    bash -c "$cmd_with_args" >> $TMP_LOGFILE 2>&1
 }
 
 has_prefix() {
@@ -133,11 +133,9 @@ use_gnome_terminal() {
 
   log "column:$columns | rows:$rows | width:$half_width"
 
-  local cmd="gnome-terminal \
-    --title 'scratchpad' \
-    --hide-menubar \
-    --geometry \"${columns}x${rows}+$half_width+0\" \
-    --"
+  local cmd="gnome-terminal --title 'scratchpad' --hide-menubar"
+  cmd="$cmd --geometry \"${columns}x${rows}+${half_width}+0\""
+  cmd="$cmd -- "
 
   echo "$cmd"
 }
@@ -149,12 +147,12 @@ use_wezterm() {
 
     log "$half_width"
 
-    echo "/home/linuxbrew/.linuxbrew/bin/wezterm start --position '1303,0' --"
+    echo "/home/linuxbrew/.linuxbrew/bin/wezterm start --position '1303,0' -- "
 }
 
 use_term() {
     local cmd="$1"
-    local term=""
+    local term=''
     log "chosen terminal: $cmd"
 
     case "$1" in
@@ -169,12 +167,11 @@ main() {
     local term="$1"
     local name="$1"
 
-    local launch_cmd="$(use_term $1)"
-    local launch_cmd_args=''
+    local command="$(use_term "$1")"
+    local sub_command=''
 
-    log "name: $name"
-    log "cmd:"
-    log "  $launch_cmd"
+
+    # TODO: check if tmux is installed.
 
     # If session exists, connect to it. Otherwise, create it.
     if run tmux has -t $name; then
@@ -182,25 +179,24 @@ main() {
 
         # Need quotes because of the pipe.
         if run "tmux lsc | grep ' $name '"; then
-
+            sub_command="tmux detach -s $name"
             log "should detach from '$name'"
-            run tmux detach -s $name
-
         else
-            launch_cmd_args="tmux attach -t $name"
+            sub_command="tmux attach -t $name"
             log "should reattach to '$name' by running:"
-            log "  $launch_cmd $launch_cmd_args"
-
-            run $launch_cmd $launch_cmd_args
         fi
-
     else
-        launch_cmd_args="tmux new -s $name"
+        sub_command="tmux new -s $name"
         log "no session '$name', creating one with:"
-        log "  $launch_cmd $launch_cmd_args"
-
-        run $launch_cmd $launch_cmd_args
     fi
+
+    log "name: $name"
+    log "cmd:"
+    log "  $command"
+    log "with args:"
+    log "  $sub_command"
+
+    run $command $sub_command
 }
 
 
