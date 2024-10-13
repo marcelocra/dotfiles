@@ -44,7 +44,7 @@
   //
 
   "[clojure]": {
-    "editor.wordSeparators": "\t ()\"':,;~@#$%^&{}[]/-`.",
+    // "editor.wordSeparators": "\t ()\"':,;~@#$%^&{}[]/-`.",
     "editor.autoClosingBrackets": "always",
     "editor.autoClosingOvertype": "always",
     "editor.autoClosingQuotes": "always",
