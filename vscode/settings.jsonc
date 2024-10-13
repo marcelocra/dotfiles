@@ -772,6 +772,12 @@
   // Editor
   //
 
+  // CodeNewRoman font
+  //
+  "editor.fontFamily": "CodeNewRoman Nerd Font",
+  "editor.fontSize": 15, // edn{:desktop 15 :notebook ?? :small ??}
+  "editor.fontWeight": "normal", // edn{:desktop "bold" :notebook "??" :small "??"}
+
   // Cascadia Code font
   //
   // "editor.fontFamily": "Cascadia Code NF",
@@ -878,9 +884,9 @@
 
   // Recursive font
   //
-  "editor.fontFamily": "Recursive",
-  "editor.fontSize": 13, // edn{:desktop 13 :notebook ?? :small 11}
-  "editor.fontWeight": "400", // edn{:desktop "400" :notebook "??" :small "100"}
+  // "editor.fontFamily": "Recursive",
+  // "editor.fontSize": 13, // edn{:desktop 13 :notebook ?? :small 11}
+  // "editor.fontWeight": "400", // edn{:desktop "400" :notebook "??" :small "100"}
   // // Recursive with default values and almost no customization.
   // "editor.fontLigatures": "'frac'",
   // // Some customizations that I like. See details below.
