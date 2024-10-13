@@ -1029,11 +1029,12 @@
   // Terminal
   //
 
-  "terminal.integrated.fontFamily": "'Recursive', 'Geist Mono', 'JetBrains Mono', 'MesloLGS Nerd Font', 'MesloLGS NF', monospace",
+  "terminal.integrated.fontFamily": "'JetBrains Mono', 'Recursive', 'Geist Mono', 'MesloLGS Nerd Font', 'MesloLGS NF', monospace",
   "terminal.integrated.tabs.enabled": true,
   "terminal.integrated.fontSize": 13, // edn{:desktop 13 :notebook 19}
-  "terminal.integrated.fontWeight": "normal",
-  "terminal.integrated.lineHeight": 1.6, // Good values: 1.6; 2
+  "terminal.integrated.fontWeight": 100,
+  "terminal.integrated.lineHeight": 1, // Also good values: 1.6; 2
+  "terminal.integrated.letterSpacing": 0,
   "terminal.integrated.macOptionClickForcesSelection": true,
   "terminal.integrated.allowChords": false,
   // "terminal.integrated.sendKeybindingsToShell": false,
