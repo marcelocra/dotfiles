@@ -1043,7 +1043,7 @@
 
   "terminal.integrated.fontFamily": "'JetBrains Mono', 'Recursive', 'Geist Mono', 'CodeNewRoman Nerd Font', 'MesloLGS Nerd Font', 'MesloLGS NF', monospace",
   "terminal.integrated.tabs.enabled": true,
-  "terminal.integrated.fontSize": 9, // edn{:desktop 13 :notebook 19}
+  "terminal.integrated.fontSize": 11, // edn{:desktop 13 :notebook 19}
   "terminal.integrated.fontWeight": "600",
   // "terminal.integrated.lineHeight": 1.6, // Also good values: 1.6; 2
   // "terminal.integrated.letterSpacing": 1,
@@ -1143,7 +1143,7 @@
       "url": "https://json.schemastore.org/chrome-manifest.json"
     }
   ],
-  "workbench.colorTheme": "Night Owl Light",
+  "workbench.colorTheme": "Night Owl",
   "window.newWindowProfile": "Default",
   "workbench.activityBar.location": "hidden",
   "window.menuBarVisibility": "toggle"

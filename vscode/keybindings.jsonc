@@ -741,6 +741,19 @@
     "when": "terminalChatAgentRegistered && terminalFocusInAny && terminalHasBeenCreated || terminalChatAgentRegistered && terminalFocusInAny && terminalProcessSupported"
   },
 
+  {
+    "key": "alt+=",
+    "command": "workbench.action.toggleCenteredLayout",
+    // Because this kbd has meaning in the search editor.
+    "when": "!inSearchEditor"
+  },
+
+  {
+    "key": "EDITOR - NEXT ABOVE",
+    "command": "",
+    "when": ""
+  },
+
   //
   //
   // EDITOR }}}
