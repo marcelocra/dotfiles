@@ -201,16 +201,27 @@ function define_colorscheme(mode)
     -- If not forcing light mode, then check if forcing dark. If not, then use
     -- the time-based approach.
 
+    -- Dark mode colors.
     if (mode ~= ColorMode.Light
             and (mode == ColorMode.Dark
                 or hour_now < daylight_starts
                 or hour_now >= daylight_ends)) then
-        vim.cmd([[
-            colorscheme tokyonight
 
+        -- MUST set the colorscheme before making color changes, otherwise they
+        -- will be overwritten.
+        vim.cmd('colorscheme tokyonight')
+
+        vim.cmd([[
             hi MatchParen ctermfg=red ctermbg=black
             hi ColorColumn ctermfg=gray ctermbg=black
+
+            set termguicolors
+            hi Cursor guifg=yellow guibg=yellow
+            hi Cursor2 guifg=red guibg=red
         ]])
+
+        -- vim.cmd('set guicursor=n-v-c:block-Cursor/lCursor,i-ci-ve:ver25-Cursor2/lCursor2,r-cr:hor20,o:hor50')
+
 
         -- -- If tokyonight is not available, use these.
         --
@@ -221,13 +232,24 @@ function define_colorscheme(mode)
         --     hi MatchParen ctermfg=red ctermbg=black
         --     hi ColorColumn ctermfg=gray ctermbg=black
         -- ]])
-    else
-        vim.cmd([[
-            colorscheme tokyonight-day
 
+    else
+        -- Light mode colors.
+
+        -- MUST set the colorscheme before making color changes, otherwise they
+        -- will be overwritten.
+        vim.cmd('colorscheme tokyonight-day')
+
+        vim.cmd([[
             hi MatchParen ctermfg=black ctermbg=lightgreen
             hi ColorColumn ctermfg=gray ctermbg=white
+
+            set termguicolors
+            hi Cursor guifg=yellow guibg=yellow
+            hi Cursor2 guifg=red guibg=red
         ]])
+
+        -- vim.cmd('set guicursor=n-v-c:block-Cursor/lCursor,i-ci-ve:ver25-Cursor2/lCursor2,r-cr:hor20,o:hor50')
 
         -- -- If tokyonight is not available, use these.
         --
@@ -464,7 +486,7 @@ end, { noremap = true, silent = true })
 -- AT THE END <<<
 
 
-vim.cmd('echom "neovim.lua loaded!"')
+vim.cmd('call _mcra_debug("neovim.lua loaded!")')
 
 
 -- >>>
