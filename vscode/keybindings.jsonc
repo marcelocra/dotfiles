@@ -587,8 +587,9 @@
       "commands": [
         "typescript.restartTsServer",
         "elm.commands.restart",
+        "deno.client.restart",
         "eslint.restart"
-        // "svelte.restartLanguageServer"
+        // "svelte.restartLanguageServer"  // I'm not using Svelte.
       ]
     },
     "when": "editorTextFocus && (vim.mode == 'Normal' || vim.mode == 'Insert')"
