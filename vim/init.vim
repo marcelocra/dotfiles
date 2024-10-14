@@ -44,11 +44,11 @@ if !has('nvim')
   let s:vimrc = expand("~/.vim/vimrc")
 
   if !filereadable(s:vimrc)
-    echom 'No file at: ' .. s:vimrc
+    echom 'No file at: ' . s:vimrc
     finish
   endif
 
-  exec 'source '.. s:vimrc
+  exec 'source ' . s:vimrc
   finish
 endif
 
@@ -57,8 +57,8 @@ endif
 " NEOVIM SETTINGS
 
 
-" We need all these files to exist. One is sourced here and the others are
-" sourced in it, the correct order.
+" We need all these files to exist. The main one is sourced here and then it
+" sources the other ones, in the correct order.
 let g:mcra_neovim_init = expand("~/.config/nvim/neovim.vim")
 let g:mcra_vimrc = expand("~/.config/nvim/vimrc")
 let g:mcra_neovim_init_lua = expand("~/.config/nvim/neovim.lua")
@@ -71,8 +71,8 @@ if !filereadable(g:mcra_vimrc)
   finish
 endif
 
-call _mcra_silent_echo('Loading config files...')
+echom 'Found all required files! Will start sourcing them shortly...'
 
 " This file source the other two.
-exec 'source ' .. g:mcra_neovim_init
+exec 'source ' . g:mcra_neovim_init
 

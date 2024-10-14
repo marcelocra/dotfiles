@@ -293,13 +293,17 @@ function load_init(command, init_filename)
     vim.cmd(command .. " " .. init_lua_path)
 end
 
--- Actual Neovim init.
+-- Main Neovim init.
 vim.api.nvim_set_keymap('n', '<leader><leader>etv', ':lua load_init("tabedit", "neovim.vim")<cr>', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', '<leader><leader>ev', ':lua load_init("vspl", "neovim.vim")<cr>', { noremap = true, silent = true })
--- Additional settings (in Lua), loaded from the init above.
+
+-- Additional settings (in Lua).
 vim.api.nvim_set_keymap('n', '<leader><leader>etl', ':lua load_init("tabedit", "neovim.lua")<cr>', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', '<leader><leader>el', ':lua load_init("vspl", "neovim.lua")<cr>', { noremap = true, silent = true })
 
+-- Source the init entrypoint.
+vim.api.nvim_set_keymap('n', '<leader><leader>sv', ':source ' .. vim.env.MYVIMRC .. '<cr>zazz', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('i', '<leader><leader>sv', '<esc>:source ' .. vim.env.MYVIMRC .. '<cr>zazza', { noremap = true, silent = true })
 
 
 
@@ -460,9 +464,7 @@ end, { noremap = true, silent = true })
 -- AT THE END <<<
 
 
-vim.cmd([[
-  call _mcra_silent_echo('neovim.lua loaded!')
-]])
+vim.cmd('echom "neovim.lua loaded!"')
 
 
 -- >>>

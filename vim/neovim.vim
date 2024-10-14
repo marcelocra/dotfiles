@@ -211,8 +211,8 @@ call _mcra_debug(2)
 
 
 " Source common Vim stuff before anything else, so we can override stuff.
-exec 'source ' .. g:mcra_vimrc
-
+exec 'source ' . g:mcra_vimrc
+echom 'sourced ' . g:mcra_vimrc
 
 " --- -settings( ------------------------------------------------------------{{{
 
@@ -808,8 +808,6 @@ call _mcra_debug(14)
 
 
 " I'm moving stuff to lua slowly. For now it should be loaded last.
-exec 'luafile ' ..  g:mcra_neovim_init_lua
-
-
-call _mcra_silent_echo('neovim.vim loaded!')
+exec 'luafile ' .  g:mcra_neovim_init_lua
+echom 'sourced ' . g:mcra_neovim_init_lua
 
