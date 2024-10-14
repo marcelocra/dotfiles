@@ -14,4 +14,5 @@ nnoremap <leader><leader>ev :vspl $MYVIMRC<cr>
 nnoremap <leader><leader>etv :tabe $MYVIMRC<cr>
 
 " Keep this at the end!
-echom "vimrc loaded!"
+call _mcra_debug("vimrc loaded!")
+

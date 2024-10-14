@@ -212,7 +212,7 @@ call _mcra_debug(2)
 
 " Source common Vim stuff before anything else, so we can override stuff.
 exec 'source ' . g:mcra_vimrc
-echom 'sourced ' . g:mcra_vimrc
+call _mcra_debug('sourced ' . g:mcra_vimrc)
 
 " --- -settings( ------------------------------------------------------------{{{
 
@@ -432,7 +432,7 @@ inoremap <a-s> <c-r>=strftime("\n\n---\n\n%Hh%M\n\n")<cr>
 inoremap <a-n> <c-r>=strftime("%Y-%m-%d %H:%M")<cr>
 
 " Copy current file path to clipboard, trying to replace user home path with $HOME.
-nnoremap <leader><leader>p :let @+ = substitute(expand('%'), expand('~'), '$HOME', '')<cr>:echo @+<cr>
+nnoremap <leader><leader>cp :let @+ = substitute(expand('%'), expand('~'), '$HOME', '')<cr>:echo @+<cr>
 nnoremap <leader><leader>cw :echo getcwd()<cr>
 
 " Execute last macro recorded in register 'q'.
@@ -452,6 +452,13 @@ nnoremap ga <Plug>(EasyAlign)
 " nnoremap <c-\/> gcc
 " vnoremap <c-\/> gc
 " inoremap <c-\/> <esc>gcca
+
+" Print all mappings to a new buffer.
+function! PrintMappingsToBuffer()
+  redir @a | silent map | redir END | new | put a
+endfunction
+
+nnoremap <leader><leader>m :call PrintMappingsToBuffer()<cr>
 
 call _mcra_debug(4)
 
@@ -809,5 +816,5 @@ call _mcra_debug(14)
 
 " I'm moving stuff to lua slowly. For now it should be loaded last.
 exec 'luafile ' .  g:mcra_neovim_init_lua
-echom 'sourced ' . g:mcra_neovim_init_lua
+call _mcra_debug('sourced ' . g:mcra_neovim_init_lua)
 

@@ -8,20 +8,33 @@
 
 " Enable logs by setting this to 1.
 let g:mcra_debug = 1
-let g:mcra_debug_out = ''
-let g:mcra_output = ''
+let g:mcra_debug_out = 'Each output is within brackets:'
+let g:mcra_output = 'Log:'
+
+function! _mcra_wrap(text)
+  return ' [ ' . a:text . ' ]'
+endfunction
 
 " printf-like function, for debugging.
 function! _mcra_debug(text)
   if g:mcra_debug
-    let g:mcra_debug_out = g:mcra_debug_out . a:text . '; '
+    let g:mcra_debug_out = g:mcra_debug_out . _mcra_wrap(a:text)
   endif
 endfunction
 
 " Do not show a message right away, but append it to `:messages`.
-function! _mcra_silent_echo(text)
-  let g:mcra_output = g:mcra_output . a:text . '; '
+function! _mcra_log(text)
+  let g:mcra_output = g:mcra_output . _mcra_wrap(a:text)
 endfunction
+
+" Print debug content.
+function! _mcra_print_debug()
+  echo g:mcra_debug_out
+endfunction
+
+if g:mcra_debug
+  nnoremap <leader><leader>p :call _mcra_print_debug()<cr>
+endif
 
 
 
@@ -30,7 +43,7 @@ endfunction
 
 
 if exists('g:vscode')
-  call _mcra_silent_echo("neovim inside vscode")
+  call _mcra_log("neovim inside vscode")
   finish
 endif
 
@@ -71,7 +84,7 @@ if !filereadable(g:mcra_vimrc)
   finish
 endif
 
-echom 'Found all required files! Will start sourcing them shortly...'
+call _mcra_debug('Found all required files! Will start sourcing them shortly...')
 
 " This file source the other two.
 exec 'source ' . g:mcra_neovim_init
