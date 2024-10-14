@@ -110,7 +110,7 @@ function! s:install()
   " Improved support for many language stuff, like highlighting, ast manipulation,
   " etc. Originally created at GitHub for use in the Atom editor:
   "   https://getpage.in/tree-sitter
-  Plug 'nvim-treesitter/nvim-treesitter', { 'do': ':TSUpdate' }
+  " Plug 'nvim-treesitter/nvim-treesitter', { 'do': ':TSUpdate' }
 
   " GitHub Copilot.
   Plug 'github/copilot.vim'

@@ -211,13 +211,16 @@ function define_colorscheme(mode)
         -- will be overwritten.
         vim.cmd('colorscheme tokyonight')
 
+        -- Colors for `Cursor` won't work if they are overwritten by the
+        -- terminal.
         vim.cmd([[
+            colorscheme tokyonight
+
             hi MatchParen ctermfg=red ctermbg=black
             hi ColorColumn ctermfg=gray ctermbg=black
 
-            set termguicolors
+            hi Cursor ctermfg=yellow ctermbg=yellow
             hi Cursor guifg=yellow guibg=yellow
-            hi Cursor2 guifg=red guibg=red
         ]])
 
         -- vim.cmd('set guicursor=n-v-c:block-Cursor/lCursor,i-ci-ve:ver25-Cursor2/lCursor2,r-cr:hor20,o:hor50')
@@ -240,13 +243,16 @@ function define_colorscheme(mode)
         -- will be overwritten.
         vim.cmd('colorscheme tokyonight-day')
 
+        -- Colors for `Cursor` won't work if they are overwritten by the
+        -- terminal.
         vim.cmd([[
+            colorscheme tokyonight-day
+
             hi MatchParen ctermfg=black ctermbg=lightgreen
             hi ColorColumn ctermfg=gray ctermbg=white
 
-            set termguicolors
+            hi Cursor ctermfg=yellow ctermbg=yellow
             hi Cursor guifg=yellow guibg=yellow
-            hi Cursor2 guifg=red guibg=red
         ]])
 
         -- vim.cmd('set guicursor=n-v-c:block-Cursor/lCursor,i-ci-ve:ver25-Cursor2/lCursor2,r-cr:hor20,o:hor50')
@@ -262,7 +268,9 @@ function define_colorscheme(mode)
         -- ]])
     end
 end
+
 define_colorscheme(vim.g.colorsheme_mode)
+
 -- >>>
 -- Toggle colorsheme between light/dark with a keybinding. <<<
 vim.keymap.set('n', '<a-L>', function()
@@ -272,6 +280,7 @@ vim.keymap.set('n', '<a-L>', function()
     else
         vim.g.colorsheme_mode = ColorMode.Dark
     end
+
     define_colorscheme(vim.g.colorsheme_mode)
 end)
 -- >>>
@@ -347,13 +356,19 @@ vim.api.nvim_set_keymap('i', '<leader><leader>sv', '<esc>:source ' .. vim.env.MY
 -- vim.g.mcra_js_eval = "deno eval"
 vim.g.mcra_js_eval = "deno run -"
 
-function prepare_command_to_execute_js(js_code)
+function prepare_and_execute_js_command(js_code)
   -- Base64-encode the selected text
   local encoded_js_code = vim.fn.system('echo -n ' .. vim.fn.shellescape(js_code) .. ' | base64')
 
-  -- Return the exact code that should be executed, with everything properly
-  -- escaped.
-  return 'eval(atob(\'' .. encoded_js_code:gsub("\n", "") .. '\'))'
+  -- Prepare the command and execute it.
+  local command = string.format('echo "%s" | %s', 'const code = atob(\'' .. encoded_js_code:gsub("\n", "") .. '\'); eval(code);', vim.g.mcra_js_eval)
+  local output = vim.fn.system(command)
+
+  -- Remove trailing newlines and ANSI escape codes.
+  output = output:gsub('[\r\n]+$', '')
+  output = output:gsub('\x1b%[[0-9;]*m', '')
+
+  return output
 end
 
 -- Function to execute the current paragraph of JavaScript code
@@ -367,11 +382,9 @@ function execute_js_paragraph()
     -- Combine them into a single string of JavaScript code
     local js_code = table.concat(lines, "\n")
 
-    -- Prepare command.
-    local command = string.format('%s "%s"', vim.g.mcra_js_eval, prepare_command_to_execute_js(js_code))
-
-    -- Execute the command.
-    print(vim.fn.system(command))
+    -- Execute command and print output.
+    local output = prepare_and_execute_js_command(js_code)
+    print(output)
 end
 
 vim.api.nvim_set_keymap('n', '<localleader>er', ':lua execute_js_paragraph()<cr>', { noremap = true, silent = true })
@@ -398,10 +411,9 @@ function execute_js_selection()
   -- Join the selected lines
   local js_code = table.concat(lines, '\n')
 
-  -- Prepare command.
-  local command = string.format('%s "%s"', vim.g.mcra_js_eval, prepare_command_to_execute_js(js_code))
-
-  print(vim.fn.system(command))
+  -- Execute command and print output.
+  local output = prepare_and_execute_js_command(js_code)
+  print(output)
 end
 
 vim.api.nvim_set_keymap('v', '<localleader>E', ':lua execute_js_selection()<cr>', { noremap = true, silent = true })

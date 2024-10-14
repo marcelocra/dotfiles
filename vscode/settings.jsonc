@@ -1109,6 +1109,8 @@
   //
 
   "workbench.colorCustomizations": {
+    "terminalCursor.foreground": "#eeff00",
+    "terminalCursor.background": "#000",
     // "editorCursor.foreground": "#fff", // edn{:dark "#fff" :light "#ff00ea" :dark-opt "#51ff00"}
     // "tree.indentGuidesStroke": "#0084ff",
     // "tree.inactiveIndentGuidesStroke": "#555", // edn{:dark "#444" :light "#d8d8d8" "GitHub Dark" "#555"}
@@ -1143,7 +1145,7 @@
       "url": "https://json.schemastore.org/chrome-manifest.json"
     }
   ],
-  "workbench.colorTheme": "Night Owl",
+  "workbench.colorTheme": "Night Owl Light",
   "window.newWindowProfile": "Default",
   "workbench.activityBar.location": "hidden",
   "window.menuBarVisibility": "toggle"
