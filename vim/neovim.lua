@@ -191,32 +191,53 @@ local ColorMode = {
     Light = 2,
 }
 
-local mode = ColorMode.Dark
+local mode = ColorMode.TimeBased
 vim.g.colorsheme_mode = mode
 
 function define_colorscheme(mode)
-    -- If not forcing light mode, then check if forcing dark. If not, then use the
-    -- time-based approach.
-    --
     -- Try to make paranthesis matching useful and less confusing (hi MatchParen
     -- needs to be changed after setting a colorscheme).
-    if mode ~= ColorMode.Light and (mode == ColorMode.Dark or hour_now < daylight_starts or hour_now >= daylight_ends) then
+
+    -- If not forcing light mode, then check if forcing dark. If not, then use
+    -- the time-based approach.
+
+    if (mode ~= ColorMode.Light
+            and (mode == ColorMode.Dark
+                or hour_now < daylight_starts
+                or hour_now >= daylight_ends)) then
         vim.cmd([[
-            colorscheme slate
-            colorscheme elflord
             colorscheme tokyonight
+
             hi MatchParen ctermfg=red ctermbg=black
             hi ColorColumn ctermfg=gray ctermbg=black
         ]])
 
+        -- -- If tokyonight is not available, use these.
+        --
+        -- vim.cmd([[
+        --     colorscheme default
+        --     set background=dark
+
+        --     hi MatchParen ctermfg=red ctermbg=black
+        --     hi ColorColumn ctermfg=gray ctermbg=black
+        -- ]])
     else
         vim.cmd([[
-            colorscheme zellner
-            colorscheme tokyonight
+            colorscheme tokyonight-day
+
             hi MatchParen ctermfg=black ctermbg=lightgreen
             hi ColorColumn ctermfg=gray ctermbg=white
         ]])
 
+        -- -- If tokyonight is not available, use these.
+        --
+        -- vim.cmd([[
+        --     colorscheme default
+        --     set background=light
+
+        --     hi MatchParen ctermfg=black ctermbg=lightgreen
+        --     hi ColorColumn ctermfg=gray ctermbg=white
+        -- ]])
     end
 end
 define_colorscheme(vim.g.colorsheme_mode)
