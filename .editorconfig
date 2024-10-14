@@ -17,7 +17,7 @@ max_line_length = 120
 indent_size = 4
 max_line_length = 80
 
-[*.{fs,fsi,fsx,elm}]
+[*.{fs,fsi,fsx,elm,lua}]
 indent_size = 4
 
 #
