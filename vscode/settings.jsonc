@@ -943,9 +943,9 @@
   "editor.acceptSuggestionOnCommitCharacter": false,
   "editor.hover.delay": 1000,
   "editor.inlineSuggest.enabled": true,
-  "editor.wordWrap": "off",
+  "editor.wordWrap": "bounded",
   "editor.wrappingIndent": "deepIndent",
-  "editor.wordWrapColumn": 80,
+  "editor.wordWrapColumn": 120,
   "editor.lineHeight": 0, // Interesting values: 1.6; 2; 2.2
   // "editor.letterSpacing": -0.8,
   "editor.roundedSelection": false,
@@ -1109,24 +1109,34 @@
   //
 
   "workbench.colorCustomizations": {
-    "terminalCursor.foreground": "#eeff00",
-    "terminalCursor.background": "#000",
-    // "editorCursor.foreground": "#fff", // edn{:dark "#fff" :light "#ff00ea" :dark-opt "#51ff00"}
+    // cursor
+    // "terminalCursor.foreground": "#000", // edn{:dark "#eeff00" :light "#000"}
+    // "terminalCursor.background": "#eeff00", // edn{:dark "#000" :light "#eeff00"}
+
+    // // guides
     // "tree.indentGuidesStroke": "#0084ff",
     // "tree.inactiveIndentGuidesStroke": "#555", // edn{:dark "#444" :light "#d8d8d8" "GitHub Dark" "#555"}
     "editorIndentGuide.activeBackground1": "#555d", // edn{:dark "#ff00c8" :light "#00ffff"}
-    "editorIndentGuide.background1": "#5551" // edn{:dark "#555" :light "#ccc" "GitHub Dark" "#555" "Solarized Light" "#ccc" }
-    // "editor.lineHighlightBorder": "#ff00c833", // edn{:dark "#ff00c833" :light "#00ffff22"}
-    // "editor.lineHighlightBackground": "#ff00c822" // edn{:dark "#ff00c822" :light "#00ffff22"}
+    "editorIndentGuide.background1": "#5551", // edn{:dark "#555" :light "#ccc" "GitHub Dark" "#555" "Solarized Light" "#ccc" }
+
+    // // line height
+    "editor.lineHighlightBorder": "#ff00c833", // edn{:dark "#ff00c833" :light "#00ffff22"}
+    "editor.lineHighlightBackground": "#ff00c815" // edn{:dark "#ff00c822" :light "#00ffff22"}
+
+    // // selection
     // // TODO: figure out how to get this working.
     // // "editor.selectionForeground": "#ff00c8" // edn{:dark "#ff00c8" :light "#fff"}
     // "editor.selectionBackground": "#ff00c855", // edn{:dark "#ff00c855" :light "#00ffff77"}
     // "editor.selectionHighlightBorder": "#ffffff81", // edn{:dark "#ffffff81" :light "#ffffffdd"}
     // "editor.selectionHighlightBackground": "#ffffff36", // edn{:dark "#ffffff36" :light "#ffffff36"}
+
+    // // word and search match highlight
     // "editor.wordHighlightBorder": "#ffffff66", // edn{:dark "#ffffff66" :light "#00000033"}
     // "editor.wordHighlightBackground": "#00000066", // edn{:dark "#00000066" :light "#ffffff44"}
     // "editor.findMatchBackground": "#d400ff88", // edn{:dark "#d400ff88" :light "#000000e8"}
     // "editor.findMatchHighlightBackground": "#d400ff56", // edn{:dark "#d400ff56" :light "#d400ff56"}
+
+    // // calva
     // "calva.inlineErrorForegroundColor": "#ff0000",
     // "calva.inlineForegroundColor": "#ff9000"
   },
@@ -1145,7 +1155,7 @@
       "url": "https://json.schemastore.org/chrome-manifest.json"
     }
   ],
-  "workbench.colorTheme": "Night Owl Light",
+  "workbench.colorTheme": "Dracula Theme",
   "window.newWindowProfile": "Default",
   "workbench.activityBar.location": "hidden",
   "window.menuBarVisibility": "toggle"

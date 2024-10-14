@@ -587,8 +587,8 @@
       "commands": [
         "typescript.restartTsServer",
         "elm.commands.restart",
-        "deno.client.restart",
-        "eslint.restart"
+        "eslint.restart",
+        "deno.client.restart"
         // "svelte.restartLanguageServer"  // I'm not using Svelte.
       ]
     },
