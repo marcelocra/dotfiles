@@ -344,10 +344,20 @@ vim.api.nvim_set_keymap('i', '<leader><leader>sv', '<esc>:source ' .. vim.env.MY
 
 
 -- Choose which command to eval JavaScript.
-vim.g.mcra_js_eval = "deno eval"
+-- vim.g.mcra_js_eval = "deno eval"
+vim.g.mcra_js_eval = "deno run -"
+
+function prepare_command_to_execute_js(js_code)
+  -- Base64-encode the selected text
+  local encoded_js_code = vim.fn.system('echo -n ' .. vim.fn.shellescape(js_code) .. ' | base64')
+
+  -- Return the exact code that should be executed, with everything properly
+  -- escaped.
+  return 'eval(atob(\'' .. encoded_js_code:gsub("\n", "") .. '\'))'
+end
 
 -- Function to execute the current paragraph of JavaScript code
-function ExecuteJsBlock()
+function execute_js_paragraph()
     -- Get the start and end line of the current paragraph and the lines between
     -- them.
     local start_line = vim.fn.line("'{")
@@ -357,19 +367,45 @@ function ExecuteJsBlock()
     -- Combine them into a single string of JavaScript code
     local js_code = table.concat(lines, "\n")
 
-    -- Escape double quotes in the JavaScript code before passing to the shell.
-    js_code = js_code:gsub('"', '\\"')
-
-    -- Get the eval command and use it in the code.
-    local eval_cmd = vim.g.mcra_js_eval
-    local command = string.format('%s "%s"', eval_cmd, js_code)
+    -- Prepare command.
+    local command = string.format('%s "%s"', vim.g.mcra_js_eval, prepare_command_to_execute_js(js_code))
 
     -- Execute the command.
     print(vim.fn.system(command))
 end
 
-vim.api.nvim_set_keymap('n', '<localleader>er', ':lua ExecuteJsBlock()<cr>', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<localleader>ep', ':lua ExecuteJsBlock()<cr>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<localleader>er', ':lua execute_js_paragraph()<cr>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<localleader>ep', ':lua execute_js_paragraph()<cr>', { noremap = true, silent = true })
+
+-- Execute selected JavaScript block.
+
+function execute_js_selection()
+  -- Get the selected text
+  local _, line_start, col_start = unpack(vim.fn.getpos("'<"))
+  local _, line_end, col_end = unpack(vim.fn.getpos("'>"))
+
+  -- Get the selected lines
+  local lines = vim.fn.getline(line_start, line_end)
+
+  -- Handle the case where only one line is selected
+  if #lines == 1 then
+    lines[1] = string.sub(lines[1], col_start, col_end)
+  else
+    lines[1] = string.sub(lines[1], col_start)
+    lines[#lines] = string.sub(lines[#lines], 1, col_end)
+  end
+
+  -- Join the selected lines
+  local js_code = table.concat(lines, '\n')
+
+  -- Prepare command.
+  local command = string.format('%s "%s"', vim.g.mcra_js_eval, prepare_command_to_execute_js(js_code))
+
+  print(vim.fn.system(command))
+end
+
+vim.api.nvim_set_keymap('v', '<localleader>E', ':lua execute_js_selection()<cr>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('v', '<localleader>E', ':lua execute_js_selection()<cr>', { noremap = true, silent = true })
 
 -- >>>
 
