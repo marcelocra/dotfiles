@@ -771,49 +771,49 @@
   {
     "key": "alt+l",
     "command": "cursorWordPartRight",
-    "when": "textInputFocus"
+    "when": "!vim.active && textInputFocus"
   },
 
   {
     "key": "alt+shift+l",
     "command": "cursorWordPartRightSelect",
-    "when": "textInputFocus"
+    "when": "!vim.active && textInputFocus"
   },
 
   {
     "key": "alt+h",
     "command": "cursorWordPartStartLeft",
-    "when": "textInputFocus"
+    "when": "!vim.active && textInputFocus"
   },
 
   {
     "key": "alt+shift+h",
     "command": "cursorWordPartStartLeftSelect",
-    "when": "textInputFocus"
+    "when": "!vim.active && textInputFocus"
   },
 
   {
     "key": "alt+backspace",
     "command": "deleteWordPartLeft",
-    "when": "textInputFocus && !editorReadonly"
+    "when": "!vim.active && textInputFocus && !editorReadonly"
   },
 
   {
     "key": "alt+shift+backspace",
     "command": "deleteWordPartRight",
-    "when": "textInputFocus && !editorReadonly"
+    "when": "!vim.active && textInputFocus && !editorReadonly"
   },
 
   {
     "key": "alt+delete",
     "command": "deleteWordPartRight",
-    "when": "textInputFocus && !editorReadonly"
+    "when": "!vim.active && textInputFocus && !editorReadonly"
   },
 
   {
     "key": "alt+shift+delete",
     "command": "deleteWordPartLeft",
-    "when": "textInputFocus && !editorReadonly"
+    "when": "!vim.active && textInputFocus && !editorReadonly"
   }
 
   //

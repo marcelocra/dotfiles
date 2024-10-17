@@ -612,6 +612,10 @@
     {
       "before": ["g", "E"],
       "commands": ["editor.action.marker.prevInFiles"]
+    },
+    {
+      "before": ["<a-l>"],
+      "commands": ["cursorWordPartRight"]
     }
     // {
     //   "before": ["/"],
@@ -1155,10 +1159,10 @@
       "url": "https://json.schemastore.org/chrome-manifest.json"
     }
   ],
-  "workbench.colorTheme": "Dracula Theme",
   "window.newWindowProfile": "Default",
   "workbench.activityBar.location": "hidden",
-  "window.menuBarVisibility": "toggle"
+  "window.menuBarVisibility": "toggle",
+  "workbench.colorTheme": "Quiet Light"
 
   //////////////////////////////////////////////////////////////////////////////
 }

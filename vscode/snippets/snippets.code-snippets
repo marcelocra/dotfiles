@@ -474,4 +474,141 @@
       "app.ports.messageReceiver.send(\"Hi to Elm from JS\");",
     ]
   },
+  //
+  //
+  // JSON / JSONC
+  //
+  "prettier essentials": {
+    "description": "All projects should use these.",
+    "scope": "json,jsonc",
+    "prefix": "prettier-essentials",
+    "body": [
+      "\"endOfLine\": \"lf\",",
+      "\"printWidth\": 80,",
+      "\"proseWrap\": \"preserve\",",
+      "\"tabWidth\": 2,",
+      "\"useTabs\": false,",
+      "\"rulers\": [80]"
+    ]
+  },
+  "prettier global overrides": {
+    "scope": "json,jsonc",
+    "prefix": "prettier-global-overrides",
+    "body": [
+      "\"overrides\": [",
+      "  {",
+      "    \"files\": \"*.md\",",
+      "    \"options\": {",
+      "      \"parser\": \"markdown\",",
+      "      \"printWidth\": 80,",
+      "      \"proseWrap\": \"always\"",
+      "    }",
+      "  },",
+      "  {",
+      "    \"files\": [\".prettierrc\"],",
+      "    \"options\": {",
+      "      \"parser\": \"json\"",
+      "    }",
+      "  }",
+      "]"
+    ]
+  },
+  "prettier javascript defaults": {
+    "scope": "json,jsonc",
+    "prefix": "prettier-javascript-defaults",
+    "body": [
+      "\"arrowParens\": \"always\",",
+      "\"bracketSpacing\": true,",
+      "\"insertPragma\": false,",
+      "\"singleAttributePerLine\": false,",
+      "\"bracketSameLine\": false,",
+      "\"quoteProps\": \"as-needed\",",
+      "\"requirePragma\": false,",
+      "\"semi\": true,",
+      "\"singleQuote\": true,",
+      "\"trailingComma\": \"es5\",",
+      "\"htmlWhitespaceSensitivity\": \"css\",",
+      "\"jsxBracketSameLine\": false,",
+      "\"jsxSingleQuote\": false,",
+      "\"vueIndentScriptAndStyle\": false,"
+    ]
+  },
+  "example vscode settings config to hide folders from the explorer": {
+    "scope": "json,jsonc",
+    "prefix": [
+      "vs-hide",
+      "vs-ig",
+      "vs-ignore"
+    ],
+    "body": [
+      "\"files.exclude\": {",
+      "//",
+      "//",
+      "// Code that I don't need to see right now.",
+      "//",
+      "",
+      "\"${1:**/some folder to hide}\": true,",
+      "\"${2:**/can have multiple entries here}\": true,",
+      "$0",
+      "",
+      "//",
+      "//",
+      "// Example, also used so I don't have to worry about trailing commas when",
+      "// modifying the list above.",
+      "//",
+      "",
+      "\"**/example*.js\": true",
+      "}",
+    ]
+  },
+  "tells tailwind to detect custom tailwind config file": {
+    "scope": "json,jsonc",
+    "prefix": [
+      "tw",
+      "tailwind",
+      "tw-config"
+    ],
+    "body": [
+      "\"tailwindCSS.experimental.configFile\": {",
+      "  \"./packages/chrome-ext-main/tailwind.base.config.js\": [",
+      "    \"./packages/chrome-ext-main/src/**/*.html\",",
+      "    \"./packages/chrome-ext-main/src/**/*.js\",",
+      "    \"./packages/chrome-ext-main/src/**/*.elm\"",
+      "  ]",
+      "},"
+    ]
+  },
+  "JSON": {
+    "scope": "json,jsonc",
+    "body": []
+  },
+  "my default extensions, used in all projects": {
+    "scope": "json,jsonc",
+    "prefix": [
+      "ext"
+    ],
+    "body": [
+      "{",
+      "  \"recommendations\": [",
+      "    \"bradlc.vscode-tailwindcss\",",
+      "    \"dbaeumer.vscode-eslint\",",
+      "    \"esbenp.prettier-vscode\",",
+      "    \"editorconfig.editorconfig\",",
+      "    \"denoland.vscode-deno\",",
+      "    \"redhat.vscode-yaml\",",
+      "    \"elmtooling.elm-ls-vscode\",",
+      "    \"styled-components.vscode-styled-components\",",
+      "    \"dracula-theme.theme-dracula\",",
+      "    \"github.copilot\",",
+      "    \"github.copilot-chat\",",
+      "    \"github.github-vscode-theme\",",
+      "    \"eamodio.gitlens\",",
+      "    \"sdras.night-owl\",",
+      "    \"ms-vscode.test-adapter-converter\",",
+      "    \"hbenl.vscode-test-explorer\",",
+      "    \"vscodevim.vim\"",
+      "  ]",
+      "}"
+    ]
+  },
 }

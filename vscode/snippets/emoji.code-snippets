@@ -28,7 +28,7 @@
   "Cch": {
     "prefix": [
       "Cch",
-      "-em:ch"
+      "emoji:ch"
     ],
     "body": [
       "✓"
@@ -37,7 +37,7 @@
   "Cgch": {
     "prefix": [
       "Cgc",
-      "-em:gc"
+      "emoji:gc"
     ],
     "body": [
       "✅️"
@@ -46,7 +46,7 @@
   "Cnot": {
     "prefix": [
       "Cnot",
-      "-em:not"
+      "emoji:not"
     ],
     "body": [
       "⛔️"
@@ -55,7 +55,7 @@
   "Cstar": {
     "prefix": [
       "Cstar",
-      "-em:star"
+      "emoji:star"
     ],
     "body": [
       "⭐️"
@@ -64,7 +64,7 @@
   "Cbolt": {
     "prefix": [
       "Cbolt",
-      "-em:bolt"
+      "emoji:bolt"
     ],
     "body": [
       "⚡️"
@@ -73,7 +73,7 @@
   "Ccros": {
     "prefix": [
       "Ccros",
-      "-em:cross"
+      "emoji:cross"
     ],
     "body": [
       "❌️"
@@ -82,7 +82,7 @@
   "Cheartp": {
     "prefix": [
       "Cheartp",
-      "-em:heartp"
+      "emoji:heartp"
     ],
     "body": [
       "💜️"
@@ -91,7 +91,7 @@
   "Cheartw": {
     "prefix": [
       "Cheartw",
-      "-em:heartw"
+      "emoji:heartw"
     ],
     "body": [
       "🤍️"
@@ -100,7 +100,7 @@
   "Chanddown": {
     "prefix": [
       "Chanddown",
-      "-em:handdown"
+      "emoji:handdown"
     ],
     "body": [
       "👇🏽️"
@@ -109,7 +109,7 @@
   "Chandup": {
     "prefix": [
       "Chandup",
-      "-em:handup"
+      "emoji:handup"
     ],
     "body": [
       "👆🏽️"
@@ -118,7 +118,7 @@
   "Cexp": {
     "prefix": [
       "Cexp",
-      "-em:exp"
+      "emoji:science"
     ],
     "body": [
       "🧑🏽‍🔬"
