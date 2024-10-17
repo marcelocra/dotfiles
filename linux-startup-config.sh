@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/bin/env bash
 
 # Commands to run during system startup.
 #
@@ -21,25 +21,33 @@
 
 # -- [ Configure hardware ] ----------------------------------------------------
 
-set -e
+readonly DEBUG='false'
 
 # TODO: move this and the following ideas to `.rc.common`.
 now() {
     echo "$(date '+%F_%T')"
 }
 
-logfile="$HOME/.log.linux-startup-config.$(now).txt"
+logfile="$HOME/.mcra.linux-startup-config.$(now).log"
 
 prefix() {
     echo -n "[$(now | sed -E -e 's/_/ /')] [$@]"
 }
 
 error() {
-    echo -n "$(prefix error) $@\n" | tee -a $logfile
+    echo "$(prefix error) $@" | tee -a $logfile
 }
 
 debug() {
-    echo -n "$(prefix debug) $@\n" | tee -a $logfile
+    if [ "$DEBUG" = "false" ]; then
+        return 0
+    fi
+
+    echo "$(prefix debug) $@" | tee -a $logfile
+}
+
+log() {
+    echo "$(prefix log) $@" | tee -a $logfile
 }
 
 usage() {
@@ -52,45 +60,6 @@ options:
   - todoist: symlink todoist again after an update
   - all: do everything'
 }
-
-
-if [ $# -eq 0 ]; then
-  arg='all'
-else
-  arg="$@"
-
-  found=0
-
-  for valid_arg in "all expert evoluent logitech todoist"; do
-    if [ "$arg" = "$valid_arg" ]; then
-      found=1
-      break
-    fi
-  done
-
-  if [ $found -eq 0 ]; then
-    error 'Invalid option!'
-    usage
-    return 1
-  fi
-fi
-
-# Commands need xinput, so check that first.
-if [ -f "${HOME}/.no-xinput-found" ]; then
-  error 'xinput not available. install that first'
-  return 1
-fi
-
-if ! command -v xinput >/dev/null 2>&1; then
-  local no_xinput
-  no_xinput="${HOME}/.no-xinput-found"
-
-  echo >&2 "I require xinput but it's not installed.  Aborting."
-  echo >&2 "I will create ${no_xinput} and won't try again. If you"
-  echo >&2 "want this to run again, delete that file."
-  touch "${no_xinput}" && echo >&2 "Created!" || echo >&2 "Failed :("
-  return 1
-fi
 
 
 # Configure expert mouse, if available.
@@ -134,6 +103,7 @@ setup_expert_mouse() {
     fi
 }
 
+
 # Reconfigure Evoluent vertical mouse to swap back/forward button. Originally,
 # they are assigned to the bottom/top buttons respectively, but I prefer
 # top/bottom. Also reduce the device speed.
@@ -163,6 +133,7 @@ setup_evoluent_mouse() {
     xinput set-prop $device_id $prop_id -0.75
 }
 
+
 reduce_speed_of_logitech_mouse() {
     local device_id
     device_id=$(xinput \
@@ -183,6 +154,7 @@ reduce_speed_of_logitech_mouse() {
     # This is a good value that I found by testing different ones.
     xinput set-prop $device_id $prop_id -0.75
 }
+
 
 # Todoist has an auto update feature that replaces the AppImage binary with
 # a new one, meaning that the reference used in the .desktop file end up
@@ -221,39 +193,87 @@ symlink_todoist_again() {
     ln -f -s $todoist_dir/$todoist_latest_bin $HOME/bin/todoist
 }
 
-debug "Provided argument: '$arg'\n"
 
-if [ "$arg" = "expert" ] || [ "$arg" = "all" ]; then
+main() {
+    local arg=''
+    local found=0
+
+    if [ $# -eq 0 ]; then
+        arg='all'
+    else
+        arg="$@"
+
+        local valid_args=(all expert evoluent logitech todoist)
+
+        for valid_arg in ${valid_args[@]}; do
+            debug "valid_arg: >>>$valid_arg<<<"
+            debug "arg: >>>$arg<<<"
+            if [ "$arg" = "$valid_arg" ]; then
+                found=1
+                break
+            fi
+        done
+
+        if [ $found -eq 0 ]; then
+            error 'Invalid option!'
+            usage
+            return 1
+        fi
+    fi
+
+    # Commands need xinput, so check that first.
+    if [ -f "${HOME}/.no-xinput-found" ]; then
+        error 'xinput not available. install that first'
+        return 1
+    fi
+
+    if ! command -v xinput >/dev/null 2>&1; then
+        local no_xinput
+        no_xinput="${HOME}/.no-xinput-found"
+
+        echo >&2 "I require xinput but it's not installed.  Aborting."
+        echo >&2 "I will create ${no_xinput} and won't try again. If you"
+        echo >&2 "want this to run again, delete that file."
+        touch "${no_xinput}" && echo >&2 "Created!" || echo >&2 "Failed :("
+        return 1
+    fi
 
 
-  debug "Running 'expert'..."
-  setup_expert_mouse
-  debug 'Done!'
+    log "Provided argument: '$arg'"
 
-fi
 
-if [ "$arg" = "evoluent" ] || [ "$arg" = "all" ]; then
+    if [ "$arg" = "expert" ] || [ "$arg" = "all" ]; then
+        log "Running 'expert'..."
+        setup_expert_mouse
+        log 'Done!'
 
-  debug "Running 'evoluent'..."
-  setup_evoluent_mouse
-  debug 'Done!'
+    fi
 
-fi
 
-if [ "$arg" = "logitech" ] || [ "$arg" = "all" ]; then
+    if [ "$arg" = "evoluent" ] || [ "$arg" = "all" ]; then
+        log "Running 'evoluent'..."
+        setup_evoluent_mouse
+        log 'Done!'
 
-  debug "Running 'logitech'..."
-  reduce_speed_of_logitech_mouse
-  debug 'Done!'
+    fi
 
-fi
 
-if [ "$arg" = "todoist" ] || [ "$arg" = "all" ]; then
+    if [ "$arg" = "logitech" ] || [ "$arg" = "all" ]; then
+        log "Running 'logitech'..."
+        reduce_speed_of_logitech_mouse
+        log 'Done!'
 
-  debug "Running 'todoist'..."
-  symlink_todoist_again
-  debug 'Done!'
+    fi
 
-fi
 
-return 0
+    if [ "$arg" = "todoist" ] || [ "$arg" = "all" ]; then
+        log "Running 'todoist'..."
+        symlink_todoist_again
+        log 'Done!'
+
+    fi
+}
+
+
+main "$@"
+
