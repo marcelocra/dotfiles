@@ -84,6 +84,17 @@ local fonts = {
       'cv17', 'cv01', 'cv02', 'zero'
     },
   }),
+
+  iosevka = wezterm.font({
+    family = 'Iosevka Fixed',
+    weight = 500,
+    harfbuzz_features = {
+      -- Lucida Console with some changes.
+      -- 'ss13', 'cv02 4', 'cv04 11', 'cv05 8', 'cv10 10',
+      -- Menlo
+      'ss07',
+    },
+  }),
 }
 -- )>>
 
@@ -286,8 +297,8 @@ config.window_background_opacity = 1
 config.text_background_opacity = 1
 config.window_decorations = 'RESIZE'
 
-config.font = fonts.jb
-config.font_size = 10
+config.font = fonts.iosevka
+config.font_size = 15
 -- config.line_height = 1.2
 
 config.scrollback_lines = 5000

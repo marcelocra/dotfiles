@@ -8,10 +8,7 @@
   // JSONs
   //
 
-  "[json][jsonc][json5]": {
-    "editor.fontSize": 13,
-    "editor.lineHeight": 0
-  },
+  "[json][jsonc][json5]": {},
 
   //
   //
@@ -766,8 +763,8 @@
   "[log][Log]": {
     "editor.fontFamily": "JetBrains Mono",
     "editor.fontSize": 11,
-    "editor.fontWeight": "400",
-    "editor.fontLigatures": "'ss02', 'ss19', 'ss20', 'zero', 'cv03', 'cv04', 'cv16', 'cv19', 'cv20', 'cv99'"
+    "editor.fontWeight": "300"
+    // "editor.fontLigatures": "'ss02', 'ss19', 'ss20', 'zero', 'cv03', 'cv04', 'cv16', 'cv19', 'cv20', 'cv99'"
   },
 
   //
@@ -887,13 +884,13 @@
 
   // Recursive font
   //
-  "editor.fontFamily": "Recursive",
-  "editor.fontSize": 13, // edn{:desktop 13 :notebook ?? :small 11}
-  "editor.fontWeight": "400", // edn{:desktop "400" :notebook "??" :small "100"}
+  // "editor.fontFamily": "Recursive",
+  // "editor.fontSize": 15, // edn{:desktop 13 :notebook ?? :small 11}
+  // "editor.fontWeight": "400", // edn{:desktop "400" :notebook "??" :small "100"}
   // // Recursive with default values and almost no customization.
   // "editor.fontLigatures": "'frac'",
   // // Some customizations that I like. See details below.
-  "editor.fontLigatures": "'ss01', 'ss02', 'ss03', 'ss04', 'ss05', 'ss06', 'ss07', 'ss11', 'ss12', 'case', 'frac'",
+  // "editor.fontLigatures": "'ss01', 'ss02', 'ss03', 'ss04', 'ss05', 'ss06', 'ss07', 'ss11', 'ss12', 'case', 'frac'",
   // // - dlig: ligatures - => && === ff it ti (more below)
   // // - ss01: a | ss02: g | ss03: f | ss04: i | ss05: l | ss06: r
   // // - ss07: simplified italic diagonals - kwxyz | ss08: no-serif on L and Z
@@ -905,6 +902,39 @@
   // // - titl: Q leg to the right instead of down
   // // - sups, numr: superior/numerators - H0123456789
   // // - sinf, dnom: inferior/denominators
+  // // Ligature test:
+  // //  ! " # $ % & ' ( ) * + , - . / : ; < = > ? @ [ \ ] ^ _ ` { | } ~
+  // //  ~ < > = + _ _ ( ) * & ^ % $ # @ ! { } [ ] \ | / ? : ; , . ` ' " ´ ` ˜
+  // //  => -> <> <= >= != !== === ~= |> <- --> || .- :- .= {..}
+
+  // Iosevka
+  //
+  "editor.fontFamily": "Iosevka Fixed",
+  "editor.fontSize": 17, // edn{:desktop 13 :notebook ?? :small 11}
+  "editor.fontWeight": "400", // edn{:desktop "400" :notebook "??" :small "100"}
+  // // Recursive with default values and almost no customization.
+  // "editor.fontLigatures": "'frac'",
+  // // Some customizations that I like. See details below.
+  "editor.fontLigatures": "'ss13', 'cv02' 4, 'cv04' 11, 'cv05' 8, 'cv10' 10, 'VSAB' 6, 'VSAF' 2, 'VSAJ' 4, 'VSAM' 1, 'VSAO' 1, 'VSAQ' 3",
+  // ss01: Andale Mono
+  // ss02: Anonymous Pro
+  // ss03: Consolas
+  // ss04: Menlo
+  // ss05: Fira Mono
+  // ss06: Liberation Mono
+  // ss07: Monaco
+  // ss08: Pragmata Pro
+  // ss09: Source Code Pro
+  // ss10: Envy Code R
+  // ss11: X Window
+  // ss12: Ubuntu Mono
+  // ss13: Lucida
+  // ss14: JetBrains Mono
+  // ss15: IBM Plex Mono
+  // ss16: PT Mono
+  // ss17: Recursive Mono
+  // ss18: Input Mono
+  // ss20: Curly
   // // Ligature test:
   // //  ! " # $ % & ' ( ) * + , - . / : ; < = > ? @ [ \ ] ^ _ ` { | } ~
   // //  ~ < > = + _ _ ( ) * & ^ % $ # @ ! { } [ ] \ | / ? : ; , . ` ' " ´ ` ˜
@@ -1048,8 +1078,8 @@
 
   "terminal.integrated.fontFamily": "'JetBrains Mono', 'Recursive', 'Geist Mono', 'CodeNewRoman Nerd Font', 'MesloLGS Nerd Font', 'MesloLGS NF', monospace",
   "terminal.integrated.tabs.enabled": true,
-  "terminal.integrated.fontSize": 11, // edn{:desktop 13 :notebook 19}
-  "terminal.integrated.fontWeight": "600",
+  "terminal.integrated.fontSize": 13, // edn{:desktop 13 :notebook 19}
+  "terminal.integrated.fontWeight": "300",
   // "terminal.integrated.lineHeight": 1.6, // Also good values: 1.6; 2
   // "terminal.integrated.letterSpacing": 1,
   "terminal.integrated.macOptionClickForcesSelection": true,
@@ -1167,7 +1197,7 @@
   "window.newWindowProfile": "Default",
   "workbench.activityBar.location": "hidden",
   "window.menuBarVisibility": "toggle",
-  "workbench.colorTheme": "Night Owl Light"
+  "workbench.colorTheme": "Quiet Light"
 
   //////////////////////////////////////////////////////////////////////////////
 }
