@@ -1145,7 +1145,7 @@
 
   "workbench.colorCustomizations": {
     // cursor
-    "terminalCursor.foreground": "#ff4500",
+    "terminalCursor.foreground": "#ff4500", // orange red
     "terminalCursor.background": "#000",
     // "[Night Owl Light]": {
     //   "terminalCursor.foreground": "#ff0",
