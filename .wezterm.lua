@@ -314,7 +314,7 @@ config.window_padding = {
 }
 
 config.colors = {
-  cursor_bg = 'yellow',
+  cursor_bg = '#ff4500',  -- orange red (supposed to work with light/dark themes).
   cursor_fg = 'black',
 }
 
