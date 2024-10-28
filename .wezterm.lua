@@ -298,7 +298,7 @@ config.text_background_opacity = 1
 config.window_decorations = 'RESIZE'
 
 config.font = fonts.iosevka
-config.font_size = 15
+config.font_size = 11
 -- config.line_height = 1.2
 
 config.scrollback_lines = 5000

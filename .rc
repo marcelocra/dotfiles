@@ -624,9 +624,6 @@ elif mm_is_command vim; then
   alias less='vim -R -'
 fi
 
-# Clear the screen before listing the files.
-alias cl="clear && l"
-
 # next alias above, unless they fit in one of the other sections.
 # }}}general
 # git frequent{{{
