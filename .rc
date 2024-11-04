@@ -624,6 +624,12 @@ elif mm_is_command vim; then
   alias less='vim -R -'
 fi
 
+# List processes bound to all ports.
+alias process-to-port-all="netstat -lnp"
+# Same, but for TCP only. This is usually what I want, e.g. when a server hold
+# it even after ctrl+c.
+alias process-to-port="netstat -lnpt"
+
 # next alias above, unless they fit in one of the other sections.
 # }}}general
 # git frequent{{{
