@@ -89,10 +89,36 @@ local fonts = {
     family = 'Iosevka Fixed',
     weight = 500,
     harfbuzz_features = {
+      -- ss01: Andale Mono
+      -- ss02: Anonymous Pro
+      -- ss03: Consolas
+      -- ss04: Menlo
+      -- ss05: Fira Mono
+      -- ss06: Liberation Mono
+      -- ss07: Monaco
+      -- ss08: Pragmata Pro
+      -- ss09: Source Code Pro
+      -- ss10: Envy Code R
+      -- ss11: X Window
+      -- ss12: Ubuntu Mono
+      -- ss13: Lucida
+      -- ss14: JetBrains Mono
+      -- ss15: IBM Plex Mono
+      -- ss16: PT Mono
+      -- ss17: Recursive Mono
+      -- ss18: Input Mono
+      -- ss20: Curly
+      -- Others:
       -- Lucida Console with some changes.
       -- 'ss13', 'cv02 4', 'cv04 11', 'cv05 8', 'cv10 10',
-      -- Menlo
-      'ss07',
+      'ss02',
+    },
+  }),
+
+  iosevka_e = wezterm.font({
+    family = 'Iosevka Extended',
+    harfbuzz_features = {
+      'ss02',
     },
   }),
 }
@@ -239,7 +265,7 @@ local color_schemes_to_pick = color_schemes_by_name{
 -- Fill this as I find schemes that I like. Later I can randomize only them.
 local color_scheme_override = {
   -- Use `false` to select a random color scheme or the index of the favorite to use as override.
-  override = 2,
+  override = 19,
   favorites = {
     'Dracula',                                -- Lua is 1-based, so this has index 1.
     'Dark Pastel',                            -- 2
@@ -259,6 +285,7 @@ local color_scheme_override = {
     'Afterglow (Gogh)',                       -- 16
     'HaX0R_R3D',                              -- 17
     'Vice Alt (base16)',                      -- 18
+    'Gigavolt (base16)',                      -- 19
   }
 }
 
@@ -297,7 +324,7 @@ config.window_background_opacity = 1
 config.text_background_opacity = 1
 config.window_decorations = 'RESIZE'
 
-config.font = fonts.iosevka
+config.font = fonts.iosevka_e
 config.font_size = 11
 -- config.line_height = 1.2
 
