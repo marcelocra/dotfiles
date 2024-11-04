@@ -226,7 +226,7 @@
 
   {
     "key": "ctrl+j",
-    "command": "selenext",
+    "command": "selectNextCodeAction",
     "when": "codeActionMenuVisible"
   },
 
@@ -580,16 +580,18 @@
     // Restart processes that might be using stale info.
     //
     // NOTE: It will show and error notification if some of them are not
-    // available in the current workspace. That is NOT problem, just close it.
+    // available in the current workspace. If the one that failed is above
+    // others, it will not restart the others. Comment it out and try again.
     "key": "alt+r",
     "command": "runCommands",
     "args": {
       "commands": [
         "typescript.restartTsServer",
+        "deno.client.restart",
         "elm.commands.restart",
+
         "eslint.restart",
-        "deno.client.restart"
-        // "svelte.restartLanguageServer"  // I'm not using Svelte.
+        "svelte.restartLanguageServer"
       ]
     },
     "when": "editorTextFocus && (vim.mode == 'Normal' || vim.mode == 'Insert')"

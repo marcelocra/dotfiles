@@ -201,6 +201,24 @@
   ],
   "eslint.validate": ["javascript", "javascriptreact", "typescript", "typescriptreact"],
 
+  //
+  //
+  // Css
+  //
+
+  "[handlebars]": {
+    "editor.defaultFormatter": "vscode.html-language-features"
+  },
+
+  "[jade]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+
+  //
+  //
+  // TailwindCSS
+  //
+
   "tailwindCSS.emmetCompletions": false, // I don't use these.
   "tailwindCSS.colorDecorators": true, // They are useful, though annoying.
   "tailwindCSS.experimental.classRegex": [
@@ -912,10 +930,14 @@
   "editor.fontFamily": "Iosevka Fixed",
   "editor.fontSize": 17, // edn{:desktop 13 :notebook ?? :small 11}
   "editor.fontWeight": "400", // edn{:desktop "400" :notebook "??" :small "100"}
-  // // Recursive with default values and almost no customization.
-  // "editor.fontLigatures": "'frac'",
-  // // Some customizations that I like. See details below.
-  "editor.fontLigatures": "'ss13', 'cv02' 4, 'cv04' 11, 'cv05' 8, 'cv10' 10, 'VSAB' 6, 'VSAF' 2, 'VSAJ' 4, 'VSAM' 1, 'VSAO' 1, 'VSAQ' 3",
+  "editor.fontLigatures": "'ss03'", // Consolas.
+  // // Lucida with some changes.
+  // "editor.fontLigatures": "'ss13', 'cv02' 4, 'cv04' 11, 'cv05' 8, 'cv10' 10, 'VSAB' 6, 'VSAF' 2, 'VSAJ' 4, 'VSAM' 1, 'VSAO' 1, 'VSAQ' 3",
+  //
+  // Other styles:
+  // cv02: change 2, cv04: change 4, cv05: change 5, cv10: change 0
+  // VSAB: * position (top, middle, bottom), VSAF: ' style (straight, curved)
+  // VSAJ: # style, VSAM: $ style, VSAO: % style, VSAQ: ? style
   // ss01: Andale Mono
   // ss02: Anonymous Pro
   // ss03: Consolas
@@ -1016,15 +1038,18 @@
   //
 
   "files.associations": {
-    "*.erb": "erb",
+    "*.adoc": "asciidoc",
     "*.css": "css",
-    "vimrc": "vimrc",
-    "json5": "jsonc",
+    "*.erb": "erb",
     "*.liquid": "html",
     "*.mdx": "markdown",
     "*.svg": "html",
-    "*.adoc": "asciidoc",
-    "*.vue": "vue"
+    "*.svx": "markdown",
+    "*.vue": "vue",
+    "json5": "jsonc",
+
+    // Add above.
+    "vimrc": "vimrc"
   },
 
   "files.eol": "\n",
@@ -1073,26 +1098,35 @@
 
   //
   //
-  // Terminal
+  // TERMINAL
+  // Fonts are paired with their good font size and weight.
   //
 
-  "terminal.integrated.fontFamily": "'Iosevka Fixed', 'JetBrains Mono', 'Recursive', 'Geist Mono', 'CodeNewRoman Nerd Font', 'MesloLGS Nerd Font', 'MesloLGS NF', monospace",
-  "terminal.integrated.tabs.enabled": true,
-  "terminal.integrated.fontSize": 17, // edn{:desktop 13 :notebook 19}
+  // "terminal.integrated.fontFamily": "Iosevka Fixed",
+  // "terminal.integrated.fontSize": 15,
+  // "terminal.integrated.fontWeight": "500",
+
+  "terminal.integrated.fontFamily": "JetBrains Mono",
+  "terminal.integrated.fontSize": 15,
   "terminal.integrated.fontWeight": "500",
-  // "terminal.integrated.lineHeight": 1.6, // Also good values: 1.6; 2
-  // "terminal.integrated.letterSpacing": 1,
+
+  // "terminal.integrated.fontFamily": "'JetBrains Mono', 'Recursive', 'Geist Mono', 'CodeNewRoman Nerd Font', 'MesloLGS Nerd Font', 'MesloLGS NF', monospace",
+  // "terminal.integrated.fontSize": 17, // edn{:desktop 13 :notebook 19}
+  // "terminal.integrated.fontWeight": "500",
+  "terminal.integrated.tabs.enabled": true,
   "terminal.integrated.macOptionClickForcesSelection": true,
   "terminal.integrated.allowChords": false,
+  "terminal.integrated.shellIntegration.enabled": true,
+  "terminal.integrated.drawBoldTextInBrightColors": true,
+  "terminal.integrated.minimumContrastRatio": 4.5,
+  "terminal.integrated.enableVisualBell": true,
+  "terminal.integrated.bellDuration": 3000,
+  // "terminal.integrated.lineHeight": 1.6, // Also good values: 1.6; 2
+  // "terminal.integrated.letterSpacing": 1,
   // "terminal.integrated.sendKeybindingsToShell": false,
   // "terminal.integrated.commandsToSkipShell": [
   //   "workbench.action.toggleMaximizedPanel"
   // ],
-  "terminal.integrated.shellIntegration.enabled": true,
-  "terminal.integrated.drawBoldTextInBrightColors": true,
-  "terminal.integrated.minimumContrastRatio": 1,
-  "terminal.integrated.enableVisualBell": true,
-  "terminal.integrated.bellDuration": 3000,
 
   // cursor
   "terminal.integrated.cursorStyle": "line",
@@ -1105,9 +1139,13 @@
   // Window
   //
 
-  "window.title": "${dirty}${activeEditorLong}${separator}${appName}",
+  "window.title": "${activeFolderMedium}${separator}${rootNameShort}",
   "window.newWindowDimensions": "inherit",
-  "window.restoreWindows": "none",
+  "window.restoreWindows": "all",
+  "window.titleBarStyle": "custom",
+  "window.newWindowProfile": "Default",
+  "window.menuBarVisibility": "hidden",
+  "window.customMenuBarAltFocus": false,
 
   //
   //
@@ -1194,10 +1232,8 @@
       "url": "https://json.schemastore.org/chrome-manifest.json"
     }
   ],
-  "window.newWindowProfile": "Default",
   "workbench.activityBar.location": "hidden",
-  "window.menuBarVisibility": "toggle",
-  "workbench.colorTheme": "Quiet Light"
+  "workbench.colorTheme": "Dracula Theme"
 
   //////////////////////////////////////////////////////////////////////////////
 }

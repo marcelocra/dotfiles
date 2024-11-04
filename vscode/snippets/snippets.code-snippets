@@ -278,9 +278,12 @@
   },
   "deno shebang": {
     "scope": "javascript,javascriptreact,typescript,typescriptreact",
-    "prefix": "deno",
+    "prefix": [
+      "deno-with-docs",
+      "denod"
+    ],
     "body": [
-      "#!/usr/bin/env -S deno run ${0:-A --env}",
+      "#!/usr/bin/env -S deno run ${1:-A --env}$0",
       "// The example above includes all permissions (-A) and env, like Node.",
       "//",
       "// Use the docs below to write fine-grained permissions. For most of",
@@ -348,7 +351,7 @@
     "scope": "json,jsonc,snippets",
     "prefix": [
       "script",
-      "s"
+      "ss"
     ],
     "body": [
       "\"$1\"${2:: \"$3\"},$0"
@@ -578,7 +581,7 @@
       "},"
     ]
   },
-  "JSON": {
+  "[json][jsonc]": {
     "scope": "json,jsonc",
     "body": []
   },
@@ -609,6 +612,27 @@
       "    \"vscodevim.vim\"",
       "  ]",
       "}"
+    ]
+  },
+  "package.json scripts comment block": {
+    "scope": "json,jsonc",
+    "prefix": [
+      "d"
+    ],
+    "body": [
+      "\"//\": \"///////////////////////////////////////////////////////////////////\",",
+      "\"//\": \"${1:Docs here}$0\",",
+      "\"//\": \"///////////////////////////////////////////////////////////////////\",",
+    ]
+  },
+  "package.json scripts separator": {
+    "scope": "json,jsonc",
+    "prefix": [
+      "sep",
+      "s"
+    ],
+    "body": [
+      "\"------------------------------[ ${1:TEXT} ]------------------------------\": \"\","
     ]
   },
 }

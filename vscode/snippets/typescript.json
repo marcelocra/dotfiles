@@ -12,14 +12,24 @@
   // 	],
   // 	"description": "Log output to console"
   // }
-  "creates a deno shebang": {
-    "prefix": "deno",
+  "creates a deno shebang with detailed permissions": {
+    "prefix": [
+      "deno-detailed"
+    ],
     "body": [
       // --env: read and load a `.env` file.
       // -A: allow all permissions.
       // --unstable-kv: use the unstable Deno KV API.
       "${2:#!/usr/bin/env -S deno run ${3:--env }${4:--allow-env }${5:--allow-net }${6:--allow-read }${7:--allow-write }${8:--unstable-kv}}",
       "$9${1:#!/usr/bin/env -S deno run ${10:--env }${11:-A }${12:--unstable-kv}}",
+    ]
+  },
+  "creates a simple deno shebang": {
+    "prefix": [
+      "deno"
+    ],
+    "body": [
+      "#!/usr/bin/env -S deno run ${1:-A} ${2:--env}$0",
     ]
   },
 }
