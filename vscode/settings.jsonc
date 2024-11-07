@@ -847,11 +847,15 @@
   // Source Code Pro
   //
   // "editor.fontFamily": "SourceCodeVF",
-  // "editor.fontSize": 15, // edn{:desktop 15 :notebook ?? :small 11}
+  // "editor.fontSize": 19, // edn{:desktop 15 :notebook ?? :small 11}
   // "editor.fontWeight": "400", // edn{:desktop "400" :notebook "??" :small "100"}
-  // "editor.fontLigatures": "'cv17','cv01','cv02','zero'",
+  // "editor.fontLigatures": "'cv17', 'zero'",
+  // "editor.fontLigatures": "'cv01', 'cv02', 'cv17', 'zero'",
   // // Available stylistic sets:
-  // // - | cv17: improved 1 | cv01 and cv02: clearer 'a' and 'g' |
+  // // - | cv01 and cv02: clearer 'a' and 'g'
+  // // - | cv08: alternate &
+  // // - | cv09: alternate @
+  // // - | cv17: improved 1
   // // - | zero: reverse dashed zero
 
   // JetBrainsMono font
@@ -928,16 +932,26 @@
   // Iosevka
   //
   "editor.fontFamily": "Iosevka Fixed",
-  "editor.fontSize": 17, // edn{:desktop 13 :notebook ?? :small 11}
+  // // Source Code Pro, with changes to: 1, 4, 0, l (lowercase L).
+  "editor.fontLigatures": "'ss09', 'cv01' 3, 'cv04' 5, 'cv10' 4, 'cv47' 8",
+  "editor.fontSize": 15, // edn{:desktop 13 :notebook ?? :small 11}
   "editor.fontWeight": "400", // edn{:desktop "400" :notebook "??" :small "100"}
-  "editor.fontLigatures": "'ss03'", // Consolas.
-  // // Lucida with some changes.
+  //
+  // // Lucida, with changes to: 2, 4, 5, 0, *, ', #, $, %, ?.
   // "editor.fontLigatures": "'ss13', 'cv02' 4, 'cv04' 11, 'cv05' 8, 'cv10' 10, 'VSAB' 6, 'VSAF' 2, 'VSAJ' 4, 'VSAM' 1, 'VSAO' 1, 'VSAQ' 3",
   //
   // Other styles:
-  // cv02: change 2, cv04: change 4, cv05: change 5, cv10: change 0
-  // VSAB: * position (top, middle, bottom), VSAF: ' style (straight, curved)
-  // VSAJ: # style, VSAM: $ style, VSAO: % style, VSAQ: ? style
+  // cv02: change 2
+  // cv04: change 4
+  // cv05: change 5
+  // cv10: change 0
+  // cv47: change l
+  // VSAB: * position (top, middle, bottom)
+  // VSAF: ' style (straight, curved)
+  // VSAJ: # style
+  // VSAM: $ style
+  // VSAO: % style
+  // VSAQ: ? style
   // ss01: Andale Mono
   // ss02: Anonymous Pro
   // ss03: Consolas
@@ -1102,13 +1116,13 @@
   // Fonts are paired with their good font size and weight.
   //
 
-  // "terminal.integrated.fontFamily": "Iosevka Fixed",
-  // "terminal.integrated.fontSize": 15,
-  // "terminal.integrated.fontWeight": "500",
-
-  "terminal.integrated.fontFamily": "JetBrains Mono",
+  "terminal.integrated.fontFamily": "Iosevka Fixed",
   "terminal.integrated.fontSize": 15,
   "terminal.integrated.fontWeight": "500",
+
+  // "terminal.integrated.fontFamily": "JetBrains Mono",
+  // "terminal.integrated.fontSize": 15,
+  // "terminal.integrated.fontWeight": "400",
 
   // "terminal.integrated.fontFamily": "'JetBrains Mono', 'Recursive', 'Geist Mono', 'CodeNewRoman Nerd Font', 'MesloLGS Nerd Font', 'MesloLGS NF', monospace",
   // "terminal.integrated.fontSize": 17, // edn{:desktop 13 :notebook 19}
@@ -1233,7 +1247,7 @@
     }
   ],
   "workbench.activityBar.location": "hidden",
-  "workbench.colorTheme": "Dracula Theme"
+  "workbench.colorTheme": "Tokyo Night Storm"
 
   //////////////////////////////////////////////////////////////////////////////
 }
