@@ -23,6 +23,11 @@
 
 readonly DEBUG='false'
 
+# Use the same sensitivity in all pointing devices. This is a good value that I
+# found by testing different ones. It is also the minimum (values can be float,
+# and -1.1 gives error. I believe the maximum is 1).
+readonly DEVICE_SENSITIVITY="-1"
+
 # TODO: move this and the following ideas to `.rc.common`.
 now() {
     echo "$(date '+%F_%T')"
@@ -101,6 +106,18 @@ setup_expert_mouse() {
         # that's ok.
         xinput set-button-map $device_id 3 8 9 4 5 6 7 1
     fi
+
+    # Reduce the device acceleration speed.
+    local prop_id
+    prop_id=$(xinput list-props $device_id \
+        | sed -nre 's/.*Accel\ Speed\ \(([0-9]+)\).*/\1/p' \
+        | head -n1)
+    if [ -z "$prop_id" ]; then
+        return
+    fi
+
+    # This is a good value that I found by testing different ones.
+    xinput set-prop $device_id $prop_id $DEVICE_SENSITIVITY
 }
 
 
@@ -130,7 +147,7 @@ setup_evoluent_mouse() {
     fi
 
     # This is a good value that I found by testing different ones.
-    xinput set-prop $device_id $prop_id -0.75
+    xinput set-prop $device_id $prop_id $DEVICE_SENSITIVITY
 }
 
 
@@ -152,7 +169,7 @@ reduce_speed_of_logitech_mouse() {
     fi
 
     # This is a good value that I found by testing different ones.
-    xinput set-prop $device_id $prop_id -0.75
+    xinput set-prop $device_id $prop_id $DEVICE_SENSITIVITY
 }
 
 
