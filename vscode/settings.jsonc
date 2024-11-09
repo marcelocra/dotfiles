@@ -282,6 +282,9 @@
   "tailwindCSS.includeLanguages": {
     "clojure": "html",
     "vue": "html",
+    "aspnetcorerazor": "html",
+    "razor": "html",
+    "*.razor": "html",
     "elm": "html"
   },
 
@@ -931,9 +934,11 @@
 
   // Iosevka
   //
-  "editor.fontFamily": "Iosevka Fixed",
+  "editor.fontFamily": "Iosevka Fixed Extended",
   // // Source Code Pro, with changes to: 1, 4, 0, l (lowercase L).
-  "editor.fontLigatures": "'ss09', 'cv01' 3, 'cv04' 5, 'cv10' 4, 'cv47' 8",
+  // "editor.fontLigatures": "'ss09', 'cv01' 3, 'cv04' 5, 'cv10' 4, 'cv47' 8",
+  // // Monaco.
+  "editor.fontLigatures": "'ss07'",
   "editor.fontSize": 15, // edn{:desktop 13 :notebook ?? :small 11}
   "editor.fontWeight": "400", // edn{:desktop "400" :notebook "??" :small "100"}
   //
@@ -1116,13 +1121,13 @@
   // Fonts are paired with their good font size and weight.
   //
 
-  "terminal.integrated.fontFamily": "Iosevka Fixed",
-  "terminal.integrated.fontSize": 15,
-  "terminal.integrated.fontWeight": "500",
-
-  // "terminal.integrated.fontFamily": "JetBrains Mono",
+  // "terminal.integrated.fontFamily": "Iosevka Fixed",
   // "terminal.integrated.fontSize": 15,
-  // "terminal.integrated.fontWeight": "400",
+  // "terminal.integrated.fontWeight": "500",
+
+  "terminal.integrated.fontFamily": "JetBrains Mono",
+  "terminal.integrated.fontSize": 15,
+  "terminal.integrated.fontWeight": "400",
 
   // "terminal.integrated.fontFamily": "'JetBrains Mono', 'Recursive', 'Geist Mono', 'CodeNewRoman Nerd Font', 'MesloLGS Nerd Font', 'MesloLGS NF', monospace",
   // "terminal.integrated.fontSize": 17, // edn{:desktop 13 :notebook 19}
