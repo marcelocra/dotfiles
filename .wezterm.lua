@@ -27,6 +27,7 @@ local fonts = {
 
   jb = wezterm.font({
     family = 'JetBrains Mono',
+    weight = 400,
     -- Ligature test:
     --  ! " # $ % & ' ( ) * + , - . / : ; < = > ? @ [ \ ] ^ _ ` { | } ~
     --  ~ < > = + _ _ ( ) * & ^ % $ # @ ! { } [ ] \ | / ? : ; , . ` ' " ´ ` ˜
@@ -116,7 +117,8 @@ local fonts = {
   }),
 
   iosevka_e = wezterm.font({
-    family = 'Iosevka Extended',
+    family = 'Iosevka Fixed Extended',
+    weight = 900,
     harfbuzz_features = {
       'ss02',
     },
@@ -325,8 +327,12 @@ config.window_background_opacity = 1
 config.text_background_opacity = 1
 config.window_decorations = 'RESIZE'
 
+-- Only the last one will apply.
+config.font = fonts.iosevka
 config.font = fonts.iosevka_e
-config.font_size = 11
+config.font = fonts.jb
+
+config.font_size = 10 -- change
 -- config.line_height = 1.2
 
 config.scrollback_lines = 5000
