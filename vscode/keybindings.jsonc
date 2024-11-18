@@ -590,8 +590,8 @@
         "deno.client.restart",
         "elm.commands.restart",
 
-        "eslint.restart",
-        "svelte.restartLanguageServer"
+        "eslint.restart"
+        // "svelte.restartLanguageServer"  // Not working, even from the command palette.
       ]
     },
     "when": "editorTextFocus && (vim.mode == 'Normal' || vim.mode == 'Insert')"
