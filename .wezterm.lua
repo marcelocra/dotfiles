@@ -334,6 +334,9 @@ config.font = fonts.jb
 
 config.font_size = 10 -- change
 -- config.line_height = 1.2
+config.freetype_load_target = 'Light'
+config.freetype_render_target = 'HorizontalLcd'
+-- config.freetype_load_flags = 'NO_HINTING'
 
 config.scrollback_lines = 5000
 
