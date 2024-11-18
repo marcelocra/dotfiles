@@ -436,7 +436,7 @@
   //
   "create elm-like spacing (3 before, 2 after) separation using comments, see example above": {
     "prefix": [
-      "c"
+      "cm"
     ],
     "body": [
       "",

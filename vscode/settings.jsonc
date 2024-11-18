@@ -219,8 +219,8 @@
   // TailwindCSS
   //
 
-  "tailwindCSS.emmetCompletions": false, // I don't use these.
-  "tailwindCSS.colorDecorators": true, // They are useful, though annoying.
+  "tailwindCSS.emmetCompletions": true,
+  "tailwindCSS.colorDecorators": false, // They are useful, though annoying.
   "tailwindCSS.experimental.classRegex": [
     // Always detect when wrapping strings with Tailwind-specific tagged
     // literals. You can define a simple identity function that receives a
@@ -514,10 +514,6 @@
       "after": ["leader", "leader", "s"]
     },
     {
-      "before": ["<c-a>"],
-      "after": ["gg", "V", "G"]
-    },
-    {
       "before": ["<c-p>"],
       "commands": ["workbench.action.quickOpen"]
     },
@@ -715,10 +711,12 @@
   //
 
   "emmet.triggerExpansionOnTab": true,
-  "emmet.showExpandedAbbreviation": "never",
-  "emmet.showSuggestionsAsSnippets": false,
+  "emmet.showExpandedAbbreviation": "always",
+  "emmet.showSuggestionsAsSnippets": true,
   "emmet.includeLanguages": {
     "erb": "html",
+    "vue-html": "html",
+    "javascript": "javascriptreact",
     "svelte": "html"
   },
 
@@ -790,6 +788,7 @@
 
   //
   //
+  // Editor
   // #region Editor
   //
 
@@ -863,11 +862,11 @@
 
   // JetBrainsMono font
   //
-  // "editor.fontFamily": "JetBrains Mono",
-  // "editor.fontSize": 11, // edn{:desktop 13 :notebook ?? :small 11}
-  // "editor.fontWeight": "400", // edn{:desktop "200" :notebook "??" :small "100"}
-  // // Minimal.
-  // "editor.fontLigatures": "'ss01', 'ss19', 'ss20', 'zero', 'cv99'",
+  "editor.fontFamily": "JetBrains Mono",
+  "editor.fontSize": 15, // edn{:desktop 13 :notebook ?? :small 11}
+  "editor.fontWeight": "300", // edn{:desktop "200" :notebook "??" :small "100"}
+  // Minimal.
+  "editor.fontLigatures": "'ss01', 'ss19', 'ss20', 'zero', 'cv99'",
   // // Very different from the default.
   // "editor.fontLigatures": "'ss02', 'ss19', 'ss20', 'zero', 'cv03', 'cv04', 'cv16', 'cv19', 'cv20', 'cv99'",
   // // Available stylistic sets:
@@ -934,13 +933,13 @@
 
   // Iosevka
   //
-  "editor.fontFamily": "Iosevka Fixed Extended",
-  // // Source Code Pro, with changes to: 1, 4, 0, l (lowercase L).
-  // "editor.fontLigatures": "'ss09', 'cv01' 3, 'cv04' 5, 'cv10' 4, 'cv47' 8",
-  // // Monaco.
-  "editor.fontLigatures": "'ss07'",
-  "editor.fontSize": 15, // edn{:desktop 13 :notebook ?? :small 11}
-  "editor.fontWeight": "400", // edn{:desktop "400" :notebook "??" :small "100"}
+  // "editor.fontFamily": "Iosevka Fixed",
+  // // // Source Code Pro, with changes to: 1, 4, 0, l (lowercase L).
+  // // "editor.fontLigatures": "'ss09', 'cv01' 3, 'cv04' 5, 'cv10' 4, 'cv47' 8",
+  // // // Monaco.
+  // "editor.fontLigatures": "'ss07'",
+  // "editor.fontSize": 17, // edn{:desktop 13 :notebook ?? :small 11}
+  // "editor.fontWeight": "400", // edn{:desktop "400" :notebook "??" :small "100"}
   //
   // // Lucida, with changes to: 2, 4, 5, 0, *, ', #, $, %, ?.
   // "editor.fontLigatures": "'ss13', 'cv02' 4, 'cv04' 11, 'cv05' 8, 'cv10' 10, 'VSAB' 6, 'VSAF' 2, 'VSAJ' 4, 'VSAM' 1, 'VSAO' 1, 'VSAQ' 3",
@@ -985,7 +984,7 @@
     "source.fixAll.eslint": "explicit",
     "source.fixAll": "explicit"
   },
-  "editor.lineNumbers": "off",
+  "editor.lineNumbers": "on",
   "editor.parameterHints.enabled": false,
   "editor.guides.bracketPairs": "active",
   "editor.bracketPairColorization.enabled": true,
@@ -1027,6 +1026,11 @@
   "editor.autoIndent": "full",
   "editor.screenReaderAnnounceInlineSuggestion": false,
   "editor.snippetSuggestions": "inline",
+  "editor.suggest.showSnippets": true,
+  "editor.suggest.matchOnWordStartOnly": true,
+  "editor.suggestOnTriggerCharacters": true,
+  "editor.acceptSuggestionOnEnter": "smart",
+  "editor.suggestSelection": "recentlyUsedByPrefix",
   "editor.multiCursorModifier": "ctrlCmd",
   "editor.renderLineHighlight": "all",
   "editor.scrollbar.vertical": "hidden",
@@ -1252,7 +1256,7 @@
     }
   ],
   "workbench.activityBar.location": "hidden",
-  "workbench.colorTheme": "Tokyo Night Storm"
+  "workbench.colorTheme": "GitHub Light"
 
   //////////////////////////////////////////////////////////////////////////////
 }
