@@ -648,6 +648,10 @@ fonts_install_packages_to_improve_rendering() {
 alias fonts_update_cache="fc-cache -fv"
 alias fonts_rebuild_cache="sudo fc-cache -r -v"
 
+# Monitor
+# -------
+
+alias monitor_show_dpi="xdpyinfo | grep dots"
 
 
 ## nextnext
