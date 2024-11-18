@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
-# vim:tw=80:ts=4:sw=4:ai:et:ff=unix:fenc=utf-8:et:fixeol:eol:fdm=marker:fdl=0:fen:ft=sh
+# vim:tw=80:ts=4:sw=4:ai:et:ff=unix:fenc=utf-8:et:fixeol:eol:fdm=marker:fdl=1:fen:ft=sh
 #
-# Main shell configuration script.
+# Main shell configuration script. {{{
 #
 # File docs and posix shell how-to. {{{
 #
@@ -50,6 +50,8 @@
 # Move stuff from here to the section above after learning!
 #
 # - more posix stuff!
+#
+# }}}
 #
 # }}}
 
@@ -629,6 +631,26 @@ alias process-to-port-all="netstat -lnp"
 # Same, but for TCP only. This is usually what I want, e.g. when a server hold
 # it even after ctrl+c.
 alias process-to-port="netstat -lnpt"
+
+# Fonts
+# -----
+
+fonts_install_packages_to_improve_rendering() {
+    # Great fonts with good rendering.
+    sudo apt install fonts-noto
+    sudo apt install ttf-mscorefonts-installer
+
+    # Packages that enhance font rendering.
+    sudo apt install fontconfig fontconfig-config
+    sudo apt install libfreetype6
+}
+
+alias fonts_update_cache="fc-cache -fv"
+alias fonts_rebuild_cache="sudo fc-cache -r -v"
+
+
+
+## nextnext
 
 # next alias above, unless they fit in one of the other sections.
 # }}}general
