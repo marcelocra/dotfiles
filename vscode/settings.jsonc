@@ -774,6 +774,7 @@
   "telemetry.telemetryLevel": "off",
   "problems.showCurrentInStatus": true,
   "scm.diffDecorationsGutterWidth": 5,
+  "scm.compactFolders": false,
   "diffEditor.renderSideBySide": true,
   "diffEditor.ignoreTrimWhitespace": false,
   "outline.collapseItems": "alwaysCollapse",
@@ -863,8 +864,8 @@
   // JetBrainsMono font
   //
   "editor.fontFamily": "JetBrains Mono",
-  "editor.fontSize": 15, // edn{:desktop 13 :notebook ?? :small 11}
-  "editor.fontWeight": "300", // edn{:desktop "200" :notebook "??" :small "100"}
+  "editor.fontSize": 13, // edn{:desktop 13 :notebook ?? :small 11}
+  "editor.fontWeight": "400", // edn{:desktop "200" :notebook "??" :small "100"}
   // Minimal.
   "editor.fontLigatures": "'ss01', 'ss19', 'ss20', 'zero', 'cv99'",
   // // Very different from the default.
@@ -1020,7 +1021,7 @@
   "editor.wordWrap": "bounded",
   "editor.wrappingIndent": "deepIndent",
   "editor.wordWrapColumn": 120,
-  "editor.lineHeight": 0, // Interesting values: 1.6; 2; 2.2
+  "editor.lineHeight": 1.8, // Interesting values: 1.6; 2; 2.2
   // "editor.letterSpacing": -0.8,
   "editor.roundedSelection": false,
   "editor.autoIndent": "full",
@@ -1035,6 +1036,10 @@
   "editor.renderLineHighlight": "all",
   "editor.scrollbar.vertical": "hidden",
   "editor.scrollbar.horizontal": "hidden",
+  "editor.renderFinalNewline": "on",
+  "editor.colorDecorators": false,
+  "editor.glyphMargin": false,
+  "editor.mouseWheelZoom": true,
 
   // #endregion
 
@@ -1046,6 +1051,7 @@
   "explorer.openEditors.visible": 1,
   "explorer.confirmDragAndDrop": false,
   "explorer.excludeGitIgnore": false,
+  "explorer.compactFolders": false,
 
   // Disabling this for now, as I didn't really like it.
   // // Nest some files in the explorer.
@@ -1156,6 +1162,7 @@
   "terminal.integrated.cursorStyleInactive": "outline",
   "terminal.integrated.cursorWidth": 1,
   "terminal.integrated.cursorBlinking": true,
+  "terminal.integrated.mouseWheelZoom": true,
 
   //
   //
@@ -1256,7 +1263,7 @@
     }
   ],
   "workbench.activityBar.location": "hidden",
-  "workbench.colorTheme": "GitHub Light"
+  "workbench.colorTheme": "GitHub Dark Dimmed"
 
   //////////////////////////////////////////////////////////////////////////////
 }
