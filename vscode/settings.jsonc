@@ -220,7 +220,7 @@
   //
 
   "tailwindCSS.emmetCompletions": true,
-  "tailwindCSS.colorDecorators": false, // They are useful, though annoying.
+  "tailwindCSS.colorDecorators": true, // They are useful, though annoying.
   "tailwindCSS.experimental.classRegex": [
     // Always detect when wrapping strings with Tailwind-specific tagged
     // literals. You can define a simple identity function that receives a
@@ -795,9 +795,9 @@
 
   // CodeNewRoman font
   //
-  // "editor.fontFamily": "CodeNewRoman Nerd Font",
-  // "editor.fontSize": 13,
-  // "editor.fontWeight": "normal", // edn{:desktop "bold" :notebook "??" :small "??"}
+  "editor.fontFamily": "CodeNewRoman Nerd Font Mono",
+  "editor.fontSize": 15,
+  "editor.fontWeight": "normal",
 
   // Cascadia Code font
   //
@@ -863,11 +863,11 @@
 
   // JetBrainsMono font
   //
-  "editor.fontFamily": "JetBrains Mono",
-  "editor.fontSize": 13, // edn{:desktop 13 :notebook ?? :small 11}
-  "editor.fontWeight": "400", // edn{:desktop "200" :notebook "??" :small "100"}
-  // Minimal.
-  "editor.fontLigatures": "'ss01', 'ss19', 'ss20', 'zero', 'cv99'",
+  // "editor.fontFamily": "JetBrains Mono",
+  // "editor.fontSize": 13, // edn{:desktop 13 :notebook ?? :small 11}
+  // "editor.fontWeight": "400", // edn{:desktop "200" :notebook "??" :small "100"}
+  // // Minimal.
+  // "editor.fontLigatures": "'ss01', 'ss19', 'ss20', 'zero', 'cv99'",
   // // Very different from the default.
   // "editor.fontLigatures": "'ss02', 'ss19', 'ss20', 'zero', 'cv03', 'cv04', 'cv16', 'cv19', 'cv20', 'cv99'",
   // // Available stylistic sets:
@@ -981,6 +981,21 @@
   // //  ~ < > = + _ _ ( ) * & ^ % $ # @ ! { } [ ] \ | / ? : ; , . ` ' " ´ ` ˜
   // //  => -> <> <= >= != !== === ~= |> <- --> || .- :- .= {..}
 
+  // Victor Mono
+  //
+  // "editor.fontFamily": "Victor Mono",
+  // "editor.fontLigatures": "'ss01', 'ss02', 'ss07', 'ss08'",
+  // // "editor.fontLigatures": "'calt' 0, 'ss01', 'ss02', 'ss06', 'ss07', 'ss08'",
+  // // - calt=0: no ligatures (particularly for `==` and `!=`, but also disable for ff fi il re tl ke)
+  // // - ss01: different 'a'
+  // // - ss02: different dashed zero (up to ss05)
+  // // - ss06: crossed '7'
+  // // - ss07: different '6' and  '9'
+  // // - ss08: more fish-like stuff (::<)
+  // //         |> >- <-> <| <> |- .- :: -.- -> => == === != !== ::<
+  // "editor.fontSize": 24, // Good value: 17.
+  // "editor.fontWeight": "400",
+
   "editor.codeActionsOnSave": {
     "source.fixAll.eslint": "explicit",
     "source.fixAll": "explicit"
@@ -1021,7 +1036,7 @@
   "editor.wordWrap": "bounded",
   "editor.wrappingIndent": "deepIndent",
   "editor.wordWrapColumn": 120,
-  "editor.lineHeight": 1.8, // Interesting values: 1.6; 2; 2.2
+  "editor.lineHeight": 1.6, // Interesting values: 1.6; 1.8; 2; 2.2
   // "editor.letterSpacing": -0.8,
   "editor.roundedSelection": false,
   "editor.autoIndent": "full",
@@ -1037,9 +1052,37 @@
   "editor.scrollbar.vertical": "hidden",
   "editor.scrollbar.horizontal": "hidden",
   "editor.renderFinalNewline": "on",
-  "editor.colorDecorators": false,
-  "editor.glyphMargin": false,
+  "editor.colorDecorators": true,
+  "editor.glyphMargin": true, // Space between the explorer and the line number.
   "editor.mouseWheelZoom": true,
+  "editor.tokenColorCustomizations": {
+    // "[*Light*]": { // Match all themes with "Light" in the name.
+    //   "textMateRules": [
+    //     {
+    //       "scope": "ref.matchtext",
+    //       "settings": {
+    //         "foreground": "#000"
+    //       }
+    //     }
+    //   ]
+    // },
+    "[Spiral Tattoo Ink Dark Dim]": {
+      "textMateRules": [
+        {
+          "scope": "support",
+          "settings": {
+            "fontStyle": "bold"
+          }
+        },
+        {
+          "scope": "comment",
+          "settings": {
+            "fontStyle": "italic"
+          }
+        }
+      ]
+    }
+  },
 
   // #endregion
 
@@ -1176,6 +1219,10 @@
   "window.newWindowProfile": "Default",
   "window.menuBarVisibility": "hidden",
   "window.customMenuBarAltFocus": false,
+  // Same effect for font size, but not for VSCode interface:
+  // - fontSize 17, zoomLevel 2
+  // - fontSize 24, zoomLevel 0
+  "window.zoomLevel": 0,
 
   //
   //
@@ -1212,40 +1259,87 @@
   //
 
   "workbench.colorCustomizations": {
-    // cursor
     "terminalCursor.foreground": "#ff4500", // orange red
     "terminalCursor.background": "#000",
-    // "[Night Owl Light]": {
-    //   "terminalCursor.foreground": "#ff0",
-    //   "terminalCursor.background": "#000"
-    // },
 
-    // // guides
-    // "tree.indentGuidesStroke": "#0084ff",
-    // "tree.inactiveIndentGuidesStroke": "#555", // edn{:dark "#444" :light "#d8d8d8" "GitHub Dark" "#555"}
-    "editorIndentGuide.activeBackground1": "#555d", // edn{:dark "#ff00c8" :light "#00ffff"}
-    "editorIndentGuide.background1": "#5551", // edn{:dark "#555" :light "#ccc" "GitHub Dark" "#555" "Solarized Light" "#ccc" }
+    "[Spiral Tattoo Ink Dark Dim]": {
+      "editorCursor.foreground": "#fff",
+      // The bottom border of the active tab.
+      "tab.activeBackground": "#332c5f", // Good: 3d236e
+      "tab.inactiveBackground": "#33475C",
+      "gitDecoration.untrackedResourceForeground": "#00FF00",
 
-    // // line height
-    "editor.lineHighlightBorder": "#ff00c833", // edn{:dark "#ff00c833" :light "#00ffff22"}
-    "editor.lineHighlightBackground": "#ff00c815" // edn{:dark "#ff00c822" :light "#00ffff22"}
+      "badge.background": "#fff",
+      "scmGraph.historyItemRemoteRefColor": "#fff",
 
-    // // selection
-    // // TODO: figure out how to get this working.
-    // // "editor.selectionForeground": "#ff00c8" // edn{:dark "#ff00c8" :light "#fff"}
-    // "editor.selectionBackground": "#ff00c855", // edn{:dark "#ff00c855" :light "#00ffff77"}
-    // "editor.selectionHighlightBorder": "#ffffff81", // edn{:dark "#ffffff81" :light "#ffffffdd"}
-    // "editor.selectionHighlightBackground": "#ffffff36", // edn{:dark "#ffffff36" :light "#ffffff36"}
+      //
+      //
+      // ERRORS
+      //
 
-    // // word and search match highlight
-    // "editor.wordHighlightBorder": "#ffffff66", // edn{:dark "#ffffff66" :light "#00000033"}
-    // "editor.wordHighlightBackground": "#00000066", // edn{:dark "#00000066" :light "#ffffff44"}
-    // "editor.findMatchBackground": "#d400ff88", // edn{:dark "#d400ff88" :light "#000000e8"}
-    // "editor.findMatchHighlightBackground": "#d400ff56", // edn{:dark "#d400ff56" :light "#d400ff56"}
+      // TODO: figure out these ones. They were all with the magenta color initially, but I prefer this one for errors.
 
-    // // calva
-    // "calva.inlineErrorForegroundColor": "#ff0000",
-    // "calva.inlineForegroundColor": "#ff9000"
+      "errorForeground": "#ff4500",
+      "problemsErrorIcon.foreground": "#ff4500",
+      "editorMarkerNavigationError.background": "#ff4500",
+      "statusBarItem.errorBackground": "#ff4500",
+      "notificationsErrorIcon.foreground": "#ff4500",
+      "debugTokenExpression.error": "#ff4500",
+      "testing.iconErrored": "#ff4500",
+      "testing.message.error.decorationForeground": "#ff4500",
+      "testing.message.error.lineBackground": "#ff45003f",
+      "debugConsole.errorForeground": "#ff4500",
+      "notebookStatusErrorIcon.foreground": "#ff4500",
+
+      // The color of a tab's text when there is an error.
+
+      "list.errorForeground": "#ff4500",
+
+      // How the minimap and scrollbar show errors.
+
+      "minimap.errorHighlight": "#ff450080",
+      "editorOverviewRuler.errorForeground": "#ff45007f",
+
+      // Invalid inputs (e.g. leave an empty name for a new file).
+
+      "inputValidation.errorForeground": "#ff4500",
+      "inputValidation.errorBorder": "#ff4500",
+
+      // Syntax errors.
+
+      "editorError.foreground": "#ff4500",
+      "editorError.border": "#ffffff00",
+
+      //
+      //
+      // BORDERS
+      //
+
+      // Bottom border of the title bar.
+      "titleBar.border": "#4b6786",
+
+      // Editor border right below the tabs.
+      "editorGroupHeader.tabsBorder": "#4b6786",
+
+      // Editor border below the breadcrumbs.
+      "editorGroupHeader.border": "#4b6786",
+
+      // Editor border when using splits.
+      "editorGroup.border": "#4b6786",
+
+      // Border between tabs.
+      "tab.border": "#4b6786",
+
+      // Active tab bottom border.
+      "tab.activeBorder": "#A699FF",
+
+      // Borders for all menu items (like the right click menu).
+      "menu.border": "#4b6786",
+
+      "sideBar.border": "#4b6786",
+
+      "focusBorder": "#A699FF"
+    }
   },
 
   "workbench.startupEditor": "newUntitledFile",
@@ -1263,7 +1357,7 @@
     }
   ],
   "workbench.activityBar.location": "hidden",
-  "workbench.colorTheme": "GitHub Dark Dimmed"
+  "workbench.colorTheme": "Spiral Tattoo Ink Dark Dim"
 
   //////////////////////////////////////////////////////////////////////////////
 }
