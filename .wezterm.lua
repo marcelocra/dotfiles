@@ -337,10 +337,10 @@ config.window_decorations = 'RESIZE'
 -- Only the last one will apply. fff
 config.font = fonts.meslo
 config.font = fonts.iosevka
-config.font = fonts.jb
 config.font = fonts.victor_mono
+config.font = fonts.jb
 
-config.font_size = 10 -- fs
+config.font_size = 13 -- fs
 -- config.line_height = 1.2
 config.freetype_load_target = 'Light'
 config.freetype_render_target = 'HorizontalLcd'

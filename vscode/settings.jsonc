@@ -1178,9 +1178,12 @@
   // "terminal.integrated.fontSize": 15,
   // "terminal.integrated.fontWeight": "500",
 
-  "terminal.integrated.fontFamily": "JetBrains Mono",
+  // "terminal.integrated.fontFamily": "JetBrains Mono",
+  // "terminal.integrated.fontSize": 15,
+  // "terminal.integrated.fontWeight": "400",
+
+  "terminal.integrated.fontFamily": "Victor Mono",
   "terminal.integrated.fontSize": 15,
-  "terminal.integrated.fontWeight": "400",
 
   // "terminal.integrated.fontFamily": "'JetBrains Mono', 'Recursive', 'Geist Mono', 'CodeNewRoman Nerd Font', 'MesloLGS Nerd Font', 'MesloLGS NF', monospace",
   // "terminal.integrated.fontSize": 17, // edn{:desktop 13 :notebook 19}
@@ -1264,13 +1267,25 @@
 
     "[Spiral Tattoo Ink Dark Dim]": {
       "editorCursor.foreground": "#fff",
-      // The bottom border of the active tab.
-      "tab.activeBackground": "#332c5f", // Good: 3d236e
-      "tab.inactiveBackground": "#33475C",
-      "gitDecoration.untrackedResourceForeground": "#00FF00",
 
       "badge.background": "#fff",
       "scmGraph.historyItemRemoteRefColor": "#fff",
+
+      // The bottom border of the active tab.
+
+      "tab.activeBackground": "#332c5f", // Good: 3d236e, A600FF22; better: 332c5f
+      "tab.inactiveBackground": "#33475C",
+
+      // Git staged.
+
+      "gitDecoration.stageModifiedResourceForeground": "#ffa70f",
+      "gitDecoration.stageDeletedResourceForeground": "#ff4500",
+
+      // Git non-staged.
+
+      "gitDecoration.modifiedResourceForeground": "#ffa70f",
+      "gitDecoration.deletedResourceForeground": "#ff4500",
+      "gitDecoration.untrackedResourceForeground": "#00FF00",
 
       //
       //
@@ -1308,7 +1323,10 @@
       // Syntax errors.
 
       "editorError.foreground": "#ff4500",
-      "editorError.border": "#ffffff00",
+      // TODO: Remove. Defines a double border below the squiggly line (defined by foreground). Default is empty.
+      "editorError.border": "default",
+
+      "editorUnnecessaryCode.border": "default",
 
       //
       //
