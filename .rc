@@ -653,6 +653,8 @@ alias fonts_rebuild_cache="sudo fc-cache -r -v"
 
 alias monitor_show_dpi="xdpyinfo | grep dots"
 
+# Last time a user logged into the system.
+alias last_login="last -10"
 
 ## nextnext
 
