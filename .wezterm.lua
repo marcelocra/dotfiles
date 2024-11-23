@@ -16,13 +16,10 @@ local mux = wezterm.mux
 local fonts = {
   meslo = wezterm.font({
     family = 'MesloLGS NF',
-    harfbuzz_features = {},
-  }),
-
-  meslo_bold = wezterm.font({
-    family = 'MesloLGS NF',
-    harfbuzz_features = {},
-    weight = 'Bold',
+    harfbuzz_features = {
+      'cv10 10'
+    },
+    weight = 400,
   }),
 
   jb = wezterm.font({
@@ -37,7 +34,7 @@ local fonts = {
     harfbuzz_features = {
       -- Minimal: default style (ss01); no ligatures in `=` (ss19); raised bar `f` (ss20); dashed
       -- zero (zero); highlight some weird glyphs (cv99).
-      'ss01', 'ss19', 'ss20', 'zero', 'cv99',
+      -- 'ss01', 'ss19', 'ss20', 'zero', 'cv99',
 
       -- Different: closed construction (ss02); no ligatures in `=` (ss19); raised bar `f` (ss20);
       -- dashed zero (zero); different `g`, `j`, `Q`, `8`, `5` (respectively); highlight some weird
@@ -87,9 +84,10 @@ local fonts = {
   }),
 
   iosevka = wezterm.font({
-    family = 'Iosevka Fixed',
-    weight = 500,
+    family = 'Iosevka Fixed Extended',
+    weight = 400,
     harfbuzz_features = {
+      -- Font alternatives. <<(
       -- ss01: Andale Mono
       -- ss02: Anonymous Pro
       -- ss03: Consolas
@@ -109,18 +107,27 @@ local fonts = {
       -- ss17: Recursive Mono
       -- ss18: Input Mono
       -- ss20: Curly
+      -- )>>
+      'ss03',
+
       -- Others:
       -- Lucida Console with some changes.
       -- 'ss13', 'cv02 4', 'cv04 11', 'cv05 8', 'cv10 10',
-      'ss02',
+      -- 'ss13', 'cv02 1', 'cv04 3', 'cv05 4', 'cv10 25',
     },
   }),
 
-  iosevka_e = wezterm.font({
-    family = 'Iosevka Fixed Extended',
-    weight = 900,
+  victor_mono = wezterm.font({
+    family = 'Victor Mono',
+    weight = 600,
     harfbuzz_features = {
-      'ss02',
+      -- 'calt=0', -- no ligatures (particularly for `==` and `!=`)
+      -- 'ss01', -- different 'a'
+      'ss02', -- different dashed zero (up to ss05)
+      'ss06', -- crossed '7'
+      'ss07', -- different '6' and  '9'
+      'ss08', -- more fish-like stuff (::<)
+      -- |> >- <-> <| <> |- .- :: -.- -> => == === != !== ::<
     },
   }),
 }
@@ -327,12 +334,13 @@ config.window_background_opacity = 1
 config.text_background_opacity = 1
 config.window_decorations = 'RESIZE'
 
--- Only the last one will apply.
+-- Only the last one will apply. fff
+config.font = fonts.meslo
 config.font = fonts.iosevka
-config.font = fonts.iosevka_e
 config.font = fonts.jb
+config.font = fonts.victor_mono
 
-config.font_size = 10 -- change
+config.font_size = 10 -- fs
 -- config.line_height = 1.2
 config.freetype_load_target = 'Light'
 config.freetype_render_target = 'HorizontalLcd'
