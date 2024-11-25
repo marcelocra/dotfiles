@@ -796,8 +796,8 @@
   // CodeNewRoman font
   //
   "editor.fontFamily": "CodeNewRoman Nerd Font Mono",
-  "editor.fontSize": 15,
-  "editor.fontWeight": "normal",
+  "editor.fontSize": 17,
+  "editor.fontWeight": "400",
 
   // Cascadia Code font
   //
@@ -1068,18 +1068,22 @@
     // },
     "[Spiral Tattoo Ink Dark Dim]": {
       "textMateRules": [
-        {
-          "scope": "support",
-          "settings": {
-            "fontStyle": "bold"
-          }
-        },
-        {
-          "scope": "comment",
-          "settings": {
-            "fontStyle": "italic"
-          }
-        }
+        // Test custom colors here, before moving to the theme.
+        //
+        // Example:
+        //
+        //    {
+        //      "scope": "support",
+        //      "settings": {
+        //        "fontStyle": ""
+        //      }
+        //    },
+        //    {
+        //      "scope": "comment",
+        //      "settings": {
+        //        "fontStyle": "italic"
+        //      }
+        //    }
       ]
     }
   },
@@ -1184,6 +1188,7 @@
 
   "terminal.integrated.fontFamily": "Victor Mono",
   "terminal.integrated.fontSize": 15,
+  "terminal.integrated.fontWeight": "700",
 
   // "terminal.integrated.fontFamily": "'JetBrains Mono', 'Recursive', 'Geist Mono', 'CodeNewRoman Nerd Font', 'MesloLGS Nerd Font', 'MesloLGS NF', monospace",
   // "terminal.integrated.fontSize": 17, // edn{:desktop 13 :notebook 19}
@@ -1215,23 +1220,20 @@
   // Window
   //
 
+  "window.titleBarStyle": "custom",
   "window.title": "${activeFolderMedium}${separator}${rootNameShort}",
   "window.newWindowDimensions": "inherit",
   "window.restoreWindows": "all",
-  "window.titleBarStyle": "custom",
   "window.newWindowProfile": "Default",
   "window.menuBarVisibility": "hidden",
   "window.customMenuBarAltFocus": false,
-  // Same effect for font size, but not for VSCode interface:
-  // - fontSize 17, zoomLevel 2
-  // - fontSize 24, zoomLevel 0
-  "window.zoomLevel": 0,
 
   //
   //
   // Search
   //
 
+  "window.zoomLevel": 0,
   "search.defaultViewMode": "tree",
   "search.mode": "newEditor",
   "search.searchOnTypeDebouncePeriod": 500,
@@ -1265,100 +1267,37 @@
     "terminalCursor.foreground": "#ff4500", // orange red
     "terminalCursor.background": "#000",
 
+    // My colors:
+    // - most backgrounds: #33475C
+    // - focus and active tab borders: #A699FF
+    // - most other borders: #4b6786
+    // - active tab and sticky section backgrounds: #332c5f
+    // - most errors: #ff4500
+    // - most warnings: #ffa70f
+
     "[Spiral Tattoo Ink Dark Dim]": {
-      "editorCursor.foreground": "#fff",
+      // Test custom colors here, before moving to the theme. Example above (but in here they will only apply to this
+      // theme).
+      "textPreformat.foreground": "#fff",
+      "textPreformat.background": "#332c5f",
 
-      "badge.background": "#fff",
-      "scmGraph.historyItemRemoteRefColor": "#fff",
+      "symbolIcon.packageForeground": "#ffff00",
 
-      // The bottom border of the active tab.
+      "symbolIcon.constructorForeground": "#00ff00",
+      "symbolIcon.functionForeground": "#00ff00",
 
-      "tab.activeBackground": "#332c5f", // Good: 3d236e, A600FF22; better: 332c5f
-      "tab.inactiveBackground": "#33475C",
+      "symbolIcon.fieldForeground": "#ff00f7",
+      "symbolIcon.variableForeground": "#ff00f7",
 
-      // Git staged.
-
-      "gitDecoration.stageModifiedResourceForeground": "#ffa70f",
-      "gitDecoration.stageDeletedResourceForeground": "#ff4500",
-
-      // Git non-staged.
-
-      "gitDecoration.modifiedResourceForeground": "#ffa70f",
-      "gitDecoration.deletedResourceForeground": "#ff4500",
-      "gitDecoration.untrackedResourceForeground": "#00FF00",
-
-      //
-      //
-      // ERRORS
-      //
-
-      // TODO: figure out these ones. They were all with the magenta color initially, but I prefer this one for errors.
-
-      "errorForeground": "#ff4500",
-      "problemsErrorIcon.foreground": "#ff4500",
-      "editorMarkerNavigationError.background": "#ff4500",
-      "statusBarItem.errorBackground": "#ff4500",
-      "notificationsErrorIcon.foreground": "#ff4500",
-      "debugTokenExpression.error": "#ff4500",
-      "testing.iconErrored": "#ff4500",
-      "testing.message.error.decorationForeground": "#ff4500",
-      "testing.message.error.lineBackground": "#ff45003f",
-      "debugConsole.errorForeground": "#ff4500",
-      "notebookStatusErrorIcon.foreground": "#ff4500",
-
-      // The color of a tab's text when there is an error.
-
-      "list.errorForeground": "#ff4500",
-
-      // How the minimap and scrollbar show errors.
-
-      "minimap.errorHighlight": "#ff450080",
-      "editorOverviewRuler.errorForeground": "#ff45007f",
-
-      // Invalid inputs (e.g. leave an empty name for a new file).
-
-      "inputValidation.errorForeground": "#ff4500",
-      "inputValidation.errorBorder": "#ff4500",
-
-      // Syntax errors.
-
-      "editorError.foreground": "#ff4500",
-      // TODO: Remove. Defines a double border below the squiggly line (defined by foreground). Default is empty.
-      "editorError.border": "default",
-
-      "editorUnnecessaryCode.border": "default",
-
-      //
-      //
-      // BORDERS
-      //
-
-      // Bottom border of the title bar.
-      "titleBar.border": "#4b6786",
-
-      // Editor border right below the tabs.
-      "editorGroupHeader.tabsBorder": "#4b6786",
-
-      // Editor border below the breadcrumbs.
-      "editorGroupHeader.border": "#4b6786",
-
-      // Editor border when using splits.
-      "editorGroup.border": "#4b6786",
-
-      // Border between tabs.
-      "tab.border": "#4b6786",
-
-      // Active tab bottom border.
-      "tab.activeBorder": "#A699FF",
-
-      // Borders for all menu items (like the right click menu).
-      "menu.border": "#4b6786",
-
-      "sideBar.border": "#4b6786",
-
-      "focusBorder": "#A699FF"
+      "symbolIcon.booleanForeground": "#ff00aa",
+      "symbolIcon.nullForeground": "#ff00aa",
+      "symbolIcon.operatorForeground": "#ff00aa",
+      "symbolIcon.numberForeground": "#ff00aa",
+      "symbolIcon.referenceForeground": "#ff00aa"
     }
   },
+
+  "window.customTitleBarVisibility": "never",
 
   "workbench.startupEditor": "newUntitledFile",
   "workbench.tree.indent": 20,
@@ -1374,8 +1313,8 @@
       "url": "https://json.schemastore.org/chrome-manifest.json"
     }
   ],
-  "workbench.activityBar.location": "hidden",
-  "workbench.colorTheme": "Spiral Tattoo Ink Dark Dim"
+  "workbench.colorTheme": "Quiet Light",
+  "workbench.activityBar.location": "hidden"
 
   //////////////////////////////////////////////////////////////////////////////
 }
