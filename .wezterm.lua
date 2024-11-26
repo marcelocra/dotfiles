@@ -11,6 +11,9 @@ local wezterm = require 'wezterm'
 local act = wezterm.action
 local mux = wezterm.mux
 
+-- Options: 'Fixed', 'Fixed Extended', 'Extended'.
+local which_iosevka = 'Iosevka Fixed Extended'
+
 
 -- Fonts I frequently use. <<(
 local fonts = {
@@ -24,7 +27,7 @@ local fonts = {
 
   jb = wezterm.font({
     family = 'JetBrains Mono',
-    weight = 400,
+    weight = 200,
     -- Ligature test:
     --  ! " # $ % & ' ( ) * + , - . / : ; < = > ? @ [ \ ] ^ _ ` { | } ~
     --  ~ < > = + _ _ ( ) * & ^ % $ # @ ! { } [ ] \ | / ? : ; , . ` ' " ´ ` ˜
@@ -45,15 +48,16 @@ local fonts = {
 
   cascadia = wezterm.font({
     family = 'Cascadia Code NF',
+    weight = 400,
     harfbuzz_features = {
-      'ss01', 'ss19', 'ss20', 'calt=0',
+      'calt 0', 'ss01', 'ss19', 'ss20',
     },
   }),
 
   fira = wezterm.font({
     family = 'Fira Code',
     harfbuzz_features = {
-      'calt=0', 'cv01', 'cv02', 'cv05', 'cv09', 'ss05', 'ss03', 'cv16', 'cv30', 'cv25', 'cv26',
+      'calt 0', 'cv01', 'cv02', 'cv05', 'cv09', 'ss05', 'ss03', 'cv16', 'cv30', 'cv25', 'cv26',
       'cv32', 'cv28', 'ss10', 'cv14', 'cv12',
     },
   }),
@@ -64,14 +68,16 @@ local fonts = {
 
   noto = wezterm.font({
     family = 'Noto Sans Mono',
-    weight = 700,
+    weight = 400,
   }),
 
   dm = wezterm.font({
     family = 'DM Mono',
     weight = 700,
     harfbuzz_features = {
-      'ss01', 'ss03', 'ss04',
+      'ss01', -- rounded commas
+      'ss03', -- non curvy 'g'
+      'ss04', -- non curvy '6' and '9'
     },
   }),
 
@@ -84,7 +90,7 @@ local fonts = {
   }),
 
   iosevka = wezterm.font({
-    family = 'Iosevka Fixed Extended',
+    family = which_iosevka,
     weight = 400,
     harfbuzz_features = {
       -- Font alternatives. <<(
@@ -108,7 +114,6 @@ local fonts = {
       -- ss18: Input Mono
       -- ss20: Curly
       -- )>>
-      'ss03',
 
       -- Others:
       -- Lucida Console with some changes.
@@ -117,9 +122,44 @@ local fonts = {
     },
   }),
 
+  iosevka_jb = wezterm.font({
+    family = which_iosevka,
+    weight = 400,
+    harfbuzz_features = {
+      'ss14'
+    },
+  }),
+
+  iosevka_lucida = wezterm.font({
+    family = which_iosevka,
+    weight = 400,
+    harfbuzz_features = {
+      'ss13', 'cv10 7'
+      -- Variations.
+      -- 'ss13', 'cv02 4', 'cv04 11', 'cv05 8', 'cv10 10',
+      -- 'ss13', 'cv02 1', 'cv04 3', 'cv05 4', 'cv10 25',
+    },
+  }),
+
+  iosevka_menlo = wezterm.font({
+    family = which_iosevka,
+    weight = 400,
+    harfbuzz_features = {
+      'ss04',
+    },
+  }),
+
+  iosevka_monaco = wezterm.font({
+    family = which_iosevka,
+    weight = 400,
+    harfbuzz_features = {
+      'ss07',
+    },
+  }),
+
   victor_mono = wezterm.font({
     family = 'Victor Mono',
-    weight = 600,
+    weight = 400,
     harfbuzz_features = {
       -- 'calt=0', -- no ligatures (particularly for `==` and `!=`)
       -- 'ss01', -- different 'a'
@@ -130,6 +170,31 @@ local fonts = {
       -- |> >- <-> <| <> |- .- :: -.- -> => == === != !== ::<
     },
   }),
+
+  code_new_roman = wezterm.font({
+    family = 'CodeNewRoman Nerd Font Mono',
+    weight = 400,
+    harfbuzz_features = {
+      -- |> >- <-> <| <> |- .- :: -.- -> => == === != !== ::<
+    },
+  }),
+}
+
+local fonts_size = {
+  cascadia = 13,
+  fira = 13,
+  geist = 13,
+  noto = 9,
+  dm = 13,
+  meslo = 13,
+  iosevka = 13,
+  iosevka_jb = 13,
+  iosevka_lucida = 13,
+  iosevka_menlo = 11,
+  iosevka_monaco = 11,
+  jb = 9,
+  victor_mono = 10,
+  code_new_roman = 13,
 }
 -- )>>
 
@@ -334,13 +399,20 @@ config.window_background_opacity = 1
 config.text_background_opacity = 1
 config.window_decorations = 'RESIZE'
 
--- Only the last one will apply. fff
-config.font = fonts.meslo
-config.font = fonts.iosevka
-config.font = fonts.victor_mono
-config.font = fonts.jb
+-- Only the last one will be applied. fff
+config.font = fonts.code_new_roman; config.font_size = fonts_size.code_new_roman
+config.font = fonts.iosevka; config.font_size = fonts_size.iosevka
+config.font = fonts.iosevka_jb; config.font_size = fonts_size.iosevka_jb
+config.font = fonts.iosevka_lucida; config.font_size = fonts_size.iosevka_lucida
+config.font = fonts.meslo; config.font_size = fonts_size.meslo
+config.font = fonts.victor_mono; config.font_size = fonts_size.victor_mono
+config.font = fonts.iosevka_monaco; config.font_size = fonts_size.iosevka_monaco
+config.font = fonts.dm; config.font_size = fonts_size.dm
+config.font = fonts.noto; config.font_size = fonts_size.noto
+config.font = fonts.iosevka_menlo; config.font_size = fonts_size.iosevka_menlo
+config.font = fonts.cascadia; config.font_size = fonts_size.cascadia
+config.font = fonts.jb; config.font_size = fonts_size.jb
 
-config.font_size = 13 -- fs
 -- config.line_height = 1.2
 config.freetype_load_target = 'Light'
 config.freetype_render_target = 'HorizontalLcd'
