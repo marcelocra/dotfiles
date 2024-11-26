@@ -191,7 +191,8 @@ local ColorMode = {
     Light = 2,
 }
 
-local mode = ColorMode.TimeBased
+-- local mode = ColorMode.TimeBased
+local mode = ColorMode.Dark
 vim.g.colorsheme_mode = mode
 
 function define_colorscheme(mode)
@@ -207,21 +208,23 @@ function define_colorscheme(mode)
                 or hour_now < daylight_starts
                 or hour_now >= daylight_ends)) then
 
-        -- MUST set the colorscheme before making color changes, otherwise they
-        -- will be overwritten.
-        vim.cmd('colorscheme tokyonight')
+        vim.cmd('colorscheme badwolf')
 
-        -- Colors for `Cursor` won't work if they are overwritten by the
-        -- terminal.
-        vim.cmd([[
-            colorscheme tokyonight
+        -- -- MUST set the colorscheme before making color changes, otherwise they
+        -- -- will be overwritten.
+        -- vim.cmd('colorscheme tokyonight')
 
-            hi MatchParen ctermfg=red ctermbg=black
-            hi ColorColumn ctermfg=gray ctermbg=black
+        -- -- Colors for `Cursor` won't work if they are overwritten by the
+        -- -- terminal.
+        -- vim.cmd([[
+        --     colorscheme tokyonight
 
-            hi Cursor ctermfg=yellow ctermbg=yellow
-            hi Cursor guifg=yellow guibg=yellow
-        ]])
+        --     hi MatchParen ctermfg=red ctermbg=black
+        --     hi ColorColumn ctermfg=gray ctermbg=black
+
+        --     hi Cursor ctermfg=yellow ctermbg=yellow
+        --     hi Cursor guifg=yellow guibg=yellow
+        -- ]])
 
         -- vim.cmd('set guicursor=n-v-c:block-Cursor/lCursor,i-ci-ve:ver25-Cursor2/lCursor2,r-cr:hor20,o:hor50')
 
