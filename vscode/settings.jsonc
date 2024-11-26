@@ -781,9 +781,13 @@
   "notebook.lineNumbers": "on",
   "html.suggest.html5": false,
   "[log][Log]": {
-    "editor.fontFamily": "JetBrains Mono",
+    "editor.fontFamily": "Recursive",
     "editor.fontSize": 11,
-    "editor.fontWeight": "300"
+    "editor.fontWeight": "400"
+
+    // "editor.fontFamily": "JetBrains Mono",
+    // "editor.fontSize": 11,
+    // "editor.fontWeight": "300"
     // "editor.fontLigatures": "'ss02', 'ss19', 'ss20', 'zero', 'cv03', 'cv04', 'cv16', 'cv19', 'cv20', 'cv99'"
   },
 
@@ -795,16 +799,17 @@
 
   // CodeNewRoman font
   //
-  "editor.fontFamily": "CodeNewRoman Nerd Font Mono",
-  "editor.fontSize": 17,
-  "editor.fontWeight": "400",
+  // "editor.fontFamily": "CodeNewRoman Nerd Font Mono",
+  // "editor.fontSize": 17,
+  // "editor.fontWeight": "400",
 
   // Cascadia Code font
   //
   // "editor.fontFamily": "Cascadia Code NF",
-  // "editor.fontSize": 13, // edn{:desktop 13 :notebook 19 :small 11}
-  // "editor.fontWeight": "300", // edn{:desktop "300" :notebook "300" :small "100"}
-  // "editor.fontLigatures": "'ss01', 'ss19', 'ss20', 'calt' 0",
+  // "editor.fontSize": 14, // edn{:desktop 13 :notebook 19 :small 11}
+  // "editor.fontWeight": "400", // edn{:desktop "300" :notebook "300" :small "100"}
+  // "editor.fontLigatures": "'calt', 'ss01', 'ss19', 'ss20', 'cv01' 3",
+  // "window.zoomLevel": 2,
   // // Available stylistic sets:
   // // - cursive italics: 'ss01'
   // // - alternate not equal: 'ss02' ~= (appears as !=)
@@ -819,8 +824,8 @@
   // Fira Code font
   //
   // "editor.fontFamily": "Fira Code",
-  // "editor.fontSize": 13, // edn{:desktop 15 :notebook ?? :small 11}
-  // "editor.fontWeight": "100", // edn{:desktop "400" :notebook "??" :small "100"}
+  // "editor.fontSize": 15, // edn{:desktop 15 :notebook ?? :small 11}
+  // "editor.fontWeight": "400", // edn{:desktop "400" :notebook "??" :small "100"}
   // "editor.fontLigatures": "'calt' 0, 'cv01', 'cv02', 'cv05', 'cv09', 'ss05', 'ss03', 'cv16', 'cv30', 'cv25', 'cv26', 'cv32', 'cv28', 'ss10', 'cv14', 'cv12'",
   // // Available stylistic sets:
   // // - | cv01: a      | cv02: g  | cv03...06: i | cv07..10: l | ss01: r
@@ -909,13 +914,14 @@
 
   // Recursive font
   //
-  // "editor.fontFamily": "Recursive",
-  // "editor.fontSize": 15, // edn{:desktop 13 :notebook ?? :small 11}
-  // "editor.fontWeight": "400", // edn{:desktop "400" :notebook "??" :small "100"}
+  "editor.fontFamily": "Recursive",
+  "editor.fontSize": 15, // edn{:desktop 13 :notebook ?? :small 11}
+  "editor.fontWeight": "400", // edn{:desktop "400" :notebook "??" :small "100"}
+  "window.zoomLevel": 2,
   // // Recursive with default values and almost no customization.
   // "editor.fontLigatures": "'frac'",
   // // Some customizations that I like. See details below.
-  // "editor.fontLigatures": "'ss01', 'ss02', 'ss03', 'ss04', 'ss05', 'ss06', 'ss07', 'ss11', 'ss12', 'case', 'frac'",
+  "editor.fontLigatures": "'ss01', 'ss02', 'ss03', 'ss04', 'ss05', 'ss06', 'ss07', 'ss11', 'ss12', 'case', 'frac' 0",
   // // - dlig: ligatures - => && === ff it ti (more below)
   // // - ss01: a | ss02: g | ss03: f | ss04: i | ss05: l | ss06: r
   // // - ss07: simplified italic diagonals - kwxyz | ss08: no-serif on L and Z
@@ -1044,6 +1050,7 @@
   "editor.snippetSuggestions": "inline",
   "editor.suggest.showSnippets": true,
   "editor.suggest.matchOnWordStartOnly": true,
+  "editor.suggest.showWords": false,
   "editor.suggestOnTriggerCharacters": true,
   "editor.acceptSuggestionOnEnter": "smart",
   "editor.suggestSelection": "recentlyUsedByPrefix",
@@ -1186,13 +1193,18 @@
   // "terminal.integrated.fontSize": 15,
   // "terminal.integrated.fontWeight": "400",
 
-  "terminal.integrated.fontFamily": "Victor Mono",
-  "terminal.integrated.fontSize": 15,
-  "terminal.integrated.fontWeight": "700",
+  // "terminal.integrated.fontFamily": "Victor Mono",
+  // "terminal.integrated.fontSize": 15,
+  // "terminal.integrated.fontWeight": "700",
 
-  // "terminal.integrated.fontFamily": "'JetBrains Mono', 'Recursive', 'Geist Mono', 'CodeNewRoman Nerd Font', 'MesloLGS Nerd Font', 'MesloLGS NF', monospace",
-  // "terminal.integrated.fontSize": 17, // edn{:desktop 13 :notebook 19}
-  // "terminal.integrated.fontWeight": "500",
+  // "terminal.integrated.fontFamily": "MesloLGS NF",
+  // "terminal.integrated.fontSize": 15,
+  // "terminal.integrated.fontWeight": "400",
+
+  "terminal.integrated.fontFamily": "Recursive",
+  "terminal.integrated.fontSize": 14,
+  "terminal.integrated.fontWeight": "400",
+
   "terminal.integrated.tabs.enabled": true,
   "terminal.integrated.macOptionClickForcesSelection": true,
   "terminal.integrated.allowChords": false,
@@ -1233,7 +1245,6 @@
   // Search
   //
 
-  "window.zoomLevel": 0,
   "search.defaultViewMode": "tree",
   "search.mode": "newEditor",
   "search.searchOnTypeDebouncePeriod": 500,
@@ -1313,7 +1324,7 @@
       "url": "https://json.schemastore.org/chrome-manifest.json"
     }
   ],
-  "workbench.colorTheme": "Quiet Light",
+  "workbench.colorTheme": "GitHub Dark Default",
   "workbench.activityBar.location": "hidden"
 
   //////////////////////////////////////////////////////////////////////////////
