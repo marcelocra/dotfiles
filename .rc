@@ -647,6 +647,7 @@ fonts_install_packages_to_improve_rendering() {
 
 alias fonts_update_cache="fc-cache -fv"
 alias fonts_rebuild_cache="sudo fc-cache -r -v"
+alias fonts_list="ls -la ~/.local/share/fonts"
 
 # Monitor
 # -------
@@ -655,6 +656,24 @@ alias monitor_show_dpi="xdpyinfo | grep dots"
 
 # Last time a user logged into the system.
 alias last_login="last -10"
+
+# Print the size of the files in the current directory.
+alias files_cwd_size_in_mb='ls -la | awk '\''{sum += $5} END {print sum/1024/1024 " MB"}'\'''
+alias files_size_in_mb='awk '\''{sum += $5} END {print sum/1024/1024 " MB"}'\'''
+
+# Pnpm stuff
+# ----------
+
+alias pnpm_add_tailwind="pnpm add -D @tailwindcss/typography daisyui@latest tailwindcss postcss autoprefixer tailwind-merge react-markdown && npx tailwindcss init -p"
+alias pnpm_clean="rm ./pnpm-lock.yaml && rm -rf ./node_modules && pnpm install"
+alias pnpm_add_mui='pnpm add @mui/material @emotion/react @emotion/styled @mui/icons-material'
+alias pnpm_add_mui2='echo "Add this to your index.html:\n\n\n<link rel=\"preconnect\" href=\"https://fonts.googleapis.com\" />
+<link rel=\"preconnect\" href=\"https://fonts.gstatic.com\" crossorigin />
+<link
+  rel=\"stylesheet\"
+  href=\"https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap\"
+/>"'
+
 
 ## nextnext
 
