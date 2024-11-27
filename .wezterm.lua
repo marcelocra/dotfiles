@@ -48,7 +48,7 @@ local fonts = {
 
   cascadia = wezterm.font({
     family = 'Cascadia Code NF',
-    weight = 400,
+    weight = 300,
     harfbuzz_features = {
       'calt 0', 'ss01', 'ss19', 'ss20',
     },
@@ -178,13 +178,31 @@ local fonts = {
       -- |> >- <-> <| <> |- .- :: -.- -> => == === != !== ::<
     },
   }),
+
+  recursive = wezterm.font({
+    family = 'Rec Mono Linear',
+    weight = 400,
+    harfbuzz_features = {
+      -- |> >- <-> <| <> |- .- :: -.- -> => == === != !== ::<
+    },
+  }),
+
+  recursive_alt = wezterm.font({
+    family = 'Rec Mono Duotone',
+    -- family = 'Rec Mono Semicasual',
+    -- family = 'Rec Mono Casual',
+    weight = 400,
+    harfbuzz_features = {
+      -- |> >- <-> <| <> |- .- :: -.- -> => == === != !== ::<
+    },
+  }),
 }
 
 local fonts_size = {
-  cascadia = 13,
+  cascadia = 11,
   fira = 13,
   geist = 13,
-  noto = 9,
+  noto = 20,
   dm = 13,
   meslo = 13,
   iosevka = 13,
@@ -192,9 +210,11 @@ local fonts_size = {
   iosevka_lucida = 13,
   iosevka_menlo = 11,
   iosevka_monaco = 11,
-  jb = 9,
+  jb = 11,
   victor_mono = 10,
   code_new_roman = 13,
+  recursive = 13,
+  recursive_alt = 13,
 }
 -- )>>
 
@@ -408,10 +428,13 @@ config.font = fonts.meslo; config.font_size = fonts_size.meslo
 config.font = fonts.victor_mono; config.font_size = fonts_size.victor_mono
 config.font = fonts.iosevka_monaco; config.font_size = fonts_size.iosevka_monaco
 config.font = fonts.dm; config.font_size = fonts_size.dm
-config.font = fonts.noto; config.font_size = fonts_size.noto
 config.font = fonts.iosevka_menlo; config.font_size = fonts_size.iosevka_menlo
-config.font = fonts.cascadia; config.font_size = fonts_size.cascadia
 config.font = fonts.jb; config.font_size = fonts_size.jb
+config.font = fonts.cascadia; config.font_size = fonts_size.cascadia
+config.font = fonts.noto; config.font_size = fonts_size.noto
+config.font = fonts.recursive_duotone; config.font_size = fonts_size.recursive_duotone
+config.font = fonts.recursive; config.font_size = fonts_size.recursive
+config.font = fonts.recursive_alt; config.font_size = fonts_size.recursive_alt
 
 -- config.line_height = 1.2
 config.freetype_load_target = 'Light'
