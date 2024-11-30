@@ -9,6 +9,14 @@
   //
 
   "[json][jsonc][json5]": {},
+  "json.schemas": [
+    {
+      // Chrome Extensions. Point to extension files in a workspace if this is not working
+      // correctly.
+      "fileMatch": ["manifest.json"],
+      "url": "https://json.schemastore.org/chrome-manifest.json"
+    }
+  ],
 
   //
   //
@@ -765,34 +773,6 @@
 
   //
   //
-  // Misc
-  //
-  // Random one-off settings that doesn't make sense to put in a separate
-  // category.
-  //
-
-  "telemetry.telemetryLevel": "off",
-  "problems.showCurrentInStatus": true,
-  "scm.diffDecorationsGutterWidth": 5,
-  "scm.compactFolders": false,
-  "diffEditor.renderSideBySide": true,
-  "diffEditor.ignoreTrimWhitespace": false,
-  "outline.collapseItems": "alwaysCollapse",
-  "notebook.lineNumbers": "on",
-  "html.suggest.html5": false,
-  "[log][Log]": {
-    "editor.fontFamily": "Recursive",
-    "editor.fontSize": 11,
-    "editor.fontWeight": "400"
-
-    // "editor.fontFamily": "JetBrains Mono",
-    // "editor.fontSize": 11,
-    // "editor.fontWeight": "300"
-    // "editor.fontLigatures": "'ss02', 'ss19', 'ss20', 'zero', 'cv03', 'cv04', 'cv16', 'cv19', 'cv20', 'cv99'"
-  },
-
-  //
-  //
   // Editor
   // #region Editor
   //
@@ -915,7 +895,7 @@
   // Recursive font
   //
   "editor.fontFamily": "Rec Mono Duotone",
-  "editor.fontSize": 20, // edn{:desktop 13 :notebook ?? :small 11}
+  "editor.fontSize": 13, // edn{:desktop 13 :notebook ?? :small 11}
   "editor.fontWeight": "400", // edn{:desktop "400" :notebook "??" :small "100"}
   "window.zoomLevel": 0,
   // // Recursive with default values and almost no customization.
@@ -1008,6 +988,7 @@
     "source.fixAll": "explicit"
   },
   "editor.lineNumbers": "on",
+  "zenMode.hideLineNumbers": false,
   "editor.parameterHints.enabled": false,
   "editor.guides.bracketPairs": "active",
   "editor.bracketPairColorization.enabled": true,
@@ -1048,7 +1029,7 @@
   "editor.roundedSelection": false,
   "editor.autoIndent": "full",
   "editor.screenReaderAnnounceInlineSuggestion": false,
-  "editor.snippetSuggestions": "inline",
+  "editor.snippetSuggestions": "bottom",
   "editor.suggest.showSnippets": true,
   "editor.suggest.matchOnWordStartOnly": true,
   "editor.suggest.showWords": false,
@@ -1203,7 +1184,7 @@
   // "terminal.integrated.fontWeight": "400",
 
   "terminal.integrated.fontFamily": "JetBrains Mono",
-  "terminal.integrated.fontSize": 16,
+  // "terminal.integrated.fontSize": 16,
   "terminal.integrated.fontWeight": "300",
 
   "terminal.integrated.tabs.enabled": true,
@@ -1240,6 +1221,7 @@
   "window.newWindowProfile": "Default",
   "window.menuBarVisibility": "hidden",
   "window.customMenuBarAltFocus": false,
+  "window.customTitleBarVisibility": "never",
 
   //
   //
@@ -1293,6 +1275,10 @@
       "textPreformat.foreground": "#fff",
       "textPreformat.background": "#332c5f",
 
+      "editorStickyScroll.background": "#1b2733",
+      "editorStickyScroll.border": "#4b6786",
+      "editorStickyScroll.shadow": "#222",
+
       "symbolIcon.packageForeground": "#ffff00",
 
       "symbolIcon.constructorForeground": "#00ff00",
@@ -1309,24 +1295,42 @@
     }
   },
 
-  "window.customTitleBarVisibility": "never",
-
   "workbench.startupEditor": "newUntitledFile",
   "workbench.tree.indent": 20,
   "workbench.tree.renderIndentGuides": "always",
   "workbench.list.horizontalScrolling": true,
   "workbench.sideBar.location": "left",
   "workbench.panel.defaultLocation": "bottom",
-  "json.schemas": [
-    {
-      // Chrome Extensions. Point to extension files in a workspace if this is not working
-      // correctly.
-      "fileMatch": ["manifest.json"],
-      "url": "https://json.schemastore.org/chrome-manifest.json"
-    }
-  ],
-  "workbench.colorTheme": "Tokyo Night Storm",
-  "workbench.activityBar.location": "hidden"
+  "workbench.colorTheme": "Spiral Tattoo Ink Dark Dim",
+  "workbench.activityBar.location": "hidden",
+
+  //
+  //
+  // Misc
+  //
+  // Random one-off settings that doesn't make sense to put in a separate
+  // category.
+  //
+
+  "diffEditor.ignoreTrimWhitespace": false,
+  "diffEditor.renderSideBySide": true,
+  "html.suggest.html5": false,
+  "notebook.lineNumbers": "on",
+  "outline.collapseItems": "alwaysCollapse",
+  "problems.showCurrentInStatus": true,
+  "scm.compactFolders": false,
+  "scm.diffDecorationsGutterWidth": 5,
+  "telemetry.telemetryLevel": "off",
+  "[log][Log]": {
+    "editor.fontFamily": "Recursive",
+    "editor.fontSize": 11,
+    "editor.fontWeight": "400"
+
+    // "editor.fontFamily": "JetBrains Mono",
+    // "editor.fontSize": 11,
+    // "editor.fontWeight": "300"
+    // "editor.fontLigatures": "'ss02', 'ss19', 'ss20', 'zero', 'cv03', 'cv04', 'cv16', 'cv19', 'cv20', 'cv99'"
+  }
 
   //////////////////////////////////////////////////////////////////////////////
 }
