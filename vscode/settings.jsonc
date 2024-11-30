@@ -251,7 +251,7 @@
     "tw`([^`]+)`",
 
     // Try to generalize.
-    "[cC]lass[^\"'`]*[\"'`]([^\"'`]+)[\"'`]"
+    "[cC][lL][aA][sS]{2}[^\"'`]*[\"'`]([^\"'`]+)[\"'`]"
 
     // Old tries for this, kept here as a reference of what **might** work.
     //
