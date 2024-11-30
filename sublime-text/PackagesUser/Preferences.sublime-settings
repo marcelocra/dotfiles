@@ -25,13 +25,10 @@
 
   // ---
 
-  "font_face": "Recursive",
+  "font_face": "Rec Mono Duotone",
   "font_size": 11,
   "font_options": [
-    // Examples to test: -> => <> <=>
-    // // Changes a, g, f, l, i, r, simpler italics, 1, @, higher punctuations, crazy fractions
-    // "ss01", "ss02", "ss03", "ss04", "ss05", "ss06", "ss07", "ss11", "ss12", "case", "frac"
-    "frac"
+
   ],
 
   "caret_extra_top": 4,
