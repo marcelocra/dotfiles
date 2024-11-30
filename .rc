@@ -116,6 +116,7 @@ tmx() {
     echo "An error happened. Couldn't load $session_name"
     return 1
 }
+alias t=tmx
 
 
 easy_jump_to_project() {
@@ -579,7 +580,7 @@ alias untar="tar -xf"
 if [[ ! -d "$MCRA_TMP_PLAYGROUND" ]]; then
     mkdir $MCRA_TMP_PLAYGROUND
 fi
-alias t="pushd $MCRA_TMP_PLAYGROUND"
+alias tmp="pushd $MCRA_TMP_PLAYGROUND"
 
 # As in 'back'.
 alias b="popd"
@@ -665,6 +666,8 @@ alias files_size_in_mb='awk '\''{sum += $5} END {print sum/1024/1024 " MB"}'\'''
 # ----------
 
 alias pnpm_add_tailwind="pnpm add -D @tailwindcss/typography daisyui@latest tailwindcss postcss autoprefixer tailwind-merge react-markdown && npx tailwindcss init -p"
+alias pnpm_add_tailwind_utils="pnpm add -D tailwind-merge @popperjs/core @tailwindcss/typography daisyui@latest tailwind-merge react-markdown"
+alias pnpm_add_flowbite_svelte="pnpm add -D flowbite-svelte flowbite flowbite-svelte-icons"
 alias pnpm_clean="rm ./pnpm-lock.yaml && rm -rf ./node_modules && pnpm install"
 alias pnpm_add_mui='pnpm add @mui/material @emotion/react @emotion/styled @mui/icons-material'
 alias pnpm_add_mui2='echo "Add this to your index.html:\n\n\n<link rel=\"preconnect\" href=\"https://fonts.googleapis.com\" />
