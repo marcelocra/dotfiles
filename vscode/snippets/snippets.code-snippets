@@ -18,99 +18,6 @@
 // 	  "description": "Log output to console"
 //  }
 {
-  // -- ESLINT -----
-  "eslint disable next line without reason": {
-    "scope": "javascript,typescript,javascriptreact,typescriptreact",
-    "prefix": "ednl",
-    "body": [
-      "// eslint-disable-next-line"
-    ]
-  },
-  "eslint disable next line with reason": {
-    "scope": "javascript,javascriptreact,typescript,typescriptreact",
-    "prefix": "ednlr",
-    "body": [
-      "// eslint-disable-next-line ${1:@typescript-eslint/no-explicit-any}$0"
-    ]
-  },
-  "eslint disable next line useEffect exhaustive deps": {
-    "scope": "javascript,typescript,javascriptreact,typescriptreact",
-    "prefix": "ednlex",
-    "body": [
-      "// eslint-disable-next-line react-hooks/exhaustive-deps"
-    ]
-  },
-  // -- REACT -----
-  "react useState hook": {
-    "scope": "javascript,typescript,javascriptreact,typescriptreact",
-    "prefix": "us",
-    "body": [
-      "const [$1, set${1/(.*)/${1:/capitalize}/}] = useState($2)"
-    ]
-  },
-  "react useEffect hook": {
-    "scope": "javascript,typescript,javascriptreact,typescriptreact",
-    "prefix": "ue",
-    "body": [
-      "useEffect(() => {",
-      "  $1",
-      "}, [$2])"
-    ]
-  },
-  "react const with function": {
-    "scope": "javascript,typescript,javascriptreact,typescriptreact",
-    "prefix": "const",
-    "body": [
-      "const $2 = $1()"
-    ]
-  },
-  "delay promise": {
-    "scope": "javascript,typescript,javascriptreact,typescriptreact",
-    "prefix": "delay",
-    "body": [
-      "await new Promise((resolve) => setTimeout(resolve, $1))"
-    ]
-  },
-  "javascript type": {
-    "scope": "javascript,typescript,javascriptreact,typescriptreact",
-    "prefix": "type",
-    "body": [
-      "/** @type {$1} */ $2"
-    ]
-  },
-  "tsignore": {
-    "scope": "javascript,typescript,javascriptreact,typescriptreact",
-    "prefix": "tsi",
-    "body": [
-      "// @ts-ignore"
-    ]
-  },
-  "ts expect error": {
-    "scope": "javascript,typescript,javascriptreact,typescriptreact",
-    "prefix": "tse",
-    "body": [
-      "// @ts-expect-error: $0"
-    ]
-  },
-  "ts nocheck - ignore current file (should be in the first line)": {
-    "scope": "javascript,typescript,javascriptreact,typescriptreact",
-    "prefix": "tsno",
-    "body": [
-      "// @ts-nocheck",
-    ]
-  },
-  "ts check - check this file (should be in the first line)": {
-    "scope": "javascript,typescript,javascriptreact,typescriptreact",
-    "prefix": [
-      "tscheck",
-      "check",
-      "tsch",
-      "ch"
-    ],
-    "body": [
-      "// @ts-check",
-    ]
-  },
   "shebang": {
     "prefix": [
       "sb",
@@ -204,13 +111,6 @@
       "min-h-screen mx-auto flex justify-center items-center"
     ]
   },
-  "eslint allow no explicit any": {
-    "scope": "javascript,javascriptreact,typescript,typescriptreact",
-    "prefix": "eslint-nea",
-    "body": [
-      "// eslint-disable-next-line @typescript-eslint/no-explicit-any"
-    ]
-  },
   "search comments that also fold in vim": {
     "prefix": "co",
     "body": [
@@ -276,34 +176,6 @@
       "# yaml-language-server: \\$schema=https://json.schemastore.org/package.json"
     ]
   },
-  "deno shebang": {
-    "scope": "javascript,javascriptreact,typescript,typescriptreact",
-    "prefix": [
-      "deno-with-docs",
-      "denod"
-    ],
-    "body": [
-      "#!/usr/bin/env -S deno run ${1:-A --env}$0",
-      "// The example above includes all permissions (-A) and env, like Node.",
-      "//",
-      "// Use the docs below to write fine-grained permissions. For most of",
-      "// them you can provide a CSV list detailing exactly which resources to",
-      "// make available. For example, --allow-read='/some/path/here' will",
-      "// only allow the program to read from that particular path. Without the",
-      "// '=csv,list,here', the permission applies to all resources of that",
-      "// type: --allow-read allows the program to read all files it wants to.",
-      "// Be careful when using them.",
-      "//",
-      "// Some commonly used permissions (see docs for all):",
-      "//   --allow-read[=csv-list]",
-      "//   --allow-write[=csv-list]",
-      "//   --allow-run[=csv-list]",
-      "//   --allow-sys[=csv-list]",
-      "//   --allow-net[=csv-list]",
-      "//   --allow-env[=csv-list]",
-      "//   --env: read from .env",
-    ]
-  },
   "localhost address ipv4": {
     "prefix": "localhost",
     "body": [
@@ -357,59 +229,6 @@
       "\"$1\"${2:: \"$3\"},$0"
     ]
   },
-  "deno ignore file": {
-    "scope": "javascript,javascriptreact,typescript,typescriptreact",
-    "prefix": [
-      "denoif",
-    ],
-    "body": [
-      "// deno-lint-ignore-file ${1:prefer-const}$0"
-    ]
-  },
-  "deno ignore next line": {
-    "scope": "javascript,javascriptreact,typescript,typescriptreact",
-    "prefix": [
-      "denoi",
-    ],
-    "body": [
-      "// deno-lint-ignore ${1:prefer-const}$0"
-    ]
-  },
-  "create an iife - immidiately invoked function expression": {
-    "scope": "javascript,javascriptreact,typescript,typescriptreact",
-    "prefix": [
-      "fiife",
-      "fi"
-    ],
-    "body": [
-      "(${1:async} ($2) => {$0})($2)"
-    ]
-  },
-  "create a simple iife - immidiately invoked function expression": {
-    "scope": "javascript,javascriptreact,typescript,typescriptreact",
-    "prefix": [
-      "iife",
-      "i",
-    ],
-    "body": [
-      "(() => {$0})()"
-    ]
-  },
-  "make ts": {
-    "scope": "javascript,javascriptreact,typescript,typescriptreact",
-    "prefix": [
-      "global"
-    ],
-    "body": [
-      "declare global {",
-      "   var Vue: any;  // Just an example. Replace by whatever.",
-      "                  // And yes, must be `var`.",
-      "}",
-      "",
-      "export {};",
-      "",
-    ]
-  },
   //
   //
   //
@@ -461,20 +280,6 @@
       "//",
       "////////////////////////////////////////////////////////////////////////////////",
       "$0"
-    ]
-  },
-  "Elm ports scaffolding": {
-    "scope": "javascript,javascriptreact,typescript,typescriptreact",
-    "prefix": [
-      "elm",
-      "ports",
-      "port"
-    ],
-    "body": [
-      "// Used to receive a `message` from Elm.",
-      "app.ports.sendJsonMessage.subscribe(function (/** @type {any} */ message) {});",
-      "// Used to `send` a message to Elm.",
-      "app.ports.messageReceiver.send(\"Hi to Elm from JS\");",
     ]
   },
   //
@@ -634,5 +439,214 @@
     "body": [
       "\"------------------------------[ ${1:TEXT} ]------------------------------\": \"\","
     ]
+  },
+  "javascript,javascriptreact,typescript,typescriptreact - start": {
+    "body": []
+  },
+  "eslint disable next line without reason": {
+    "scope": "javascript,javascriptreact,typescript,typescriptreact",
+    "prefix": "ednl",
+    "body": [
+      "// eslint-disable-next-line"
+    ]
+  },
+  "eslint disable next line with reason": {
+    "scope": "javascript,javascriptreact,typescript,typescriptreact",
+    "prefix": "ednlr",
+    "body": [
+      "// eslint-disable-next-line ${1:@typescript-eslint/no-explicit-any}$0"
+    ]
+  },
+  "eslint disable next line useEffect exhaustive deps": {
+    "scope": "javascript,javascriptreact,typescript,typescriptreact",
+    "prefix": "ednlex",
+    "body": [
+      "// eslint-disable-next-line react-hooks/exhaustive-deps"
+    ]
+  },
+  // -- REACT -----
+  "react useState hook": {
+    "scope": "javascript,javascriptreact,typescript,typescriptreact",
+    "prefix": "us",
+    "body": [
+      "const [$1, set${1/(.*)/${1:/capitalize}/}] = useState($2)"
+    ]
+  },
+  "react useEffect hook": {
+    "scope": "javascript,javascriptreact,typescript,typescriptreact",
+    "prefix": "ue",
+    "body": [
+      "useEffect(() => {",
+      "  $1",
+      "}, [$2])"
+    ]
+  },
+  "react const with function": {
+    "scope": "javascript,javascriptreact,typescript,typescriptreact",
+    "prefix": "const",
+    "body": [
+      "const $2 = $1()"
+    ]
+  },
+  "delay promise": {
+    "scope": "javascript,javascriptreact,typescript,typescriptreact",
+    "prefix": "delay",
+    "body": [
+      "await new Promise((resolve) => setTimeout(resolve, $1))"
+    ]
+  },
+  "javascript type": {
+    "scope": "javascript,javascriptreact,typescript,typescriptreact",
+    "prefix": "type",
+    "body": [
+      "/** @type {$1} */ $2"
+    ]
+  },
+  "tsignore": {
+    "scope": "javascript,javascriptreact,typescript,typescriptreact",
+    "prefix": "tsi",
+    "body": [
+      "// @ts-ignore"
+    ]
+  },
+  "ts expect error": {
+    "scope": "javascript,javascriptreact,typescript,typescriptreact",
+    "prefix": "tse",
+    "body": [
+      "// @ts-expect-error: $0"
+    ]
+  },
+  "ts nocheck - ignore current file (should be in the first line)": {
+    "scope": "javascript,javascriptreact,typescript,typescriptreact",
+    "prefix": "tsno",
+    "body": [
+      "// @ts-nocheck",
+    ]
+  },
+  "ts check - check this file (should be in the first line)": {
+    "scope": "javascript,javascriptreact,typescript,typescriptreact",
+    "prefix": [
+      "tscheck",
+      "check",
+      "tsch",
+      "ch"
+    ],
+    "body": [
+      "// @ts-check",
+    ]
+  },
+  "eslint allow no explicit any": {
+    "scope": "javascript,javascriptreact,typescript,typescriptreact",
+    "prefix": "eslint-nea",
+    "body": [
+      "// eslint-disable-next-line @typescript-eslint/no-explicit-any"
+    ]
+  },
+  "deno shebang": {
+    "scope": "javascript,javascriptreact,typescript,typescriptreact",
+    "prefix": [
+      "deno-with-docs",
+      "denod"
+    ],
+    "body": [
+      "#!/usr/bin/env -S deno run ${1:-A --env}$0",
+      "// The example above includes all permissions (-A) and env, like Node.",
+      "//",
+      "// Use the docs below to write fine-grained permissions. For most of",
+      "// them you can provide a CSV list detailing exactly which resources to",
+      "// make available. For example, --allow-read='/some/path/here' will",
+      "// only allow the program to read from that particular path. Without the",
+      "// '=csv,list,here', the permission applies to all resources of that",
+      "// type: --allow-read allows the program to read all files it wants to.",
+      "// Be careful when using them.",
+      "//",
+      "// Some commonly used permissions (see docs for all):",
+      "//   --allow-read[=csv-list]",
+      "//   --allow-write[=csv-list]",
+      "//   --allow-run[=csv-list]",
+      "//   --allow-sys[=csv-list]",
+      "//   --allow-net[=csv-list]",
+      "//   --allow-env[=csv-list]",
+      "//   --env: read from .env",
+    ]
+  },
+  "deno ignore file": {
+    "scope": "javascript,javascriptreact,typescript,typescriptreact",
+    "prefix": [
+      "denoif",
+    ],
+    "body": [
+      "// deno-lint-ignore-file ${1:prefer-const}$0"
+    ]
+  },
+  "deno ignore next line": {
+    "scope": "javascript,javascriptreact,typescript,typescriptreact",
+    "prefix": [
+      "denoi",
+    ],
+    "body": [
+      "// deno-lint-ignore ${1:prefer-const}$0"
+    ]
+  },
+  "create an iife - immidiately invoked function expression": {
+    "scope": "javascript,javascriptreact,typescript,typescriptreact",
+    "prefix": [
+      "fiife",
+      "fi"
+    ],
+    "body": [
+      "(${1:async} ($2) => {$0})($2)"
+    ]
+  },
+  "create a simple iife - immidiately invoked function expression": {
+    "scope": "javascript,javascriptreact,typescript,typescriptreact",
+    "prefix": [
+      "iife",
+      "i",
+    ],
+    "body": [
+      "(() => {$0})()"
+    ]
+  },
+  "make ts": {
+    "scope": "javascript,javascriptreact,typescript,typescriptreact",
+    "prefix": [
+      "global"
+    ],
+    "body": [
+      "declare global {",
+      "   var Vue: any;  // Just an example. Replace by whatever.",
+      "                  // And yes, must be `var`.",
+      "}",
+      "",
+      "export {};",
+      "",
+    ]
+  },
+  "Elm ports scaffolding": {
+    "scope": "javascript,javascriptreact,typescript,typescriptreact",
+    "prefix": [
+      "elm",
+      "ports",
+      "port"
+    ],
+    "body": [
+      "// Used to receive a `message` from Elm.",
+      "app.ports.sendJsonMessage.subscribe(function (/** @type {any} */ message) {});",
+      "// Used to `send` a message to Elm.",
+      "app.ports.messageReceiver.send(\"Hi to Elm from JS\");",
+    ]
+  },
+  "simplify using a zustand store": {
+    "scope": "javascript,javascriptreact,typescript,typescriptreact",
+    "prefix": [
+      "st"
+    ],
+    "body": [
+      "const { $3 } = use${1:Store}$2();"
+    ]
+  },
+  "javascript,javascriptreact,typescript,typescriptreact - end": {
+    "body": []
   },
 }

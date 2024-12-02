@@ -1269,6 +1269,14 @@
     // - most errors: #ff4500
     // - most warnings: #ffa70f
 
+    "[Tokyo Night]": {
+      "editor.selectionBackground": "#ff450055"
+    },
+
+    "[Tokyo Night Storm]": {
+      "editor.selectionBackground": "#ff450055"
+    },
+
     "[Spiral Tattoo Ink Dark Dim]": {
       // Test custom colors here, before moving to the theme. Example above (but in here they will only apply to this
       // theme).
@@ -1301,7 +1309,7 @@
   "workbench.list.horizontalScrolling": true,
   "workbench.sideBar.location": "left",
   "workbench.panel.defaultLocation": "bottom",
-  "workbench.colorTheme": "Spiral Tattoo Ink Dark Dim",
+  "workbench.colorTheme": "Tokyo Night Storm",
   "workbench.activityBar.location": "hidden",
 
   //
@@ -1316,7 +1324,7 @@
   "diffEditor.renderSideBySide": true,
   "html.suggest.html5": false,
   "notebook.lineNumbers": "on",
-  "outline.collapseItems": "alwaysCollapse",
+  "outline.collapseItems": "alwaysExpand",
   "problems.showCurrentInStatus": true,
   "scm.compactFolders": false,
   "scm.diffDecorationsGutterWidth": 5,
