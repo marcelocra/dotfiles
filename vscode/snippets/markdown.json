@@ -1,50 +1,67 @@
 {
-	// Place your snippets for markdown here. Each snippet is defined under a snippet name and has a prefix, body and 
-	// description. The prefix is what is used to trigger the snippet and the body will be expanded and inserted. Possible variables are:
-	// $1, $2 for tab stops, $0 for the final cursor position, and ${1:label}, ${2:another} for placeholders. Placeholders with the 
-	// same ids are connected.
-	// Example:
-	// "Print to console": {
-	// 	"prefix": "log",
-	// 	"body": [
-	// 		"console.log('$1');",
-	// 		"$2"
-	// 	],
-	// 	"description": "Log output to console"
-	// }
-	"md fold region": {
-		"prefix": [
-			"fold",
-			"region"
-		],
-		"body": [
-			"<!-- #region $1 -->",
-			"$2",
-			"<!-- #endregion -->"
-		]
-	},
-	"md checkbox": {
-		"prefix": [
-			"--"
-		],
-		"body": [
-			"- [ ] "
-		]
-	},
-	"md numbered checkbox": {
-		"prefix": [
-			"k"
-		],
-		"body": [
-			"1. [ ] "
-		]
-	},
-	"create an obsidian link": {
-		"prefix": [
-			"[["
-		],
-		"body": [
-			"[[${1:note name}]]$0"
-		]
-	},
+  // Place your snippets for markdown here. Each snippet is defined under a snippet name and has a prefix, body and
+  // description. The prefix is what is used to trigger the snippet and the body will be expanded and inserted. Possible variables are:
+  // $1, $2 for tab stops, $0 for the final cursor position, and ${1:label}, ${2:another} for placeholders. Placeholders with the
+  // same ids are connected.
+  // Example:
+  // "Print to console": {
+  // 	"prefix": "log",
+  // 	"body": [
+  // 		"console.log('$1');",
+  // 		"$2"
+  // 	],
+  // 	"description": "Log output to console"
+  // }
+  "md fold region": {
+    "prefix": [
+      "fold",
+      "region"
+    ],
+    "body": [
+      "<!-- #region $1 -->",
+      "$2",
+      "<!-- #endregion -->"
+    ]
+  },
+  "md checkbox": {
+    "prefix": [
+      "--"
+    ],
+    "body": [
+      "- [ ] "
+    ]
+  },
+  "md numbered checkbox": {
+    "prefix": [
+      "k"
+    ],
+    "body": [
+      "1. [ ] "
+    ]
+  },
+  "create an obsidian link": {
+    "prefix": [
+      "[["
+    ],
+    "body": [
+      "[[${1:note name}]]$0"
+    ]
+  },
+  "changelog: new version section": {
+    "prefix": [
+      "v",
+      "ver",
+      "version"
+    ],
+    "body": [
+      "## [${1:0.1.0}] - ${2:$CURRENT_YEAR-$CURRENT_MONTH-$CURRENT_DATE}",
+      "### Added",
+      "",
+      "$0",
+      "",
+      "### Fixed",
+      "### Changed",
+      "### Removed"
+    ]
+  },
 }

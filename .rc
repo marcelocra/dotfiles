@@ -676,6 +676,7 @@ alias pnpm_add_mui2='echo "Add this to your index.html:\n\n\n<link rel=\"preconn
   rel=\"stylesheet\"
   href=\"https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap\"
 />"'
+alias pnpm_add_lodash="pnpm add -D lodash @types/lodash"
 
 
 ## nextnext
