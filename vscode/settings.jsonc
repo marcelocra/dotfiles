@@ -899,7 +899,7 @@
 
   // Recursive font
   //
-  "editor.fontFamily": "Rec Mono Duotone",
+  "editor.fontFamily": "Rec Mono Linear",
   "editor.fontSize": 13, // edn{:desktop 13 :notebook ?? :small 11}
   "editor.fontWeight": "400", // edn{:desktop "400" :notebook "??" :small "100"}
   "window.zoomLevel": 0,
@@ -1273,13 +1273,21 @@
     // - active tab and sticky section backgrounds: #332c5f
     // - most errors: #ff4500
     // - most warnings: #ffa70f
+    //
+    // Other interesting ones (from v0.dev):
+    // --geist-cyan-lighter: #aaffec;
+    // --geist-cyan-light: #79ffe1;
+    // --geist-cyan: #50e3c2;
+    // --geist-cyan-dark: #29bc9b;
 
-    "[Tokyo Night][Tokyo Night Storm][Tokyo Night Light][Spiral Tattoo Ink Dark Dim]": {
+    "[Tokyo Night][Tokyo Night Storm]": {
       // File picker (ctrl+p) focused element background.
-      "quickInputList.focusBackground": "#ff450055",
+      "quickInputList.focusBackground": "#5533ffaa",
+      "quickInputList.focusForeground": "#fff",
+      "quickInputList.focusIconForeground": "#fff",
 
       // Code actions (ctrl+.) focused element background.
-      "editorActionList.focusBackground": "#ff450055",
+      "editorActionList.focusBackground": "#5533ff",
 
       // Border of the complete widget.
       "editorSuggestWidget.border": "#4b6786",
@@ -1290,7 +1298,49 @@
       // "editorSuggestWidget.background": "#e6e7ed",
 
       // Background of the focused item.
-      "editorSuggestWidget.selectedBackground": "#ff450055",
+      "editorSuggestWidget.selectedBackground": "#5588ffdd",
+      "editorSuggestWidget.selectedForeground": "#000",
+      "editorSuggestWidget.highlightForeground": "#5533ff",
+      "editorSuggestWidget.focusHighlightForeground": "#00ffff",
+
+      // // Text color.
+      "editorSuggestWidget.foreground": "#fff",
+
+      // // Element that is focused in the explorer.
+      "list.focusBackground": "#5588ff",
+      "list.focusForeground": "#000",
+      // // Element that was focused in the explorer.
+      "list.inactiveFocusBackground": "#5588ff33",
+
+      // // Not sure what this is.
+      // "list.deemphasizedForeground": "#ff450055",
+
+      "editor.inactiveSelectionBackground": "#5533ff22",
+      // "editor.selectionHighlightBorder": "#008800",
+      // "editor.selectionHighlightBackground": "#ff008833",
+      "editor.lineHighlightBorder": "#5533ff33",
+      // "editor.wordHighlightBorder": "#171f2c",
+      "editor.rangeHighlightBackground": "#5533ff55",
+      "editor.selectionBackground": "#5533ff55"
+    },
+
+    "[Tokyo Night Light][Spiral Tattoo Ink Dark Dim][Night Owl Light]": {
+      // File picker (ctrl+p) focused element background.
+      "quickInputList.focusBackground": "#00ff0055",
+
+      // Code actions (ctrl+.) focused element background.
+      "editorActionList.focusBackground": "#00ff0055",
+
+      // Border of the complete widget.
+      "editorSuggestWidget.border": "#4b6786",
+
+      // "editorSuggestWidget.selectedForeground": "#000",
+
+      // // Background of the complete widget.
+      // "editorSuggestWidget.background": "#e6e7ed",
+
+      // Background of the focused item.
+      "editorSuggestWidget.selectedBackground": "#00ff0055",
 
       // // Text color.
       // "editorSuggestWidget.foreground": "#000",
@@ -1308,7 +1358,7 @@
       // "editor.selectionHighlightBackground": "#ff008833",
       "editor.lineHighlightBorder": "#00ff0033",
       // "editor.wordHighlightBorder": "#171f2c",
-      "editor.rangeHighlightBorder": "#171f2c",
+      "editor.rangeHighlightBackground": "#00ff0055",
       "editor.selectionBackground": "#00ff0055"
     },
 
@@ -1344,7 +1394,7 @@
   "workbench.list.horizontalScrolling": true,
   "workbench.sideBar.location": "left",
   "workbench.panel.defaultLocation": "bottom",
-  "workbench.colorTheme": "Tokyo Night Light",
+  "workbench.colorTheme": "One Dark Pro",
 
   //
   //

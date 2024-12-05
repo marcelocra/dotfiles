@@ -114,6 +114,14 @@ use_gnome_terminal() {
       columns=179
       rows=69
     fi
+  elif has_prefix "$font_family" 'Rec Mono'; then
+    if [ $font_size -eq 13 ]; then
+      columns=125
+      rows=100
+    elif [ $font_size -eq 9 ]; then
+      columns=179
+      rows=100
+    fi
   fi
 
   # # Get the current screen resolution.
