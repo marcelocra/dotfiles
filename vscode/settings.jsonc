@@ -295,6 +295,7 @@
     "*.razor": "html",
     "elm": "html"
   },
+  "tailwindCSS.files.exclude": ["**/.git/**", "**/node_modules/**", "**/.hg/**", "**/.svn/**", "**/*.md"],
 
   //
   //
@@ -639,10 +640,6 @@
       "before": ["<a-l>"],
       "commands": ["cursorWordPartRight"]
     }
-    // {
-    //   "before": ["/"],
-    //   "commands": ["actions.find"]
-    // }
   ],
   // vimnormal-
 
@@ -682,32 +679,58 @@
       "commands": [":q"],
       "after": ["<esc>"]
     },
-    // Prevents `p` from yanking text that is being overwriten. When that
-    // behavior is desired, use `gp`.
     {
+      // The next keybinding prevents `p` from replacing clipboard content. When that is desirable, use `gp` instead.
       "before": ["g", "p"],
       "after": ["p"]
     },
     {
+      // Paste without replacing clipboard. (Better than below?)
       "before": ["p"],
-      "after": ["\"", "_", "d", "P"]
+      "after": ["p", "g", "v", "y"]
     },
+    // {
+    //   // Paste without replacing clipboard.
+    //   "before": ["p"],
+    //   "after": ["\"", "_", "d", "P"]
+    // },
     {
       // search for all occurences of the selected text
       "before": ["/", "/"],
       "after": ["y", "/", "<c-r>", "*", "<cr>"]
     },
     {
-      // search for all occurences of the selected text
       "before": ["<c-v>"],
       "after": ["p"]
+    },
+    {
+      "before": [">"],
+      "commands": ["editor.action.indentLines"]
+    },
+    {
+      "before": ["<"],
+      "commands": ["editor.action.outdentLines"]
     }
     // {
     //   "before": [" ", "E"],
     //   "commands": ["calva.evaluateSelectionToSelectionEnd"]
     // },
   ],
-  // vimvisual-
+
+  "vim.operatorPendingModeKeyBindingsNonRecursive": [
+    {
+      "before": ["("],
+      "after": ["i", "("]
+    },
+    {
+      "before": ["["],
+      "after": ["i", "["]
+    },
+    {
+      "before": ["{"],
+      "after": ["i", "{"]
+    }
+  ],
 
   //
   //
@@ -740,10 +763,10 @@
 
   "github.copilot.editor.enableAutoCompletions": true,
   "github.copilot.enable": {
-    "*": true,
-    "plaintext": false,
-    "markdown": false,
-    "scminput": false
+    // "plaintext": false,
+    // "scminput": false
+    "markdown": true,
+    "*": true
   },
 
   //
@@ -794,7 +817,6 @@
   // "editor.fontSize": 14, // edn{:desktop 13 :notebook 19 :small 11}
   // "editor.fontWeight": "400", // edn{:desktop "300" :notebook "300" :small "100"}
   // "editor.fontLigatures": "'calt', 'ss01', 'ss19', 'ss20', 'cv01' 3",
-  // "window.zoomLevel": 2,
   // // Available stylistic sets:
   // // - cursive italics: 'ss01'
   // // - alternate not equal: 'ss02' ~= (appears as !=)
@@ -902,7 +924,6 @@
   "editor.fontFamily": "Rec Mono Linear",
   "editor.fontSize": 13, // edn{:desktop 13 :notebook ?? :small 11}
   "editor.fontWeight": "400", // edn{:desktop "400" :notebook "??" :small "100"}
-  "window.zoomLevel": 0,
   // // Recursive with default values and almost no customization.
   // "editor.fontLigatures": "'frac'",
   // // Some customizations that I like. See details below.
@@ -1007,13 +1028,6 @@
   "editor.cursorStyle": "line-thin",
   "editor.cursorBlinking": "smooth",
   "editor.rulers": [80, 100, 120],
-  "editor.minimap.maxColumn": 30,
-  "editor.minimap.renderCharacters": false,
-  "editor.minimap.showSlider": "always",
-  "editor.minimap.size": "fill",
-  "editor.minimap.autohide": false,
-  "editor.minimap.side": "right",
-  "editor.minimap.scale": 1,
   "editor.formatOnSave": true,
   "editor.tabCompletion": "onlySnippets",
   "editor.suggest.snippetsPreventQuickSuggestions": false,
@@ -1025,7 +1039,6 @@
   "editor.renderWhitespace": "none",
   "editor.acceptSuggestionOnCommitCharacter": false,
   "editor.hover.delay": 1000,
-  "editor.inlineSuggest.enabled": true,
   "editor.wordWrap": "bounded",
   "editor.wrappingIndent": "deepIndent",
   "editor.wordWrapColumn": 120,
@@ -1049,6 +1062,8 @@
   "editor.colorDecorators": true,
   "editor.glyphMargin": true, // Space between the explorer and the line number.
   "editor.mouseWheelZoom": true,
+  "editor.minimap.showSlider": "always",
+  "editor.inlineSuggest.enabled": true,
   "editor.tokenColorCustomizations": {
     // "[*Light*]": { // Match all themes with "Light" in the name.
     //   "textMateRules": [
@@ -1259,12 +1274,17 @@
 
   //
   //
-  // Workbench
+  // MARK: Workbench
   //
 
   "workbench.colorCustomizations": {
     "terminalCursor.foreground": "#ff4500", // orange red
     "terminalCursor.background": "#000",
+
+    "minimap.background": "#00000055",
+    "minimapSlider.activeBackground": "#5533ff44",
+    "minimapSlider.hoverBackground": "#ff450044",
+    "minimapSlider.background": "#ff450022",
 
     // My colors:
     // - most backgrounds: #33475C
@@ -1423,50 +1443,8 @@
     // "editor.fontWeight": "300"
     // "editor.fontLigatures": "'ss02', 'ss19', 'ss20', 'zero', 'cv03', 'cv04', 'cv16', 'cv19', 'cv20', 'cv99'"
   },
-  "workbench.activityBar.location": "top"
-
-  //////////////////////////////////////////////////////////////////////////////
+  "workbench.activityBar.location": "top",
+  "extensions.experimental.affinity": {
+    "vscodevim.vim": 1
+  }
 }
-
-////////////////////////////////////////////////////////////////////////////////
-// Some VSCode documentation that I consider relevant to keep here.
-// #region
-//
-
-//
-//
-// Ligatures
-//
-
-//
-// According to ChatGPT:
-//
-// ---
-// In Visual Studio Code, the `editor.fontLigatures` option can be customized
-// using an array of strings, each representing a specific typographic
-// feature. Here are some common options:
-//
-// 1. **`liga`**: Standard ligatures.
-// 2. **`dlig`**: Discretionary ligatures.
-// 3. **`clig`**: Contextual ligatures.
-// 4. **`hlig`**: Historical ligatures.
-// 5. **`calt`**: Contextual alternates.
-// 6. **`ss01`** to **`ss20`**: Stylistic sets.
-// 7. **`salt`**: Stylistic alternates.
-// 8. **`zero`**: Slashed zero.
-//
-// These options allow you to fine-tune which ligatures and typographic
-// features are enabled in the editor.
-//
-// For more detailed information, refer to the OpenType feature tags:
-//   https://docs.microsoft.com/en-us/typography/opentype/spec/featurelist
-//
-// ---
-//
-// Seems to be possible to remove a particular ligature by using the ["-zero"]
-// syntax.
-//
-
-//
-// #endregion
-////////////////////////////////////////////////////////////////////////////////

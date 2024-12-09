@@ -646,7 +646,42 @@
       "const { $3 } = use${1:Store}$2();"
     ]
   },
+  "imports in a way that trigger autocomplete": {
+    "scope": "javascript,javascriptreact,typescript,typescriptreact",
+    "prefix": [
+      "imp",
+      "im",
+      "import"
+    ],
+    "body": [
+      "import { $0 } from \"$1\";"
+    ]
+  },
   "javascript,javascriptreact,typescript,typescriptreact - end": {
+    "body": []
+  },
+  "javascriptreact,typescriptreact - start": {
+    "body": []
+  },
+  "new function component": {
+    "scope": "javascriptreact,typescriptreact",
+    "prefix": [
+      "fc",
+      "pg",
+      "page",
+      "comp"
+    ],
+    "body": [
+      "export default function ${1:Page}() {",
+      "  return (",
+      "    <div>",
+      "      $0",
+      "    </div>",
+      "  );",
+      "}"
+    ]
+  },
+  "javascriptreact,typescriptreact - end": {
     "body": []
   },
 }

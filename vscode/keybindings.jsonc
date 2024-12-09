@@ -1,6 +1,6 @@
 [
   {
-    // This and other similar bindings are ussed Used to help organize the file. It is not a valid keybinding and won't be
+    // This and other similar bindings are used to help organize the file. It is not a valid keybinding and won't be
     // triggered, but appears at the top when searching for symbols.
     "key": "DOCS"
   },
@@ -273,6 +273,17 @@
     "command": "workbench.action.navigateForward"
   },
 
+  {
+    // Example:
+    // Rebind ctrl+shift+y to yy in normal mode.
+    "key": "ctrl+shift+y",
+    "command": "vim.remap",
+    "when": "inputFocus && vim.mode == 'Normal'",
+    "args": {
+      "after": ["y", "y"]
+    }
+  },
+
   //
   //
   // IMPROVED VSCODE VIM SUPPORT }}}
@@ -522,6 +533,11 @@
   },
 
   {
+    "key": "alt+shift+f",
+    "command": "search.action.openNewEditorToSide"
+  },
+
+  {
     "key": "alt+a",
     "command": "workbench.action.toggleActivityBarVisibility"
   },
@@ -534,6 +550,12 @@
   {
     "key": "alt+p",
     "command": "issue.copyGithubPermalink"
+  },
+
+  {
+    "key": "alt+l",
+    "command": "workbench.action.quickOpenPreviousRecentlyUsedEditor",
+    "when": "!terminalFocus"
   },
 
   {
@@ -629,6 +651,18 @@
   {
     "key": "alt+z",
     "command": "workbench.action.toggleZenMode"
+  },
+
+  {
+    "key": "ctrl+alt+space",
+    "command": "github.copilot.generate",
+    "when": "editorTextFocus && github.copilot.activated && !inInteractiveInput && !interactiveEditorFocused"
+  },
+
+  {
+    "key": "ctrl+alt+space",
+    "command": "github.copilot.generate",
+    "when": "editorTextFocus && github.copilot.activated && !commentEditorFocused && !inInteractiveInput && !interactiveEditorFocused"
   },
 
   {
