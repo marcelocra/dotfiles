@@ -13,46 +13,23 @@
   // 	"description": "Log output to console"
   // }
   "md fold region": {
-    "prefix": [
-      "fold",
-      "region"
-    ],
-    "body": [
-      "<!-- #region $1 -->",
-      "$2",
-      "<!-- #endregion -->"
-    ]
+    "prefix": ["fold", "region"],
+    "body": ["<!-- #region $1 -->", "$2", "<!-- #endregion -->"]
   },
   "md checkbox": {
-    "prefix": [
-      "--"
-    ],
-    "body": [
-      "- [ ] "
-    ]
+    "prefix": ["--"],
+    "body": ["- [ ] "]
   },
   "md numbered checkbox": {
-    "prefix": [
-      "k"
-    ],
-    "body": [
-      "1. [ ] "
-    ]
+    "prefix": ["k"],
+    "body": ["1. [ ] "]
   },
   "create an obsidian link": {
-    "prefix": [
-      "[["
-    ],
-    "body": [
-      "[[${1:note name}]]$0"
-    ]
+    "prefix": ["[["],
+    "body": ["[[${1:note name}]]$0"]
   },
   "changelog: new version section": {
-    "prefix": [
-      "v",
-      "ver",
-      "version"
-    ],
+    "prefix": ["v", "ver", "version"],
     "body": [
       "## [${1:0.1.0}] - ${2:$CURRENT_YEAR-$CURRENT_MONTH-$CURRENT_DATE} ${3:$CURRENT_HOUR:$CURRENT_MINUTE}",
       "### Added",
@@ -65,11 +42,7 @@
     ]
   },
   "chrome web store": {
-    "prefix": [
-      "cws",
-      "template",
-      "t"
-    ],
+    "prefix": ["cws", "template", "t"],
     "body": [
       "# Chrome Web Store metadata",
       "",
@@ -173,7 +146,25 @@
       "### Distribution",
       "",
       "All regions.",
-      "",
+      ""
     ]
   },
+  "template de frontmatter para posts no blog": {
+    "prefix": ["blog", "post"],
+    "body": [
+      "---",
+      "title: ${1:Post title here}",
+      "author: ${2:Author name}",
+      "description: >",
+      "  ${3:Post description here}",
+      "createdDate: \"$CURRENT_YEAR-$CURRENT_MONTH-${CURRENT_DATE}T$CURRENT_HOUR:$CURRENT_MINUTE:${CURRENT_SECOND}${CURRENT_TIMEZONE_OFFSET}\"",
+      "pubDate: \"$CURRENT_YEAR-$CURRENT_MONTH-${CURRENT_DATE}T$CURRENT_HOUR:$CURRENT_MINUTE:${CURRENT_SECOND}${CURRENT_TIMEZONE_OFFSET}\"",
+      "updatedDate: \"$CURRENT_YEAR-$CURRENT_MONTH-${CURRENT_DATE}T$CURRENT_HOUR:$CURRENT_MINUTE:${CURRENT_SECOND}${CURRENT_TIMEZONE_OFFSET}\"",
+      "tags:",
+      "  - ${4:tag 1}",
+      "---",
+      "",
+      "$0"
+    ]
+  }
 }
