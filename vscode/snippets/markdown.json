@@ -13,23 +13,46 @@
   // 	"description": "Log output to console"
   // }
   "md fold region": {
-    "prefix": ["fold", "region"],
-    "body": ["<!-- #region $1 -->", "$2", "<!-- #endregion -->"]
+    "prefix": [
+      "fold",
+      "region"
+    ],
+    "body": [
+      "<!-- #region $1 -->",
+      "$2",
+      "<!-- #endregion -->"
+    ]
   },
   "md checkbox": {
-    "prefix": ["--"],
-    "body": ["- [ ] "]
+    "prefix": [
+      "--"
+    ],
+    "body": [
+      "- [ ] "
+    ]
   },
   "md numbered checkbox": {
-    "prefix": ["k"],
-    "body": ["1. [ ] "]
+    "prefix": [
+      "k"
+    ],
+    "body": [
+      "1. [ ] "
+    ]
   },
   "create an obsidian link": {
-    "prefix": ["[["],
-    "body": ["[[${1:note name}]]$0"]
+    "prefix": [
+      "[["
+    ],
+    "body": [
+      "[[${1:note name}]]$0"
+    ]
   },
   "changelog: new version section": {
-    "prefix": ["v", "ver", "version"],
+    "prefix": [
+      "v",
+      "ver",
+      "version"
+    ],
     "body": [
       "## [${1:0.1.0}] - ${2:$CURRENT_YEAR-$CURRENT_MONTH-$CURRENT_DATE} ${3:$CURRENT_HOUR:$CURRENT_MINUTE}",
       "### Added",
@@ -41,8 +64,36 @@
       "### Removed"
     ]
   },
+  "changelog: new unreleased section": {
+    "prefix": [
+      "vu",
+      "unreleased",
+      "unrel",
+      "unr"
+    ],
+    "body": [
+      "## [$1] - Unreleased",
+      "",
+      "Created: ${2:$CURRENT_YEAR-$CURRENT_MONTH-$CURRENT_DATE} ${3:$CURRENT_HOUR:$CURRENT_MINUTE}",
+      "",
+      "### Added",
+      "",
+      "$0",
+      "",
+      "### Fixed",
+      "",
+      "### Changed",
+      "",
+      "### Removed",
+      "",
+    ]
+  },
   "chrome web store": {
-    "prefix": ["cws", "template", "t"],
+    "prefix": [
+      "cws",
+      "template",
+      "t"
+    ],
     "body": [
       "# Chrome Web Store metadata",
       "",
@@ -150,7 +201,10 @@
     ]
   },
   "template de frontmatter para posts no blog": {
-    "prefix": ["blog", "post"],
+    "prefix": [
+      "blog",
+      "post"
+    ],
     "body": [
       "---",
       "title: ${1:Post title here}",

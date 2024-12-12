@@ -681,6 +681,21 @@
       "}"
     ]
   },
+  "function component with children props": {
+    "scope": "javascriptreact,typescriptreact",
+    "prefix": [
+      "props",
+      "withprops",
+      "wp"
+    ],
+    "body": [
+      "export function $1({ ${2:other, }children }: {${2: other: $3, }children: React.ReactNode }) {",
+      "  return (",
+      "    $0",
+      "  );",
+      "}"
+    ]
+  },
   "javascriptreact,typescriptreact - end": {
     "body": []
   },
