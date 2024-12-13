@@ -926,8 +926,8 @@
 
   // Recursive font
   //
-  "editor.fontFamily": "Rec Mono Linear",
-  "editor.fontSize": 13, // edn{:desktop 13 :notebook ?? :small 11}
+  "editor.fontFamily": "Rec Mono Casual",
+  "editor.fontSize": 18, // edn{:desktop 13 :notebook ?? :small 11}
   "editor.fontWeight": "400", // edn{:desktop "400" :notebook "??" :small "100"}
   // // Recursive with default values and almost no customization.
   // "editor.fontLigatures": "'frac'",
@@ -1057,7 +1057,7 @@
   "editor.suggest.matchOnWordStartOnly": true,
   "editor.suggest.showWords": false,
   "editor.suggestOnTriggerCharacters": true,
-  "editor.acceptSuggestionOnEnter": "smart",
+  "editor.acceptSuggestionOnEnter": "on",
   "editor.suggestSelection": "recentlyUsedByPrefix",
   "editor.multiCursorModifier": "ctrlCmd",
   "editor.renderLineHighlight": "all",
@@ -1208,8 +1208,9 @@
   // "terminal.integrated.fontSize": 15,
   // "terminal.integrated.fontWeight": "400",
 
-  "terminal.integrated.fontFamily": "JetBrains Mono",
-  // "terminal.integrated.fontSize": 16,
+  "terminal.integrated.fontFamily": "Rec Mono Linear",
+  // "terminal.integrated.fontLigatures": true,
+  "terminal.integrated.fontSize": 16,
   "terminal.integrated.fontWeight": "300",
 
   "terminal.integrated.tabs.enabled": true,
@@ -1410,6 +1411,14 @@
       "symbolIcon.operatorForeground": "#ff00aa",
       "symbolIcon.numberForeground": "#ff00aa",
       "symbolIcon.referenceForeground": "#ff00aa"
+    },
+
+    "[Andromeda][Andromeda Bordered][Andromeda Colorizer][Andromeda Italic Bordered][Andromeda Italic]": {
+      // "editorCursor.background": "#f00",
+      // "selection.background": "#f00",
+      "editor.selectionBackground": "#ff00ff55",
+      // "editor.selectionForeground": "#000",
+      "editor.wordHighlightBackground": "#ff00ff17"
     }
   },
 
@@ -1419,7 +1428,8 @@
   "workbench.list.horizontalScrolling": true,
   "workbench.sideBar.location": "left",
   "workbench.panel.defaultLocation": "bottom",
-  "workbench.colorTheme": "Quiet Light",
+  "workbench.colorTheme": "Andromeda Italic Bordered",
+  "workbench.editor.pinnedTabsOnSeparateRow": true,
 
   //
   //
