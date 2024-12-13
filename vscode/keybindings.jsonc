@@ -240,7 +240,7 @@
     // Focus on the group that is above the current one (in a split view).
     "key": "ctrl+k",
     "command": "workbench.action.focusAboveGroup",
-    "when": "vim.mode == 'Normal' && editorTextFocus && vim.active"
+    "when": "vim.active && vim.mode == 'Normal' && editorTextFocus && multipleEditorGroups"
   },
 
   {
@@ -716,15 +716,15 @@
     "command": "-workbench.action.files.newUntitledFile"
   },
 
-  {
-    "key": "ctrl+k",
-    "command": "workbench.action.quickTextSearch",
-    // This is necessary because we use ctrl+k to navigate up in menus. This one
-    // must have a negative of the combination of all others, i.e., if they are
-    // `when: A`, `when: B`, `when: C`, this one must be `when: !A && !B && !C`,
-    // which is the same thing as `when: !(A || B || C)`.
-    "when": "!(suggestWidgetVisible || (inQuickInput && quickInputType == 'quickPick') || codeActionMenuVisible)"
-  },
+  // {
+  //   "key": "ctrl+k",
+  //   "command": "workbench.action.quickTextSearch",
+  //   // This is necessary because we use ctrl+k to navigate up in menus. This one
+  //   // must have a negative of the combination of all others, i.e., if they are
+  //   // `when: A`, `when: B`, `when: C`, this one must be `when: !A && !B && !C`,
+  //   // which is the same thing as `when: !(A || B || C)`.
+  //   "when": "!(suggestWidgetVisible || (inQuickInput && quickInputType == 'quickPick') || codeActionMenuVisible)"
+  // },
 
   {
     // This mode is quite annoying, stealing focus weirdly.

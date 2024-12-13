@@ -373,6 +373,10 @@
   "vim.enableNeovim": true,
   "vim.neovimUseConfigFile": true,
 
+  "vim.handleKeys": {
+    "<C-k>": false
+  },
+
   // This is VERY, PAINFULLY, UNUSABLY slow in Ubuntu 20.04. It uses gdbus, as shown in the
   // following link. I also got the scripts (get-im and set-im) from there:
   //
@@ -459,10 +463,11 @@
       "before": ["<c-j>"],
       "after": ["<c-w>", "j"]
     },
-    {
-      "before": ["<c-k>"],
-      "after": ["<c-w>", "k"]
-    },
+    // {
+    //   // Enabled through VSCode Keybindings file, to enable it only when in the multiple groups mode.
+    //   "before": ["<c-k>"],
+    //   "after": ["<c-w>", "k"]
+    // },
     {
       "before": ["<leader>", "d"],
       "after": ["d", "d"]
