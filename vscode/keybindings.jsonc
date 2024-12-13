@@ -548,7 +548,7 @@
   },
 
   {
-    "key": "alt+p",
+    "key": "alt+shift+p",
     "command": "issue.copyGithubPermalink"
   },
 
@@ -850,6 +850,16 @@
     "key": "alt+shift+delete",
     "command": "deleteWordPartLeft",
     "when": "!vim.active && textInputFocus && !editorReadonly"
+  },
+  {
+    "key": "alt+p",
+    "command": "workbench.action.pinEditor",
+    "when": "!activeEditorIsPinned"
+  },
+  {
+    "key": "alt+p",
+    "command": "workbench.action.unpinEditor",
+    "when": "activeEditorIsPinned"
   }
 
   //
