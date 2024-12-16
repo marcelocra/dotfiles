@@ -237,13 +237,6 @@
   },
 
   {
-    // Focus on the group that is above the current one (in a split view).
-    "key": "ctrl+k",
-    "command": "workbench.action.focusAboveGroup",
-    "when": "vim.active && vim.mode == 'Normal' && editorTextFocus && multipleEditorGroups"
-  },
-
-  {
     // Override VSCode Vim's ctrl+f. Use ctrl+d and / inst
     "key": "ctrl+f",
     "command": "actions.find"
