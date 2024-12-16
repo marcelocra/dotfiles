@@ -372,7 +372,6 @@
 
   "vim.enableNeovim": true,
   "vim.neovimUseConfigFile": true,
-
   "vim.handleKeys": {
     "<C-c>": false
   },
@@ -926,8 +925,7 @@
   // Recursive font
   //
   "editor.fontFamily": "Rec Mono Casual",
-  "editor.fontSize": 18, // edn{:desktop 13 :notebook ?? :small 11}
-  "editor.fontWeight": "400", // edn{:desktop "400" :notebook "??" :small "100"}
+  "editor.fontSize": 12, // edn{:desktop 13 :notebook ?? :small 11}
   // // Recursive with default values and almost no customization.
   // "editor.fontLigatures": "'frac'",
   // // Some customizations that I like. See details below.
@@ -1306,36 +1304,51 @@
     // --geist-cyan-dark: #29bc9b;
 
     "[Tokyo Night][Tokyo Night Storm]": {
+      "menu.border": "#5588ff55",
+      "focusBorder": "#5588ff55",
+      "editorWidget.border": "#5588ff55",
+
+      // "tab.border": "#5588ff55",
+      "tab.activeBorder": "default",
+      "tab.activeBorderTop": "default",
+      "tab.activeBackground": "#332c5f",
+      "tab.lastPinnedBorder": "#5588ff55",
+
+      "titleBar.border": "#5588ff55",
+      // Like terminal.
+      "panel.border": "#5588ff55",
+      "sideBar.border": "#5588ff55",
+      "editorGroup.border": "#5588ff55",
+
       // File picker (ctrl+p) focused element background.
       "quickInputList.focusBackground": "#5533ffaa",
       "quickInputList.focusForeground": "#fff",
       "quickInputList.focusIconForeground": "#fff",
+      // Works for quickInputList too.
+      "widget.border": "#5588ff55",
 
       // Code actions (ctrl+.) focused element background.
       "editorActionList.focusBackground": "#5533ff",
 
       // Border of the complete widget.
-      "editorSuggestWidget.border": "#4b6786",
-
+      "editorSuggestWidget.border": "#5588ff55",
       // "editorSuggestWidget.selectedForeground": "#000",
-
       // // Background of the complete widget.
       // "editorSuggestWidget.background": "#e6e7ed",
-
       // Background of the focused item.
-      "editorSuggestWidget.selectedBackground": "#5588ffdd",
-      "editorSuggestWidget.selectedForeground": "#000",
-      "editorSuggestWidget.highlightForeground": "#5533ff",
-      "editorSuggestWidget.focusHighlightForeground": "#00ffff",
-
+      "editorSuggestWidget.selectedBackground": "#5588ff55",
+      "editorSuggestWidget.selectedForeground": "#fff",
+      "editorSuggestWidget.highlightForeground": "#00ffffdd",
+      "editorSuggestWidget.focusHighlightForeground": "#00ffffdd",
       // // Text color.
       "editorSuggestWidget.foreground": "#fff",
 
       // // Element that is focused in the explorer.
-      "list.focusBackground": "#5588ff",
-      "list.focusForeground": "#000",
+      // "list.focusBackground": "#5588ff",
+      // "list.focusForeground": "#000",
+
       // // Element that was focused in the explorer.
-      "list.inactiveFocusBackground": "#5588ff33",
+      // "list.inactiveFocusBackground": "#5588ff33",
 
       // // Not sure what this is.
       // "list.deemphasizedForeground": "#ff450055",
