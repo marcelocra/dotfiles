@@ -463,11 +463,10 @@
       "before": ["<c-j>"],
       "after": ["<c-w>", "j"]
     },
-    // {
-    //   // Enabled through VSCode Keybindings file, to enable it only when in the multiple groups mode.
-    //   "before": ["<c-k>"],
-    //   "after": ["<c-w>", "k"]
-    // },
+    {
+      "before": ["<c-k>"],
+      "after": ["<c-w>", "k"]
+    },
     {
       "before": ["<leader>", "d"],
       "after": ["d", "d"]
