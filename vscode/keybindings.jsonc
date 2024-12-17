@@ -778,9 +778,24 @@
   },
 
   {
-    "key": "EDITOR - NEXT ABOVE",
-    "command": "",
-    "when": ""
+    "key": "ctrl+shift+i",
+    "command": "runCommands",
+    "args": {
+      "commands": ["editor.action.formatDocument", "typescript.removeUnusedImports", "javascript.removeUnusedImports"]
+    },
+    "when": "editorHasDocumentFormattingProvider && editorTextFocus && !editorReadonly && !inCompositeEditor"
+  },
+
+  {
+    "key": "ctrl+e",
+    "command": "editor.action.smartSelect.expand",
+    "when": "editorTextFocus"
+  },
+
+  {
+    "key": "ctrl+y",
+    "command": "editor.action.smartSelect.shrink",
+    "when": "editorTextFocus"
   },
 
   //

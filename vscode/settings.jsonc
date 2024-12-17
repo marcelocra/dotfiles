@@ -373,7 +373,9 @@
   "vim.enableNeovim": true,
   "vim.neovimUseConfigFile": true,
   "vim.handleKeys": {
-    "<C-c>": false
+    "<C-c>": false,
+    "<C-e>": false,
+    "<C-y>": false
   },
 
   // This is VERY, PAINFULLY, UNUSABLY slow in Ubuntu 20.04. It uses gdbus, as shown in the
@@ -423,11 +425,15 @@
       // save and quit
       "before": ["<leader>", "x"],
       "commands": [":x"]
-    }
+    },
     // {
     //   "before": ["<c-t>"],
     //   "commands": ["workbench.action.showAllSymbols"]
     // }
+    {
+      "before": ["<c-a>"],
+      "after": ["<esc>", "gg", "V", "G"]
+    }
   ],
   // viminsert-
 
@@ -713,11 +719,15 @@
     {
       "before": ["<"],
       "commands": ["editor.action.outdentLines"]
-    }
+    },
     // {
     //   "before": [" ", "E"],
     //   "commands": ["calva.evaluateSelectionToSelectionEnd"]
     // },
+    {
+      "before": ["<c-a>"],
+      "commands": ["editor.action.selectAll"]
+    }
   ],
 
   "vim.operatorPendingModeKeyBindingsNonRecursive": [
@@ -1238,7 +1248,7 @@
   //
 
   "window.titleBarStyle": "custom",
-  "window.title": "${activeFolderMedium}${separator}${rootNameShort}",
+  "window.title": "[${rootNameShort}] [${activeRepositoryBranchName}] ${activeEditorMedium}",
   "window.newWindowDimensions": "inherit",
   "window.restoreWindows": "all",
   "window.newWindowProfile": "Default",
@@ -1362,12 +1372,16 @@
       "editor.selectionBackground": "#5533ff55"
     },
 
+    "[Tokyo Night Light]": {
+      "tab.activeBackground": "#00ffff55"
+    },
+
     "[Tokyo Night Light][Spiral Tattoo Ink Dark Dim][Night Owl Light]": {
       // File picker (ctrl+p) focused element background.
-      "quickInputList.focusBackground": "#00ff0055",
+      "quickInputList.focusBackground": "#00ffff55",
 
       // Code actions (ctrl+.) focused element background.
-      "editorActionList.focusBackground": "#00ff0055",
+      "editorActionList.focusBackground": "#00ffff55",
 
       // Border of the complete widget.
       "editorSuggestWidget.border": "#4b6786",
@@ -1378,7 +1392,7 @@
       // "editorSuggestWidget.background": "#e6e7ed",
 
       // Background of the focused item.
-      "editorSuggestWidget.selectedBackground": "#00ff0055",
+      "editorSuggestWidget.selectedBackground": "#00ffff55",
 
       // // Text color.
       // "editorSuggestWidget.foreground": "#000",
@@ -1391,13 +1405,13 @@
       // // Not sure what this is.
       // "list.deemphasizedForeground": "#ff450055",
 
-      "editor.inactiveSelectionBackground": "#00ff0022",
+      "editor.inactiveSelectionBackground": "#00ffff22",
       // "editor.selectionHighlightBorder": "#008800",
       // "editor.selectionHighlightBackground": "#ff008833",
-      "editor.lineHighlightBorder": "#00ff0033",
+      "editor.lineHighlightBorder": "#00ffff33",
       // "editor.wordHighlightBorder": "#171f2c",
-      "editor.rangeHighlightBackground": "#00ff0055",
-      "editor.selectionBackground": "#00ff0055"
+      "editor.rangeHighlightBackground": "#00ffff55",
+      "editor.selectionBackground": "#00ffff55"
     },
 
     "[Spiral Tattoo Ink Dark Dim]": {
@@ -1412,8 +1426,8 @@
 
       "symbolIcon.packageForeground": "#ffff00",
 
-      "symbolIcon.constructorForeground": "#00ff00",
-      "symbolIcon.functionForeground": "#00ff00",
+      "symbolIcon.constructorForeground": "#00ffff",
+      "symbolIcon.functionForeground": "#00ffff",
 
       "symbolIcon.fieldForeground": "#ff00f7",
       "symbolIcon.variableForeground": "#ff00f7",
@@ -1440,7 +1454,7 @@
   "workbench.list.horizontalScrolling": true,
   "workbench.sideBar.location": "left",
   "workbench.panel.defaultLocation": "bottom",
-  "workbench.colorTheme": "Andromeda Italic Bordered",
+  "workbench.colorTheme": "Night Owl Light",
   "workbench.editor.pinnedTabsOnSeparateRow": true,
 
   //
@@ -1455,6 +1469,7 @@
   "diffEditor.renderSideBySide": true,
   "html.suggest.html5": false,
   "notebook.lineNumbers": "on",
+  "notebook.output.scrolling": true,
   "outline.collapseItems": "alwaysExpand",
   "problems.showCurrentInStatus": true,
   "scm.compactFolders": false,
