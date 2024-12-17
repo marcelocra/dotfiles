@@ -787,13 +787,13 @@
   },
 
   {
-    "key": "ctrl+e",
+    "key": "alt+shift+l",
     "command": "editor.action.smartSelect.expand",
     "when": "editorTextFocus"
   },
 
   {
-    "key": "ctrl+y",
+    "key": "alt+shift+h",
     "command": "editor.action.smartSelect.shrink",
     "when": "editorTextFocus"
   },

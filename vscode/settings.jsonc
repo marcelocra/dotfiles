@@ -373,9 +373,7 @@
   "vim.enableNeovim": true,
   "vim.neovimUseConfigFile": true,
   "vim.handleKeys": {
-    "<C-c>": false,
-    "<C-e>": false,
-    "<C-y>": false
+    "<C-c>": false
   },
 
   // This is VERY, PAINFULLY, UNUSABLY slow in Ubuntu 20.04. It uses gdbus, as shown in the
