@@ -778,15 +778,6 @@
   },
 
   {
-    "key": "ctrl+shift+i",
-    "command": "runCommands",
-    "args": {
-      "commands": ["editor.action.formatDocument", "typescript.removeUnusedImports", "javascript.removeUnusedImports"]
-    },
-    "when": "editorHasDocumentFormattingProvider && editorTextFocus && !editorReadonly && !inCompositeEditor"
-  },
-
-  {
     "key": "alt+shift+l",
     "command": "editor.action.smartSelect.expand",
     "when": "editorTextFocus"
@@ -1016,6 +1007,10 @@
   {
     "key": "ctrl+shift+-",
     "command": "-workbench.action.navigateForward"
+  },
+  {
+    "key": "ctrl+shift+alt+l",
+    "command": "editor.action.openLink"
   }
 
   //

@@ -1022,6 +1022,8 @@
   "editor.codeActionsOnSave": {
     "source.fixAll.eslint": "explicit",
     "source.fixAll": "explicit"
+    // "source.addMissingImports.ts": "always",
+    // "source.removeUnusedImports": "always"
   },
   "editor.lineNumbers": "on",
   "zenMode.hideLineNumbers": false,
@@ -1452,8 +1454,8 @@
   "workbench.list.horizontalScrolling": true,
   "workbench.sideBar.location": "left",
   "workbench.panel.defaultLocation": "bottom",
-  "workbench.colorTheme": "Night Owl Light",
-  "workbench.editor.pinnedTabsOnSeparateRow": true,
+  "workbench.colorTheme": "Dracula Theme",
+  "workbench.editor.pinnedTabsOnSeparateRow": false,
 
   //
   //
