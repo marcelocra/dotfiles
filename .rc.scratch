@@ -121,6 +121,9 @@ use_gnome_terminal() {
     elif [ $font_size -eq 9 ]; then
       columns=179
       rows=100
+    elif [ $font_size -eq 11 ]; then
+      columns=139
+      rows=100
     fi
   fi
 
