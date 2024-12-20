@@ -340,6 +340,18 @@
   },
 
   //
+  //
+  // Shell
+  //
+  "[shellscript]": {
+    "editor.quickSuggestions": {
+      "other": "on",
+      "comments": "on",
+      "strings": "on"
+    }
+  },
+
+  //
   // Next language or framework specific setting above.
   // #endregion
   //////////////////////////////////////////////////////////////////////////////
@@ -1060,9 +1072,9 @@
   "editor.autoIndent": "full",
   "editor.screenReaderAnnounceInlineSuggestion": false,
   "editor.snippetSuggestions": "bottom",
-  "editor.suggest.showSnippets": true,
-  "editor.suggest.matchOnWordStartOnly": true,
-  "editor.suggest.showWords": false,
+  "editor.suggest.showSnippets": false, // Avoid clutter in suggestions. I know my snippets by heart.
+  "editor.suggest.matchOnWordStartOnly": false,
+  "editor.suggest.showWords": true, // `words` means other words found in the file.
   "editor.suggestOnTriggerCharacters": true,
   "editor.acceptSuggestionOnEnter": "on",
   "editor.suggestSelection": "recentlyUsedByPrefix",
@@ -1445,6 +1457,11 @@
       "editor.selectionBackground": "#ff00ff55",
       // "editor.selectionForeground": "#000",
       "editor.wordHighlightBackground": "#ff00ff17"
+    },
+
+    "[Solarized Light]": {
+      "editor.selectionBackground": "#00ffff55",
+      "editor.wordHighlightBackground": "#00ffff22"
     }
   },
 
@@ -1454,7 +1471,7 @@
   "workbench.list.horizontalScrolling": true,
   "workbench.sideBar.location": "left",
   "workbench.panel.defaultLocation": "bottom",
-  "workbench.colorTheme": "Dracula Theme",
+  "workbench.colorTheme": "Solarized Light",
   "workbench.editor.pinnedTabsOnSeparateRow": false,
 
   //
