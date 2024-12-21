@@ -3,7 +3,7 @@ Name=Todoist
 Comment=To do App
 GenericName=Text Editor
 Type=Application
-Exec=todoist %U
+Exec=env LANG=pt_BR.utf8 todoist %U
 Icon=todoist
 StartupWMClass=todoist
 MimeType=x-scheme-handler/todoist;x-scheme-handler/com.todoist
