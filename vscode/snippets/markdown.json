@@ -64,6 +64,24 @@
       "### Removed"
     ]
   },
+  "changelog: new date version section": {
+    "prefix": [
+      "vd",
+      "date",
+      "datev",
+      "dv"
+    ],
+    "body": [
+      "## ${1:$CURRENT_YEAR-$CURRENT_MONTH-$CURRENT_DATE} ${2:$CURRENT_HOUR:$CURRENT_MINUTE}",
+      "### Added",
+      "",
+      "$0",
+      "",
+      "### Fixed",
+      "### Changed",
+      "### Removed"
+    ]
+  },
   "changelog: new unreleased section": {
     "prefix": [
       "vu",
