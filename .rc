@@ -496,6 +496,47 @@ count_lines_of_code() {
 alias loc=count_lines_of_code
 
 
+x() {
+    # Execute stuff depending on what is in the folder.
+    #
+    # - If there's an `nx.json` file in the current directory
+    #   - If no arguments are given, list all `nx` tasks
+    #   - Else, run `nx` with the given arguments.
+    # - If there's a `package.json` file in the current directory
+    #   - If no arguments are given, list all `pnpm` scripts
+    #   - Else, run `pnpm run` with the given arguments.
+
+    local nx_json='nx.json'
+    local package_json='package.json'
+
+    if [ -f "$nx_json" ]; then
+        if [ $# -eq 0 ]; then
+            echo "No arguments given. Listing all 'nx' tasks."
+            echo
+            pnpx nx show projects | sort
+        else
+            echo "Running 'nx' with the given arguments."
+            echo
+            pnpx nx "$@"
+        fi
+    elif [ -f "$package_json" ]; then
+        if [ $# -eq 0 ]; then
+            echo "No arguments given. Listing all 'pnpm' scripts."
+            echo
+            cat package.json| jq -r '.scripts|to_entries[]| .key + " -> " + .value'
+        else
+            echo "Running 'pnpm run' with the given arguments."
+            echo
+            pnpm run "$@"
+        fi
+    else
+        echo "No 'nx.json' or 'package.json' found in the current directory and you didn't configured any other behavior. Exiting."
+    fi
+
+    return 0
+}
+
+
 # }}}functions
 # aliases{{{
 # one lettered{{{
