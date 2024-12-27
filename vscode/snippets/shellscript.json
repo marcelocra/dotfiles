@@ -82,7 +82,7 @@
   },
   "create basic script structure": {
     "prefix": [
-      "init"
+      "old-init"
     ],
     "body": [
       "#!/usr/bin/env bash",
@@ -155,6 +155,56 @@
     ],
     "body": [
       "find ${1:.} -regextype egrep -regex '${2:.*\\.(js|css|html)$}'$0",
+    ]
+  },
+  "template for a robust script per chatgpt 4o": {
+    "prefix": [
+      "base",
+      "script",
+      "shell"
+    ],
+    "body": [
+      "#!/usr/bin/env bash",
+      "#",
+      "# ${1:TODO: Add a description of the script}",
+      "",
+      "set -euo pipefail",
+      "",
+      "# Show commands if in debug mode.",
+      "[[ \"${DEBUG:-}\" == \"true\" ]] && set -x",
+      "",
+      "# Trap signals",
+      "trap \"echo 'Ctrl+C pressed! Script interrupted.'; exit 1\" SIGINT SIGTERM",
+      "",
+      "# Logging",
+      "now() { echo -n \"[$(date '+%Y-%m-%d %H:%M:%S')] \"; }",
+      "log() { echo \"$(now)[INFO]$*\"; }",
+      "error() { echo \"$(now)[ERROR] $*\" >&2; }",
+      "",
+      "# Main logic",
+      "main() {",
+      "  log \"Starting script...\"",
+      "  # TODO: Your script logic here.",
+      "}",
+      "",
+      "# Execute main",
+      "main \"$@\"",
+    ]
+  },
+  "start of shell scripts that uses the `essentials` lib": {
+    "prefix": [
+      "init"
+    ],
+    "body": [
+      "################## MUST BE THE FIRST THING AFTER THE SHEBANG ##################",
+      "essentials_script_path=${HOME}/lib/essentials.sh",
+      "[[ -f $essentials_script_path ]] || {",
+      "    echo \"ERROR: File not found: $essentials_script_path\"",
+      "    exit 1",
+      "}",
+      "source $essentials_script_path",
+      "essentials_setup $0",
+      "################## MUST BE THE FIRST THING AFTER THE SHEBANG ##################",
     ]
   },
 }
