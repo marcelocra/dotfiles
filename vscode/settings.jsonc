@@ -443,7 +443,18 @@
     {
       "before": ["<c-a>"],
       "after": ["<esc>", "gg", "V", "G"]
+    },
+
+    // -- visual lines - Move using visual lines.
+    {
+      "before": ["<up>"],
+      "after": ["<c-o>", "g", "k"]
+    },
+    {
+      "before": ["<down>"],
+      "after": ["<c-o>", "g", "j"]
     }
+    // -- visual lines - end
   ],
   // viminsert-
 
@@ -534,6 +545,14 @@
     {
       "before": ["$"],
       "after": ["g", "$"]
+    },
+    {
+      "before": ["<up>"],
+      "after": ["g", "<up>"]
+    },
+    {
+      "before": ["<down>"],
+      "after": ["g", "<down>"]
     },
     // -- visual lines - end
     {
@@ -680,6 +699,14 @@
     {
       "before": ["$"],
       "after": ["g", "$"]
+    },
+    {
+      "before": ["<up>"],
+      "after": ["g", "<up>"]
+    },
+    {
+      "before": ["<down>"],
+      "after": ["g", "<down>"]
     },
     // -- visual lines - end
     {
