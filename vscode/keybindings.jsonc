@@ -197,6 +197,17 @@
     "command": "editor.action.moveSelectionToPreviousFindMatch",
     "when": "vim.mode == 'Visual'"
   },
+  {
+    "key": "ctrl+n",
+    "command": "editor.action.moveSelectionToNextFindMatch",
+    "when": "!vim.active && editorTextFocus"
+  },
+
+  {
+    "key": "ctrl+p",
+    "command": "editor.action.moveSelectionToPreviousFindMatch",
+    "when": "!vim.active && editorTextFocus"
+  },
 
   {
     // Navigate to the next suggestion in menus.
