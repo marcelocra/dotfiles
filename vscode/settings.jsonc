@@ -1498,7 +1498,7 @@
   "workbench.list.horizontalScrolling": true,
   "workbench.sideBar.location": "left",
   "workbench.panel.defaultLocation": "bottom",
-  "workbench.colorTheme": "Night Owl Light",
+  "workbench.colorTheme": "Solarized Light",
   "workbench.editor.pinnedTabsOnSeparateRow": false,
 
   //
