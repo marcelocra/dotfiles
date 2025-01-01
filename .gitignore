@@ -509,3 +509,6 @@ $RECYCLE.BIN/
 
 # Vim temporary swap files
 *.swp
+
+# elm stuff
+**/elm-stuff
