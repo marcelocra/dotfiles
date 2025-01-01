@@ -398,7 +398,7 @@
   // "vim.autoSwitchInputMethod.obtainIMCmd": "/home/marcelocra/bin/get-im",
   // "vim.autoSwitchInputMethod.switchIMCmd": "/home/marcelocra/bin/set-im {im}",
 
-  // -viminsert
+  //#region viminsert
   "vim.insertModeKeyBindingsNonRecursive": [
     {
       "before": ["j", "f"],
@@ -406,12 +406,6 @@
     },
     {
       "before": ["f", "j"],
-      "after": ["<esc>"]
-    },
-    {
-      // something to try...
-      // TODO: review later
-      "before": ["<c-m>"],
       "after": ["<esc>"]
     },
     {
@@ -436,16 +430,12 @@
       "before": ["<leader>", "x"],
       "commands": [":x"]
     },
-    // {
-    //   "before": ["<c-t>"],
-    //   "commands": ["workbench.action.showAllSymbols"]
-    // }
     {
       "before": ["<c-a>"],
       "after": ["<esc>", "gg", "V", "G"]
     },
 
-    // -- visual lines - Move using visual lines.
+    //#region Move using visual lines.
     {
       "before": ["<up>"],
       "after": ["<c-o>", "g", "k"]
@@ -454,9 +444,9 @@
       "before": ["<down>"],
       "after": ["<c-o>", "g", "j"]
     }
-    // -- visual lines - end
+    //#endregion
   ],
-  // viminsert-
+  //#endregion
 
   // -vimnormal
   "vim.normalModeKeyBindingsNonRecursive": [
@@ -851,23 +841,29 @@
 
   //
   //
-  // Editor
-  // #region Editor
+  //#region Editor
   //
 
-  // CodeNewRoman font
-  //
-  // "editor.fontFamily": "CodeNewRoman Nerd Font Mono",
-  // "editor.fontSize": 17,
+  //#region Blex
+  // "editor.fontFamily": "BlexMono Nerd Font",
+  // "editor.fontSize": 14,
   // "editor.fontWeight": "400",
+  // "editor.fontLigatures": "",
+  //#endregion
 
-  // Cascadia Code font
-  //
-  // "editor.fontFamily": "Cascadia Code NF",
+  //#region CodeNewRoman
+  // "editor.fontFamily": "CodeNewRoman Nerd Font",
+  // "editor.fontSize": 14,
+  // "editor.fontWeight": "400",
+  // "editor.fontLigatures": "",
+  //#endregion
+
+  //#region Cascadia
+  // "editor.fontFamily": "'Cascadia Code NF', 'CaskaydiaCove NF'",
   // "editor.fontSize": 14, // edn{:desktop 13 :notebook 19 :small 11}
   // "editor.fontWeight": "400", // edn{:desktop "300" :notebook "300" :small "100"}
   // "editor.fontLigatures": "'calt', 'ss01', 'ss19', 'ss20', 'cv01' 3",
-  // // Available stylistic sets:
+  //#region Available stylistic sets:
   // // - cursive italics: 'ss01'
   // // - alternate not equal: 'ss02' ~= (appears as !=)
   // // - serbian locl forms (italic only): 'ss03'
@@ -877,27 +873,8 @@
   // //  ! " # $ % & ' ( ) * + , - . / : ; < = > ? @ [ \ ] ^ _ ` { | } ~
   // //  ~ < > = + _ _ ( ) * & ^ % $ # @ ! { } [ ] \ | / ? : ; , . ` ' " ´ ` ˜
   // //  => -> <> <= >= != !== === ~= |> <- --> || .- :- .= {..}
-
-  // Fira Code font
-  //
-  // "editor.fontFamily": "Fira Code",
-  // "editor.fontSize": 15, // edn{:desktop 15 :notebook ?? :small 11}
-  // "editor.fontWeight": "400", // edn{:desktop "400" :notebook "??" :small "100"}
-  // "editor.fontLigatures": "'calt' 0, 'cv01', 'cv02', 'cv05', 'cv09', 'ss05', 'ss03', 'cv16', 'cv30', 'cv25', 'cv26', 'cv32', 'cv28', 'ss10', 'cv14', 'cv12'",
-  // // Available stylistic sets:
-  // // - | cv01: a      | cv02: g  | cv03...06: i | cv07..10: l | ss01: r
-  // // - | zero: dot    | cv11..13: empty zero, reverse dashed zero, long dot zero
-  // // - | cv14: 3      | onum: numbers not middle aligned      | cv17: ~ height
-  // // - | ss05: @      | ss04: $  | cv18: %      | ss03: &     | cv15..16: *
-  // // - | cv31: ()     | cv29: {} | cv30: longer vertical bar  | ss02: <= >=
-  // // - | cv19..20: <= | cv23: >= | cv21..22: =< | ss08: == === != !==
-  // // - | cv24: /=     | ss09: >>= <<= ||= |=    | cv25: .-    | cv26: :-
-  // // - | cv32: .=     | cv27: [] | cv28: {..}   | ss06: \\    | ss07: =~ !~
-  // // - | ss10: Fl Tl fi fj fl ft
-  // // Ligature test:
-  // //  ! " # $ % & ' ( ) * + , - . / : ; < = > ? @ [ \ ] ^ _ ` { | } ~
-  // //  ~ < > = + _ _ ( ) * & ^ % $ # @ ! { } [ ] \ | / ? : ; , . ` ' " ´ ` ˜
-  // //  => -> <> <= >= != !== === ~= |> <- --> || .- :- .= {..}
+  //#endregion
+  //#endregion
 
   // DM Mono
   //
@@ -948,12 +925,6 @@
   // //  ~ < > = + _ _ ( ) * & ^ % $ # @ ! { } [ ] \ | / ? : ; , . ` ' " ´ ` ˜
   // //  => -> <> <= >= != !== === ~= |> <- --> || .- :- .= {..} 1/2 3/8 100/48
 
-  // Noto Sans Mono font
-  //
-  // "editor.fontFamily": "Noto Sans Mono",
-  // "editor.fontSize": 13, // edn{:desktop 13 :notebook ?? :small 11}
-  // "editor.fontWeight": "400", // edn{:desktop "200" :notebook "??" :small "100"}
-
   // Geist Mono font
   //
   // "editor.fontFamily": "Geist Mono",
@@ -971,10 +942,8 @@
 
   // Recursive font
   //
-  "editor.fontFamily": "Rec Mono Casual",
-  "editor.fontSize": 12, // edn{:desktop 13 :notebook ?? :small 11}
-  // // Recursive with default values and almost no customization.
-  // "editor.fontLigatures": "'frac'",
+  // "editor.fontFamily": "RecMonoDuotone Nerd Font",
+  // "editor.fontSize": 12, // edn{:desktop 13 :notebook ?? :small 11}
   // // Some customizations that I like. See details below.
   // "editor.fontLigatures": "'ss01', 'ss02', 'ss03', 'ss04', 'ss05', 'ss06', 'ss07', 'ss11', 'ss12', 'case', 'frac' 0",
   // "editor.fontLigatures": "'ss04', 'ss05', 'ss12', 'case', 'frac' 0",
@@ -1057,6 +1026,10 @@
   // //         |> >- <-> <| <> |- .- :: -.- -> => == === != !== ::<
   // "editor.fontSize": 24, // Good value: 17.
   // "editor.fontWeight": "400",
+
+  "editor.fontFamily": "'FantasqueSansM Nerd Font', 'CodeNewRoman Nerd Font Mono', 'MesloLGS Nerd Font', 'Noto Sans Mono'",
+  "editor.fontSize": 19,
+  "editor.fontWeight": "400",
 
   "editor.codeActionsOnSave": {
     "source.fixAll.eslint": "explicit",
@@ -1254,10 +1227,11 @@
   // "terminal.integrated.fontSize": 15,
   // "terminal.integrated.fontWeight": "400",
 
-  "terminal.integrated.fontFamily": "Rec Mono Linear",
-  // "terminal.integrated.fontLigatures": true,
+  // "terminal.integrated.fontFamily": "RecMonoLinear Nerd Font",
+  "terminal.integrated.fontFamily": "MesloLGS NF",
+  "terminal.integrated.fontLigatures": true,
   "terminal.integrated.fontSize": 16,
-  "terminal.integrated.fontWeight": "300",
+  "terminal.integrated.fontWeight": "normal",
 
   "terminal.integrated.tabs.enabled": true,
   "terminal.integrated.macOptionClickForcesSelection": true,
@@ -1498,7 +1472,7 @@
   "workbench.list.horizontalScrolling": true,
   "workbench.sideBar.location": "left",
   "workbench.panel.defaultLocation": "bottom",
-  "workbench.colorTheme": "Solarized Light",
+  "workbench.colorTheme": "Tokyo Night Storm",
   "workbench.editor.pinnedTabsOnSeparateRow": false,
 
   //

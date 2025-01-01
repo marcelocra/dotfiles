@@ -76,14 +76,14 @@
 
   {
     // If terminal is opened and active, focus on the text editor ...
-    "key": "ctrl+m",
+    "key": "alt+m",
     "command": "workbench.action.focusLastEditorGroup",
     "when": "activePanel && terminalFocus"
   },
 
   {
     // ... otherwise, focus on the panel.
-    "key": "ctrl+m",
+    "key": "alt+m",
     "command": "workbench.action.terminal.focus",
     "when": "activePanel && !terminalFocus"
   },
@@ -200,13 +200,13 @@
   {
     "key": "ctrl+n",
     "command": "editor.action.moveSelectionToNextFindMatch",
-    "when": "!vim.active && editorTextFocus"
+    "when": "!vim.active && editorTextFocus && editorHasSelection"
   },
 
   {
     "key": "ctrl+p",
     "command": "editor.action.moveSelectionToPreviousFindMatch",
-    "when": "!vim.active && editorTextFocus"
+    "when": "!vim.active && editorTextFocus && editorHasSelection"
   },
 
   {
@@ -319,7 +319,7 @@
 
   {
     // Slurp and barf using <( >( >) <).
-    "key": "ctrl+shift+alt+left",
+    "key": "ctrl+alt+shift+left",
     "command": "-paredit.slurpSexpBackward",
     "when": "vim.active && vim.mode == 'Normal' && calva:keybindingsEnabled && editorTextFocus && editorLangId == 'clojure' && paredit:keyMap =~ /original|strict/"
   },
@@ -361,7 +361,7 @@
 
   {
     // Slurp and barf using <( >( >) <).
-    "key": "ctrl+shift+alt+right",
+    "key": "ctrl+alt+shift+right",
     "command": "-paredit.barfSexpBackward",
     "when": "vim.mode == 'Normal' && calva:keybindingsEnabled && editorTextFocus && editorLangId == 'clojure' && paredit:keyMap =~ /original|strict/"
   },
@@ -481,7 +481,7 @@
   },
 
   {
-    "key": "alt+m",
+    "key": "alt+shift+m",
     "command": "editor.action.toggleMinimap"
   },
 
@@ -577,7 +577,7 @@
   },
 
   {
-    "key": "alt+shift+k",
+    "key": "ctrl+alt+shift+k",
     "command": "runCommands",
     "args": {
       "commands": [
@@ -711,7 +711,7 @@
   },
 
   {
-    "key": "shift+alt+n",
+    "key": "alt+shift+n",
     "command": "workbench.action.files.newUntitledFile"
   },
 
@@ -789,15 +789,51 @@
   },
 
   {
-    "key": "alt+shift+l",
+    "key": "alt+shift+k",
     "command": "editor.action.smartSelect.expand",
     "when": "editorTextFocus"
   },
 
   {
-    "key": "alt+shift+h",
+    "key": "ctrl+alt+shift+up",
+    "command": "editor.action.smartSelect.expand",
+    "when": "editorTextFocus"
+  },
+
+  {
+    "key": "ctrl+alt+shift+up",
+    "command": "-editor.action.copyLinesUpAction",
+    "when": "editorTextFocus && !editorReadonly"
+  },
+
+  {
+    "key": "alt+shift+=",
+    "command": "editor.action.smartSelect.expand",
+    "when": "editorTextFocus"
+  },
+
+  {
+    "key": "alt+shift+j",
     "command": "editor.action.smartSelect.shrink",
     "when": "editorTextFocus"
+  },
+
+  {
+    "key": "ctrl+alt+shift+down",
+    "command": "editor.action.smartSelect.shrink",
+    "when": "editorTextFocus"
+  },
+
+  {
+    "key": "alt+shift+-",
+    "command": "editor.action.smartSelect.shrink",
+    "when": "editorTextFocus"
+  },
+
+  {
+    "key": "ctrl+alt+shift+down",
+    "command": "-editor.action.copyLinesDownAction",
+    "when": "editorTextFocus && !editorReadonly"
   },
 
   //
@@ -821,7 +857,19 @@
   },
 
   {
+    "key": "alt+right",
+    "command": "cursorWordPartRight",
+    "when": "!vim.active && textInputFocus"
+  },
+
+  {
     "key": "alt+shift+l",
+    "command": "cursorWordPartRightSelect",
+    "when": "!vim.active && textInputFocus"
+  },
+
+  {
+    "key": "alt+shift+right",
     "command": "cursorWordPartRightSelect",
     "when": "!vim.active && textInputFocus"
   },
@@ -833,7 +881,19 @@
   },
 
   {
+    "key": "alt+left",
+    "command": "cursorWordPartStartLeft",
+    "when": "!vim.active && textInputFocus"
+  },
+
+  {
     "key": "alt+shift+h",
+    "command": "cursorWordPartStartLeftSelect",
+    "when": "!vim.active && textInputFocus"
+  },
+
+  {
+    "key": "alt+shift+left",
     "command": "cursorWordPartStartLeftSelect",
     "when": "!vim.active && textInputFocus"
   },
@@ -965,7 +1025,7 @@
 
   //
   //
-  // VIEW ZOOM AND FONT SIZE {{{
+  //#region VIEW ZOOM AND FONT SIZE {{{
   //
 
   // Editor font.
@@ -1020,13 +1080,45 @@
     "command": "-workbench.action.navigateForward"
   },
   {
-    "key": "ctrl+shift+alt+l",
+    "key": "ctrl+alt+shift+l",
     "command": "editor.action.openLink"
+  },
+
+  //#region Fold and Unfold
+  {
+    "key": "ctrl+[",
+    "command": "editor.fold",
+    "when": "editorTextFocus && foldingEnabled"
+  },
+  {
+    "key": "ctrl+[",
+    "command": "-editor.action.outdentLines",
+    "when": "editorTextFocus && !editorReadonly"
+  },
+  {
+    "key": "ctrl+]",
+    "command": "editor.unfold",
+    "when": "editorTextFocus && foldingEnabled"
+  },
+  {
+    "key": "ctrl+]",
+    "command": "-editor.action.indentLines",
+    "when": "editorTextFocus && !editorReadonly"
+  },
+  {
+    "key": "ctrl+m",
+    "command": "editor.action.jumpToBracket",
+    "when": "editorTextFocus"
+  },
+  {
+    "key": "ctrl+k n",
+    "command": "editor.gotoNextFold"
   }
+  //#endregion
 
   //
   //
-  // VIEW ZOOM AND FONT SIZE }}}
+  //#endregion }}}
   //
 
   //

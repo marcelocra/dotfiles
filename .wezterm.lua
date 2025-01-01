@@ -11,14 +11,17 @@ local wezterm = require 'wezterm'
 local act = wezterm.action
 local mux = wezterm.mux
 
--- Options: 'Fixed', 'Fixed Extended', 'Extended'.
-local which_iosevka = 'Iosevka Fixed Extended'
 
 
 -- Fonts I frequently use. <<(
+
+
+-- Options: 'Fixed', 'Fixed Extended', 'Extended'.
+local which_iosevka = 'Iosevka Fixed Extended'
+
 local fonts = {
   meslo = wezterm.font({
-    family = 'MesloLGS NF',
+    family = 'MesloLGL Nerd Font',
     harfbuzz_features = {
       'cv10 10'
     },
@@ -47,8 +50,9 @@ local fonts = {
   }),
 
   cascadia = wezterm.font({
-    family = 'Cascadia Code NF',
-    weight = 300,
+    -- family = 'Cascadia Code NF',
+    family = 'CaskaydiaCove NF',
+    weight = 400,
     harfbuzz_features = {
       'calt 0', 'ss01', 'ss19', 'ss20',
     },
@@ -159,7 +163,7 @@ local fonts = {
 
   victor_mono = wezterm.font({
     family = 'Victor Mono',
-    weight = 400,
+    weight = 600,
     harfbuzz_features = {
       -- 'calt=0', -- no ligatures (particularly for `==` and `!=`)
       -- 'ss01', -- different 'a'
@@ -172,49 +176,57 @@ local fonts = {
   }),
 
   code_new_roman = wezterm.font({
-    family = 'CodeNewRoman Nerd Font Mono',
+    family = 'CodeNewRoman Nerd Font',
     weight = 400,
-    harfbuzz_features = {
-      -- |> >- <-> <| <> |- .- :: -.- -> => == === != !== ::<
-    },
   }),
 
   recursive = wezterm.font({
-    family = 'Rec Mono Linear',
+    family = 'RecMonoLinear Nerd Font',
     weight = 400,
-    harfbuzz_features = {
-      -- |> >- <-> <| <> |- .- :: -.- -> => == === != !== ::<
-    },
   }),
 
   recursive_alt = wezterm.font({
-    family = 'Rec Mono Duotone',
-    -- family = 'Rec Mono Semicasual',
-    -- family = 'Rec Mono Casual',
+    family = 'RecMonoDuotone Nerd Font',
     weight = 400,
-    harfbuzz_features = {
-      -- |> >- <-> <| <> |- .- :: -.- -> => == === != !== ::<
-    },
+  }),
+
+  hack = wezterm.font({
+    family = 'Hack Nerd Font',
+    weight = 400,
+  }),
+
+  blex = wezterm.font({
+    family = 'Blex Mono Nerd Font',
+    weight = 400,
+  }),
+
+  commit = wezterm.font({
+    family = 'CommitMono Nerd Font',
+    weight = 400,
   }),
 }
 
+local common_good_size = 13
 local fonts_size = {
-  cascadia = 11,
-  fira = 13,
-  geist = 13,
+  cascadia = common_good_size,
+  fira = common_good_size,
+  geist = common_good_size,
   noto = 20,
-  dm = 13,
-  meslo = 13,
-  iosevka = 13,
-  iosevka_jb = 13,
-  iosevka_lucida = 13,
-  iosevka_menlo = 11,
-  iosevka_monaco = 11,
+  dm = common_good_size,
+  meslo = common_good_size,
+  iosevka = common_good_size,
+  iosevka_jb = common_good_size,
+  iosevka_lucida = common_good_size,
+  iosevka_menlo = 15,
+  iosevka_monaco = 15,
   jb = 11,
-  victor_mono = 10,
-  code_new_roman = 13,
-  recursive = 13,
-  recursive_alt = 13,
+  victor_mono = common_good_size,
+  code_new_roman = common_good_size,
+  recursive = common_good_size,
+  recursive_alt = common_good_size,
+  hack = common_good_size,
+  blex = common_good_size,
+  commit = common_good_size,
 }
 -- )>>
 
@@ -424,17 +436,20 @@ config.font = fonts.code_new_roman; config.font_size = fonts_size.code_new_roman
 config.font = fonts.iosevka; config.font_size = fonts_size.iosevka
 config.font = fonts.iosevka_jb; config.font_size = fonts_size.iosevka_jb
 config.font = fonts.iosevka_lucida; config.font_size = fonts_size.iosevka_lucida
-config.font = fonts.meslo; config.font_size = fonts_size.meslo
-config.font = fonts.victor_mono; config.font_size = fonts_size.victor_mono
-config.font = fonts.iosevka_monaco; config.font_size = fonts_size.iosevka_monaco
 config.font = fonts.dm; config.font_size = fonts_size.dm
-config.font = fonts.iosevka_menlo; config.font_size = fonts_size.iosevka_menlo
 config.font = fonts.jb; config.font_size = fonts_size.jb
-config.font = fonts.cascadia; config.font_size = fonts_size.cascadia
 config.font = fonts.noto; config.font_size = fonts_size.noto
 config.font = fonts.recursive_duotone; config.font_size = fonts_size.recursive_duotone
-config.font = fonts.recursive; config.font_size = fonts_size.recursive
 config.font = fonts.recursive_alt; config.font_size = fonts_size.recursive_alt
+config.font = fonts.blex; config.font_size = fonts_size.blex
+config.font = fonts.commit; config.font_size = fonts_size.commit
+config.font = fonts.hack; config.font_size = fonts_size.hack
+config.font = fonts.recursive; config.font_size = fonts_size.recursive
+config.font = fonts.iosevka_monaco; config.font_size = fonts_size.iosevka_monaco
+config.font = fonts.iosevka_menlo; config.font_size = fonts_size.iosevka_menlo
+config.font = fonts.meslo; config.font_size = fonts_size.meslo
+config.font = fonts.cascadia; config.font_size = fonts_size.cascadia
+config.font = fonts.victor_mono; config.font_size = fonts_size.victor_mono
 
 -- config.line_height = 1.2
 config.freetype_load_target = 'Light'
