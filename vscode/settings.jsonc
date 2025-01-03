@@ -438,13 +438,18 @@
     //#region Move using visual lines.
     {
       "before": ["<up>"],
-      "after": ["<c-o>", "g", "k"]
+      "commands": ["cursorUp"]
     },
     {
       "before": ["<down>"],
-      "after": ["<c-o>", "g", "j"]
-    }
+      "commands": ["cursorDown"]
+    },
     //#endregion
+
+    {
+      "before": ["<c-d>"],
+      "commands": ["editor.action.addSelectionToNextFindMatch"]
+    }
   ],
   //#endregion
 
@@ -1228,7 +1233,7 @@
   // "terminal.integrated.fontWeight": "400",
 
   // "terminal.integrated.fontFamily": "RecMonoLinear Nerd Font",
-  "terminal.integrated.fontFamily": "MesloLGS NF",
+  "terminal.integrated.fontFamily": "MesloLGS Nerd Font",
   "terminal.integrated.fontLigatures": true,
   "terminal.integrated.fontSize": 16,
   "terminal.integrated.fontWeight": "normal",
@@ -1304,13 +1309,18 @@
   //
 
   "workbench.colorCustomizations": {
+    "editorCursor.foreground": "#00ffff", // cyan
+    // "editorCursor.foreground": "#00ffc8", // blue-green
+    "editorCursor.background": "#000",
+
     "terminalCursor.foreground": "#ff4500", // orange red
     "terminalCursor.background": "#000",
 
-    "minimap.background": "#00000055",
-    "minimapSlider.activeBackground": "#5533ff44",
-    "minimapSlider.hoverBackground": "#ff450044",
-    "minimapSlider.background": "#ff450022",
+    // Testing some colors. Not great.
+    // "minimap.background": "#00000055",
+    // "minimapSlider.activeBackground": "#5533ff44",
+    // "minimapSlider.hoverBackground": "#ff450044",
+    // "minimapSlider.background": "#ff450022",
 
     // My colors:
     // - most backgrounds: #33475C
@@ -1472,7 +1482,7 @@
   "workbench.list.horizontalScrolling": true,
   "workbench.sideBar.location": "left",
   "workbench.panel.defaultLocation": "bottom",
-  "workbench.colorTheme": "Tokyo Night Storm",
+  "workbench.colorTheme": "Andromeda Italic Bordered",
   "workbench.editor.pinnedTabsOnSeparateRow": false,
 
   //

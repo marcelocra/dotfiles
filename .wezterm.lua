@@ -21,7 +21,9 @@ local which_iosevka = 'Iosevka Fixed Extended'
 
 local fonts = {
   meslo = wezterm.font({
-    family = 'MesloLGL Nerd Font',
+    -- family = 'MesloLGL Nerd Font', -- more space between lines
+    -- family = 'MesloLGM Nerd Font', -- medium space between lines
+    family = 'MesloLGS Nerd Font', -- less space between lines
     harfbuzz_features = {
       'cv10 10'
     },
@@ -361,17 +363,23 @@ local function color_schemes_by_name(opts)
   return chosen_schemes
 end
 
+local color_schemes_light = color_schemes_by_name{
+  min_light = 0.6,
+  max_light = 1.0
+}
 
-local color_schemes_to_pick = color_schemes_by_name{
-  min_light = 0,
+local color_schemes_dark = color_schemes_by_name{
+  min_light = 0.0,
   max_light = 0.2
 }
+
+local color_schemes_to_pick = color_schemes_dark
 
 
 -- Fill this as I find schemes that I like. Later I can randomize only them.
 local color_scheme_override = {
   -- Use `false` to select a random color scheme or the index of the favorite to use as override.
-  override = 1,
+  override = false,
   favorites = {
     'Dracula',                                -- Lua is 1-based, so this has index 1.
     'Dark Pastel',                            -- 2
@@ -447,9 +455,9 @@ config.font = fonts.hack; config.font_size = fonts_size.hack
 config.font = fonts.recursive; config.font_size = fonts_size.recursive
 config.font = fonts.iosevka_monaco; config.font_size = fonts_size.iosevka_monaco
 config.font = fonts.iosevka_menlo; config.font_size = fonts_size.iosevka_menlo
-config.font = fonts.meslo; config.font_size = fonts_size.meslo
-config.font = fonts.cascadia; config.font_size = fonts_size.cascadia
 config.font = fonts.victor_mono; config.font_size = fonts_size.victor_mono
+config.font = fonts.cascadia; config.font_size = fonts_size.cascadia
+config.font = fonts.meslo; config.font_size = fonts_size.meslo
 
 -- config.line_height = 1.2
 config.freetype_load_target = 'Light'
