@@ -829,7 +829,7 @@
   "[aspnetcorerazor]": {
     "editor.defaultFormatter": "ms-dotnettools.csharp"
   },
-  "polyglot-notebook.defaultNotebookLanguage": "fsharp",
+  "polyglot-notebook.defaultNotebookLanguage": "javascript",
 
   "[prisma]": {
     "editor.defaultFormatter": "Prisma.prisma"
@@ -907,13 +907,13 @@
 
   // JetBrainsMono font
   //
-  // "editor.fontFamily": "JetBrains Mono",
-  // "editor.fontSize": 13, // edn{:desktop 13 :notebook ?? :small 11}
-  // "editor.fontWeight": "400", // edn{:desktop "200" :notebook "??" :small "100"}
+  "editor.fontFamily": "'JetBrainsMono Nerd Font', 'JetBrains Mono'",
+  "editor.fontSize": 19, // edn{:desktop 13 :notebook ?? :small 11}
+  "editor.fontWeight": "400", // edn{:desktop "200" :notebook "??" :small "100"}
   // // Minimal.
   // "editor.fontLigatures": "'ss01', 'ss19', 'ss20', 'zero', 'cv99'",
-  // // Very different from the default.
-  // "editor.fontLigatures": "'ss02', 'ss19', 'ss20', 'zero', 'cv03', 'cv04', 'cv16', 'cv19', 'cv20', 'cv99'",
+  // Very different from the default, using the closed construction set (ss02) and some alternative ligatures for g (03), j (04), Q (16), 269 (18), 8 (19) 5 (20), and some inverted color ligatures (99).
+  "editor.fontLigatures": "'ss02', 'ss19', 'ss20', 'zero', 'cv03', 'cv04', 'cv16', 'cv18', 'cv19', 'cv20', 'cv99'",
   // // Available stylistic sets:
   // // - | cv01,05: l | cv02: t | cv03: g | cv04: j | cv06: m  | cv07: w | cv08: k
   // // - | cv09,17: f | cv10: r | cv11: y | cv12: u | cv14: $¢ | cv15: & | cv16: Q
@@ -1032,9 +1032,9 @@
   // "editor.fontSize": 24, // Good value: 17.
   // "editor.fontWeight": "400",
 
-  "editor.fontFamily": "'FantasqueSansM Nerd Font', 'CodeNewRoman Nerd Font Mono', 'MesloLGS Nerd Font', 'Noto Sans Mono'",
-  "editor.fontSize": 19,
-  "editor.fontWeight": "400",
+  // "editor.fontFamily": "'FantasqueSansM Nerd Font', 'CodeNewRoman Nerd Font Mono', 'MesloLGS Nerd Font', 'Noto Sans Mono'",
+  // "editor.fontSize": 19,
+  // "editor.fontWeight": "400",
 
   "editor.codeActionsOnSave": {
     "source.fixAll.eslint": "explicit",
@@ -1232,11 +1232,16 @@
   // "terminal.integrated.fontSize": 15,
   // "terminal.integrated.fontWeight": "400",
 
-  // "terminal.integrated.fontFamily": "RecMonoLinear Nerd Font",
-  "terminal.integrated.fontFamily": "MesloLGS Nerd Font",
+  "terminal.integrated.fontFamily": "JetBrainsMono Nerd Font",
   "terminal.integrated.fontLigatures": true,
   "terminal.integrated.fontSize": 16,
   "terminal.integrated.fontWeight": "normal",
+
+  // "terminal.integrated.fontFamily": "RecMonoLinear Nerd Font",
+  // "terminal.integrated.fontFamily": "MesloLGS Nerd Font Mono",
+  // "terminal.integrated.fontLigatures": true,
+  // "terminal.integrated.fontSize": 16,
+  // "terminal.integrated.fontWeight": "normal",
 
   "terminal.integrated.tabs.enabled": true,
   "terminal.integrated.macOptionClickForcesSelection": true,
@@ -1482,7 +1487,7 @@
   "workbench.list.horizontalScrolling": true,
   "workbench.sideBar.location": "left",
   "workbench.panel.defaultLocation": "bottom",
-  "workbench.colorTheme": "Andromeda Italic Bordered",
+  "workbench.colorTheme": "Tokyo Night",
   "workbench.editor.pinnedTabsOnSeparateRow": false,
 
   //
@@ -1498,6 +1503,7 @@
   "html.suggest.html5": false,
   "notebook.lineNumbers": "on",
   "notebook.output.scrolling": true,
+  "notebook.formatOnSave.enabled": true,
   "outline.collapseItems": "alwaysExpand",
   "problems.showCurrentInStatus": true,
   "scm.compactFolders": false,
@@ -1516,5 +1522,6 @@
   "workbench.activityBar.location": "top",
   "extensions.experimental.affinity": {
     "vscodevim.vim": 1
-  }
+  },
+  "polyglot-notebook.defaultNotebookExtension": ".ipynb"
 }
