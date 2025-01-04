@@ -874,11 +874,6 @@
 
   {
     "key": "ctrl+d",
-    "command": "notebook.cell.cursorPageDown",
-    "when": "editorTextFocus && inputFocus && notebookEditorFocused"
-  },
-  {
-    "key": "ctrl+d",
     "command": "editor.action.pageDownHover",
     "when": "editorHoverFocused"
   },
@@ -911,11 +906,6 @@
     "key": "ctrl+d",
     "command": "workbench.action.terminal.selectNextPageSuggestion",
     "when": "terminalFocus && terminalHasBeenCreated && terminalIsOpen && terminalSuggestWidgetVisible || terminalFocus && terminalIsOpen && terminalProcessSupported && terminalSuggestWidgetVisible"
-  },
-  {
-    "key": "ctrl+u",
-    "command": "notebook.cell.cursorPageUp",
-    "when": "editorTextFocus && inputFocus && notebookEditorFocused"
   },
   {
     "key": "ctrl+u",
