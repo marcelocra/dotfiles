@@ -32,7 +32,7 @@ local fonts = {
 
   jb = wezterm.font({
     family = 'JetBrains Mono',
-    weight = 200,
+    weight = 400,
     -- Ligature test:
     --  ! " # $ % & ' ( ) * + , - . / : ; < = > ? @ [ \ ] ^ _ ` { | } ~
     --  ~ < > = + _ _ ( ) * & ^ % $ # @ ! { } [ ] \ | / ? : ; , . ` ' " ´ ` ˜
@@ -48,6 +48,22 @@ local fonts = {
       -- dashed zero (zero); different `g`, `j`, `Q`, `8`, `5` (respectively); highlight some weird
       -- glyphs (cv99).
       -- 'ss02', 'ss19', 'ss20', 'zero', 'cv03', 'cv04', 'cv16', 'cv19', 'cv20', 'cv99',
+    },
+  }),
+
+  jb_nf = wezterm.font({
+    family = 'JetBrainsMono Nerd Font',
+    weight = 400,
+    -- Ligature test:
+    --  ! " # $ % & ' ( ) * + , - . / : ; < = > ? @ [ \ ] ^ _ ` { | } ~
+    --  ~ < > = + _ _ ( ) * & ^ % $ # @ ! { } [ ] \ | / ? : ; , . ` ' " ´ ` ˜
+    --  => -> <> <= >= != !== === ~= |> <- --> || .- :- .= {..} 1/2 3/8 100/48
+    --  a b c d e f g h i j k l m n o p q r s t u v x w y z
+    --  A B C D E F G H I J K L M N O P Q R S T U V X W Y Z
+    harfbuzz_features = {
+        -- 'zero'
+        -- 'ss01', 'ss19', 'ss20', 'zero', 'cv99',
+        'ss02', 'ss19', 'ss20', 'zero', 'cv03', 'cv04', 'cv16', 'cv18', 'cv19', 'cv20', 'cv99',
     },
   }),
 
@@ -221,7 +237,7 @@ local fonts_size = {
   iosevka_lucida = common_good_size,
   iosevka_menlo = 15,
   iosevka_monaco = 15,
-  jb = 11,
+  jb = 15,
   victor_mono = common_good_size,
   code_new_roman = common_good_size,
   recursive = common_good_size,
@@ -401,6 +417,7 @@ local color_scheme_override = {
     'Vice Alt (base16)',                      -- 18
     'Gigavolt (base16)',                      -- 19
     'Humanoid dark (base16)',                 -- 20
+    'Nancy (terminal.sexy)',                  -- 21
   }
 }
 
@@ -458,6 +475,7 @@ config.font = fonts.iosevka_menlo; config.font_size = fonts_size.iosevka_menlo
 config.font = fonts.victor_mono; config.font_size = fonts_size.victor_mono
 config.font = fonts.cascadia; config.font_size = fonts_size.cascadia
 config.font = fonts.meslo; config.font_size = fonts_size.meslo
+config.font = fonts.jb_nf; config.font_size = fonts_size.jb
 
 -- config.line_height = 1.2
 config.freetype_load_target = 'Light'
