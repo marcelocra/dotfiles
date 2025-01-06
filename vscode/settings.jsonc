@@ -1314,7 +1314,8 @@
   //
 
   "workbench.colorCustomizations": {
-    "editorCursor.foreground": "#00ffff", // cyan
+    // "editorCursor.foreground": "#00ffff", // cyan
+    "editorCursor.foreground": "#ff4500", // orange red
     // "editorCursor.foreground": "#00ffc8", // blue-green
     "editorCursor.background": "#000",
 
@@ -1487,7 +1488,7 @@
   "workbench.list.horizontalScrolling": true,
   "workbench.sideBar.location": "left",
   "workbench.panel.defaultLocation": "bottom",
-  "workbench.colorTheme": "Tokyo Night",
+  "workbench.colorTheme": "Tokyo Night Storm",
   "workbench.editor.pinnedTabsOnSeparateRow": false,
 
   //

@@ -418,6 +418,8 @@ local color_scheme_override = {
     'Gigavolt (base16)',                      -- 19
     'Humanoid dark (base16)',                 -- 20
     'Nancy (terminal.sexy)',                  -- 21
+    'Purpledream (base16)',                   -- 22
+    'Mirage',                                 -- 23
   }
 }
 
