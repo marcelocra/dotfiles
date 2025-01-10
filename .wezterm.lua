@@ -237,7 +237,7 @@ local fonts_size = {
   iosevka_lucida = common_good_size,
   iosevka_menlo = 15,
   iosevka_monaco = 15,
-  jb = 15,
+  jb = 11,
   victor_mono = common_good_size,
   code_new_roman = common_good_size,
   recursive = common_good_size,
@@ -395,7 +395,7 @@ local color_schemes_to_pick = color_schemes_dark
 -- Fill this as I find schemes that I like. Later I can randomize only them.
 local color_scheme_override = {
   -- Use `false` to select a random color scheme or the index of the favorite to use as override.
-  override = false,
+  override = 22, --change
   favorites = {
     'Dracula',                                -- Lua is 1-based, so this has index 1.
     'Dark Pastel',                            -- 2
@@ -420,6 +420,8 @@ local color_scheme_override = {
     'Nancy (terminal.sexy)',                  -- 21
     'Purpledream (base16)',                   -- 22
     'Mirage',                                 -- 23
+    'Solarized Dark Higher Contrast (Gogh)',  -- 24
+    -- nextoverride
   }
 }
 
