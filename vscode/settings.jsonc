@@ -1,7 +1,7 @@
 {
   //////////////////////////////////////////////////////////////////////////////
   // Language and framework specific settings
-  // #region
+  // #region {{{
 
   //
   //
@@ -352,10 +352,17 @@
   },
 
   //
-  // Next language or framework specific setting above.
-  // #endregion
-  //////////////////////////////////////////////////////////////////////////////
+  //
+  // Zig
+  //
 
+  "zig.path": "zig",
+  "zig.zls.path": "zls",
+
+  //
+  // Next language or framework specific setting above.
+  // #endregion }}}
+  //////////////////////////////////////////////////////////////////////////////
   //////////////////////////////////////////////////////////////////////////////
   // Tools
   // #region
@@ -816,6 +823,22 @@
 
   //
   //
+  // Notebooks
+  //
+
+  "polyglot-notebook.defaultNotebookLanguage": "fsharp",
+  "polyglot-notebook.defaultNotebookExtension": ".dib",
+  "[polyglot-notebook]": {
+    // Doesn't work right now: https://github.com/dotnet/interactive/issues/3449
+    "editor.defaultFormatter": "Ionide.Ionide-fsharp"
+  },
+
+  "notebook.lineNumbers": "on",
+  "notebook.output.scrolling": true,
+  "notebook.formatOnSave.enabled": true,
+
+  //
+  //
   // Misc tools
   //
 
@@ -829,7 +852,6 @@
   "[aspnetcorerazor]": {
     "editor.defaultFormatter": "ms-dotnettools.csharp"
   },
-  "polyglot-notebook.defaultNotebookLanguage": "javascript",
 
   "[prisma]": {
     "editor.defaultFormatter": "Prisma.prisma"
@@ -1488,7 +1510,7 @@
   "workbench.list.horizontalScrolling": true,
   "workbench.sideBar.location": "left",
   "workbench.panel.defaultLocation": "bottom",
-  "workbench.colorTheme": "Tokyo Night Storm",
+  "workbench.colorTheme": "Night Owl Light",
   "workbench.editor.pinnedTabsOnSeparateRow": false,
 
   //
@@ -1502,9 +1524,6 @@
   "diffEditor.ignoreTrimWhitespace": true,
   "diffEditor.renderSideBySide": true,
   "html.suggest.html5": false,
-  "notebook.lineNumbers": "on",
-  "notebook.output.scrolling": true,
-  "notebook.formatOnSave.enabled": true,
   "outline.collapseItems": "alwaysExpand",
   "problems.showCurrentInStatus": true,
   "scm.compactFolders": false,
@@ -1523,6 +1542,5 @@
   "workbench.activityBar.location": "top",
   "extensions.experimental.affinity": {
     "vscodevim.vim": 1
-  },
-  "polyglot-notebook.defaultNotebookExtension": ".ipynb"
+  }
 }
