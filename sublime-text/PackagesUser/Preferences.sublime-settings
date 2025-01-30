@@ -25,10 +25,10 @@
 
   // ---
 
-  "font_face": "Rec Mono Duotone",
+  "font_face": "JetBrainsMono Nerd Font",
   "font_size": 11,
   "font_options": [
-
+    // "ss02"
   ],
 
   "caret_extra_top": 4,
