@@ -24,7 +24,11 @@
   },
   "posix shell shebang": {
     "prefix": "posix",
-    "body": ["#!/usr/bin/env sh", "", "$0"]
+    "body": [
+      "#!/usr/bin/env sh",
+      "",
+      "$0"
+    ]
   },
   "start a new shell file": {
     "prefix": "posix-init",
@@ -77,7 +81,9 @@
     ]
   },
   "create basic script structure": {
-    "prefix": ["old-init"],
+    "prefix": [
+      "old-init"
+    ],
     "body": [
       "#!/usr/bin/env bash",
       "#",
@@ -116,7 +122,9 @@
     ]
   },
   "create an inotifywait watcher": {
-    "prefix": ["watch"],
+    "prefix": [
+      "watch"
+    ],
     "body": [
       "files_to_watch() {",
       "    find ${1:.src} -regextype egrep -regex '${2:.*\\.(js|css|html)$}'",
@@ -142,11 +150,19 @@
     ]
   },
   "`find` using an `egrep` regex": {
-    "prefix": ["find"],
-    "body": ["find ${1:.} -regextype egrep -regex '${2:.*\\.(js|css|html)$}'$0"]
+    "prefix": [
+      "find"
+    ],
+    "body": [
+      "find ${1:.} -regextype egrep -regex '${2:.*\\.(js|css|html)$}'$0"
+    ]
   },
   "template for a robust script per chatgpt 4o": {
-    "prefix": ["base", "script", "shell"],
+    "prefix": [
+      "base",
+      "script",
+      "shell"
+    ],
     "body": [
       "#!/usr/bin/env bash",
       "#",
@@ -174,5 +190,24 @@
       "# Execute main",
       "main \"$@\""
     ]
-  }
+  },
+  "print error and exit for scripts that should not be run": {
+    "prefix": [
+      "no-run"
+    ],
+    "body": [
+      "",
+      "",
+      "",
+      "echo",
+      "echo",
+      "echo 'ERROR: DO NOT RUN. THIS IS ONLY FOR REFERENCE'",
+      "echo",
+      "echo",
+      "",
+      "exit 1",
+      "",
+      ""
+    ]
+  },
 }
