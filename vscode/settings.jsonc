@@ -827,7 +827,7 @@
   //
 
   "polyglot-notebook.defaultNotebookLanguage": "fsharp",
-  "polyglot-notebook.defaultNotebookExtension": ".dib",
+  "polyglot-notebook.defaultNotebookExtension": ".ipynb",
   "[polyglot-notebook]": {
     // Doesn't work right now: https://github.com/dotnet/interactive/issues/3449
     "editor.defaultFormatter": "Ionide.Ionide-fsharp"
@@ -836,6 +836,8 @@
   "notebook.lineNumbers": "on",
   "notebook.output.scrolling": true,
   "notebook.formatOnSave.enabled": true,
+
+  "jupyter.disableJupyterAutoStart": true,
 
   //
   //
@@ -1542,5 +1544,8 @@
   "workbench.activityBar.location": "top",
   "extensions.experimental.affinity": {
     "vscodevim.vim": 1
+  },
+  "[csharp]": {
+    "editor.defaultFormatter": "ms-dotnettools.csharp"
   }
 }
