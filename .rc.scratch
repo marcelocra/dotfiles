@@ -3,6 +3,8 @@
 
 readonly TMP_LOGFILE='/tmp/mcra.custom.terminal.log'
 
+PATH="/home/linuxbrew/.linuxbrew/bin:$PATH"
+
 log() {
     echo "[$(date '+%F_%T')] $@" >> $TMP_LOGFILE
 }
