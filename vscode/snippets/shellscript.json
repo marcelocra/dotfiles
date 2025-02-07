@@ -24,11 +24,7 @@
   },
   "posix shell shebang": {
     "prefix": "posix",
-    "body": [
-      "#!/usr/bin/env sh",
-      "",
-      "$0"
-    ]
+    "body": ["#!/usr/bin/env sh", "", "$0"]
   },
   "start a new shell file": {
     "prefix": "posix-init",
@@ -81,9 +77,7 @@
     ]
   },
   "create basic script structure": {
-    "prefix": [
-      "old-init"
-    ],
+    "prefix": ["old-init"],
     "body": [
       "#!/usr/bin/env bash",
       "#",
@@ -118,13 +112,11 @@
       "helpers",
       "setupAndValidation",
       "main \"$@\"",
-      "",
+      ""
     ]
   },
   "create an inotifywait watcher": {
-    "prefix": [
-      "watch"
-    ],
+    "prefix": ["watch"],
     "body": [
       "files_to_watch() {",
       "    find ${1:.src} -regextype egrep -regex '${2:.*\\.(js|css|html)$}'",
@@ -146,23 +138,15 @@
       "inotifywait -m -e close_write $(files_to_watch) | \\",
       "    while read -r file _evt; do",
       "        process_file \"\\$file\"",
-      "    done",
-    ],
-  },
-  "`find` using an `egrep` regex": {
-    "prefix": [
-      "find"
-    ],
-    "body": [
-      "find ${1:.} -regextype egrep -regex '${2:.*\\.(js|css|html)$}'$0",
+      "    done"
     ]
   },
+  "`find` using an `egrep` regex": {
+    "prefix": ["find"],
+    "body": ["find ${1:.} -regextype egrep -regex '${2:.*\\.(js|css|html)$}'$0"]
+  },
   "template for a robust script per chatgpt 4o": {
-    "prefix": [
-      "base",
-      "script",
-      "shell"
-    ],
+    "prefix": ["base", "script", "shell"],
     "body": [
       "#!/usr/bin/env bash",
       "#",
@@ -188,13 +172,11 @@
       "}",
       "",
       "# Execute main",
-      "main \"$@\"",
+      "main \"$@\""
     ]
   },
   "start of shell scripts that uses the `essentials` lib": {
-    "prefix": [
-      "init"
-    ],
+    "prefix": ["init"],
     "body": [
       "################## MUST BE THE FIRST THING AFTER THE SHEBANG ##################",
       "essentials_script_path=${HOME}/lib/essentials.sh",
@@ -204,7 +186,24 @@
       "}",
       "source $essentials_script_path",
       "essentials_setup $0",
-      "################## MUST BE THE FIRST THING AFTER THE SHEBANG ##################",
+      "################## MUST BE THE FIRST THING AFTER THE SHEBANG ##################"
     ]
   },
+  "print error and exit for scripts that should not be run": {
+    "prefix": ["no-run"],
+    "body": [
+      "",
+      "",
+      "",
+      "echo",
+      "echo",
+      "echo 'ERROR: DO NOT RUN. THIS IS ONLY FOR REFERENCE'",
+      "echo",
+      "echo",
+      "",
+      "exit 1",
+      "",
+      ""
+    ]
+  }
 }
