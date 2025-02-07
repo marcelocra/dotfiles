@@ -931,8 +931,8 @@
 
   // JetBrainsMono font
   //
-  "editor.fontFamily": "'JetBrainsMono Nerd Font', 'JetBrains Mono'",
-  "editor.fontSize": 19, // edn{:desktop 13 :notebook ?? :small 11}
+  "editor.fontFamily": "'RecMonoDuotone Nerd Font', 'JetBrainsMono Nerd Font', 'Liberation Mono', 'DejaVu Sans Mono', monospace",
+  "editor.fontSize": 16, // edn{:desktop 13 :notebook ?? :small 11}
   "editor.fontWeight": "400", // edn{:desktop "200" :notebook "??" :small "100"}
   // // Minimal.
   // "editor.fontLigatures": "'ss01', 'ss19', 'ss20', 'zero', 'cv99'",
@@ -1256,7 +1256,8 @@
   // "terminal.integrated.fontSize": 15,
   // "terminal.integrated.fontWeight": "400",
 
-  "terminal.integrated.fontFamily": "JetBrainsMono Nerd Font",
+  // Try a bunch of variations of JetBrains Mono, which is great for terminal. Add fallbacks if it is not available.
+  "terminal.integrated.fontFamily": "'JetBrainsMono Nerd Font', 'JetBrainsMono NF', 'JetBrains Mono Nerd Font', 'JetBrains Mono NF', 'JetBrains Mono', 'Liberation Mono', 'DejaVu Sans Mono', monospace",
   "terminal.integrated.fontLigatures": true,
   "terminal.integrated.fontSize": 16,
   "terminal.integrated.fontWeight": "normal",
@@ -1512,7 +1513,7 @@
   "workbench.list.horizontalScrolling": true,
   "workbench.sideBar.location": "left",
   "workbench.panel.defaultLocation": "bottom",
-  "workbench.colorTheme": "Night Owl Light",
+  "workbench.colorTheme": "Solarized Light",
   "workbench.editor.pinnedTabsOnSeparateRow": false,
 
   //
@@ -1532,7 +1533,6 @@
   "scm.diffDecorationsGutterWidth": 5,
   "telemetry.telemetryLevel": "off",
   "[log][Log]": {
-    "editor.fontFamily": "Recursive",
     "editor.fontSize": 11,
     "editor.fontWeight": "400"
 
