@@ -703,6 +703,9 @@ alias last_login="last -10"
 alias files_cwd_size_in_mb='ls -la | awk '\''{sum += $5} END {print sum/1024/1024 " MB"}'\'''
 alias files_size_in_mb='awk '\''{sum += $5} END {print sum/1024/1024 " MB"}'\'''
 
+# Get os version, name and details.
+alias system_info='cat /etc/os-release && lsb_release -a && hostnamectl && uname -r'
+
 # Pnpm stuff
 # ----------
 
@@ -719,6 +722,12 @@ alias pnpm_add_mui2='echo "Add this to your index.html:\n\n\n<link rel=\"preconn
 />"'
 alias pnpm_add_lodash="pnpm add -D lodash @types/lodash"
 alias pnpm_add_immer="pnpm add immer use-immer"
+
+# Chrome
+# ------
+
+# Start Chrome using other language.
+alias chrome_br='LANGUAGE=pt_BR google-chrome-stable'
 
 
 ## nextnext

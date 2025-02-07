@@ -86,6 +86,9 @@ use_gnome_terminal() {
     if [ $font_size -eq 10 ]; then
       columns=157  # widescreen. In normal: ?
       rows=60
+    elif [ $font_size -eq 13 ]; then
+      columns=125
+      rows=60
     elif [ $font_size -eq 11 ]; then
       columns=139  # wide
       rows=55

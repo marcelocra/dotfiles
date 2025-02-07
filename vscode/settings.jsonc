@@ -1,7 +1,7 @@
 {
   //////////////////////////////////////////////////////////////////////////////
   // Language and framework specific settings
-  // #region
+  // #region {{{
 
   //
   //
@@ -352,10 +352,17 @@
   },
 
   //
-  // Next language or framework specific setting above.
-  // #endregion
-  //////////////////////////////////////////////////////////////////////////////
+  //
+  // Zig
+  //
 
+  "zig.path": "zig",
+  "zig.zls.path": "zls",
+
+  //
+  // Next language or framework specific setting above.
+  // #endregion }}}
+  //////////////////////////////////////////////////////////////////////////////
   //////////////////////////////////////////////////////////////////////////////
   // Tools
   // #region
@@ -398,7 +405,7 @@
   // "vim.autoSwitchInputMethod.obtainIMCmd": "/home/marcelocra/bin/get-im",
   // "vim.autoSwitchInputMethod.switchIMCmd": "/home/marcelocra/bin/set-im {im}",
 
-  // -viminsert
+  //#region viminsert
   "vim.insertModeKeyBindingsNonRecursive": [
     {
       "before": ["j", "f"],
@@ -406,12 +413,6 @@
     },
     {
       "before": ["f", "j"],
-      "after": ["<esc>"]
-    },
-    {
-      // something to try...
-      // TODO: review later
-      "before": ["<c-m>"],
       "after": ["<esc>"]
     },
     {
@@ -436,27 +437,28 @@
       "before": ["<leader>", "x"],
       "commands": [":x"]
     },
-    // {
-    //   "before": ["<c-t>"],
-    //   "commands": ["workbench.action.showAllSymbols"]
-    // }
     {
       "before": ["<c-a>"],
       "after": ["<esc>", "gg", "V", "G"]
     },
 
-    // -- visual lines - Move using visual lines.
+    //#region Move using visual lines.
     {
       "before": ["<up>"],
-      "after": ["<c-o>", "g", "k"]
+      "commands": ["cursorUp"]
     },
     {
       "before": ["<down>"],
-      "after": ["<c-o>", "g", "j"]
+      "commands": ["cursorDown"]
+    },
+    //#endregion
+
+    {
+      "before": ["<c-d>"],
+      "commands": ["editor.action.addSelectionToNextFindMatch"]
     }
-    // -- visual lines - end
   ],
-  // viminsert-
+  //#endregion
 
   // -vimnormal
   "vim.normalModeKeyBindingsNonRecursive": [
@@ -821,6 +823,24 @@
 
   //
   //
+  // Notebooks
+  //
+
+  "polyglot-notebook.defaultNotebookLanguage": "fsharp",
+  "polyglot-notebook.defaultNotebookExtension": ".ipynb",
+  "[polyglot-notebook]": {
+    // Doesn't work right now: https://github.com/dotnet/interactive/issues/3449
+    "editor.defaultFormatter": "Ionide.Ionide-fsharp"
+  },
+
+  "notebook.lineNumbers": "on",
+  "notebook.output.scrolling": true,
+  "notebook.formatOnSave.enabled": true,
+
+  "jupyter.disableJupyterAutoStart": true,
+
+  //
+  //
   // Misc tools
   //
 
@@ -834,7 +854,6 @@
   "[aspnetcorerazor]": {
     "editor.defaultFormatter": "ms-dotnettools.csharp"
   },
-  "polyglot-notebook.defaultNotebookLanguage": "fsharp",
 
   "[prisma]": {
     "editor.defaultFormatter": "Prisma.prisma"
@@ -851,23 +870,29 @@
 
   //
   //
-  // Editor
-  // #region Editor
+  //#region Editor
   //
 
-  // CodeNewRoman font
-  //
-  // "editor.fontFamily": "CodeNewRoman Nerd Font Mono",
-  // "editor.fontSize": 17,
+  //#region Blex
+  // "editor.fontFamily": "BlexMono Nerd Font",
+  // "editor.fontSize": 14,
   // "editor.fontWeight": "400",
+  // "editor.fontLigatures": "",
+  //#endregion
 
-  // Cascadia Code font
-  //
-  // "editor.fontFamily": "Cascadia Code NF",
+  //#region CodeNewRoman
+  // "editor.fontFamily": "CodeNewRoman Nerd Font",
+  // "editor.fontSize": 14,
+  // "editor.fontWeight": "400",
+  // "editor.fontLigatures": "",
+  //#endregion
+
+  //#region Cascadia
+  // "editor.fontFamily": "'Cascadia Code NF', 'CaskaydiaCove NF'",
   // "editor.fontSize": 14, // edn{:desktop 13 :notebook 19 :small 11}
   // "editor.fontWeight": "400", // edn{:desktop "300" :notebook "300" :small "100"}
   // "editor.fontLigatures": "'calt', 'ss01', 'ss19', 'ss20', 'cv01' 3",
-  // // Available stylistic sets:
+  //#region Available stylistic sets:
   // // - cursive italics: 'ss01'
   // // - alternate not equal: 'ss02' ~= (appears as !=)
   // // - serbian locl forms (italic only): 'ss03'
@@ -877,27 +902,8 @@
   // //  ! " # $ % & ' ( ) * + , - . / : ; < = > ? @ [ \ ] ^ _ ` { | } ~
   // //  ~ < > = + _ _ ( ) * & ^ % $ # @ ! { } [ ] \ | / ? : ; , . ` ' " ´ ` ˜
   // //  => -> <> <= >= != !== === ~= |> <- --> || .- :- .= {..}
-
-  // Fira Code font
-  //
-  // "editor.fontFamily": "Fira Code",
-  // "editor.fontSize": 15, // edn{:desktop 15 :notebook ?? :small 11}
-  // "editor.fontWeight": "400", // edn{:desktop "400" :notebook "??" :small "100"}
-  // "editor.fontLigatures": "'calt' 0, 'cv01', 'cv02', 'cv05', 'cv09', 'ss05', 'ss03', 'cv16', 'cv30', 'cv25', 'cv26', 'cv32', 'cv28', 'ss10', 'cv14', 'cv12'",
-  // // Available stylistic sets:
-  // // - | cv01: a      | cv02: g  | cv03...06: i | cv07..10: l | ss01: r
-  // // - | zero: dot    | cv11..13: empty zero, reverse dashed zero, long dot zero
-  // // - | cv14: 3      | onum: numbers not middle aligned      | cv17: ~ height
-  // // - | ss05: @      | ss04: $  | cv18: %      | ss03: &     | cv15..16: *
-  // // - | cv31: ()     | cv29: {} | cv30: longer vertical bar  | ss02: <= >=
-  // // - | cv19..20: <= | cv23: >= | cv21..22: =< | ss08: == === != !==
-  // // - | cv24: /=     | ss09: >>= <<= ||= |=    | cv25: .-    | cv26: :-
-  // // - | cv32: .=     | cv27: [] | cv28: {..}   | ss06: \\    | ss07: =~ !~
-  // // - | ss10: Fl Tl fi fj fl ft
-  // // Ligature test:
-  // //  ! " # $ % & ' ( ) * + , - . / : ; < = > ? @ [ \ ] ^ _ ` { | } ~
-  // //  ~ < > = + _ _ ( ) * & ^ % $ # @ ! { } [ ] \ | / ? : ; , . ` ' " ´ ` ˜
-  // //  => -> <> <= >= != !== === ~= |> <- --> || .- :- .= {..}
+  //#endregion
+  //#endregion
 
   // DM Mono
   //
@@ -925,13 +931,13 @@
 
   // JetBrainsMono font
   //
-  // "editor.fontFamily": "JetBrains Mono",
-  // "editor.fontSize": 13, // edn{:desktop 13 :notebook ?? :small 11}
-  // "editor.fontWeight": "400", // edn{:desktop "200" :notebook "??" :small "100"}
+  "editor.fontFamily": "'JetBrainsMono Nerd Font', 'JetBrains Mono'",
+  "editor.fontSize": 19, // edn{:desktop 13 :notebook ?? :small 11}
+  "editor.fontWeight": "400", // edn{:desktop "200" :notebook "??" :small "100"}
   // // Minimal.
   // "editor.fontLigatures": "'ss01', 'ss19', 'ss20', 'zero', 'cv99'",
-  // // Very different from the default.
-  // "editor.fontLigatures": "'ss02', 'ss19', 'ss20', 'zero', 'cv03', 'cv04', 'cv16', 'cv19', 'cv20', 'cv99'",
+  // Very different from the default, using the closed construction set (ss02) and some alternative ligatures for g (03), j (04), Q (16), 269 (18), 8 (19) 5 (20), and some inverted color ligatures (99).
+  "editor.fontLigatures": "'ss02', 'ss19', 'ss20', 'zero', 'cv03', 'cv04', 'cv16', 'cv18', 'cv19', 'cv20', 'cv99'",
   // // Available stylistic sets:
   // // - | cv01,05: l | cv02: t | cv03: g | cv04: j | cv06: m  | cv07: w | cv08: k
   // // - | cv09,17: f | cv10: r | cv11: y | cv12: u | cv14: $¢ | cv15: & | cv16: Q
@@ -947,12 +953,6 @@
   // //  ! " # $ % & ' ( ) * + , - . / : ; < = > ? @ [ \ ] ^ _ ` { | } ~
   // //  ~ < > = + _ _ ( ) * & ^ % $ # @ ! { } [ ] \ | / ? : ; , . ` ' " ´ ` ˜
   // //  => -> <> <= >= != !== === ~= |> <- --> || .- :- .= {..} 1/2 3/8 100/48
-
-  // Noto Sans Mono font
-  //
-  // "editor.fontFamily": "Noto Sans Mono",
-  // "editor.fontSize": 13, // edn{:desktop 13 :notebook ?? :small 11}
-  // "editor.fontWeight": "400", // edn{:desktop "200" :notebook "??" :small "100"}
 
   // Geist Mono font
   //
@@ -971,10 +971,8 @@
 
   // Recursive font
   //
-  "editor.fontFamily": "Rec Mono Casual",
-  "editor.fontSize": 12, // edn{:desktop 13 :notebook ?? :small 11}
-  // // Recursive with default values and almost no customization.
-  // "editor.fontLigatures": "'frac'",
+  // "editor.fontFamily": "RecMonoDuotone Nerd Font",
+  // "editor.fontSize": 12, // edn{:desktop 13 :notebook ?? :small 11}
   // // Some customizations that I like. See details below.
   // "editor.fontLigatures": "'ss01', 'ss02', 'ss03', 'ss04', 'ss05', 'ss06', 'ss07', 'ss11', 'ss12', 'case', 'frac' 0",
   // "editor.fontLigatures": "'ss04', 'ss05', 'ss12', 'case', 'frac' 0",
@@ -1056,6 +1054,10 @@
   // // - ss08: more fish-like stuff (::<)
   // //         |> >- <-> <| <> |- .- :: -.- -> => == === != !== ::<
   // "editor.fontSize": 24, // Good value: 17.
+  // "editor.fontWeight": "400",
+
+  // "editor.fontFamily": "'FantasqueSansM Nerd Font', 'CodeNewRoman Nerd Font Mono', 'MesloLGS Nerd Font', 'Noto Sans Mono'",
+  // "editor.fontSize": 19,
   // "editor.fontWeight": "400",
 
   "editor.codeActionsOnSave": {
@@ -1254,10 +1256,16 @@
   // "terminal.integrated.fontSize": 15,
   // "terminal.integrated.fontWeight": "400",
 
-  "terminal.integrated.fontFamily": "Rec Mono Linear",
-  // "terminal.integrated.fontLigatures": true,
+  "terminal.integrated.fontFamily": "JetBrainsMono Nerd Font",
+  "terminal.integrated.fontLigatures": true,
   "terminal.integrated.fontSize": 16,
-  "terminal.integrated.fontWeight": "300",
+  "terminal.integrated.fontWeight": "normal",
+
+  // "terminal.integrated.fontFamily": "RecMonoLinear Nerd Font",
+  // "terminal.integrated.fontFamily": "MesloLGS Nerd Font Mono",
+  // "terminal.integrated.fontLigatures": true,
+  // "terminal.integrated.fontSize": 16,
+  // "terminal.integrated.fontWeight": "normal",
 
   "terminal.integrated.tabs.enabled": true,
   "terminal.integrated.macOptionClickForcesSelection": true,
@@ -1330,13 +1338,19 @@
   //
 
   "workbench.colorCustomizations": {
+    // "editorCursor.foreground": "#00ffff", // cyan
+    "editorCursor.foreground": "#ff4500", // orange red
+    // "editorCursor.foreground": "#00ffc8", // blue-green
+    "editorCursor.background": "#000",
+
     "terminalCursor.foreground": "#ff4500", // orange red
     "terminalCursor.background": "#000",
 
-    "minimap.background": "#00000055",
-    "minimapSlider.activeBackground": "#5533ff44",
-    "minimapSlider.hoverBackground": "#ff450044",
-    "minimapSlider.background": "#ff450022",
+    // Testing some colors. Not great.
+    // "minimap.background": "#00000055",
+    // "minimapSlider.activeBackground": "#5533ff44",
+    // "minimapSlider.hoverBackground": "#ff450044",
+    // "minimapSlider.background": "#ff450022",
 
     // My colors:
     // - most backgrounds: #33475C
@@ -1498,7 +1512,7 @@
   "workbench.list.horizontalScrolling": true,
   "workbench.sideBar.location": "left",
   "workbench.panel.defaultLocation": "bottom",
-  "workbench.colorTheme": "Solarized Light",
+  "workbench.colorTheme": "Night Owl Light",
   "workbench.editor.pinnedTabsOnSeparateRow": false,
 
   //
@@ -1512,8 +1526,6 @@
   "diffEditor.ignoreTrimWhitespace": true,
   "diffEditor.renderSideBySide": true,
   "html.suggest.html5": false,
-  "notebook.lineNumbers": "on",
-  "notebook.output.scrolling": true,
   "outline.collapseItems": "alwaysExpand",
   "problems.showCurrentInStatus": true,
   "scm.compactFolders": false,
@@ -1532,5 +1544,8 @@
   "workbench.activityBar.location": "top",
   "extensions.experimental.affinity": {
     "vscodevim.vim": 1
+  },
+  "[csharp]": {
+    "editor.defaultFormatter": "ms-dotnettools.csharp"
   }
 }
