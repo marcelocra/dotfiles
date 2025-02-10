@@ -25,13 +25,10 @@
 
   // ---
 
-  "font_face": "Recursive",
+  "font_face": "JetBrainsMono Nerd Font",
   "font_size": 11,
   "font_options": [
-    // Examples to test: -> => <> <=>
-    // // Changes a, g, f, l, i, r, simpler italics, 1, @, higher punctuations, crazy fractions
-    // "ss01", "ss02", "ss03", "ss04", "ss05", "ss06", "ss07", "ss11", "ss12", "case", "frac"
-    "frac"
+    // "ss02"
   ],
 
   "caret_extra_top": 4,
@@ -99,17 +96,19 @@
   "vintage_start_in_command_mode": true,
   "vintage_use_clipboard": true,
   "vintage_ctrl_keys": true,
-  "ignored_packages": ["Vintage",
+  "ignored_packages": ["Clojure Sublimed",
+    "Vintage",
   ],
 
   "file_tab_style": "square",
 
   "goto_anything_exclude_gitignore": true,
-  "index_files": true,
+  "index_files": false,
 
   "clojure_sublimed_formatter": "clj -Tcljfmt fix",
 
-  "color_scheme": "auto",
+  "color_scheme": "Mariana.sublime-color-scheme",
   "dark_color_scheme": "Mariana.sublime-color-scheme",
   "light_color_scheme": "Breakers.sublime-color-scheme",
+  "theme": "auto",
 }
