@@ -1024,16 +1024,19 @@
     "when": "!vim.active && editorTextFocus && !editorReadonly"
   },
   {
-    "key": "ctrl+k f n",
-    "command": "editor.gotoNextFold"
+    "key": "ctrl+; f n",
+    "command": "editor.gotoNextFold",
+    "when": "editorTextFocus"
   },
   {
-    "key": "ctrl+k f p",
-    "command": "editor.gotoPreviousFold"
+    "key": "ctrl+; f p",
+    "command": "editor.gotoPreviousFold",
+    "when": "editorTextFocus"
   },
   {
-    "key": "ctrl+k f t",
-    "command": "editor.gotoParentFold"
+    "key": "ctrl+; f t",
+    "command": "editor.gotoParentFold",
+    "when": "editorTextFocus"
   },
 
   //#endregion FOLD AND UNFOLD }}}
