@@ -384,10 +384,9 @@
   "vim.foldfix": true,
   "vim.camelCaseMotion.enable": true,
 
-  // Use this for most languages and files. I change it for some particular file
-  // types in their sessions, search for it here to see (e.g. Python and Shell).
-  // Ideally, it should be in sync with preferences from the .editorconfig file.
-  "vim.textwidth": 120,
+  // I only use this to format comments, that most automated formatters don't
+  // touch. And I prefer to keep them at 80 columns.
+  "vim.textwidth": 80,
 
   "vim.enableNeovim": true,
   "vim.neovimUseConfigFile": true,
