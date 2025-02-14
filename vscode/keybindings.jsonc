@@ -2064,6 +2064,16 @@
   {
     "key": "ctrl+q",
     "command": "-workbench.action.quit"
+  },
+  {
+    "key": "shift+alt+j",
+    "command": "workbench.action.terminal.focusNext",
+    "when": "terminalFocus && terminalHasBeenCreated && !terminalEditorFocus || terminalFocus && terminalProcessSupported && !terminalEditorFocus"
+  },
+  {
+    "key": "shift+alt+k",
+    "command": "workbench.action.terminal.focusPrevious",
+    "when": "terminalFocus && terminalHasBeenCreated && !terminalEditorFocus || terminalFocus && terminalProcessSupported && !terminalEditorFocus"
   }
   //#endregion CHANGE DEFAULT KEYBINDINGS THAT START WITH CTRLK }}}
 ]
