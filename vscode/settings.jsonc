@@ -94,6 +94,20 @@
     "editor.tabSize": 4
   },
   "FSharp.addFsiWatcher": true,
+  "FSharp.autoRevealInExplorer": "disabled",
+
+  //
+  //
+  // C# / CSharp / AspNetCore / Razor
+  //
+
+  "[csharp]": {
+    "editor.defaultFormatter": "ms-dotnettools.csharp"
+  },
+  "[aspnetcorerazor]": {
+    "editor.defaultFormatter": "ms-dotnettools.csharp"
+  },
+  "csharp.suppressBuildAssetsNotification": true,
 
   //
   //
@@ -678,7 +692,31 @@
     {
       "before": ["<a-l>"],
       "commands": ["cursorWordPartRight"]
+    },
+    //#region Use Conjure-like keybindings for FSharp. {{{
+    {
+      "before": [" ", "e", "e"],
+      "commands": ["fsi.SendLine", "extension.vim_up"]
+    },
+    {
+      "before": [" ", "e", "r"],
+      "commands": ["fsi.SendSelection"],
+      "after": ["v", "i", "p"]
+    },
+    {
+      "before": [" ", "e", "w"],
+      "commands": ["fsi.SendSelection", "extension.vim_escape"],
+      "after": ["v", "i", "w"]
+    },
+    {
+      "before": [" ", "e", "f"],
+      "commands": ["fsi.SendFile"]
+    },
+    {
+      "before": [" ", "e", "b"],
+      "commands": ["fsi.SendFile"]
     }
+    //#endregion }}}
   ],
   // vimnormal-
 
@@ -765,7 +803,13 @@
     {
       "before": ["<c-a>"],
       "commands": ["editor.action.selectAll"]
+    },
+    //#region Use Conjure-like keybindings for FSharp. {{{
+    {
+      "before": [" ", "E"],
+      "commands": ["fsi.SendSelection"]
     }
+    //#endregion }}}
   ],
 
   "vim.operatorPendingModeKeyBindingsNonRecursive": [
@@ -849,10 +893,6 @@
 
   // From Nx plugin.
   "nxConsole.enableTelemetry": false,
-
-  "[aspnetcorerazor]": {
-    "editor.defaultFormatter": "ms-dotnettools.csharp"
-  },
 
   "[prisma]": {
     "editor.defaultFormatter": "Prisma.prisma"
@@ -1544,7 +1584,5 @@
   "extensions.experimental.affinity": {
     "vscodevim.vim": 1
   },
-  "[csharp]": {
-    "editor.defaultFormatter": "ms-dotnettools.csharp"
-  }
+  "@azure.argTenant": ""
 }

@@ -615,14 +615,25 @@
 
   {
     "key": "ctrl+enter",
-    "command": "-github.copilot.generate",
-    "when": "editorTextFocus && github.copilot.activated && !inInteractiveInput && !interactiveEditorFocused"
+    "command": "runCommands",
+    "args": {
+      "commands": ["fsi.SendSelection"]
+    },
+    "when": "editorFocus && !findWidgetVisible && editorLangId == 'fsharp' && editor.hasSelection"
   },
 
   {
     "key": "ctrl+enter",
-    "command": "-github.copilot.generate",
-    "when": "editorTextFocus && github.copilot.activated && !commentEditorFocused && !inInteractiveInput && !interactiveEditorFocused"
+    "command": "runCommands",
+    "args": {
+      "commands": ["fsi.SendLine", "cursorUp"]
+    },
+    "when": "editorFocus && !findWidgetVisible && editorLangId == 'fsharp' && !editor.hasSelection"
+  },
+
+  {
+    "key": "ctrl+enter",
+    "command": "-github.copilot.generate"
   },
 
   {
