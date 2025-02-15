@@ -421,6 +421,7 @@ local color_scheme_override = {
     'Purpledream (base16)',                   -- 22
     'Mirage',                                 -- 23
     'Solarized Dark Higher Contrast (Gogh)',  -- 24
+    'Trim Yer Beard (terminal.sexy)',         -- 25
     -- nextoverride
   }
 }
