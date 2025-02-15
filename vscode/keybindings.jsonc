@@ -76,6 +76,54 @@
   },
 
   {
+    // Toggle the panel position between bottom and right.
+    "key": "ctrl+; ctrl+p",
+    "command": "runCommands",
+    "args": {
+      "commands": ["workbench.action.positionPanelRight", "workbench.action.focusPanel"]
+    },
+    "when": "activePanel && terminalFocus && panelPosition == 'bottom'"
+  },
+
+  {
+    // Toggle the panel position between bottom and right.
+    "key": "ctrl+; ctrl+p",
+    "command": "runCommands",
+    "args": {
+      "commands": ["workbench.action.positionPanelBottom", "workbench.action.focusPanel"]
+    },
+    "when": "activePanel && terminalFocus && panelPosition == 'right'"
+  },
+
+  {
+    // If the terminal panel is active and in the bottom, increase its size.
+    "key": "ctrl+; ctrl+k",
+    "command": "workbench.action.terminal.resizePaneUp",
+    "when": "activePanel && terminalFocus && panelPosition == 'bottom'"
+  },
+
+  {
+    // If the terminal panel is active and in the bottom, decrease its size.
+    "key": "ctrl+; ctrl+j",
+    "command": "workbench.action.terminal.resizePaneDown",
+    "when": "activePanel && terminalFocus && panelPosition == 'bottom'"
+  },
+
+  {
+    // If the terminal panel is active and in the right, increase its size.
+    "key": "ctrl+; ctrl+h",
+    "command": "workbench.action.terminal.resizePaneLeft",
+    "when": "activePanel && terminalFocus && panelPosition == 'right'"
+  },
+
+  {
+    // If the terminal panel is active and in the right, decrease its size.
+    "key": "ctrl+; ctrl+l",
+    "command": "workbench.action.terminal.resizePaneRight",
+    "when": "activePanel && terminalFocus && panelPosition == 'right'"
+  },
+
+  {
     // If the panel is not active, activate and maximize it.
     "key": "ctrl+alt+`",
     "command": "workbench.action.toggleMaximizedPanel",
@@ -209,13 +257,6 @@
     // Override VSCode Vim's ctrl+f. Use ctrl+d and / inst
     "key": "ctrl+f",
     "command": "actions.find"
-  },
-
-  {
-    // Enable default ctrl+h behavior in Insert mode.
-    "key": "ctrl+h",
-    "command": "editor.action.startFindReplaceAction",
-    "when": "editorTextFocus && vim.mode == 'Insert'"
   },
 
   {
@@ -801,73 +842,73 @@
   {
     "key": "alt+l",
     "command": "cursorWordPartRight",
-    "when": "!vim.active && textInputFocus"
+    "when": "!vim.active && editorTextFocus"
   },
 
   {
     "key": "alt+right",
     "command": "cursorWordPartRight",
-    "when": "!vim.active && textInputFocus"
+    "when": "!vim.active && editorTextFocus"
   },
 
   {
     "key": "alt+shift+l",
     "command": "cursorWordPartRightSelect",
-    "when": "!vim.active && textInputFocus"
+    "when": "!vim.active && editorTextFocus"
   },
 
   {
     "key": "alt+shift+right",
     "command": "cursorWordPartRightSelect",
-    "when": "!vim.active && textInputFocus"
+    "when": "!vim.active && editorTextFocus"
   },
 
   {
     "key": "alt+h",
     "command": "cursorWordPartStartLeft",
-    "when": "!vim.active && textInputFocus"
+    "when": "!vim.active && editorTextFocus"
   },
 
   {
     "key": "alt+left",
     "command": "cursorWordPartStartLeft",
-    "when": "!vim.active && textInputFocus"
+    "when": "!vim.active && editorTextFocus"
   },
 
   {
     "key": "alt+shift+h",
     "command": "cursorWordPartStartLeftSelect",
-    "when": "!vim.active && textInputFocus"
+    "when": "!vim.active && editorTextFocus"
   },
 
   {
     "key": "alt+shift+left",
     "command": "cursorWordPartStartLeftSelect",
-    "when": "!vim.active && textInputFocus"
+    "when": "!vim.active && editorTextFocus"
   },
 
   {
     "key": "alt+backspace",
     "command": "deleteWordPartLeft",
-    "when": "!vim.active && textInputFocus && !editorReadonly"
+    "when": "!vim.active && editorTextFocus && !editorReadonly"
   },
 
   {
     "key": "alt+shift+backspace",
     "command": "deleteWordPartRight",
-    "when": "!vim.active && textInputFocus && !editorReadonly"
+    "when": "!vim.active && editorTextFocus && !editorReadonly"
   },
 
   {
     "key": "alt+delete",
     "command": "deleteWordPartRight",
-    "when": "!vim.active && textInputFocus && !editorReadonly"
+    "when": "!vim.active && editorTextFocus && !editorReadonly"
   },
 
   {
     "key": "alt+shift+delete",
     "command": "deleteWordPartLeft",
-    "when": "!vim.active && textInputFocus && !editorReadonly"
+    "when": "!vim.active && editorTextFocus && !editorReadonly"
   },
   {
     "key": "alt+p",
@@ -881,6 +922,27 @@
   },
 
   //#endregion CAMELCASE MOVEMENTS BETWEEN HUMPS, AKA cursorWordPart }}}
+  //#region VIM CUSTOM HELPER MOVEMENTS {{{
+
+  {
+    "key": "VIM CUSTOM HELPER MOVEMENTS"
+  },
+
+  {
+    // If vim is active, function as the `end` button.
+    "key": "alt+shift+l",
+    "command": "cursorEnd",
+    "when": "vim.active && editorTextFocus"
+  },
+
+  {
+    // If vim is active, function as the `home` button.
+    "key": "alt+shift+h",
+    "command": "cursorHome",
+    "when": "vim.active && editorTextFocus"
+  },
+
+  //#endregion VIM CUSTOM HELPER MOVEMENTS }}}
   //#region PAGE UP AND PAGE DOWN VIM-STYLE {{{
 
   {
@@ -1072,16 +1134,16 @@
     "when": "editorTextFocus && !editorReadonly"
   },
 
-  {
-    "key": "ctrl+[",
-    "command": "workbench.action.navigateBack",
-    "when": "vim.active && vim.mode == 'Normal'"
-  },
-  {
-    "key": "ctrl+]",
-    "command": "workbench.action.navigateForward",
-    "when": "vim.active && vim.mode == 'Normal'"
-  },
+  // {
+  //   "key": "ctrl+[",
+  //   "command": "workbench.action.navigateBack",
+  //   "when": "vim.active && vim.mode == 'Normal'"
+  // },
+  // {
+  //   "key": "ctrl+]",
+  //   "command": "workbench.action.navigateForward",
+  //   "when": "vim.active && vim.mode == 'Normal'"
+  // },
   //#endregion MISC }}}
   //#region NEXT {{{
   {
@@ -2074,6 +2136,11 @@
     "key": "shift+alt+k",
     "command": "workbench.action.terminal.focusPrevious",
     "when": "terminalFocus && terminalHasBeenCreated && !terminalEditorFocus || terminalFocus && terminalProcessSupported && !terminalEditorFocus"
+  },
+  {
+    "key": "ctrl+h",
+    "command": "-editor.action.startFindReplaceAction",
+    "when": "editorFocus || editorIsOpen"
   }
   //#endregion CHANGE DEFAULT KEYBINDINGS THAT START WITH CTRLK }}}
 ]

@@ -420,16 +420,18 @@
 
   //#region viminsert
   "vim.insertModeKeyBindingsNonRecursive": [
+    // {
+    //   // Leave insert mode.
+    //   "before": ["j", "f"],
+    //   "after": ["<esc>"]
+    // },
+    // {
+    //   // Leave insert mode.
+    //   "before": ["f", "j"],
+    //   "after": ["<esc>"]
+    // },
     {
-      "before": ["j", "f"],
-      "after": ["<esc>"]
-    },
-    {
-      "before": ["f", "j"],
-      "after": ["<esc>"]
-    },
-    {
-      // save and stay in insert mode
+      // Save and stay in insert mode.
       "before": ["<leader>", "w"],
       "commands": [":w"],
       "after": ["<esc>a"]
@@ -469,6 +471,10 @@
     {
       "before": ["<c-d>"],
       "commands": ["editor.action.addSelectionToNextFindMatch"]
+    },
+    {
+      "before": ["<c-h>"],
+      "commands": ["deleteLeft"]
     }
   ],
   //#endregion
@@ -492,6 +498,15 @@
       "before": ["]", "t"],
       "commands": [":tabn"]
     },
+    {
+      "before": ["[", "<space>"],
+      "commands": ["editor.action.insertLineBefore"]
+    },
+    {
+      "before": ["]", "<space>"],
+      "commands": ["editor.action.insertLineAfter"]
+    },
+    // Use vim-unimpaired shortcuts.
     {
       "before": ["<c-l>"],
       "after": ["<c-w>", "l"]
@@ -715,8 +730,12 @@
     {
       "before": [" ", "e", "b"],
       "commands": ["fsi.SendFile"]
-    }
+    },
     //#endregion }}}
+    {
+      "before": ["<c-h>"],
+      "commands": ["editor.action.startFindReplaceAction"]
+    }
   ],
   // vimnormal-
 
@@ -1552,7 +1571,6 @@
   "workbench.list.horizontalScrolling": true,
   "workbench.sideBar.location": "left",
   "workbench.panel.defaultLocation": "bottom",
-  "workbench.colorTheme": "Tokyo Night Storm",
   "workbench.editor.pinnedTabsOnSeparateRow": false,
 
   //
