@@ -1,0 +1,109 @@
+// Zed settings.
+//
+// For information on how to configure Zed, see the Zed documentation:
+// https://zed.dev/docs/configuring-zed
+//
+// To see all of Zed's default settings without changing your custom settings,
+// run the `open default settings` command from the command palette or from
+// `Zed` application menu.
+{
+  "assistant": {
+    "default_model": {
+      "provider": "copilot_chat",
+      "model": "claude-3-5-sonnet"
+    },
+    "version": "2"
+  },
+
+  "terminal": {
+    "dock": "right",
+    "option_as_meta": true,
+    "cursor_shape": "underline",
+    "line_height": "standard",
+
+    "font_family": "JetBrainsMono Nerd Font Mono",
+    "font_weight": 400,
+    "font_size": 15.0
+
+    // "font_family": "MesloLGM Nerd Font Mono",
+    // "font_weight": 600,
+    // "font_size": 15.0
+  },
+
+  "vim_mode": true,
+  "vim": {},
+
+  // "cursor_blink": true,
+  "scroll_beyond_last_line": "one_page",
+
+  // "ui_font_family": "Cascadia Code NF",
+  // "ui_font_family": "Geist",
+  "ui_font_family": "Inter",
+  // "ui_font_weight": 900,
+  // "ui_font_size": 14,
+
+  // Mac and Windows only :(. But will leave it here for when it's supported.
+  // "ui_font_features": {
+  //   "ss01": true,
+  //   "ss19": true,
+  //   "ss20": true,
+  //   "calt": false
+  // },
+
+  // "buffer_font_family": "JetBrainsMono Nerd Font Mono", // If this doesn't work, try 'JetBrains Mono'.
+  "buffer_font_family": "CodeNewRoman Nerd Font Mono",
+  "buffer_font_size": 17.0,
+  "buffer_font_weight": 400,
+  // "buffer_line_height": "standard",
+
+  // Mac and Windows only :(.
+  "buffer_font_features": {
+    "zero": true
+  },
+
+  "theme": {
+    "mode": "system",
+    "light": "One Light",
+    "dark": "One Dark"
+  },
+
+  "jupyter": {
+    "enabled": true
+  },
+
+  "telemetry": {
+    "diagnostics": false,
+    "metrics": false
+  },
+
+  "lsp": {
+    "deno": {
+      "settings": {
+        "deno": {
+          "enable": true
+        }
+      }
+    }
+  },
+
+  "languages": {
+    "TypeScript": {
+      "language_servers": [
+        "deno",
+        "!typescript-language-server",
+        "!vtsls",
+        "!eslint"
+      ],
+      "formatter": "language_server"
+    },
+    "TSX": {
+      "language_servers": [
+        "deno",
+        "!typescript-language-server",
+        "!vtsls",
+        "!eslint"
+      ],
+      "formatter": "language_server"
+    }
+  }
+}
