@@ -314,8 +314,8 @@ vnoremap / /\v\c
 
 " Simpler way to go to command mode from insert mode.
 " inoremap <c-n> <esc>
-inoremap jf <esc>
-inoremap fj <esc>
+" inoremap jf <esc>
+" inoremap fj <esc>
 
 " Quicker window movement.
 nnoremap <c-j> <c-w><c-j>
