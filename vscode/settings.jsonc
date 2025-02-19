@@ -1602,5 +1602,6 @@
   "extensions.experimental.affinity": {
     "vscodevim.vim": 1
   },
-  "@azure.argTenant": ""
+  "@azure.argTenant": "",
+  "workbench.colorTheme": "GitHub Light Default"
 }
