@@ -395,7 +395,7 @@ local color_schemes_to_pick = color_schemes_dark
 -- Fill this as I find schemes that I like. Later I can randomize only them.
 local color_scheme_override = {
   -- Use `false` to select a random color scheme or the index of the favorite to use as override.
-  override = false, -- 22, --change
+  override = false,                           -- 22, -- Update override.
   favorites = {
     'Dracula',                                -- Lua is 1-based, so this has index 1.
     'Dark Pastel',                            -- 2
@@ -422,7 +422,8 @@ local color_scheme_override = {
     'Mirage',                                 -- 23
     'Solarized Dark Higher Contrast (Gogh)',  -- 24
     'Trim Yer Beard (terminal.sexy)',         -- 25
-    -- nextoverride
+    'Gruvbox dark, hard (base16)',            -- 26
+    -- Next override.
   }
 }
 
