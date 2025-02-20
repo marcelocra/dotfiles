@@ -61,10 +61,14 @@
   //   "calt": false
   // },
 
-  // "buffer_font_family": "JetBrainsMono Nerd Font Mono", // If this doesn't work, try 'JetBrains Mono'.
-  "buffer_font_family": "CodeNewRoman Nerd Font Mono",
-  "buffer_font_size": 17.0,
+  "buffer_font_family": "JetBrainsMono Nerd Font Mono", // If this doesn't work, try 'JetBrains Mono'.
+  "buffer_font_size": 15.0, // fontfont
   "buffer_font_weight": 400,
+  "buffer_line_height": "standard",
+
+  // "buffer_font_family": "CodeNewRoman Nerd Font Mono",
+  // "buffer_font_size": 16.0, // fontfont
+  // "buffer_font_weight": 100,
   // "buffer_line_height": "standard",
 
   // Mac and Windows only :(.
@@ -74,7 +78,7 @@
 
   "theme": {
     "mode": "system",
-    "light": "Andromeda",
+    "light": "Atelier Lakeside Light",
     "dark": "One Dark"
   },
 

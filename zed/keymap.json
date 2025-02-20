@@ -65,8 +65,8 @@
       "|": ["workspace::SendKeystrokes", "ctrl-w v ctrl-w shift-l"],
       "-": "pane::SplitHorizontal",
 
-      ", s": ["workspace::SendKeystrokes", "ctrl-s"],
-      ", w": ["workspace::SendKeystrokes", "ctrl-s"],
+      ", s": "workspace::Save",
+      ", w": "workspace::Save",
       "s": ["workspace::SendKeystrokes", "/"],
 
       "shift-y": ["workspace::SendKeystrokes", "y $"] // Use neovim's yank behavior: yank to end of line.
@@ -83,8 +83,9 @@
       "ctrl-x": "editor::Cut", // vim default: decrement
       "ctrl-a": "editor::SelectAll", // vim default: increment
 
-      ", s": ["workspace::SendKeystrokes", "escape ctrl-s"],
-      ", w": ["workspace::SendKeystrokes", "escape ctrl-s"],
+      ", s": "workspace::Save",
+      ", w": "workspace::Save",
+      // ", s": ["workspace::SendKeystrokes", "escape ctrl-s"],
 
       "shift-s": ["vim::PushAddSurrounds", {}]
     }
@@ -94,13 +95,13 @@
     "bindings": {
       "ctrl-c": "editor::Copy",
       "ctrl-x": "editor::Cut",
-      "ctrl-v": "vim::Paste",
+      "ctrl-v": "vim::Paste"
 
       // "j f": "vim::NormalBefore", // In insert mode, make jk escape to normal mode.
       // "f j": "vim::NormalBefore", // In insert mode, make jk escape to normal mode.
 
-      ", s": ["workspace::SendKeystrokes", "ctrl-s escape"],
-      ", w": ["workspace::SendKeystrokes", "ctrl-s escape"]
+      // ", s": ["workspace::SendKeystrokes", "ctrl-s escape"],
+      // ", w": ["workspace::SendKeystrokes", "ctrl-s escape"]
     }
   },
   {
@@ -193,7 +194,9 @@
     "context": "BufferSearchBar && !in_replace > Editor",
     "bindings": {
       "ctrl-k": "search::PreviousHistoryQuery",
-      "ctrl-j": "search::NextHistoryQuery"
+      "ctrl-j": "search::NextHistoryQuery",
+      "ctrl-p": "search::PreviousHistoryQuery",
+      "ctrl-n": "search::NextHistoryQuery"
     }
   },
   {
