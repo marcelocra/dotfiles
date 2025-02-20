@@ -7,12 +7,23 @@
 // run the `open default settings` command from the command palette or from
 // `Zed` application menu.
 {
+  "telemetry": {
+    "diagnostics": false,
+    "metrics": false
+  },
+
+  "restore_on_startup": "none",
+
   "assistant": {
     "default_model": {
       "provider": "copilot_chat",
       "model": "claude-3-5-sonnet"
     },
     "version": "2"
+  },
+
+  "jupyter": {
+    "enabled": true
   },
 
   "terminal": {
@@ -63,17 +74,8 @@
 
   "theme": {
     "mode": "system",
-    "light": "One Light",
+    "light": "Andromeda",
     "dark": "One Dark"
-  },
-
-  "jupyter": {
-    "enabled": true
-  },
-
-  "telemetry": {
-    "diagnostics": false,
-    "metrics": false
   },
 
   "lsp": {
