@@ -142,6 +142,7 @@ function nvim_lsp()
     end
     local lspconfig = require('lspconfig')
     setup(require('ionide'))
+    -- setup(lspconfig.pyright)
     -- -- add other languages here
     -- setup(lspconfig.ocamllsp)
     -- setup(lspconfig.ccls)

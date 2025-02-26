@@ -673,7 +673,7 @@ let g:conjure#log#hud#anchor = "SE"
 let g:conjure#log#hud#width = 1.0
 
 let g:conjure#log#botright = 1
-let g:conjure#log#fold#enabled = 1
+" let g:conjure#log#fold#enabled = 1
 
 let g:conjure#highlight#enabled = 1
 
