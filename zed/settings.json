@@ -63,7 +63,7 @@
 
   "buffer_font_family": "JetBrainsMono Nerd Font Mono", // If this doesn't work, try 'JetBrains Mono'.
   "buffer_font_size": 15.0, // fontfont
-  "buffer_font_weight": 600,
+  "buffer_font_weight": 300,
   // "buffer_line_height": "standard",
 
   // "buffer_font_family": "CodeNewRoman Nerd Font Mono",
@@ -85,7 +85,7 @@
 
   "theme": {
     "mode": "system",
-    "light": "One Light",
+    "light": "Andromeda",
     "dark": "One Dark"
   },
 

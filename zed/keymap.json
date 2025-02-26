@@ -95,13 +95,13 @@
     "bindings": {
       "ctrl-c": "editor::Copy",
       "ctrl-x": "editor::Cut",
-      "ctrl-v": "vim::Paste"
+      "ctrl-v": "vim::Paste",
 
       // "j f": "vim::NormalBefore", // In insert mode, make jk escape to normal mode.
       // "f j": "vim::NormalBefore", // In insert mode, make jk escape to normal mode.
 
-      // ", s": ["workspace::SendKeystrokes", "ctrl-s escape"],
-      // ", w": ["workspace::SendKeystrokes", "ctrl-s escape"]
+      ", s": ["workspace::SendKeystrokes", "ctrl-s escape escape"],
+      ", w": ["workspace::SendKeystrokes", "ctrl-s escape escape"]
     }
   },
   {
@@ -169,6 +169,14 @@
   //   "bindings": {
   //   }
   // },
+
+  {
+    "context": "Editor && jupyter && !ContextEditor",
+    "bindings": {
+      "ctrl-shift-enter": "repl::Run",
+      "ctrl-alt-enter": "repl::RunInPlace"
+    }
+  },
 
   //
   //
