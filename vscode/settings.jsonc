@@ -708,30 +708,31 @@
       "before": ["<a-l>"],
       "commands": ["cursorWordPartRight"]
     },
-    //#region Use Conjure-like keybindings for FSharp. {{{
-    {
-      "before": [" ", "e", "e"],
-      "commands": ["fsi.SendLine", "extension.vim_up"]
-    },
-    {
-      "before": [" ", "e", "r"],
-      "commands": ["fsi.SendSelection"],
-      "after": ["v", "i", "p"]
-    },
-    {
-      "before": [" ", "e", "w"],
-      "commands": ["fsi.SendSelection", "extension.vim_escape"],
-      "after": ["v", "i", "w"]
-    },
-    {
-      "before": [" ", "e", "f"],
-      "commands": ["fsi.SendFile"]
-    },
-    {
-      "before": [" ", "e", "b"],
-      "commands": ["fsi.SendFile"]
-    },
-    //#endregion }}}
+    // TODO: move this to the keybindings file. See Python example as reference.
+    // //#region Use Conjure-like keybindings for FSharp. {{{
+    // {
+    //   "before": [" ", "e", "e"],
+    //   "commands": ["fsi.SendLine", "extension.vim_up"]
+    // },
+    // {
+    //   "before": [" ", "e", "r"],
+    //   "commands": ["fsi.SendSelection"],
+    //   "after": ["v", "i", "p"]
+    // },
+    // {
+    //   "before": [" ", "e", "w"],
+    //   "commands": ["fsi.SendSelection", "extension.vim_escape"],
+    //   "after": ["v", "i", "w"]
+    // },
+    // {
+    //   "before": [" ", "e", "f"],
+    //   "commands": ["fsi.SendFile"]
+    // },
+    // {
+    //   "before": [" ", "e", "b"],
+    //   "commands": ["fsi.SendFile"]
+    // },
+    // //#endregion }}}
     {
       "before": ["<c-h>"],
       "commands": ["editor.action.startFindReplaceAction"]
