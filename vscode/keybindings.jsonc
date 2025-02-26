@@ -1134,6 +1134,52 @@
     "when": "editorTextFocus && !editorReadonly"
   },
 
+  {
+    // Replicate Conjure behavior: execute file in terminal.
+    "key": "space e b",
+    "command": "python.execInDedicatedTerminal",
+    "when": "vim.active && vim.mode == 'Normal' && editorTextFocus && editorLangId == 'python'"
+  },
+
+  {
+    // Replicate Conjure behavior: expand selection to work and evaluate it.
+    "key": "space e w",
+    "command": "runCommands",
+    "args": {
+      "commands": [
+        "editor.action.smartSelect.expand",
+        "python.execInREPL",
+        "editor.action.smartSelect.shrink",
+        "cancelSelection",
+        "extension.vim_escape"
+      ]
+    },
+    "when": "vim.active && vim.mode == 'Normal' && editorTextFocus && editorLangId == 'python'"
+  },
+
+  {
+    // Replicate Conjure behavior: evaluate current line or top-level form.
+    "key": "space e e",
+    "command": "python.execInREPL",
+    "when": "vim.active && vim.mode == 'Normal' && editorTextFocus && editorLangId == 'python'"
+  },
+
+  {
+    // Replicate Conjure behavior: evaluate current line or top-level form.
+    "key": "space e r",
+    "command": "python.execInREPL",
+    "when": "vim.active && vim.mode == 'Normal' && editorTextFocus && editorLangId == 'python'"
+  },
+
+  {
+    // Replicate Conjure behavior: evaluate selection.
+    "key": "space shift+e",
+    "command": "python.execInREPL",
+    "when": "vim.active && (vim.mode == 'Visual' || vim.mode == 'VisualLine') && editorTextFocus && editorLangId == 'python'"
+  },
+
+  // Conjure end. }}}
+
   // {
   //   "key": "ctrl+[",
   //   "command": "workbench.action.navigateBack",
