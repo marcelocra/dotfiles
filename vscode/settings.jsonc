@@ -133,6 +133,8 @@
     "vim.textwidth": 80
   },
 
+  "python.REPL.enableREPLSmartSend": false,
+
   //
   //
   // Dart
@@ -1317,9 +1319,9 @@
 
   // Try a bunch of variations of JetBrains Mono, which is great for terminal. Add fallbacks if it is not available.
   "terminal.integrated.fontFamily": "'JetBrainsMono Nerd Font', 'JetBrainsMono NF', 'JetBrains Mono Nerd Font', 'JetBrains Mono NF', 'JetBrains Mono', 'Liberation Mono', 'DejaVu Sans Mono', monospace",
+  "terminal.integrated.fontSize": 13,
+  "terminal.integrated.fontWeight": "300",
   "terminal.integrated.fontLigatures": true,
-  "terminal.integrated.fontSize": 16,
-  "terminal.integrated.fontWeight": "normal",
 
   // "terminal.integrated.fontFamily": "RecMonoLinear Nerd Font",
   // "terminal.integrated.fontFamily": "MesloLGS Nerd Font Mono",
@@ -1604,5 +1606,5 @@
     "vscodevim.vim": 1
   },
   "@azure.argTenant": "",
-  "workbench.colorTheme": "GitHub Light Default"
+  "workbench.colorTheme": "Tokyo Night Storm"
 }

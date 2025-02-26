@@ -1147,9 +1147,8 @@
     "command": "runCommands",
     "args": {
       "commands": [
-        "editor.action.smartSelect.expand",
+        "editor.action.addSelectionToNextFindMatch",
         "python.execInREPL",
-        "editor.action.smartSelect.shrink",
         "cancelSelection",
         "extension.vim_escape"
       ]
@@ -1160,21 +1159,30 @@
   {
     // Replicate Conjure behavior: evaluate current line or top-level form.
     "key": "space e e",
-    "command": "python.execInREPL",
+    "command": "runCommands",
+    "args": {
+      "commands": ["python.execInREPL"]
+    },
     "when": "vim.active && vim.mode == 'Normal' && editorTextFocus && editorLangId == 'python'"
   },
 
   {
     // Replicate Conjure behavior: evaluate current line or top-level form.
     "key": "space e r",
-    "command": "python.execInREPL",
+    "command": "runCommands",
+    "args": {
+      "commands": ["python.execInREPL"]
+    },
     "when": "vim.active && vim.mode == 'Normal' && editorTextFocus && editorLangId == 'python'"
   },
 
   {
     // Replicate Conjure behavior: evaluate selection.
     "key": "space shift+e",
-    "command": "python.execInREPL",
+    "command": "runCommands",
+    "args": {
+      "commands": ["python.execInREPL"]
+    },
     "when": "vim.active && (vim.mode == 'Visual' || vim.mode == 'VisualLine') && editorTextFocus && editorLangId == 'python'"
   },
 
