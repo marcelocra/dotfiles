@@ -207,11 +207,21 @@ vim.keymap.set('n', '<C-k>', '<C-w><C-k>', { desc = 'Move focus to the upper win
 
 -- My keybindings.
 
+-- Go back to normal mode.
+vim.keymap.set('i', 'jf', '<Esc>', { desc = 'Go to normal mode' })
+vim.keymap.set('i', 'fj', '<Esc>', { desc = 'Go to normal mode' })
+
+-- Save faster.
 vim.keymap.set({ 'i', 'n' }, ',w', '<Esc>:w<CR>', { desc = 'Saves the current buffer' })
 vim.keymap.set({ 'i', 'n' }, ',s', '<Esc>:w<CR>', { desc = 'Saves the current buffer' })
+
+-- Quit and close buffers faster.
 vim.keymap.set('n', ',q', ':q<CR>', { desc = 'Close the current buffer' })
 vim.keymap.set('n', ',,q', ':qa<CR>', { desc = 'Close all buffers' })
-vim.keymap.set({ 'i', 'n', 'v' }, '<C-p>', ':Telescope find_files<CR>', { desc = 'Open Telescope file picker' })
+
+-- Port my most used mappings from VSCode.
+vim.keymap.set({ 'i', 'n', 'v' }, '<C-p>', ':Telescope find_files<CR>', { desc = 'Fuzzy search files in current folder' })
+vim.keymap.set({ 'i', 'n', 'v' }, '<C-t>', ':Telescope lsp_workspace_symbols<CR>', { desc = 'Fuzzy search workspace symbols' })
 
 -- nextkeymap,nextmapping
 
@@ -852,25 +862,25 @@ require('lazy').setup({
         --
         -- No, but seriously. Please read `:help ins-completion`, it is really good!
         mapping = cmp.mapping.preset.insert {
-          -- Select the [n]ext item
+          -- Select the [n]ext item (<C-n>).
           ['<C-j>'] = cmp.mapping.select_next_item(),
-          -- Select the [p]revious item
+          -- Select the [p]revious item (<C-p>).
           ['<C-k>'] = cmp.mapping.select_prev_item(),
 
-          -- Scroll the documentation window [b]ack / [f]orward
-          ['<C-b>'] = cmp.mapping.scroll_docs(-4),
-          ['<C-f>'] = cmp.mapping.scroll_docs(4),
+          -- Scroll the documentation window [b]ack / [f]orward (<C-b/f>).
+          ['<C-u>'] = cmp.mapping.scroll_docs(-4),
+          ['<C-d>'] = cmp.mapping.scroll_docs(4),
 
-          -- Accept ([y]es) the completion.
+          -- Accept ([y]es) the completion (<C-y>).
           --  This will auto-import if your LSP supports it.
           --  This will expand snippets if the LSP sent a snippet.
-          ['<C-y>'] = cmp.mapping.confirm { select = true },
+          ['<Tab>'] = cmp.mapping.confirm { select = true },
 
           -- If you prefer more traditional completion keymaps,
           -- you can uncomment the following lines
-          --['<CR>'] = cmp.mapping.confirm { select = true },
-          --['<Tab>'] = cmp.mapping.select_next_item(),
-          --['<S-Tab>'] = cmp.mapping.select_prev_item(),
+          ['<CR>'] = cmp.mapping.confirm { select = true },
+          -- ['<Tab>'] = cmp.mapping.select_next_item(),
+          -- ['<S-Tab>'] = cmp.mapping.select_prev_item(),
 
           -- Manually trigger a completion from nvim-cmp.
           --  Generally you don't need this, because nvim-cmp will display
@@ -993,6 +1003,15 @@ require('lazy').setup({
         additional_vim_regex_highlighting = { 'ruby' },
       },
       indent = { enable = true, disable = { 'ruby' } },
+      incremental_selection = {
+        enable = true,
+        keymaps = {
+          init_selection = 'gnn',
+          node_incremental = 'grn',
+          scope_incremental = 'grc',
+          node_decremental = 'grm',
+        },
+      },
     },
     -- There are additional nvim-treesitter modules that you can use to interact
     -- with nvim-treesitter. You should go explore a few and see what interests you:
@@ -1031,7 +1050,7 @@ require('lazy').setup({
 
   {
     'Olical/conjure',
-    ft = { 'clojure', 'fennel', 'python' }, -- etc
+    ft = { 'clojure', 'fennel', 'python', 'racket' }, -- etc
     lazy = true,
     init = function()
       -- Set configuration options here
