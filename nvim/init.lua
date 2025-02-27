@@ -91,7 +91,7 @@ vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 
 -- Set to true if you have a Nerd Font installed and selected in the terminal
-vim.g.have_nerd_font = false
+vim.g.have_nerd_font = true
 
 -- [[ Setting options ]]
 -- See `:help vim.opt`
@@ -156,6 +156,22 @@ vim.opt.cursorline = true
 -- Minimal number of screen lines to keep above and below the cursor.
 vim.opt.scrolloff = 10
 
+-- vim.g['conjure#client_on_load'] = false
+vim.g['conjure#log#jump_to_latest#enabled'] = false
+vim.g['conjure#log#jump_to_latest#cursor_scroll_position'] = 'center'
+
+vim.g['conjure#log#wrap'] = true
+
+vim.g['conjure#log#hud#anchor'] = 'SE'
+vim.g['conjure#log#hud#width'] = 1.0
+
+vim.g['conjure#log#botright'] = true
+-- vim.g['conjure#log#fold#enabled'] = true
+
+vim.g['conjure#highlight#enabled'] = true
+
+-- nextsetting
+
 -- [[ Basic Keymaps ]]
 --  See `:help vim.keymap.set()`
 
@@ -188,6 +204,16 @@ vim.keymap.set('n', '<C-h>', '<C-w><C-h>', { desc = 'Move focus to the left wind
 vim.keymap.set('n', '<C-l>', '<C-w><C-l>', { desc = 'Move focus to the right window' })
 vim.keymap.set('n', '<C-j>', '<C-w><C-j>', { desc = 'Move focus to the lower window' })
 vim.keymap.set('n', '<C-k>', '<C-w><C-k>', { desc = 'Move focus to the upper window' })
+
+-- My keybindings.
+
+vim.keymap.set({ 'i', 'n' }, ',w', '<Esc>:w<CR>', { desc = 'Saves the current buffer' })
+vim.keymap.set({ 'i', 'n' }, ',s', '<Esc>:w<CR>', { desc = 'Saves the current buffer' })
+vim.keymap.set('n', ',q', ':q<CR>', { desc = 'Close the current buffer' })
+vim.keymap.set('n', ',,q', ':qa<CR>', { desc = 'Close all buffers' })
+vim.keymap.set({ 'i', 'n', 'v' }, '<C-p>', ':Telescope find_files<CR>', { desc = 'Open Telescope file picker' })
+
+-- nextkeymap,nextmapping
 
 -- [[ Basic Autocommands ]]
 --  See `:help lua-guide-autocommands`
@@ -393,11 +419,15 @@ require('lazy').setup({
         -- You can put your default mappings / updates / etc. in here
         --  All the info you're looking for is in `:help telescope.setup()`
         --
-        -- defaults = {
-        --   mappings = {
-        --     i = { ['<c-enter>'] = 'to_fuzzy_refine' },
-        --   },
-        -- },
+        defaults = {
+          mappings = {
+            i = {
+              -- ['<C-enter>'] = 'to_fuzzy_refine',
+              ['<C-j>'] = 'move_selection_next',
+              ['<C-k>'] = 'move_selection_previous',
+            },
+          },
+        },
         -- pickers = {}
         extensions = {
           ['ui-select'] = {
@@ -660,7 +690,7 @@ require('lazy').setup({
       local servers = {
         -- clangd = {},
         -- gopls = {},
-        -- pyright = {},
+        pyright = {},
         -- rust_analyzer = {},
         -- ... etc. See `:help lspconfig-all` for a list of all the pre-configured LSPs
         --
@@ -823,9 +853,9 @@ require('lazy').setup({
         -- No, but seriously. Please read `:help ins-completion`, it is really good!
         mapping = cmp.mapping.preset.insert {
           -- Select the [n]ext item
-          ['<C-n>'] = cmp.mapping.select_next_item(),
+          ['<C-j>'] = cmp.mapping.select_next_item(),
           -- Select the [p]revious item
-          ['<C-p>'] = cmp.mapping.select_prev_item(),
+          ['<C-k>'] = cmp.mapping.select_prev_item(),
 
           -- Scroll the documentation window [b]ack / [f]orward
           ['<C-b>'] = cmp.mapping.scroll_docs(-4),
@@ -986,7 +1016,7 @@ require('lazy').setup({
   -- require 'kickstart.plugins.lint',
   -- require 'kickstart.plugins.autopairs',
   -- require 'kickstart.plugins.neo-tree',
-  -- require 'kickstart.plugins.gitsigns', -- adds gitsigns recommend keymaps
+  require 'kickstart.plugins.gitsigns', -- adds gitsigns recommend keymaps
 
   -- NOTE: The import below can automatically add your own plugins, configuration, etc from `lua/custom/plugins/*.lua`
   --    This is the easiest way to modularize your config.
@@ -998,6 +1028,33 @@ require('lazy').setup({
   -- Or use telescope!
   -- In normal mode type `<space>sh` then write `lazy.nvim-plugin`
   -- you can continue same window with `<space>sr` which resumes last telescope search
+
+  {
+    'Olical/conjure',
+    ft = { 'clojure', 'fennel', 'python' }, -- etc
+    lazy = true,
+    init = function()
+      -- Set configuration options here
+      -- Uncomment this to get verbose logging to help diagnose internal Conjure issues
+      -- This is VERY helpful when reporting an issue with the project
+      -- vim.g["conjure#debug"] = true
+    end,
+
+    -- Optional cmp-conjure integration
+    dependencies = { 'marcelocra/cmp-conjure' },
+  },
+  {
+    'marcelocra/cmp-conjure',
+    lazy = true,
+    config = function()
+      local cmp = require 'cmp'
+      local config = cmp.get_config()
+      table.insert(config.sources, { name = 'conjure' })
+      return cmp.setup(config)
+    end,
+  },
+
+  -- nextplugin
 }, {
   ui = {
     -- If you are using a Nerd Font: set icons to an empty table which will use the
