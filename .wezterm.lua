@@ -2,36 +2,30 @@
 --
 -- WezTerm configuration file.
 
-
-
 -- IMPORTS, VARIABLES AND OTHER CONFIG SETTINGS
 
-
-local wezterm = require 'wezterm'
+local wezterm = require("wezterm")
 local act = wezterm.action
 local mux = wezterm.mux
 
-
-
 -- Fonts I frequently use. <<(
 
-
 -- Options: 'Fixed', 'Fixed Extended', 'Extended'.
-local which_iosevka = 'Iosevka Fixed Extended'
+local which_iosevka = "Iosevka Fixed Extended"
 
 local fonts = {
   meslo = wezterm.font({
     -- family = 'MesloLGL Nerd Font', -- more space between lines
     -- family = 'MesloLGM Nerd Font', -- medium space between lines
-    family = 'MesloLGS Nerd Font', -- less space between lines
+    family = "MesloLGS Nerd Font", -- less space between lines
     harfbuzz_features = {
-      'cv10 10'
+      "cv10 10",
     },
     weight = 400,
   }),
 
   jb = wezterm.font({
-    family = 'JetBrains Mono',
+    family = "JetBrains Mono",
     weight = 400,
     -- Ligature test:
     --  ! " # $ % & ' ( ) * + , - . / : ; < = > ? @ [ \ ] ^ _ ` { | } ~
@@ -52,7 +46,7 @@ local fonts = {
   }),
 
   jb_nf = wezterm.font({
-    family = 'JetBrainsMono Nerd Font',
+    family = "JetBrainsMono Nerd Font",
     weight = 400,
     -- Ligature test:
     --  ! " # $ % & ' ( ) * + , - . / : ; < = > ? @ [ \ ] ^ _ ` { | } ~
@@ -61,53 +55,83 @@ local fonts = {
     --  a b c d e f g h i j k l m n o p q r s t u v x w y z
     --  A B C D E F G H I J K L M N O P Q R S T U V X W Y Z
     harfbuzz_features = {
-        -- 'zero'
-        -- 'ss01', 'ss19', 'ss20', 'zero', 'cv99',
-        'ss02', 'ss19', 'ss20', 'zero', 'cv03', 'cv04', 'cv16', 'cv18', 'cv19', 'cv20', 'cv99',
+      -- 'zero'
+      -- 'ss01', 'ss19', 'ss20', 'zero', 'cv99',
+      "ss02",
+      "ss19",
+      "ss20",
+      "zero",
+      "cv03",
+      "cv04",
+      "cv16",
+      "cv18",
+      "cv19",
+      "cv20",
+      "cv99",
     },
   }),
 
   cascadia = wezterm.font({
     -- family = 'Cascadia Code NF',
-    family = 'CaskaydiaCove NF',
+    family = "CaskaydiaCove NF",
     weight = 400,
     harfbuzz_features = {
-      'calt 0', 'ss01', 'ss19', 'ss20',
+      "calt 0",
+      "ss01",
+      "ss19",
+      "ss20",
     },
   }),
 
   fira = wezterm.font({
-    family = 'Fira Code',
+    family = "Fira Code",
     harfbuzz_features = {
-      'calt 0', 'cv01', 'cv02', 'cv05', 'cv09', 'ss05', 'ss03', 'cv16', 'cv30', 'cv25', 'cv26',
-      'cv32', 'cv28', 'ss10', 'cv14', 'cv12',
+      "calt 0",
+      "cv01",
+      "cv02",
+      "cv05",
+      "cv09",
+      "ss05",
+      "ss03",
+      "cv16",
+      "cv30",
+      "cv25",
+      "cv26",
+      "cv32",
+      "cv28",
+      "ss10",
+      "cv14",
+      "cv12",
     },
   }),
 
   geist = wezterm.font({
-    family = 'Geist Mono',
+    family = "Geist Mono",
   }),
 
   noto = wezterm.font({
-    family = 'Noto Sans Mono',
+    family = "Noto Sans Mono",
     weight = 400,
   }),
 
   dm = wezterm.font({
-    family = 'DM Mono',
+    family = "DM Mono",
     weight = 700,
     harfbuzz_features = {
-      'ss01', -- rounded commas
-      'ss03', -- non curvy 'g'
-      'ss04', -- non curvy '6' and '9'
+      "ss01", -- rounded commas
+      "ss03", -- non curvy 'g'
+      "ss04", -- non curvy '6' and '9'
     },
   }),
 
   scp = wezterm.font({
-    family = 'SourceCodeVF',
+    family = "SourceCodeVF",
     -- weight = 700,
     harfbuzz_features = {
-      'cv17', 'cv01', 'cv02', 'zero'
+      "cv17",
+      "cv01",
+      "cv02",
+      "zero",
     },
   }),
 
@@ -148,7 +172,7 @@ local fonts = {
     family = which_iosevka,
     weight = 400,
     harfbuzz_features = {
-      'ss14'
+      "ss14",
     },
   }),
 
@@ -156,7 +180,8 @@ local fonts = {
     family = which_iosevka,
     weight = 400,
     harfbuzz_features = {
-      'ss13', 'cv10 7'
+      "ss13",
+      "cv10 7",
       -- Variations.
       -- 'ss13', 'cv02 4', 'cv04 11', 'cv05 8', 'cv10 10',
       -- 'ss13', 'cv02 1', 'cv04 3', 'cv05 4', 'cv10 25',
@@ -167,7 +192,7 @@ local fonts = {
     family = which_iosevka,
     weight = 400,
     harfbuzz_features = {
-      'ss04',
+      "ss04",
     },
   }),
 
@@ -175,51 +200,51 @@ local fonts = {
     family = which_iosevka,
     weight = 400,
     harfbuzz_features = {
-      'ss07',
+      "ss07",
     },
   }),
 
   victor_mono = wezterm.font({
-    family = 'Victor Mono',
+    family = "Victor Mono",
     weight = 600,
     harfbuzz_features = {
       -- 'calt=0', -- no ligatures (particularly for `==` and `!=`)
       -- 'ss01', -- different 'a'
-      'ss02', -- different dashed zero (up to ss05)
-      'ss06', -- crossed '7'
-      'ss07', -- different '6' and  '9'
-      'ss08', -- more fish-like stuff (::<)
+      "ss02", -- different dashed zero (up to ss05)
+      "ss06", -- crossed '7'
+      "ss07", -- different '6' and  '9'
+      "ss08", -- more fish-like stuff (::<)
       -- |> >- <-> <| <> |- .- :: -.- -> => == === != !== ::<
     },
   }),
 
   code_new_roman = wezterm.font({
-    family = 'CodeNewRoman Nerd Font',
+    family = "CodeNewRoman Nerd Font",
     weight = 400,
   }),
 
   recursive = wezterm.font({
-    family = 'RecMonoLinear Nerd Font',
+    family = "RecMonoLinear Nerd Font",
     weight = 400,
   }),
 
   recursive_alt = wezterm.font({
-    family = 'RecMonoDuotone Nerd Font',
+    family = "RecMonoDuotone Nerd Font",
     weight = 400,
   }),
 
   hack = wezterm.font({
-    family = 'Hack Nerd Font',
+    family = "Hack Nerd Font",
     weight = 400,
   }),
 
   blex = wezterm.font({
-    family = 'Blex Mono Nerd Font',
+    family = "Blex Mono Nerd Font",
     weight = 400,
   }),
 
   commit = wezterm.font({
-    family = 'CommitMono Nerd Font',
+    family = "CommitMono Nerd Font",
     weight = 400,
   }),
 }
@@ -248,24 +273,19 @@ local fonts_size = {
 }
 -- )>>
 
-
 local config = wezterm.config_builder()
 
-
-local SCRATCH_SCRIPT = os.getenv('HOME') .. '/projects/dotfiles/.rc.scratch'
-
-
+local SCRATCH_SCRIPT = os.getenv("HOME") .. "/projects/dotfiles/.rc.scratch"
 
 -- EVENTS
 
-
-wezterm.on('gui-startup', function(cmd)
+wezterm.on("gui-startup", function(cmd)
   local tab, pane, window = mux.spawn_window(cmd or {})
   if window then
     local active_screen = wezterm.gui.screens().active
-    local screen_width =  active_screen.width
+    local screen_width = active_screen.width
     local screen_height = active_screen.height
-    local panel_width = 47  -- This is configured in Cinnamon directly.
+    local panel_width = 47 -- This is configured in Cinnamon directly.
 
     local start_x = (screen_width + panel_width) / 2
     local start_y = 0
@@ -278,8 +298,7 @@ wezterm.on('gui-startup', function(cmd)
   end
 end)
 
-
-wezterm.on('format-tab-title', function(tab, tabs, panes, config, hover, max_width)
+wezterm.on("format-tab-title", function(tab, tabs, panes, config, hover, max_width)
   -- The filled in variant of the < symbol
   local solid_left_arrow = wezterm.nerdfonts.pl_right_hard_divider
 
@@ -301,16 +320,16 @@ wezterm.on('format-tab-title', function(tab, tabs, panes, config, hover, max_wid
     return tab_info.active_pane.title
   end
 
-  local edge_background = '#0b0022'
-  local background = '#1b1032'
-  local foreground = '#808080'
+  local edge_background = "#0b0022"
+  local background = "#1b1032"
+  local foreground = "#808080"
 
   if tab.is_active then
-    background = '#2b2042'
-    foreground = '#c0c0c0'
+    background = "#2b2042"
+    foreground = "#c0c0c0"
   elseif hover then
-    background = '#3b3052'
-    foreground = '#909090'
+    background = "#3b3052"
+    foreground = "#909090"
   end
 
   local edge_foreground = background
@@ -348,46 +367,85 @@ end)
 -- end)
 
 -- Implementation that leverages your existing .rc.scratch script
-wezterm.on('window-focus-changed', function(window, pane)
-  -- Only take action when the window loses focus
-  if not window:is_focused() then
-    -- Window lost focus - disconnect from tmux
-    wezterm.log_info("Window unfocused, detaching from tmux session")
+-- local focus_loss_timer = nil
+-- local focus_loss_detach_minutes = 10
+-- local focus_loss_detach_seconds = 3 --60 * focus_loss_detach_minutes
 
-    -- Get the session name that's currently active
-    local success, stdout, stderr = wezterm.run_child_process({
-      "tmux", "display-message", "-p", "#S"
-    })
+-- Path to file that controls whether or not the window should detach.
+-- local detach_timer_active_file = ""
 
-    local session_name
-    if success then
-      session_name = stdout:gsub("%s+", "")  -- Trim whitespace
-      wezterm.log_info("Current tmux session: " .. session_name)
-
-      -- Now detach from this session
-      success, stderr = wezterm.run_child_process({
-        "tmux", "detach-client", "-s", session_name
-      })
-
-      if not success then
-        wezterm.log_error("Failed to detach from tmux: " .. tostring(stderr))
-      else
-        wezterm.log_info("Successfully detached from tmux session: " .. session_name)
-      end
-    else
-      wezterm.log_error("Failed to get current tmux session: " .. tostring(stderr))
-    end
-  end
-end)
-
+-- Hides the terminal window if it remains unfocused for `focus_loss_detach_seconds`.
+--
+-- TODO: Figure out how to make this work properly. Right now, it always triggers the function
+-- and detach the window after focus_loss_detach_seconds. The current idea is to use a file
+-- (detach_timer_active_file) to control whether the callback should execute and detach or not.
+--
+-- wezterm.on("window-focus-changed", function(window, pane)
+--   wezterm.log_info("window:is_focused() = " .. tostring(window:is_focused()))
+--   wezterm.log_info("focus_loss_timer = " .. tostring(focus_loss_timer))
+--
+--   if window:is_focused() then
+--     -- Window gained focus - cancel any pending detach
+--
+--     -- IDEA: Delete the detach_timer_active_file file.
+--   else
+--     -- Window lost focus - start a timer to detach after delay
+--     wezterm.log_info("Window unfocused, starting detach timer for " .. focus_loss_detach_seconds .. " seconds")
+--
+--     -- IDEA: Create/update detach_timer_active_file file with the current time.
+--
+--     -- Create a timer using coroutine
+--     wezterm.time.call_after(focus_loss_detach_seconds, function()
+--       -- IDEA: Check if the detach_timer_active_file exists.
+--       -- IDEA: If not, bail... timer has been cancelled.
+--       -- IDEA: If so, check if the diff for current time is around focus_loss_detach_seconds,
+--       -- IDEA: only proceeding if so (otherwise the timer was updated).
+--
+--       -- This will run after the specified delay if not cancelled
+--       wezterm.log_info("Detach timer expired, detaching from tmux session")
+--
+--       -- Get the session name that's currently active
+--       local success, stdout, stderr = wezterm.run_child_process({
+--         "tmux",
+--         "display-message",
+--         "-p",
+--         "#S",
+--       })
+--
+--       local session_name
+--       if success then
+--         session_name = stdout:gsub("%s+", "") -- Trim whitespace
+--         wezterm.log_info("Current tmux session: " .. session_name)
+--
+--         -- Now detach from this session
+--         local detach_success, detach_stderr = wezterm.run_child_process({
+--           "tmux",
+--           "detach-client",
+--           "-s",
+--           session_name,
+--         })
+--
+--         if not detach_success then
+--           wezterm.log_error("Failed to detach from tmux: " .. tostring(detach_stderr))
+--         else
+--           wezterm.log_info("Successfully detached from tmux session: " .. session_name)
+--         end
+--       else
+--         wezterm.log_error("Failed to get current tmux session: " .. tostring(stderr))
+--       end
+--
+--       focus_loss_timer = nil
+--     end)
+--   end
+-- end)
 
 local function color_schemes_by_name(opts)
   setmetatable(opts, {
     __index = {
       -- Defaults to darker colors.
       min_light = 0.0,
-      max_light = 0.4
-    }
+      max_light = 0.4,
+    },
   })
 
   local schemes = wezterm.color.get_builtin_schemes()
@@ -411,114 +469,127 @@ local function color_schemes_by_name(opts)
   return chosen_schemes
 end
 
-local color_schemes_light = color_schemes_by_name{
+local color_schemes_light = color_schemes_by_name({
   min_light = 0.6,
-  max_light = 1.0
-}
+  max_light = 1.0,
+})
 
-local color_schemes_dark = color_schemes_by_name{
+local color_schemes_dark = color_schemes_by_name({
   min_light = 0.0,
-  max_light = 0.2
-}
+  max_light = 0.2,
+})
 
 local color_schemes_to_pick = color_schemes_dark
-
 
 -- Fill this as I find schemes that I like. Later I can randomize only them.
 local color_scheme_override = {
   -- Use `false` to select a random color scheme or the index of the favorite to use as override.
-  override = 27,                           -- 22, -- Update override.
+  override = 27, -- 22, -- Update override.
   favorites = {
-    'Dracula',                                -- Lua is 1-based, so this has index 1.
-    'Dark Pastel',                            -- 2
-    'CrayonPonyFish',                         -- 3
-    'Heetch Dark (base16)',                   -- 4
-    'Canvased Pastel (terminal.sexy)',        -- 5
-    'Synth Midnight Terminal Light (base16)', -- 6
-    'midnight-in-mojave',                     -- 7
-    'Slate (Gogh)',                           -- 8
-    'tlh (terminal.sexy)',                    -- 9
-    'Man Page (Gogh)',                        -- 10
-    'Builtin Solarized Dark',                 -- 11
-    'Apathy (base16)',                        -- 12
-    'gooey (Gogh)',                           -- 13
-    'SynthwaveAlpha (Gogh)',                  -- 14
-    'Liquid Carbon Transparent (Gogh)',       -- 15
-    'Afterglow (Gogh)',                       -- 16
-    'HaX0R_R3D',                              -- 17
-    'Vice Alt (base16)',                      -- 18
-    'Gigavolt (base16)',                      -- 19
-    'Humanoid dark (base16)',                 -- 20
-    'Nancy (terminal.sexy)',                  -- 21
-    'Purpledream (base16)',                   -- 22
-    'Mirage',                                 -- 23
-    'Solarized Dark Higher Contrast (Gogh)',  -- 24
-    'Trim Yer Beard (terminal.sexy)',         -- 25
-    'Gruvbox dark, hard (base16)',            -- 26
-    'Harmonic16 Dark (base16)',               -- 27
+    "Dracula", -- Lua is 1-based, so this has index 1.
+    "Dark Pastel", -- 2
+    "CrayonPonyFish", -- 3
+    "Heetch Dark (base16)", -- 4
+    "Canvased Pastel (terminal.sexy)", -- 5
+    "Synth Midnight Terminal Light (base16)", -- 6
+    "midnight-in-mojave", -- 7
+    "Slate (Gogh)", -- 8
+    "tlh (terminal.sexy)", -- 9
+    "Man Page (Gogh)", -- 10
+    "Builtin Solarized Dark", -- 11
+    "Apathy (base16)", -- 12
+    "gooey (Gogh)", -- 13
+    "SynthwaveAlpha (Gogh)", -- 14
+    "Liquid Carbon Transparent (Gogh)", -- 15
+    "Afterglow (Gogh)", -- 16
+    "HaX0R_R3D", -- 17
+    "Vice Alt (base16)", -- 18
+    "Gigavolt (base16)", -- 19
+    "Humanoid dark (base16)", -- 20
+    "Nancy (terminal.sexy)", -- 21
+    "Purpledream (base16)", -- 22
+    "Mirage", -- 23
+    "Solarized Dark Higher Contrast (Gogh)", -- 24
+    "Trim Yer Beard (terminal.sexy)", -- 25
+    "Gruvbox dark, hard (base16)", -- 26
+    "Harmonic16 Dark (base16)", -- 27
     -- Next override.
-  }
+  },
 }
 
-
 function get_scheme(opts)
-  local scheme = 'Dracula'
+  local scheme = "Dracula"
 
   if not opts.force_random and color_scheme_override.override then
     scheme = color_scheme_override.favorites[color_scheme_override.override]
-    print('Overriden scheme: ' .. scheme)
+    print("Overriden scheme: " .. scheme)
   else
     scheme = color_schemes_to_pick[math.random(#color_schemes_to_pick)]
-    print('Random scheme: ' .. scheme)
+    print("Random scheme: " .. scheme)
   end
 
   return scheme
 end
 
-
-wezterm.on('window-config-reloaded', function(window, pane)
+wezterm.on("window-config-reloaded", function(window, pane)
   if not window:get_config_overrides() then
     window:set_config_overrides({
-      color_scheme = get_scheme{force_random = false}
+      color_scheme = get_scheme({ force_random = false }),
     })
   end
 end)
 
-
 -- next event
-
 
 -- MAIN SETTINGS
 
-
 config.window_background_opacity = 1
 config.text_background_opacity = 1
-config.window_decorations = 'RESIZE'
+config.window_decorations = "RESIZE"
 
 -- Only the last one will be applied. fff
-config.font = fonts.code_new_roman; config.font_size = fonts_size.code_new_roman
-config.font = fonts.iosevka; config.font_size = fonts_size.iosevka
-config.font = fonts.iosevka_jb; config.font_size = fonts_size.iosevka_jb
-config.font = fonts.iosevka_lucida; config.font_size = fonts_size.iosevka_lucida
-config.font = fonts.dm; config.font_size = fonts_size.dm
-config.font = fonts.jb; config.font_size = fonts_size.jb
-config.font = fonts.noto; config.font_size = fonts_size.noto
-config.font = fonts.recursive_duotone; config.font_size = fonts_size.recursive_duotone
-config.font = fonts.recursive_alt; config.font_size = fonts_size.recursive_alt
-config.font = fonts.blex; config.font_size = fonts_size.blex
-config.font = fonts.commit; config.font_size = fonts_size.commit
-config.font = fonts.hack; config.font_size = fonts_size.hack
-config.font = fonts.recursive; config.font_size = fonts_size.recursive
-config.font = fonts.iosevka_monaco; config.font_size = fonts_size.iosevka_monaco
-config.font = fonts.iosevka_menlo; config.font_size = fonts_size.iosevka_menlo
-config.font = fonts.victor_mono; config.font_size = fonts_size.victor_mono
-config.font = fonts.cascadia; config.font_size = fonts_size.cascadia
-config.font = fonts.meslo; config.font_size = fonts_size.meslo
-config.font = fonts.jb_nf; config.font_size = fonts_size.jb
+config.font = fonts.code_new_roman
+config.font_size = fonts_size.code_new_roman
+config.font = fonts.iosevka
+config.font_size = fonts_size.iosevka
+config.font = fonts.iosevka_jb
+config.font_size = fonts_size.iosevka_jb
+config.font = fonts.iosevka_lucida
+config.font_size = fonts_size.iosevka_lucida
+config.font = fonts.dm
+config.font_size = fonts_size.dm
+config.font_size = fonts_size.jb
+config.font = fonts.noto
+config.font_size = fonts_size.noto
+config.font = fonts.recursive_duotone
+config.font_size = fonts_size.recursive_duotone
+config.font = fonts.recursive_alt
+config.font_size = fonts_size.recursive_alt
+config.font = fonts.blex
+config.font_size = fonts_size.blex
+config.font = fonts.commit
+config.font_size = fonts_size.commit
+config.font = fonts.hack
+config.font_size = fonts_size.hack
+config.font = fonts.recursive
+config.font_size = fonts_size.recursive
+config.font = fonts.iosevka_monaco
+config.font_size = fonts_size.iosevka_monaco
+config.font = fonts.iosevka_menlo
+config.font_size = fonts_size.iosevka_menlo
+config.font = fonts.victor_mono
+config.font_size = fonts_size.victor_mono
+config.font = fonts.cascadia
+config.font_size = fonts_size.cascadia
+config.font = fonts.meslo
+config.font_size = fonts_size.meslo
+config.font = fonts.jb_nf
+config.font_size = fonts_size.jb
+config.font = fonts.jb
 
 -- config.line_height = 1.2
-config.freetype_load_target = 'Light'
-config.freetype_render_target = 'HorizontalLcd'
+config.freetype_load_target = "Light"
+config.freetype_render_target = "HorizontalLcd"
 -- config.freetype_load_flags = 'NO_HINTING'
 
 config.scrollback_lines = 5000
@@ -534,45 +605,37 @@ config.window_padding = {
 }
 
 config.colors = {
-  cursor_bg = '#ff4500',  -- orange red (supposed to work with light/dark themes).
-  cursor_fg = 'black',
+  cursor_bg = "#ff4500", -- orange red (supposed to work with light/dark themes).
+  cursor_fg = "black",
 }
 
 -- The x is calculated as `(screen_width + panel_width) / 2`. See `gui-startup`
 -- above.
--- config.default_gui_startup_args = { 'start', '--position', '1303,0', SCRATCH_SCRIPT, }
+config.default_gui_startup_args = { "start", "--position", "1303,0", SCRATCH_SCRIPT }
 
 local should_blink = false
 if should_blink then
-  config.default_cursor_style = 'BlinkingUnderline'
-  config.cursor_thickness = '0.1pt'
+  config.default_cursor_style = "BlinkingUnderline"
+  config.cursor_thickness = "0.1pt"
   config.cursor_blink_rate = 500
 else
-  config.default_cursor_style = 'SteadyUnderline'
+  config.default_cursor_style = "SteadyUnderline"
 end
-
-
 
 -- KEYBINDINGS
 
-
 function change_color_scheme(window, pane)
-  wezterm.gui.gui_windows()[1]:set_config_overrides{ color_scheme = get_scheme{force_random = true} }
+  wezterm.gui.gui_windows()[1]:set_config_overrides({ color_scheme = get_scheme({ force_random = true }) })
 end
 
-
 config.keys = {
-  { key = 'h', mods = 'SHIFT|CTRL', action = wezterm.action.Search { Regex = 'hello' } },
-  { key = 'j', mods = 'ALT|SHIFT', action = act.ActivateTabRelative(-1) },
-  { key = 'k', mods = 'ALT|SHIFT', action = act.ActivateTabRelative(1) },
-  { key = 't', mods = 'SHIFT|ALT', action = act.SpawnTab 'CurrentPaneDomain' },
-  { key = 't', mods = 'SHIFT|CTRL', action = wezterm.action_callback(change_color_scheme) },
+  { key = "h", mods = "SHIFT|CTRL", action = wezterm.action.Search({ Regex = "hello" }) },
+  { key = "j", mods = "ALT|SHIFT", action = act.ActivateTabRelative(-1) },
+  { key = "k", mods = "ALT|SHIFT", action = act.ActivateTabRelative(1) },
+  { key = "t", mods = "SHIFT|ALT", action = act.SpawnTab("CurrentPaneDomain") },
+  { key = "t", mods = "SHIFT|CTRL", action = wezterm.action_callback(change_color_scheme) },
 }
-
-
 
 -- RETURN THE CONFIG OBJECT, TO APPLY ALL SETTINGS
 
-
 return config
-
