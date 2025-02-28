@@ -729,6 +729,11 @@ alias pnpm_add_immer="pnpm add immer use-immer"
 # Start Chrome using other language.
 alias chrome_br='LANGUAGE=pt_BR google-chrome-stable'
 
+# Python
+# ------
+
+alias venv_activate='source .venv/bin/activate'
+
 
 ## nextnext
 
