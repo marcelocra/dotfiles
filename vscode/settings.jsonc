@@ -992,8 +992,8 @@
 
   // JetBrainsMono font
   //
-  "editor.fontFamily": "'RecMonoDuotone Nerd Font', 'JetBrainsMono Nerd Font', 'Liberation Mono', 'DejaVu Sans Mono', monospace",
-  "editor.fontSize": 16, // edn{:desktop 13 :notebook ?? :small 11}
+  "editor.fontFamily": "'JetBrainsMono Nerd Font', 'RecMonoDuotone Nerd Font', 'Liberation Mono', 'DejaVu Sans Mono', monospace",
+  "editor.fontSize": 13, // edn{:desktop 13 :notebook ?? :small 11}
   "editor.fontWeight": "400", // edn{:desktop "200" :notebook "??" :small "100"}
   // // Minimal.
   // "editor.fontLigatures": "'ss01', 'ss19', 'ss20', 'zero', 'cv99'",
