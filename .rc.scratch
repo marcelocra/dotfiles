@@ -157,11 +157,11 @@ use_gnome_terminal() {
 }
 
 use_wezterm() {
-    local resolution=$(xrandr | grep '*' | awk '{print $1}')
-    local screen_width=$(echo $resolution | cut -d'x' -f1)
-    local half_width=$((screen_width / 2))
+    # local resolution=$(xrandr | grep '*' | awk '{print $1}')
+    # local screen_width=$(echo $resolution | cut -d'x' -f1)
+    # local half_width=$((screen_width / 2))
 
-    log "$half_width"
+    # log "$half_width"
 
     echo "/home/linuxbrew/.linuxbrew/bin/wezterm start --position '1303,0' -- "
 }
@@ -212,7 +212,12 @@ main() {
     log "with args:"
     log "  $sub_command"
 
+    # Works.
     run $command $sub_command
+
+    # Alternatives to try:
+    # /home/linuxbrew/.linuxbrew/bin/wezterm start --position '1303,0' --
+    # eval "$command $sub_command"
 }
 
 

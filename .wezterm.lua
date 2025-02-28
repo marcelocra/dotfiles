@@ -334,7 +334,6 @@ wezterm.on('format-tab-title', function(tab, tabs, panes, config, hover, max_wid
   }
 end)
 
-
 -- TODO: get this to work one day?
 -- wezterm.on('window-focus-changed', function(window, pane)
 --   if window:is_focused() then
@@ -347,6 +346,39 @@ end)
 --     }
 --   end
 -- end)
+
+-- Implementation that leverages your existing .rc.scratch script
+wezterm.on('window-focus-changed', function(window, pane)
+  -- Only take action when the window loses focus
+  if not window:is_focused() then
+    -- Window lost focus - disconnect from tmux
+    wezterm.log_info("Window unfocused, detaching from tmux session")
+
+    -- Get the session name that's currently active
+    local success, stdout, stderr = wezterm.run_child_process({
+      "tmux", "display-message", "-p", "#S"
+    })
+
+    local session_name
+    if success then
+      session_name = stdout:gsub("%s+", "")  -- Trim whitespace
+      wezterm.log_info("Current tmux session: " .. session_name)
+
+      -- Now detach from this session
+      success, stderr = wezterm.run_child_process({
+        "tmux", "detach-client", "-s", session_name
+      })
+
+      if not success then
+        wezterm.log_error("Failed to detach from tmux: " .. tostring(stderr))
+      else
+        wezterm.log_info("Successfully detached from tmux session: " .. session_name)
+      end
+    else
+      wezterm.log_error("Failed to get current tmux session: " .. tostring(stderr))
+    end
+  end
+end)
 
 
 local function color_schemes_by_name(opts)
