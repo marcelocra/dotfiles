@@ -430,6 +430,11 @@ require('lazy').setup({
         --  All the info you're looking for is in `:help telescope.setup()`
         --
         defaults = {
+          layout_strategy = 'vertical',
+          layout_config = {
+            height = 0.95,
+            -- width = 0.95,
+          },
           mappings = {
             i = {
               -- ['<C-enter>'] = 'to_fuzzy_refine',
@@ -438,7 +443,7 @@ require('lazy').setup({
             },
           },
         },
-        -- pickers = {}
+        -- pickers = {},
         extensions = {
           ['ui-select'] = {
             require('telescope.themes').get_dropdown(),
@@ -1050,7 +1055,7 @@ require('lazy').setup({
 
   {
     'Olical/conjure',
-    ft = { 'clojure', 'fennel', 'python', 'racket' }, -- etc
+    ft = { 'clojure', 'fennel', 'python', 'racket', 'lua' }, -- etc
     lazy = true,
     init = function()
       -- Set configuration options here
