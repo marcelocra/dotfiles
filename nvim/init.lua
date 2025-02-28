@@ -156,20 +156,6 @@ vim.opt.cursorline = true
 -- Minimal number of screen lines to keep above and below the cursor.
 vim.opt.scrolloff = 10
 
--- vim.g['conjure#client_on_load'] = false
-vim.g['conjure#log#jump_to_latest#enabled'] = false
-vim.g['conjure#log#jump_to_latest#cursor_scroll_position'] = 'center'
-
-vim.g['conjure#log#wrap'] = true
-
-vim.g['conjure#log#hud#anchor'] = 'SE'
-vim.g['conjure#log#hud#width'] = 1.0
-
-vim.g['conjure#log#botright'] = true
--- vim.g['conjure#log#fold#enabled'] = true
-
-vim.g['conjure#highlight#enabled'] = true
-
 -- nextsetting
 
 -- [[ Basic Keymaps ]]
@@ -178,6 +164,7 @@ vim.g['conjure#highlight#enabled'] = true
 -- Clear highlights on search when pressing <Esc> in normal mode
 --  See `:help hlsearch`
 vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
+vim.keymap.set('n', '<C-n>', '<cmd>nohlsearch<CR>')
 
 -- Diagnostic keymaps
 vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostic [Q]uickfix list' })
@@ -219,9 +206,31 @@ vim.keymap.set({ 'i', 'n' }, ',s', '<Esc>:w<CR>', { desc = 'Saves the current bu
 vim.keymap.set('n', ',q', ':q<CR>', { desc = 'Close the current buffer' })
 vim.keymap.set('n', ',,q', ':qa<CR>', { desc = 'Close all buffers' })
 
+-- Save and quit faster.
+vim.keymap.set('n', ',x', ':x<CR>', { desc = 'Save and close the current buffer' })
+vim.keymap.set('i', ',x', '<Esc>:x<CR>', { desc = 'Save and close the current buffer' })
+
 -- Port my most used mappings from VSCode.
 vim.keymap.set({ 'i', 'n', 'v' }, '<C-p>', ':Telescope find_files<CR>', { desc = 'Fuzzy search files in current folder' })
 vim.keymap.set({ 'i', 'n', 'v' }, '<C-t>', ':Telescope lsp_workspace_symbols<CR>', { desc = 'Fuzzy search workspace symbols' })
+
+-- Move between tabs.
+vim.keymap.set('n', '<M-j>', ':tabp<CR>', { desc = 'Move to the left tab' })
+vim.keymap.set('n', '<M-k>', ':tabn<CR>', { desc = 'Move to the right tab' })
+vim.keymap.set('i', '<M-j>', '<Esc>:tabp<CR>', { desc = 'Move to the left tab' })
+vim.keymap.set('i', '<M-k>', '<Esc>:tabn<CR>', { desc = 'Move to the right tab' })
+
+-- Easily open Neovim config files.
+vim.keymap.set('n', '<Leader>evv', ':vspl $MYVIMRC<CR>', { desc = 'Edit init file in a vertical split' })
+vim.keymap.set('n', '<Leader>evh', ':spl $MYVIMRC<CR>', { desc = 'Edit init file in an horizontal split' })
+vim.keymap.set('n', '<Leader>evt', ':tabe $MYVIMRC<CR>', { desc = 'Edit init file in a new tab' })
+
+-- Easily change colorschemes.
+vim.keymap.set('n', '<Leader>sc', ":lua require('telescope.builtin').colorscheme()<CR>", { desc = 'Change colorscheme' })
+
+-- Select file content.
+vim.keymap.set('n', ',a', 'ggVG', { desc = 'Select full file content' })
+vim.keymap.set('i', ',a', '<Esc>ggVG', { desc = 'Select full file content' })
 
 -- nextkeymap,nextmapping
 
@@ -438,8 +447,10 @@ require('lazy').setup({
           mappings = {
             i = {
               -- ['<C-enter>'] = 'to_fuzzy_refine',
-              ['<C-j>'] = 'move_selection_next',
-              ['<C-k>'] = 'move_selection_previous',
+
+              -- Instead of using <C-p/n> for previous/next, use <C-k/j>.
+              -- ['<C-k>'] = 'move_selection_previous',
+              -- ['<C-j>'] = 'move_selection_next',
             },
           },
         },
@@ -748,6 +759,7 @@ require('lazy').setup({
       local ensure_installed = vim.tbl_keys(servers or {})
       vim.list_extend(ensure_installed, {
         'stylua', -- Used to format Lua code
+        'ruff', -- Used to format Python code
       })
       require('mason-tool-installer').setup { ensure_installed = ensure_installed }
 
@@ -866,54 +878,7 @@ require('lazy').setup({
         -- chosen, you will need to read `:help ins-completion`
         --
         -- No, but seriously. Please read `:help ins-completion`, it is really good!
-        mapping = cmp.mapping.preset.insert {
-          -- Select the [n]ext item (<C-n>).
-          ['<C-j>'] = cmp.mapping.select_next_item(),
-          -- Select the [p]revious item (<C-p>).
-          ['<C-k>'] = cmp.mapping.select_prev_item(),
-
-          -- Scroll the documentation window [b]ack / [f]orward (<C-b/f>).
-          ['<C-u>'] = cmp.mapping.scroll_docs(-4),
-          ['<C-d>'] = cmp.mapping.scroll_docs(4),
-
-          -- Accept ([y]es) the completion (<C-y>).
-          --  This will auto-import if your LSP supports it.
-          --  This will expand snippets if the LSP sent a snippet.
-          ['<Tab>'] = cmp.mapping.confirm { select = true },
-
-          -- If you prefer more traditional completion keymaps,
-          -- you can uncomment the following lines
-          ['<CR>'] = cmp.mapping.confirm { select = true },
-          -- ['<Tab>'] = cmp.mapping.select_next_item(),
-          -- ['<S-Tab>'] = cmp.mapping.select_prev_item(),
-
-          -- Manually trigger a completion from nvim-cmp.
-          --  Generally you don't need this, because nvim-cmp will display
-          --  completions whenever it has completion options available.
-          ['<C-Space>'] = cmp.mapping.complete {},
-
-          -- Think of <c-l> as moving to the right of your snippet expansion.
-          --  So if you have a snippet that's like:
-          --  function $name($args)
-          --    $body
-          --  end
-          --
-          -- <c-l> will move you to the right of each of the expansion locations.
-          -- <c-h> is similar, except moving you backwards.
-          -- ['<C-l>'] = cmp.mapping(function()
-          --     if luasnip.expand_or_locally_jumpable() then
-          --         luasnip.expand_or_jump()
-          --     end
-          -- end, { 'i', 's' }),
-          -- ['<C-h>'] = cmp.mapping(function()
-          --     if luasnip.locally_jumpable(-1) then
-          --         luasnip.jump(-1)
-          --     end
-          -- end, { 'i', 's' }),
-
-          -- For more advanced Luasnip keymaps (e.g. selecting choice nodes, expansion) see:
-          --    https://github.com/L3MON4D3/LuaSnip?tab=readme-ov-file#keymaps
-        },
+        mapping = require 'custom.cmp-mappings-default',
         sources = {
           {
             name = 'lazydev',
@@ -940,14 +905,19 @@ require('lazy').setup({
       ---@diagnostic disable-next-line: missing-fields
       require('tokyonight').setup {
         styles = {
-          comments = { italic = false }, -- Disable italics in comments
+          -- comments = { italic = false }, -- Disable italics in comments
         },
       }
 
       -- Load the colorscheme here.
       -- Like many other themes, this one has different styles, and you could load
       -- any other, such as 'tokyonight-storm', 'tokyonight-moon', or 'tokyonight-day'.
-      vim.cmd.colorscheme 'tokyonight-night'
+      -- vim.cmd.colorscheme 'tokyonight-night'
+      vim.cmd.colorscheme(require('custom.time-based-colorscheme').define_colorscheme())
+
+      -- Simplify toggling light and dark.
+      vim.keymap.set('n', '<M-d>', ':colorscheme ' .. vim.g.colorscheme_mode_dark .. '<CR>', { desc = 'Set colorscheme to vim.g.colorscheme_mode_dark' })
+      vim.keymap.set('n', '<M-l>', ':colorscheme ' .. vim.g.colorscheme_mode_light .. '<CR>', { desc = 'Set colorscheme to vim.g.colorscheme_mode_light' })
     end,
   },
 
@@ -1046,37 +1016,12 @@ require('lazy').setup({
   --    This is the easiest way to modularize your config.
   --
   --  Uncomment the following line and add your plugins to `lua/custom/plugins/*.lua` to get going.
-  -- { import = 'custom.plugins' },
+  { import = 'custom.plugins' },
   --
   -- For additional information with loading, sourcing and examples see `:help lazy.nvim-🔌-plugin-spec`
   -- Or use telescope!
   -- In normal mode type `<space>sh` then write `lazy.nvim-plugin`
   -- you can continue same window with `<space>sr` which resumes last telescope search
-
-  {
-    'Olical/conjure',
-    ft = { 'clojure', 'fennel', 'python', 'racket', 'lua' }, -- etc
-    lazy = true,
-    init = function()
-      -- Set configuration options here
-      -- Uncomment this to get verbose logging to help diagnose internal Conjure issues
-      -- This is VERY helpful when reporting an issue with the project
-      -- vim.g["conjure#debug"] = true
-    end,
-
-    -- Optional cmp-conjure integration
-    dependencies = { 'marcelocra/cmp-conjure' },
-  },
-  {
-    'marcelocra/cmp-conjure',
-    lazy = true,
-    config = function()
-      local cmp = require 'cmp'
-      local config = cmp.get_config()
-      table.insert(config.sources, { name = 'conjure' })
-      return cmp.setup(config)
-    end,
-  },
 
   -- nextplugin
 }, {
@@ -1101,5 +1046,4 @@ require('lazy').setup({
   },
 })
 
--- The line beneath this is called `modeline`. See `:help modeline`
--- vim: ts=2 sts=2 sw=2 et
+-- vim: tw=80 ts=2 sts=2 sw=2 et ai ff=unix fixeol eol fenc=utf-8 fdm=marker fdl=0 fen
