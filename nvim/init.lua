@@ -441,6 +441,9 @@ require('lazy').setup({
         defaults = {
           layout_strategy = 'vertical',
           layout_config = {
+            -- anchor = 'NE',
+            prompt_position = 'top',
+            mirror = true,
             height = 0.95,
             -- width = 0.95,
           },
@@ -487,6 +490,20 @@ require('lazy').setup({
           previewer = false,
         })
       end, { desc = '[/] Fuzzily search in current buffer' })
+
+      -- My version (I prefer <C-d>).
+      vim.keymap.set('n', '<C-f>', function()
+        -- You can pass additional configuration to Telescope to change the theme, layout, etc.
+        builtin.current_buffer_fuzzy_find(require('telescope.themes').get_dropdown {
+          winblend = 10,
+          previewer = false,
+          layout_config = {
+            prompt_position = 'top',
+            height = 0.5,
+            width = 0.8,
+          },
+        })
+      end, { desc = 'Fuzzily search in current buffer' })
 
       -- It's also possible to pass additional configuration options.
       --  See `:help telescope.builtin.live_grep()` for information about particular keys
