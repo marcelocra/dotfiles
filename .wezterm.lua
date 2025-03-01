@@ -8,7 +8,7 @@ local wezterm = require("wezterm")
 local act = wezterm.action
 local mux = wezterm.mux
 
--- Fonts I frequently use. <<(
+-- Fonts I frequently use.
 
 -- Options: 'Fixed', 'Fixed Extended', 'Extended'.
 local which_iosevka = "Iosevka Fixed Extended"
@@ -29,7 +29,7 @@ local fonts = {
   },
 
   jb = {
-    font = wezterm.font({ -- <<(
+    font = wezterm.font({
       family = "JetBrains Mono",
       weight = 400,
       -- Ligature test:
@@ -48,12 +48,12 @@ local fonts = {
         -- glyphs (cv99).
         -- 'ss02', 'ss19', 'ss20', 'zero', 'cv03', 'cv04', 'cv16', 'cv19', 'cv20', 'cv99',
       },
-    }), -- )>>
+    }),
     size = 10,
   },
 
   jb_nf = {
-    font = wezterm.font({ -- <<(
+    font = wezterm.font({
       family = "JetBrainsMono Nerd Font",
       weight = 400,
       -- Ligature test:
@@ -77,8 +77,8 @@ local fonts = {
         "cv20",
         "cv99",
       },
-    }), -- )>>
-    size = 10,
+    }),
+    size = 11,
   },
 
   cascadia = {
@@ -305,8 +305,6 @@ local fonts = {
     size = good_font_size,
   },
 }
-
--- )>>
 
 local config = wezterm.config_builder()
 
@@ -588,10 +586,9 @@ local set_font = function(font)
   config.line_height = font.line_height or 1.0
 end
 
-set_font(fonts.jb_nf)
 set_font(fonts.noto)
 set_font(fonts.jb)
-set_font(fonts.meslo)
+set_font(fonts.jb_nf)
 
 config.freetype_load_target = "Light"
 config.freetype_render_target = "HorizontalLcd"
