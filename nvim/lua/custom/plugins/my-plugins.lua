@@ -32,7 +32,16 @@ return {
   },
 
   -- Align stuff.
-  { 'junegunn/vim-easy-align' },
+  {
+    'junegunn/vim-easy-align',
+    config = function()
+      -- Start interactive EasyAlign in visual mode (e.g. vipga)
+      vim.cmd 'xnoremap ga <Plug>(EasyAlign)'
+
+      -- Start interactive EasyAlign for a motion/text object (e.g. gaip)
+      vim.cmd 'nnoremap ga <Plug>(EasyAlign)'
+    end,
+  },
 
   --
   --
