@@ -405,7 +405,7 @@
   "vim.textwidth": 80,
 
   "vim.enableNeovim": true,
-  "vim.neovimUseConfigFile": true,
+  "vim.neovimUseConfigFile": false,
   "vim.handleKeys": {
     "<C-c>": false
   },
@@ -422,16 +422,16 @@
 
   //#region viminsert
   "vim.insertModeKeyBindingsNonRecursive": [
-    // {
-    //   // Leave insert mode.
-    //   "before": ["j", "f"],
-    //   "after": ["<esc>"]
-    // },
-    // {
-    //   // Leave insert mode.
-    //   "before": ["f", "j"],
-    //   "after": ["<esc>"]
-    // },
+    {
+      // Leave insert mode.
+      "before": ["j", "f"],
+      "after": ["<esc>"]
+    },
+    {
+      // Leave insert mode.
+      "before": ["f", "j"],
+      "after": ["<esc>"]
+    },
     {
       // Save and stay in insert mode.
       "before": ["<leader>", "w"],
@@ -1121,6 +1121,38 @@
   // "editor.fontSize": 19,
   // "editor.fontWeight": "400",
 
+  "editor.tokenColorCustomizations": {
+    // "[*Light*]": { // Match all themes with "Light" in the name.
+    //   "textMateRules": [
+    //     {
+    //       "scope": "ref.matchtext",
+    //       "settings": {
+    //         "foreground": "#000"
+    //       }
+    //     }
+    //   ]
+    // },
+    "[Spiral Tattoo Ink Dark Dim]": {
+      "textMateRules": [
+        // Test custom colors here, before moving to the theme.
+        //
+        // Example:
+        //
+        //    {
+        //      "scope": "support",
+        //      "settings": {
+        //        "fontStyle": ""
+        //      }
+        //    },
+        //    {
+        //      "scope": "comment",
+        //      "settings": {
+        //        "fontStyle": "italic"
+        //      }
+        //    }
+      ]
+    }
+  },
   "editor.codeActionsOnSave": {
     "source.fixAll.eslint": "explicit",
     "source.fixAll": "explicit"
@@ -1178,38 +1210,9 @@
   "editor.mouseWheelZoom": true,
   "editor.minimap.showSlider": "always",
   "editor.inlineSuggest.enabled": true,
-  "editor.tokenColorCustomizations": {
-    // "[*Light*]": { // Match all themes with "Light" in the name.
-    //   "textMateRules": [
-    //     {
-    //       "scope": "ref.matchtext",
-    //       "settings": {
-    //         "foreground": "#000"
-    //       }
-    //     }
-    //   ]
-    // },
-    "[Spiral Tattoo Ink Dark Dim]": {
-      "textMateRules": [
-        // Test custom colors here, before moving to the theme.
-        //
-        // Example:
-        //
-        //    {
-        //      "scope": "support",
-        //      "settings": {
-        //        "fontStyle": ""
-        //      }
-        //    },
-        //    {
-        //      "scope": "comment",
-        //      "settings": {
-        //        "fontStyle": "italic"
-        //      }
-        //    }
-      ]
-    }
-  },
+  "editor.accessibilitySupport": "off",
+
+  // next.editor
 
   // #endregion
 
@@ -1222,6 +1225,8 @@
   "explorer.confirmDragAndDrop": false,
   "explorer.excludeGitIgnore": false,
   "explorer.compactFolders": false,
+
+  // next.explorer
 
   // Disabling this for now, as I didn't really like it.
   // // Nest some files in the explorer.
@@ -1333,23 +1338,23 @@
   "terminal.integrated.macOptionClickForcesSelection": true,
   "terminal.integrated.allowChords": false,
   "terminal.integrated.shellIntegration.enabled": true,
-  "terminal.integrated.drawBoldTextInBrightColors": true,
   "terminal.integrated.minimumContrastRatio": 4.5,
   "terminal.integrated.enableVisualBell": true,
   "terminal.integrated.bellDuration": 3000,
-  // "terminal.integrated.lineHeight": 1.6, // Also good values: 1.6; 2
-  // "terminal.integrated.letterSpacing": 1,
-  // "terminal.integrated.sendKeybindingsToShell": false,
-  // "terminal.integrated.commandsToSkipShell": [
-  //   "workbench.action.toggleMaximizedPanel"
-  // ],
-
-  // cursor
-  "terminal.integrated.cursorStyle": "line",
-  "terminal.integrated.cursorStyleInactive": "outline",
-  "terminal.integrated.cursorWidth": 1,
   "terminal.integrated.cursorBlinking": true,
   "terminal.integrated.mouseWheelZoom": true,
+
+  "terminal.external.linuxExec": "kitty",
+  "terminal.integrated.enableFileLinks": "notRemote",
+  "terminal.integrated.fontLigatures.enabled": true,
+  "terminal.integrated.fontLigatures.featureSettings": "",
+  "terminal.integrated.gpuAcceleration": "on",
+  "terminal.integrated.localEchoExcludePrograms": ["vim", "vi", "nano", "tmux", "nvim"],
+  "terminal.integrated.smoothScrolling": true,
+  "terminal.integrated.stickyScroll.enabled": true,
+  "terminal.integrated.suggest.enabled": true,
+  "terminal.integrated.tabs.defaultColor": "terminal.ansiMagenta",
+  "terminal.integrated.tabs.location": "left",
 
   //
   //
@@ -1370,11 +1375,6 @@
   // Search
   //
 
-  "search.defaultViewMode": "tree",
-  "search.mode": "newEditor",
-  "search.searchOnTypeDebouncePeriod": 500,
-  "search.showLineNumbers": true,
-  "search.smartCase": true,
   "search.exclude": {
     // Other stuff.
     "**/.archives": true,
@@ -1393,6 +1393,11 @@
     "**/bower_components": true,
     "**/*.code-search": true
   },
+  "search.defaultViewMode": "tree",
+  "search.mode": "newEditor",
+  "search.searchOnTypeDebouncePeriod": 500,
+  "search.showLineNumbers": true,
+  "search.smartCase": true,
 
   //
   //

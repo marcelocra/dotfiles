@@ -201,7 +201,7 @@
   {
     "key": "ctrl+p",
     "command": "editor.action.moveSelectionToPreviousFindMatch",
-    "when": "vim.mode == 'Visual'"
+    "when": "editorTextFocus && vim.mode == 'Visual'"
   },
   {
     "key": "ctrl+n",
@@ -217,38 +217,38 @@
 
   {
     // Navigate to the next suggestion in menus.
-    "key": "ctrl+j",
+    "key": "ctrl+n", // "ctrl+j",
     "command": "selectNextSuggestion",
     "when": "suggestWidgetVisible"
   },
 
   {
     // Navigate to the previous suggestion in menus.
-    "key": "ctrl+k",
+    "key": "ctrl+p", // "ctrl+k",
     "command": "selectPrevSuggestion",
     "when": "suggestWidgetVisible"
   },
 
   {
-    "key": "ctrl+j",
+    "key": "ctrl+n", // "ctrl+j",
     "command": "quickInput.next",
     "when": "inQuickInput && quickInputType == 'quickPick'"
   },
 
   {
-    "key": "ctrl+k",
+    "key": "ctrl+p", // "ctrl+k",
     "command": "quickInput.previous",
     "when": "inQuickInput && quickInputType == 'quickPick'"
   },
 
   {
-    "key": "ctrl+j",
+    "key": "ctrl+n", // "ctrl+j",
     "command": "selectNextCodeAction",
     "when": "codeActionMenuVisible"
   },
 
   {
-    "key": "ctrl+k",
+    "key": "ctrl+p", // "ctrl+k",
     "command": "selectPrevCodeAction",
     "when": "codeActionMenuVisible"
   },
