@@ -576,7 +576,9 @@ else
     # -h: print human readable sizes (using K, M, G instead of bytes).
     # -t: sort by time, most recently updated first.
     # --time-style: how to show time. Currently, 30mar23[22:10].
-    alias l='ls -lFh -t --time-style="+%d%b%y[%H:%M]" --group-directories-first'
+    # --hyperlink=auto: stuff becomes clickable. For example, it is possbile to
+    #   open images in kitty term.
+    alias l='ls -lFh -t --time-style="+%d%b%y[%H:%M]" --group-directories-first --hyperlink=auto'
 fi
 
 alias ll='l -A'
@@ -734,8 +736,12 @@ alias chrome_br='LANGUAGE=pt_BR google-chrome-stable'
 
 alias venv_activate='source .venv/bin/activate'
 
+# List monospaced fonts.
+# ---------------------
 
-## nextnext
+alias list_mono_fonts='fc-list : family spacing outline scalable | grep -e spacing=100 -e spacing=90 | grep -e outline=True | grep -e scalable=True'
+
+## nextnextalias
 
 # next alias above, unless they fit in one of the other sections.
 # }}}general
