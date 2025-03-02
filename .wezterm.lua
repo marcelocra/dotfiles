@@ -134,6 +134,22 @@ local fonts = {
     line_height = 0.9,
   },
 
+  red_hat_mono = {
+    font = wezterm.font({
+      family = "Red Hat Mono",
+      weight = 400,
+    }),
+    size = 10,
+  },
+
+  ibm = {
+    font = wezterm.font({
+      family = "IBM Plex Mono",
+      weight = 600,
+    }),
+    size = 11,
+  },
+
   dm = {
     font = wezterm.font({
       family = "DM Mono",
@@ -586,9 +602,11 @@ local set_font = function(font)
   config.line_height = font.line_height or 1.0
 end
 
+-- set_font(fonts.jb_nf)
+-- set_font(fonts.jb)
 set_font(fonts.noto)
-set_font(fonts.jb)
-set_font(fonts.jb_nf)
+set_font(fonts.red_hat_mono)
+set_font(fonts.ibm)
 
 config.freetype_load_target = "Light"
 config.freetype_render_target = "HorizontalLcd"
