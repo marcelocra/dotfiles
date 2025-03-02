@@ -192,7 +192,7 @@ vim.keymap.set('n', '<C-l>', '<C-w><C-l>', { desc = 'Move focus to the right win
 vim.keymap.set('n', '<C-j>', '<C-w><C-j>', { desc = 'Move focus to the lower window' })
 vim.keymap.set('n', '<C-k>', '<C-w><C-k>', { desc = 'Move focus to the upper window' })
 
--- My keybindings.
+-- [[ My keybindings ]]
 
 -- Go back to normal mode.
 vim.keymap.set('i', 'jf', '<Esc>', { desc = 'Go to normal mode' })
@@ -221,18 +221,137 @@ vim.keymap.set('i', '<M-j>', '<Esc>:tabp<CR>', { desc = 'Move to the left tab' }
 vim.keymap.set('i', '<M-k>', '<Esc>:tabn<CR>', { desc = 'Move to the right tab' })
 
 -- Easily open Neovim config files.
-vim.keymap.set('n', '<Leader>evv', ':vspl $MYVIMRC<CR>', { desc = 'Edit init file in a vertical split' })
-vim.keymap.set('n', '<Leader>evh', ':spl $MYVIMRC<CR>', { desc = 'Edit init file in an horizontal split' })
-vim.keymap.set('n', '<Leader>evt', ':tabe $MYVIMRC<CR>', { desc = 'Edit init file in a new tab' })
+vim.keymap.set('n', ',e', '<NOP>', { desc = '[E]dit' })
+vim.keymap.set('n', ',ev', '<NOP>', { desc = '[V]imrc' })
+vim.keymap.set('n', ',evv', ':vspl $MYVIMRC<CR>', { desc = '[E]dit [V]imrc in a [V]ertical split' })
+vim.keymap.set('n', ',evh', ':spl $MYVIMRC<CR>', { desc = '[E]dit [V]imrc in an [H]orizontal split' })
+vim.keymap.set('n', ',evt', ':tabe $MYVIMRC<CR>', { desc = '[E]dit [V]imrc in a new [T]ab' })
 
 -- Easily change colorschemes.
-vim.keymap.set('n', '<Leader>sc', ":lua require('telescope.builtin').colorscheme()<CR>", { desc = 'Change colorscheme' })
+vim.keymap.set('n', ',cc', ":lua require('telescope.builtin').colorscheme()<CR>", { desc = '[C]hange [C]olorscheme' })
 
 -- Select file content.
 vim.keymap.set('n', ',a', 'ggVG', { desc = 'Select full file content' })
 vim.keymap.set('i', ',a', '<Esc>ggVG', { desc = 'Select full file content' })
 
+-- Search for the selected text.
+vim.keymap.set('v', '//', "y/\\V<C-r>=escape(@\",'/\\')<CR><CR>", { desc = 'Search for current selection' })
+
+-- Use - and | to split in normal mode.
+vim.cmd [[
+  nnoremap - :split<cr>
+  nnoremap \| :vsplit<cr>
+]]
+
+-- Avoids replacing the clipboard content with the selected content. Does this
+-- by deleting the selected content to the blackhole register and then pasting
+-- the clipboard content to before the cursor position.
+vim.cmd 'vnoremap p "_dP'
+
+-- Clear last search (really.. it will erase the search and pressing 'n' won't
+-- show it again).
+vim.cmd 'nnoremap ,,cl :let @/ = ""<cr>'
+
+-- Go to the Nth tab.
+vim.cmd [[
+  nnoremap <M-1> :tabn 1<CR>
+  nnoremap <M-2> :tabn 2<CR>
+  nnoremap <M-3> :tabn 3<CR>
+  nnoremap <M-4> :tabn 4<CR>
+  nnoremap <M-5> :tabn 5<CR>
+  nnoremap <M-6> :tabn 6<CR>
+  nnoremap <M-7> :tabn 7<CR>
+  nnoremap <M-8> :tabn 8<CR>
+  nnoremap <M-9> :tabn 9<CR>
+]]
+
+-- Reminder that I'm using the wrong keyboard layout.
+vim.cmd [[
+  nnoremap Ç :echo "Wrong keyboard layout!"<cr>
+  nnoremap ç :echo "wrong keyboard layout!"<cr>
+]]
+
+-- Toggle wrap.
+vim.cmd [[
+  nnoremap <a-w> :set wrap!<cr>
+  inoremap <a-w> <esc>:set wrap!<cr>a
+]]
+
+-- Add date to current buffer.
+-- inoremap <a-d> <c-r>=strftime("%Y-%m-%d")<cr>
+vim.cmd 'inoremap <a-d> <c-r>=strftime("%d%b%y")<cr>'
+
+-- Add time to current buffer.
+vim.cmd 'inoremap <a-t> <c-r>=strftime("%Hh%M")<cr>'
+
+-- Eval current line or selection using Lua.
+vim.keymap.set('n', ',l', 'V:lua<CR>', { desc = 'Eval current line using Lua' })
+vim.keymap.set('v', ',l', ':lua<CR>', { desc = 'Eval current selection using Lua' })
+
 -- nextkeymap,nextmapping
+
+-- [[ Abbreviations ]]
+
+-- Shebangs.
+vim.cmd [[
+  iab _sb #!/usr/bin/env
+  iab _posix #!/usr/bin/env sh
+  iab _deno #!/usr/bin/env -S deno run --allow-read
+  iab _fsx #!/usr/bin/env -S dotnet fsi
+]]
+
+-- EditorConfig alternatives.
+-- When EditorConfig is not available, creates a modeline with my prefs.
+-- For most languages I use the next line. Change tab (spaces) width, usually for Python.
+vim.cmd [[
+  iab _ec   vim: tw=80 ts=2 sw=2 ai et ff=unix fenc=utf-8 et fixeol eol fdm=marker fdl=0 fen
+  iab _ecpy vim: tw=80 ts=4 sw=4 ai et ff=unix fenc=utf-8 et fixeol eol fdm=marker fdl=0 fen
+]]
+
+-- Shell
+-- -e: exit on error
+-- -u: exit on undefined variable
+-- -o pipefail: exits on command pipe failures
+-- -x: print commands before execution. Use only if necessary... too verbose.
+vim.cmd [[
+  iab _euxo set -euxo pipefail
+  iab _euo set -euo pipefail
+]]
+
+-- The first one is not as portable as the other ones.
+vim.cmd [[
+  iab _devnullshort &>/dev/null
+  iab _devnull &>/dev/null 2>&1
+  iab _dn &>/dev/null 2>&1
+]]
+
+-- Simplify writing shell command checks.
+vim.cmd [[
+  iab _out >/dev/null 2>&1; then
+  iab _command command -v _out
+]]
+
+-- Unicode, emoji, etc.
+vim.cmd [[
+  iab __ch ✓
+  iab __ch ✅️
+  iab __not ⛔️
+  iab __star ⭐️
+  iab __bolt ⚡️
+  iab __cros ❌️
+  iab __heartp 💜️
+  iab __heartw 🤍️
+  iab __handdown 👇🏽️
+  iab __handup 👆🏽️
+  iab __k - [ ]
+  iab __- - [ ]
+  iab __ret ↲
+]]
+
+-- Command mode: open help in a new tab, unless it is typed fully ("help").
+vim.cmd 'cab h tab help'
+
+-- nextabbreviation
 
 -- [[ Basic Autocommands ]]
 --  See `:help lua-guide-autocommands`
@@ -442,8 +561,8 @@ require('lazy').setup({
           layout_strategy = 'vertical',
           layout_config = {
             -- anchor = 'NE',
-            prompt_position = 'top',
-            mirror = true,
+            -- prompt_position = 'top',
+            -- mirror = true,
             height = 0.95,
             -- width = 0.95,
           },
@@ -930,6 +1049,13 @@ require('lazy').setup({
       -- Like many other themes, this one has different styles, and you could load
       -- any other, such as 'tokyonight-storm', 'tokyonight-moon', or 'tokyonight-day'.
       -- vim.cmd.colorscheme 'tokyonight-night'
+
+      -- Chose your mode here. Options are 'time_based', 'dark', 'light'.
+      --  time_based: the colorscheme will be chosen based on the time of the day.
+      vim.g.colorscheme_mode = 'dark'
+      vim.g.colorscheme_mode_dark = 'tokyonight-night'
+      vim.g.colorscheme_mode_light = 'tokyonight-day'
+
       vim.cmd.colorscheme(require('custom.time-based-colorscheme').define_colorscheme())
 
       -- Simplify toggling light and dark.

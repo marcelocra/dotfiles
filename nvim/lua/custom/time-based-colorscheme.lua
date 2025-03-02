@@ -9,14 +9,8 @@ local hour_now = tonumber(os.date '%H')
 local daylight_ends = 19
 local daylight_starts = 6
 
-local time_based = 'time_based' -- The colorscheme will be chosen based on time of the day.
 local dark = 'dark' -- Override with a dark mode of your choice.
 local light = 'light' -- Override with a light mode of your choice.
-
--- Chose your mode here.
-vim.g.colorscheme_mode = time_based
-vim.g.colorscheme_mode_dark = 'tokyonight-night'
-vim.g.colorscheme_mode_light = 'tokyonight-day'
 
 local define_colorscheme = function()
   local ambient_is_dark = hour_now < daylight_starts or hour_now >= daylight_ends
