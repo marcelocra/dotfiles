@@ -1,3 +1,4 @@
+-- [[ Kickstart Welcome ]] {{{
 --[[
 
 =====================================================================
@@ -83,6 +84,9 @@ I hope you enjoy your Neovim journey,
 
 P.S. You can delete this when you're done too. It's your config now! :)
 --]]
+--}}}
+
+-- [[ Leader ]] {{{
 
 -- Set <space> as the leader key
 -- See `:help mapleader`
@@ -93,7 +97,9 @@ vim.g.maplocalleader = ' '
 -- Set to true if you have a Nerd Font installed and selected in the terminal
 vim.g.have_nerd_font = true
 
--- [[ Setting options ]]
+-- }}}
+
+-- [[ Setting options ]] {{{
 -- See `:help vim.opt`
 -- NOTE: You can change these options as you wish!
 --  For more options, you can see `:help option-list`
@@ -156,9 +162,16 @@ vim.opt.cursorline = true
 -- Minimal number of screen lines to keep above and below the cursor.
 vim.opt.scrolloff = 10
 
--- nextsetting
+-- Keep default autowrapping (e.g. comments, gq, etc), but do not do it for actual code.
+vim.cmd 'set formatoptions-=t'
 
--- [[ Basic Keymaps ]]
+-- Set rulers +N columns after the `textwidth`.
+vim.opt.colorcolumn = { '+1', '+21', '+41' }
+
+-- nextsetting
+-- }}}
+
+-- [[ Basic Keymaps ]] {{{
 --  See `:help vim.keymap.set()`
 
 -- Clear highlights on search when pressing <Esc> in normal mode
@@ -192,7 +205,13 @@ vim.keymap.set('n', '<C-l>', '<C-w><C-l>', { desc = 'Move focus to the right win
 vim.keymap.set('n', '<C-j>', '<C-w><C-j>', { desc = 'Move focus to the lower window' })
 vim.keymap.set('n', '<C-k>', '<C-w><C-k>', { desc = 'Move focus to the upper window' })
 
--- [[ My keybindings ]]
+-- }}}
+
+-- [[ My keybindings ]] {{{
+-- NOTE: I'm used to `,` as my <Leader>, so to avoid conflicts with Kickstart
+-- and Lazy's default keybindings, I'm keeping space as the leader and using
+-- literal `,` for my previous mappings, as I'm already used to them. For new
+-- ones, if they fit with Lazy's approach, use <Leader>, otherwise, ','.
 
 -- Go back to normal mode.
 vim.keymap.set('i', 'jf', '<Esc>', { desc = 'Go to normal mode' })
@@ -211,8 +230,8 @@ vim.keymap.set('n', ',x', ':x<CR>', { desc = 'Save and close the current buffer'
 vim.keymap.set('i', ',x', '<Esc>:x<CR>', { desc = 'Save and close the current buffer' })
 
 -- Port my most used mappings from VSCode.
-vim.keymap.set({ 'i', 'n', 'v' }, '<C-p>', ':Telescope find_files<CR>', { desc = 'Fuzzy search files in current folder' })
-vim.keymap.set({ 'i', 'n', 'v' }, '<C-t>', ':Telescope lsp_workspace_symbols<CR>', { desc = 'Fuzzy search workspace symbols' })
+vim.keymap.set('n', '<C-p>', ':Telescope find_files<CR>', { desc = 'Fuzzy search files in current folder' })
+vim.keymap.set('n', '<C-t>', ':Telescope lsp_dynamic_workspace_symbols<CR>', { desc = 'Fuzzy search workspace symbols' })
 
 -- Move between tabs.
 vim.keymap.set('n', '<M-j>', ':tabp<CR>', { desc = 'Move to the left tab' })
@@ -221,14 +240,14 @@ vim.keymap.set('i', '<M-j>', '<Esc>:tabp<CR>', { desc = 'Move to the left tab' }
 vim.keymap.set('i', '<M-k>', '<Esc>:tabn<CR>', { desc = 'Move to the right tab' })
 
 -- Easily open Neovim config files.
-vim.keymap.set('n', ',e', '<NOP>', { desc = '[E]dit' })
-vim.keymap.set('n', ',ev', '<NOP>', { desc = '[V]imrc' })
+-- vim.keymap.set('n', ',e', '<NOP>', { desc = '[E]dit' })
+-- vim.keymap.set('n', ',ev', '<NOP>', { desc = '[V]imrc' })
 vim.keymap.set('n', ',evv', ':vspl $MYVIMRC<CR>', { desc = '[E]dit [V]imrc in a [V]ertical split' })
 vim.keymap.set('n', ',evh', ':spl $MYVIMRC<CR>', { desc = '[E]dit [V]imrc in an [H]orizontal split' })
 vim.keymap.set('n', ',evt', ':tabe $MYVIMRC<CR>', { desc = '[E]dit [V]imrc in a new [T]ab' })
 
 -- Easily change colorschemes.
-vim.keymap.set('n', ',cc', ":lua require('telescope.builtin').colorscheme()<CR>", { desc = '[C]hange [C]olorscheme' })
+vim.keymap.set('n', '<Leader>cc', ":lua require('telescope.builtin').colorscheme()<CR>", { desc = '[C]hange [C]olorscheme' })
 
 -- Select file content.
 vim.keymap.set('n', ',a', 'ggVG', { desc = 'Select full file content' })
@@ -289,8 +308,9 @@ vim.keymap.set('n', ',l', 'V:lua<CR>', { desc = 'Eval current line using Lua' })
 vim.keymap.set('v', ',l', ':lua<CR>', { desc = 'Eval current selection using Lua' })
 
 -- nextkeymap,nextmapping
+-- }}}
 
--- [[ Abbreviations ]]
+-- [[ Abbreviations ]] {{{
 
 -- Shebangs.
 vim.cmd [[
@@ -352,8 +372,9 @@ vim.cmd [[
 vim.cmd 'cab h tab help'
 
 -- nextabbreviation
+-- }}}
 
--- [[ Basic Autocommands ]]
+-- [[ Basic Autocommands ]] {{{
 --  See `:help lua-guide-autocommands`
 
 -- Highlight when yanking (copying) text
@@ -367,7 +388,9 @@ vim.api.nvim_create_autocmd('TextYankPost', {
   end,
 })
 
--- [[ Install `lazy.nvim` plugin manager ]]
+-- }}}
+
+-- [[ Install `lazy.nvim` plugin manager ]] {{{
 --    See `:help lazy.nvim.txt` or https://github.com/folke/lazy.nvim for more info
 local lazypath = vim.fn.stdpath 'data' .. '/lazy/lazy.nvim'
 if not (vim.uv or vim.loop).fs_stat(lazypath) then
@@ -379,7 +402,9 @@ if not (vim.uv or vim.loop).fs_stat(lazypath) then
 end ---@diagnostic disable-next-line: undefined-field
 vim.opt.rtp:prepend(lazypath)
 
--- [[ Configure and install plugins ]]
+-- }}}
+
+-- [[ Configure and install plugins ]] {{{
 --
 --  To check the current status of your plugins, run
 --    :Lazy
@@ -391,7 +416,7 @@ vim.opt.rtp:prepend(lazypath)
 --
 -- NOTE: Here is where you install your plugins.
 require('lazy').setup({
-  -- NOTE: Plugins can be added with a link (or for a github repo: 'owner/repo' link).
+  -- NOTE: Plugins can be added with a link (or for a github repo: 'owner/repo' link).{{{
   'tpope/vim-sleuth', -- Detect tabstop and shiftwidth automatically
 
   -- NOTE: Plugins can also be added by using a table,
@@ -851,7 +876,7 @@ require('lazy').setup({
       --        For example, to see the options for `lua_ls`, you could go to: https://luals.github.io/wiki/settings/
       local servers = {
         -- clangd = {},
-        -- gopls = {},
+        gopls = {},
         pyright = {},
         -- rust_analyzer = {},
         -- ... etc. See `:help lspconfig-all` for a list of all the pre-configured LSPs
@@ -1052,7 +1077,7 @@ require('lazy').setup({
 
       -- Chose your mode here. Options are 'time_based', 'dark', 'light'.
       --  time_based: the colorscheme will be chosen based on the time of the day.
-      vim.g.colorscheme_mode = 'dark'
+      vim.g.colorscheme_mode = 'time_based'
       vim.g.colorscheme_mode_dark = 'tokyonight-night'
       vim.g.colorscheme_mode_light = 'tokyonight-day'
 
@@ -1121,6 +1146,7 @@ require('lazy').setup({
         additional_vim_regex_highlighting = { 'ruby' },
       },
       indent = { enable = true, disable = { 'ruby' } },
+      -- TODO: Figure out how to actually enable this.
       incremental_selection = {
         enable = true,
         keymaps = {
@@ -1130,6 +1156,10 @@ require('lazy').setup({
           node_decremental = 'grm',
         },
       },
+    },
+    dependencies = {
+      { 'nvim-treesitter/nvim-treesitter-context' },
+      { 'nvim-treesitter/nvim-treesitter-textobjects' },
     },
     -- There are additional nvim-treesitter modules that you can use to interact
     -- with nvim-treesitter. You should go explore a few and see what interests you:
@@ -1166,7 +1196,7 @@ require('lazy').setup({
   -- In normal mode type `<space>sh` then write `lazy.nvim-plugin`
   -- you can continue same window with `<space>sr` which resumes last telescope search
 
-  -- nextplugin
+  -- nextplugin}}}
 }, {
   ui = {
     -- If you are using a Nerd Font: set icons to an empty table which will use the
@@ -1188,5 +1218,7 @@ require('lazy').setup({
     },
   },
 })
+
+-- }}}
 
 -- vim: tw=80 ts=2 sts=2 sw=2 et ai ff=unix fixeol eol fenc=utf-8 fdm=marker fdl=0 fen
