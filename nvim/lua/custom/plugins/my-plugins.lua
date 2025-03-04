@@ -11,13 +11,13 @@ return {
 
   -- NOTE: Might not be necessary, as current defaults already support my needs.
   -- Simplify (un)commenting stuff out.
-  -- { 'tpope/vim-commentary', lazy = true },
+  -- { 'tpope/vim-commentary' },
 
   -- Improve repeat support (e.g. for surrounding stuff).
   { 'tpope/vim-repeat' },
 
-  -- Simplify jumping to stuff. Made by a NeoVim maintainer.
   {
+    -- Simplify jumping to stuff. Made by a NeoVim maintainer.
     'justinmk/vim-sneak',
     init = function()
       vim.g['sneak#label'] = true
@@ -31,8 +31,11 @@ return {
     end,
   },
 
-  -- Align stuff.
+  -- Copilot support.
+  { 'github/copilot.vim' },
+
   {
+    -- Align stuff.
     'junegunn/vim-easy-align',
     config = function()
       -- Start interactive EasyAlign in visual mode (e.g. vipga)
@@ -43,11 +46,16 @@ return {
     end,
   },
 
+  { 'vim-airline/vim-airline' },
+
   --
   --
   -- COLORSCHEMES
   --
 
+  { 'folke/tokyonight.nvim' },
+  { 'altercation/vim-colors-solarized' },
+  { 'sjl/badwolf' },
   { 'tpope/vim-vividchalk' },
 
   --
@@ -57,13 +65,15 @@ return {
 
   {
     'Olical/conjure',
-    ft = { 'clojure', 'fennel', 'python', 'racket' }, -- etc
+    ft = { 'clojure', 'fennel', 'python', 'racket', 'lua' }, -- etc
     lazy = true,
     init = function()
       -- Set configuration options here
       -- Uncomment this to get verbose logging to help diagnose internal Conjure issues
       -- This is VERY helpful when reporting an issue with the project
       -- vim.g["conjure#debug"] = true
+
+      vim.g['conjure#extract#tree_sitter#enabled'] = true
 
       -- vim.g['conjure#client_on_load'] = false
       vim.g['conjure#log#jump_to_latest#enabled'] = false
@@ -132,5 +142,11 @@ return {
       -- vim.g['fsharp#fsi_command'] = 'dotnet fsi --compilertool:~/.nuget/packages/paket/8.0.3/tools/netcoreapp2.1/any/'
       -- vim.g['fsharp#use_sdk_scripts'] = false -- for net462 FSI
     end,
+  },
+
+  {
+    -- Golang.
+    'fatih/vim-go',
+    ft = { 'go' }, -- etc
   },
 }
