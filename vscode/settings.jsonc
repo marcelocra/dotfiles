@@ -83,8 +83,21 @@
 
   //
   //
-  // F# / FSharp
+  // dotnet / .NET
+  // F# / FSharp /
+  // C# / CSharp / AspNetCore / Razor
   //
+
+  "dotnetAcquisitionExtension.enableTelemetry": false,
+
+  "dotnetAcquisitionExtension.sharedExistingDotnetPath": "/home/marcelocra/bin/dotnet",
+  "dotnetAcquisitionExtension.existingDotnetPath": [
+    {
+      "extensionId": "ms-azuretools.vscode-azure-github-copilot",
+      // "path": "/home/marcelocra/bin/binaries/dotnet/dotnet-v9.0.102/dotnet"
+      "path": "/home/marcelocra/bin/binaries/dotnet/dotnet-v8.0.405/dotnet"
+    }
+  ],
 
   "FSharp.smartIndent": true,
   "FSharp.inlayHints.parameterNames": false,
@@ -95,11 +108,6 @@
   },
   "FSharp.addFsiWatcher": true,
   "FSharp.autoRevealInExplorer": "disabled",
-
-  //
-  //
-  // C# / CSharp / AspNetCore / Razor
-  //
 
   "[csharp]": {
     "editor.defaultFormatter": "ms-dotnettools.csharp"
@@ -179,6 +187,9 @@
   //
 
   "go.formatTool": "goimports",
+  "[go][go.mod][go.sum][gotmpl][go.work]": {
+    "editor.defaultFormatter": "golang.go"
+  },
 
   //
   //
@@ -389,9 +400,11 @@
   //
 
   "vim.leader": ",",
+
   "vim.easymotion": true,
-  "vim.sneak": true,
+  "vim.sneak": false,
   "vim.surround": true,
+
   "vim.incsearch": true,
   "vim.useSystemClipboard": true,
   "vim.useCtrlKeys": true,
@@ -806,10 +819,10 @@
       "before": ["/", "/"],
       "after": ["y", "/", "<c-r>", "*", "<cr>"]
     },
-    {
-      "before": ["<c-v>"],
-      "after": ["p"]
-    },
+    // {
+    //   "before": ["<c-v>"],
+    //   "after": ["p"]
+    // },
     {
       "before": [">"],
       "commands": ["editor.action.indentLines"]
@@ -949,9 +962,10 @@
   //#endregion
 
   //#region Cascadia
-  // "editor.fontFamily": "'Cascadia Code NF', 'CaskaydiaCove NF'",
-  // "editor.fontSize": 14, // edn{:desktop 13 :notebook 19 :small 11}
+  // "editor.fontFamily": "Cascadia Code NF",
+  // "editor.fontSize": 13, // edn{:desktop 13 :notebook 19 :small 11}
   // "editor.fontWeight": "400", // edn{:desktop "300" :notebook "300" :small "100"}
+  // "editor.fontLigatures": "'zero'",
   // "editor.fontLigatures": "'calt', 'ss01', 'ss19', 'ss20', 'cv01' 3",
   //#region Available stylistic sets:
   // // - cursive italics: 'ss01'
@@ -992,13 +1006,13 @@
 
   // JetBrainsMono font
   //
-  "editor.fontFamily": "'JetBrainsMono Nerd Font', 'RecMonoDuotone Nerd Font', 'Liberation Mono', 'DejaVu Sans Mono', monospace",
-  "editor.fontSize": 13, // edn{:desktop 13 :notebook ?? :small 11}
-  "editor.fontWeight": "400", // edn{:desktop "200" :notebook "??" :small "100"}
+  // "editor.fontFamily": "JetBrainsMono Nerd Font",
+  // "editor.fontSize": 13, // edn{:desktop 13 :notebook ?? :small 11}
+  // "editor.fontWeight": "400", // edn{:desktop "200" :notebook "??" :small "100"}
   // // Minimal.
   // "editor.fontLigatures": "'ss01', 'ss19', 'ss20', 'zero', 'cv99'",
   // Very different from the default, using the closed construction set (ss02) and some alternative ligatures for g (03), j (04), Q (16), 269 (18), 8 (19) 5 (20), and some inverted color ligatures (99).
-  "editor.fontLigatures": "'ss02', 'ss19', 'ss20', 'zero', 'cv03', 'cv04', 'cv16', 'cv18', 'cv19', 'cv20', 'cv99'",
+  // "editor.fontLigatures": "'ss02', 'ss19', 'ss20', 'zero', 'cv03', 'cv04', 'cv16', 'cv18', 'cv19', 'cv20', 'cv99'",
   // // Available stylistic sets:
   // // - | cv01,05: l | cv02: t | cv03: g | cv04: j | cv06: m  | cv07: w | cv08: k
   // // - | cv09,17: f | cv10: r | cv11: y | cv12: u | cv14: $¢ | cv15: & | cv16: Q
@@ -1032,9 +1046,10 @@
 
   // Recursive font
   //
-  // "editor.fontFamily": "RecMonoDuotone Nerd Font",
-  // "editor.fontSize": 12, // edn{:desktop 13 :notebook ?? :small 11}
+  "editor.fontFamily": "Rec Mono Duotone",
+  "editor.fontSize": 15, // edn{:desktop 13 :notebook ?? :small 11}
   // // Some customizations that I like. See details below.
+  "editor.fontLigatures": "true",
   // "editor.fontLigatures": "'ss01', 'ss02', 'ss03', 'ss04', 'ss05', 'ss06', 'ss07', 'ss11', 'ss12', 'case', 'frac' 0",
   // "editor.fontLigatures": "'ss04', 'ss05', 'ss12', 'case', 'frac' 0",
   // // - dlig: ligatures - => && === ff it ti (more below)
@@ -1323,10 +1338,11 @@
   // "terminal.integrated.fontWeight": "400",
 
   // Try a bunch of variations of JetBrains Mono, which is great for terminal. Add fallbacks if it is not available.
-  "terminal.integrated.fontFamily": "'JetBrainsMono Nerd Font', 'JetBrainsMono NF', 'JetBrains Mono Nerd Font', 'JetBrains Mono NF', 'JetBrains Mono', 'Liberation Mono', 'DejaVu Sans Mono', monospace",
-  "terminal.integrated.fontSize": 13,
-  "terminal.integrated.fontWeight": "300",
-  "terminal.integrated.fontLigatures": true,
+  "terminal.integrated.fontFamily": "'JetBrainsMono Nerd Font', 'Cascadia Code NF', 'JetBrainsMono NF', 'JetBrains Mono Nerd Font', 'JetBrains Mono NF', 'MesloLGM Nerd Font Mono', 'MesloLGS Nerd Font Mono', 'JetBrains Mono', 'Liberation Mono', 'DejaVu Sans Mono', monospace",
+  "terminal.integrated.fontSize": 17,
+  "terminal.integrated.fontWeight": "400",
+  "terminal.integrated.fontLigatures.enabled": true,
+  "terminal.integrated.fontLigatures.featureSettings": "'zero'",
 
   // "terminal.integrated.fontFamily": "RecMonoLinear Nerd Font",
   // "terminal.integrated.fontFamily": "MesloLGS Nerd Font Mono",
@@ -1344,10 +1360,7 @@
   "terminal.integrated.cursorBlinking": true,
   "terminal.integrated.mouseWheelZoom": true,
 
-  "terminal.external.linuxExec": "kitty",
   "terminal.integrated.enableFileLinks": "notRemote",
-  "terminal.integrated.fontLigatures.enabled": true,
-  "terminal.integrated.fontLigatures.featureSettings": "",
   "terminal.integrated.gpuAcceleration": "on",
   "terminal.integrated.localEchoExcludePrograms": ["vim", "vi", "nano", "tmux", "nvim"],
   "terminal.integrated.smoothScrolling": true,
@@ -1355,6 +1368,10 @@
   "terminal.integrated.suggest.enabled": true,
   "terminal.integrated.tabs.defaultColor": "terminal.ansiMagenta",
   "terminal.integrated.tabs.location": "left",
+
+  "terminal.external.linuxExec": "kitty",
+  "terminal.external.osxExec": "kitty.app",
+  "terminal.external.windowsExec": "C:\\Windows\\System32\\kitty.exe",
 
   //
   //
