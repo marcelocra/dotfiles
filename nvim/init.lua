@@ -1150,10 +1150,10 @@ require('lazy').setup({
       incremental_selection = {
         enable = true,
         keymaps = {
-          init_selection = 'gnn',
-          node_incremental = 'grn',
+          init_selection = '<M-S-k>',
           scope_incremental = 'grc',
-          node_decremental = 'grm',
+          node_incremental = '<M-S-k>',
+          node_decremental = '<M-S-j>',
         },
       },
     },
