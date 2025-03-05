@@ -919,8 +919,16 @@ require('lazy').setup({
       -- for you, so that they are available from within Neovim.
       local ensure_installed = vim.tbl_keys(servers or {})
       vim.list_extend(ensure_installed, {
-        'stylua', -- Used to format Lua code
-        'ruff', -- Used to format Python code
+        -- Original Kickstart provided tool.
+        'stylua', -- Lua formatter.
+
+        -- Other tools I installed.
+        'ruff', -- Python formatter.
+        'fantomas', -- F# formatter.
+        'fsautocomplete', -- F# Official LSP.
+        'clj-kondo', -- Clojure static analyzer and linter.
+        'cljfmt', -- Clojure formatter.
+        'prettier', -- JavaScript, TypeScript, HTML, CSS, JSX formatter.
       })
       require('mason-tool-installer').setup { ensure_installed = ensure_installed }
 
@@ -1135,7 +1143,41 @@ require('lazy').setup({
     main = 'nvim-treesitter.configs', -- Sets main module to use for opts
     -- [[ Configure Treesitter ]] See `:help nvim-treesitter`
     opts = {
-      ensure_installed = { 'bash', 'c', 'diff', 'html', 'lua', 'luadoc', 'markdown', 'markdown_inline', 'query', 'vim', 'vimdoc' },
+      -- stylua: ignore
+      ensure_installed = {
+
+        -- Languages initially provided by Kickstart. {{{
+        'bash',            -- [Official] https://github.com/tree-sitter/tree-sitter-bash
+        'c',               -- [Official] https://github.com/tree-sitter/tree-sitter-c
+        'diff',            -- [Kickstart] https://github.com/the-mikedavis/tree-sitter-diff
+        'html',            -- [Official] https://github.com/tree-sitter/tree-sitter-html
+        -- It was: https://github.com/MunifTanjim/tree-sitter-lua
+        'lua',             -- [Kickstart] https://github.com/tree-sitter-grammars/tree-sitter-lua
+        -- It was: https://github.com/amaanq/tree-sitter-luadoc
+        'luadoc',          -- [Kickstart] https://github.com/tree-sitter-grammars/tree-sitter-luadoc
+        'markdown',        -- [Kickstart] https://github.com/tree-sitter-grammars/tree-sitter-markdown
+        'markdown_inline', -- [Kickstart] https://github.com/tree-sitter-grammars/tree-sitter-markdown
+        -- It was: https://github.com/nvim-treesitter/tree-sitter-query
+        'query',           -- [Kickstart] https://github.com/tree-sitter-grammars/tree-sitter-query
+        'vim',             -- https://github.com/neovim/tree-sitter-vim
+        'vimdoc',          -- https://github.com/neovim/tree-sitter-vimdoc
+        -- }}}
+        -- My additional languages. {{{
+        'c_sharp',         -- [Official] https://github.com/tree-sitter/tree-sitter-c-sharp
+        'css',             -- [Official] https://github.com/tree-sitter/tree-sitter-css
+        'fsharp',          -- [Ionide] https://github.com/ionide/tree-sitter-fsharp
+        'go',              -- [Official] https://github.com/tree-sitter/tree-sitter-go
+        'javascript',      -- [Official] https://github.com/tree-sitter/tree-sitter-javascript
+        'ocaml',           -- [Official] https://github.com/tree-sitter/tree-sitter-ocaml
+        'python',          -- [Official] https://github.com/tree-sitter/tree-sitter-python
+        'rust',            -- [Official] https://github.com/tree-sitter/tree-sitter-rust
+        'typescript',      -- [Official] https://github.com/tree-sitter/tree-sitter-typescript
+        -- }}}
+        -- Other languages that I might need one day. {{{
+        -- 'yaml', -- https://github.com/tree-sitter-grammars/tree-sitter-yaml
+        -- }}}
+
+      },
       -- Autoinstall languages that are not installed
       auto_install = true,
       highlight = {
