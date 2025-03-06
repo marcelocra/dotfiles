@@ -1421,7 +1421,41 @@
 
   //
   //
+  // Misc
+  //
+  // Random one-off settings that doesn't make sense to put in a separate
+  // category.
+  //
+
+  "diffEditor.ignoreTrimWhitespace": true,
+  "diffEditor.renderSideBySide": true,
+  "html.suggest.html5": false,
+  "outline.collapseItems": "alwaysExpand",
+  "problems.showCurrentInStatus": true,
+  "scm.compactFolders": false,
+  "scm.diffDecorationsGutterWidth": 5,
+  "telemetry.telemetryLevel": "off",
+
+  "[log][Log]": {
+    "editor.fontSize": 11,
+    "editor.fontWeight": "400"
+
+    // "editor.fontFamily": "JetBrains Mono",
+    // "editor.fontSize": 11,
+    // "editor.fontWeight": "300"
+    // "editor.fontLigatures": "'ss02', 'ss19', 'ss20', 'zero', 'cv03', 'cv04', 'cv16', 'cv19', 'cv20', 'cv99'"
+  },
+  "workbench.activityBar.location": "top",
+  "extensions.experimental.affinity": {
+    "vscodevim.vim": 1
+  },
+  "@azure.argTenant": "",
+  "dev.containers.dockerPath": "podman",
+
+  //
+  //
   // MARK: Workbench
+  // #region
   //
 
   "workbench.colorCustomizations": {
@@ -1601,36 +1635,8 @@
   "workbench.panel.defaultLocation": "bottom",
   "workbench.editor.pinnedTabsOnSeparateRow": false,
 
-  //
-  //
-  // Misc
-  //
-  // Random one-off settings that doesn't make sense to put in a separate
-  // category.
-  //
+  "workbench.colorTheme": "Tokyo Night Light"
 
-  "diffEditor.ignoreTrimWhitespace": true,
-  "diffEditor.renderSideBySide": true,
-  "html.suggest.html5": false,
-  "outline.collapseItems": "alwaysExpand",
-  "problems.showCurrentInStatus": true,
-  "scm.compactFolders": false,
-  "scm.diffDecorationsGutterWidth": 5,
-  "telemetry.telemetryLevel": "off",
-
-  "[log][Log]": {
-    "editor.fontSize": 11,
-    "editor.fontWeight": "400"
-
-    // "editor.fontFamily": "JetBrains Mono",
-    // "editor.fontSize": 11,
-    // "editor.fontWeight": "300"
-    // "editor.fontLigatures": "'ss02', 'ss19', 'ss20', 'zero', 'cv03', 'cv04', 'cv16', 'cv19', 'cv20', 'cv99'"
-  },
-  "workbench.activityBar.location": "top",
-  "extensions.experimental.affinity": {
-    "vscodevim.vim": 1
-  },
-  "@azure.argTenant": "",
-  "workbench.colorTheme": "Tokyo Night Storm"
+  // #endregion
+  //
 }
