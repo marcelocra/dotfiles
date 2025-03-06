@@ -16,19 +16,34 @@ return {
   -- Improve repeat support (e.g. for surrounding stuff).
   { 'tpope/vim-repeat' },
 
+  -- {
+  --   -- Simplify jumping to stuff. Made by a NeoVim maintainer.
+  --   'justinmk/vim-sneak',
+  --   init = function()
+  --     vim.g['sneak#label'] = true
+  --     vim.g['sneak#s_next'] = true
+  --   end,
+  --   config = function()
+  --     vim.keymap.set('n', 'f', '<Plug>Sneak_f', { desc = 'Replaces f with Sneak_f' })
+  --     vim.keymap.set('n', 'F', '<Plug>Sneak_F', { desc = 'Replaces F with Sneak_F' })
+  --     vim.keymap.set('n', 't', '<Plug>Sneak_t', { desc = 'Replaces t with Sneak_t' })
+  --     vim.keymap.set('n', 'T', '<Plug>Sneak_T', { desc = 'Replaces T with Sneak_T' })
+  --   end,
+  -- },
+
   {
-    -- Simplify jumping to stuff. Made by a NeoVim maintainer.
-    'justinmk/vim-sneak',
-    init = function()
-      vim.g['sneak#label'] = true
-      vim.g['sneak#s_next'] = true
-    end,
-    config = function()
-      vim.keymap.set('n', 'f', '<Plug>Sneak_f', { desc = 'Replaces f with Sneak_f' })
-      vim.keymap.set('n', 'F', '<Plug>Sneak_F', { desc = 'Replaces F with Sneak_F' })
-      vim.keymap.set('n', 't', '<Plug>Sneak_t', { desc = 'Replaces t with Sneak_t' })
-      vim.keymap.set('n', 'T', '<Plug>Sneak_T', { desc = 'Replaces T with Sneak_T' })
-    end,
+    'folke/flash.nvim',
+    event = 'VeryLazy',
+    ---@type Flash.Config
+    opts = {},
+    -- stylua: ignore
+    keys = {
+      { "s", mode = { "n", "x", "o" }, function() require("flash").jump() end, desc = "Flash" },
+      { "S", mode = { "n", "x", "o" }, function() require("flash").treesitter() end, desc = "Flash Treesitter" },
+      { "r", mode = "o", function() require("flash").remote() end, desc = "Remote Flash" },
+      { "R", mode = { "o", "x" }, function() require("flash").treesitter_search() end, desc = "Treesitter Search" },
+      { "<c-s>", mode = { "c" }, function() require("flash").toggle() end, desc = "Toggle Flash Search" },
+    },
   },
 
   -- Copilot support.
