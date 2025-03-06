@@ -1,3 +1,5 @@
+-- vim: tw=80 ts=2 sts=2 sw=2 et ai ff=unix fixeol eol fenc=utf-8 fdm=marker fdl=0 fen
+
 -- [[ Kickstart Welcome ]] {{{
 --[[
 
@@ -846,6 +848,10 @@ require('lazy').setup({
               vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled { bufnr = event.buf })
             end, '[T]oggle Inlay [H]ints')
           end
+
+          map('gh', vim.lsp.buf.hover, '[G]oto [H]over')
+
+          -- nextlspconfig
         end,
       })
 
@@ -922,6 +928,14 @@ require('lazy').setup({
             },
           },
         },
+
+        -- My lsps.
+
+        fsautocomplete = {}, -- F#.
+        clojure_lsp = {},
+        ocamllsp = {},
+
+        -- Next lsp server here.
       }
 
       -- Ensure the servers and tools above are installed
@@ -938,17 +952,33 @@ require('lazy').setup({
       -- You can add other tools here that you want Mason to install
       -- for you, so that they are available from within Neovim.
       local ensure_installed = vim.tbl_keys(servers or {})
+      -- stylua: ignore
       vim.list_extend(ensure_installed, {
-        -- Original Kickstart provided tool.
-        'stylua', -- Lua formatter.
+        -- TIP: Use 'gai<curlies>,' to re-aling.
 
-        -- Other tools I installed.
-        'ruff', -- Python formatter.
-        'fantomas', -- F# formatter.
-        'fsautocomplete', -- F# Official LSP.
-        'clj-kondo', -- Clojure static analyzer and linter.
-        'cljfmt', -- Clojure formatter.
-        'prettier', -- JavaScript, TypeScript, HTML, CSS, JSX formatter.
+        -- Original Kickstart provided tool
+        -----------------------------------
+
+        'stylua',         -- Lua formatter.
+
+
+        -- Other tools I installed
+        --------------------------
+
+        'ruff',           -- Python formatter.
+
+        -- F#.
+        'fantomas',       -- Formatter.
+        'fsautocomplete', -- Official LSP.
+
+        -- Clojure.
+        'clj-kondo',      -- Static analyzer and linter.
+        'cljfmt',         -- Formatter.
+
+        -- Java
+        'prettier',       -- JavaScript, TypeScript, HTML, CSS, JSX formatter.
+
+        -- Next tool here. Use 'gai<curlies>,' to re-aling.
       })
       require('mason-tool-installer').setup { ensure_installed = ensure_installed }
 
@@ -1107,7 +1137,8 @@ require('lazy').setup({
       --  time_based: the colorscheme will be chosen based on the time of the day.
       vim.g.colorscheme_mode = 'time_based'
       vim.g.colorscheme_mode_dark = 'tokyonight-night'
-      vim.g.colorscheme_mode_light = 'tokyonight-day'
+      -- vim.g.colorscheme_mode_light = 'tokyonight-day'
+      vim.g.colorscheme_mode_light = 'tokyonight-storm'
 
       vim.cmd.colorscheme(require('custom.time-based-colorscheme').define_colorscheme())
 
@@ -1125,26 +1156,25 @@ require('lazy').setup({
   --     config = function()
   --         -- Better Around/Inside textobjects
   --         --
-  --         -- Examples:
   --         --  - va)  - [V]isually select [A]round [)]paren
   --         --  - yinq - [Y]ank [I]nside [N]ext [Q]uote
   --         --  - ci'  - [C]hange [I]nside [']quote
-  --         require('mini.ai').setup { n_lines = 500 }
-
+  --         -- require('mini.ai').setup { n_lines = 500 }
+  --
   --         -- Add/delete/replace surroundings (brackets, quotes, etc.)
   --         --
   --         -- - saiw) - [S]urround [A]dd [I]nner [W]ord [)]Paren
   --         -- - sd'   - [S]urround [D]elete [']quotes
   --         -- - sr)'  - [S]urround [R]eplace [)] [']
-  --         require('mini.surround').setup()
-
+  --         -- require('mini.surround').setup()
+  --
   --         -- Simple and easy statusline.
   --         --  You could remove this setup call if you don't like it,
   --         --  and try some other statusline plugin
   --         local statusline = require 'mini.statusline'
   --         -- set use_icons to true if you have a Nerd Font
   --         statusline.setup { use_icons = vim.g.have_nerd_font }
-
+  --
   --         -- You can configure sections in the statusline by overriding their
   --         -- default behavior. For example, here we set the section for
   --         -- cursor location to LINE:COLUMN
@@ -1152,11 +1182,12 @@ require('lazy').setup({
   --         statusline.section_location = function()
   --             return '%2l:%-2v'
   --         end
-
+  --
   --         -- ... and there is more!
   --         --  Check out: https://github.com/echasnovski/mini.nvim
   --     end,
   -- },
+
   { -- Highlight, edit, and navigate code
     'nvim-treesitter/nvim-treesitter',
     build = ':TSUpdate',
@@ -1166,7 +1197,9 @@ require('lazy').setup({
       -- stylua: ignore
       ensure_installed = {
 
-        -- Languages initially provided by Kickstart. {{{
+        -- Languages initially provided by Kickstart
+        --------------------------------------------
+
         'bash',            -- [Official] https://github.com/tree-sitter/tree-sitter-bash
         'c',               -- [Official] https://github.com/tree-sitter/tree-sitter-c
         'diff',            -- [Kickstart] https://github.com/the-mikedavis/tree-sitter-diff
@@ -1181,8 +1214,10 @@ require('lazy').setup({
         'query',           -- [Kickstart] https://github.com/tree-sitter-grammars/tree-sitter-query
         'vim',             -- https://github.com/neovim/tree-sitter-vim
         'vimdoc',          -- https://github.com/neovim/tree-sitter-vimdoc
-        -- }}}
-        -- My additional languages. {{{
+
+        -- My additional languages
+        --------------------------
+
         'c_sharp',         -- [Official] https://github.com/tree-sitter/tree-sitter-c-sharp
         'css',             -- [Official] https://github.com/tree-sitter/tree-sitter-css
         'fsharp',          -- [Ionide] https://github.com/ionide/tree-sitter-fsharp
@@ -1192,10 +1227,14 @@ require('lazy').setup({
         'python',          -- [Official] https://github.com/tree-sitter/tree-sitter-python
         'rust',            -- [Official] https://github.com/tree-sitter/tree-sitter-rust
         'typescript',      -- [Official] https://github.com/tree-sitter/tree-sitter-typescript
-        -- }}}
-        -- Other languages that I might need one day. {{{
-        -- 'yaml', -- https://github.com/tree-sitter-grammars/tree-sitter-yaml
-        -- }}}
+        'tsx',             -- [Official] https://github.com/tree-sitter/tree-sitter-typescript
+        'json',            -- [Official] https://github.com/tree-sitter/tree-sitter-json
+        'regex',           -- [Official] https://github.com/tree-sitter/tree-sitter-regex
+
+        -- Other languages that I might need one day
+        --------------------------------------------
+
+        'yaml',            -- https://github.com/tree-sitter-grammars/tree-sitter-yaml
 
       },
       -- Autoinstall languages that are not installed
@@ -1208,7 +1247,6 @@ require('lazy').setup({
         additional_vim_regex_highlighting = { 'ruby' },
       },
       indent = { enable = true, disable = { 'ruby' } },
-      -- TODO: Figure out how to actually enable this.
       incremental_selection = {
         enable = true,
         keymaps = {
@@ -1282,5 +1320,3 @@ require('lazy').setup({
 })
 
 -- }}}
-
--- vim: tw=80 ts=2 sts=2 sw=2 et ai ff=unix fixeol eol fenc=utf-8 fdm=marker fdl=0 fen
