@@ -311,6 +311,22 @@ vim.cmd 'inoremap <a-t> <c-r>=strftime("%Hh%M")<cr>'
 vim.keymap.set('n', '<Leader>el', 'V:lua<CR>', { desc = 'Eval current line using Lua' })
 vim.keymap.set('v', '<Leader>el', ':lua<CR>', { desc = 'Eval current selection using Lua' })
 
+-- Use normal regex.
+vim.keymap.set({ 'n', 'v' }, '/', '/\\v\\c', { desc = 'Use normal regex' })
+
+-- Move vertically by visual line (not jumping long lines).
+vim.keymap.set({ 'n', 'v' }, 'j', 'gj', { desc = 'Move down by visual line' })
+vim.keymap.set({ 'n', 'v' }, 'k', 'gk', { desc = 'Move up by visual line' })
+vim.keymap.set({ 'n', 'v' }, '$', 'g$', { desc = 'Move to the end of the line' })
+vim.keymap.set({ 'n', 'v' }, '0', 'g0', { desc = 'Move to the beginning of the line' })
+
+-- Highlight last inserted text.
+vim.keymap.set('n', 'gV', '`[v`]')
+
+-- Allow fast indenting when there is a chunck of text selected.
+vim.keymap.set('v', '<', '<gv', { desc = 'Indent selected text to the left' })
+vim.keymap.set('v', '>', '>gv', { desc = 'Indent selected text to the right' })
+
 -- nextkeymap,nextmapping
 -- }}}
 
