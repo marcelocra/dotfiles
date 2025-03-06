@@ -741,6 +741,18 @@ alias venv_activate='source .venv/bin/activate'
 
 alias list_mono_fonts='fc-list : family spacing outline scalable | grep -e spacing=100 -e spacing=90 | grep -e outline=True | grep -e scalable=True'
 
+# List processes using the most memory.
+alias mem_sed='ps -eo pid,comm,rss --sort=-rss \
+    | awk '\''{ printf "%-10s %-20s %-10s\n", $1, $2, $3/1024 }'\'' \
+    | column -t \
+    | sed -E "s/^(PID.*)0/\1MEM/"'
+
+# Same as above, but allow awk to print the first line (header).
+alias mem='ps -eo pid,comm,rss --sort=-rss \
+    | awk '\''NR == 1 { printf "%-10s %-20s %-10s\n", $1, $2, $3 } \
+              NR  > 1 { printf "%-10s %-20s %-10s\n", $1, $2, $3/1024 }'\'' \
+    | column -t'
+
 ## nextnextalias
 
 # next alias above, unless they fit in one of the other sections.
