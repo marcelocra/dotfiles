@@ -33,7 +33,7 @@ ansi_escape = re.compile(
           [@-~]       # Final byte
       | \]             # OSC sequences:
           [^\x1B\x07]*  # Any characters except ESC and BEL
-          (?:\x1B\\|\x07|\x1B)  # Terminated by ESC\ or BEL or a lone ESC
+          (?:\x1B\\\|\x07|\x1B)  # Terminated by ESC\ or BEL or a lone ESC
     )
     """,
     re.VERBOSE,
