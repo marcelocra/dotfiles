@@ -962,11 +962,11 @@
   //#endregion
 
   //#region Cascadia
-  "editor.fontFamily": "Cascadia Code NF",
-  "editor.fontSize": 15, // edn{:desktop 13 :notebook 19 :small 11}
-  "editor.fontWeight": "400", // edn{:desktop "300" :notebook "300" :small "100"}
-  // 'calt' and 'cv01' 3 were here, don't know why... don't seem to do anything.
-  "editor.fontLigatures": "'ss01', 'ss19', 'ss20'",
+  // "editor.fontFamily": "Cascadia Code NF",
+  // "editor.fontSize": 15, // edn{:desktop 13 :notebook 19 :small 11}
+  // "editor.fontWeight": "400", // edn{:desktop "300" :notebook "300" :small "100"}
+  // // 'calt' and 'cv01' 3 were here, don't know why... don't seem to do anything.
+  // "editor.fontLigatures": "'ss01', 'ss19', 'ss20'",
   //#region Available stylistic sets:
   // // - cursive italics: 'ss01'
   // // - alternate not equal: 'ss02' ~= (appears as !=)
@@ -992,11 +992,11 @@
 
   // Source Code Pro
   //
-  // "editor.fontFamily": "SourceCodeVF",
+  "editor.fontFamily": "SourceCodeVF",
   // "editor.fontSize": 19, // edn{:desktop 15 :notebook ?? :small 11}
-  // "editor.fontWeight": "400", // edn{:desktop "400" :notebook "??" :small "100"}
+  "editor.fontWeight": "450", // edn{:desktop "400" :notebook "??" :small "100"}
   // "editor.fontLigatures": "'cv17', 'zero'",
-  // "editor.fontLigatures": "'cv01', 'cv02', 'cv17', 'zero'",
+  "editor.fontLigatures": "'cv01', 'cv02', 'cv17', 'zero'",
   // // Available stylistic sets:
   // // - | cv01 and cv02: clearer 'a' and 'g'
   // // - | cv08: alternate &
