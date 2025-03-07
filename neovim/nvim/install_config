@@ -1,0 +1,5 @@
+#!/usr/bin/env sh
+
+mv $HOME/.config/nvim{,.$(date +'%F_%T' | tr ':' '-').bak}
+ln -s $HOME/projects/dotfiles/neovim/nvim $HOME/.config/nvim
+

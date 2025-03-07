@@ -177,7 +177,7 @@ vim.opt.colorcolumn = { '+1', '+21', '+41' }
 -- nextsetting
 -- }}}
 
--- [[ Basic Keymaps ]] {{{
+-- [[ Basic keymaps ]] {{{
 --  See `:help vim.keymap.set()`
 
 -- Clear highlights on search when pressing <Esc> in normal mode
@@ -213,7 +213,7 @@ vim.keymap.set('n', '<C-k>', '<C-w><C-k>', { desc = 'Move focus to the upper win
 
 -- }}}
 
--- [[ My keybindings ]] {{{
+-- [[ My keymaps ]] {{{
 -- NOTE: I'm used to `,` as my <Leader>, so to avoid conflicts with Kickstart
 -- and Lazy's default keybindings, I'm keeping space as the leader and using
 -- literal `,` for my previous mappings, as I'm already used to them. For new
@@ -396,7 +396,7 @@ vim.cmd 'cab h tab help'
 -- nextabbreviation
 -- }}}
 
--- [[ Basic Autocommands ]] {{{
+-- [[ Basic autocommands ]] {{{
 --  See `:help lua-guide-autocommands`
 
 -- Highlight when yanking (copying) text
