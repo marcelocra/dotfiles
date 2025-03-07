@@ -10,13 +10,12 @@ tmpfile=$(mktemp /tmp/kitty-nvim-tempfile.XXXXXX)
 cat > "$tmpfile"
 
 # Cleanup control sequences and open nvim.
-file_to_run="$(mktemp)" && cat <<EOF > "$file_to_run" && python3 "$file_to_run"
+file_to_run="$(mktemp)" && cat <<'EOF' > "$file_to_run"
 
 import re
 import sys
 
-with open('$tmpfile', 'r') as f:
-    input_text = f.read()
+input_text = sys.stdin.read()
 
 if not input_text:
     print("No input provided")
@@ -24,35 +23,31 @@ if not input_text:
 
 ansi_escape = re.compile(
     r"""
-    \x1B                # ESC
-    (?:                 # Start non-capturing group for the rest
-        [@-Z\\-_]      # 7-bit C1 control codes
-      | \[             # CSI sequences:
-          [0-?]*      # Parameter bytes
-          [ -/]*      # Intermediate bytes
-          [@-~]       # Final byte
-      | \]             # OSC sequences:
-          [^\x1B\x07]*  # Any characters except ESC and BEL
-          (?:\x1B\\\|\x07|\x1B)  # Terminated by ESC\ or BEL or a lone ESC
+    \x1B                        # ESC
+    (?:                         # Start non-capturing group for the rest
+        [@-Z\-_]               # 7-bit C1 control codes
+      | \[                      # CSI sequences:
+          [0-?]*                # Parameter bytes
+          [ -/]*                # Intermediate bytes
+          [@-~]                 # Final byte
+      | \]                      # OSC sequences:
+          [^\x1B\x07]*          # Any characters except ESC and BEL
+          (?:\x1B\\|\x07|\x1B)  # Terminated by ESC\ or BEL or a lone ESC
     )
     """,
     re.VERBOSE,
 )
 
 cleaned_text = ansi_escape.sub("", input_text)
-
-with open('$tmpfile', 'w') as f:
-    f.write(cleaned_text)
-
+sys.stdout.write(cleaned_text)
 sys.exit(0)
 
 EOF
 
+cat "$tmpfile" | python3 "$file_to_run" | nvim -R -
+
 # Remove the temporary Python file, as it already ran.
 rm "$file_to_run"
-
-# Open editor.
-nvim "$tmpfile"
 
 # Remove the temporary file after nvim exits.
 rm "$tmpfile"
