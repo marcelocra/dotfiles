@@ -962,11 +962,11 @@
   //#endregion
 
   //#region Cascadia
-  // "editor.fontFamily": "Cascadia Code NF",
-  // "editor.fontSize": 13, // edn{:desktop 13 :notebook 19 :small 11}
-  // "editor.fontWeight": "400", // edn{:desktop "300" :notebook "300" :small "100"}
-  // "editor.fontLigatures": "'zero'",
-  // "editor.fontLigatures": "'calt', 'ss01', 'ss19', 'ss20', 'cv01' 3",
+  "editor.fontFamily": "Cascadia Code NF",
+  "editor.fontSize": 15, // edn{:desktop 13 :notebook 19 :small 11}
+  "editor.fontWeight": "400", // edn{:desktop "300" :notebook "300" :small "100"}
+  // 'calt' and 'cv01' 3 were here, don't know why... don't seem to do anything.
+  "editor.fontLigatures": "'ss01', 'ss19', 'ss20'",
   //#region Available stylistic sets:
   // // - cursive italics: 'ss01'
   // // - alternate not equal: 'ss02' ~= (appears as !=)
@@ -1046,10 +1046,10 @@
 
   // Recursive font
   //
-  "editor.fontFamily": "Rec Mono Duotone",
-  "editor.fontSize": 15, // edn{:desktop 13 :notebook ?? :small 11}
-  // // Some customizations that I like. See details below.
-  "editor.fontLigatures": "true",
+  // "editor.fontFamily": "Rec Mono Duotone",
+  // "editor.fontSize": 15, // edn{:desktop 13 :notebook ?? :small 11}
+  // // // Some customizations that I like. See details below.
+  // "editor.fontLigatures": "true",
   // "editor.fontLigatures": "'ss01', 'ss02', 'ss03', 'ss04', 'ss05', 'ss06', 'ss07', 'ss11', 'ss12', 'case', 'frac' 0",
   // "editor.fontLigatures": "'ss04', 'ss05', 'ss12', 'case', 'frac' 0",
   // // - dlig: ligatures - => && === ff it ti (more below)
