@@ -584,10 +584,10 @@ fi
 alias ll='l -A'
 
 if [[ ! -z "${MCRA_INIT_SHELL}" && ! -z "${MCRA_LOCAL_SHELL}" ]]; then
-    alias rc='vim $MCRA_INIT_SHELL'
-    alias rcl='vim $MCRA_LOCAL_SHELL'
-    alias rcz='vim ~/.zshrc'
-    alias rcb='vim ~/.bashrc'
+    alias rc='$EDITOR $MCRA_INIT_SHELL'
+    alias rcl='$EDITOR $MCRA_LOCAL_SHELL'
+    alias rcz='$EDITOR ~/.zshrc'
+    alias rcb='$EDITOR ~/.bashrc'
     alias rc.='source $MCRA_LOCAL_SHELL && source $MCRA_INIT_SHELL'
 else
     alias rc="echo 'Define \$MCRA_INIT_SHELL and \$MCRA_LOCAL_SHELL in your rc file'"
@@ -636,7 +636,7 @@ alias rf="pnpm run --filter"
 
 
 alias bbg="bb --config ~/.config/babashka/bb.edn"
-alias bbge="vim ~/.config/babashka/bb.edn"
+alias bbge='$EDITOR ~/.config/babashka/bb.edn'
 
 alias colines='echo "Columns: $COLUMNS, Lines: $LINES"'
 
@@ -663,12 +663,11 @@ elif mm_is_command grep; then
   alias g=grep
 fi
 
-# Prefer neovim/vim as pager.
-if mm_is_command nvim; then
-  alias less='nvim -R -'  # -R: readonly, -: read from stdin
-elif mm_is_command vim; then
-  alias less='vim -R -'
-fi
+# Use nvim as pager.
+#  -R: readonly
+#  -M: not modifyable
+#  - : read from stdin
+alias less='$EDITOR -R -'
 
 # List processes bound to all ports.
 alias process-to-port-all="netstat -lnp"
@@ -752,6 +751,9 @@ alias mem='ps -eo pid,comm,rss --sort=-rss \
     | awk '\''NR == 1 { printf "%-10s %-20s %-10s\n", $1, $2, $3 } \
               NR  > 1 { printf "%-10s %-20s %-10s\n", $1, $2, $3/1024 }'\'' \
     | column -t'
+
+# Bat, a cat clone with wings.
+alias bat=batcat
 
 ## nextnextalias
 
