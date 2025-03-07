@@ -412,6 +412,20 @@ vim.api.nvim_create_autocmd('TextYankPost', {
 
 -- }}}
 
+-- [[ My autocommands ]] {{{
+
+vim.api.nvim_create_autocmd('BufReadPost', {
+  desc = 'Removes ANSI escape sequences from the entire buffer for specific files.',
+  group = vim.api.nvim_create_augroup('rm-buffer-ansi-escape-sequences', { clear = true }),
+  pattern = '/tmp/kitty-less-tempfile.*',
+  callback = function()
+    -- The substitution uses very magic mode (\v) to simplify the regex.
+    vim.cmd '%s/\\v\\x1b\\[[0-9;]*m//g'
+  end,
+})
+
+-- }}}
+
 -- [[ Install `lazy.nvim` plugin manager ]] {{{
 --    See `:help lazy.nvim.txt` or https://github.com/folke/lazy.nvim for more info
 local lazypath = vim.fn.stdpath 'data' .. '/lazy/lazy.nvim'
