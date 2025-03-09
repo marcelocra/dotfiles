@@ -825,7 +825,7 @@
   "editor.fontFamily": "SourceCodeVF",
   "editor.fontSize": 16, // edn{:desktop 15 :notebook ?? :small 11}
   "editor.fontWeight": "500", // edn{:desktop "400" :notebook "??" :small "100"}
-  "editor.letterSpacing": -0.8,
+  "editor.letterSpacing": -0.4,
   // "editor.fontLigatures": "'cv17', 'zero'",
   "editor.fontLigatures": "'cv01', 'cv02', 'cv17', 'zero'",
   // Available stylistic sets:

@@ -1,6 +1,6 @@
 # dotfiles
 
-Configuration files that I consider essential.
+My essential configuration files.
 
 ## Fonts
 
