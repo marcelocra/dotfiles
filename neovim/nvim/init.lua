@@ -164,6 +164,9 @@ vim.keymap.set('v', '>', '>gv', { desc = 'Indent selected text to the right' })
 -- Clear search highlights.
 vim.keymap.set('n', '<C-n>', ':nohlsearch<CR>')
 
+-- Create a local shell file in the current directory, to use as a scratch file.
+vim.keymap.set('n', ',,s', ':e /tmp/tmp-shell-helper_<C-r>=strftime("%Y%m%d%H%M%S")<CR>.sh<CR>', { desc = 'Create and load scratch shell file' })
+
 -- Next keymap/keybinding/mapping.
 -- }}}
 
