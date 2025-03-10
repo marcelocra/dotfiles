@@ -252,5 +252,29 @@ vim.api.nvim_create_autocmd('FileType', {
   end,
 })
 
+vim.g.tw_comments = 80
+
+vim.api.nvim_create_autocmd('FileType', {
+  desc = 'Sets different textwidth for comments. Otherwise it is controlled by EditorConfig.',
+  group = vim.api.nvim_create_augroup('dynamic-text-width', { clear = true }),
+  pattern = '*',
+  callback = function()
+    vim.api.nvim_create_autocmd('CursorMoved', {
+      group = vim.api.nvim_create_augroup('dynamic-text-width-cursor-moved', { clear = true }),
+      buffer = 0,
+      callback = function()
+        local line = vim.api.nvim_get_current_line()
+        local cursor_col = vim.api.nvim_win_get_cursor(0)[2] + 1
+        local before_cursor = line:sub(1, cursor_col)
+
+        -- If inside a comment, update tw.
+        if before_cursor:match '^%s*[%/%*#;%-%-%!]' then
+          vim.opt_local.textwidth = vim.g.tw_comments
+        end
+      end,
+    })
+  end,
+})
+
 -- Next autocommand.
 -- }}}
