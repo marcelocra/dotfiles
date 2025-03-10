@@ -11,7 +11,7 @@ ansi_escape = re.compile(
     r"""
     \x1B                        # ESC
     (?:                         # Start non-capturing group for the rest
-        [@-Z\-_]               # 7-bit C1 control codes
+        [@-Z\-_]                # 7-bit C1 control codes
       | \[                      # CSI sequences:
           [0-?]*                # Parameter bytes
           [ -/]*                # Intermediate bytes

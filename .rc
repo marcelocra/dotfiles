@@ -663,11 +663,7 @@ elif mm_is_command grep; then
   alias g=grep
 fi
 
-# Use nvim as pager.
-#  -R: readonly
-#  -M: not modifyable
-#  - : read from stdin
-alias less='$EDITOR -R -'
+alias less='lesstmp'
 
 # List processes bound to all ports.
 alias process-to-port-all="netstat -lnp"
