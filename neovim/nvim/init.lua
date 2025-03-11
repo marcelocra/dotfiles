@@ -138,9 +138,11 @@ vim.keymap.set('n', '<Leader>el', 'V:lua<CR>', { desc = 'Eval current line using
 vim.keymap.set('v', '<Leader>el', ':lua<CR>', { desc = 'Eval current selection using Lua' })
 
 -- Run current line in external shell and paste the output below.
+-- Test with: echo hello world (select "echo hello").
+-- TODO: deal with ^M (carriage return) characters. Currently they break the
+-- command.
 vim.keymap.set('n', '<Leader>es', ":exec 'r !' . getline('.')<CR>", { desc = 'Run line externally and paste output' })
--- TODO: figure out how to do the selection version.
--- vim.keymap.set('v', '<Leader>es', "\"xy :exec 'r !' . <C-r>x", { desc = 'Run selection externally and paste output' })
+vim.keymap.set('v', '<Leader>es', '"xy:r ! <C-r>x<CR>', { desc = 'Run selection externally and paste output' })
 
 -- Use normal regex.
 vim.keymap.set('n', '/', '/\\v', { desc = 'Use normal regex' })

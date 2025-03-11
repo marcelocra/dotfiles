@@ -106,7 +106,6 @@ return {
   { 'sjl/badwolf' },
   { 'tpope/vim-vividchalk' },
 
-
   {
     -- Clojure, Lisps, Python, etc, REPL support in Neovim.
     'Olical/conjure',
