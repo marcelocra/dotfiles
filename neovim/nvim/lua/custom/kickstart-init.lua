@@ -627,6 +627,7 @@ require('lazy').setup({
       --  - capabilities (table): Override fields in capabilities. Can be used to disable certain LSP features.
       --  - settings (table): Override the default settings passed when initializing the server.
       --        For example, to see the options for `lua_ls`, you could go to: https://luals.github.io/wiki/settings/
+      -- stylua: ignore
       local servers = {
         -- clangd = {},
         gopls = {},
@@ -647,9 +648,7 @@ require('lazy').setup({
           -- capabilities = {},
           settings = {
             Lua = {
-              completion = {
-                callSnippet = 'Replace',
-              },
+              completion = { callSnippet = 'Replace' },
               -- You can toggle below to ignore Lua_LS's noisy `missing-fields` warnings
               -- diagnostics = { disable = { 'missing-fields' } },
             },
@@ -658,9 +657,10 @@ require('lazy').setup({
 
         -- My lsps.
 
-        fsautocomplete = {}, -- F#.
-        clojure_lsp = {},
-        ocamllsp = {},
+        fsautocomplete = {}, -- Official LSP for F#.
+        clojure_lsp = {},    -- Written by a Nubanker (https://github.com/clojure-lsp/clojure-lsp).
+        ocamllsp = {},       -- Official LSP (https://github.com/ocaml/ocaml-lsp).
+        yamlls = {},         -- Used by the official VSCode YAML extension by RedHat.
 
         -- Next lsp server here.
       }
@@ -693,6 +693,8 @@ require('lazy').setup({
         --------------------------
 
         'ruff',           -- Python formatter.
+        'prettier',       -- JavaScript, TypeScript, HTML, CSS, JSX formatter.
+        'yamlfmt',        -- YAML formatter (https://github.com/google/yamlfmt)
 
         -- F#.
         'fantomas',       -- Formatter.
@@ -701,9 +703,6 @@ require('lazy').setup({
         -- Clojure.
         'clj-kondo',      -- Static analyzer and linter.
         'cljfmt',         -- Formatter.
-
-        -- Java
-        'prettier',       -- JavaScript, TypeScript, HTML, CSS, JSX formatter.
 
         -- Next tool here. Use 'gai<curlies>,' to re-aling.
       })
