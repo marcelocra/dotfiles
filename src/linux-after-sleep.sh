@@ -21,6 +21,12 @@ action="$1"
 this_file_name=$(basename $0)
 log_file="$HOME/.${USER}.${this_file_name}.log"
 
+debug_logfile=/tmp/pm-action.log
+
+echo "Action: $action
+File: $this_file_name
+Logfile: $log_file" >> $debug_logfile
+
 log() {
     echo "[`date`] $@" | tee -a $log_file
 }
@@ -65,6 +71,8 @@ if [[ "$action" == "install-this-script" ]]; then
     exit 0
 fi
 
+echo 'after if' >> $debug_logfile
+
 # We only want to blow up when not running in the context of pm-action.
 set +e
 
@@ -72,14 +80,18 @@ echo "---------------------------------------------------------------------" >> 
 log $action
 echo "---------------------------------------------------------------------" >> $log_file
 
+echo 'before case' >> $debug_logfile
+
 case "$action" in
    suspend)
         # List programs to run before, the system suspends
         # to ram; some folks call this "sleep"
+        echo 'inside suspend' >> $debug_logfile
    ;;
    resume)
         # List of programs to when the systems "resumes"
         # after being suspended
+        echo 'inside resume' >> $debug_logfile
 
         log "Resuming the system..."
         $HOME/projects/dotfiles/linux-startup-config.sh >> $log_file 2>&1 \
@@ -89,9 +101,14 @@ case "$action" in
    hibernate)
         # List of programs to run before the system hibernates
         # to disk; includes power-off, looks like shutdown
+        echo 'inside hibernate' >> $debug_logfile
    ;;
    thaw)
         # List of programs to run when the system wakes
         # up from hibernation
+        echo 'inside thaw' >> $debug_logfile
    ;;
 esac
+
+echo 'the end!' >> $debug_logfile
+
