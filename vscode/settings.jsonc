@@ -195,8 +195,7 @@
   "FSharp.inlayHints.parameterNames": false,
   "FSharp.inlayHints.typeAnnotations": false,
   "[fsharp]": {
-    "editor.defaultFormatter": "Ionide.Ionide-fsharp",
-    "editor.tabSize": 4
+    "editor.defaultFormatter": "Ionide.Ionide-fsharp"
   },
   "FSharp.addFsiWatcher": true,
   "FSharp.autoRevealInExplorer": "disabled",
