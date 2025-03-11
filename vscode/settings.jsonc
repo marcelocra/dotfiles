@@ -287,6 +287,10 @@
   "zig.path": "zig",
   "zig.zls.path": "zls",
 
+  "[ocaml]": {
+    "editor.defaultFormatter": "ocamllabs.ocaml-platform"
+  },
+
   // Vim.
   // #region {{{
 
@@ -1215,6 +1219,7 @@
   },
   "@azure.argTenant": "",
   "dev.containers.dockerPath": "podman",
+  "geminicodeassist.enableTelemetry": false,
 
   // #endregion Misc }}}
   // #region workbench. {{{
@@ -1400,6 +1405,5 @@
   // Next workbench (keep the theme last, as it changes frequently).
 
   "workbench.colorTheme": "Tokyo Night Light"
-
   // #endregion workbench. }}}
 }
