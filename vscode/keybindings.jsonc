@@ -1570,12 +1570,12 @@
     "when": "editorFocus"
   },
   {
-    "key": "ctrl+k ctrl+shift+alt+c",
+    "key": "ctrl+k ctrl+alt+shift+c",
     "command": "-copyRelativeFilePath",
     "when": "editorFocus"
   },
   {
-    "key": "ctrl+q ctrl+shift+alt+c",
+    "key": "ctrl+q ctrl+alt+shift+c",
     "command": "copyRelativeFilePath",
     "when": "editorFocus"
   },
@@ -2182,12 +2182,32 @@
     "command": "-workbench.action.quit"
   },
   {
-    "key": "shift+alt+j",
+    "key": "alt+shift+j",
     "command": "workbench.action.terminal.focusNext",
     "when": "terminalFocus && terminalHasBeenCreated && !terminalEditorFocus || terminalFocus && terminalProcessSupported && !terminalEditorFocus"
   },
   {
-    "key": "shift+alt+k",
+    "key": "alt+shift+k",
+    "command": "workbench.action.terminal.focusPrevious",
+    "when": "terminalFocus && terminalHasBeenCreated && !terminalEditorFocus || terminalFocus && terminalProcessSupported && !terminalEditorFocus"
+  },
+  {
+    "key": "ctrl+shift+]",
+    "command": "workbench.action.terminal.focusNextPane",
+    "when": "terminalFocus && terminalHasBeenCreated && !terminalEditorFocus || terminalFocus && terminalProcessSupported && !terminalEditorFocus"
+  },
+  {
+    "key": "ctrl+shift+[",
+    "command": "workbench.action.terminal.focusPreviousPane",
+    "when": "terminalFocus && terminalHasBeenCreated && !terminalEditorFocus || terminalFocus && terminalProcessSupported && !terminalEditorFocus"
+  },
+  {
+    "key": "ctrl+shift+right",
+    "command": "workbench.action.terminal.focusNext",
+    "when": "terminalFocus && terminalHasBeenCreated && !terminalEditorFocus || terminalFocus && terminalProcessSupported && !terminalEditorFocus"
+  },
+  {
+    "key": "ctrl+shift+left",
     "command": "workbench.action.terminal.focusPrevious",
     "when": "terminalFocus && terminalHasBeenCreated && !terminalEditorFocus || terminalFocus && terminalProcessSupported && !terminalEditorFocus"
   },
