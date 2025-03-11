@@ -62,6 +62,7 @@ options:
   - expert: setup expert mouse to have more intuitive usage settings
   - evoluent: setup evoluent mouse to have more intuitive usage settings
   - logitech: reduce speed of logitech mouse
+  - multilaser: reduce speed of multilaser mouse
   - todoist: symlink todoist again after an update
   - all: do everything'
 }
@@ -173,6 +174,30 @@ reduce_speed_of_logitech_mouse() {
 }
 
 
+reduce_speed_of_multilaser_mouse() {
+    local device_id
+    device_id=$(xinput \
+        | sed -nre 's/.*YICHIP.*Mouse.*id\=([0-9]+).*/\1/p' \
+        | head -n1)
+    if [ -z "$device_id" ]; then
+        return
+    fi
+
+    local prop_id
+    prop_id=$(device_id=20 && xinput list-props $device_id \
+        | sed -nre 's/.*Accel\ Speed\ \(([0-9]+)\).*/\1/p' \
+        | head -n1)
+    if [ -z "$prop_id" ]; then
+        return
+    fi
+
+    # Reset value: xinput set-float-prop 20 302 0
+
+    # This is a good value that I found by testing different ones.
+    xinput set-float-prop $device_id $prop_id $DEVICE_SENSITIVITY
+}
+
+
 # Todoist has an auto update feature that replaces the AppImage binary with
 # a new one, meaning that the reference used in the .desktop file end up
 # invalid. But that only happens after a system restart, so this is meant to
@@ -278,6 +303,14 @@ main() {
     if [ "$arg" = "logitech" ] || [ "$arg" = "all" ]; then
         log "Running 'logitech'..."
         reduce_speed_of_logitech_mouse
+        log 'Done!'
+
+    fi
+
+
+    if [ "$arg" = "multilaser" ] || [ "$arg" = "all" ]; then
+        log "Running 'multilaser'..."
+        reduce_speed_of_multilaser_mouse
         log 'Done!'
 
     fi
