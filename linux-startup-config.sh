@@ -106,6 +106,8 @@ setup_expert_mouse() {
         # this point, physical buttons and functions won't match anymore, but
         # that's ok.
         xinput set-button-map $device_id 3 8 9 4 5 6 7 1
+    else
+        return
     fi
 
     # Reduce the device acceleration speed.
