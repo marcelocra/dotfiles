@@ -151,7 +151,7 @@ use_gnome_terminal() {
 
   local cmd="gnome-terminal --title 'scratchpad' --hide-menubar"
   cmd="$cmd --geometry \"${columns}x${rows}+${half_width}+0\""
-  cmd="$cmd -- "
+  cmd="$cmd --working-directory=$HOME -- "
 
   echo "$cmd"
 }
