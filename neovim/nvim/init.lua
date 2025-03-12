@@ -4,6 +4,10 @@
 
 require 'custom.kickstart-init'
 
+-- ENABLE CUSTOM CONFIGURATION
+
+require 'custom.open-scratch-file'
+
 -- OPTIONS {{{
 
 vim.o.smartindent = true
