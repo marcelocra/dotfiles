@@ -1,4 +1,4 @@
--- vim: tw=80 ts=2 sts=2 sw=2 et ai ff=unix fixeol eol fenc=utf-8 fdm=marker fdl=1 fen
+-- vim: tw=80 ts=2 sts=2 sw=2 et ai ff=unix fixeol eol fenc=utf-8 fdm=marker fdl=0 fen
 
 -- ENABLE DEFAULT KICKSTART CONFIGURATION
 
@@ -62,6 +62,10 @@ vim.keymap.set('n', ',,q', ':qa<CR>', { desc = 'Close all buffers' })
 vim.keymap.set('n', ',x', ':x<CR>', { desc = 'Save and close the current buffer' })
 vim.keymap.set('i', ',x', '<Esc>:x<CR>', { desc = 'Save and close the current buffer' })
 
+-- Reload current file.
+vim.keymap.set('n', ',e', ':e<CR>', { desc = 'Reload current file' })
+vim.keymap.set('i', ',e', '<Esc>:e<CR>', { desc = 'Reload current file' })
+
 -- Port my most used mappings from VSCode.
 vim.keymap.set('n', '<C-p>', ':Telescope find_files<CR>', { desc = 'Fuzzy search files in current folder' })
 vim.keymap.set('n', '<C-t>', ':Telescope lsp_dynamic_workspace_symbols<CR>', { desc = 'Fuzzy search workspace symbols' })
@@ -72,12 +76,14 @@ vim.keymap.set('n', '<M-k>', ':tabn<CR>', { desc = 'Move to the right tab' })
 vim.keymap.set('i', '<M-j>', '<Esc>:tabp<CR>', { desc = 'Move to the left tab' })
 vim.keymap.set('i', '<M-k>', '<Esc>:tabn<CR>', { desc = 'Move to the right tab' })
 
+-- Print current file folder name.
+vim.keymap.set('n', ',f', ':echo expand("%:p:h")<CR>', { desc = 'Print current file folder name' })
+
 -- Easily open Neovim config files.
--- vim.keymap.set('n', ',e', '<NOP>', { desc = '[E]dit' })
--- vim.keymap.set('n', ',ev', '<NOP>', { desc = '[V]imrc' })
-vim.keymap.set('n', ',evv', ':vspl $MYVIMRC<CR>', { desc = '[E]dit [V]imrc in a [V]ertical split' })
-vim.keymap.set('n', ',evh', ':spl $MYVIMRC<CR>', { desc = '[E]dit [V]imrc in an [H]orizontal split' })
-vim.keymap.set('n', ',evt', ':tabe $MYVIMRC<CR>', { desc = '[E]dit [V]imrc in a new [T]ab' })
+local edit_nvim_common = '$MYVIMRC<CR>:lcd <C-r>=expand("%:p:h")<CR><CR>'
+vim.keymap.set('n', '<Leader>ev', ':tabe ' .. edit_nvim_common, { desc = '[E]dit [V]imrc in a new tab' })
+vim.keymap.set('n', '<Leader>evh', ':spl ' .. edit_nvim_common, { desc = '[E]dit [V]imrc in an [H]orizontal split' })
+vim.keymap.set('n', '<Leader>evv', ':vspl ' .. edit_nvim_common, { desc = '[E]dit [V]imrc in a [V]ertical split' })
 
 -- Easily change colorschemes.
 vim.keymap.set('n', '<Leader>cc', ":lua require('telescope.builtin').colorscheme()<CR>", { desc = '[C]hange [C]olorscheme' })
@@ -133,9 +139,9 @@ vim.cmd 'inoremap <a-d> <c-r>=strftime("%d%b%y")<cr>'
 -- Add time to current buffer.
 vim.cmd 'inoremap <a-t> <c-r>=strftime("%Hh%M")<cr>'
 
--- Eval current line or selection using Lua.
-vim.keymap.set('n', '<Leader>el', 'V:lua<CR>', { desc = 'Eval current line using Lua' })
-vim.keymap.set('v', '<Leader>el', ':lua<CR>', { desc = 'Eval current selection using Lua' })
+-- Eval current line or selection using Lua. (Edit: using Conjure instead.)
+-- vim.keymap.set('n', '<Leader>el', 'V:lua<CR>', { desc = 'Eval current line using Lua' })
+-- vim.keymap.set('v', '<Leader>el', ':lua<CR>', { desc = 'Eval current selection using Lua' })
 
 -- Run current line in external shell and paste the output below.
 -- Test with: echo hello world (select "echo hello").
@@ -166,8 +172,9 @@ vim.keymap.set('v', '>', '>gv', { desc = 'Indent selected text to the right' })
 -- Clear search highlights.
 vim.keymap.set('n', '<C-n>', ':nohlsearch<CR>')
 
--- Create a local shell file in the current directory, to use as a scratch file.
-vim.keymap.set('n', ',,s', ':e /tmp/tmp-shell-helper_<C-r>=strftime("%Y%m%d%H%M%S")<CR>.sh<CR>', { desc = 'Create and load scratch shell file' })
+-- Change unimpaired default mappings for [t and ]t for tab navigation.
+vim.keymap.set('n', '[t', ':tabprevious<CR>', { desc = 'Move to the previous tab' })
+vim.keymap.set('n', ']t', ':tabnext<CR>', { desc = 'Move to the next tab' })
 
 -- Next keymap/keybinding/mapping.
 -- }}}
@@ -249,7 +256,7 @@ vim.api.nvim_create_autocmd('BufReadPost', {
 })
 
 vim.api.nvim_create_autocmd('FileType', {
-  desc = 'Force format options',
+  desc = 'Forces format options.',
   group = vim.api.nvim_create_augroup('set-formatoptions', { clear = true }),
   pattern = '*',
   callback = function()
