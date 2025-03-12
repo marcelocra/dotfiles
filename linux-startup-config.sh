@@ -186,17 +186,35 @@ reduce_speed_of_multilaser_mouse() {
     fi
 
     local prop_id
-    prop_id=$(device_id=20 && xinput list-props $device_id \
+    prop_id=$(xinput list-props $device_id \
         | sed -nre 's/.*Accel\ Speed\ \(([0-9]+)\).*/\1/p' \
         | head -n1)
     if [ -z "$prop_id" ]; then
         return
     fi
 
-    # Reset value: xinput set-float-prop 20 302 0
-
-    # This is a good value that I found by testing different ones.
     xinput set-float-prop $device_id $prop_id $DEVICE_SENSITIVITY
+}
+
+
+reduce_speed_of_razer_mouse() {
+    local device_id
+    device_id=$(xinput \
+        | sed -nre 's/.*Razer.*DeathAdder.*id=([0-9]+).*/\1/p' \
+        | head -n1)
+    if [ -z "$device_id" ]; then
+        return
+    fi
+
+    local prop_id
+    prop_id=$(xinput list-props $device_id \
+        | sed -nre 's/.*libinput Accel Speed \(([0-9]+)\).*/\1/p' \
+        | head -n1)
+    if [ -z "$prop_id" ]; then
+        return
+    fi
+
+    xinput set-float-prop $device_id $prop_id -0.8
 }
 
 
@@ -313,6 +331,14 @@ main() {
     if [ "$arg" = "multilaser" ] || [ "$arg" = "all" ]; then
         log "Running 'multilaser'..."
         reduce_speed_of_multilaser_mouse
+        log 'Done!'
+
+    fi
+
+
+    if [ "$arg" = "razer" ] | [ "$arg" = "all" ]; then
+        log "Running 'razer'..."
+        reduce_speed_of_razer_mouse
         log 'Done!'
 
     fi
