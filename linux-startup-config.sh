@@ -308,7 +308,6 @@ main() {
         log "Running 'expert'..."
         setup_expert_mouse
         log 'Done!'
-
     fi
 
 
@@ -316,7 +315,6 @@ main() {
         log "Running 'evoluent'..."
         setup_evoluent_mouse
         log 'Done!'
-
     fi
 
 
@@ -324,7 +322,6 @@ main() {
         log "Running 'logitech'..."
         reduce_speed_of_logitech_mouse
         log 'Done!'
-
     fi
 
 
@@ -332,7 +329,6 @@ main() {
         log "Running 'multilaser'..."
         reduce_speed_of_multilaser_mouse
         log 'Done!'
-
     fi
 
 
@@ -340,7 +336,6 @@ main() {
         log "Running 'razer'..."
         reduce_speed_of_razer_mouse
         log 'Done!'
-
     fi
 
 
@@ -348,7 +343,6 @@ main() {
         log "Running 'todoist'..."
         symlink_todoist_again
         log 'Done!'
-
     fi
 }
 
