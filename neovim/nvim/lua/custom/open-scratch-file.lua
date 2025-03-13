@@ -11,34 +11,35 @@ vim.keymap.set(
   function()
     local curr_time = time_now()
 
-    -- Create a Python scratch file.
-    local scratch_file = mcra_scratch_dir .. '/scratch_' .. curr_time .. '.py'
-    local scratch_file_content = [[
-import os
-import sys
-
-
-]]
-
-    -- -- Create a Clojure scratch file.
-    --     local scratch_file = mcra_scratch_dir .. '/scratch_' .. curr_time .. '.clj'
-    --     local scratch_file_content = '(ns scratch-'
-    --       .. curr_time
-    --       .. [[(:require [clojure.java.shell] [clojure.string]))
+    --     -- Create a Python scratch file.
+    --     local scratch_file = mcra_scratch_dir .. '/scratch_' .. curr_time .. '.py'
+    --     local scratch_file_content = [[
+    -- import os
+    -- import sys
     --
-    -- (defn bash [cmd]
-    --   (let [res (clojure.java.shell/sh "bash" "-c" cmd)]
-    --     (if (= 0 (:exit res))
-    --       (println (:out res))
-    --       res)))
-    --
-    -- (bash [
-    --
-    --       ;; Do not wrap.
-    --       ])
     --
     -- ]]
-    --
+
+    -- Create a Clojure scratch file.
+    local scratch_file = mcra_scratch_dir .. '/scratch_' .. curr_time .. '.clj'
+    local scratch_file_content = '(ns scratch-'
+      .. curr_time
+      .. [[(:require [clojure.java.shell] [clojure.string]))
+
+(defn bash [cmd]
+  (let [res (clojure.java.shell/sh "bash" "-c" (clojure.string.join #" | " cmd))]
+    (if (= 0 (:exit res))
+      (println (:out res))
+      res)))
+
+(bash [; Commands below this line.
+
+
+
+       ; Do not wrap.
+       ])
+
+    ]]
 
     -- Write scratch file content to file.
     local file = io.open(scratch_file, 'w')
