@@ -825,12 +825,12 @@
   // #endregion }}}
 
   // #region Source Code Pro {{{
-  "editor.fontFamily": "SourceCodeVF",
-  "editor.fontSize": 16, // edn{:desktop 15 :notebook ?? :small 11}
-  "editor.fontWeight": "500", // edn{:desktop "400" :notebook "??" :small "100"}
-  "editor.letterSpacing": -0.4,
-  // "editor.fontLigatures": "'cv17', 'zero'",
-  "editor.fontLigatures": "'cv01', 'cv02', 'cv17', 'zero'",
+  // "editor.fontFamily": "SourceCodeVF",
+  // "editor.fontSize": 16, // edn{:desktop 15 :notebook ?? :small 11}
+  // "editor.fontWeight": "500", // edn{:desktop "400" :notebook "??" :small "100"}
+  // "editor.letterSpacing": -0.4,
+  // // "editor.fontLigatures": "'cv17', 'zero'",
+  // "editor.fontLigatures": "'cv01', 'cv02', 'cv17', 'zero'",
   // Available stylistic sets:
   //    cv01 and cv02: clearer 'a' and 'g', cv08: alternate &, cv09: alternate @
   //    cv17: improved 1, zero: reverse dashed zero
@@ -938,9 +938,9 @@
   // #endregion }}}
 
   // #region Other fonts that I tested or used in the past {{{
-  // "editor.fontFamily": "'FantasqueSansM Nerd Font', 'CodeNewRoman Nerd Font Mono', 'MesloLG Nerd Font', 'Noto Sans Mono'",
-  // "editor.fontSize": 19,
-  // "editor.fontWeight": "400",
+  "editor.fontFamily": "BlexMono Nerd Font",
+  "editor.fontSize": 17,
+  "editor.fontWeight": "400",
   // #endregion }}}
 
   "editor.tokenColorCustomizations": {
@@ -1039,7 +1039,13 @@
   "editor.accessibilitySupport": "off",
   "editor.showFoldingControls": "always",
   "editor.foldingHighlight": true,
+
   // Next editor.
+
+  "diffEditor.codeLens": true,
+  "diffEditor.ignoreTrimWhitespace": true,
+  "diffEditor.renderSideBySide": true,
+
   // #endregion editor. }}}
 
   "explorer.openEditors.visible": 1,
@@ -1117,11 +1123,14 @@
   // #region terminal. {{{
 
   // Choose the main font and add fallbacks.
-  "terminal.integrated.fontFamily": "'JetBrainsMono Nerd Font', 'Cascadia Code NF', 'JetBrainsMono NF', 'JetBrains Mono Nerd Font', 'JetBrains Mono NF', 'MesloLGM Nerd Font Mono', 'MesloLGS Nerd Font Mono', 'JetBrains Mono', 'Liberation Mono', 'DejaVu Sans Mono', monospace",
-  "terminal.integrated.fontSize": 13,
-  "terminal.integrated.fontWeight": "400",
+  "terminal.integrated.fontFamily": "'BlexMono Nerd Font', 'JetBrainsMono Nerd Font', 'Cascadia Code NF', 'JetBrainsMono NF', 'JetBrains Mono Nerd Font', 'JetBrains Mono NF', 'MesloLGM Nerd Font Mono', 'MesloLGS Nerd Font Mono', 'JetBrains Mono', 'Liberation Mono', 'DejaVu Sans Mono', monospace",
+  "terminal.integrated.fontSize": 17,
+  "terminal.integrated.fontWeight": "500",
   "terminal.integrated.fontLigatures.enabled": true,
   "terminal.integrated.fontLigatures.featureSettings": "'zero'",
+  "terminal.integrated.cursorStyle": "line",
+  "terminal.integrated.cursorWidth": 2,
+  "terminal.integrated.cursorStyleInactive": "outline",
 
   "debug.console.fontFamily": "'JetBrainsMono Nerd Font', 'Cascadia Code NF', 'JetBrainsMono NF', 'JetBrains Mono Nerd Font', 'JetBrains Mono NF', 'MesloLGM Nerd Font Mono', 'MesloLGS Nerd Font Mono', 'JetBrains Mono', 'Liberation Mono', 'DejaVu Sans Mono', monospace",
   "debug.console.fontSize": 13,
@@ -1196,8 +1205,6 @@
   // Random one-off settings that doesn't make sense to put in a separate
   // category.
 
-  "diffEditor.ignoreTrimWhitespace": true,
-  "diffEditor.renderSideBySide": true,
   "html.suggest.html5": false,
   "outline.collapseItems": "alwaysExpand",
   "problems.showCurrentInStatus": true,
@@ -1404,6 +1411,6 @@
 
   // Next workbench (keep the theme last, as it changes frequently).
 
-  "workbench.colorTheme": "Tokyo Night Light"
+  "workbench.colorTheme": "GitHub Light Default"
   // #endregion workbench. }}}
 }
