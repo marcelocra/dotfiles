@@ -107,7 +107,7 @@
   {
     "context": "Workspace || Editor",
     "bindings": {
-      "alt-j": "pane::ActivatePrevItem",
+      "alt-j": "pane::ActivatePreviousItem",
       "alt-shift-j": "pane::SwapItemLeft",
 
       "alt-k": "pane::ActivateNextItem",
@@ -137,7 +137,7 @@
     "context": "BufferSearchBar && !in_replace",
     "bindings": {
       "enter": "search::SelectNextMatch",
-      "shift-enter": "search::SelectPrevMatch",
+      "shift-enter": "search::SelectPreviousMatch",
       "alt-enter": "search::SelectAllMatches",
       "escape": "buffer_search::Dismiss"
     }
@@ -192,7 +192,7 @@
     // because every time I saw it triggering, this one also triggered.
     // "context": "FileFinder && !menu_open",
     "bindings": {
-      "ctrl-k": "menu::SelectPrev",
+      "ctrl-k": "menu::SelectPrevious",
       "ctrl-j": "menu::SelectNext"
     }
   },
@@ -221,7 +221,7 @@
     // - ctrl-.: code actions
     "context": "Editor && (showing_code_actions || showing_completions)",
     "bindings": {
-      "ctrl-k": "editor::ContextMenuPrev",
+      "ctrl-k": "editor::ContextMenuPrevious",
       "ctrl-j": "editor::ContextMenuNext"
     }
   }
