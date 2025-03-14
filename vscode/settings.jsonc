@@ -223,10 +223,10 @@
   "jupyter.disableJupyterAutoStart": true,
 
   "python.REPL.enableREPLSmartSend": false,
+  "ruff.nativeServer": "on",
 
   "[python]": {
-    "editor.tabSize": 4,
-    "editor.defaultFormatter": "ms-python.black-formatter"
+    "editor.defaultFormatter": "charliermarsh.ruff"
   },
 
   "[python][shellscript]": {
@@ -977,7 +977,8 @@
   },
   "editor.codeActionsOnSave": {
     "source.fixAll.eslint": "explicit",
-    "source.fixAll": "explicit"
+    "source.fixAll": "explicit",
+    "source.organizeImports.ruff": "explicit"
     // "source.addMissingImports.ts": "always",
     // "source.removeUnusedImports": "always"
   },
