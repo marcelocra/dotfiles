@@ -22,6 +22,7 @@
 
 # -- [ Configure hardware ] ----------------------------------------------------
 
+import argparse
 import datetime
 import os
 import re
@@ -307,55 +308,52 @@ def symlink_todoist_again():
         return False
 
 
+# Map of actions to their corresponding functions
+ACTIONS = {
+    "expert": setup_expert_mouse,
+    "evoluent": setup_evoluent_mouse,
+    "logitech": reduce_speed_of_logitech_mouse,
+    "multilaser": reduce_speed_of_multilaser_mouse,
+    "razer": reduce_speed_of_razer_mouse,
+    "todoist": symlink_todoist_again,
+}
+
+
+def setup_arg_parser():
+    """Set up command line argument parser."""
+    parser = argparse.ArgumentParser(
+        description="Configure input devices and system settings."
+    )
+    parser.add_argument(
+        "action",
+        nargs="?",
+        default="all",
+        choices=["all", *ACTIONS],
+        help="Action to perform (default: all)",
+    )
+    return parser
+
+
 def main(args):
-    if len(args) == 0:
-        arg = "all"
-    else:
-        arg = args[0]
-    valid_args = [
-        "all",
-        "expert",
-        "evoluent",
-        "logitech",
-        "multilaser",
-        "razer",
-        "todoist",
-    ]
-    if arg not in valid_args:
-        error("Invalid option!")
-        usage()
-        sys.exit(1)
-    log("Provided argument:", arg)
+    parser = setup_arg_parser()
+    args = parser.parse_args(args)
+    log("Provided argument:", args.action)
 
     # Check that xinput is available.
     if not shutil.which("xinput"):
         error("xinput not available. Please install xinput.")
         sys.exit(1)
 
-    if arg in ("expert", "all"):
-        log("Running 'expert'...")
-        setup_expert_mouse()
-        log("Done with 'expert'.")
-    if arg in ("evoluent", "all"):
-        log("Running 'evoluent'...")
-        setup_evoluent_mouse()
-        log("Done with 'evoluent'.")
-    if arg in ("logitech", "all"):
-        log("Running 'logitech'...")
-        reduce_speed_of_logitech_mouse()
-        log("Done with 'logitech'.")
-    if arg in ("multilaser", "all"):
-        log("Running 'multilaser'...")
-        reduce_speed_of_multilaser_mouse()
-        log("Done with 'multilaser'.")
-    if arg in ("razer", "all"):
-        log("Running 'razer'...")
-        reduce_speed_of_razer_mouse()
-        log("Done with 'razer'.")
-    if arg in ("todoist", "all"):
-        log("Running 'todoist'...")
-        symlink_todoist_again()
-        log("Done with 'todoist'.")
+    # Execute selected action or all actions
+    if args.action == "all":
+        for name, func in ACTIONS.items():
+            log(f"Running '{name}'...")
+            func()
+            log(f"Done with '{name}'.")
+    else:
+        log(f"Running '{args.action}'...")
+        ACTIONS[args.action]()
+        log(f"Done with '{args.action}'.")
 
 
 if __name__ == "__main__":
