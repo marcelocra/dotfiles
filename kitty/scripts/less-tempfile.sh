@@ -25,7 +25,7 @@ if [ -p /dev/stdin ]; then
     # Open less with the temporary file, using kitty default behaviors:
     # - starting at the end of the file (+G)
     # - preserving ANSI colors (-R)
-    $LESS_BIN "$tmpfile"
+    $LESS_BIN +G "$tmpfile"
 
     # Remove the temporary file when less exits.
     rm "$tmpfile"
