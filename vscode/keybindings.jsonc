@@ -49,6 +49,7 @@
   },
 
   //#endregion NAVIGATION }}}
+
   //#region TERMINAL FOCUS {{{
   {
     "key": "TERMINAL FOCUS"
@@ -131,6 +132,7 @@
   },
 
   //#endregion TERMINAL FOCUS }}}
+
   //#region TERMINAL FIND {{{
   {
     "key": "TERMINAL FIND"
@@ -148,6 +150,7 @@
   },
 
   //#endregion TERMINAL FIND }}}
+
   //#region PROPER CTRL+P PROPER SUPPORT IN TERMINAL {{{
 
   {
@@ -170,6 +173,7 @@
   },
 
   //#endregion PROPER CTRL+P PROPER SUPPORT IN TERMINAL }}}
+
   //#region IMPROVED VSCODE VIM SUPPORT {{{
 
   {
@@ -266,15 +270,15 @@
     "when": "editorTextFocus && vim.mode != 'Insert'"
   },
 
-  {
-    "key": "ctrl+o",
-    "command": "workbench.action.navigateBack"
-  },
+  // {
+  //   "key": "ctrl+o",
+  //   "command": "workbench.action.navigateBack"
+  // },
 
-  {
-    "key": "ctrl+i",
-    "command": "workbench.action.navigateForward"
-  },
+  // {
+  //   "key": "ctrl+i",
+  //   "command": "workbench.action.navigateForward"
+  // },
 
   {
     // Example:
@@ -288,6 +292,7 @@
   },
 
   //#endregion IMPROVED VSCODE VIM SUPPORT }}}
+
   //#region CLOJURE {{{
 
   {
@@ -432,6 +437,7 @@
   },
 
   //#endregion CLOJURE }}}
+
   //#region EDITOR {{{
 
   {
@@ -833,6 +839,7 @@
   },
 
   //#endregion EDITOR }}}
+
   //#region CAMELCASE MOVEMENTS BETWEEN HUMPS, AKA cursorWordPart {{{
 
   {
@@ -922,6 +929,7 @@
   },
 
   //#endregion CAMELCASE MOVEMENTS BETWEEN HUMPS, AKA cursorWordPart }}}
+
   //#region VIM CUSTOM HELPER MOVEMENTS {{{
 
   {
@@ -943,6 +951,7 @@
   },
 
   //#endregion VIM CUSTOM HELPER MOVEMENTS }}}
+
   //#region PAGE UP AND PAGE DOWN VIM-STYLE {{{
 
   {
@@ -1017,6 +1026,7 @@
   },
 
   //#endregion PAGE UP AND PAGE DOWN VIM-STYLE }}}
+
   //#region VIEW ZOOM AND FONT SIZE {{{
 
   {
@@ -1075,24 +1085,25 @@
   },
 
   //#endregion VIEW ZOOM AND FONT SIZE }}}
+
   //#region FOLD AND UNFOLD {{{
   {
-    "key": "ctrl+[",
+    "key": "ctrl+; ctrl+[",
     "command": "editor.fold",
     "when": "!vim.active && editorTextFocus && foldingEnabled"
   },
   {
-    "key": "ctrl+[",
+    "key": "ctrl+; ctrl+[",
     "command": "-editor.action.outdentLines",
     "when": "!vim.active && editorTextFocus && !editorReadonly"
   },
   {
-    "key": "ctrl+]",
+    "key": "ctrl+; ctrl+]",
     "command": "editor.unfold",
     "when": "!vim.active && editorTextFocus && foldingEnabled"
   },
   {
-    "key": "ctrl+]",
+    "key": "ctrl+; ctrl+]",
     "command": "-editor.action.indentLines",
     "when": "!vim.active && editorTextFocus && !editorReadonly"
   },
@@ -1113,6 +1124,7 @@
   },
 
   //#endregion FOLD AND UNFOLD }}}
+
   //#region MISC {{{
   {
     "key": "ctrl+m",
@@ -1186,7 +1198,7 @@
     "when": "vim.active && (vim.mode == 'Visual' || vim.mode == 'VisualLine') && editorTextFocus && editorLangId == 'python'"
   },
 
-  // Conjure end. }}}
+  // Conjure end.
 
   // {
   //   "key": "ctrl+[",
@@ -1198,12 +1210,29 @@
   //   "command": "workbench.action.navigateForward",
   //   "when": "vim.active && vim.mode == 'Normal'"
   // },
+
+  {
+    // Insert the next suggested word, instead of the full suggestion.
+    "key": "ctrl+l",
+    "command": "editor.action.inlineSuggest.acceptNextWord",
+    "when": "vim.active && vim.mode == 'Insert' && editorTextFocus"
+  },
+
+  {
+    // Insert the next suggestion (full, i.e., might be multi-line).
+    "key": "ctrl+y",
+    "command": "editor.action.inlineSuggest.",
+    "when": "vim.active && vim.mode == 'Insert' && editorTextFocus"
+  },
+
   //#endregion MISC }}}
+
   //#region NEXT {{{
   {
     "key": "KEYBINDING INBOX - NEXT UNCATEGORIZED ABOVE"
   },
   //#endregion NEXT }}}
+
   //#region CHANGE DEFAULT KEYBINDINGS THAT START WITH CTRLK {{{
 
   {

@@ -1,5 +1,4 @@
 {
-  "[json][jsonc][json5]": {},
   "json.schemas": [
     {
       // Chrome Extensions. Point to extension files in a workspace if this is not working
@@ -11,18 +10,10 @@
 
   "js/ts.implicitProjectConfig.checkJs": true,
   "javascript.preferences.importModuleSpecifierEnding": "js",
-  "[javascript][javascriptreact]": {
-    // "editor.rulers": [100, 120]
-    // "editor.wordWrapColumn": 100
-  },
 
   // // Causes deno extension to report import errors.
   // "typescript.tsserver.experimental.enableProjectDiagnostics": true,
   "typescript.preferences.importModuleSpecifier": "non-relative",
-  "[typescript][typescriptreact]": {
-    // "editor.rulers": [100, 120]
-    // "editor.wordWrapColumn": 100
-  },
 
   "svelte.enable-ts-plugin": true,
   "[svelte]": {
@@ -229,10 +220,6 @@
     "editor.defaultFormatter": "charliermarsh.ruff"
   },
 
-  "[python][shellscript]": {
-    "vim.textwidth": 80
-  },
-
   "rubyLsp.rubyVersionManager": "asdf",
 
   "dart.openDevTools": "flutter",
@@ -290,8 +277,7 @@
     "editor.defaultFormatter": "ocamllabs.ocaml-platform"
   },
 
-  // Vim.
-  // #region {{{
+  // #region Vim {{{
 
   "vim.leader": ",",
 
@@ -327,7 +313,7 @@
   // "vim.autoSwitchInputMethod.obtainIMCmd": "/home/marcelocra/bin/get-im",
   // "vim.autoSwitchInputMethod.switchIMCmd": "/home/marcelocra/bin/set-im {im}",
 
-  //#region viminsert
+  // #region vim insert(
   "vim.insertModeKeyBindingsNonRecursive": [
     {
       // Leave insert mode.
@@ -386,9 +372,12 @@
       "commands": ["deleteLeft"]
     }
   ],
-  //#endregion
+  // #endregion vim insert)
 
-  // -vimnormal
+  // MARK: normal
+
+  //#endregion
+  //vimnormal(
   "vim.normalModeKeyBindingsNonRecursive": [
     {
       "before": ["<leader>", "j"],
@@ -647,7 +636,7 @@
       "commands": ["editor.action.startFindReplaceAction"]
     }
   ],
-  // vimnormal-
+  //vimnormal)
 
   // -vimvisual
   "vim.visualModeKeyBindingsNonRecursive": [
@@ -792,10 +781,8 @@
   // #endregion }}}
 
   // #region Code New Roman {{{
-  // "editor.fontFamily": "CodeNewRoman Nerd Font",
-  // "editor.fontSize": 14,
-  // "editor.fontWeight": "400",
-  // "editor.fontLigatures": "",
+  "editor.fontFamily": "CodeNewRoman Nerd Font",
+  "editor.fontSize": 17,
   // #endregion }}}
 
   // #region Cascadia Code {{{
@@ -938,9 +925,16 @@
   // #endregion }}}
 
   // #region Other fonts that I tested or used in the past {{{
-  "editor.fontFamily": "BlexMono Nerd Font",
-  "editor.fontSize": 17,
-  "editor.fontWeight": "400",
+  // "editor.fontFamily": "BlexMono Nerd Font",
+  // "editor.fontSize": 15,
+  // "editor.fontWeight": "400",
+  // // "editor.fontLigatures": "'ss01', 'ss02', 'zero'",
+  // "editor.fontLigatures": "'zero'",
+  // Ligature test:
+  //    ! " # $ % & ' ( ) * + , - . / : ; < = > ? @ [ \ ] ^ _ ` { | } ~ < > = +
+  //    _ _ ( ) * & ^ % $ # @ ! { } [ ] \ | / ? : ; , . ` ' " ´ ` ˜ => -> <> <=
+  //    >= != !== === ~= |> <- --> || .- :- .= {..} 1/2 3/8 100/48
+
   // #endregion }}}
 
   "editor.tokenColorCustomizations": {
@@ -1040,11 +1034,21 @@
   "editor.showFoldingControls": "always",
   "editor.foldingHighlight": true,
 
+  //#region this
+
+  "editor.minimap.sectionHeaderLetterSpacing": 0,
+  "editor.minimap.size": "fit",
+  "editor.minimap.markSectionHeaderRegex": "\\bMARK:\\s*(?<separator>-?)\\s*(?<label>.*)$",
+  "editor.minimap.showMarkSectionHeaders": true,
+  "editor.minimap.showRegionSectionHeaders": true,
+
   // Next editor.
 
   "diffEditor.codeLens": true,
   "diffEditor.ignoreTrimWhitespace": true,
   "diffEditor.renderSideBySide": true,
+
+  "keyboard.dispatch": "keyCode",
 
   // #endregion editor. }}}
 
@@ -1127,7 +1131,7 @@
   "terminal.integrated.fontSize": 17,
   "terminal.integrated.fontWeight": "500",
   "terminal.integrated.fontLigatures.enabled": true,
-  "terminal.integrated.fontLigatures.featureSettings": "'zero'",
+  // "terminal.integrated.fontLigatures.featureSettings": "'zero'",
   "terminal.integrated.cursorStyle": "line",
   "terminal.integrated.cursorWidth": 2,
   "terminal.integrated.cursorStyleInactive": "outline",
@@ -1222,14 +1226,48 @@
     // "editor.fontLigatures": "'ss02', 'ss19', 'ss20', 'zero', 'cv03', 'cv04', 'cv16', 'cv19', 'cv20', 'cv99'"
   },
   "extensions.experimental.affinity": {
-    "vscodevim.vim": 1
+    "vscodevim.vim": 1,
+    "asvetliakov.vscode-neovim": 1
   },
   "@azure.argTenant": "",
   "dev.containers.dockerPath": "podman",
   "geminicodeassist.enableTelemetry": false,
 
   // #endregion Misc }}}
-  // #region workbench. {{{
+
+  // #region vscode-neovim {{{
+
+  "vscode-neovim.neovimInitVimPaths.linux": "/home/marcelocra/.config/nvim/vscode-init.lua",
+  "vscode-neovim.compositeTimeout": 100,
+  "vscode-neovim.compositeKeys": {
+    "jf": {
+      // Easier way to leave insert mode.
+      "command": "vscode-neovim.escape"
+    },
+    "fj": {
+      // Easier way to leave insert mode.
+      "command": "vscode-neovim.escape"
+    },
+    ",w": {
+      // Easier way to leave insert mode and save the file.
+      "command": "vscode-neovim.lua",
+      "args": ["vim.api.nvim_input('<Esc>') require('vscode').action('workbench.action.files.save')"]
+    },
+    ",s": {
+      // Easier way to leave insert mode and save the file.
+      // TODO: figure out why this is not working.
+      "command": "vscode-neovim.lua",
+      "args": [
+        "local code = require('vscode')",
+        "code.action('vscode-neovim.escape')",
+        "code.action('workbench.action.files.save')"
+      ]
+    }
+  },
+
+  // #endregion vscode-neovim }}}
+
+  // #region workbench {{{
 
   "workbench.colorCustomizations": {
     // "editorCursor.foreground": "#00ffff", // cyan
@@ -1411,6 +1449,7 @@
 
   // Next workbench (keep the theme last, as it changes frequently).
 
-  "workbench.colorTheme": "GitHub Light Default"
+  "workbench.colorTheme": "Quiet Light"
+
   // #endregion workbench. }}}
 }
