@@ -1449,7 +1449,7 @@
 
   // Next workbench (keep the theme last, as it changes frequently).
 
-  "workbench.colorTheme": "Quiet Light"
+  "workbench.colorTheme": "Night Owl Light"
 
   // #endregion workbench. }}}
 }
