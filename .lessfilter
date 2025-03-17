@@ -1,0 +1,38 @@
+#!/bin/sh
+#
+# Note: This file might not be necessary if the `-g` option is used with
+# `pygmentize` in the `LESSOPEN` environment variable. For example:
+#
+#     export LESSOPEN="|pygmentize -g %s"
+#
+# This doesn't work when piping from stdin, though.
+#
+
+# Set pygmentize command common options.
+# -f 256: Use the 256 colors terminal formatter. Details:
+#         https://pygments.org/docs/formatters/#Terminal256Formatter
+cmd='pygmentize -f 256'
+
+case "$1" in
+    *.awk|*.groff|*.java|*.js|*.m4|*.php|*.pl|*.pm|*.pod|*.sh|\
+    *.ad[asb]|*.asm|*.inc|*.[ch]|*.[ch]pp|*.[ch]xx|*.cc|*.hh|\
+    *.lsp|*.l|*.pas|*.p|*.xml|*.xps|*.xsl|*.axp|*.ppd|*.pov|\
+    *.diff|*.patch|*.py|*.rb|*.sql|*.ebuild|*.eclass)
+        $cmd "$1";;
+
+    .bashrc|.bash_aliases|.bash_environment)
+        $cmd -l sh "$1";;
+
+    *)
+        if egrep -q "#\!/bin/(?:ba|c|z)?sh" "$1" 2> /dev/null; then
+            # Detect shell.
+            $cmd -l sh "$1"
+        # elif head -n1 "$1" | egrep -q "python" 2> /dev/null; then
+        #     $cmd -l python "$1"
+        else
+            # Couldn't find a lexer.
+            exit 1
+        fi
+esac
+
+exit 0
