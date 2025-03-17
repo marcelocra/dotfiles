@@ -695,7 +695,7 @@ export LESS='-R'
 
 # Alternatively, using a custom command allows us to keep the default less
 # less in case we don't need anything else.
-alias lesc='LESSOPEN="|pygmentize -g %s" lesstmp'
+# alias lesc='LESSOPEN="|pygmentize -g %s" lesstmp'
 
 # Less with vim support as the editor (pressing v in less).
 alias lesv='lesstmp'
