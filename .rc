@@ -687,13 +687,24 @@ elif mm_is_command grep; then
   alias g=grep
 fi
 
-alias less='lesstmp'
+export LESS='-R'
+# If `lesspipe` is available, we can use the following instead of the
+# `LESSOPEN` env.
+# eval "$(lesspipe)"
+# export LESSOPEN='|~/.lessfilter %s'
+
+# Alternatively, using a custom command allows us to keep the default less
+# less in case we don't need anything else.
+alias lesc='LESSOPEN="|pygmentize -g %s" lesstmp'
+
+# Less with vim support as the editor (pressing v in less).
+alias lesv='lesstmp'
 
 # List processes bound to all ports.
-alias process-to-port-all="netstat -lnp"
+alias list_process_to_port_all="netstat -lnp"
 # Same, but for TCP only. This is usually what I want, e.g. when a server hold
 # it even after ctrl+c.
-alias process-to-port="netstat -lnpt"
+alias list_process_to_port_tcp="netstat -lnpt"
 
 # Fonts
 # -----
@@ -710,7 +721,7 @@ fonts_install_packages_to_improve_rendering() {
 
 alias fonts_update_cache="fc-cache -fv"
 alias fonts_rebuild_cache="sudo fc-cache -r -v"
-alias fonts_list="ls -la ~/.local/share/fonts"
+alias fonts_list="ll ~/.local/share/fonts"
 
 # Monitor
 # -------
