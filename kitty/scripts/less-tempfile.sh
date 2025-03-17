@@ -9,7 +9,7 @@ set -euo pipefail
 
 export EDITOR=nvim
 
-LESS_BIN="less -R"
+LESS_BIN="less -R +G"
 
 # Check if there's standard input being piped in. If there is, create a
 # temporary file for it and go from there. If there isn't, just call less with
@@ -25,7 +25,7 @@ if [ -p /dev/stdin ]; then
     # Open less with the temporary file, using kitty default behaviors:
     # - starting at the end of the file (+G)
     # - preserving ANSI colors (-R)
-    $LESS_BIN +G "$tmpfile"
+    $LESS_BIN "$tmpfile"
 
     # Remove the temporary file when less exits.
     rm "$tmpfile"
