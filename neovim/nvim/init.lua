@@ -17,7 +17,7 @@ vim.o.autoindent = true
 -- time_based: the colorscheme will be chosen based on the time of the day.
 
 vim.g.colorscheme_modes = { 'time_based', 'dark', 'light' }
-vim.g.colorscheme_mode = vim.g.colorscheme_modes[2]
+vim.g.colorscheme_mode = vim.g.colorscheme_modes[1]
 vim.g.colorscheme_mode_dark = 'tokyonight-night'
 -- vim.g.colorscheme_mode_light = 'tokyonight-day'
 vim.g.colorscheme_mode_light = 'tokyonight-day'
