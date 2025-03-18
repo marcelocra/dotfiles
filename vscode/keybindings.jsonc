@@ -56,18 +56,49 @@
   },
 
   {
-    // If terminal is opened and active, focus on the text editor ...
-    "key": "alt+m",
+    "key": "ctrl+`",
+    "command": "workbench.action.terminal.focus",
+    // "command": "workbench.action.terminal.toggleTerminal",
+    "when": "activePanel && !terminalFocus"
+  },
+
+  {
+    "key": "ctrl+`",
     "command": "workbench.action.focusLastEditorGroup",
+    // "command": "workbench.action.terminal.toggleTerminal",
     "when": "activePanel && terminalFocus"
   },
 
   {
-    // ... otherwise, focus on the panel.
-    "key": "alt+m",
-    "command": "workbench.action.terminal.focus",
-    "when": "activePanel && !terminalFocus"
+    // Act somewhat like the default ctrl+`, toggling the terminal panel
+    // anytime. The difference is that if it is opened but unfocused, it will
+    // close it.  Otherwise, it will open it and focus on it. For that behavior
+    // to work, the next binding is also necessary.
+    "key": "alt+t",
+    "command": "workbench.action.togglePanel",
+    "when": "terminal.active && !terminalFocus"
+    // "command": "workbench.action.focusLastEditorGroup",
+    // "when": "activePanel && terminalFocus"
   },
+
+  {
+    // Act somewhat like the default ctrl+`, toggling the terminal panel
+    // anytime. The difference is that if it is opened but unfocused, it will
+    // close it.  Otherwise, it will open it and focus on it. For that behavior
+    // to work, the previous binding is also necessary.
+    "key": "alt+t",
+    "command": "workbench.action.terminal.toggleTerminal"
+    // "when": "terminal.active && terminalFocus"
+    // "command": "workbench.action.focusLastEditorGroup",
+    // "when": "activePanel && terminalFocus"
+  },
+
+  // {
+  //   // ... otherwise, focus on the panel.
+  //   "key": "alt+m",
+  //   "command": "workbench.action.terminal.focus",
+  //   "when": "activePanel && !terminalFocus"
+  // },
 
   {
     // If the panel is active, but not maximized, maximize it.
@@ -516,20 +547,20 @@
   },
 
   {
-    "key": "alt+f",
+    "key": "alt+shift+f",
     "command": "workbench.view.search",
     "when": "!sideBarFocus || activeViewlet != 'workbench.view.search'"
   },
 
   {
-    "key": "alt+f",
+    "key": "alt+shift+f",
     "command": "workbench.action.focusLastEditorGroup",
     "when": "sideBarFocus && activeViewlet == 'workbench.view.search'"
   },
 
   {
-    "key": "alt+shift+f",
-    "command": "search.action.openNewEditorToSide"
+    "key": "alt+f",
+    "command": "workbench.action.findInFiles"
   },
 
   {
@@ -758,12 +789,13 @@
     "when": "editorTextFocus"
   },
 
-  {
-    // Search through all symbols in a workspace.
-    "key": "alt+t",
-    "command": "workbench.action.showAllSymbols",
-    "when": "editorTextFocus"
-  },
+  // {
+  //   // Search through all symbols in a workspace.
+  //   // Note: Indexes `node_modules` too, so not very useful.
+  //   "key": "alt+t",
+  //   "command": "workbench.action.showAllSymbols",
+  //   "when": "editorTextFocus"
+  // },
 
   {
     "key": "ctrl+shift+o",
