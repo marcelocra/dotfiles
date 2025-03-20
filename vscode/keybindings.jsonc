@@ -75,23 +75,23 @@
     // close it.  Otherwise, it will open it and focus on it. For that behavior
     // to work, the next binding is also necessary.
     "key": "alt+t",
-    "command": "workbench.action.togglePanel",
-    "when": "terminal.active && !terminalFocus"
+    "command": "workbench.action.togglePanel"
+    // "when": "terminal.active && !terminalFocus"
     // "command": "workbench.action.focusLastEditorGroup",
     // "when": "activePanel && terminalFocus"
   },
 
-  {
-    // Act somewhat like the default ctrl+`, toggling the terminal panel
-    // anytime. The difference is that if it is opened but unfocused, it will
-    // close it.  Otherwise, it will open it and focus on it. For that behavior
-    // to work, the previous binding is also necessary.
-    "key": "alt+t",
-    "command": "workbench.action.terminal.toggleTerminal"
-    // "when": "terminal.active && terminalFocus"
-    // "command": "workbench.action.focusLastEditorGroup",
-    // "when": "activePanel && terminalFocus"
-  },
+  // {
+  //   // Act somewhat like the default ctrl+`, toggling the terminal panel
+  //   // anytime. The difference is that if it is opened but unfocused, it will
+  //   // close it.  Otherwise, it will open it and focus on it. For that behavior
+  //   // to work, the previous binding is also necessary.
+  //   "key": "alt+t",
+  //   "command": "workbench.action.terminal.toggleTerminal"
+  //   // "when": "terminal.active && terminalFocus"
+  //   // "command": "workbench.action.focusLastEditorGroup",
+  //   // "when": "activePanel && terminalFocus"
+  // },
 
   // {
   //   // ... otherwise, focus on the panel.
