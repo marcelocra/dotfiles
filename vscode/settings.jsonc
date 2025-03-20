@@ -1,10 +1,15 @@
 {
   "json.schemas": [
     {
-      // Chrome Extensions. Point to extension files in a workspace if this is not working
-      // correctly.
+      // Chrome Extensions' Manifest. Point to extension files in a workspace if
+      // this is not working correctly.
       "fileMatch": ["manifest.json"],
       "url": "https://json.schemastore.org/chrome-manifest.json"
+    },
+    {
+      // TypeScript.
+      "fileMatch": ["tsconfig.json"],
+      "url": "https://json.schemastore.org/tsconfig.json"
     }
   ],
 
@@ -1182,22 +1187,19 @@
   "window.customTitleBarVisibility": "auto",
 
   "search.exclude": {
-    // Other stuff.
     "**/.archives": true,
-    "**/.vscode": true,
-    "**/dist/": true,
-
-    // Clojure.
     "**/.calva/": true,
     "**/.clj-kondo/": true,
     "**/.lsp/": true,
-    "**/target/": true,
-    "**/out/": true,
-
-    // VSCode defaults (as of 2oct24).
-    "**/node_modules": true,
+    "**/.vscode": true,
+    "**/*.code-search": true,
     "**/bower_components": true,
-    "**/*.code-search": true
+    "**/dist/": true,
+    "**/node_modules": true,
+    "**/out/": true,
+    "**/target/": true,
+    "package-lock.json": true,
+    "pnpm-lock.yaml": true
   },
   "search.defaultViewMode": "tree",
   "search.mode": "newEditor",
