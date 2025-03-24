@@ -626,14 +626,23 @@ alias myls_display='awk -f <(cat - <<-'\''EOF'\''
 EOF
 )'
 
-if [[ `uname` == "Darwin" ]]; then
-    # Mac doesn't support the --time-style flag.
-    alias l='ls -lFh -t'
-else
-    alias l='myls | myls_display ; tree -L 2'
-fi
+function improved_ls() {
+    if [[ `uname` == "Darwin" ]]; then
+        # Mac doesn't support the --time-style flag.
+        alias l='ls -lFh -t'
+    else
+        local path_to_use="${1:-.}"
 
-alias ll='myls -A | myls_display ; tree -L 2'
+        myls "${path_to_use}" | myls_display ; tree "${path_to_use}" -L 2
+    fi
+}
+alias l=improved_ls
+
+function improved_ls_full() {
+    local path_to_use="${1:-.}"
+    myls "${path_to_use}" | myls_display ; tree "${path_to_use}" -L 2
+}
+alias ll=improved_ls_full
 
 if [[ ! -z "${MCRA_INIT_SHELL}" && ! -z "${MCRA_LOCAL_SHELL}" ]]; then
     alias rc.='echo -n "Reloading configs at $(date +%F_%T)... " \
@@ -799,6 +808,9 @@ alias chrome_br='LANGUAGE=pt_BR google-chrome-stable'
 # ------
 
 alias venv_activate='source .venv/bin/activate'
+
+# Init local python environment and install pip.
+alias initpy='uv init && uv venv && uv add pip && venv_activate'
 
 # List monospaced fonts.
 # ---------------------
