@@ -620,7 +620,8 @@ alias myls_display='awk -f <(cat - <<-'\''EOF'\''
     }
 
     END {
-        printf "\nTotal (KB): %s\nTotal (MB): %s\n\n", total/1024, total/1024/1024;
+        printf "\nTotal (KB): %s\nTotal (MB): %s\n", total/1024, total/1024/1024;
+        printf "%s\n", sep;
     }
 EOF
 )'
