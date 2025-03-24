@@ -139,12 +139,14 @@ if mm_is_command nvim; then
     alias vim="$EDITOR"
     alias vi=vim
     alias v=vim
+    alias n=vim
 elif mm_is_command vim; then
     export EDITOR=vim
 
     alias vim="$EDITOR"
     alias vi=vim
     alias v=vim
+    alias n=vim
 elif mm_is_command vi; then
     export EDITOR=vi
 elif mm_is_command nano; then
