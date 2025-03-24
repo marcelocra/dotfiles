@@ -13,7 +13,8 @@ local mux = wezterm.mux
 -- Options: 'Fixed', 'Fixed Extended', 'Extended'.
 local which_iosevka = "Iosevka Fixed Extended"
 
-local good_font_size = 11
+local good_font_size = 13
+
 local fonts = {
   meslo = {
     font = wezterm.font({
@@ -49,7 +50,7 @@ local fonts = {
         -- 'ss02', 'ss19', 'ss20', 'zero', 'cv03', 'cv04', 'cv16', 'cv19', 'cv20', 'cv99',
       },
     }),
-    size = 10,
+    size = good_font_size,
   },
 
   jb_nf = {
@@ -130,8 +131,8 @@ local fonts = {
       family = "Noto Sans Mono",
       weight = 400,
     }),
-    size = 11,
-    line_height = 0.9,
+    size = good_font_size,
+    -- line_height = 0.9,
   },
 
   red_hat_mono = {
@@ -139,15 +140,20 @@ local fonts = {
       family = "Red Hat Mono",
       weight = 400,
     }),
-    size = 10,
+    size = good_font_size,
   },
 
   ibm = {
     font = wezterm.font({
       family = "IBM Plex Mono",
-      weight = 600,
+      weight = 400,
+      harfbuzz_features = {
+        "zero",
+        "ss01", -- a
+        "ss02", -- g
+      },
     }),
-    size = 11,
+    size = 14,
   },
 
   dm = {
@@ -287,7 +293,7 @@ local fonts = {
     size = good_font_size,
   },
 
-  recursive = {
+  recursive_linear = {
     font = wezterm.font({
       family = "RecMonoLinear Nerd Font",
       weight = 400,
@@ -295,7 +301,7 @@ local fonts = {
     size = good_font_size,
   },
 
-  recursive_alt = {
+  recursive_duotone = {
     font = wezterm.font({
       family = "RecMonoDuotone Nerd Font",
       weight = 400,
@@ -519,7 +525,7 @@ local function color_schemes_by_name(opts)
 end
 
 local color_schemes_light = color_schemes_by_name({
-  min_light = 0.6,
+  min_light = 0.8,
   max_light = 1.0,
 })
 
@@ -528,40 +534,50 @@ local color_schemes_dark = color_schemes_by_name({
   max_light = 0.2,
 })
 
-local color_schemes_to_pick = color_schemes_dark
+-- Choose `color_schemes_to_pick` based on the current time of day: if it is daytime, pick a light
+-- color scheme, otherwise pick a dark one.
+local color_schemes_to_pick = (function()
+  local hour = os.date("*t").hour
+  if hour >= 6 and hour < 18 then
+    return color_schemes_light
+  else
+    return color_schemes_dark
+  end
+end)()
 
 -- Fill this as I find schemes that I like. Later I can randomize only them.
 local color_scheme_override = {
   -- Use `false` to select a random color scheme or the index of the favorite to use as override.
-  override = 27, -- 22, -- Update override.
+  override = false, -- 2, -- 22, -- Update override.
+  -- stylua: ignore
   favorites = {
-    "Dracula", -- Lua is 1-based, so this has index 1.
-    "Dark Pastel", -- 2
-    "CrayonPonyFish", -- 3
-    "Heetch Dark (base16)", -- 4
-    "Canvased Pastel (terminal.sexy)", -- 5
+    "Dracula",                                -- Lua is 1-based, so this has index 1.
+    "Dark Pastel",                            -- 2
+    "CrayonPonyFish",                         -- 3
+    "Heetch Dark (base16)",                   -- 4
+    "Canvased Pastel (terminal.sexy)",        -- 5
     "Synth Midnight Terminal Light (base16)", -- 6
-    "midnight-in-mojave", -- 7
-    "Slate (Gogh)", -- 8
-    "tlh (terminal.sexy)", -- 9
-    "Man Page (Gogh)", -- 10
-    "Builtin Solarized Dark", -- 11
-    "Apathy (base16)", -- 12
-    "gooey (Gogh)", -- 13
-    "SynthwaveAlpha (Gogh)", -- 14
-    "Liquid Carbon Transparent (Gogh)", -- 15
-    "Afterglow (Gogh)", -- 16
-    "HaX0R_R3D", -- 17
-    "Vice Alt (base16)", -- 18
-    "Gigavolt (base16)", -- 19
-    "Humanoid dark (base16)", -- 20
-    "Nancy (terminal.sexy)", -- 21
-    "Purpledream (base16)", -- 22
-    "Mirage", -- 23
-    "Solarized Dark Higher Contrast (Gogh)", -- 24
-    "Trim Yer Beard (terminal.sexy)", -- 25
-    "Gruvbox dark, hard (base16)", -- 26
-    "Harmonic16 Dark (base16)", -- 27
+    "midnight-in-mojave",                     -- 7
+    "Slate (Gogh)",                           -- 8
+    "tlh (terminal.sexy)",                    -- 9
+    "Man Page (Gogh)",                        -- 10
+    "Builtin Solarized Dark",                 -- 11
+    "Apathy (base16)",                        -- 12
+    "gooey (Gogh)",                           -- 13
+    "SynthwaveAlpha (Gogh)",                  -- 14
+    "Liquid Carbon Transparent (Gogh)",       -- 15
+    "Afterglow (Gogh)",                       -- 16
+    "HaX0R_R3D",                              -- 17
+    "Vice Alt (base16)",                      -- 18
+    "Gigavolt (base16)",                      -- 19
+    "Humanoid dark (base16)",                 -- 20
+    "Nancy (terminal.sexy)",                  -- 21
+    "Purpledream (base16)",                   -- 22
+    "Mirage",                                 -- 23
+    "Solarized Dark Higher Contrast (Gogh)",  -- 24
+    "Trim Yer Beard (terminal.sexy)",         -- 25
+    "Gruvbox dark, hard (base16)",            -- 26
+    "Harmonic16 Dark (base16)",               -- 27
     -- Next override.
   },
 }
@@ -588,7 +604,7 @@ wezterm.on("window-config-reloaded", function(window, pane)
   end
 end)
 
--- next event
+-- Next event.
 
 -- MAIN SETTINGS
 
@@ -602,11 +618,15 @@ local set_font = function(font)
   config.line_height = font.line_height or 1.0
 end
 
--- set_font(fonts.jb_nf)
--- set_font(fonts.jb)
-set_font(fonts.noto)
-set_font(fonts.red_hat_mono)
 set_font(fonts.ibm)
+set_font(fonts.red_hat_mono)
+set_font(fonts.jb_nf)
+set_font(fonts.jb)
+set_font(fonts.recursive_linear)
+set_font(fonts.recursive_duotone)
+set_font(fonts.noto)
+
+-- Next font.
 
 config.freetype_load_target = "Light"
 config.freetype_render_target = "HorizontalLcd"
