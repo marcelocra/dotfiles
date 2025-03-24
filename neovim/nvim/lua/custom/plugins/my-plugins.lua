@@ -3,18 +3,14 @@
 --
 -- See the kickstart.nvim README for more information
 
-local plugin_path = function(plugin_name)
-  return (os.getenv 'MCRA_PROJECTS_FOLDER') .. '/dotfiles/neovim/nvim/lua/custom/my-plugins/' .. plugin_name
-end
-
 return {
-  {
-    -- TODO: Figure out why this is not working.
-    dir = plugin_path 'night-owl',
-    name = 'night-owl',
-    config = function()
-      require 'night-owl'
-    end,
-    priority = 1000,
-  },
+  -- {
+  --   -- TODO: Figure out why this is not working.
+  --   dir = '~/dotfiles/neovim/nvim/my-plugins/night-owl',
+  --   name = 'night-owl',
+  --   priority = 1000,
+  --   config = function()
+  --     require 'night-own'.setup()
+  --   end,
+  -- },
 }
