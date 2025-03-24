@@ -593,28 +593,59 @@ if [ "$EDITOR" = "nvim" ]; then
   alias vimdiff="nvim -d"
 fi
 
+# -l: print as a list.
+# -F: classify (folder vs files).
+# -h: print human readable sizes (using K, M, G instead of bytes).
+# -t: sort by time, most recently updated first.
+# --time-style: how to show time. Currently, 30mar23-22h10.
+# --hyperlink=auto: stuff becomes clickable. For example, it is possbile to
+#   open images in kitty term.
+alias myls='ls -lFt --group-directories-first --color=always --time-style="+%d%b%y-%Hh%M"'
+alias myls_display='awk -f <(cat - <<-'\''EOF'\''
+    BEGIN {
+        sep = "";
+        "tput cols" | getline the_cols;
+        for (i=0; i < the_cols ; i++) {
+            sep = sep"-";
+        }
+    }
+
+    NR == 1 {
+        printf "%sSize (B) |  Date (Desc)  | Files and Folders\n%s", sep, sep;
+    }
+
+    NR > 1 {
+        total += $5;
+        printf "%-9s| %-14s| %s\n", $5, $6, substr($0, index($0,$7));
+    }
+
+    END {
+        printf "\nTotal (KB): %s\nTotal (MB): %s\n\n", total/1024, total/1024/1024;
+    }
+EOF
+)'
+
 if [[ `uname` == "Darwin" ]]; then
     # Mac doesn't support the --time-style flag.
     alias l='ls -lFh -t'
 else
-    # -l: print as a list.
-    # -F: classify (folder vs files).
-    # -h: print human readable sizes (using K, M, G instead of bytes).
-    # -t: sort by time, most recently updated first.
-    # --time-style: how to show time. Currently, 30mar23[22:10].
-    # --hyperlink=auto: stuff becomes clickable. For example, it is possbile to
-    #   open images in kitty term.
-    alias l='ls -lFh -t --time-style="+%d%b%y[%H:%M]" --group-directories-first --hyperlink=auto'
+    alias l='myls | myls_display ; tree -L 2'
 fi
 
-alias ll='l -A'
+alias ll='myls -A | myls_display ; tree -L 2'
 
 if [[ ! -z "${MCRA_INIT_SHELL}" && ! -z "${MCRA_LOCAL_SHELL}" ]]; then
-    alias rc='$EDITOR $MCRA_INIT_SHELL'
-    alias rcl='$EDITOR $MCRA_LOCAL_SHELL'
-    alias rcz='$EDITOR ~/.zshrc'
-    alias rcb='$EDITOR ~/.bashrc'
-    alias rc.='source $MCRA_LOCAL_SHELL && source $MCRA_INIT_SHELL'
+    alias rc.='echo -n "Reloading configs at $(date +%F_%T)... " \
+        && source $MCRA_LOCAL_SHELL \
+        && source $MCRA_INIT_SHELL \
+        && echo '\''done!'\'' \
+        || echo '\''failed :('\'''
+    # # Changed in the last 10 minutes.
+    # alias rc_changed='find $MCRA_INIT_SHELL $MCRA_LOCAL_SHELL -mmin -10'
+    alias rc='$EDITOR $MCRA_INIT_SHELL; rc.'
+    alias rcl='$EDITOR $MCRA_LOCAL_SHELL; rc.'
+    alias rcz='$EDITOR ~/.zshrc; rc.'
+    alias rcb='$EDITOR ~/.bashrc; rc.'
 else
     alias rc="echo 'Define \$MCRA_INIT_SHELL and \$MCRA_LOCAL_SHELL in your rc file'"
     alias rcl=rc
