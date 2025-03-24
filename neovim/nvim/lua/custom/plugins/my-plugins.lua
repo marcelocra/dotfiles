@@ -9,6 +9,7 @@ end
 
 return {
   {
+    -- TODO: Figure out why this is not working.
     dir = plugin_path 'night-owl',
     name = 'night-owl',
     config = function()
