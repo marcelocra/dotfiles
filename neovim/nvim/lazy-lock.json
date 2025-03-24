@@ -1,6 +1,7 @@
 {
   "Ionide-vim": { "branch": "master", "commit": "c7e8973426431839e9d888a4aa8d6a41251ba16f" },
   "badwolf": { "branch": "master", "commit": "61d75affa51d40213d671edc9c8ff83992d7fd6f" },
+  "catppuccin": { "branch": "main", "commit": "5b5e3aef9ad7af84f463d17b5479f06b87d5c429" },
   "cmp-conjure": { "branch": "master", "commit": "8c9a88efedc0e5bf3165baa6af8a407afe29daf6" },
   "cmp-nvim-lsp": { "branch": "main", "commit": "99290b3ec1322070bcfb9e846450a46f6efa50f0" },
   "cmp-nvim-lsp-signature-help": { "branch": "main", "commit": "031e6ba70b0ad5eee49fd2120ff7a2e325b17fa7" },
