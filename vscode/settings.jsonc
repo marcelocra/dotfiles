@@ -761,7 +761,7 @@
   "github.copilot.enable": {
     // "plaintext": false,
     // "scminput": false
-    "markdown": true,
+    // "markdown": false,
     "*": true
   },
 
@@ -779,15 +779,15 @@
   // #region editor. {{{
 
   // #region IBM Plex Mono {{{
-  // "editor.fontFamily": "IBM Plex Mono",
-  // "editor.fontSize": 14,
+  "editor.fontFamily": "IBM Plex Mono",
+  "editor.fontSize": 13,
   // "editor.fontWeight": "400",
-  // "editor.fontLigatures": "",
+  "editor.fontLigatures": "'zero'",
   // #endregion }}}
 
   // #region Code New Roman {{{
-  "editor.fontFamily": "CodeNewRoman Nerd Font",
-  "editor.fontSize": 17,
+  // "editor.fontFamily": "CodeNewRoman Nerd Font",
+  // "editor.fontSize": 17,
   // #endregion }}}
 
   // #region Cascadia Code {{{
@@ -818,8 +818,8 @@
 
   // #region Source Code Pro {{{
   // "editor.fontFamily": "SourceCodeVF",
-  // "editor.fontSize": 16, // edn{:desktop 15 :notebook ?? :small 11}
-  // "editor.fontWeight": "500", // edn{:desktop "400" :notebook "??" :small "100"}
+  // "editor.fontSize": 19, // edn{:desktop 15 :notebook ?? :small 11}
+  // "editor.fontWeight": "400", // edn{:desktop "400" :notebook "??" :small "100"}
   // "editor.letterSpacing": -0.4,
   // // "editor.fontLigatures": "'cv17', 'zero'",
   // "editor.fontLigatures": "'cv01', 'cv02', 'cv17', 'zero'",
@@ -1133,10 +1133,10 @@
 
   // Choose the main font and add fallbacks.
   "terminal.integrated.fontFamily": "'BlexMono Nerd Font', 'JetBrainsMono Nerd Font', 'Cascadia Code NF', 'JetBrainsMono NF', 'JetBrains Mono Nerd Font', 'JetBrains Mono NF', 'MesloLGM Nerd Font Mono', 'MesloLGS Nerd Font Mono', 'JetBrains Mono', 'Liberation Mono', 'DejaVu Sans Mono', monospace",
-  "terminal.integrated.fontWeight": "400",
-  "terminal.integrated.fontSize": 12,
+  "terminal.integrated.fontSize": 15,
   "terminal.integrated.fontLigatures.enabled": true,
-  // "terminal.integrated.fontLigatures.featureSettings": "'zero'",
+  "terminal.integrated.fontLigatures.featureSettings": "'zero', 'ss01', 'ss02'",
+  // "terminal.integrated.fontWeight": "300",
   "terminal.integrated.cursorStyle": "line",
   "terminal.integrated.cursorWidth": 2,
   "terminal.integrated.cursorStyleInactive": "outline",
