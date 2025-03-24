@@ -13,14 +13,42 @@ require 'custom.open-scratch-file'
 vim.o.smartindent = true
 vim.o.autoindent = true
 
+-- Colorschemes {{{
+
 -- Load the colorscheme, choosing the mode: 'time_based', 'dark', 'light'.
 -- time_based: the colorscheme will be chosen based on the time of the day.
 
 vim.g.colorscheme_modes = { 'time_based', 'dark', 'light' }
 vim.g.colorscheme_mode = vim.g.colorscheme_modes[1]
-vim.g.colorscheme_mode_dark = 'tokyonight-night'
--- vim.g.colorscheme_mode_light = 'tokyonight-day'
-vim.g.colorscheme_mode_light = 'tokyonight-day'
+
+math.randomseed(os.time())
+
+-- For dark mode, choose randomly between these options:
+local dark_mode_options = {
+  'retrobox',
+  'sorbet',
+  'zaibatsu',
+  'wildcharm',
+  'vim',
+  'habamax',
+  'badwolf',
+  'goodwolf',
+  'vividchalk',
+  'tokyonight-night',
+  'tokyonight-storm',
+  'tokyonight-moon',
+  'catppuccin-frappe',
+  'catppuccin-macchiato',
+  'catppuccin-mocha',
+}
+vim.g.colorscheme_mode_dark = dark_mode_options[math.random(#dark_mode_options)]
+
+-- For light mode, choose randomly between these options:
+local light_mode_options = {
+  'tokyonight-day',
+  'catppuccin-latte',
+}
+vim.g.colorscheme_mode_light = light_mode_options[math.random(#light_mode_options)]
 
 vim.cmd.colorscheme(require('custom.time-based-colorscheme').define_colorscheme())
 
@@ -39,6 +67,9 @@ vim.keymap.set('n', '<M-l>', function()
   vim.cmd.colorscheme(require('custom.time-based-colorscheme').define_colorscheme 'light')
   transparent_background()
 end, { desc = 'Set colorscheme to vim.g.colorscheme_mode_light' })
+
+-- Next colorscheme.
+-- }}}
 
 -- Next option/setting.
 -- }}}
