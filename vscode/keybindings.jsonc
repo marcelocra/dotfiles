@@ -1204,7 +1204,7 @@
     "command": "-workbench.action.splitEditor"
   },
   {
-    "key": "ctrl+q ctrl+c",
+    "key": "ctrl+; ctrl+c",
     "command": "editor.action.addCommentLine",
     "when": "editorTextFocus && !editorReadonly"
   },
@@ -1297,7 +1297,7 @@
 
   //#region NEXT {{{
   {
-    "key": "KEYBINDING INBOX - NEXT UNCATEGORIZED ABOVE"
+    "key": "NEXT KEYBINDING HERE!"
   },
   //#endregion NEXT }}}
 
@@ -2272,11 +2272,8 @@
     "key": "ctrl+; ctrl+r",
     "command": "git.revertSelectedRanges",
     "when": "isInDiffEditor && !operationInProgress"
-  },
-  {
-    "key": "ctrl+q",
-    "command": "-workbench.action.quit"
   }
+
   // DO NOT ADD STUFF HERE. SEARCH FOR `NEXT` AND ADD THERE.
   //#endregion CHANGE DEFAULT KEYBINDINGS THAT START WITH CTRLK }}}
 ]
