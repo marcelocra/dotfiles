@@ -627,22 +627,60 @@ EOF
 )'
 
 function improved_ls() {
-    if [[ `uname` == "Darwin" ]]; then
-        # Mac doesn't support the --time-style flag.
-        alias l='ls -lFh -t'
-    else
-        local path_to_use="${1:-.}"
+    local path_to_use=${1:-.}
+    local tree_level
+    local is_next=false
 
-        myls "${path_to_use}" | myls_display ; tree "${path_to_use}" -L 2
-    fi
+    [[ -n "$1" ]] && shift
+
+    # Try to get `path_to_use` from the --path option in $@.
+    for arg in "$@"; do
+        if [[ $arg == --path=* ]] || [[ $arg == -p=* ]]; then
+            path_to_use="${arg#*=}"
+        elif [[ "$arg" == "--path" ]] || [[ "$arg" == "-p" ]]; then
+            is_next=true
+        elif $is_next; then
+            path_to_use="$arg"
+            is_next=false
+        fi
+    done
+
+    for arg in "$@"; do
+        if [[ $arg == --level=* ]] || [[ $arg == -l=* ]]; then
+            tree_level="${arg#*=}"
+        elif [[ "$arg" == "--level" ]] || [[ "$arg" == "-l" ]]; then
+            is_next=true
+        elif $is_next; then
+            tree_level="$arg"
+            is_next=false
+        fi
+    done
+
+    echo "--path=${path_to_use}"
+    [[ -n "$tree_level" ]] && echo "--level=${tree_level}"
+
+    # Remove the --path and --level option from the arguments.
+    local rest=$(echo "$@" | sed -E -e 's/(--path|-p)[= ][^ ]+//g' -e 's/(--level|-l)[= ][^ ]+//g')
+
+    myls ${path_to_use} ${rest} | myls_display
+    [[ -n "$tree_level" ]] \
+        && tree "${path_to_use}" -L $tree_level \
+        || true
 }
-alias l=improved_ls
+
+if [[ `uname` == "Darwin" ]]; then
+    # Mac doesn't support the --time-style flag.
+    alias l='ls -lFh -t'
+else
+    alias l='improved_ls'
+fi
 
 function improved_ls_full() {
-    local path_to_use="${1:-.}"
-    myls "${path_to_use}" | myls_display ; tree "${path_to_use}" -L 2
+    local path_to_use=${1:-.}
+    [[ -n "$1" ]] && shift
+    improved_ls $path_to_use $@ -A
 }
-alias ll=improved_ls_full
+alias ll='improved_ls_full'
 
 if [[ ! -z "${MCRA_INIT_SHELL}" && ! -z "${MCRA_LOCAL_SHELL}" ]]; then
     alias rc.='echo -n "Reloading configs at $(date +%F_%T)... " \
