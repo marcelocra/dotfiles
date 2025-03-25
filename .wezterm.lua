@@ -309,10 +309,13 @@ local fonts = {
     size = good_font_size,
   },
 
-  hack = { font = wezterm.font({
-    family = "Hack Nerd Font",
-    weight = 400,
-  }), size = good_font_size },
+  hack = {
+    font = wezterm.font({
+      family = "Hack Nerd Font",
+      weight = 400,
+    }),
+    size = good_font_size,
+  },
 
   blex = { font = wezterm.font({
     family = "Blex Mono Nerd Font",
@@ -322,6 +325,14 @@ local fonts = {
   commit = {
     font = wezterm.font({
       family = "CommitMono Nerd Font",
+      weight = 400,
+    }),
+    size = good_font_size,
+  },
+
+  roboto = {
+    font = wezterm.font({
+      family = "RobotoMono Nerd Font",
       weight = 400,
     }),
     size = good_font_size,
@@ -625,6 +636,8 @@ set_font(fonts.jb)
 set_font(fonts.recursive_linear)
 set_font(fonts.recursive_duotone)
 set_font(fonts.noto)
+set_font(fonts.hack)
+set_font(fonts.roboto)
 
 -- Next font.
 
