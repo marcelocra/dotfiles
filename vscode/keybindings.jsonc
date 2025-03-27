@@ -104,62 +104,56 @@
     // If the panel is active, but not maximized, maximize it.
     "key": "ctrl+alt+`",
     "command": "workbench.action.toggleMaximizedPanel",
-    "when": "activePanel && terminalFocus"
+    "when": "panelFocus && terminalFocus"
   },
 
   {
-    // Toggle the panel position between bottom and right.
-    "key": "ctrl+; ctrl+p",
-    "command": "runCommands",
-    "args": {
-      "commands": ["workbench.action.positionPanelRight", "workbench.action.focusPanel"]
-    },
-    "when": "activePanel && terminalFocus && panelPosition == 'bottom'"
+    // Move the panel to a new position.
+    "key": "ctrl+; ctrl+l",
+    "command": "workbench.action.positionPanelRight",
+    "when": "panelFocus && panelPosition == 'bottom'"
   },
 
   {
-    // Toggle the panel position between bottom and right.
-    "key": "ctrl+; ctrl+p",
-    "command": "runCommands",
-    "args": {
-      "commands": ["workbench.action.positionPanelBottom", "workbench.action.focusPanel"]
-    },
-    "when": "activePanel && terminalFocus && panelPosition == 'right'"
+    // Move the panel to a new position.
+    "key": "ctrl+; ctrl+j",
+    "command": "workbench.action.positionPanelBottom",
+    "when": "panelFocus && panelPosition == 'right'"
   },
 
   {
-    // If the terminal panel is active and in the bottom, increase its size.
+    // Resize panel.
     "key": "ctrl+; ctrl+k",
     "command": "workbench.action.terminal.resizePaneUp",
-    "when": "activePanel && terminalFocus && panelPosition == 'bottom'"
+    "when": "panelFocus"
   },
 
   {
-    // If the terminal panel is active and in the bottom, decrease its size.
+    // Resize panel.
     "key": "ctrl+; ctrl+j",
     "command": "workbench.action.terminal.resizePaneDown",
-    "when": "activePanel && terminalFocus && panelPosition == 'bottom'"
+    "when": "panelFocus && panelPosition == 'bottom'"
   },
 
   {
-    // If the terminal panel is active and in the right, increase its size.
+    // Resize panel.
     "key": "ctrl+; ctrl+h",
     "command": "workbench.action.terminal.resizePaneLeft",
-    "when": "activePanel && terminalFocus && panelPosition == 'right'"
+    "when": "panelFocus"
   },
 
   {
-    // If the terminal panel is active and in the right, decrease its size.
+    // Resize panel.
     "key": "ctrl+; ctrl+l",
     "command": "workbench.action.terminal.resizePaneRight",
-    "when": "activePanel && terminalFocus && panelPosition == 'right'"
+    "when": "panelFocus && panelPosition == 'right'"
   },
 
   {
     // If the panel is not active, activate and maximize it.
     "key": "ctrl+alt+`",
     "command": "workbench.action.toggleMaximizedPanel",
-    "when": "!activePanel || !terminalFocus"
+    "when": "!panelFocus || !terminalFocus"
   },
 
   {
@@ -1293,6 +1287,22 @@
     "when": "vim.active && vim.mode == 'Insert' && editorTextFocus"
   },
 
+  {
+    // Go to the next view in the panels (terminal, output, debug console,
+    // problems, etc.).
+    "key": "ctrl+]",
+    "command": "workbench.action.nextPanelView",
+    "when": "panelFocus"
+  },
+
+  {
+    // Go to the previous view in the panels (terminal, output, debug console,
+    // problems, etc.).
+    "key": "ctrl+[",
+    "command": "workbench.action.previousPanelView",
+    "when": "panelFocus"
+  },
+
   //#endregion MISC }}}
 
   //#region NEXT {{{
@@ -2038,11 +2048,12 @@
     "command": "-workbench.action.output.toggleOutput",
     "when": "workbench.panel.output.active"
   },
-  {
-    "key": "ctrl+; ctrl+h",
-    "command": "workbench.action.output.toggleOutput",
-    "when": "workbench.panel.output.active"
-  },
+  // {
+  //   // I use this for something else.
+  //   "key": "ctrl+; ctrl+h",
+  //   "command": "workbench.action.output.toggleOutput",
+  //   "when": "workbench.panel.output.active"
+  // },
   {
     "key": "ctrl+k shift+enter",
     "command": "-workbench.action.pinEditor",
