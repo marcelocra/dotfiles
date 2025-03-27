@@ -639,6 +639,10 @@
     {
       "before": ["<c-h>"],
       "commands": ["editor.action.startFindReplaceAction"]
+    },
+    {
+      "before": ["Y"],
+      "after": ["y", "$"]
     }
   ],
   //vimnormal)
@@ -971,6 +975,17 @@
         //        "fontStyle": "italic"
         //      }
         //    }
+      ]
+    },
+    "[GitHub Light*]": {
+      // Use italics for comments.
+      "textMateRules": [
+        {
+          "scope": ["comment", "keyword"],
+          "settings": {
+            "fontStyle": "italic"
+          }
+        }
       ]
     }
   },
@@ -1440,6 +1455,8 @@
       "editor.selectionBackground": "#00ffff55",
       "editor.wordHighlightBackground": "#00ffff22"
     }
+
+    // Next theme colorscheme customization.
   },
 
   "workbench.activityBar.location": "top",
@@ -1453,7 +1470,7 @@
 
   // Next workbench (keep the theme last, as it changes frequently).
 
-  "workbench.colorTheme": "Quiet Light"
+  "workbench.colorTheme": "Night Owl Light"
 
   // #endregion workbench. }}}
 }
