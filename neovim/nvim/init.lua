@@ -102,7 +102,7 @@ vim.keymap.set('n', ',e', ':e<CR>', { desc = 'Reload current file' })
 vim.keymap.set('i', ',e', '<Esc>:e<CR>', { desc = 'Reload current file' })
 
 -- Port my most used mappings from VSCode.
-vim.keymap.set('n', '<C-p>', ':Telescope find_files<CR>', { desc = 'Fuzzy search files in current folder' })
+vim.keymap.set('n', '<C-p>', ':Telescope find_files hidden=true<CR>', { desc = 'Fuzzy search files in current folder' })
 vim.keymap.set('n', '<C-t>', ':Telescope lsp_dynamic_workspace_symbols<CR>', { desc = 'Fuzzy search workspace symbols' })
 
 -- Move between tabs.
