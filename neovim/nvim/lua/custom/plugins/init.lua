@@ -54,7 +54,8 @@ return {
       vim.g.copilot_no_tab_map = true
     end,
     config = function()
-      vim.keymap.set('i', '<C-y>', 'copilot#Accept("\\<CR>")', {
+      -- Good alternative to tab: <C-y>.
+      vim.keymap.set('i', '<Tab>', 'copilot#Accept("\\<Tab>")', {
         expr = true,
         replace_keycodes = false,
       })
