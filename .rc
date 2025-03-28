@@ -601,7 +601,31 @@ fi
 # --hyperlink=auto: stuff becomes clickable. For example, it is possbile to
 #   open images in kitty term.
 alias myls='ls -lFt --group-directories-first --color=always --time-style="+%d%b%y-%Hh%M"'
-alias myls_display='awk -f <(cat - <<-'\''EOF'\''
+alias myls_display_no_group='awk -f <(cat - <<-'\''EOF'\''
+    BEGIN {
+        print
+    }
+
+    {
+        # If the line starts with "total", print as is.
+        if (index($1, "total") == 1) {
+            print $0;
+            next;
+        }
+
+        total += $5;
+        printf "%-10s   %-4.4s%3s   %-13s   %s\n", $1, $5/1024, "KB", $6, substr($0, index($0,$7));
+    }
+
+    END {
+        total_kb = total/1024;
+        total_mb = total_kb/1024;
+        printf "\nSize: %s MB (%s KB)\n", total_mb, total_kb;
+    }
+EOF
+)'
+
+alias myls_display_table='awk -f <(cat - <<-'\''EOF'\''
     BEGIN {
         sep = "";
         "tput cols" | getline the_cols;
@@ -662,17 +686,22 @@ function improved_ls() {
     # Remove the --path and --level option from the arguments.
     local rest=$(echo "$@" | sed -E -e 's/(--path|-p)[= ][^ ]+//g' -e 's/(--level|-l)[= ][^ ]+//g')
 
-    myls ${path_to_use} ${rest} | myls_display
+    myls ${path_to_use} ${rest} | myls_display_table
     [[ -n "$tree_level" ]] \
         && tree "${path_to_use}" -L $tree_level \
         || true
+}
+
+function improved_ls_no_group() {
+    myls $@ | myls_display_no_group
 }
 
 if [[ `uname` == "Darwin" ]]; then
     # Mac doesn't support the --time-style flag.
     alias l='ls -lFh -t'
 else
-    alias l='improved_ls'
+    alias l='improved_ls_no_group'
+    alias lt='improved_ls'
 fi
 
 function improved_ls_full() {
@@ -680,7 +709,8 @@ function improved_ls_full() {
     [[ -n "$1" ]] && shift
     improved_ls $path_to_use $@ -A
 }
-alias ll='improved_ls_full'
+alias ll='improved_ls_no_group -A'
+alias llt='improved_ls_full'
 
 if [[ ! -z "${MCRA_INIT_SHELL}" && ! -z "${MCRA_LOCAL_SHELL}" ]]; then
     alias rc.='echo -n "Reloading configs at $(date +%F_%T)... " \
@@ -750,15 +780,10 @@ alias ppath="echo $PATH | tr ':' '\n'"
 alias t1="tree -L 1"
 alias t2="tree -L 2"
 
-if command -v python3.12 &> /dev/null; then
-    alias python=python3.12
-elif command -v python3 &> /dev/null; then
-    alias python=python3
-else
-    alias python="echo 'check for python3'"
-fi
-alias py=python
-
+alias old_python_warning='echo "\nWARNING: This is the system (outdated) Python version. Use '\''py'\'' for a more recent one.\n"'
+alias python3='old_python_warning; python3'
+alias python=python3
+alias py='source $MCRA_PYTHON_VENV_ACTIVATE && python'
 
 if mm_is_command rg; then
   alias g=rg
