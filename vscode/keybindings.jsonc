@@ -93,12 +93,12 @@
   //   // "when": "activePanel && terminalFocus"
   // },
 
-  // {
-  //   // ... otherwise, focus on the panel.
-  //   "key": "alt+m",
-  //   "command": "workbench.action.terminal.focus",
-  //   "when": "activePanel && !terminalFocus"
-  // },
+  {
+    // Move the focus away from the terminal without closing it.
+    "key": "ctrl+m", // Previous: alt+m
+    "command": "workbench.action.focusLastEditorGroup",
+    "when": "activePanel && terminalFocus"
+  },
 
   {
     // If the panel is active, but not maximized, maximize it.
@@ -330,16 +330,6 @@
     "command": "workbench.action.closeActiveEditor",
     "when": "editorTextFocus && vim.mode != 'Insert'"
   },
-
-  // {
-  //   "key": "ctrl+o",
-  //   "command": "workbench.action.navigateBack"
-  // },
-
-  // {
-  //   "key": "ctrl+i",
-  //   "command": "workbench.action.navigateForward"
-  // },
 
   {
     // Example:
@@ -833,17 +823,17 @@
     "when": "!accessibilityHelpIsShown && !accessibleViewIsShown"
   },
 
-  {
-    "key": "ctrl+i",
-    "command": "-workbench.action.terminal.chat.focusInput",
-    "when": "terminalChatFocus && !inlineChatFocused"
-  },
+  // {
+  //   "key": "ctrl+i",
+  //   "command": "-workbench.action.terminal.chat.focusInput",
+  //   "when": "terminalChatFocus && !inlineChatFocused"
+  // },
 
-  {
-    "key": "ctrl+i",
-    "command": "-workbench.action.terminal.chat.start",
-    "when": "terminalChatAgentRegistered && terminalFocusInAny && terminalHasBeenCreated || terminalChatAgentRegistered && terminalFocusInAny && terminalProcessSupported"
-  },
+  // {
+  //   "key": "ctrl+i",
+  //   "command": "-workbench.action.terminal.chat.start",
+  //   "when": "terminalChatAgentRegistered && terminalFocusInAny && terminalHasBeenCreated || terminalChatAgentRegistered && terminalFocusInAny && terminalProcessSupported"
+  // },
 
   {
     "key": "alt+=",
