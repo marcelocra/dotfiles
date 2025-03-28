@@ -79,7 +79,7 @@ local fonts = {
         "cv99",
       },
     }),
-    size = 11,
+    size = good_font_size,
   },
 
   cascadia = {
@@ -132,7 +132,7 @@ local fonts = {
       weight = 400,
     }),
     size = good_font_size,
-    -- line_height = 0.9,
+    -- line_height = 0.84,
   },
 
   red_hat_mono = {
@@ -146,14 +146,14 @@ local fonts = {
   ibm = {
     font = wezterm.font({
       family = "IBM Plex Mono",
-      weight = 400,
+      weight = 450,
       harfbuzz_features = {
         "zero",
         "ss01", -- a
         "ss02", -- g
       },
     }),
-    size = 14,
+    size = good_font_size,
   },
 
   dm = {
@@ -589,7 +589,8 @@ local color_scheme_override = {
     "Trim Yer Beard (terminal.sexy)",         -- 25
     "Gruvbox dark, hard (base16)",            -- 26
     "Harmonic16 Dark (base16)",               -- 27
-    -- Next override.
+    "Alabaster",                              -- 28
+    -- Next theme colorscheme override.
   },
 }
 
@@ -629,15 +630,15 @@ local set_font = function(font)
   config.line_height = font.line_height or 1.0
 end
 
-set_font(fonts.ibm)
 set_font(fonts.red_hat_mono)
-set_font(fonts.jb_nf)
-set_font(fonts.jb)
+set_font(fonts.roboto)
+set_font(fonts.ibm)
 set_font(fonts.recursive_linear)
 set_font(fonts.recursive_duotone)
 set_font(fonts.noto)
+set_font(fonts.jb)
+set_font(fonts.jb_nf)
 set_font(fonts.hack)
-set_font(fonts.roboto)
 
 -- Next font.
 
