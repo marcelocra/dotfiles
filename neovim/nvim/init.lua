@@ -323,5 +323,33 @@ vim.api.nvim_create_autocmd('FileType', {
   end,
 })
 
+local function clear_cmdarea()
+  vim.defer_fn(function()
+    vim.api.nvim_echo({}, false, {})
+  end, 800)
+end
+
+local auto_save_triggers = {
+  'InsertLeave',
+  -- 'TextChanged',  -- This one seems too aggressive.
+}
+
+vim.api.nvim_create_autocmd(auto_save_triggers, {
+  desc = 'Automatically save changes.',
+  group = vim.api.nvim_create_augroup('auto-save-changes', { clear = true }),
+  callback = function()
+    if #vim.api.nvim_buf_get_name(0) ~= 0 and vim.bo.buflisted then
+      vim.cmd 'silent w'
+
+      local time = os.date '%H:%M:%S'
+
+      -- print nice colored msg
+      vim.api.nvim_echo({ { 'v', 'LazyProgressDone' }, { ' file autosaved at ' .. time } }, false, {})
+
+      clear_cmdarea()
+    end
+  end,
+})
+
 -- Next autocommand.
 -- }}}
