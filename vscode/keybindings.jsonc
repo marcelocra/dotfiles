@@ -55,19 +55,17 @@
     "key": "TERMINAL FOCUS"
   },
 
-  // {
-  //   "key": "ctrl+`",
-  //   "command": "workbench.action.terminal.focus",
-  //   // "command": "workbench.action.terminal.toggleTerminal",
-  //   "when": "activePanel && !terminalFocus"
-  // },
+  {
+    "key": "ctrl+`",
+    "command": "workbench.action.terminal.focus",
+    "when": "activePanel && !terminalFocus"
+  },
 
-  // {
-  //   "key": "ctrl+`",
-  //   "command": "workbench.action.focusLastEditorGroup",
-  //   // "command": "workbench.action.terminal.toggleTerminal",
-  //   "when": "activePanel && terminalFocus"
-  // },
+  {
+    "key": "ctrl+`",
+    "command": "workbench.action.focusLastEditorGroup",
+    "when": "activePanel && terminalFocus"
+  },
 
   // {
   //   // Act somewhat like the default ctrl+`, toggling the terminal panel
@@ -95,9 +93,10 @@
 
   {
     // Move the focus away from the terminal without closing it.
-    "key": "ctrl+m", // Previous: alt+m
-    "command": "workbench.action.focusLastEditorGroup",
-    "when": "activePanel && terminalFocus"
+    "key": "alt+t", // Previous: alt+m
+    "command": "workbench.action.terminal.toggleTerminal"
+    // "command": "workbench.action.focusLastEditorGroup",
+    // "when": "activePanel && terminalFocus"
   },
 
   {
