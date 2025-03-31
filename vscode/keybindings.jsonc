@@ -92,11 +92,9 @@
   // },
 
   {
-    // Move the focus away from the terminal without closing it.
+    // Open or close the panel anytime. Work well with ctrl+`.
     "key": "alt+t", // Previous: alt+m
-    "command": "workbench.action.terminal.toggleTerminal"
-    // "command": "workbench.action.focusLastEditorGroup",
-    // "when": "activePanel && terminalFocus"
+    "command": "workbench.action.togglePanel"
   },
 
   {
