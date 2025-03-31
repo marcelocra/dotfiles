@@ -293,7 +293,7 @@
   "vim.useSystemClipboard": true,
   "vim.useCtrlKeys": true,
   "vim.hlsearch": true,
-  "vim.smartRelativeLine": false,
+  "vim.smartRelativeLine": true,
   "vim.foldfix": true,
   "vim.camelCaseMotion.enable": true,
 
@@ -950,7 +950,7 @@
   // #region Hack {{{
   "editor.fontFamily": "Hack Nerd Font",
   "editor.fontSize": 13,
-  "editor.fontWeight": "400",
+  "editor.fontWeight": "bold",
   // "editor.fontLigatures": "'zero'",
   // Available stylistic sets:
   //    calt=0: no ligatures (particularly for `==` and `!=`, but also disable
@@ -992,7 +992,7 @@
         //    }
       ]
     },
-    "[GitHub Light*]": {
+    "[GitHub*]": {
       // Use italics for comments.
       "textMateRules": [
         {
@@ -1485,7 +1485,7 @@
 
   // Next workbench (keep the theme last, as it changes frequently).
 
-  "workbench.colorTheme": "Night Owl"
+  "workbench.colorTheme": "GitHub Dark"
 
   // #endregion workbench. }}}
 }
