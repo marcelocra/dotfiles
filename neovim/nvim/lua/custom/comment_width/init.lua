@@ -109,11 +109,10 @@ function M.attach_autocmd()
   })
 end
 
-
 return {
   name = 'comment_width',
   lazy = false, -- or true if you want to load on demand
-  config = function
+  config = function()
     M.attach_autocmd()
   end,
 }

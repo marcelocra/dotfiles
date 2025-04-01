@@ -4,17 +4,19 @@
 -- See the kickstart.nvim README for more information
 return {
   {
-    dir = os.getenv('HOME') .. '/.config/nvim/lua/custom/comment_width',
+    dir = os.getenv 'HOME' .. '/.config/nvim/lua/custom/comment_width',
     config = function()
-      -- require 'custom.comment_width'.config()
+      -- TODO: There's a function in the module that's being called on nil.
+      -- Figure out why.
+      -- require('custom.comment_width').config()
     end,
   },
   {
-    dir = os.getenv('HOME') .. '/.config/nvim/lua/custom/night-owl',
+    dir = os.getenv 'HOME' .. '/.config/nvim/lua/custom/night-owl',
     config = function()
-      require 'custom.night-owl'.config()
+      require('custom.night-owl').config()
     end,
-  }
+  },
 }
 
 -- return { dir = '~/.config/nvim/lua/custom/plugins/comment_width' }
