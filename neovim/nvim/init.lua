@@ -299,7 +299,7 @@ vim.api.nvim_create_autocmd('FileType', {
   end,
 })
 
-vim.g.tw_comments = 80
+vim.g.mcra_tw_comments = 80
 
 -- vim.api.nvim_create_autocmd('BufWinEnter', {
 --   desc = 'Sets different textwidth for comments. Otherwise it is controlled by EditorConfig.',
@@ -337,7 +337,7 @@ vim.g.tw_comments = 80
 --         --      (*: ML-style
 --         if before_cursor:match '^%s*[%-%/#{%(][%-%*%(]?' then
 --           -- If inside a comment, update tw.
---           vim.opt_local.textwidth = vim.g.tw_comments
+--           vim.opt_local.textwidth = vim.g.mcra_tw_comments
 --         end
 --       end,
 --     })

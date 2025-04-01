@@ -93,9 +93,7 @@ function M.smart_textwidth()
   local line = vim.api.nvim_get_current_line()
 
   if M.is_comment_line(line) then
-    vim.opt_local.textwidth = 80
-  else
-    vim.opt_local.textwidth = 0
+    vim.opt_local.textwidth = vim.g.mcra_tw_comments or 80
   end
 end
 
