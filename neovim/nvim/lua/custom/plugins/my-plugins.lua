@@ -2,15 +2,31 @@
 --  I promise not to create any merge conflicts in this directory :)
 --
 -- See the kickstart.nvim README for more information
-
 return {
-  -- {
-  --   -- TODO: Figure out why this is not working.
-  --   dir = '~/dotfiles/neovim/nvim/my-plugins/night-owl',
-  --   name = 'night-owl',
-  --   priority = 1000,
-  --   config = function()
-  --     require 'night-own'.setup()
-  --   end,
-  -- },
+  {
+    dir = os.getenv('HOME') .. '/.config/nvim/lua/custom/comment_width',
+    config = function()
+      -- require 'custom.comment_width'.config()
+    end,
+  },
+  {
+    dir = os.getenv('HOME') .. '/.config/nvim/lua/custom/night-owl',
+    config = function()
+      require 'custom.night-owl'.config()
+    end,
+  }
 }
+
+-- return { dir = '~/.config/nvim/lua/custom/plugins/comment_width' }
+
+-- return {
+--   -- {
+--   --   -- TODO: Figure out why this is not working.
+--   --   dir = '~/dotfiles/neovim/nvim/my-plugins/night-owl',
+--   --   name = 'night-owl',
+--   --   priority = 1000,
+--   --   config = function()
+--   --     require 'night-own'.setup()
+--   --   end,
+--   -- },
+-- }
