@@ -950,7 +950,7 @@
   // #region Hack {{{
   "editor.fontFamily": "Hack Nerd Font",
   "editor.fontSize": 13,
-  "editor.fontWeight": "bold",
+  "editor.fontWeight": "normal",
   // "editor.fontLigatures": "'zero'",
   // Available stylistic sets:
   //    calt=0: no ligatures (particularly for `==` and `!=`, but also disable
@@ -1485,7 +1485,7 @@
 
   // Next workbench (keep the theme last, as it changes frequently).
 
-  "workbench.colorTheme": "GitHub Dark"
+  "workbench.colorTheme": "Solarized Light"
 
   // #endregion workbench. }}}
 }
