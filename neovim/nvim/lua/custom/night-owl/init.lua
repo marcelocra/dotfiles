@@ -69,10 +69,13 @@ local setup = function()
     vim.g.terminal_color_foreground = '#FFFFFF'
     vim.g.terminal_color_background = '#403f53'
   end
-
-  print 'Night Owl Light colorscheme loaded'
 end
 
 return {
-  setup = setup,
+  name = 'night-owl',
+  lazy = false,
+  priority = 1000,
+  config = function()
+    setup()
+  end,
 }
