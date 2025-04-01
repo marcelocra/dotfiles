@@ -536,13 +536,13 @@ local function color_schemes_by_name(opts)
 end
 
 local color_schemes_light = color_schemes_by_name({
-  min_light = 0.8,
+  min_light = 0.6,
   max_light = 1.0,
 })
 
 local color_schemes_dark = color_schemes_by_name({
   min_light = 0.0,
-  max_light = 0.2,
+  max_light = 0.4,
 })
 
 -- Choose `color_schemes_to_pick` based on the current time of day: if it is daytime, pick a light
