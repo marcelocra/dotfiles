@@ -33,22 +33,6 @@ local fonts = {
     font = wezterm.font({
       family = "JetBrains Mono",
       weight = 400,
-      -- Ligature test:
-      --  ! " # $ % & ' ( ) * + , - . / : ; < = > ? @ [ \ ] ^ _ ` { | } ~
-      --  ~ < > = + _ _ ( ) * & ^ % $ # @ ! { } [ ] \ | / ? : ; , . ` ' " ´ ` ˜
-      --  => -> <> <= >= != !== === ~= |> <- --> || .- :- .= {..} 1/2 3/8 100/48
-      --  a b c d e f g h i j k l m n o p q r s t u v x w y z
-      --  A B C D E F G H I J K L M N O P Q R S T U V X W Y Z
-      harfbuzz_features = {
-        -- Minimal: default style (ss01); no ligatures in `=` (ss19); raised bar `f` (ss20); dashed
-        -- zero (zero); highlight some weird glyphs (cv99).
-        -- 'ss01', 'ss19', 'ss20', 'zero', 'cv99',
-
-        -- Different: closed construction (ss02); no ligatures in `=` (ss19); raised bar `f` (ss20);
-        -- dashed zero (zero); different `g`, `j`, `Q`, `8`, `5` (respectively); highlight some weird
-        -- glyphs (cv99).
-        -- 'ss02', 'ss19', 'ss20', 'zero', 'cv03', 'cv04', 'cv16', 'cv19', 'cv20', 'cv99',
-      },
     }),
     size = good_font_size,
   },
@@ -132,7 +116,6 @@ local fonts = {
       weight = 400,
     }),
     size = good_font_size,
-    -- line_height = 0.84,
   },
 
   red_hat_mono = {
@@ -169,15 +152,15 @@ local fonts = {
     size = good_font_size,
   },
 
-  scp = {
+  source_code_pro = {
     font = wezterm.font({
       family = "SourceCodeVF",
-      -- weight = 700,
+      weight = 500,
       harfbuzz_features = {
-        "cv17",
-        "cv01",
-        "cv02",
-        "zero",
+        "cv17", -- Improved '1'.
+        "cv01", -- Alternative 'a'.
+        "cv02", -- Alternative 'g'.
+        -- "zero", -- Slashed zero.
       },
     }),
     size = good_font_size,
@@ -309,11 +292,28 @@ local fonts = {
     size = good_font_size,
   },
 
+  recursive_semicasual = {
+    font = wezterm.font({
+      family = "RecMonoSmCasual Nerd Font",
+      weight = 400,
+    }),
+    size = good_font_size,
+  },
+
+  recursive_casual = {
+    font = wezterm.font({
+      family = "RecMonoCasual Nerd Font",
+      weight = 400,
+    }),
+    size = good_font_size,
+  },
+
   hack = {
     font = wezterm.font({
       family = "Hack Nerd Font",
       weight = 400,
     }),
+    line_height = 1.3,
     size = good_font_size,
   },
 
@@ -614,6 +614,10 @@ wezterm.on("window-config-reloaded", function(window, pane)
       color_scheme = get_scheme({ force_random = false }),
     })
   end
+
+  -- get wez config font
+
+  print("Selected font: ", window:effective_config().font)
 end)
 
 -- Next event.
@@ -627,18 +631,26 @@ config.window_decorations = "RESIZE"
 local set_font = function(font)
   config.font = font.font
   config.font_size = font.size
+  -- Most other heights end up cropping the fonts, so only change them if you
+  -- are sure the won't.
   config.line_height = font.line_height or 1.0
 end
 
-set_font(fonts.red_hat_mono)
-set_font(fonts.roboto)
-set_font(fonts.ibm)
-set_font(fonts.recursive_linear)
-set_font(fonts.recursive_duotone)
-set_font(fonts.noto)
-set_font(fonts.jb)
-set_font(fonts.jb_nf)
-set_font(fonts.hack)
+-- Randomly pick a font.
+local best_fonts = {
+  fonts.red_hat_mono,
+  fonts.ibm,
+  fonts.recursive_linear,
+  fonts.recursive_duotone,
+  fonts.recursive_semicasual,
+  fonts.noto,
+  fonts.jb,
+  fonts.jb_nf,
+  fonts.hack,
+  fonts.source_code_pro,
+}
+local font = best_fonts[math.random(#best_fonts)]
+set_font(font)
 
 -- Next font.
 
