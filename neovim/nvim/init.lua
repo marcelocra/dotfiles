@@ -301,27 +301,48 @@ vim.api.nvim_create_autocmd('FileType', {
 
 vim.g.tw_comments = 80
 
-vim.api.nvim_create_autocmd('FileType', {
-  desc = 'Sets different textwidth for comments. Otherwise it is controlled by EditorConfig.',
-  group = vim.api.nvim_create_augroup('dynamic-text-width', { clear = true }),
-  pattern = '*',
-  callback = function()
-    vim.api.nvim_create_autocmd('CursorMoved', {
-      group = vim.api.nvim_create_augroup('dynamic-text-width-cursor-moved', { clear = true }),
-      buffer = 0,
-      callback = function()
-        local line = vim.api.nvim_get_current_line()
-        local cursor_col = vim.api.nvim_win_get_cursor(0)[2] + 1
-        local before_cursor = line:sub(1, cursor_col)
+-- vim.api.nvim_create_autocmd('BufWinEnter', {
+--   desc = 'Sets different textwidth for comments. Otherwise it is controlled by EditorConfig.',
+--   group = vim.api.nvim_create_augroup('dynamic-text-width', { clear = true }),
+--   pattern = '*',
+--   callback = function()
+--     vim.api.nvim_create_autocmd('CursorMoved', {
+--       group = vim.api.nvim_create_augroup('dynamic-text-width-cursor-moved', { clear = true }),
+--       buffer = 0,
+--       callback = function()
+--         local line = vim.api.nvim_get_current_line()
+--         local cursor_col = vim.api.nvim_win_get_cursor(0)[2] + 1
+--         local before_cursor = line:sub(1, cursor_col)
 
-        -- If inside a comment, update tw.
-        if before_cursor:match '^%s*[%/%*#;%-%-%!]' then
-          vim.opt_local.textwidth = vim.g.tw_comments
-        end
-      end,
-    })
-  end,
-})
+--         -- Lua patterns are different from regex.
+--         --    ^ and *: same as in regex
+--         --    %s: all whitespace
+--         --    %/ %* # ; %- %! %(: literal characters
+--         --    [...]: a char set (same as regex)
+--         --
+--         -- First try: '^%s*[%/]?[%/%*#;%-%-%!]'
+--         --
+--         --    Didn't work very well, particularly for Lua comments. Lets write this a bit more and
+--         --
+--         -- Second try: '^%s*[%-%/#{%(][%-%*%(]?'
+--         --
+--         --    Should match most line and block comments.
+--         --    Line comments:
+--         --      --: Lua, Haskell
+--         --      //: C-like: C, C++, Java, JavaScript, etc.
+--         --      # : Python, Ruby, Shell, etc.
+--         --    Block comment starts:
+--         --      /*: C-like block comment start
+--         --      { : Pascal-style
+--         --      (*: ML-style
+--         if before_cursor:match '^%s*[%-%/#{%(][%-%*%(]?' then
+--           -- If inside a comment, update tw.
+--           vim.opt_local.textwidth = vim.g.tw_comments
+--         end
+--       end,
+--     })
+--   end,
+-- })
 
 local function clear_cmdarea()
   vim.defer_fn(function()

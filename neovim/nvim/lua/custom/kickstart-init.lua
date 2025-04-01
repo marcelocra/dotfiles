@@ -144,7 +144,8 @@ vim.api.nvim_create_autocmd('TextYankPost', {
 })
 
 -- INSTALL `LAZY.NVIM` PLUGIN MANAGER
---    See `:help lazy.nvim.txt` or https://github.com/folke/lazy.nvim for more info
+--    See `:help lazy.nvim.txt` or https://github.com/folke/lazy.nvim for more
+--    info.
 
 local lazypath = vim.fn.stdpath 'data' .. '/lazy/lazy.nvim'
 if not (vim.uv or vim.loop).fs_stat(lazypath) then
@@ -169,13 +170,15 @@ vim.opt.rtp:prepend(lazypath)
 require('lazy').setup({
   'tpope/vim-sleuth', -- Detect tabstop and shiftwidth automatically
 
-  -- NOTE: Plugins can also be added by using a table, with the first argument being the link and the following
-  -- keys can be used to configure plugin behavior/loading/etc.
+  -- NOTE: Plugins can also be added by using a table, with the first argument
+  -- being the link and the following keys can be used to configure plugin
+  -- behavior/loading/etc.
   --
-  -- Use `opts = {}` to automatically pass options to a plugin's `setup()` function, forcing the plugin to be loaded.
+  -- Use `opts = {}` to automatically pass options to a plugin's `setup()`
+  -- function, forcing the plugin to be loaded.
   --
-  -- Alternatively, use `config = function() ... end` for full control over the configuration.
-  -- If you prefer to call `setup` explicitly, use:
+  -- Alternatively, use `config = function() ... end` for full control over the
+  -- configuration. If you prefer to call `setup` explicitly, use:
   --    {
   --        'lewis6991/gitsigns.nvim',
   --        config = function()
@@ -189,7 +192,9 @@ require('lazy').setup({
   -- options to `gitsigns.nvim`.
   --
   -- See `:help gitsigns` to understand what the configuration keys do
-  { -- Adds git related signs to the gutter, as well as utilities for managing changes
+  {
+    -- Adds git related signs to the gutter, as well as utilities for managing
+    -- changes.
     'lewis6991/gitsigns.nvim',
     opts = {
       signs = {
@@ -226,8 +231,9 @@ require('lazy').setup({
       icons = {
         -- set icon mappings to true if you have a Nerd Font
         mappings = vim.g.have_nerd_font,
-        -- If you are using a Nerd Font: set icons.keys to an empty table which will use the
-        -- default which-key.nvim defined Nerd Font icons, otherwise define a string table
+        -- If you are using a Nerd Font: set icons.keys to an empty table which
+        -- will use the default which-key.nvim defined Nerd Font icons,
+        -- otherwise define a string table.
         keys = vim.g.have_nerd_font and {} or {
           Up = '<Up> ',
           Down = '<Down> ',
@@ -286,11 +292,14 @@ require('lazy').setup({
     branch = '0.1.x',
     dependencies = {
       'nvim-lua/plenary.nvim',
-      { -- If encountering errors, see telescope-fzf-native README for installation instructions
+      {
+        -- If encountering errors, see telescope-fzf-native README for
+        -- installation instructions.
         'nvim-telescope/telescope-fzf-native.nvim',
 
-        -- `build` is used to run some command when the plugin is installed/updated.
-        -- This is only run then, not every time Neovim starts up.
+        -- `build` is used to run some command when the plugin is
+        -- installed/updated. This is only run then, not every time Neovim
+        -- starts up.
         build = 'make',
 
         -- `cond` is a condition used to determine whether this plugin should be
@@ -306,9 +315,9 @@ require('lazy').setup({
       { 'nvim-tree/nvim-web-devicons', enabled = vim.g.have_nerd_font },
     },
     config = function()
-      -- Telescope is a fuzzy finder that comes with a lot of different things that
-      -- it can fuzzy find! It's more than just a "file finder", it can search
-      -- many different aspects of Neovim, your workspace, LSP, and more!
+      -- Telescope is a fuzzy finder that comes with a lot of different things
+      -- that it can fuzzy find! It's more than just a "file finder", it can
+      -- search many different aspects of Neovim, your workspace, LSP, and more!
       --
       -- The easiest way to use Telescope, is to start by doing something like:
       --  :Telescope help_tags
@@ -995,16 +1004,18 @@ require('lazy').setup({
   -- require 'kickstart.plugins.neo-tree',
   require 'kickstart.plugins.gitsigns', -- adds gitsigns recommend keymaps
 
-  -- NOTE: The import below can automatically add your own plugins, configuration, etc from `lua/custom/plugins/*.lua`
-  --    This is the easiest way to modularize your config.
+  -- NOTE: The import below can automatically add your own plugins,
+  -- configuration, etc from `lua/custom/plugins/*.lua`. This is the easiest way
+  -- to modularize your config.
   --
-  --  Uncomment the following line and add your plugins to `lua/custom/plugins/*.lua` to get going.
+  --  Uncomment the following line and add your plugins to
+  --  `lua/custom/plugins/*.lua` to get going.
   { import = 'custom.plugins' },
   --
-  -- For additional information with loading, sourcing and examples see `:help lazy.nvim-🔌-plugin-spec`
-  -- Or use telescope!
-  -- In normal mode type `<space>sh` then write `lazy.nvim-plugin`
-  -- you can continue same window with `<space>sr` which resumes last telescope search
+  -- For additional information with loading, sourcing and examples see `:help
+  -- lazy.nvim-🔌-plugin-spec`. Or use telescope! In normal mode type
+  -- `<space>sh` then write `lazy.nvim-plugin` you can continue same window with
+  -- `<space>sr` which resumes last telescope search.
 
   -- nextplugin
 }, {
