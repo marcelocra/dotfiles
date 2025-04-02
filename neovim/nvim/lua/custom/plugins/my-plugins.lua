@@ -14,7 +14,9 @@ return {
   {
     dir = os.getenv 'HOME' .. '/.config/nvim/lua/custom/night-owl',
     config = function()
-      require('custom.night-owl').config()
+      -- TODO: This seems to be on all the time, making every colorscheme look
+      -- weird. Figure out why before reenabling.
+      -- require('custom.night-owl').config()
     end,
   },
 }
