@@ -224,6 +224,8 @@
     "editor.defaultFormatter": "charliermarsh.ruff"
   },
 
+  "python.venvFolders": [".python-global-venv"],
+
   "rubyLsp.rubyVersionManager": "asdf",
 
   "dart.openDevTools": "flutter",
@@ -949,7 +951,7 @@
 
   // #region Hack {{{
   "editor.fontFamily": "Hack Nerd Font",
-  "editor.fontSize": 13,
+  "editor.fontSize": 15,
   "editor.fontWeight": "normal",
   // "editor.fontLigatures": "'zero'",
   // Available stylistic sets:
@@ -1163,13 +1165,13 @@
 
   // Choose the main font and add fallbacks.
   "terminal.integrated.fontFamily": "'Hack Nerd Font', 'RecMonoLinear Nerd Font', 'BlexMono Nerd Font', 'JetBrainsMono Nerd Font', 'Cascadia Code NF', 'JetBrainsMono NF', 'JetBrains Mono Nerd Font', 'JetBrains Mono NF', 'MesloLGM Nerd Font Mono', 'MesloLGS Nerd Font Mono', 'JetBrains Mono', 'Noto Sans Mono', 'Liberation Mono', 'DejaVu Sans Mono', monospace",
-  "terminal.integrated.fontSize": 13,
+  "terminal.integrated.fontSize": 15,
   "terminal.integrated.fontWeight": "400",
   "terminal.integrated.fontLigatures.enabled": true,
   // // IBM Plex Mono features:
   // "terminal.integrated.fontLigatures.featureSettings": "'zero', 'ss01', 'ss02'",
   "terminal.integrated.cursorStyle": "line",
-  "terminal.integrated.cursorWidth": 2,
+  "terminal.integrated.cursorWidth": 3,
   "terminal.integrated.cursorStyleInactive": "outline",
 
   "debug.console.fontFamily": "'JetBrainsMono Nerd Font', 'Cascadia Code NF', 'JetBrainsMono NF', 'JetBrains Mono Nerd Font', 'JetBrains Mono NF', 'MesloLGM Nerd Font Mono', 'MesloLGS Nerd Font Mono', 'JetBrains Mono', 'Liberation Mono', 'DejaVu Sans Mono', monospace",
@@ -1187,7 +1189,6 @@
   "terminal.integrated.macOptionClickForcesSelection": true,
   "terminal.integrated.allowChords": false,
   "terminal.integrated.shellIntegration.enabled": true,
-  "terminal.integrated.minimumContrastRatio": 4.5,
   "terminal.integrated.enableVisualBell": true,
   "terminal.integrated.bellDuration": 3000,
   "terminal.integrated.cursorBlinking": true,
@@ -1200,11 +1201,13 @@
   "terminal.integrated.stickyScroll.enabled": true,
   "terminal.integrated.suggest.enabled": true,
   "terminal.integrated.tabs.defaultColor": "terminal.ansiMagenta",
-  "terminal.integrated.tabs.location": "left",
 
   "terminal.external.linuxExec": "kitty",
   "terminal.external.osxExec": "kitty.app",
   "terminal.external.windowsExec": "C:\\Windows\\System32\\kitty.exe",
+
+  "terminal.integrated.enableMultiLinePasteWarning": "always",
+  "terminal.integrated.minimumContrastRatio": 1,
 
   // #endregion terminal. }}}
 
@@ -1482,10 +1485,7 @@
   "workbench.sideBar.location": "left",
   "workbench.panel.defaultLocation": "bottom",
   "workbench.editor.pinnedTabsOnSeparateRow": false,
-
-  // Next workbench (keep the theme last, as it changes frequently).
-
-  "workbench.colorTheme": "Solarized Light"
+  "workbench.colorTheme": "Default Light Modern"
 
   // #endregion workbench. }}}
 }
