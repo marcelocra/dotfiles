@@ -36,6 +36,16 @@
         "reveal": "always"
       },
       "problemMatcher": []
+    },
+    {
+      "label": "say-hello",
+      "type": "shell",
+      "command": "echo Hello World",
+      "presentation": {
+        "reveal": "always"
+      }
     }
-  ]
+  ],
+
+  "$schema": "vscode://schemas/tasks"
 }
