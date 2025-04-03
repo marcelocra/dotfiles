@@ -58,13 +58,28 @@
   {
     "key": "ctrl+`",
     "command": "workbench.action.terminal.focus",
-    "when": "activePanel && !terminalFocus"
+    "when": "!terminalFocus"
+  },
+
+  {
+    "key": "ctrl+`",
+    "command": "workbench.action.terminal.focus",
+    "when": "!terminalFocus && !view.workbench.panel.chat.view.edits.visible"
+  },
+
+  {
+    "key": "ctrl+`",
+    "command": "runCommands",
+    "args": {
+      "commands": ["workbench.panel.chatEditing", "workbench.action.togglePanel"]
+    },
+    "when": "!terminalFocus && view.workbench.panel.chat.view.edits.visible"
   },
 
   {
     "key": "ctrl+`",
     "command": "workbench.action.focusLastEditorGroup",
-    "when": "activePanel && terminalFocus"
+    "when": "terminalFocus"
   },
 
   // {
@@ -709,6 +724,24 @@
   },
 
   {
+    "key": "ctrl+alt+shift+i",
+    "command": "runCommands",
+    "args": {
+      "commands": ["workbench.action.togglePanel", "workbench.panel.chatEditing"]
+    },
+    "when": "terminalFocus"
+  },
+
+  // {
+  //   "key": "ctrl+alt+shift+i",
+  //   "command": "runCommands",
+  //   "args": {
+  //     "commands": ["workbench.panel.chatEditing", "workbench.action.togglePanel"]
+  //   },
+  //   "when": "!terminalFocus"
+  // },
+
+  {
     "key": "ctrl+enter",
     "command": "runCommands",
     "args": {
@@ -818,6 +851,12 @@
     "key": "ctrl+shift+o",
     "command": "-workbench.action.gotoSymbol",
     "when": "!accessibilityHelpIsShown && !accessibleViewIsShown"
+  },
+
+  {
+    "key": "ctrl+i",
+    "command": "inlineChat.startWithCurrentLine",
+    "when": "(!vim.active || vim.mode == 'Insert') && inlineChatHasProvider && !editorReadonly && !inlineChatVisible"
   },
 
   // {
