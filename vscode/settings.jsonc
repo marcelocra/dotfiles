@@ -783,22 +783,12 @@
 
   // #region editor. {{{
 
-  // #region IBM Plex Mono {{{
   // "editor.fontFamily": "IBM Plex Mono",
-  // "editor.fontSize": 13,
-  // "editor.fontWeight": "500",
   // "editor.fontLigatures": "'zero'",
-  // #endregion }}}
 
-  // #region Code New Roman {{{
   // "editor.fontFamily": "CodeNewRoman Nerd Font",
-  // "editor.fontSize": 17,
-  // #endregion }}}
 
-  // #region Cascadia Code {{{
   // "editor.fontFamily": "Cascadia Code NF",
-  // "editor.fontSize": 15, // edn{:desktop 13 :notebook 19 :small 11}
-  // "editor.fontWeight": "400", // edn{:desktop "300" :notebook "300" :small "100"}
   // 'calt' and 'cv01' 3 were here, don't know why... don't seem to do anything.
   // "editor.fontLigatures": "'ss01', 'ss19', 'ss20'",
   // Available stylistic sets:
@@ -809,34 +799,22 @@
   //    ! " # $ % & ' ( ) * + , - . / : ; < = > ? @ [ \ ] ^ _ ` { } ~ < > = + _
   //    ( ) * & ^ % $ # @ ! { } [ ] \ | / ? : ; , . ` ' " ´ ` ˜ => -> <> <= >=
   //    != !== === ~= |> <- --> || .- :- .= {..}
-  // #endregion }}}
 
-  // #region DM Mono {{{
   // "editor.fontFamily": "DM Mono",
-  // "editor.fontSize": 14, // edn{:desktop 15 :notebook ?? :small 11}
-  // "editor.fontWeight": "300", // edn{:desktop "300" :notebook "??" :small "100"}
   // "editor.fontLigatures": "'ss01','ss03','ss04'",
   // Available stylistic sets:
   //    ss01: curved comma, ss02: curved a, ss03: curved g, ss04: less rounded
   //    numbers, ss05: remove rounded borders of f
-  // #endregion }}}
 
-  // #region Source Code Pro {{{
   // "editor.fontFamily": "SourceCodeVF",
-  // "editor.fontSize": 19, // edn{:desktop 15 :notebook ?? :small 11}
-  // "editor.fontWeight": "400", // edn{:desktop "400" :notebook "??" :small "100"}
   // "editor.letterSpacing": -0.4,
   // // "editor.fontLigatures": "'cv17', 'zero'",
   // "editor.fontLigatures": "'cv01', 'cv02', 'cv17', 'zero'",
   // Available stylistic sets:
   //    cv01 and cv02: clearer 'a' and 'g', cv08: alternate &, cv09: alternate @
   //    cv17: improved 1, zero: reverse dashed zero
-  // #endregion }}}
 
-  // #region JetBrains Mono {{{
   // "editor.fontFamily": "JetBrainsMono Nerd Font",
-  // "editor.fontSize": 13, // edn{:desktop 13 :notebook ?? :small 11}
-  // "editor.fontWeight": "400", // edn{:desktop "200" :notebook "??" :small "100"}
   // Minimal (Fira Code like):
   // "editor.fontLigatures": "'ss01', 'ss19', 'ss20', 'zero', 'cv99'",
   // Very different (Ubuntu Mono like):
@@ -851,29 +829,14 @@
   //    gliphs, ss01: classic construction, ss02: closed construction, ss19:
   //    broken equals ligatures (yay!), ss20: raised bar f, zero: slashed zero,
   //    frac: fractions
-  // Ligature test:
-  //    ! " # $ % & ' ( ) * + , - . / : ; < = > ? @ [ \ ] ^ _ ` { | } ~ < > = +
-  //    _ _ ( ) * & ^ % $ # @ ! { } [ ] \ | / ? : ; , . ` ' " ´ ` ˜ => -> <> <=
-  //    >= != !== === ~= |> <- --> || .- :- .= {..} 1/2 3/8 100/48
-  // #endregion }}}
 
-  // #region Geist Mono {{{
   // "editor.fontFamily": "Geist Mono",
-  // "editor.fontSize": 13, // edn{:desktop 13 :notebook ?? :small 11}
-  // "editor.fontWeight": "400", // edn{:desktop "400" :notebook "??" :small "100"}
   // "editor.fontLigatures": "'ss02', 'ss03', 'ss06', 'ss13', 'liga' 0",
   // Available stylistic sets:
   //    ss01: normal, ss02: circular a, ss03: non-1-like l, ss06: circular
   //    uppercase G, ss08: compact (semi) colon, ss09: non slashed zero
-  // Ligature test:
-  //    ! " # $ % & ' ( ) * + , - . / : ; < = > ? @ [ \ ] ^ _ ` { | } ~ < > = +
-  //    _ _ ( ) * & ^ % $ # @ ! { } [ ] \ | / ? : ; , . ` ' " ´ ` ˜ => -> <> <=
-  //    >= != !== === ~= |> <- --> || .- :- .= {..}
-  // #endregion }}}
 
-  // #region Recursive {{{
   // "editor.fontFamily": "Rec Mono Duotone",
-  // "editor.fontSize": 15, // edn{:desktop 13 :notebook ?? :small 11}
   // Some customizations that I like (details below).
   // "editor.fontLigatures": "true",
   // "editor.fontLigatures": "'ss01', 'ss02', 'ss03', 'ss04', 'ss05', 'ss06', 'ss07', 'ss11', 'ss12', 'case', 'frac' 0",
@@ -888,16 +851,8 @@
   //    ordinals - 1.o 8.a, titl: Q leg to the right instead of down, sups,
   //    numr: superior/numerators - H0123456789, sinf, dnom:
   //    inferior/denominators
-  // Ligature test:
-  //    ! " # $ % & ' ( ) * + , - . / : ; < = > ? @ [ \ ] ^ _ ` { | } ~ < > = +
-  //    _ _ ( ) * & ^ % $ # @ ! { } [ ] \ | / ? : ; , . ` ' " ´ ` ˜ => -> <> <=
-  //    >= != !== === ~= |> <- --> || .- :- .= {..}
-  // #endregion }}}
 
-  // #region Iosevka {{{
   // "editor.fontFamily": "Iosevka Fixed Extended",
-  // "editor.fontSize": 17, // edn{:desktop 13 :notebook ?? :small 11}
-  // "editor.fontWeight": "400", // edn{:desktop "400" :notebook "??" :small "100"}
   // // Source Code Pro, with changes to: 1, 4, 0, l (lowercase L).
   // "editor.fontLigatures": "'ss09', 'cv01' 3, 'cv04' 5, 'cv10' 4, 'cv47' 8",
   // // Monaco.
@@ -913,16 +868,8 @@
   //    Pro, ss10: Envy Code R, ss11: X Window, ss12: Ubuntu Mono, ss13: Lucida,
   //    ss14: JetBrains Mono, ss15: IBM Plex Mono, ss16: PT Mono, ss17:
   //    Recursive Mono, ss18: Input Mono, ss20: Curly
-  // Ligature test:
-  //    ! " # $ % & ' ( ) * + , - . / : ; < = > ? @ [ \ ] ^ _ ` { | } ~ < > = +
-  //    _ _ ( ) * & ^ % $ # @ ! { } [ ] \ | / ? : ; , . ` ' " ´ ` ˜ => -> <> <=
-  //    >= != !== === ~= |> <- --> || .- :- .= {..}
-  // #endregion }}}
 
-  // #region Victor Mono {{{
   // "editor.fontFamily": "Victor Mono",
-  // "editor.fontSize": 17, // Good value: 17.
-  // "editor.fontWeight": "600",
   // "editor.fontLigatures": "'ss01', 'ss02', 'ss07', 'ss08'",
   // "editor.fontLigatures": "'calt' 0, 'ss01', 'ss02', 'ss06', 'ss07', 'ss08'",
   // Available stylistic sets:
@@ -930,14 +877,8 @@
   //    for ff fi il re tl ke), ss01: different 'a', ss02: different dashed zero
   //    (up to ss05), ss06: crossed '7', ss07: different '6' and  '9', ss08:
   //    more fish-like stuff (::<)
-  // Tests:
-  //    |> >- <-> <| <> |- .- :: -.- -> => == === != !== ::<
-  // #endregion }}}
 
-  // #region BlexMono (IBM Plex Mono Nerd Font) {{{
   // "editor.fontFamily": "BlexMono Nerd Font",
-  // "editor.fontSize": 15,
-  // "editor.fontWeight": "400",
   // // "editor.fontLigatures": "'ss01', 'ss02', 'zero'",
   // "editor.fontLigatures": "'zero'",
   // Available stylistic sets:
@@ -945,23 +886,16 @@
   //    for ff fi il re tl ke), ss01: different 'a', ss02: different dashed zero
   //    (up to ss05), ss06: crossed '7', ss07: different '6' and  '9', ss08:
   //    more fish-like stuff (::<)
-  // Tests:
-  //    |> >- <-> <| <> |- .- :: -.- -> => == === != !== ::<
-  // #endregion }}}
 
-  // #region Hack {{{
-  "editor.fontFamily": "Hack Nerd Font",
-  "editor.fontSize": 15,
-  "editor.fontWeight": "normal",
-  // "editor.fontLigatures": "'zero'",
+  // "editor.fontFamily": "Hack Nerd Font",
   // Available stylistic sets:
   //    calt=0: no ligatures (particularly for `==` and `!=`, but also disable
   //    for ff fi il re tl ke), ss01: different 'a', ss02: different dashed zero
   //    (up to ss05), ss06: crossed '7', ss07: different '6' and  '9', ss08:
   //    more fish-like stuff (::<)
-  // Tests:
-  //    |> >- <-> <| <> |- .- :: -.- -> => == === != !== ::<
-  // #endregion }}}
+
+  "editor.fontSize": 15,
+  "editor.fontWeight": "normal",
 
   "editor.tokenColorCustomizations": {
     // "[*Light*]": { // Match all themes with "Light" in the name.
@@ -1080,12 +1014,6 @@
   "editor.minimap.showRegionSectionHeaders": true,
 
   // Next editor.
-
-  "diffEditor.codeLens": true,
-  "diffEditor.ignoreTrimWhitespace": true,
-  "diffEditor.renderSideBySide": true,
-
-  "keyboard.dispatch": "keyCode",
 
   // #endregion editor. }}}
 
@@ -1269,6 +1197,13 @@
   "dev.containers.dockerPath": "podman",
   "geminicodeassist.enableTelemetry": false,
   "postman.settings.dotenv-detection-notification-visibility": false,
+
+  "diffEditor.codeLens": true,
+  "diffEditor.ignoreTrimWhitespace": true,
+  "diffEditor.renderSideBySide": true,
+
+  // Detect remapped keys better (e.g. caps lock -> ctrl).
+  "keyboard.dispatch": "keyCode",
 
   // #endregion Misc }}}
 
@@ -1484,8 +1419,7 @@
   "workbench.list.horizontalScrolling": true,
   "workbench.sideBar.location": "left",
   "workbench.panel.defaultLocation": "bottom",
-  "workbench.editor.pinnedTabsOnSeparateRow": false,
-  "workbench.colorTheme": "Default Light Modern"
+  "workbench.editor.pinnedTabsOnSeparateRow": false
 
   // #endregion workbench. }}}
 }
