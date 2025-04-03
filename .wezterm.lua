@@ -14,6 +14,7 @@ local mux = wezterm.mux
 local which_iosevka = "Iosevka Fixed Extended"
 
 local good_font_size = 13
+local good_font_weight = 450
 
 local fonts = {
   meslo = {
@@ -24,7 +25,7 @@ local fonts = {
       harfbuzz_features = {
         -- "cv10 10",
       },
-      weight = 400,
+      weight = good_font_weight,
     }),
     size = good_font_size,
   },
@@ -32,7 +33,7 @@ local fonts = {
   jb = {
     font = wezterm.font({
       family = "JetBrains Mono",
-      weight = 400,
+      weight = good_font_weight,
     }),
     size = good_font_size,
   },
@@ -40,7 +41,7 @@ local fonts = {
   jb_nf = {
     font = wezterm.font({
       family = "JetBrainsMono Nerd Font",
-      weight = 400,
+      weight = good_font_weight,
       -- Ligature test:
       --  ! " # $ % & ' ( ) * + , - . / : ; < = > ? @ [ \ ] ^ _ ` { | } ~
       --  ~ < > = + _ _ ( ) * & ^ % $ # @ ! { } [ ] \ | / ? : ; , . ` ' " ´ ` ˜
@@ -70,7 +71,7 @@ local fonts = {
     font = wezterm.font({
       -- family = 'Cascadia Code NF',
       family = "CaskaydiaCove NF",
-      weight = 400,
+      weight = good_font_weight,
       harfbuzz_features = {
         "calt 0",
         "ss01",
@@ -84,36 +85,63 @@ local fonts = {
   fira = {
     font = wezterm.font({
       family = "Fira Code",
+      weight = good_font_weight,
+    }),
+    size = good_font_size,
+  },
+
+  fira_crazy = {
+    font = wezterm.font({
+      family = "Fira Code",
+      weight = good_font_weight,
       harfbuzz_features = {
-        "calt 0",
-        "cv01",
-        "cv02",
-        "cv05",
-        "cv09",
-        "ss05",
-        "ss03",
-        "cv16",
-        "cv30",
-        "cv25",
-        "cv26",
-        "cv32",
-        "cv28",
-        "ss10",
-        "cv14",
-        "cv12",
+        -- Ligatures for -- => -> <> <= >= != !== === ~= |> <- --> || .- :- .= {..}
+        "calt 1",
+        -- Alternates for some letters:
+        "cv01", -- Closed a
+        "cv02", -- Closed g
+        -- "cv05", -- Lucida i
+        -- "cv09", -- Lucida l
+        "ss05", -- Consolas style @
+        "ss03", -- More common &
+        "cv16", -- * with 6 legs instead of 5
+        "cv30", -- Taller |
+        -- Dot in the middle:
+        "cv25", -- .-
+        "cv26", -- :-
+        "cv32", -- .=
+        "cv28", -- {. .}
+        -- Ligatures in Fl Tl fi fj fl ft:
+        -- "ss10",
+        "cv14", -- not fully round 3
+        -- None of the ones below: dashed zero.
+        -- "cv11", -- 0 without inner things
+        -- "cv12", -- 0 with reverse dash
+        -- "cv13", -- 0 Hack style
+
+        -- Ligature test:
+        --  ! " # $ % & ' ( ) * + , - . / : ; < = > ? @ [ \ ] ^ _ ` { | } ~
+        --  ~ < > = + _ _ ( ) * & ^ % $ # @ ! { } [ ] \ | / ? : ; , . ` ' " ´ ` ˜
+        --  => -> <> <= >= != !== === ~= |> <- --> || .- :- .= {..} 1/2 3/8 100/48
+        --  a b c d e f g h i j k l m n o p q r s t u v x w y z
+        --  A B C D E F G H I J K L M N O P Q R S T U V X W Y Z
       },
     }),
     size = good_font_size,
   },
 
-  geist = { font = wezterm.font({
-    family = "Geist Mono",
-  }), size = good_font_size },
+  geist = {
+    font = wezterm.font({
+      family = "Geist Mono",
+      weight = good_font_weight,
+    }),
+    size = good_font_size,
+  },
 
   noto = {
     font = wezterm.font({
       family = "Noto Sans Mono",
-      weight = 400,
+      weight = good_font_weight,
     }),
     size = good_font_size,
   },
@@ -121,7 +149,7 @@ local fonts = {
   red_hat_mono = {
     font = wezterm.font({
       family = "Red Hat Mono",
-      weight = 400,
+      weight = good_font_weight,
     }),
     size = good_font_size,
   },
@@ -129,7 +157,7 @@ local fonts = {
   ibm = {
     font = wezterm.font({
       family = "IBM Plex Mono",
-      weight = 450,
+      weight = 500,
       harfbuzz_features = {
         "zero",
         "ss01", -- a
@@ -169,7 +197,7 @@ local fonts = {
   iosevka = {
     font = wezterm.font({
       family = which_iosevka,
-      weight = 400,
+      weight = good_font_weight,
       harfbuzz_features = {
         -- Font alternatives. <<(
         -- ss01: Andale Mono
@@ -205,7 +233,7 @@ local fonts = {
   iosevka_jb = {
     font = wezterm.font({
       family = which_iosevka,
-      weight = 400,
+      weight = good_font_weight,
       harfbuzz_features = {
         "ss14",
       },
@@ -216,7 +244,7 @@ local fonts = {
   iosevka_lucida = {
     font = wezterm.font({
       family = which_iosevka,
-      weight = 400,
+      weight = good_font_weight,
       harfbuzz_features = {
         "ss13",
         "cv10 7",
@@ -231,7 +259,7 @@ local fonts = {
   iosevka_menlo = {
     font = wezterm.font({
       family = which_iosevka,
-      weight = 400,
+      weight = good_font_weight,
       harfbuzz_features = {
         "ss04",
       },
@@ -242,7 +270,7 @@ local fonts = {
   iosevka_monaco = {
     font = wezterm.font({
       family = which_iosevka,
-      weight = 400,
+      weight = good_font_weight,
       harfbuzz_features = {
         "ss07",
       },
@@ -270,7 +298,7 @@ local fonts = {
   code_new_roman = {
     font = wezterm.font({
       family = "CodeNewRoman Nerd Font",
-      weight = 400,
+      weight = good_font_weight,
     }),
 
     size = good_font_size,
@@ -279,7 +307,7 @@ local fonts = {
   recursive_linear = {
     font = wezterm.font({
       family = "RecMonoLinear Nerd Font",
-      weight = 400,
+      weight = good_font_weight,
     }),
     size = good_font_size,
   },
@@ -287,7 +315,7 @@ local fonts = {
   recursive_duotone = {
     font = wezterm.font({
       family = "RecMonoDuotone Nerd Font",
-      weight = 400,
+      weight = good_font_weight,
     }),
     size = good_font_size,
   },
@@ -295,7 +323,7 @@ local fonts = {
   recursive_semicasual = {
     font = wezterm.font({
       family = "RecMonoSmCasual Nerd Font",
-      weight = 400,
+      weight = good_font_weight,
     }),
     size = good_font_size,
   },
@@ -303,7 +331,7 @@ local fonts = {
   recursive_casual = {
     font = wezterm.font({
       family = "RecMonoCasual Nerd Font",
-      weight = 400,
+      weight = good_font_weight,
     }),
     size = good_font_size,
   },
@@ -311,21 +339,24 @@ local fonts = {
   hack = {
     font = wezterm.font({
       family = "Hack Nerd Font",
-      weight = 400,
+      weight = good_font_weight,
     }),
     line_height = 1.3,
     size = good_font_size,
   },
 
-  blex = { font = wezterm.font({
-    family = "Blex Mono Nerd Font",
-    weight = 400,
-  }), size = good_font_size },
+  blex = {
+    font = wezterm.font({
+      family = "Blex Mono Nerd Font",
+      weight = good_font_weight,
+    }),
+    size = good_font_size,
+  },
 
   commit = {
     font = wezterm.font({
       family = "CommitMono Nerd Font",
-      weight = 400,
+      weight = good_font_weight,
     }),
     size = good_font_size,
   },
@@ -333,7 +364,7 @@ local fonts = {
   roboto = {
     font = wezterm.font({
       family = "RobotoMono Nerd Font",
-      weight = 400,
+      weight = good_font_weight,
     }),
     size = good_font_size,
   },
@@ -346,22 +377,22 @@ local SCRATCH_SCRIPT = os.getenv("HOME") .. "/projects/dotfiles/.rc.scratch"
 -- EVENTS
 
 wezterm.on("gui-startup", function(cmd)
-  local tab, pane, window = mux.spawn_window(cmd or {})
-  if window then
-    local active_screen = wezterm.gui.screens().active
-    local screen_width = active_screen.width
-    local screen_height = active_screen.height
-    local panel_width = 47 -- This is configured in Cinnamon directly.
-
-    local start_x = (screen_width + panel_width) / 2
-    local start_y = 0
-    local window_width = (screen_width - panel_width) / 2
-    local window_height = screen_height
-
-    local gui_window = window:gui_window()
-    gui_window:set_position(start_x, start_y)
-    gui_window:set_inner_size(window_width, screen_height)
-  end
+  -- local tab, pane, window = mux.spawn_window(cmd or {})
+  -- if window then
+  --   local active_screen = wezterm.gui.screens().active
+  --   local screen_width = active_screen.width
+  --   local screen_height = active_screen.height
+  --   local panel_width = 47 -- This is configured in Cinnamon directly.
+  --
+  --   local start_x = (screen_width + panel_width) / 2
+  --   local start_y = 0
+  --   local window_width = (screen_width - panel_width) / 2
+  --   -- local window_height = screen_height
+  --
+  --   local gui_window = window:gui_window()
+  --   gui_window:set_position(start_x, start_y)
+  --   gui_window:set_inner_size(window_width, screen_height)
+  -- end
 end)
 
 wezterm.on("format-tab-title", function(tab, tabs, panes, config, hover, max_width)
@@ -417,6 +448,35 @@ wezterm.on("format-tab-title", function(tab, tabs, panes, config, hover, max_wid
     { Foreground = { Color = edge_foreground } },
     { Text = solid_right_arrow },
   }
+end)
+
+wezterm.on("window-focus-changed", function(window, pane)
+  -- If window lost focus but is still open, do nothing
+  -- if not window:is_valid() then
+  --   wezterm.log_info("Window is not valid.")
+  --   return
+  -- end
+
+  if not window:is_focused() then
+    wezterm.log_info("Window lost focus.")
+    return
+  end
+
+  wezterm.log_info("Window gained focus.")
+
+  local active_screen = wezterm.gui.screens().active
+  local screen_width = active_screen.width
+  local screen_height = active_screen.height
+  local panel_width = 47 -- This is configured in Cinnamon directly.
+
+  local start_x = (screen_width + panel_width) / 2
+  local start_y = 0
+  local window_width = (screen_width - panel_width) / 2
+  -- local window_height = screen_height
+
+  local gui_window = wezterm.gui.gui_windows()[1]
+  gui_window:set_position(start_x, start_y)
+  gui_window:set_inner_size(window_width, screen_height)
 end)
 
 -- TODO: get this to work one day?
@@ -590,6 +650,7 @@ local color_scheme_override = {
     "Gruvbox dark, hard (base16)",            -- 26
     "Harmonic16 Dark (base16)",               -- 27
     "Alabaster",                              -- 28
+    "Horizon Bright (Gogh)",                  -- 29
     -- Next theme colorscheme override.
   },
 }
@@ -614,9 +675,6 @@ wezterm.on("window-config-reloaded", function(window, pane)
       color_scheme = get_scheme({ force_random = false }),
     })
   end
-
-  -- get wez config font
-
   print("Selected font: ", window:effective_config().font)
 end)
 
@@ -638,16 +696,22 @@ end
 
 -- Randomly pick a font.
 local best_fonts = {
-  fonts.red_hat_mono,
-  fonts.ibm,
-  fonts.recursive_linear,
-  fonts.recursive_duotone,
-  fonts.recursive_semicasual,
-  fonts.noto,
-  fonts.jb,
-  fonts.jb_nf,
-  fonts.hack,
-  fonts.source_code_pro,
+  -- fonts.geist,
+  -- fonts.jb_nf,
+  -- fonts.recursive_duotone,
+  -- fonts.recursive_linear,
+  -- fonts.recursive_semicasual,
+
+  -- Active.
+
+  -- fonts.fira,
+  fonts.fira_crazy,
+  -- fonts.hack,
+  -- fonts.ibm,
+  -- fonts.jb,
+  -- fonts.noto,
+  -- fonts.red_hat_mono,
+  -- fonts.source_code_pro,
 }
 local font = best_fonts[math.random(#best_fonts)]
 set_font(font)
