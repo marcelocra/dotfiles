@@ -50,36 +50,30 @@
 
   //#endregion NAVIGATION }}}
 
-  //#region TERMINAL FOCUS {{{
+  //#region BOTTOM PANEL FOCUS {{{
   {
-    "key": "TERMINAL FOCUS"
+    "key": "BOTTOM PANEL FOCUS"
   },
 
   {
+    // If the terminal is not focused, focus it.
     "key": "ctrl+`",
-    "command": "workbench.action.terminal.focus",
-    "when": "!terminalFocus"
+    "command": "workbench.action.focusPanel",
+    "when": "!panelFocus"
   },
 
   {
-    "key": "ctrl+`",
-    "command": "workbench.action.terminal.focus",
-    "when": "!terminalFocus && !view.workbench.panel.chat.view.edits.visible"
-  },
-
-  {
-    "key": "ctrl+`",
-    "command": "runCommands",
-    "args": {
-      "commands": ["workbench.panel.chatEditing", "workbench.action.togglePanel"]
-    },
-    "when": "!terminalFocus && view.workbench.panel.chat.view.edits.visible"
-  },
-
-  {
+    // See the first one for docs.
     "key": "ctrl+`",
     "command": "workbench.action.focusLastEditorGroup",
-    "when": "terminalFocus"
+    "when": "panelFocus && !panelMaximized"
+  },
+
+  {
+    // See the first one for docs.
+    "key": "ctrl+`",
+    "command": "workbench.action.togglePanel",
+    "when": "panelFocus && panelMaximized"
   },
 
   // {
@@ -204,7 +198,7 @@
     "when": "editorTextFocus || editorIsOpen"
   },
 
-  //#endregion TERMINAL FOCUS }}}
+  //#endregion BOTTOM PANEL FOCUS }}}
 
   //#region TERMINAL FIND {{{
   {
@@ -723,14 +717,14 @@
     "when": "editorTextFocus && github.copilot.activated && !commentEditorFocused && !inInteractiveInput && !interactiveEditorFocused"
   },
 
-  {
-    "key": "ctrl+alt+shift+i",
-    "command": "runCommands",
-    "args": {
-      "commands": ["workbench.action.togglePanel", "workbench.panel.chatEditing"]
-    },
-    "when": "terminalFocus"
-  },
+  // {
+  //   "key": "ctrl+alt+shift+i",
+  //   "command": "runCommands",
+  //   "args": {
+  //     "commands": ["workbench.action.togglePanel", "workbench.panel.chatEditing"]
+  //   },
+  //   "when": "terminalFocus"
+  // },
 
   // {
   //   "key": "ctrl+alt+shift+i",
