@@ -11,9 +11,9 @@ local mux = wezterm.mux
 -- Fonts I frequently use.
 
 -- Options: 'Fixed', 'Fixed Extended', 'Extended'.
-local which_iosevka = "Iosevka Fixed Extended"
+local which_iosevka = "Iosevka"
 
-local good_font_size = 13
+local good_font_size = 15
 local good_font_weight = 450
 
 local fonts = {
@@ -86,6 +86,10 @@ local fonts = {
     font = wezterm.font({
       family = "Fira Code",
       weight = good_font_weight,
+      stretch = "UltraCondensed",
+      harfbuzz_features = {
+        "calt=0",
+      },
     }),
     size = good_font_size,
   },
@@ -94,27 +98,36 @@ local fonts = {
     font = wezterm.font({
       family = "Fira Code",
       weight = good_font_weight,
+      stretch = "Condensed",
       harfbuzz_features = {
-        -- Ligatures for -- => -> <> <= >= != !== === ~= |> <- --> || .- :- .= {..}
-        "calt 1",
-        -- Alternates for some letters:
+        -- Ligatures for:
+        -- => -> <> <= >= != !== === ~= |> <- --> || .- :- .= {..}
+        "calt=1",
+
+        -- Alternates for some chars:
         "cv01", -- Closed a
         "cv02", -- Closed g
+        "cv14", -- Not fully round 3
         -- "cv05", -- Lucida i
         -- "cv09", -- Lucida l
         "ss05", -- Consolas style @
         "ss03", -- More common &
         "cv16", -- * with 6 legs instead of 5
+        -- "cv24", -- `/`+`=` => /= (too similar to !=, `!`+`=`)
         "cv30", -- Taller |
+        "cv31", -- Monaco parens (hello)
+        "ss08", -- Less ligatures for == === != !==.
+
         -- Dot in the middle:
         "cv25", -- .-
         "cv26", -- :-
         "cv32", -- .=
         "cv28", -- {. .}
+
         -- Ligatures in Fl Tl fi fj fl ft:
         -- "ss10",
-        "cv14", -- not fully round 3
-        -- None of the ones below: dashed zero.
+
+        -- For the default dashed zero, disable all the ones below.
         -- "cv11", -- 0 without inner things
         -- "cv12", -- 0 with reverse dash
         -- "cv13", -- 0 Hack style
@@ -141,7 +154,7 @@ local fonts = {
   noto = {
     font = wezterm.font({
       family = "Noto Sans Mono",
-      weight = good_font_weight,
+      weight = 500,
     }),
     size = good_font_size,
   },
@@ -157,7 +170,7 @@ local fonts = {
   ibm = {
     font = wezterm.font({
       family = "IBM Plex Mono",
-      weight = 500,
+      weight = good_font_weight,
       harfbuzz_features = {
         "zero",
         "ss01", -- a
@@ -183,7 +196,7 @@ local fonts = {
   source_code_pro = {
     font = wezterm.font({
       family = "SourceCodeVF",
-      weight = 500,
+      weight = good_font_weight,
       harfbuzz_features = {
         "cv17", -- Improved '1'.
         "cv01", -- Alternative 'a'.
@@ -230,6 +243,17 @@ local fonts = {
     size = good_font_size,
   },
 
+  iosevka_pragmata = {
+    font = wezterm.font({
+      family = which_iosevka,
+      weight = good_font_weight,
+      harfbuzz_features = {
+        "ss08",
+      },
+    }),
+    size = good_font_size,
+  },
+
   iosevka_jb = {
     font = wezterm.font({
       family = which_iosevka,
@@ -264,7 +288,7 @@ local fonts = {
         "ss04",
       },
     }),
-    size = 15,
+    size = good_font_size,
   },
 
   iosevka_monaco = {
@@ -275,7 +299,7 @@ local fonts = {
         "ss07",
       },
     }),
-    size = 15,
+    size = good_font_size,
   },
 
   victor_mono = {
@@ -341,7 +365,7 @@ local fonts = {
       family = "Hack Nerd Font",
       weight = good_font_weight,
     }),
-    line_height = 1.3,
+    -- line_height = 1.3,
     size = good_font_size,
   },
 
@@ -368,6 +392,17 @@ local fonts = {
     }),
     size = good_font_size,
   },
+
+  liberation_mono = {
+    font = wezterm.font({
+      family = "Liberation Mono",
+      weight = good_font_weight,
+    }),
+    size = good_font_size,
+    -- line_height = 1.2,
+  },
+
+  -- Next font.
 }
 
 local config = wezterm.config_builder()
@@ -686,7 +721,32 @@ config.window_background_opacity = 1
 config.text_background_opacity = 1
 config.window_decorations = "RESIZE"
 
-local set_font = function(font)
+local choose_random_font = function()
+  local best_fonts = {
+    -- fonts.geist,
+    -- fonts.jb_nf,
+    -- fonts.liberation_mono,
+    -- fonts.recursive_duotone,
+    -- fonts.recursive_linear,
+    -- fonts.recursive_semicasual,
+
+    -- Active.
+
+    fonts.fira,
+    fonts.fira_crazy,
+    fonts.hack,
+    fonts.ibm,
+    fonts.jb,
+    fonts.noto,
+    fonts.red_hat_mono,
+    fonts.source_code_pro,
+    fonts.iosevka,
+    fonts.iosevka_menlo,
+    fonts.iosevka_monaco,
+    fonts.iosevka_pragmata,
+  }
+  local font = best_fonts[math.random(#best_fonts)]
+
   config.font = font.font
   config.font_size = font.size
   -- Most other heights end up cropping the fonts, so only change them if you
@@ -694,35 +754,13 @@ local set_font = function(font)
   config.line_height = font.line_height or 1.0
 end
 
--- Randomly pick a font.
-local best_fonts = {
-  -- fonts.geist,
-  -- fonts.jb_nf,
-  -- fonts.recursive_duotone,
-  -- fonts.recursive_linear,
-  -- fonts.recursive_semicasual,
-
-  -- Active.
-
-  -- fonts.fira,
-  fonts.fira_crazy,
-  -- fonts.hack,
-  -- fonts.ibm,
-  -- fonts.jb,
-  -- fonts.noto,
-  -- fonts.red_hat_mono,
-  -- fonts.source_code_pro,
-}
-local font = best_fonts[math.random(#best_fonts)]
-set_font(font)
-
--- Next font.
+choose_random_font()
 
 config.freetype_load_target = "Light"
 config.freetype_render_target = "HorizontalLcd"
--- config.freetype_load_flags = 'NO_HINTING'
+config.freetype_load_flags = "NO_HINTING"
 
-config.scrollback_lines = 5000
+config.scrollback_lines = 10000
 
 config.enable_tab_bar = true
 config.hide_tab_bar_if_only_one_tab = true
@@ -764,6 +802,7 @@ config.keys = {
   { key = "k", mods = "ALT|SHIFT", action = act.ActivateTabRelative(1) },
   { key = "t", mods = "SHIFT|ALT", action = act.SpawnTab("CurrentPaneDomain") },
   { key = "t", mods = "SHIFT|CTRL", action = wezterm.action_callback(change_color_scheme) },
+  { key = "r", mods = "CTRL|SHIFT", action = wezterm.action.ReloadConfiguration },
 }
 
 -- RETURN THE CONFIG OBJECT, TO APPLY ALL SETTINGS
