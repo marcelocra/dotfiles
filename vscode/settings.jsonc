@@ -894,8 +894,11 @@
   //    (up to ss05), ss06: crossed '7', ss07: different '6' and  '9', ss08:
   //    more fish-like stuff (::<)
 
-  "editor.fontSize": 15,
+  ///auto-config-start:fonts
+  "editor.fontFamily": "'M Plus 1 Code', Iosevka",
+  "editor.fontSize": 17,
   "editor.fontWeight": "normal",
+  ///auto-config-end:fonts
 
   "editor.tokenColorCustomizations": {
     // "[*Light*]": { // Match all themes with "Light" in the name.
