@@ -209,7 +209,7 @@ local fonts = {
 
   iosevka = {
     font = wezterm.font({
-      family = which_iosevka,
+      family = "M PLUS 1 Code", --which_iosevka,
       weight = good_font_weight,
       harfbuzz_features = {
         -- Font alternatives. <<(
@@ -402,7 +402,31 @@ local fonts = {
     -- line_height = 1.2,
   },
 
+  m_plus = {
+    font = wezterm.font({
+      family = "M PLUS 1 Code",
+      weight = good_font_weight,
+    }),
+    size = good_font_size,
+  },
+
+  atkinson = {
+    font = wezterm.font({
+      family = "Atkinson Hyperlegible Mono",
+      weight = "Regular",
+    }),
+    size = 13,
+  },
+
   -- Next font.
+
+  testing = {
+    font = wezterm.font({
+      family = "Atkinson Hyperlegible Mono",
+      weight = good_font_weight,
+    }),
+    size = good_font_size,
+  },
 }
 
 local config = wezterm.config_builder()
@@ -744,6 +768,10 @@ local choose_random_font = function()
     fonts.iosevka_menlo,
     fonts.iosevka_monaco,
     fonts.iosevka_pragmata,
+    fonts.m_plus,
+
+    -- Test font.
+    -- fonts.testing,
   }
   local font = best_fonts[math.random(#best_fonts)]
 
