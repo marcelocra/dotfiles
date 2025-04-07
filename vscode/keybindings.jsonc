@@ -195,7 +195,7 @@
   {
     "key": "ctrl+h",
     "command": "-editor.action.startFindReplaceAction",
-    "when": "editorTextFocus || editorIsOpen"
+    "when": "editorFocus || editorIsOpen"
   },
 
   //#endregion BOTTOM PANEL FOCUS }}}
@@ -804,7 +804,7 @@
     // must have a negative of the combination of all others, i.e., if they are
     // `when: A`, `when: B`, `when: C`, this one must be `when: !A && !B && !C`,
     // which is the same thing as `when: !(A || B || C)`.
-    "when": "!(suggestWidgetVisible || (inQuickInput && quickInputType == 'quickPick') || codeActionMenuVisible)"
+    "when": "!(suggestWidgetVisible || (inQuickInput && quickInputType == 'quickPick') || codeActionMenuVisible) && vim.mode == 'Insert'"
   },
 
   {

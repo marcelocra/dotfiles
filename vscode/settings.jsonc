@@ -290,6 +290,8 @@
   "vim.easymotion": true,
   "vim.sneak": false,
   "vim.surround": true,
+  "vim.cursorStylePerMode.normal": "line",
+  "vim.cursorStylePerMode.insert": "line-thin",
 
   "vim.incsearch": true,
   "vim.useSystemClipboard": true,
@@ -637,14 +639,20 @@
     //   "commands": ["fsi.SendFile"]
     // },
     // //#endregion }}}
-    {
-      "before": ["<c-h>"],
-      "commands": ["editor.action.startFindReplaceAction"]
-    },
+    // {
+    //   "before": ["<c-h>"],
+    //   "commands": ["editor.action.startFindReplaceAction"]
+    // },
     {
       "before": ["Y"],
       "after": ["y", "$"]
+    },
+    {
+      "before": [" ", "w", "s"],
+      "commands": ["workbench.action.quickTextSearch"]
     }
+
+    // Next normal keybinding.
   ],
   //vimnormal)
 
@@ -962,8 +970,10 @@
   "editor.insertSpaces": true,
   "editor.detectIndentation": true,
   "editor.defaultFormatter": "esbenp.prettier-vscode",
-  "editor.cursorStyle": "line-thin",
-  "editor.cursorBlinking": "smooth",
+  "editor.cursorStyle": "line",
+  "editor.cursorWidth": 3,
+  "editor.cursorSmoothCaretAnimation": "on",
+  "editor.cursorBlinking": "blink",
   "editor.rulers": [80, 100, 120],
   "editor.formatOnSave": true,
   "editor.tabCompletion": "onlySnippets",
@@ -1246,11 +1256,11 @@
 
   "workbench.colorCustomizations": {
     // "editorCursor.foreground": "#00ffff", // cyan
-    "editorCursor.foreground": "#ff4500", // orange red
+    "editorCursor.foreground": "#cc00ff", // orange red
     // "editorCursor.foreground": "#00ffc8", // blue-green
     "editorCursor.background": "#000",
 
-    "terminalCursor.foreground": "#ff4500", // orange red
+    "terminalCursor.foreground": "#cc00ff", // orange red
     "terminalCursor.background": "#000",
 
     // Testing some colors. Not great.
@@ -1422,7 +1432,8 @@
   "workbench.list.horizontalScrolling": true,
   "workbench.sideBar.location": "left",
   "workbench.panel.defaultLocation": "bottom",
-  "workbench.editor.pinnedTabsOnSeparateRow": false
+  "workbench.editor.pinnedTabsOnSeparateRow": false,
+  "workbench.colorTheme": "Default Light Modern"
 
   // #endregion workbench. }}}
 }
