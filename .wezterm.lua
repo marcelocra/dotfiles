@@ -13,7 +13,7 @@ local mux = wezterm.mux
 -- Options: 'Fixed', 'Fixed Extended', 'Extended'.
 local which_iosevka = "Iosevka"
 
-local good_font_size = 15
+local good_font_size = 13
 local good_font_weight = 450
 
 local fonts = {
@@ -771,6 +771,7 @@ local choose_random_font = function()
     fonts.m_plus,
 
     -- Test font.
+
     -- fonts.testing,
   }
   local font = best_fonts[math.random(#best_fonts)]
