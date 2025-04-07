@@ -783,10 +783,20 @@ alias t3="tree -L 3"
 alias t4="tree -L 4"
 alias t5="tree -L 5"
 
-alias old_python_warning='echo "\nWARNING: This is the system (outdated) Python version. Use '\''py'\'' for a more recent one.\n"'
-alias python3='old_python_warning; python3'
+alias is_venv='which deactivate >/dev/null 2>&1 && true || false'
+function check_python_venv() {
+    local in_venv
+    if is_venv; then
+        in_venv="IN"
+    else
+        in_venv="NOT IN"
+    fi
+
+    printf "\n!!! %s A VIRTUAL ENVIRONMENT... !!!\n\n\n" $in_venv
+}
+alias python3='check_python_venv && python3'
 alias python=python3
-alias py='source $MCRA_PYTHON_VENV_ACTIVATE && python'
+alias py='python'
 
 if mm_is_command rg; then
   alias g=rg
