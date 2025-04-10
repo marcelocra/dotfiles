@@ -60,6 +60,11 @@ return {
         replace_keycodes = false,
       })
 
+      vim.keymap.set('i', '<C-y>', 'copilot#Accept("\\<Tab>")', {
+        expr = true,
+        replace_keycodes = false,
+      })
+
       vim.keymap.set('i', '<C-l>', '<Plug>(copilot-accept-word)')
 
       vim.api.nvim_create_autocmd('ColorScheme', {
