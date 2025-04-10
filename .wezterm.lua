@@ -6,7 +6,6 @@
 
 local wezterm = require("wezterm")
 local act = wezterm.action
-local mux = wezterm.mux
 
 -- Fonts I frequently use.
 
@@ -20,8 +19,8 @@ local fonts = {
   meslo = {
     font = wezterm.font({
       -- family = 'MesloLGL Nerd Font', -- more space between lines
-      family = "MesloLGM Nerd Font", -- medium space between lines
-      -- family = "MesloLGS Nerd Font", -- less space between lines
+      -- family = "MesloLGM Nerd Font", -- medium space between lines
+      family = "MesloLGS NF", -- less space between lines
       harfbuzz_features = {
         -- "cv10 10",
       },
@@ -69,8 +68,8 @@ local fonts = {
 
   cascadia = {
     font = wezterm.font({
-      -- family = 'Cascadia Code NF',
-      family = "CaskaydiaCove NF",
+      family = "Cascadia Code NF",
+      -- family = "CaskaydiaCove NF",
       weight = good_font_weight,
       harfbuzz_features = {
         "calt 0",
@@ -170,6 +169,19 @@ local fonts = {
   ibm = {
     font = wezterm.font({
       family = "IBM Plex Mono",
+      weight = good_font_weight,
+      harfbuzz_features = {
+        "zero",
+        "ss01", -- a
+        "ss02", -- g
+      },
+    }),
+    size = good_font_size,
+  },
+
+  blex = {
+    font = wezterm.font({
+      family = "Blex Mono Nerd Font",
       weight = good_font_weight,
       harfbuzz_features = {
         "zero",
@@ -369,14 +381,6 @@ local fonts = {
     size = good_font_size,
   },
 
-  blex = {
-    font = wezterm.font({
-      family = "Blex Mono Nerd Font",
-      weight = good_font_weight,
-    }),
-    size = good_font_size,
-  },
-
   commit = {
     font = wezterm.font({
       family = "CommitMono Nerd Font",
@@ -418,15 +422,14 @@ local fonts = {
     size = 13,
   },
 
-  -- Next font.
-
-  testing = {
+  reddit_mono = {
     font = wezterm.font({
-      family = "Atkinson Hyperlegible Mono",
+      family = "Reddit Mono",
       weight = good_font_weight,
     }),
     size = good_font_size,
   },
+  -- Next font.
 }
 
 local config = wezterm.config_builder()
@@ -749,28 +752,43 @@ local choose_random_font = function()
   local best_fonts = {
     -- Keep sorted, please.
 
+    -- fonts.atkinson,
+    -- fonts.commit,
+    -- fonts.dm,
     -- fonts.geist,
+    -- fonts.ibm,
     -- fonts.jb,
     -- fonts.jb_nf,
     -- fonts.liberation_mono,
     -- fonts.noto,
+    -- fonts.recursive_casual,
     -- fonts.recursive_duotone,
     -- fonts.recursive_linear,
     -- fonts.recursive_semicasual,
-    fonts.fira,
-    fonts.fira_crazy,
-    fonts.hack,
-    fonts.ibm,
-    fonts.iosevka_ss04_menlo,
-    fonts.iosevka_ss07_monaco,
-    fonts.iosevka_ss08_pragmata,
-    fonts.m_plus,
-    fonts.red_hat_mono,
-    fonts.source_code_pro,
+    -- fonts.roboto,
+    -- fonts.victor_mono,
 
-    -- Have at least one always enabled, as a fallback.
+    -- Active.
 
-    fonts.iosevka,
+    -- fonts.blex,
+    fonts.cascadia,
+    -- fonts.code_new_roman,
+    -- fonts.code_new_roman,
+    -- fonts.fira,
+    -- fonts.fira_crazy,
+    -- fonts.hack,
+    -- fonts.iosevka,
+    -- fonts.iosevka_ss04_menlo,
+    -- fonts.iosevka_ss07_monaco,
+    -- fonts.iosevka_ss08_pragmata,
+    -- fonts.m_plus,
+    -- fonts.meslo,
+    -- fonts.red_hat_mono,
+    -- fonts.reddit_mono,
+    -- fonts.roboto,
+    -- fonts.source_code_pro,
+
+    -- Next font above.
   }
 
   local selected_font_index = math.random(#best_fonts)
