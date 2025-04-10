@@ -11,7 +11,7 @@ local mux = wezterm.mux
 -- Fonts I frequently use.
 
 -- Options: 'Fixed', 'Fixed Extended', 'Extended'.
-local which_iosevka = "Iosevka"
+local which_iosevka = "Iosevka Fixed Extended"
 
 local good_font_size = 13
 local good_font_weight = 450
@@ -201,7 +201,7 @@ local fonts = {
         "cv17", -- Improved '1'.
         "cv01", -- Alternative 'a'.
         "cv02", -- Alternative 'g'.
-        -- "zero", -- Slashed zero.
+        "zero", -- Slashed zero.
       },
     }),
     size = good_font_size,
@@ -209,7 +209,7 @@ local fonts = {
 
   iosevka = {
     font = wezterm.font({
-      family = "M PLUS 1 Code", --which_iosevka,
+      family = which_iosevka,
       weight = good_font_weight,
       harfbuzz_features = {
         -- Font alternatives. <<(
@@ -243,7 +243,7 @@ local fonts = {
     size = good_font_size,
   },
 
-  iosevka_pragmata = {
+  iosevka_ss08_pragmata = {
     font = wezterm.font({
       family = which_iosevka,
       weight = good_font_weight,
@@ -254,7 +254,7 @@ local fonts = {
     size = good_font_size,
   },
 
-  iosevka_jb = {
+  iosevka_ss14_jb = {
     font = wezterm.font({
       family = which_iosevka,
       weight = good_font_weight,
@@ -265,7 +265,7 @@ local fonts = {
     size = good_font_size,
   },
 
-  iosevka_lucida = {
+  iosevka_ss13_lucida = {
     font = wezterm.font({
       family = which_iosevka,
       weight = good_font_weight,
@@ -280,7 +280,7 @@ local fonts = {
     size = good_font_size,
   },
 
-  iosevka_menlo = {
+  iosevka_ss04_menlo = {
     font = wezterm.font({
       family = which_iosevka,
       weight = good_font_weight,
@@ -291,7 +291,7 @@ local fonts = {
     size = good_font_size,
   },
 
-  iosevka_monaco = {
+  iosevka_ss07_monaco = {
     font = wezterm.font({
       family = which_iosevka,
       weight = good_font_weight,
@@ -747,40 +747,44 @@ config.window_decorations = "RESIZE"
 
 local choose_random_font = function()
   local best_fonts = {
+    -- Keep sorted, please.
+
     -- fonts.geist,
+    -- fonts.jb,
     -- fonts.jb_nf,
     -- fonts.liberation_mono,
+    -- fonts.noto,
     -- fonts.recursive_duotone,
     -- fonts.recursive_linear,
     -- fonts.recursive_semicasual,
-
-    -- Active.
-
     fonts.fira,
     fonts.fira_crazy,
     fonts.hack,
     fonts.ibm,
-    fonts.jb,
-    fonts.noto,
+    fonts.iosevka_ss04_menlo,
+    fonts.iosevka_ss07_monaco,
+    fonts.iosevka_ss08_pragmata,
+    fonts.m_plus,
     fonts.red_hat_mono,
     fonts.source_code_pro,
+
+    -- Have at least one always enabled, as a fallback.
+
     fonts.iosevka,
-    fonts.iosevka_menlo,
-    fonts.iosevka_monaco,
-    fonts.iosevka_pragmata,
-    fonts.m_plus,
-
-    -- Test font.
-
-    -- fonts.testing,
   }
-  local font = best_fonts[math.random(#best_fonts)]
 
+  local selected_font_index = math.random(#best_fonts)
+  -- Get font fonts.var as a string.
+  selected_font = selected_font_index
+
+  local font = best_fonts[selected_font_index]
   config.font = font.font
   config.font_size = font.size
   -- Most other heights end up cropping the fonts, so only change them if you
   -- are sure the won't.
   config.line_height = font.line_height or 1.0
+
+  print("Selected font index: " .. selected_font_index)
 end
 
 choose_random_font()
