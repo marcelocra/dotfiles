@@ -56,24 +56,32 @@
   },
 
   {
-    // If the terminal is not focused, focus it.
+    // Focus the terminal panel in some cases:
+    //    1. If panel is not opened and terminal is not focused, open the
+    //       terminal panel.
+    //    2. If panel is opened and terminal is not focused, focus the terminal.
+    //    3. If panel is opened and terminal is focused, focus the last editor
+    //       group.
+    //    4. If panel is opened with a maximized terminal, toggle the panel.
+    //    5. If panel is opened with something else maximized, focus the
+    //       terminal.
     "key": "ctrl+`",
-    "command": "workbench.action.focusPanel",
-    "when": "!panelFocus"
+    "command": "workbench.action.terminal.focus",
+    "when": "!terminalFocus && !panelMaximized"
   },
 
   {
-    // See the first one for docs.
+    // See docs above.
     "key": "ctrl+`",
     "command": "workbench.action.focusLastEditorGroup",
-    "when": "panelFocus && !panelMaximized"
+    "when": "terminalFocus && !panelMaximized"
   },
 
   {
-    // See the first one for docs.
+    // See docs above.
     "key": "ctrl+`",
     "command": "workbench.action.togglePanel",
-    "when": "panelFocus && panelMaximized"
+    "when": "terminalFocus && panelMaximized"
   },
 
   // {
