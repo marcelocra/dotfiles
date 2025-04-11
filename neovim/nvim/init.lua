@@ -25,9 +25,11 @@ math.randomseed(os.time())
 
 -- For dark mode, choose randomly between these options:
 local dark_mode_options = {
+  -- Weird white contrast, particularly for telescope things.
+  -- 'sorbet',
+  -- 'zaibatsu',
+
   'retrobox',
-  'sorbet',
-  'zaibatsu',
   'wildcharm',
   'vim',
   'habamax',
