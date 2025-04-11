@@ -304,9 +304,9 @@ vim.api.nvim_create_autocmd('FileType', {
 vim.g.mcra_tw_comments = 80
 
 local install_autocmd_dynamic_text_width = function(opts) -- {{{
-  opts.disabled = opts.disabled or false
+  opts.enabled = opts.enabled or true
 
-  if opts.disabled then
+  if not opts.enabled then
     return
   end
 
@@ -315,6 +315,7 @@ local install_autocmd_dynamic_text_width = function(opts) -- {{{
     group = vim.api.nvim_create_augroup('dynamic-text-width', { clear = true }),
     pattern = '*',
     callback = function()
+      local the_regex = '^%s*[%-%/#{%(][%-%*%(]?'
       vim.api.nvim_create_autocmd('CursorMoved', {
         group = vim.api.nvim_create_augroup('dynamic-text-width-cursor-moved', { clear = true }),
         buffer = 0,
@@ -344,10 +345,30 @@ local install_autocmd_dynamic_text_width = function(opts) -- {{{
           --      /*: C-like block comment start
           --      { : Pascal-style
           --      (*: ML-style
-          if before_cursor:match '^%s*[%-%/#{%(][%-%*%(]?' then
+          if before_cursor:match(the_regex) then
             -- If inside a comment, update tw.
             vim.opt_local.textwidth = vim.g.mcra_tw_comments
           end
+        end,
+      })
+
+      -- If user presses gq, do the same as above.
+      vim.api.nvim_create_autocmd('FileType', {
+        group = vim.api.nvim_create_augroup('dynamic-text-width-gq', { clear = true }),
+        -- should be enabled for the same filetypes above.
+        pattern = { '*.lua' },
+        callback = function()
+          local function _helper()
+            local line = vim.api.nvim_get_current_line()
+            local cursor_col = vim.api.nvim_win_get_cursor(0)[2] + 1
+            local before_cursor = line:sub(1, cursor_col)
+
+            if before_cursor:match(the_regex) then
+              vim.opt_local.textwidth = vim.g.mcra_tw_comments
+            end
+          end
+          vim.keymap.set('n', 'gqq', _helper, { desc = 'Change default textwidth for comments' })
+          vim.keymap.set('v', 'gq', _helper, { desc = 'Change default textwidth for comments' })
         end,
       })
     end,
@@ -357,9 +378,9 @@ end
 -- }}}
 
 local install_autocmd_auto_save = function(opts) -- {{{
-  opts.disabled = opts.disabled or false
+  opts.enabled = opts.enabled or true
 
-  if opts.disabled then
+  if not opts.enabled then
     return
   end
 
@@ -394,14 +415,13 @@ end
 
 -- }}}
 
-install_autocmd_auto_save {
-  disabled = true,
-}
-
 install_autocmd_dynamic_text_width {
-  disabled = false,
+  enabled = true,
 }
 
+install_autocmd_auto_save {
+  enabled = false,
+}
 
 -- Next autocommand.
 -- }}}
