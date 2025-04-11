@@ -12,425 +12,235 @@ local act = wezterm.action
 -- Options: 'Fixed', 'Fixed Extended', 'Extended'.
 local which_iosevka = "Iosevka Fixed Extended"
 
-local good_font_size = 13
-local good_font_weight = 450
+-- Function to create a font configuration with defaults.
+local function create_font(font_family, opts)
+  opts = opts or {}
 
-local fonts = {
-  meslo = {
+  -- Build the font configuration with defaults
+  local font_config = {
+    family = font_family,
     font = wezterm.font({
-      -- family = 'MesloLGL Nerd Font', -- more space between lines
-      -- family = "MesloLGM Nerd Font", -- medium space between lines
-      family = "MesloLGS NF", -- less space between lines
-      harfbuzz_features = {
-        -- "cv10 10",
-      },
-      weight = good_font_weight,
+      family = font_family,
+      weight = opts.weight or 400,
+      harfbuzz_features = opts.harfbuzz_features or {},
+      stretch = opts.stretch,
     }),
-    size = good_font_size,
-  },
+    size = opts.size or 13,
+    line_height = opts.line_height,
+  }
 
-  jb = {
-    font = wezterm.font({
-      family = "JetBrains Mono",
-      weight = good_font_weight,
-    }),
-    size = good_font_size,
-  },
+  return font_config
+end
 
-  jb_nf = {
-    font = wezterm.font({
-      family = "JetBrainsMono Nerd Font",
-      weight = good_font_weight,
+local fonts = { -- <<(
+  meslo = create_font("MesloLGS NF"),
+
+  jb = create_font("JetBrains Mono"),
+
+  jb_nf = create_font("JetBrainsMono Nerd Font", {
+    -- Ligature test:
+    --  ! " # $ % & ' ( ) * + , - . / : ; < = > ? @ [ \ ] ^ _ ` { | } ~
+    --  ~ < > = + _ _ ( ) * & ^ % $ # @ ! { } [ ] \ | / ? : ; , . ` ' " ´ ` ˜
+    --  => -> <> <= >= != !== === ~= |> <- --> || .- :- .= {..} 1/2 3/8 100/48
+    --  a b c d e f g h i j k l m n o p q r s t u v x w y z
+    --  A B C D E F G H I J K L M N O P Q R S T U V X W Y Z
+    --  stylua: ignore
+    harfbuzz_features = {
+      -- 'zero', 'ss01', 'ss19', 'ss20', 'zero', 'cv99',
+      "ss02", "ss19", "ss20", "zero", "cv03", "cv04", "cv16", "cv18", "cv19", "cv20", "cv99",
+    },
+  }),
+
+  cascadia = create_font("Cascadia Code NF", {
+    -- If using fonts from Nerd Font, use "CaskaydiaCove NF".
+    -- stylua: ignore
+    harfbuzz_features = {
+      "calt 0", "ss01", "ss19", "ss20",
+    },
+  }),
+
+  fira = create_font("Fira Code", {
+    weight = 450, -- Retina.
+    stretch = "UltraCondensed",
+    harfbuzz_features = {
+      "calt=0", -- No ligatures.
+    },
+  }),
+
+  fira_crazy = create_font("Fira Code", {
+    weight = 450, -- Retina.
+    stretch = "Condensed",
+    harfbuzz_features = {
+      -- Ligatures for:
+      -- => -> <> <= >= != !== === ~= |> <- --> || .- :- .= {..}
+      "calt=1",
+
+      -- Alternates for some chars:
+      "cv01", -- Closed a
+      "cv02", -- Closed g
+      "cv14", -- Not fully round 3
+      -- "cv05", -- Lucida i
+      -- "cv09", -- Lucida l
+      "ss05", -- Consolas style @
+      "ss03", -- More common &
+      "cv16", -- * with 6 legs instead of 5
+      -- "cv24", -- `/`+`=` => /= (too similar to !=, `!`+`=`)
+      "cv30", -- Taller |
+      "cv31", -- Monaco parens (hello)
+      "ss08", -- Less ligatures for == === != !==.
+
+      -- Dot in the middle:
+      "cv25", -- .-
+      "cv26", -- :-
+      "cv32", -- .=
+      "cv28", -- {. .}
+
+      -- Ligatures in Fl Tl fi fj fl ft:
+      -- "ss10",
+
+      -- For the default dashed zero, disable all the ones below.
+      -- "cv11", -- 0 without inner things
+      -- "cv12", -- 0 with reverse dash
+      -- "cv13", -- 0 Hack style
+
       -- Ligature test:
       --  ! " # $ % & ' ( ) * + , - . / : ; < = > ? @ [ \ ] ^ _ ` { | } ~
       --  ~ < > = + _ _ ( ) * & ^ % $ # @ ! { } [ ] \ | / ? : ; , . ` ' " ´ ` ˜
       --  => -> <> <= >= != !== === ~= |> <- --> || .- :- .= {..} 1/2 3/8 100/48
       --  a b c d e f g h i j k l m n o p q r s t u v x w y z
       --  A B C D E F G H I J K L M N O P Q R S T U V X W Y Z
-      harfbuzz_features = {
-        -- 'zero'
-        -- 'ss01', 'ss19', 'ss20', 'zero', 'cv99',
-        "ss02",
-        "ss19",
-        "ss20",
-        "zero",
-        "cv03",
-        "cv04",
-        "cv16",
-        "cv18",
-        "cv19",
-        "cv20",
-        "cv99",
-      },
-    }),
-    size = good_font_size,
-  },
+    },
+  }),
 
-  cascadia = {
-    font = wezterm.font({
-      family = "Cascadia Code NF",
-      -- family = "CaskaydiaCove NF",
-      weight = good_font_weight,
-      harfbuzz_features = {
-        "calt 0",
-        "ss01",
-        "ss19",
-        "ss20",
-      },
-    }),
-    size = good_font_size,
-  },
+  geist = create_font("Geist Mono"),
 
-  fira = {
-    font = wezterm.font({
-      family = "Fira Code",
-      weight = good_font_weight,
-      stretch = "UltraCondensed",
-      harfbuzz_features = {
-        "calt=0",
-      },
-    }),
-    size = good_font_size,
-  },
+  noto = create_font("Noto Sans Mono", { weight = 500 }),
 
-  fira_crazy = {
-    font = wezterm.font({
-      family = "Fira Code",
-      weight = good_font_weight,
-      stretch = "Condensed",
-      harfbuzz_features = {
-        -- Ligatures for:
-        -- => -> <> <= >= != !== === ~= |> <- --> || .- :- .= {..}
-        "calt=1",
+  red_hat_mono = create_font("Red Hat Mono"),
 
-        -- Alternates for some chars:
-        "cv01", -- Closed a
-        "cv02", -- Closed g
-        "cv14", -- Not fully round 3
-        -- "cv05", -- Lucida i
-        -- "cv09", -- Lucida l
-        "ss05", -- Consolas style @
-        "ss03", -- More common &
-        "cv16", -- * with 6 legs instead of 5
-        -- "cv24", -- `/`+`=` => /= (too similar to !=, `!`+`=`)
-        "cv30", -- Taller |
-        "cv31", -- Monaco parens (hello)
-        "ss08", -- Less ligatures for == === != !==.
+  ibm = create_font("IBM Plex Mono", {
+    harfbuzz_features = {
+      "zero",
+      "ss01", -- a
+      "ss02", -- g
+    },
+  }),
 
-        -- Dot in the middle:
-        "cv25", -- .-
-        "cv26", -- :-
-        "cv32", -- .=
-        "cv28", -- {. .}
+  blex = create_font("Blex Mono Nerd Font", {
+    harfbuzz_features = {
+      "zero",
+      "ss01", -- a
+      "ss02", -- g
+    },
+  }),
 
-        -- Ligatures in Fl Tl fi fj fl ft:
-        -- "ss10",
+  dm = create_font("DM Mono", {
+    weight = 700,
+    harfbuzz_features = {
+      "ss01", -- rounded commas
+      "ss03", -- non curvy 'g'
+      "ss04", -- non curvy '6' and '9'
+    },
+  }),
 
-        -- For the default dashed zero, disable all the ones below.
-        -- "cv11", -- 0 without inner things
-        -- "cv12", -- 0 with reverse dash
-        -- "cv13", -- 0 Hack style
+  source_code_pro = create_font("SourceCodeVF", {
+    harfbuzz_features = {
+      "cv17", -- Improved '1'.
+      "cv01", -- Alternative 'a'.
+      "cv02", -- Alternative 'g'.
+      "zero", -- Slashed zero.
+    },
+  }),
 
-        -- Ligature test:
-        --  ! " # $ % & ' ( ) * + , - . / : ; < = > ? @ [ \ ] ^ _ ` { | } ~
-        --  ~ < > = + _ _ ( ) * & ^ % $ # @ ! { } [ ] \ | / ? : ; , . ` ' " ´ ` ˜
-        --  => -> <> <= >= != !== === ~= |> <- --> || .- :- .= {..} 1/2 3/8 100/48
-        --  a b c d e f g h i j k l m n o p q r s t u v x w y z
-        --  A B C D E F G H I J K L M N O P Q R S T U V X W Y Z
-      },
-    }),
-    size = good_font_size,
-  },
+  -- Iosevka alternatives. <<(
+  -- ss01: Andale Mono
+  -- ss02: Anonymous Pro
+  -- ss03: Consolas
+  -- ss04: Menlo
+  -- ss05: Fira Mono
+  -- ss06: Liberation Mono
+  -- ss07: Monaco
+  -- ss08: Pragmata Pro
+  -- ss09: Source Code Pro
+  -- ss10: Envy Code R
+  -- ss11: X Window
+  -- ss12: Ubuntu Mono
+  -- ss13: Lucida
+  -- ss14: JetBrains Mono
+  -- ss15: IBM Plex Mono
+  -- ss16: PT Mono
+  -- ss17: Recursive Mono
+  -- ss18: Input Mono
+  -- ss20: Curly
+  --
+  -- Others:
+  -- Lucida Console with some changes.
+  -- 'ss13', 'cv02 4', 'cv04 11', 'cv05 8', 'cv10 10',
+  -- 'ss13', 'cv02 1', 'cv04 3', 'cv05 4', 'cv10 25',
+  -- )>>
+  iosevka = create_font(which_iosevka),
 
-  geist = {
-    font = wezterm.font({
-      family = "Geist Mono",
-      weight = good_font_weight,
-    }),
-    size = good_font_size,
-  },
+  iosevka_ss08_pragmata = create_font(which_iosevka, { harfbuzz_features = { "ss08" } }),
 
-  noto = {
-    font = wezterm.font({
-      family = "Noto Sans Mono",
-      weight = 500,
-    }),
-    size = good_font_size,
-  },
+  iosevka_ss14_jb = create_font(which_iosevka, { harfbuzz_features = { "ss14" } }),
 
-  red_hat_mono = {
-    font = wezterm.font({
-      family = "Red Hat Mono",
-      weight = good_font_weight,
-    }),
-    size = good_font_size,
-  },
+  iosevka_ss13_lucida = create_font(which_iosevka, {
+    -- stylua: ignore
+    harfbuzz_features = {
+      "ss13",
+      "cv10 7",
+      -- Variations.
+      -- 'ss13', 'cv02 4', 'cv04 11', 'cv05 8', 'cv10 10',
+      -- 'ss13', 'cv02 1', 'cv04 3', 'cv05 4', 'cv10 25',
+    },
+  }),
 
-  ibm = {
-    font = wezterm.font({
-      family = "IBM Plex Mono",
-      weight = good_font_weight,
-      harfbuzz_features = {
-        "zero",
-        "ss01", -- a
-        "ss02", -- g
-      },
-    }),
-    size = good_font_size,
-  },
+  iosevka_ss04_menlo = create_font(which_iosevka, { harfbuzz_features = { "ss04" } }),
 
-  blex = {
-    font = wezterm.font({
-      family = "Blex Mono Nerd Font",
-      weight = good_font_weight,
-      harfbuzz_features = {
-        "zero",
-        "ss01", -- a
-        "ss02", -- g
-      },
-    }),
-    size = good_font_size,
-  },
+  iosevka_ss07_monaco = create_font(which_iosevka, { harfbuzz_features = { "ss07" } }),
 
-  dm = {
-    font = wezterm.font({
-      family = "DM Mono",
-      weight = 700,
-      harfbuzz_features = {
-        "ss01", -- rounded commas
-        "ss03", -- non curvy 'g'
-        "ss04", -- non curvy '6' and '9'
-      },
-    }),
-    size = good_font_size,
-  },
+  victor_mono = create_font("Victor Mono", {
+    weight = 600,
+    harfbuzz_features = {
+      -- 'calt=0', -- no ligatures (particularly for `==` and `!=`)
+      -- 'ss01', -- different 'a'
+      "ss02", -- different dashed zero (up to ss05)
+      "ss06", -- crossed '7'
+      "ss07", -- different '6' and  '9'
+      "ss08", -- more fish-like stuff (::<)
+      -- |> >- <-> <| <> |- .- :: -.- -> => == === != !== ::<
+    },
+  }),
 
-  source_code_pro = {
-    font = wezterm.font({
-      family = "SourceCodeVF",
-      weight = good_font_weight,
-      harfbuzz_features = {
-        "cv17", -- Improved '1'.
-        "cv01", -- Alternative 'a'.
-        "cv02", -- Alternative 'g'.
-        "zero", -- Slashed zero.
-      },
-    }),
-    size = good_font_size,
-  },
+  code_new_roman = create_font("CodeNewRoman Nerd Font"),
 
-  iosevka = {
-    font = wezterm.font({
-      family = which_iosevka,
-      weight = good_font_weight,
-      harfbuzz_features = {
-        -- Font alternatives. <<(
-        -- ss01: Andale Mono
-        -- ss02: Anonymous Pro
-        -- ss03: Consolas
-        -- ss04: Menlo
-        -- ss05: Fira Mono
-        -- ss06: Liberation Mono
-        -- ss07: Monaco
-        -- ss08: Pragmata Pro
-        -- ss09: Source Code Pro
-        -- ss10: Envy Code R
-        -- ss11: X Window
-        -- ss12: Ubuntu Mono
-        -- ss13: Lucida
-        -- ss14: JetBrains Mono
-        -- ss15: IBM Plex Mono
-        -- ss16: PT Mono
-        -- ss17: Recursive Mono
-        -- ss18: Input Mono
-        -- ss20: Curly
-        -- )>>
+  recursive_linear = create_font("RecMonoLinear Nerd Font"),
 
-        -- Others:
-        -- Lucida Console with some changes.
-        -- 'ss13', 'cv02 4', 'cv04 11', 'cv05 8', 'cv10 10',
-        -- 'ss13', 'cv02 1', 'cv04 3', 'cv05 4', 'cv10 25',
-      },
-    }),
-    size = good_font_size,
-  },
+  recursive_duotone = create_font("RecMonoDuotone Nerd Font"),
 
-  iosevka_ss08_pragmata = {
-    font = wezterm.font({
-      family = which_iosevka,
-      weight = good_font_weight,
-      harfbuzz_features = {
-        "ss08",
-      },
-    }),
-    size = good_font_size,
-  },
+  recursive_semicasual = create_font("RecMonoSmCasual Nerd Font"),
 
-  iosevka_ss14_jb = {
-    font = wezterm.font({
-      family = which_iosevka,
-      weight = good_font_weight,
-      harfbuzz_features = {
-        "ss14",
-      },
-    }),
-    size = good_font_size,
-  },
+  recursive_casual = create_font("RecMonoCasual Nerd Font"),
 
-  iosevka_ss13_lucida = {
-    font = wezterm.font({
-      family = which_iosevka,
-      weight = good_font_weight,
-      harfbuzz_features = {
-        "ss13",
-        "cv10 7",
-        -- Variations.
-        -- 'ss13', 'cv02 4', 'cv04 11', 'cv05 8', 'cv10 10',
-        -- 'ss13', 'cv02 1', 'cv04 3', 'cv05 4', 'cv10 25',
-      },
-    }),
-    size = good_font_size,
-  },
+  hack = create_font("Hack Nerd Font"),
 
-  iosevka_ss04_menlo = {
-    font = wezterm.font({
-      family = which_iosevka,
-      weight = good_font_weight,
-      harfbuzz_features = {
-        "ss04",
-      },
-    }),
-    size = good_font_size,
-  },
+  commit_mono = create_font("CommitMono Nerd Font"),
 
-  iosevka_ss07_monaco = {
-    font = wezterm.font({
-      family = which_iosevka,
-      weight = good_font_weight,
-      harfbuzz_features = {
-        "ss07",
-      },
-    }),
-    size = good_font_size,
-  },
+  roboto = create_font("RobotoMono Nerd Font"),
 
-  victor_mono = {
-    font = wezterm.font({
-      family = "Victor Mono",
-      weight = 600,
-      harfbuzz_features = {
-        -- 'calt=0', -- no ligatures (particularly for `==` and `!=`)
-        -- 'ss01', -- different 'a'
-        "ss02", -- different dashed zero (up to ss05)
-        "ss06", -- crossed '7'
-        "ss07", -- different '6' and  '9'
-        "ss08", -- more fish-like stuff (::<)
-        -- |> >- <-> <| <> |- .- :: -.- -> => == === != !== ::<
-      },
-    }),
-    size = good_font_size,
-  },
+  liberation_mono = create_font("Liberation Mono"),
 
-  code_new_roman = {
-    font = wezterm.font({
-      family = "CodeNewRoman Nerd Font",
-      weight = good_font_weight,
-    }),
+  m_plus = create_font("M PLUS 1 Code"),
 
-    size = good_font_size,
-  },
-
-  recursive_linear = {
-    font = wezterm.font({
-      family = "RecMonoLinear Nerd Font",
-      weight = good_font_weight,
-    }),
-    size = good_font_size,
-  },
-
-  recursive_duotone = {
-    font = wezterm.font({
-      family = "RecMonoDuotone Nerd Font",
-      weight = good_font_weight,
-    }),
-    size = good_font_size,
-  },
-
-  recursive_semicasual = {
-    font = wezterm.font({
-      family = "RecMonoSmCasual Nerd Font",
-      weight = good_font_weight,
-    }),
-    size = good_font_size,
-  },
-
-  recursive_casual = {
-    font = wezterm.font({
-      family = "RecMonoCasual Nerd Font",
-      weight = good_font_weight,
-    }),
-    size = good_font_size,
-  },
-
-  hack = {
-    font = wezterm.font({
-      family = "Hack Nerd Font",
-      weight = good_font_weight,
-    }),
-    -- line_height = 1.3,
-    size = good_font_size,
-  },
-
-  commit = {
-    font = wezterm.font({
-      family = "CommitMono Nerd Font",
-      weight = good_font_weight,
-    }),
-    size = good_font_size,
-  },
-
-  roboto = {
-    font = wezterm.font({
-      family = "RobotoMono Nerd Font",
-      weight = good_font_weight,
-    }),
-    size = good_font_size,
-  },
-
-  liberation_mono = {
-    font = wezterm.font({
-      family = "Liberation Mono",
-      weight = good_font_weight,
-    }),
-    size = good_font_size,
-    -- line_height = 1.2,
-  },
-
-  m_plus = {
-    font = wezterm.font({
-      family = "M PLUS 1 Code",
-      weight = good_font_weight,
-    }),
-    size = good_font_size,
-  },
-
-  atkinson = {
-    font = wezterm.font({
-      family = "Atkinson Hyperlegible Mono",
-      weight = "Regular",
-    }),
+  atkinson = create_font("Atkinson Hyperlegible Mono", {
+    weight = "Regular",
     size = 13,
-  },
+  }),
 
-  reddit_mono = {
-    font = wezterm.font({
-      family = "Reddit Mono",
-      weight = good_font_weight,
-    }),
-    size = good_font_size,
-  },
+  reddit_mono = create_font("Reddit Mono"),
+
   -- Next font.
-}
+} -- )>>
 
 local config = wezterm.config_builder()
 
@@ -438,26 +248,7 @@ local SCRATCH_SCRIPT = os.getenv("HOME") .. "/projects/dotfiles/.rc.scratch"
 
 -- EVENTS
 
-wezterm.on("gui-startup", function(cmd)
-  -- local tab, pane, window = mux.spawn_window(cmd or {})
-  -- if window then
-  --   local active_screen = wezterm.gui.screens().active
-  --   local screen_width = active_screen.width
-  --   local screen_height = active_screen.height
-  --   local panel_width = 47 -- This is configured in Cinnamon directly.
-  --
-  --   local start_x = (screen_width + panel_width) / 2
-  --   local start_y = 0
-  --   local window_width = (screen_width - panel_width) / 2
-  --   -- local window_height = screen_height
-  --
-  --   local gui_window = window:gui_window()
-  --   gui_window:set_position(start_x, start_y)
-  --   gui_window:set_inner_size(window_width, screen_height)
-  -- end
-end)
-
-wezterm.on("format-tab-title", function(tab, tabs, panes, config, hover, max_width)
+wezterm.on("format-tab-title", function(tab, _tabs, _panes, _config, hover, max_width)
   -- The filled in variant of the < symbol
   local solid_left_arrow = wezterm.nerdfonts.pl_right_hard_divider
 
@@ -468,7 +259,7 @@ wezterm.on("format-tab-title", function(tab, tabs, panes, config, hover, max_wid
   -- It prefers the title that was set via `tab:set_title()`
   -- or `wezterm cli set-tab-title`, but falls back to the
   -- title of the active pane in that tab.
-  function tab_title(tab_info)
+  local function tab_title(tab_info)
     local title = tab_info.tab_title
     -- if the tab title is explicitly set, take that
     if title and #title > 0 then
@@ -540,92 +331,6 @@ wezterm.on("window-focus-changed", function(window, pane)
   gui_window:set_position(start_x, start_y)
   gui_window:set_inner_size(window_width, screen_height)
 end)
-
--- TODO: get this to work one day?
--- wezterm.on('window-focus-changed', function(window, pane)
---   if window:is_focused() then
---     act.SpawnCommandInNewWindow {
---       args = { SCRATCH_SCRIPT, 'disconnect' }
---     }
---   else
---     act.SpawnCommandInNewWindow {
---       args = { SCRATCH_SCRIPT, 'connect' }
---     }
---   end
--- end)
-
--- Implementation that leverages your existing .rc.scratch script
--- local focus_loss_timer = nil
--- local focus_loss_detach_minutes = 10
--- local focus_loss_detach_seconds = 3 --60 * focus_loss_detach_minutes
-
--- Path to file that controls whether or not the window should detach.
--- local detach_timer_active_file = ""
-
--- Hides the terminal window if it remains unfocused for `focus_loss_detach_seconds`.
---
--- TODO: Figure out how to make this work properly. Right now, it always triggers the function
--- and detach the window after focus_loss_detach_seconds. The current idea is to use a file
--- (detach_timer_active_file) to control whether the callback should execute and detach or not.
---
--- wezterm.on("window-focus-changed", function(window, pane)
---   wezterm.log_info("window:is_focused() = " .. tostring(window:is_focused()))
---   wezterm.log_info("focus_loss_timer = " .. tostring(focus_loss_timer))
---
---   if window:is_focused() then
---     -- Window gained focus - cancel any pending detach
---
---     -- IDEA: Delete the detach_timer_active_file file.
---   else
---     -- Window lost focus - start a timer to detach after delay
---     wezterm.log_info("Window unfocused, starting detach timer for " .. focus_loss_detach_seconds .. " seconds")
---
---     -- IDEA: Create/update detach_timer_active_file file with the current time.
---
---     -- Create a timer using coroutine
---     wezterm.time.call_after(focus_loss_detach_seconds, function()
---       -- IDEA: Check if the detach_timer_active_file exists.
---       -- IDEA: If not, bail... timer has been cancelled.
---       -- IDEA: If so, check if the diff for current time is around focus_loss_detach_seconds,
---       -- IDEA: only proceeding if so (otherwise the timer was updated).
---
---       -- This will run after the specified delay if not cancelled
---       wezterm.log_info("Detach timer expired, detaching from tmux session")
---
---       -- Get the session name that's currently active
---       local success, stdout, stderr = wezterm.run_child_process({
---         "tmux",
---         "display-message",
---         "-p",
---         "#S",
---       })
---
---       local session_name
---       if success then
---         session_name = stdout:gsub("%s+", "") -- Trim whitespace
---         wezterm.log_info("Current tmux session: " .. session_name)
---
---         -- Now detach from this session
---         local detach_success, detach_stderr = wezterm.run_child_process({
---           "tmux",
---           "detach-client",
---           "-s",
---           session_name,
---         })
---
---         if not detach_success then
---           wezterm.log_error("Failed to detach from tmux: " .. tostring(detach_stderr))
---         else
---           wezterm.log_info("Successfully detached from tmux session: " .. session_name)
---         end
---       else
---         wezterm.log_error("Failed to get current tmux session: " .. tostring(stderr))
---       end
---
---       focus_loss_timer = nil
---     end)
---   end
--- end)
 
 local function color_schemes_by_name(opts)
   setmetatable(opts, {
@@ -713,11 +418,14 @@ local color_scheme_override = {
     "Harmonic16 Dark (base16)",               -- 27
     "Alabaster",                              -- 28
     "Horizon Bright (Gogh)",                  -- 29
+    "DanQing (base16)",                       -- 30
+    "Shaman",                                 -- 31
+    "catppuccin-macchiato",                   -- 32
     -- Next theme colorscheme override.
   },
 }
 
-function get_scheme(opts)
+local function get_scheme(opts)
   local scheme = "Dracula"
 
   if not opts.force_random and color_scheme_override.override then
@@ -737,7 +445,7 @@ wezterm.on("window-config-reloaded", function(window, pane)
       color_scheme = get_scheme({ force_random = false }),
     })
   end
-  print("Selected font: ", window:effective_config().font)
+  print("Current font: ", window:effective_config().font)
 end)
 
 -- Next event.
@@ -753,7 +461,7 @@ local choose_random_font = function()
     -- Keep sorted, please.
 
     -- fonts.atkinson,
-    -- fonts.commit,
+    -- fonts.commit_mono,
     -- fonts.dm,
     -- fonts.geist,
     -- fonts.ibm,
@@ -771,9 +479,8 @@ local choose_random_font = function()
     -- Active.
 
     -- fonts.blex,
-    fonts.cascadia,
-    -- fonts.code_new_roman,
-    -- fonts.code_new_roman,
+    -- fonts.cascadia,
+    fonts.code_new_roman,
     -- fonts.fira,
     -- fonts.fira_crazy,
     -- fonts.hack,
@@ -791,18 +498,14 @@ local choose_random_font = function()
     -- Next font above.
   }
 
-  local selected_font_index = math.random(#best_fonts)
-  -- Get font fonts.var as a string.
-  selected_font = selected_font_index
-
-  local font = best_fonts[selected_font_index]
+  local font = best_fonts[math.random(#best_fonts)]
   config.font = font.font
   config.font_size = font.size
   -- Most other heights end up cropping the fonts, so only change them if you
   -- are sure the won't.
   config.line_height = font.line_height or 1.0
 
-  print("Selected font index: " .. selected_font_index)
+  print("Random font: " .. font.family)
 end
 
 choose_random_font()
@@ -830,7 +533,7 @@ config.colors = {
 
 -- The x is calculated as `(screen_width + panel_width) / 2`. See `gui-startup`
 -- above.
-config.default_gui_startup_args = { "start", "--position", "1303,0", SCRATCH_SCRIPT }
+-- config.default_gui_startup_args = { "start", "--position", "1303,0", SCRATCH_SCRIPT }
 
 local should_blink = false
 if should_blink then
@@ -843,7 +546,7 @@ end
 
 -- KEYBINDINGS
 
-function change_color_scheme(window, pane)
+local function change_color_scheme(window, pane)
   wezterm.gui.gui_windows()[1]:set_config_overrides({ color_scheme = get_scheme({ force_random = true }) })
 end
 
@@ -859,3 +562,114 @@ config.keys = {
 -- RETURN THE CONFIG OBJECT, TO APPLY ALL SETTINGS
 
 return config
+
+--[[ Code Graveyard (for future reference).
+
+-- -- Previous way I use to resize a new terminal to the right of the screen.
+-- wezterm.on("gui-startup", function(cmd)
+--   local tab, pane, window = mux.spawn_window(cmd or {})
+--   if window then
+--     local active_screen = wezterm.gui.screens().active
+--     local screen_width = active_screen.width
+--     local screen_height = active_screen.height
+--     local panel_width = 47 -- This is configured in Cinnamon directly.
+--
+--     local start_x = (screen_width + panel_width) / 2
+--     local start_y = 0
+--     local window_width = (screen_width - panel_width) / 2
+--     -- local window_height = screen_height
+--
+--     local gui_window = window:gui_window()
+--     gui_window:set_position(start_x, start_y)
+--     gui_window:set_inner_size(window_width, screen_height)
+--   end
+-- end)
+
+-- TODO: get this to work one day?
+-- wezterm.on('window-focus-changed', function(window, pane)
+--   if window:is_focused() then
+--     act.SpawnCommandInNewWindow {
+--       args = { SCRATCH_SCRIPT, 'disconnect' }
+--     }
+--   else
+--     act.SpawnCommandInNewWindow {
+--       args = { SCRATCH_SCRIPT, 'connect' }
+--     }
+--   end
+-- end)
+
+-- Implementation that leverages your existing .rc.scratch script
+-- local focus_loss_timer = nil
+-- local focus_loss_detach_minutes = 10
+-- local focus_loss_detach_seconds = 3 --60 * focus_loss_detach_minutes
+
+-- Path to file that controls whether or not the window should detach.
+-- local detach_timer_active_file = ""
+
+-- Hides the terminal window if it remains unfocused for `focus_loss_detach_seconds`.
+--
+-- TODO: Figure out how to make this work properly. Right now, it always
+-- triggers the function and detach the window after focus_loss_detach_seconds.
+-- The current idea is to use a file (detach_timer_active_file) to control
+-- whether the callback should execute and detach or not.
+--
+-- wezterm.on("window-focus-changed", function(window, pane)
+--   wezterm.log_info("window:is_focused() = " .. tostring(window:is_focused()))
+--   wezterm.log_info("focus_loss_timer = " .. tostring(focus_loss_timer))
+--
+--   if window:is_focused() then
+--     -- Window gained focus - cancel any pending detach
+--
+--     -- IDEA: Delete the detach_timer_active_file file.
+--   else
+--     -- Window lost focus - start a timer to detach after delay
+--     wezterm.log_info("Window unfocused, starting detach timer for " .. focus_loss_detach_seconds .. " seconds")
+--
+--     -- IDEA: Create/update detach_timer_active_file file with the current time.
+--
+--     -- Create a timer using coroutine
+--     wezterm.time.call_after(focus_loss_detach_seconds, function()
+--       -- IDEA: Check if the detach_timer_active_file exists.
+--       -- IDEA: If not, bail... timer has been cancelled.
+--       -- IDEA: If so, check if the diff for current time is around focus_loss_detach_seconds,
+--       -- IDEA: only proceeding if so (otherwise the timer was updated).
+--
+--       -- This will run after the specified delay if not cancelled
+--       wezterm.log_info("Detach timer expired, detaching from tmux session")
+--
+--       -- Get the session name that's currently active
+--       local success, stdout, stderr = wezterm.run_child_process({
+--         "tmux",
+--         "display-message",
+--         "-p",
+--         "#S",
+--       })
+--
+--       local session_name
+--       if success then
+--         session_name = stdout:gsub("%s+", "") -- Trim whitespace
+--         wezterm.log_info("Current tmux session: " .. session_name)
+--
+--         -- Now detach from this session
+--         local detach_success, detach_stderr = wezterm.run_child_process({
+--           "tmux",
+--           "detach-client",
+--           "-s",
+--           session_name,
+--         })
+--
+--         if not detach_success then
+--           wezterm.log_error("Failed to detach from tmux: " .. tostring(detach_stderr))
+--         else
+--           wezterm.log_info("Successfully detached from tmux session: " .. session_name)
+--         end
+--       else
+--         wezterm.log_error("Failed to get current tmux session: " .. tostring(stderr))
+--       end
+--
+--       focus_loss_timer = nil
+--     end)
+--   end
+-- end)
+
+--]]
