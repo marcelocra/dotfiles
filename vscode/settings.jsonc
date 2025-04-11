@@ -738,12 +738,18 @@
       "before": ["<c-a>"],
       "commands": ["editor.action.selectAll"]
     },
-    //#region Use Conjure-like keybindings for FSharp. {{{
+
     {
+      // Use Conjure-like keybindings for FSharp.
       "before": [" ", "E"],
       "commands": ["fsi.SendSelection"]
+    },
+
+    {
+      // Use `s` to trigger easymotion full search.
+      "before": ["s"],
+      "after": ["leader", "leader", "s"]
     }
-    //#endregion }}}
   ],
 
   "vim.operatorPendingModeKeyBindingsNonRecursive": [
@@ -1435,8 +1441,7 @@
   "workbench.list.horizontalScrolling": true,
   "workbench.sideBar.location": "left",
   "workbench.panel.defaultLocation": "bottom",
-  "workbench.editor.pinnedTabsOnSeparateRow": false,
-  "workbench.colorTheme": "Default Light Modern"
+  "workbench.editor.pinnedTabsOnSeparateRow": false
 
   // #endregion workbench. }}}
 }
