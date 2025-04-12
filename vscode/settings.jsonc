@@ -907,7 +907,7 @@
   //    more fish-like stuff (::<)
 
   ///auto-config-start:fonts
-  "editor.fontFamily": "'M Plus 1 Code', Iosevka",
+  "editor.fontFamily": "'CodeNewRoman Nerd Font Mono', 'M Plus 1 Code', Iosevka",
   "editor.fontSize": 17,
   "editor.fontWeight": "normal",
   ///auto-config-end:fonts
