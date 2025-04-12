@@ -38,13 +38,30 @@
       "problemMatcher": []
     },
     {
-      "label": "say-hello",
+      "label": "Run command",
       "type": "shell",
-      "command": "echo Hello World",
+      "command": "vscode-tasks", // Should be at ~/bin.
+      "args": ["-h", "", "${input:command}" /*, "${input:componentName}" */],
       "presentation": {
         "reveal": "always"
-      }
+      },
+      "problemMatcher": []
     }
+  ],
+  "inputs": [
+    {
+      "type": "pickString",
+      "id": "command",
+      "description": "What command to run?",
+      "options": ["choose-font"],
+      "default": "help"
+    }
+    // {
+    //   "type": "promptString",
+    //   "id": "componentName",
+    //   "description": "Name your component.",
+    //   "default": "my-new-component"
+    // }
   ],
 
   "$schema": "vscode://schemas/tasks"
