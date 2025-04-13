@@ -781,6 +781,7 @@
     // "markdown": false,
     "*": true
   },
+  "chat.agent.": true,
 
   // TODO: figure out from what extension this comes from. Perhaps the Dev
   // Container one.
@@ -1441,7 +1442,8 @@
   "workbench.list.horizontalScrolling": true,
   "workbench.sideBar.location": "left",
   "workbench.panel.defaultLocation": "bottom",
-  "workbench.editor.pinnedTabsOnSeparateRow": false
+  "workbench.editor.pinnedTabsOnSeparateRow": false,
+  "workbench.colorTheme": "Default Light Modern"
 
   // #endregion workbench. }}}
 }
