@@ -268,19 +268,19 @@
   {
     "key": "ctrl+d",
     "command": "editor.action.addSelectionToNextFindMatch",
-    "when": "vim.mode == 'Visual'"
+    "when": "(vim.mode == 'Visual' || vim.mode == 'VisualLine')"
   },
 
   {
     "key": "ctrl+n",
     "command": "editor.action.moveSelectionToNextFindMatch",
-    "when": "vim.mode == 'Visual'"
+    "when": "(vim.mode == 'Visual' || vim.mode == 'VisualLine')"
   },
 
   {
     "key": "ctrl+p",
     "command": "editor.action.moveSelectionToPreviousFindMatch",
-    "when": "editorTextFocus && vim.mode == 'Visual'"
+    "when": "editorTextFocus && (vim.mode == 'Visual' || vim.mode == 'VisualLine')"
   },
   {
     "key": "ctrl+n",

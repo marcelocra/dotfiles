@@ -369,10 +369,10 @@
     },
     //#endregion
 
-    {
-      "before": ["<c-d>"],
-      "commands": ["editor.action.addSelectionToNextFindMatch"]
-    },
+    // {
+    //   "before": ["<c-d>"],
+    //   "commands": ["editor.action.addSelectionToNextFindMatch"]
+    // },
     {
       "before": ["<c-h>"],
       "commands": ["deleteLeft"]
