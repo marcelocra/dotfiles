@@ -51,7 +51,7 @@
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
 
-  "tailwindCSS.emmetCompletions": true,
+  "tailwindCSS.emmetCompletions": false,
   "tailwindCSS.colorDecorators": true, // They are useful, though annoying.
   "tailwindCSS.experimental.classRegex": [
     // Always detect when wrapping strings with Tailwind-specific tagged
@@ -124,13 +124,14 @@
   "tailwindCSS.files.exclude": ["**/.git/**", "**/node_modules/**", "**/.hg/**", "**/.svn/**", "**/*.md"],
 
   "emmet.triggerExpansionOnTab": true,
-  "emmet.showExpandedAbbreviation": "always",
+  "emmet.showExpandedAbbreviation": "inMarkupAndStylesheetFilesOnly",
   "emmet.showSuggestionsAsSnippets": true,
   "emmet.includeLanguages": {
     "erb": "html",
     "vue-html": "html",
     "svelte": "html"
   },
+  "emmet.excludeLanguages": ["markdown"],
 
   "[nim][nimble]": {
     "editor.defaultFormatter": "NimLang.nimlang"
@@ -1204,9 +1205,8 @@
   "telemetry.telemetryLevel": "off",
 
   "[log][Log]": {
-    "editor.fontSize": 11,
-    "editor.fontWeight": "400"
-
+    // "editor.fontSize": 15,
+    // "editor.fontWeight": "400"
     // "editor.fontFamily": "JetBrains Mono",
     // "editor.fontSize": 11,
     // "editor.fontWeight": "300"
@@ -1227,6 +1227,14 @@
 
   // Detect remapped keys better (e.g. caps lock -> ctrl).
   "keyboard.dispatch": "keyCode",
+
+  // "prettier.requireConfig": true,
+  // "[javascript][javascriptreact][typescript][typescriptreact]": {
+  //   "editor.defaultFormatter": "standard.vscode-standard"
+  // },
+  // "standard.enable": true,
+  // "standard.engine": "ts-standard",
+  // "standard.autoFixOnSave": true,
 
   // #endregion Misc }}}
 
@@ -1442,8 +1450,7 @@
   "workbench.list.horizontalScrolling": true,
   "workbench.sideBar.location": "left",
   "workbench.panel.defaultLocation": "bottom",
-  "workbench.editor.pinnedTabsOnSeparateRow": false,
-  "workbench.colorTheme": "Default Light Modern"
+  "workbench.editor.pinnedTabsOnSeparateRow": false
 
   // #endregion workbench. }}}
 }

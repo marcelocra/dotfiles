@@ -115,6 +115,20 @@
   },
 
   {
+    // Toggle focus between panel and editor.
+    "key": "alt+m",
+    "command": "workbench.action.focusLastEditorGroup",
+    "when": "panelFocus && !panelMaximized"
+  },
+
+  {
+    // Toggle focus between panel and editor.
+    "key": "alt+m",
+    "command": "workbench.action.focusPanel",
+    "when": "!panelFocus && !panelMaximized"
+  },
+
+  {
     // If the panel is active, but not maximized, maximize it.
     "key": "ctrl+alt+`",
     "command": "workbench.action.toggleMaximizedPanel",
@@ -1335,6 +1349,12 @@
     "key": "alt+d",
     "command": "workbench.action.toggleLightDarkThemes"
   },
+
+  // {
+  //   "key": "ctrl+shift+i",
+  //   "command": "standard.executeAutofix",
+  //   "when": "editorTextFocus && (editorLangId == 'javascript' || editorLangId == 'javascriptreact' || editorLangId == 'typescript' || editorLangId == 'typescriptreact')"
+  // },
 
   //#endregion MISC }}}
 
