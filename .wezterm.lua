@@ -12,6 +12,9 @@ local act = wezterm.action
 -- Options: 'Fixed', 'Fixed Extended', 'Extended'.
 local which_iosevka = "Iosevka Fixed Extended"
 
+local default_font_size = 11
+local default_font_weight = 400
+
 -- Function to create a font configuration with defaults.
 local function create_font(font_family, opts)
   opts = opts or {}
@@ -21,11 +24,11 @@ local function create_font(font_family, opts)
     family = font_family,
     font = wezterm.font({
       family = font_family,
-      weight = opts.weight or 400,
+      weight = opts.weight or default_font_weight,
       harfbuzz_features = opts.harfbuzz_features or {},
       stretch = opts.stretch,
     }),
-    size = opts.size or 13,
+    size = opts.size or default_font_size,
     line_height = opts.line_height,
   }
 
@@ -480,10 +483,10 @@ local choose_random_font = function()
 
     -- fonts.blex,
     -- fonts.cascadia,
-    fonts.code_new_roman,
+    -- fonts.code_new_roman,
     -- fonts.fira,
     -- fonts.fira_crazy,
-    -- fonts.hack,
+    fonts.hack,
     -- fonts.iosevka,
     -- fonts.iosevka_ss04_menlo,
     -- fonts.iosevka_ss07_monaco,
