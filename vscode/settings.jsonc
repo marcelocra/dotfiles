@@ -908,8 +908,8 @@
   //    more fish-like stuff (::<)
 
   ///auto-config-start:fonts
-  "editor.fontFamily": "'Hack Nerd Font', 'CodeNewRoman Nerd Font Mono', 'Geist Mono', 'M Plus 1 Code', Iosevka",
-  "editor.fontSize": 14,
+  "editor.fontFamily": "'Reddit Mono', 'Hack Nerd Font', 'CodeNewRoman Nerd Font Mono', 'Geist Mono', 'M Plus 1 Code', Iosevka",
+  "editor.fontSize": 15,
   "editor.fontWeight": "normal",
   ///auto-config-end:fonts
 

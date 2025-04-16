@@ -240,7 +240,9 @@ local fonts = { -- <<(
     size = 13,
   }),
 
-  reddit_mono = create_font("Reddit Mono"),
+  reddit_mono = create_font("Reddit Mono", {
+    size = 12,
+  }),
 
   -- Next font.
 } -- )>>
@@ -492,9 +494,9 @@ local choose_random_font = function()
     -- fonts.iosevka_ss07_monaco,
     -- fonts.iosevka_ss08_pragmata,
     -- fonts.m_plus,
-    fonts.meslo,
+    -- fonts.meslo,
     -- fonts.red_hat_mono,
-    -- fonts.reddit_mono,
+    fonts.reddit_mono,
     -- fonts.roboto,
     -- fonts.source_code_pro,
 
