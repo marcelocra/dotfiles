@@ -775,12 +775,11 @@
     "editor.defaultFormatter": "vscode.json-language-features"
   },
 
-  "github.copilot.editor.enableAutoCompletions": true,
   "github.copilot.enable": {
-    // "plaintext": false,
-    // "scminput": false
-    // "markdown": false,
-    "*": true
+    "*": true,
+    "plaintext": false,
+    "markdown": true,
+    "scminput": false
   },
   "chat.agent.": true,
 
@@ -909,8 +908,8 @@
   //    more fish-like stuff (::<)
 
   ///auto-config-start:fonts
-  "editor.fontFamily": "'CodeNewRoman Nerd Font Mono', 'M Plus 1 Code', Iosevka",
-  "editor.fontSize": 17,
+  "editor.fontFamily": "'Hack Nerd Font', 'CodeNewRoman Nerd Font Mono', 'Geist Mono', 'M Plus 1 Code', Iosevka",
+  "editor.fontSize": 14,
   "editor.fontWeight": "normal",
   ///auto-config-end:fonts
 
@@ -1450,7 +1449,8 @@
   "workbench.list.horizontalScrolling": true,
   "workbench.sideBar.location": "left",
   "workbench.panel.defaultLocation": "bottom",
-  "workbench.editor.pinnedTabsOnSeparateRow": false
+  "workbench.editor.pinnedTabsOnSeparateRow": false,
+  "workbench.colorTheme": "Tokyo Night Storm"
 
   // #endregion workbench. }}}
 }

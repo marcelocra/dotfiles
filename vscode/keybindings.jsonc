@@ -1319,14 +1319,14 @@
     // Insert the next suggested word, instead of the full suggestion.
     "key": "ctrl+l",
     "command": "editor.action.inlineSuggest.acceptNextWord",
-    "when": "vim.active && vim.mode == 'Insert' && editorTextFocus"
+    "when": "editorTextFocus"
   },
 
   {
     // Insert the next suggestion (full, i.e., might be multi-line).
     "key": "ctrl+y",
-    "command": "editor.action.inlineSuggest.",
-    "when": "vim.active && vim.mode == 'Insert' && editorTextFocus"
+    "command": "editor.action.inlineSuggest.acceptNextLine",
+    "when": "editorTextFocus"
   },
 
   {
@@ -1357,6 +1357,40 @@
   // },
 
   //#endregion MISC }}}
+
+  //#region MOVEMENTS WITHOUT NEOVIM {{{
+
+  {
+    "key": "ctrl+shift+k",
+    "command": "cursorUp",
+    "when": "!vim.active && editorTextFocus"
+  },
+
+  {
+    "key": "ctrl+shift+j",
+    "command": "cursorDown",
+    "when": "!vim.active && editorTextFocus"
+  },
+
+  {
+    "key": "ctrl+u",
+    "command": "deleteAllLeft",
+    "when": "!vim.active && editorTextFocus"
+  },
+
+  {
+    "key": "ctrl+shift+h",
+    "command": "deleteAllLeft",
+    "when": "!vim.active && editorTextFocus"
+  },
+
+  {
+    "key": "ctrl+shift+l",
+    "command": "deleteAllRight",
+    "when": "!vim.active && editorTextFocus"
+  },
+
+  //#endregion MOVEMENTS WITHOUT NEOVIM }}}
 
   //#region NEXT {{{
   {

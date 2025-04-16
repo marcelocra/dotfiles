@@ -213,6 +213,10 @@ vim.keymap.set('n', '<C-n>', ':nohlsearch<CR>')
 vim.keymap.set('n', '[t', ':tabprevious<CR>', { desc = 'Move to the previous tab' })
 vim.keymap.set('n', ']t', ':tabnext<CR>', { desc = 'Move to the next tab' })
 
+-- Use ctrl-/ to comment/uncomment.
+vim.keymap.set('n', '<C-_>', ':Commentary<CR>', { noremap = false, desc = 'Comment/Uncomment current line' })
+vim.keymap.set('v', '<C-_>', ':Commentary<CR>', { noremap = false, desc = 'Comment/Uncomment selection' })
+
 -- Next keymap/keybinding/mapping.
 -- }}}
 

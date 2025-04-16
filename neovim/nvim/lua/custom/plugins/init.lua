@@ -11,7 +11,7 @@ return {
 
   -- NOTE: Might not be necessary, as current defaults already support my needs.
   -- Simplify (un)commenting stuff out.
-  -- { 'tpope/vim-commentary' },
+  { 'tpope/vim-commentary' },
 
   -- Improve repeat support (e.g. for surrounding stuff).
   { 'tpope/vim-repeat' },

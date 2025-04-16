@@ -97,8 +97,8 @@
       "ctrl-x": "editor::Cut",
       "ctrl-v": "vim::Paste",
 
-      // "j f": "vim::NormalBefore", // In insert mode, make jk escape to normal mode.
-      // "f j": "vim::NormalBefore", // In insert mode, make jk escape to normal mode.
+      "j f": "vim::NormalBefore", // In insert mode, make jk escape to normal mode.
+      "f j": "vim::NormalBefore", // In insert mode, make jk escape to normal mode.
 
       ", s": ["workspace::SendKeystrokes", "ctrl-s escape escape"],
       ", w": ["workspace::SendKeystrokes", "ctrl-s escape escape"]
@@ -173,8 +173,8 @@
   {
     "context": "Editor && jupyter && !ContextEditor",
     "bindings": {
-      "ctrl-shift-enter": "repl::Run",
-      "ctrl-alt-enter": "repl::RunInPlace"
+      "ctrl-enter": "repl::Run",
+      "alt-enter": "repl::RunInPlace"
     }
   },
 
