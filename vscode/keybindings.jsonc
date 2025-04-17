@@ -1253,7 +1253,10 @@
   {
     // Replicate Conjure behavior: execute file in terminal.
     "key": "space e b",
-    "command": "python.execInDedicatedTerminal",
+    "command": "runCommands",
+    "args": {
+      "commands": ["editor.action.selectAll", "python.execInREPL", "cancelSelection", "extension.vim_escape"]
+    },
     "when": "vim.active && vim.mode == 'Normal' && editorTextFocus && editorLangId == 'python'"
   },
 
@@ -1287,7 +1290,15 @@
     "key": "space e r",
     "command": "runCommands",
     "args": {
-      "commands": ["python.execInREPL"]
+      "commands": [
+        {
+          "command": "vim.remap",
+          "args": {
+            "after": ["v", "i", "p"]
+          }
+        },
+        "python.execInREPL"
+      ]
     },
     "when": "vim.active && vim.mode == 'Normal' && editorTextFocus && editorLangId == 'python'"
   },
@@ -1301,8 +1312,6 @@
     },
     "when": "vim.active && (vim.mode == 'Visual' || vim.mode == 'VisualLine') && editorTextFocus && editorLangId == 'python'"
   },
-
-  // Conjure end.
 
   // {
   //   "key": "ctrl+[",

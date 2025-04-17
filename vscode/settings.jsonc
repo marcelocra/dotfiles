@@ -218,6 +218,7 @@
 
   "jupyter.disableJupyterAutoStart": true,
 
+  "python.REPL.sendToNativeREPL": true,
   "python.REPL.enableREPLSmartSend": false,
   "ruff.nativeServer": "on",
 
@@ -908,7 +909,7 @@
   //    more fish-like stuff (::<)
 
   ///auto-config-start:fonts
-  "editor.fontFamily": "'Reddit Mono', 'Hack Nerd Font', 'CodeNewRoman Nerd Font Mono', 'Geist Mono', 'M Plus 1 Code', Iosevka",
+  "editor.fontFamily": "'Reddit Mono', 'MesloLGS Nerd Font', 'Hack Nerd Font', 'CodeNewRoman Nerd Font Mono', 'Geist Mono', 'M Plus 1 Code', Iosevka",
   "editor.fontSize": 15,
   "editor.fontWeight": "normal",
   ///auto-config-end:fonts
@@ -1115,7 +1116,7 @@
   // #region terminal. {{{
 
   // Choose the main font and add fallbacks.
-  "terminal.integrated.fontFamily": "'Hack Nerd Font', 'RecMonoLinear Nerd Font', 'BlexMono Nerd Font', 'JetBrainsMono Nerd Font', 'Cascadia Code NF', 'JetBrainsMono NF', 'JetBrains Mono Nerd Font', 'JetBrains Mono NF', 'MesloLGM Nerd Font Mono', 'MesloLGS Nerd Font Mono', 'JetBrains Mono', 'Noto Sans Mono', 'Liberation Mono', 'DejaVu Sans Mono', monospace",
+  "terminal.integrated.fontFamily": "'MesloLGS Nerd Font', 'Hack Nerd Font', 'RecMonoLinear Nerd Font', 'BlexMono Nerd Font', 'JetBrainsMono Nerd Font', 'Cascadia Code NF', 'JetBrainsMono NF', 'JetBrains Mono Nerd Font', 'JetBrains Mono NF', 'MesloLGM Nerd Font Mono', 'JetBrains Mono', 'Noto Sans Mono', 'Liberation Mono', 'DejaVu Sans Mono', monospace",
   "terminal.integrated.fontSize": 15,
   "terminal.integrated.fontWeight": "400",
   "terminal.integrated.fontLigatures.enabled": true,
@@ -1449,8 +1450,7 @@
   "workbench.list.horizontalScrolling": true,
   "workbench.sideBar.location": "left",
   "workbench.panel.defaultLocation": "bottom",
-  "workbench.editor.pinnedTabsOnSeparateRow": false,
-  "workbench.colorTheme": "Tokyo Night Storm"
+  "workbench.editor.pinnedTabsOnSeparateRow": false
 
   // #endregion workbench. }}}
 }
