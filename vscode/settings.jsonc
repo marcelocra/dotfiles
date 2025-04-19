@@ -295,7 +295,7 @@
 
   "vim.incsearch": true,
   "vim.useSystemClipboard": true,
-  "vim.useCtrlKeys": true,
+  "vim.useCtrlKeys": false,
   "vim.hlsearch": true,
   "vim.smartRelativeLine": true,
   "vim.foldfix": true,
@@ -308,7 +308,13 @@
   "vim.enableNeovim": true,
   "vim.neovimUseConfigFile": false,
   "vim.handleKeys": {
-    "<C-c>": false
+    "<C-d>": true,
+    "<C-i>": true,
+    "<C-o>": true,
+    "<C-r>": true,
+    "<C-u>": true,
+    "<C-v>": true,
+    "<C-w>": true
   },
 
   // This is VERY, PAINFULLY, UNUSABLY slow in Ubuntu 20.04. It uses gdbus, as shown in the
@@ -333,12 +339,12 @@
       "before": ["f", "j"],
       "after": ["<esc>"]
     },
-    {
-      // Save and stay in insert mode.
-      "before": ["<leader>", "w"],
-      "commands": [":w"],
-      "after": ["<esc>a"]
-    },
+    // {
+    //   // Save and stay in insert mode.
+    //   "before": ["<leader>", "w"],
+    //   "commands": [":w"],
+    //   "after": ["<esc>a"]
+    // },
     {
       // save and leave insert mode
       "before": ["<leader>", "s"],
@@ -554,12 +560,12 @@
       "before": [" ", "d", "b"],
       "commands": ["paredit.spliceSexpKillBackward"]
     },
-    {
-      // save and stay in insert mode
-      "before": ["<leader>", "w"],
-      "commands": [":w"],
-      "after": ["<esc>a"]
-    },
+    // {
+    //   // save and stay in insert mode
+    //   "before": ["<leader>", "w"],
+    //   "commands": [":w"],
+    //   "after": ["<esc>a"]
+    // },
     {
       // try to quit without saving
       "before": ["<leader>", "q"],
@@ -1000,7 +1006,7 @@
   "editor.wordWrap": "bounded",
   "editor.wrappingIndent": "deepIndent",
   "editor.wordWrapColumn": 120,
-  "editor.lineHeight": 1.6, // Interesting values: 1.6; 1.8; 2; 2.2
+  // "editor.lineHeight": 1.5, // Interesting values: 1.6; 1.8; 2; 2.2
   // The default letter spacing (i.e. commented next line) is good for most
   // fonts. It might be good for some fonts, so I'm keeping it here. Test for a
   // font and if it is good, move to that font section.
@@ -1442,15 +1448,14 @@
 
     // Next theme colorscheme customization.
   },
-
-  "workbench.activityBar.location": "top",
   "workbench.startupEditor": "newUntitledFile",
   "workbench.tree.indent": 20,
   "workbench.tree.renderIndentGuides": "always",
   "workbench.list.horizontalScrolling": true,
   "workbench.sideBar.location": "left",
   "workbench.panel.defaultLocation": "bottom",
-  "workbench.editor.pinnedTabsOnSeparateRow": false
+  "workbench.editor.pinnedTabsOnSeparateRow": false,
+  "workbench.activityBar.location": "top"
 
   // #endregion workbench. }}}
 }
