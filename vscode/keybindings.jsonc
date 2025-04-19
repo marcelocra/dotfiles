@@ -56,32 +56,8 @@
   },
 
   {
-    // Focus the terminal panel in some cases:
-    //    1. If panel is not opened and terminal is not focused, open the
-    //       terminal panel.
-    //    2. If panel is opened and terminal is not focused, focus the terminal.
-    //    3. If panel is opened and terminal is focused, focus the last editor
-    //       group.
-    //    4. If panel is opened with a maximized terminal, toggle the panel.
-    //    5. If panel is opened with something else maximized, focus the
-    //       terminal.
     "key": "ctrl+`",
-    "command": "workbench.action.terminal.focus",
-    "when": "!terminalFocus && !panelMaximized"
-  },
-
-  {
-    // See docs above.
-    "key": "ctrl+`",
-    "command": "workbench.action.focusLastEditorGroup",
-    "when": "terminalFocus && !panelMaximized"
-  },
-
-  {
-    // See docs above.
-    "key": "ctrl+`",
-    "command": "workbench.action.togglePanel",
-    "when": "terminalFocus && panelMaximized"
+    "command": "workbench.action.togglePanel"
   },
 
   // {
@@ -108,24 +84,24 @@
   //   // "when": "activePanel && terminalFocus"
   // },
 
-  {
-    // Open or close the panel anytime. Work well with ctrl+`.
-    "key": "alt+t", // Previous: alt+m
-    "command": "workbench.action.togglePanel"
-  },
+  // {
+  //   // Open or close the panel anytime. Work well with ctrl+`.
+  //   "key": "alt+t", // Previous: alt+m
+  //   "command": "workbench.action.togglePanel"
+  // },
 
   {
     // Toggle focus between panel and editor.
-    "key": "alt+m",
+    "key": "alt+t",
     "command": "workbench.action.focusLastEditorGroup",
-    "when": "panelFocus && !panelMaximized"
+    "when": "panelFocus"
   },
 
   {
     // Toggle focus between panel and editor.
-    "key": "alt+m",
+    "key": "alt+t",
     "command": "workbench.action.focusPanel",
-    "when": "!panelFocus && !panelMaximized"
+    "when": "!panelFocus"
   },
 
   {
@@ -282,18 +258,18 @@
   {
     "key": "ctrl+d",
     "command": "editor.action.addSelectionToNextFindMatch",
-    "when": "(vim.mode == 'Visual' || vim.mode == 'VisualLine')"
+    "when": "vim.mode == 'Visual' || (vim.mode == 'Insert' && editorHasSelection) "
+  },
+
+  {
+    "key": "ctrl+; ctrl+d",
+    "command": "editor.action.addSelectionToNextFindMatch",
+    "when": "vim.mode == 'VisualLine'"
   },
 
   {
     "key": "ctrl+n",
     "command": "editor.action.moveSelectionToNextFindMatch",
-    "when": "(vim.mode == 'Visual' || vim.mode == 'VisualLine')"
-  },
-
-  {
-    "key": "ctrl+p",
-    "command": "editor.action.moveSelectionToPreviousFindMatch",
     "when": "editorTextFocus && (vim.mode == 'Visual' || vim.mode == 'VisualLine')"
   },
   {
@@ -301,7 +277,11 @@
     "command": "editor.action.moveSelectionToNextFindMatch",
     "when": "!vim.active && editorTextFocus && editorHasSelection"
   },
-
+  {
+    "key": "ctrl+p",
+    "command": "editor.action.moveSelectionToPreviousFindMatch",
+    "when": "editorTextFocus && (vim.mode == 'Visual' || vim.mode == 'VisualLine')"
+  },
   {
     "key": "ctrl+p",
     "command": "editor.action.moveSelectionToPreviousFindMatch",
@@ -1328,14 +1308,15 @@
     // Insert the next suggested word, instead of the full suggestion.
     "key": "ctrl+l",
     "command": "editor.action.inlineSuggest.acceptNextWord",
-    "when": "editorTextFocus"
+    "when": "editorTextFocus && inlineSuggestionVisible"
+    // "when": "editorTextFocus && vim.active && vim.mode != 'Normal'"
   },
 
   {
     // Insert the next suggestion (full, i.e., might be multi-line).
     "key": "ctrl+y",
     "command": "editor.action.inlineSuggest.acceptNextLine",
-    "when": "editorTextFocus"
+    "when": "editorTextFocus && inlineSuggestionVisible"
   },
 
   {
@@ -1434,11 +1415,6 @@
   {
     "key": "ctrl+k ctrl+d",
     "command": "-editor.action.moveSelectionToNextFindMatch",
-    "when": "editorFocus"
-  },
-  {
-    "key": "ctrl+; ctrl+d",
-    "command": "editor.action.moveSelectionToNextFindMatch",
     "when": "editorFocus"
   },
   {
