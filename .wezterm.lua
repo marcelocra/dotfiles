@@ -37,7 +37,7 @@ end
 
 local fonts = { -- <<(
   meslo = create_font("MesloLGS Nerd Font", {
-    size = 17,
+    -- size = 13,
   }),
 
   jb = create_font("JetBrains Mono"),
