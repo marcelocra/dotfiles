@@ -60,6 +60,12 @@
     "command": "workbench.action.togglePanel"
   },
 
+  {
+    "key": "ctrl+`",
+    "command": "workbench.action.focusPanel",
+    "when": "panelVisible && !panelFocus"
+  },
+
   // {
   //   // Act somewhat like the default ctrl+`, toggling the terminal panel
   //   // anytime. The difference is that if it is opened but unfocused, it will
@@ -258,7 +264,7 @@
   {
     "key": "ctrl+d",
     "command": "editor.action.addSelectionToNextFindMatch",
-    "when": "vim.mode == 'Visual' || (vim.mode == 'Insert' && editorHasSelection) "
+    "when": "vim.mode == 'Visual' || vim.mode == 'Insert'"
   },
 
   {

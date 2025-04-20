@@ -308,6 +308,8 @@
   "vim.enableNeovim": true,
   "vim.neovimUseConfigFile": false,
   "vim.handleKeys": {
+    "<C-[>": true,
+    "<C-]>": true,
     "<C-d>": true,
     "<C-i>": true,
     "<C-o>": true,
@@ -915,7 +917,7 @@
   //    more fish-like stuff (::<)
 
   ///auto-config-start:fonts
-  "editor.fontFamily": "'Reddit Mono', 'MesloLGS Nerd Font', 'Hack Nerd Font', 'CodeNewRoman Nerd Font Mono', 'Geist Mono', 'M Plus 1 Code', Iosevka",
+  "editor.fontFamily": "'RecMonoDuotone Nerd Font', 'Reddit Mono', 'MesloLGS Nerd Font', 'Hack Nerd Font', 'CodeNewRoman Nerd Font Mono', 'Geist Mono', 'M Plus 1 Code', Iosevka",
   "editor.fontSize": 15,
   "editor.fontWeight": "normal",
   ///auto-config-end:fonts
@@ -1455,7 +1457,8 @@
   "workbench.sideBar.location": "left",
   "workbench.panel.defaultLocation": "bottom",
   "workbench.editor.pinnedTabsOnSeparateRow": false,
-  "workbench.activityBar.location": "top"
+  "workbench.activityBar.location": "top",
+  "workbench.colorTheme": "GitHub Dark Dimmed"
 
   // #endregion workbench. }}}
 }
