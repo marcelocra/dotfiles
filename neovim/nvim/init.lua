@@ -25,23 +25,24 @@ math.randomseed(os.time())
 
 -- For dark mode, choose randomly between these options:
 local dark_mode_options = {
-  -- Weird white contrast, particularly for telescope things.
-  -- 'sorbet',
-  -- 'zaibatsu',
+  -- -- These are nice, but with at least one weird color.
+  -- 'sorbet',  -- telescope thingy is weird grey
+  -- 'zaibatsu',  -- telescope thingy is weird light grey
+  -- 'vim',  -- accent color is bright pink that hurt my eyes (and I like pink)
+  -- 'goodwolf',  -- very few colors...
+  -- --
 
-  'retrobox',
-  'wildcharm',
-  'vim',
-  'habamax',
-  'badwolf',
-  'goodwolf',
-  'vividchalk',
-  'tokyonight-night',
-  'tokyonight-storm',
-  'tokyonight-moon',
-  'catppuccin-frappe',
-  'catppuccin-macchiato',
-  'catppuccin-mocha',
+  -- 'habamax', -- a bit dead, but still nice
+  -- 'badwolf',  -- classic and still good!
+  -- 'retrobox',  -- interesting... badwolf vibes
+  -- 'vividchalk', -- really vivid!
+  -- 'wildcharm', -- kind of vivid too, though less than vividchalk
+  'tokyonight-night', -- so good!
+  'tokyonight-storm', -- so good too!
+  'tokyonight-moon', -- so good three!
+  -- 'catppuccin-frappe',
+  -- 'catppuccin-macchiato',
+  -- 'catppuccin-mocha',
 }
 vim.g.colorscheme_mode_dark = dark_mode_options[math.random(#dark_mode_options)]
 
