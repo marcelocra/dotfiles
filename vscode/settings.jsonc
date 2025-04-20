@@ -285,501 +285,6 @@
     "editor.defaultFormatter": "ocamllabs.ocaml-platform"
   },
 
-  // #region Vim {{{
-
-  "vim.leader": ",",
-
-  "vim.easymotion": true,
-  "vim.sneak": false,
-  "vim.surround": true,
-
-  "vim.incsearch": true,
-  "vim.useSystemClipboard": true,
-  "vim.useCtrlKeys": false,
-  "vim.hlsearch": true,
-  "vim.smartRelativeLine": true,
-  "vim.foldfix": true,
-  "vim.camelCaseMotion.enable": true,
-
-  // I only use this to format comments, that most automated formatters don't
-  // touch. And I prefer to keep them at 80 columns.
-  "vim.textwidth": 80,
-
-  "vim.enableNeovim": true,
-  "vim.neovimUseConfigFile": false,
-  "vim.handleKeys": {
-    "<C-[>": true,
-    "<C-]>": true,
-    "<C-d>": true,
-    "<C-i>": true,
-    "<C-o>": true,
-    "<C-r>": true,
-    "<C-u>": true,
-    "<C-v>": true,
-    "<C-w>": true
-  },
-
-  // This is VERY, PAINFULLY, UNUSABLY slow in Ubuntu 20.04. It uses gdbus, as shown in the
-  // following link. I also got the scripts (get-im and set-im) from there:
-  //
-  //    https://github.com/daipeihust/im-select?tab=readme-ov-file#gdbus
-  //
-  // "vim.autoSwitchInputMethod.enable": true,
-  // "vim.autoSwitchInputMethod.defaultIM": "1",
-  // "vim.autoSwitchInputMethod.obtainIMCmd": "/home/marcelocra/bin/get-im",
-  // "vim.autoSwitchInputMethod.switchIMCmd": "/home/marcelocra/bin/set-im {im}",
-
-  // #region vim insert(
-  "vim.insertModeKeyBindingsNonRecursive": [
-    {
-      // Leave insert mode.
-      "before": ["j", "f"],
-      "after": ["<esc>"]
-    },
-    {
-      // Leave insert mode.
-      "before": ["f", "j"],
-      "after": ["<esc>"]
-    },
-    // {
-    //   // Save and stay in insert mode.
-    //   "before": ["<leader>", "w"],
-    //   "commands": [":w"],
-    //   "after": ["<esc>a"]
-    // },
-    {
-      // save and leave insert mode
-      "before": ["<leader>", "s"],
-      "commands": [":w"],
-      "after": ["<esc>"]
-    },
-    {
-      // try to quit without saving
-      "before": ["<leader>", "q"],
-      "commands": [":q"]
-    },
-    {
-      // save and quit
-      "before": ["<leader>", "x"],
-      "commands": [":x"]
-    },
-    {
-      "before": ["<c-a>"],
-      "after": ["<esc>", "gg", "V", "G"]
-    },
-
-    //#region Move using visual lines.
-    {
-      "before": ["<up>"],
-      "commands": ["cursorUp"]
-    },
-    {
-      "before": ["<down>"],
-      "commands": ["cursorDown"]
-    },
-    //#endregion
-
-    // {
-    //   "before": ["<c-d>"],
-    //   "commands": ["editor.action.addSelectionToNextFindMatch"]
-    // },
-    {
-      "before": ["<c-h>"],
-      "commands": ["deleteLeft"]
-    }
-  ],
-  // #endregion vim insert)
-
-  // MARK: normal
-
-  //#endregion
-  //vimnormal(
-  "vim.normalModeKeyBindingsNonRecursive": [
-    {
-      "before": ["<leader>", "j"],
-      "after": ["o", "<esc>", "k"]
-    },
-    {
-      "before": ["<leader>", "k"],
-      "after": ["O", "<esc>", "j"]
-    },
-    // Use vim-unimpaired shortcuts.
-    {
-      "before": ["[", "t"],
-      "commands": [":tabp"]
-    },
-    {
-      "before": ["]", "t"],
-      "commands": [":tabn"]
-    },
-    {
-      "before": ["[", "<space>"],
-      "commands": ["editor.action.insertLineBefore"]
-    },
-    {
-      "before": ["]", "<space>"],
-      "commands": ["editor.action.insertLineAfter"]
-    },
-    // Use vim-unimpaired shortcuts.
-    {
-      "before": ["<c-l>"],
-      "after": ["<c-w>", "l"]
-    },
-    {
-      "before": ["<c-h>"],
-      "after": ["<c-w>", "h"]
-    },
-    {
-      "before": ["<c-j>"],
-      "after": ["<c-w>", "j"]
-    },
-    {
-      "before": ["<c-k>"],
-      "after": ["<c-w>", "k"]
-    },
-    {
-      "before": ["<leader>", "d"],
-      "after": ["d", "d"]
-    },
-    {
-      "before": ["<c-n>"],
-      "commands": [":nohl"]
-    },
-    {
-      "before": ["<leader>", "s"],
-      "commands": [":w"]
-    },
-    {
-      "before": ["<leader>", "x"],
-      "commands": [":x"]
-    },
-    {
-      "before": ["<leader>", "q"],
-      "commands": [":q"]
-    },
-    {
-      "before": ["<space>"],
-      "after": ["@", "q"]
-    },
-    {
-      "before": ["u"],
-      "commands": ["undo"]
-    },
-    {
-      "before": ["<c-r>"],
-      "commands": ["redo"]
-    },
-    {
-      "before": ["<leader>", "a"],
-      "after": ["g", "g", "V", "G"]
-    },
-    // -- visual lines - Move using visual lines.
-    {
-      "before": ["j"],
-      "after": ["g", "j"]
-    },
-    {
-      "before": ["k"],
-      "after": ["g", "k"]
-    },
-    {
-      "before": ["0"],
-      "after": ["g", "0"]
-    },
-    {
-      "before": ["$"],
-      "after": ["g", "$"]
-    },
-    {
-      "before": ["<up>"],
-      "after": ["g", "<up>"]
-    },
-    {
-      "before": ["<down>"],
-      "after": ["g", "<down>"]
-    },
-    // -- visual lines - end
-    {
-      // Use `s` to trigger easymotion full search.
-      "before": ["s"],
-      "after": ["leader", "leader", "s"]
-    },
-    {
-      "before": ["<c-p>"],
-      "commands": ["workbench.action.quickOpen"]
-    },
-    {
-      "before": ["<c-shift-r>"],
-      "commands": ["jupyter.restartkernel"]
-    },
-
-    // --- calva keybindings - making them more conjure-ish
-    {
-      // evaluates current form
-      // default: ctrl+enter
-      "before": [" ", "e", "e"],
-      "commands": ["calva.evaluateSelection"]
-    },
-    {
-      // evaluates current top level form
-      // default: alt+enter
-      "before": [" ", "e", "r"],
-      "commands": ["calva.evaluateCurrentTopLevelForm"]
-    },
-    {
-      "before": [" ", "e", "c", "e"],
-      "commands": ["calva.evaluateSelectionAsComment"]
-    },
-    {
-      "before": [" ", "e", "c", "r"],
-      "commands": ["calva.evaluateTopLevelFormAsComment"]
-    },
-    {
-      "before": [" ", "e", "b"],
-      "commands": ["calva.loadFile"]
-    },
-    {
-      "before": ["<a-i>"],
-      "commands": ["editor.action.showHover"]
-    },
-    {
-      "before": ["K"],
-      "commands": ["calva.printClojureDocsToOutputWindow"]
-    },
-    {
-      "before": [" ", "d", "$"],
-      "commands": ["paredit.killListForward"]
-    },
-    {
-      "before": [" ", "d", "0"],
-      "commands": ["paredit.killListBackward"]
-    },
-    {
-      "before": [" ", "d", "w"],
-      "commands": ["paredit.spliceSexpKillForward"]
-    },
-    {
-      "before": [" ", "d", "b"],
-      "commands": ["paredit.spliceSexpKillBackward"]
-    },
-    // {
-    //   // save and stay in insert mode
-    //   "before": ["<leader>", "w"],
-    //   "commands": [":w"],
-    //   "after": ["<esc>a"]
-    // },
-    {
-      // try to quit without saving
-      "before": ["<leader>", "q"],
-      "commands": [":q"]
-    },
-    {
-      // save and quit
-      "before": ["<leader>", "x"],
-      "commands": [":x"]
-    },
-    // --- calva keybindings end
-
-    // The following three commands are mimicking the behavior of Vimium. First
-    // one is actually to keep the default J behavior somewhere.
-    // {
-    //   "before": ["g", "j"],
-    //   "after": ["J"]
-    // },
-    // {
-    //   "before": ["J"],
-    //   "commands": [":tabp"]
-    // },
-    // {
-    //   "before": ["K"],
-    //   "commands": [":tabn"]
-    // }
-    // {
-    //   "before": ["<c-t>"],
-    //   "commands": ["workbench.action.showAllSymbols"]
-    // },
-    {
-      "before": ["<c-b>"],
-      "commands": [""]
-    },
-    {
-      "before": ["|"],
-      "commands": ["workbench.action.splitEditor"]
-    },
-    {
-      "before": ["-"],
-      "commands": ["workbench.action.splitEditorDown"]
-    },
-    {
-      "before": ["g", "e"],
-      "commands": ["editor.action.marker.nextInFiles"]
-    },
-    {
-      "before": ["g", "E"],
-      "commands": ["editor.action.marker.prevInFiles"]
-    },
-    {
-      "before": ["<a-l>"],
-      "commands": ["cursorWordPartRight"]
-    },
-    // TODO: move this to the keybindings file. See Python example as reference.
-    // //#region Use Conjure-like keybindings for FSharp. {{{
-    // {
-    //   "before": [" ", "e", "e"],
-    //   "commands": ["fsi.SendLine", "extension.vim_up"]
-    // },
-    // {
-    //   "before": [" ", "e", "r"],
-    //   "commands": ["fsi.SendSelection"],
-    //   "after": ["v", "i", "p"]
-    // },
-    // {
-    //   "before": [" ", "e", "w"],
-    //   "commands": ["fsi.SendSelection", "extension.vim_escape"],
-    //   "after": ["v", "i", "w"]
-    // },
-    // {
-    //   "before": [" ", "e", "f"],
-    //   "commands": ["fsi.SendFile"]
-    // },
-    // {
-    //   "before": [" ", "e", "b"],
-    //   "commands": ["fsi.SendFile"]
-    // },
-    // //#endregion }}}
-    // {
-    //   "before": ["<c-h>"],
-    //   "commands": ["editor.action.startFindReplaceAction"]
-    // },
-    {
-      "before": ["Y"],
-      "after": ["y", "$"]
-    },
-    {
-      "before": [" ", "w", "s"],
-      "commands": ["workbench.action.quickTextSearch"]
-    }
-
-    // Next normal keybinding.
-  ],
-  //vimnormal)
-
-  // -vimvisual
-  "vim.visualModeKeyBindingsNonRecursive": [
-    // -- visual lines - Move using visual lines.
-    {
-      "before": ["j"],
-      "after": ["g", "j"]
-    },
-    {
-      "before": ["k"],
-      "after": ["g", "k"]
-    },
-    {
-      "before": ["0"],
-      "after": ["g", "0"]
-    },
-    {
-      "before": ["$"],
-      "after": ["g", "$"]
-    },
-    {
-      "before": ["<up>"],
-      "after": ["g", "<up>"]
-    },
-    {
-      "before": ["<down>"],
-      "after": ["g", "<down>"]
-    },
-    // -- visual lines - end
-    {
-      // Save and leave visual mode.
-      "before": ["<leader>", "s"],
-      "commands": [":w"],
-      "after": ["<esc>"]
-    },
-    {
-      "before": ["<leader>", "x"],
-      "commands": [":x"],
-      "after": ["<esc>"]
-    },
-    {
-      "before": ["<leader>", "q"],
-      "commands": [":q"],
-      "after": ["<esc>"]
-    },
-    {
-      // The next keybinding prevents `p` from replacing clipboard content. When that is desirable, use `gp` instead.
-      "before": ["g", "p"],
-      "after": ["p"]
-    },
-    {
-      // Paste without replacing clipboard. (Better than below?)
-      "before": ["p"],
-      "after": ["p", "g", "v", "y"]
-    },
-    // {
-    //   // Paste without replacing clipboard.
-    //   "before": ["p"],
-    //   "after": ["\"", "_", "d", "P"]
-    // },
-    {
-      // search for all occurences of the selected text
-      "before": ["/", "/"],
-      "after": ["y", "/", "<c-r>", "*", "<cr>"]
-    },
-    // {
-    //   "before": ["<c-v>"],
-    //   "after": ["p"]
-    // },
-    {
-      "before": [">"],
-      "commands": ["editor.action.indentLines"]
-    },
-    {
-      "before": ["<"],
-      "commands": ["editor.action.outdentLines"]
-    },
-    // {
-    //   "before": [" ", "E"],
-    //   "commands": ["calva.evaluateSelectionToSelectionEnd"]
-    // },
-    {
-      "before": ["<c-a>"],
-      "commands": ["editor.action.selectAll"]
-    },
-
-    {
-      // Use Conjure-like keybindings for FSharp.
-      "before": [" ", "E"],
-      "commands": ["fsi.SendSelection"]
-    },
-
-    {
-      // Use `s` to trigger easymotion full search.
-      "before": ["s"],
-      "after": ["leader", "leader", "s"]
-    }
-  ],
-
-  "vim.operatorPendingModeKeyBindingsNonRecursive": [
-    {
-      "before": ["("],
-      "after": ["i", "("]
-    },
-    {
-      "before": ["["],
-      "after": ["i", "["]
-    },
-    {
-      "before": ["{"],
-      "after": ["i", "{"]
-    }
-  ],
-
-  // End Vim.
-  // #endregion }}}
-
   "[snippets]": {
     "editor.defaultFormatter": "vscode.json-language-features"
   },
@@ -917,7 +422,7 @@
   //    more fish-like stuff (::<)
 
   ///auto-config-start:fonts
-  "editor.fontFamily": "'RecMonoDuotone Nerd Font', 'Reddit Mono', 'MesloLGS Nerd Font', 'Hack Nerd Font', 'CodeNewRoman Nerd Font Mono', 'Geist Mono', 'M Plus 1 Code', Iosevka",
+  "editor.fontFamily": "'MesloLGS Nerd Font', 'M Plus 1 Code', 'CodeNewRoman Nerd Font Mono', 'RecMonoLinear Nerd Font', 'RecMonoDuotone Nerd Font', 'Reddit Mono', 'Hack Nerd Font', 'Geist Mono', Iosevka",
   "editor.fontSize": 15,
   "editor.fontWeight": "normal",
   ///auto-config-end:fonts
@@ -987,8 +492,6 @@
 
   // Cursor.
   "editor.cursorStyle": "line",
-  "vim.cursorStylePerMode.normal": "block",
-  "vim.cursorStylePerMode.insert": "line",
   "editor.cursorWidth": 3,
   "editor.cursorSmoothCaretAnimation": "on",
   "editor.cursorBlinking": "blink",
@@ -1221,7 +724,6 @@
     // "editor.fontLigatures": "'ss02', 'ss19', 'ss20', 'zero', 'cv03', 'cv04', 'cv16', 'cv19', 'cv20', 'cv99'"
   },
   "extensions.experimental.affinity": {
-    "vscodevim.vim": 1,
     "asvetliakov.vscode-neovim": 1
   },
   "@azure.argTenant": "",
@@ -1236,19 +738,7 @@
   // Detect remapped keys better (e.g. caps lock -> ctrl).
   "keyboard.dispatch": "keyCode",
 
-  // "prettier.requireConfig": true,
-  // "[javascript][javascriptreact][typescript][typescriptreact]": {
-  //   "editor.defaultFormatter": "standard.vscode-standard"
-  // },
-  // "standard.enable": true,
-  // "standard.engine": "ts-standard",
-  // "standard.autoFixOnSave": true,
-
-  // #endregion Misc }}}
-
-  // #region vscode-neovim {{{
-
-  "vscode-neovim.neovimInitVimPaths.linux": "/home/marcelocra/.config/nvim/vscode-init.lua",
+  //#region vscode-neovim {{{
   "vscode-neovim.compositeTimeout": 100,
   "vscode-neovim.compositeKeys": {
     "jf": {
@@ -1258,23 +748,54 @@
     "fj": {
       // Easier way to leave insert mode.
       "command": "vscode-neovim.escape"
-    },
-    ",w": {
-      // Easier way to leave insert mode and save the file.
-      "command": "vscode-neovim.lua",
-      "args": ["vim.api.nvim_input('<Esc>') require('vscode').action('workbench.action.files.save')"]
-    },
-    ",s": {
-      // Easier way to leave insert mode and save the file.
-      // TODO: figure out why this is not working.
-      "command": "vscode-neovim.lua",
-      "args": [
-        "local code = require('vscode')",
-        "code.action('vscode-neovim.escape')",
-        "code.action('workbench.action.files.save')"
-      ]
     }
+    // ",w": {
+    //   // Easier way to leave insert mode and save the file.
+    //   "command": "vscode-neovim.lua",
+    //   "args": ["vim.api.nvim_input('<Esc>') require('vscode').action('workbench.action.files.save')"]
+    // }
+    // ",s": {
+    //   // Easier way to leave insert mode and save the file.
+    //   // TODO: figure out why this is not working.
+    //   "command": "vscode-neovim.lua",
+    //   "args": [
+    //     "local code = require('vscode')",
+    //     "code.action('vscode-neovim.escape')",
+    //     "code.action('workbench.action.files.save')"
+    //   ]
+    // }
   },
+  "vscode-neovim.ctrlKeysForInsertMode": ["r", "u", "w"],
+  "vscode-neovim.ctrlKeysForNormalMode": [
+    "a",
+    // "b", -- I prefer half page (ctrl+d).
+    // "c",
+    "d",
+    "e",
+    // "h",
+    "i",
+    "j",
+    "k",
+    "l",
+    "m",
+    "o",
+    "r",
+    "t",
+    "u",
+    "v",
+    "w",
+    "x",
+    "y",
+    "z",
+    // "/", -- open terminal in a new tab. I don't want this.
+    "]",
+    "right",
+    "left",
+    "up",
+    "down",
+    "backspace",
+    "delete"
+  ],
 
   // #endregion vscode-neovim }}}
 
@@ -1458,7 +979,7 @@
   "workbench.panel.defaultLocation": "bottom",
   "workbench.editor.pinnedTabsOnSeparateRow": false,
   "workbench.activityBar.location": "top",
-  "workbench.colorTheme": "GitHub Dark Dimmed"
+  "workbench.colorTheme": "Tokyo Night Light"
 
   // #endregion workbench. }}}
 }
