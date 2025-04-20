@@ -562,7 +562,12 @@ function compress_video() {
     ffmpeg -i $input -vcodec libx265 -crf 28 $output
 }
 
+# List broken symlinks in folder.
+function broken_symlinks() {
+    find "${1:-.}" -type l ! -exec test -e {} \; -exec ls -lah --color {} \;
+}
 
+# next function above.
 # }}}functions
 # aliases{{{
 # one lettered{{{
@@ -720,10 +725,10 @@ if [[ ! -z "${MCRA_INIT_SHELL}" && ! -z "${MCRA_LOCAL_SHELL}" ]]; then
         || echo '\''failed :('\'''
     # # Changed in the last 10 minutes.
     # alias rc_changed='find $MCRA_INIT_SHELL $MCRA_LOCAL_SHELL -mmin -10'
-    alias rc='$EDITOR $MCRA_INIT_SHELL; rc.'
-    alias rcl='$EDITOR $MCRA_LOCAL_SHELL; rc.'
-    alias rcz='$EDITOR ~/.zshrc; rc.'
-    alias rcb='$EDITOR ~/.bashrc; rc.'
+    alias rc='cd $MCRA_PROJECTS_FOLDER/dotfiles; $EDITOR $MCRA_INIT_SHELL; rc.'
+    alias rcl='cd $MCRA_PROJECTS_FOLDER/dotfiles; $EDITOR $MCRA_LOCAL_SHELL; rc.'
+    alias rcz='cd $MCRA_PROJECTS_FOLDER/dotfiles; $EDITOR ~/.zshrc; rc.'
+    alias rcb='cd $MCRA_PROJECTS_FOLDER/dotfiles; $EDITOR ~/.bashrc; rc.'
 else
     alias rc="echo 'Define \$MCRA_INIT_SHELL and \$MCRA_LOCAL_SHELL in your rc file'"
     alias rcl=rc
@@ -908,8 +913,6 @@ alias mem='list_process_by_mem | less'
 
 # Bat, a cat clone with wings.
 alias bat=batcat
-
-## nextnextalias
 
 # next alias above, unless they fit in one of the other sections.
 # }}}general

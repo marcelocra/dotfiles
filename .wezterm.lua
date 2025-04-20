@@ -428,6 +428,7 @@ local color_scheme_override = {
     "DanQing (base16)",                       -- 30
     "Shaman",                                 -- 31
     "catppuccin-macchiato",                   -- 32
+    "Unikitty Reversible (base16)",           -- 33
     -- Next theme colorscheme override.
   },
 }
