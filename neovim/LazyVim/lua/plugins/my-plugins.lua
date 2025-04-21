@@ -12,6 +12,9 @@ return {
   -- Improve repeat support (e.g. for surrounding stuff).
   { "tpope/vim-repeat" },
 
+  -- Simplify (un)commenting stuff out.
+  { "tpope/vim-commentary" },
+
   {
     -- Copilot support.
     "github/copilot.vim",
