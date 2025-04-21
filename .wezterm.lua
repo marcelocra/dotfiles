@@ -563,14 +563,14 @@ local function change_color_scheme(window, pane)
   wezterm.gui.gui_windows()[1]:set_config_overrides({ color_scheme = get_scheme({ force_random = true }) })
 end
 
-config.keys = {
-  { key = "h", mods = "SHIFT|CTRL", action = wezterm.action.Search({ Regex = "hello" }) },
-  { key = "j", mods = "ALT|SHIFT", action = act.ActivateTabRelative(-1) },
-  { key = "k", mods = "ALT|SHIFT", action = act.ActivateTabRelative(1) },
-  { key = "t", mods = "SHIFT|ALT", action = act.SpawnTab("CurrentPaneDomain") },
-  { key = "t", mods = "SHIFT|CTRL", action = wezterm.action_callback(change_color_scheme) },
-  { key = "r", mods = "CTRL|SHIFT", action = wezterm.action.ReloadConfiguration },
-}
+-- config.keys = {
+--   { key = "h", mods = "SHIFT|CTRL", action = wezterm.action.Search({ Regex = "hello" }) },
+--   { key = "j", mods = "ALT|SHIFT", action = act.ActivateTabRelative(-1) },
+--   { key = "k", mods = "ALT|SHIFT", action = act.ActivateTabRelative(1) },
+--   { key = "t", mods = "SHIFT|ALT", action = act.SpawnTab("CurrentPaneDomain") },
+--   { key = "t", mods = "SHIFT|CTRL", action = wezterm.action_callback(change_color_scheme) },
+--   { key = "r", mods = "CTRL|SHIFT", action = wezterm.action.ReloadConfiguration },
+-- }
 
 -- RETURN THE CONFIG OBJECT, TO APPLY ALL SETTINGS
 
