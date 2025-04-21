@@ -94,39 +94,33 @@ vmap("p", "_dP", "Avoid replace clipboard content when pasting.")
 
 -- Clear last search (really.. it will erase the search and pressing 'n' won't
 -- show it again).
-nmap(",,cl", ':let @/ = ""<cr>', "Really clear the search")
+nmap(",,cl", ':let @/ = ""<CR>', "Really clear the search")
 
 -- Go to the Nth tab.
-vim.cmd([[
-  nnoremap <M-1> :tabn 1<CR>
-  nnoremap <M-2> :tabn 2<CR>
-  nnoremap <M-3> :tabn 3<CR>
-  nnoremap <M-4> :tabn 4<CR>
-  nnoremap <M-5> :tabn 5<CR>
-  nnoremap <M-6> :tabn 6<CR>
-  nnoremap <M-7> :tabn 7<CR>
-  nnoremap <M-8> :tabn 8<CR>
-  nnoremap <M-9> :tabn 9<CR>
-]])
+nmap("<M-1>", ":tabn 1<CR>")
+nmap("<M-2>", ":tabn 2<CR>")
+nmap("<M-3>", ":tabn 3<CR>")
+nmap("<M-4>", ":tabn 4<CR>")
+nmap("<M-5>", ":tabn 5<CR>")
+nmap("<M-6>", ":tabn 6<CR>")
+nmap("<M-7>", ":tabn 7<CR>")
+nmap("<M-8>", ":tabn 8<CR>")
+nmap("<M-9>", ":tabn 9<CR>")
 
 -- Reminder that I'm using the wrong keyboard layout.
-vim.cmd([[
-  nnoremap Ç :echo "Wrong keyboard layout!"<cr>
-  nnoremap ç :echo "wrong keyboard layout!"<cr>
-]])
+nmap("Ç", ':echo "Wrong keyboard layout!"<CR>')
+nmap("ç", ':echo "wrong keyboard layout!"<CR>')
 
 -- Toggle wrap.
-vim.cmd([[
-  nnoremap <a-w> :set wrap!<cr>
-  inoremap <a-w> <esc>:set wrap!<cr>a
-]])
+nmap("<M-w>", ":set wrap!<CR>")
+nmap("<M-w>", "<esc>:set wrap!<CR>a")
 
 -- Add date to current buffer.
--- inoremap <a-d> <c-r>=strftime("%Y-%m-%d")<cr>
-vim.cmd('inoremap <a-d> <c-r>=strftime("%d%b%y")<cr>')
+-- inoremap <M-d> <C-r>=strftime("%Y-%m-%d")<CR>
+nmap("<M-d>", '<C-r>=strftime("%d%b%y")<CR>')
 
 -- Add time to current buffer.
-vim.cmd('inoremap <a-t> <c-r>=strftime("%Hh%M")<cr>')
+nmap("<M-t>", '<C-r>=strftime("%Hh%M")<CR>')
 
 -- Eval current line or selection using Lua. (Edit: using Conjure instead.)
 -- nk('<Leader>el', 'V:lua<CR>', 'Eval current line using Lua')
