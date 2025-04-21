@@ -160,5 +160,12 @@ nmap("[t", ":tabprevious<CR>", "Move to the previous tab")
 nmap("]t", ":tabnext<CR>", "Move to the next tab")
 
 -- Use ctrl-/ to comment/uncomment.
-nmap("<C-_>", ":Commentary<CR>", "Comment/Uncomment current line")
-vmap("<C-_>", ":Commentary<CR>", "Comment/Uncomment selection")
+-- nmap("<C-_>", ":Commentary<CR>", "Comment/Uncomment current line")
+-- vmap("<C-_>", ":Commentary<CR>", "Comment/Uncomment selection")
+
+-- Use ctrl+f to search in current buffer.
+nmap("<C-f>", function()
+  Snacks.picker.lines()
+end, "Search for current word in current buffer")
+
+-- Next keymap/mapping/keybinding.

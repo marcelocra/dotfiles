@@ -396,6 +396,9 @@ local color_scheme_override = {
   override = false, -- 2, -- 22, -- Update override.
   -- stylua: ignore
   favorites = {
+
+    -- To align.
+
     "Dracula",                                -- Lua is 1-based, so this has index 1.
     "Dark Pastel",                            -- 2
     "CrayonPonyFish",                         -- 3
@@ -429,6 +432,8 @@ local color_scheme_override = {
     "Shaman",                                 -- 31
     "catppuccin-macchiato",                   -- 32
     "Unikitty Reversible (base16)",           -- 33
+    "Seti",                                   -- 34
+
     -- Next theme colorscheme override.
   },
 }
