@@ -979,7 +979,7 @@
   "workbench.panel.defaultLocation": "bottom",
   "workbench.editor.pinnedTabsOnSeparateRow": false,
   "workbench.activityBar.location": "top",
-  "workbench.colorTheme": "Tokyo Night Light"
+  "workbench.colorTheme": "Tokyo Night"
 
   // #endregion workbench. }}}
 }

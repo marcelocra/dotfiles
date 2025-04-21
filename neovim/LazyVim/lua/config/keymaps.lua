@@ -2,89 +2,99 @@
 -- Default keymaps that are always set: https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/config/keymaps.lua
 -- Add any additional keymaps here
 
-local key = function(mode, from, to, desc, opts)
+local map = function(mode, from, to, desc, opts)
   opts = opts or {}
+  opts.no_vscode = opts.no_vscode or false
+
+  -- If the user is using VSCode, don't set the mapping.
+  if opts.no_vscode and vim.g.vscode then
+    return
+  end
+
+  -- Keys that do not exist in vim API must be removed before calling the
+  -- actual API.
+  opts.no_vscode = nil
+
+  opts.silent = opts.silent or true
+  opts.noremap = opts.noremap or true
+
   opts.desc = desc
-  opts.silent = true
-  opts.noremap = true
   vim.keymap.set(mode, from, to, opts)
 end
 
-local ik = function(from, to, desc, opts)
-  opts = opts or {}
-  opts.desc = desc
-  key("i", from, to, desc, opts)
+local imap = function(from, to, desc, opts)
+  map("i", from, to, desc, opts)
 end
-
-local nk = function(from, to, desc, opts)
-  opts = opts or {}
-  opts.desc = desc
-  key("n", from, to, desc, opts)
+local nmap = function(from, to, desc, opts)
+  map("n", from, to, desc, opts)
+end
+local vmap = function(from, to, desc, opts)
+  map("v", from, to, desc, opts)
+end
+local inmap = function(from, to, desc, opts)
+  map({ "i", "n" }, from, to, desc, opts)
 end
 
 -- Go back to normal mode.
-ik("jf", "<Esc>", "Go to normal mode")
-ik("fj", "<Esc>", "Go to normal mode")
+imap("jf", "<Esc>", "Go to normal mode")
+imap("fj", "<Esc>", "Go to normal mode")
 
--- Use <C-s> instead. It also leaves insert mode.
--- -- Save faster.
--- vim.keymap.set({ "i", "n" }, ",w", "<Esc>:w<CR>", { desc = "Saves the current buffer" })
--- vim.keymap.set({ "i", "n" }, ",s", "<Esc>:w<CR>", { desc = "Saves the current buffer" })
-vim.keymap.set({ "i", "n" }, ",w", "<Esc>:echo 'Use <C-s>!'<CR>", { noremap = true, desc = "Saves the current buffer" })
-vim.keymap.set({ "i", "n" }, ",s", "<Esc>:echo 'Use <C-s>!'<CR>", { noremap = true, desc = "Saves the current buffer" })
+-- Save faster.
+-- NOTE: Use <C-s> instead.
+-- inmap(",w", "<Esc>:w<CR>", "Saves the current buffer")
+-- inmap(",s", "<Esc>:w<CR>", "Saves the current buffer")
+inmap(",w", "<Esc>:echo 'Use ctrl+s!'<CR>", "Saves the current buffer")
+inmap(",s", "<Esc>:echo 'Use ctrl+s!'<CR>", "Saves the current buffer")
 
 -- Quit and close buffers faster.
-nk(",q", ":q<CR>", "Close the current buffer")
-nk(",,q", ":qa<CR>", "Close all buffers")
+nmap(",q", ":q<CR>", "Close the current buffer")
+nmap(",,q", ":qa<CR>", "Close all buffers")
 
 -- Save and quit faster.
-nk(",x", ":x<CR>", "Save and close the current buffer")
-ik(",x", "<Esc>:x<CR>", "Save and close the current buffer")
+nmap(",x", ":x<CR>", "Save and close the current buffer")
+imap(",x", "<Esc>:x<CR>", "Save and close the current buffer")
 
 -- Reload current file.
-nk(",e", ":e<CR>", "Reload current file")
-ik(",e", "<Esc>:e<CR>", "Reload current file")
+nmap(",e", ":e<CR>", "Reload current file")
+imap(",e", "<Esc>:e<CR>", "Reload current file")
 
 -- Port my most used mappings from VSCode.
-nk("<C-p>", "<Space><Space>", "Fuzzy search files in current folder")
-nk("<C-t>", "<Space>sS", "Fuzzy search workspace symbols")
+nmap("<C-p>", "<Space><Space>", "Fuzzy search files in current folder")
+nmap("<C-t>", "<Space>sS", "Fuzzy search workspace symbols")
 
--- Use <M-j/k> to move between tabs and <M-S-h/l> to move a line down/up.
-ik("<M-j>", "<Esc>:tabp<CR>", { desc = "Move to the left tab" })
-ik("<M-k>", "<Esc>:tabn<CR>", { desc = "Move to the right tab" })
-ik("<M-S-j>", "<Esc>:tabp<CR>", { desc = "Move to the left tab" })
-ik("<M-S-k>", "<Esc>:tabn<CR>", { desc = "Move to the right tab" })
+-- -- Use <M-j/k> to move between tabs and <M-S-h/l> to move a line down/up.
+-- nmap("<M-j>", "<M-S-h>", "Move to the left tab")
+-- nmap("<M-k>", "<M-S-l>", "Move to the right tab")
+-- imap("<M-j>", "ddp", "Move current line down")
+-- imap("<M-k>", "ddkP", "Move current line up")
 
 -- Print current file folder name.
-nk(",f", ':echo expand("%:p:h")<CR>', "Print current file folder name")
+nmap(",f", ':echo expand("%:p:h")<CR>', "Print current file folder name")
 
 -- Easily open Neovim config files.
 local edit_nvim_common = '$MYVIMRC<CR>:lcd <C-r>=expand("%:p:h")<CR><CR>'
-nk("<Leader>ev", ":tabe " .. edit_nvim_common, "[E]dit [V]imrc in a new tab")
-nk("<Leader>evh", ":spl " .. edit_nvim_common, "[E]dit [V]imrc in an [H]orizontal split")
-nk("<Leader>evv", ":vspl " .. edit_nvim_common, "[E]dit [V]imrc in a [V]ertical split")
+nmap("<Leader>ev", ":tabe " .. edit_nvim_common, "[E]dit [V]imrc in a new tab")
+nmap("<Leader>evh", ":spl " .. edit_nvim_common, "[E]dit [V]imrc in an [H]orizontal split")
+nmap("<Leader>evv", ":vspl " .. edit_nvim_common, "[E]dit [V]imrc in a [V]ertical split")
 
 -- Easily change colorschemes.
-nk("<Leader>cc", ":lua require('telescope.builtin').colorscheme()<CR>", "[C]hange [C]olorscheme")
+-- nmap("<Leader>cc", ":lua require('telescope.builtin').colorscheme()<CR>", "[C]hange [C]olorscheme")
 
 -- Select file content.
-nk(",a", "ggVG", "Select full file content")
-ik(",a", "<Esc>ggVG", "Select full file content")
+nmap(",a", "ggVG", "Select full file content")
+imap(",a", "<Esc>ggVG", "Select full file content")
 
 -- Use - and | to split in normal mode.
-vim.cmd([[
-  nnoremap - :split<cr>
-  nnoremap \| :vsplit<cr>
-]])
+nmap("-", ":split<CR>", "Easy vertical split")
+nmap("|", ":vsplit<CR>", "Easy horizontal split")
 
--- Avoids replacing the clipboard content with the selected content. Does this
--- by deleting the selected content to the blackhole register and then pasting
--- the clipboard content to before the cursor position.
-vim.cmd('vnoremap p "_dP')
+-- Does this by deleting the selected content to the blackhole register and
+-- then pasting the clipboard content to before the cursor position.
+vmap("p", "_dP", "Avoid replace clipboard content when pasting.")
 
 -- Clear last search (really.. it will erase the search and pressing 'n' won't
 -- show it again).
-vim.cmd('nnoremap ,,cl :let @/ = ""<cr>')
+nmap(",,cl", ':let @/ = ""<cr>', "Really clear the search")
 
 -- Go to the Nth tab.
 vim.cmd([[
@@ -119,42 +129,42 @@ vim.cmd('inoremap <a-d> <c-r>=strftime("%d%b%y")<cr>')
 vim.cmd('inoremap <a-t> <c-r>=strftime("%Hh%M")<cr>')
 
 -- Eval current line or selection using Lua. (Edit: using Conjure instead.)
--- nk('n', '<Leader>el', 'V:lua<CR>', { desc = 'Eval current line using Lua' })
--- vim.keymap.set('v', '<Leader>el', ':lua<CR>', { desc = 'Eval current selection using Lua' })
+-- nk('<Leader>el', 'V:lua<CR>', 'Eval current line using Lua')
+-- vk('<Leader>el', ':lua<CR>', 'Eval current selection using Lua')
 
 -- Run current line in external shell and paste the output below.
 -- Test with: echo hello world (select "echo hello").
 -- TODO: deal with ^M (carriage return) characters. Currently they break the
 -- command.
-nk("<Leader>es", ":exec 'r !' . getline('.')<CR>", "Run line externally and paste output")
-vim.keymap.set("v", "<Leader>es", '"xy:r ! <C-r>x<CR>', { desc = "Run selection externally and paste output" })
+nmap("<Leader>es", ":exec 'r !' . getline('.')<CR>", "Run line externally and paste output")
+vmap("<Leader>es", '"xy:r ! <C-r>x<CR>', "Run selection externally and paste output")
 
 -- Use normal regex.
-nk("/", "/\\v", "Use normal regex")
+nmap("/", "/\\v", "Use normal regex")
 
 -- Search for the selected text.
-vim.keymap.set("v", "//", "y/\\V<C-r>=escape(@\",'/\\')<CR><CR>", { desc = "Search for current selection" })
+vmap("//", "y/\\V<C-r>=escape(@\",'/\\')<CR><CR>", "Search for current selection")
 
 -- Move vertically by visual line (not jumping long lines).
-vim.keymap.set({ "n", "v" }, "j", "gj", { desc = "Move down by visual line" })
-vim.keymap.set({ "n", "v" }, "k", "gk", { desc = "Move up by visual line" })
-vim.keymap.set({ "n", "v" }, "$", "g$", { desc = "Move to the end of the line" })
-vim.keymap.set({ "n", "v" }, "0", "g0", { desc = "Move to the beginning of the line" })
+map({ "n", "v" }, "j", "gj", "Move down by visual line")
+map({ "n", "v" }, "k", "gk", "Move up by visual line")
+map({ "n", "v" }, "$", "g$", "Move to the end of the line")
+map({ "n", "v" }, "0", "g0", "Move to the beginning of the line")
 
 -- Highlight last inserted text.
-nk("gV", "`[v`]")
+nmap("gV", "`[v`]")
 
 -- Allow fast indenting when there is a chunck of text selected.
-vim.keymap.set("v", "<", "<gv", { desc = "Indent selected text to the left" })
-vim.keymap.set("v", ">", ">gv", { desc = "Indent selected text to the right" })
+vmap("<", "<gv", "Indent selected text to the left")
+vmap(">", ">gv", "Indent selected text to the right")
 
 -- Clear search highlights.
-nk("<C-n>", ":nohlsearch<CR>")
+nmap("<C-n>", ":nohlsearch<CR>")
 
 -- Change unimpaired default mappings for [t and ]t for tab navigation.
-nk("[t", ":tabprevious<CR>", "Move to the previous tab")
-nk("]t", ":tabnext<CR>", "Move to the next tab")
+nmap("[t", ":tabprevious<CR>", "Move to the previous tab")
+nmap("]t", ":tabnext<CR>", "Move to the next tab")
 
 -- Use ctrl-/ to comment/uncomment.
-nk("<C-_>", ":Commentary<CR>", { noremap = false, desc = "Comment/Uncomment current line" })
-vim.keymap.set("v", "<C-_>", ":Commentary<CR>", { noremap = false, desc = "Comment/Uncomment selection" })
+nmap("<C-_>", ":Commentary<CR>", "Comment/Uncomment current line")
+vmap("<C-_>", ":Commentary<CR>", "Comment/Uncomment selection")

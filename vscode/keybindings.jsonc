@@ -117,15 +117,27 @@
   },
 
   {
-    "key": "alt+k",
+    "key": "alt+shift+l",
     "command": "workbench.action.nextEditor",
     "when": "!terminalFocus"
   },
 
   {
-    "key": "alt+j",
+    "key": "alt+shift+h",
     "command": "workbench.action.previousEditor",
     "when": "!terminalFocus"
+  },
+
+  {
+    "key": "alt+k",
+    "command": "editor.action.moveLinesUpAction",
+    "when": "editorTextFocus"
+  },
+
+  {
+    "key": "alt+j",
+    "command": "editor.action.moveLinesDownAction",
+    "when": "editorTextFocus"
   },
 
   {
@@ -209,6 +221,20 @@
     "key": "ctrl+p",
     "command": "editor.action.moveSelectionToPreviousFindMatch",
     "when": "editorTextFocus && neovim.mode == 'insert'"
+  },
+
+  {
+    // If the panel is active, but not maximized, maximize it.
+    "key": "ctrl+alt+`",
+    "command": "workbench.action.toggleMaximizedPanel",
+    "when": "panelFocus && terminalFocus"
+  },
+
+  {
+    // If the panel is not active, activate and maximize it.
+    "key": "ctrl+alt+`",
+    "command": "workbench.action.toggleMaximizedPanel",
+    "when": "!panelFocus || !terminalFocus"
   },
 
   {
