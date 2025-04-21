@@ -8,6 +8,10 @@
   //----------------------------------------------------------------------------
 
   {
+    "key": "PANEL SHORTCUT CONFIGURATION"
+  },
+
+  {
     "key": "alt+shift+r",
     "command": "workbench.action.tasks.runTask"
   },
@@ -119,23 +123,48 @@
   {
     "key": "alt+shift+l",
     "command": "workbench.action.nextEditor",
-    "when": "!terminalFocus"
+    "when": "!panelFocus"
   },
 
   {
     "key": "alt+shift+h",
     "command": "workbench.action.previousEditor",
-    "when": "!terminalFocus"
+    "when": "!panelFocus"
   },
 
   {
     "key": "alt+k",
+    "command": "workbench.action.nextEditor",
+    "when": "editorFocus"
+  },
+
+  {
+    "key": "alt+j",
+    "command": "workbench.action.previousEditor",
+    "when": "editorFocus"
+  },
+
+  {
+    // Go to next panel (terminal, output, debug console, problems, etc.).
+    "key": "alt+k",
+    "command": "workbench.action.nextPanelView",
+    "when": "panelFocus"
+  },
+  {
+    // Go to previous panel (terminal, output, debug console, problems, etc.).
+    "key": "alt+j",
+    "command": "workbench.action.previousPanelView",
+    "when": "panelFocus"
+  },
+
+  {
+    "key": "alt+shift+k",
     "command": "editor.action.moveLinesUpAction",
     "when": "editorTextFocus"
   },
 
   {
-    "key": "alt+j",
+    "key": "alt+shift+j",
     "command": "editor.action.moveLinesDownAction",
     "when": "editorTextFocus"
   },
@@ -157,9 +186,8 @@
   },
 
   {
-    "key": "ctrl+alt+space",
-    "command": "github.copilot.generate",
-    "when": "editorTextFocus"
+    "key": "alt+d",
+    "command": "workbench.action.toggleLightDarkThemes"
   },
 
   {
@@ -238,8 +266,15 @@
   },
 
   {
-    "key": "Next keybinding/keymap/mapping above."
+    "key": "ctrl+alt+space",
+    "command": "github.copilot.generate",
+    "when": "editorTextFocus"
+  },
+
+  {
+    "key": "NEXT KEYBINDING/KEYMAP/MAPPING 👆🏽"
   }
+
   //
   // //#region NAVIGATION {{{
   // // Enabled only when Vim mode is not active.
