@@ -6,3 +6,16 @@
 --
 -- Or remove existing autocmds by their group name (which is prefixed with `lazyvim_` for the defaults)
 -- e.g. vim.api.nvim_del_augroup_by_name("lazyvim_wrap_spell")
+
+-- Simplify the creation of autocommand groups.
+local function augroup(name)
+  return vim.api.nvim_create_augroup("my-autocmds-" .. name, { clear = true })
+end
+
+-- vim.api.nvim_create_autocmd("VimEnter", {
+--   desc = "Example",
+--   group = augroup("example"),
+--   callback = function()
+--     -- Do stuff here.
+--   end,
+-- })
