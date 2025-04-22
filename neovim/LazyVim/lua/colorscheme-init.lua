@@ -5,39 +5,47 @@ local time_based = "time_based"
 local dark = "dark" -- Override with a dark mode of your choice.
 local light = "light" -- Override with a light mode of your choice.
 
-math.randomseed(os.time())
+local set_random_theme = function()
+  math.randomseed(os.time())
 
--- When choosing light or dark mode randomly, use these options.
-local dark_mode_options = {
-  -- -- These are nice, but with at least one weird color.
-  -- 'sorbet',  -- telescope thingy is weird grey
-  -- 'zaibatsu',  -- telescope thingy is weird light grey
-  -- 'vim',  -- accent color is bright pink that hurt my eyes (and I like pink)
-  -- 'goodwolf',  -- very few colors...
-  -- --
+  -- When choosing light or dark mode randomly, use these options.
+  local dark_mode_options = {
+    -- -- These are nice, but with at least one weird color.
+    -- 'sorbet',  -- telescope thingy is weird grey
+    -- 'zaibatsu',  -- telescope thingy is weird light grey
+    -- 'vim',  -- accent color is bright pink that hurt my eyes (and I like pink)
+    -- 'goodwolf',  -- very few colors...
+    -- --
 
-  "habamax", -- a bit dead, but still nice
-  "badwolf", -- classic and still good!
-  "retrobox", -- interesting... badwolf vibes
-  "vividchalk", -- really vivid!
-  "wildcharm", -- kind of vivid too, though less than vividchalk
-  "tokyonight-night", -- so good!
-  "tokyonight-storm", -- so good too!
-  "tokyonight-moon", -- so good three!
-  "catppuccin-frappe",
-  "catppuccin-macchiato",
-  "catppuccin-mocha",
-}
-local light_mode_options = {
-  "tokyonight-day",
-  "catppuccin-latte",
-}
-vim.g.colorscheme_mode_dark = dark_mode_options[math.random(#dark_mode_options)]
-vim.g.colorscheme_mode_light = light_mode_options[math.random(#light_mode_options)]
+    "habamax", -- a bit dead, but still nice
+    "badwolf", -- classic and still good!
+    "retrobox", -- interesting... badwolf vibes
+    "vividchalk", -- really vivid!
+    "wildcharm", -- kind of vivid too, though less than vividchalk
+    "tokyonight-night", -- so good!
+    "tokyonight-storm", -- so good too!
+    "tokyonight-moon", -- so good three!
+    "catppuccin-frappe",
+    "catppuccin-macchiato",
+    "catppuccin-mocha",
+  }
+  local light_mode_options = {
+    "tokyonight-day",
+    "catppuccin-latte",
+  }
+  vim.g.colorscheme_mode_dark = dark_mode_options[math.random(#dark_mode_options)]
+  vim.g.colorscheme_mode_light = light_mode_options[math.random(#light_mode_options)]
+end
+
+vim.g.use_random_theme = false
+vim.g.colorscheme_mode_dark = "wildcharm"
+vim.g.colorscheme_mode_light = "catppuccin-latte"
 
 vim.g.colorscheme_modes = { time_based, dark, light }
 vim.g.colorscheme_mode = vim.g.colorscheme_modes[1]
 
+--- Returns true if the current time is in the dark period, false otherwise.
+--- @return boolean
 local is_dark = function()
   local hour_now = tonumber(os.date("%H"))
   local daylight_ends = 17
@@ -46,31 +54,94 @@ local is_dark = function()
   return hour_now < daylight_starts or hour_now >= daylight_ends
 end
 
-local get = function(new_mode)
-  new_mode = new_mode or vim.g.colorscheme_mode or time_based
-  if new_mode == dark or is_dark() then
-    return vim.g.colorscheme_mode_dark
-  elseif new_mode == light or not is_dark() then
-    return vim.g.colorscheme_mode_light
-  else
-    return vim.g.colorscheme_mode_dark
-  end
-end
-
 local transparent_background = function()
-  -- vim.cmd 'hi Normal guibg=NONE ctermbg=NONE'
+  vim.cmd("hi Normal guibg=none ctermbg=none")
+  vim.cmd("hi NonText guibg=none ctermbg=none")
 end
 
-local set = function(mode)
-  return function()
-    vim.cmd.colorscheme(get(mode))
-    transparent_background()
+local randomize_theme = function()
+  if vim.g.use_random_theme then
+    set_random_theme()
   end
+end
+
+local setup = function()
+  randomize_theme()
+  transparent_background()
+end
+
+local set_colorscheme = function(new_colorscheme)
+  if vim.g.colors_name then
+    print("Changing from " .. vim.g.colors_name .. " to " .. new_colorscheme)
+  else
+    print("Setting colorscheme to " .. new_colorscheme)
+  end
+
+  vim.cmd.colorscheme(new_colorscheme)
+end
+
+local set_dark = function()
+  setup()
+
+  vim.g.colorscheme_mode = dark
+  vim.o.background = "dark"
+
+  set_colorscheme(vim.g.colorscheme_mode_dark)
+end
+
+local set_light = function()
+  setup()
+
+  vim.g.colorscheme_mode = light
+  vim.o.background = "light"
+
+  set_colorscheme(vim.g.colorscheme_mode_light)
+end
+
+--- Changes the colorscheme.
+--- @param mode 'time_based'|'light'|'dark'|nil The mode to use for determining the colorscheme.
+--- @return function
+local set = function(mode)
+  local new_mode = mode or vim.g.colorscheme_mode
+
+  -- New modes must be checked for light or dark first, so that it is possible
+  -- to override time-based modes.
+
+  if new_mode == dark then
+    return set_dark
+  end
+
+  if new_mode == light then
+    return set_light
+  end
+
+  -- At this point we know that the mode is time_based.
+
+  if is_dark() then
+    return set_dark
+  end
+
+  return set_light
+end
+
+--- Toggles through the available colorscheme modes.
+--- @return nil
+local toggle = function()
+  local current_mode = vim.g.colorscheme_mode
+  local new_mode
+
+  if (current_mode == time_based and is_dark()) or (current_mode == dark) then
+    new_mode = light
+  else
+    new_mode = dark
+  end
+
+  set(new_mode)()
 end
 
 return {
-  get = get,
   set = set,
+  toggle = toggle,
   is_dark = is_dark,
   is_light = function()
     return not is_dark()

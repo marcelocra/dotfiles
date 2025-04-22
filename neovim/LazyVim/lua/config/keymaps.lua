@@ -8,15 +8,28 @@
 -- Open the file explorer. New: <M-b>.
 vim.keymap.del("n", "<Leader>e")
 
+-- Open terminal inside Neovim.
+vim.keymap.del("n", "<C-_>")
+
 -- }}}
 
 -- Setup and helpers functions. {{{
 
 local vimrc_folder = vim.fn.fnamemodify(vim.env.MYVIMRC, ":h")
 
--- Use to write documentation instead of comments when it makes sense. See
--- usages for some examples.
+--- Write doc comment as a string, so it can be used in the keymap description
+--- (DRY). See usages for some examples.
+--- @type string|function
 local doc
+
+--- Same as doc, but when there's need for some args.
+--- @type function
+local docfn = function(text)
+  return function(...)
+    local sep = " "
+    return text .. sep .. table.concat({ ... }, sep)
+  end
+end
 
 -- Define a function to allow partial application.
 --
@@ -78,21 +91,6 @@ local vmap = partial(map, "v")
 local inmap = partial(map, { "i", "n" })
 local vnmap = partial(map, { "v", "n" })
 
--- Opens the LazyVim file picker in current folder.
-local fuzzy_search_files = function()
-  LazyVim.pick.open()
-end
-
--- Opens the LazyVim picker for workspace symbols.
-local fuzzy_search_symbols = function()
-  Snacks.picker.lsp_workspace_symbols({ filter = LazyVim.config.kind_filter })
-end
-
--- Opens the LazyVim picker for searching in the current file (buffer).
-local fuzzy_search_buffer = function()
-  Snacks.picker.lines()
-end
-
 -- }}}
 
 -- Go back to normal mode.
@@ -119,18 +117,25 @@ imap(",x", "<Esc>:x<CR>", "Save and close the current buffer")
 -- Reload current file.
 nmap(",e", ":e<CR>", "Reload current file")
 imap(",e", "<Esc>:e<CR>", "Reload current file")
---
--- Port my most used mappings from VSCode.
-nmap("<C-p>", fuzzy_search_files, "Fuzzy search files in current folder", { vscode = false })
-nmap("<C-t>", fuzzy_search_symbols, "Fuzzy search workspace symbols", { vscode = false })
-nmap("<C-f>", fuzzy_search_buffer, "Fuzzy search current buffer", { vscode = false })
 
--- -- -- Use <M-j/k> to move between tabs and <M-S-h/l> to move a line down/up.
--- nmap("<M-j>", "<M-S-h>", "Move to the left tab")
--- nmap("<M-k>", "<Cmd>tabnext<CR>", "Move to the right tab") -- Trying instead of <M-S-l>. Didn't work.
--- nmap("<M-k>", "<M-S-l>", "Move to the right tab")
--- imap("<M-j>", "ddp", "Move current line down")
--- imap("<M-k>", "ddkP", "Move current line up")
+-- Port my most used mappings from VSCode.
+nmap("<C-p>", function()
+  LazyVim.pick.open()
+end, "Fuzzy search for files in current folder", { vscode = false })
+nmap("<C-f>", function()
+  Snacks.picker.lines()
+end, "Fuzzy search for text in the current buffer", { vscode = false })
+nmap("<C-t>", function()
+  Snacks.picker.lsp_symbols({ filter = LazyVim.config.kind_filter })
+end, "Fuzzy search for symbols in the current file (buffer)", { vscode = false })
+nmap("<F2>", "<Leader>cr", "Rename variable", { remap = true })
+
+-- NOTE: It is not possible to have multiple tabs without multiple buffers.
+-- Therefore we can use the BufferLine plugin to manage the tabs and behave
+-- as if they were tabs. Previous config:
+-- doc = docfn("Focus on the tab to the")
+-- inmap("<M-j>", "<Cmd>tabprev<CR>", doc("left"))
+-- inmap("<M-k>", "<Cmd>tabnext<CR>", doc("right"))
 inmap("<M-j>", "<Cmd>BufferLineCyclePrev<CR>", "Move to the left tab")
 inmap("<M-k>", "<Cmd>BufferLineCycleNext<CR>", "Move to the right tab")
 
@@ -157,22 +162,23 @@ local edit_nvim_file
 local edit_nvim_common = function(name)
   return "./lua/config/" .. name .. "<CR>:lcd " .. vimrc_folder .. "<CR>"
 end
+local cmds = { tab = ":tabe ", spl = ":spl ", vsp = ":vspl " }
 edit_nvim_file = edit_nvim_common("keymaps.lua")
-nmap("<Leader>evk", ":e " .. edit_nvim_file, doc, { vscode = false })
-nmap("<Leader>ev-k", ":spl " .. edit_nvim_file, doc, { vscode = false })
-nmap("<Leader>ev|k", ":vspl " .. edit_nvim_file, doc, { vscode = false })
+nmap("<Leader>evk", cmds.tab .. edit_nvim_file, doc, { vscode = false })
+nmap("<Leader>ev-k", cmds.spl .. edit_nvim_file, doc, { vscode = false })
+nmap("<Leader>ev|k", cmds.vsp .. edit_nvim_file, doc, { vscode = false })
 edit_nvim_file = edit_nvim_common("options.lua")
-nmap("<Leader>evo", ":e " .. edit_nvim_file, doc, { vscode = false })
-nmap("<Leader>ev-o", ":spl " .. edit_nvim_file, doc, { vscode = false })
-nmap("<Leader>ev|o", ":vspl " .. edit_nvim_file, doc, { vscode = false })
+nmap("<Leader>evo", cmds.tab .. edit_nvim_file, doc, { vscode = false })
+nmap("<Leader>ev-o", cmds.spl .. edit_nvim_file, doc, { vscode = false })
+nmap("<Leader>ev|o", cmds.vsp .. edit_nvim_file, doc, { vscode = false })
 edit_nvim_file = edit_nvim_common("lazy.lua")
-nmap("<Leader>evl", ":e " .. edit_nvim_file, doc, { vscode = false })
-nmap("<Leader>ev-l", ":spl " .. edit_nvim_file, doc, { vscode = false })
-nmap("<Leader>ev|l", ":vspl " .. edit_nvim_file, doc, { vscode = false })
+nmap("<Leader>evl", cmds.tab .. edit_nvim_file, doc, { vscode = false })
+nmap("<Leader>ev-l", cmds.spl .. edit_nvim_file, doc, { vscode = false })
+nmap("<Leader>ev|l", cmds.vsp .. edit_nvim_file, doc, { vscode = false })
 edit_nvim_file = edit_nvim_common("autocmds.lua")
-nmap("<Leader>eva", ":e " .. edit_nvim_file, doc, { vscode = false })
-nmap("<Leader>ev-a", ":spl " .. edit_nvim_file, doc, { vscode = false })
-nmap("<Leader>ev|a", ":vspl " .. edit_nvim_file, doc, { vscode = false })
+nmap("<Leader>eva", cmds.tab .. edit_nvim_file, doc, { vscode = false })
+nmap("<Leader>ev-a", cmds.spl .. edit_nvim_file, doc, { vscode = false })
+nmap("<Leader>ev|a", cmds.vsp .. edit_nvim_file, doc, { vscode = false })
 
 doc = "Select the whole file content"
 nmap(",a", "ggVG", doc)
@@ -182,6 +188,8 @@ nmap("-", ":split<CR>", "Easy vertical split", { vscode = false })
 nmap("|", ":vsplit<CR>", "Easy horizontal split", { vscode = false })
 
 -- `_` is the blackhole register.
+-- NOTE: Doesn't work when selecting one char at the very end of a line. In
+-- those cases, add a space before pasting.
 vmap("p", '"_dP', "Avoid replacing the clipboard content when pasting")
 
 doc = "Clear the last search, erasing from the register ('n' won't work)"
@@ -204,7 +212,7 @@ nmap("ç", ':echo "wrong keyboard layout!"<CR>', doc)
 
 nmap("<M-w>", ":set wrap!<CR>", "Toggle line wrapping", { vscode = false, silent = false })
 
--- Alternative format: %Y-%m-%d
+-- NOTE: Alternative format: %Y-%m-%d
 imap("<M-d>", '<C-r>=strftime("%d%b%y")<CR>', "Add date to current buffer in the format 21abr25")
 imap("<M-t>", '<C-r>=strftime("%Hh%M")<CR>', "Add time to current buffer")
 
@@ -226,19 +234,19 @@ nmap("gV", "`[v`]", "Highlight last inserted text.")
 vmap("<", "<gv", "Allow fast indenting when there is a chunck of text selected")
 vmap(">", ">gv", "Allow fast unindenting when there is a chunck of text selected")
 
--- Clear search highlights.
-nmap("<C-n>", ":nohlsearch<CR>")
+nmap("<C-n>", ":nohlsearch<CR>", "Clear search highlights")
 
--- Use ctrl-/ to comment/uncomment.
 doc = "Comment and uncomment line or selection"
 nmap("<C-_>", ":Commentary<CR>", doc)
 vmap("<C-_>", ":Commentary<CR>", doc)
 
-vim.keymap.set("n", "<C-Tab>", "<Cmd>e #<CR>", { desc = "Easily alternate between the two most recent buffers" })
+nmap("<C-Tab>", "<Cmd>e #<CR>", "Easily alternate between the two most recent buffers")
 
-nmap("<Leader>oct", require("colorscheme-init").set(nil), "Use time-based colorscheme")
-nmap("<Leader>ocd", require("colorscheme-init").set("dark"), "Set colorscheme to vim.g.colorscheme_mode_dark")
-nmap("<Leader>ocl", require("colorscheme-init").set("light"), "Set colorscheme to vim.g.colorscheme_mode_light")
+local colorscheme_init = require("colorscheme-init")
+nmap("<Leader>oct", colorscheme_init.set(nil), "Use time-based colorscheme")
+nmap("<Leader>ocd", colorscheme_init.set("dark"), "Set colorscheme to vim.g.colorscheme_mode_dark")
+nmap("<Leader>ocl", colorscheme_init.set("light"), "Set colorscheme to vim.g.colorscheme_mode_light")
+nmap("<M-d>", colorscheme_init.toggle, "Set colorscheme to vim.g.colorscheme_mode_light")
 
 doc = "Open explorer in root dir"
 nmap("<M-b>", partial(Snacks.explorer, { cwd = LazyVim.root() }), doc)
