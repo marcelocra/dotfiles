@@ -422,7 +422,7 @@
   //    more fish-like stuff (::<)
 
   ///auto-config-start:fonts
-  "editor.fontFamily": "'MesloLGS Nerd Font', 'M Plus 1 Code', 'CodeNewRoman Nerd Font Mono', 'RecMonoLinear Nerd Font', 'RecMonoDuotone Nerd Font', 'Reddit Mono', 'Hack Nerd Font', 'Geist Mono', Iosevka",
+  "editor.fontFamily": "'Reddit Mono', 'MesloLGS Nerd Font', 'M Plus 1 Code', 'CodeNewRoman Nerd Font Mono', 'RecMonoLinear Nerd Font', 'RecMonoDuotone Nerd Font', 'Hack Nerd Font', 'Geist Mono', Iosevka",
   "editor.fontSize": 15,
   "editor.fontWeight": "normal",
   ///auto-config-end:fonts
@@ -978,8 +978,7 @@
   "workbench.sideBar.location": "left",
   "workbench.panel.defaultLocation": "bottom",
   "workbench.editor.pinnedTabsOnSeparateRow": false,
-  "workbench.activityBar.location": "top",
-  "workbench.colorTheme": "Tokyo Night"
+  "workbench.activityBar.location": "top"
 
   // #endregion workbench. }}}
 }
