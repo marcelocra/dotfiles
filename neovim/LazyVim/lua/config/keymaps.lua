@@ -11,6 +11,11 @@ vim.keymap.del("n", "<Leader>e")
 -- Open terminal inside Neovim.
 vim.keymap.del("n", "<C-_>")
 
+-- Open a profiler for debug.
+vim.keymap.del("n", "<Leader>dpp")
+vim.keymap.del("n", "<Leader>dph")
+vim.keymap.del("n", "<Leader>dps")
+
 -- }}}
 
 -- Setup and helpers functions. {{{
@@ -20,8 +25,9 @@ local u = require("utils")
 local nmap = u.nmap
 local imap = u.imap
 local vmap = u.vmap
-local inmap = u.inmap
-local vnmap = u.vnmap
+local nimap = u.nimap
+local nvmap = u.nvmap
+local nivmap = u.nivmap
 
 --- Write doc comment as a string, so it can be used in the keymap description
 --- (DRY). See usages for some examples.
@@ -73,8 +79,8 @@ nmap("<F2>", "<Leader>cr", "Rename variable", { remap = true })
 -- doc = docfn("Focus on the tab to the")
 -- inmap("<M-j>", "<Cmd>tabprev<CR>", doc("left"))
 -- inmap("<M-k>", "<Cmd>tabnext<CR>", doc("right"))
-inmap("<M-j>", "<Cmd>BufferLineCyclePrev<CR>", "Move to the left tab")
-inmap("<M-k>", "<Cmd>BufferLineCycleNext<CR>", "Move to the right tab")
+nimap("<M-j>", "<Cmd>BufferLineCyclePrev<CR>", "Move to the left tab")
+nimap("<M-k>", "<Cmd>BufferLineCycleNext<CR>", "Move to the right tab")
 
 doc = "Move line or selection down"
 nmap("<M-Down>", "<Cmd>execute 'move .+' . v:count1<CR>==", doc)
@@ -97,7 +103,7 @@ nmap(",f", ':echo expand("%:p:h")<CR>', "Print current file folder name")
 doc = "Edit Neovim config file"
 local edit_nvim_file
 local edit_nvim_common = function(name)
-  return "./lua/config/" .. name .. "<CR>:lcd " .. u.vimrc_folder .. "<CR>"
+  return u.vimrc_folder .. "/lua/config/" .. name .. "<CR>:lcd " .. u.vimrc_folder .. "<CR>"
 end
 local cmds = { tab = ":tabe ", spl = ":spl ", vsp = ":vspl " }
 edit_nvim_file = edit_nvim_common("keymaps.lua")
@@ -161,10 +167,10 @@ vmap("<Leader>es", '"xy:r ! <C-r>x<CR>', "Run selection externally and paste out
 nmap("/", "/\\v", "Use normal regex")
 vmap("//", "y/\\V<C-r>=escape(@\",'/\\')<CR><CR>", "Search for the currently selected text")
 
-vnmap("j", "gj", "Move down by visual line")
-vnmap("k", "gk", "Move up by visual line")
-vnmap("$", "g$", "Move to the end of the line")
-vnmap("0", "g0", "Move to the beginning of the line")
+nvmap("j", "gj", "Move down by visual line")
+nvmap("k", "gk", "Move up by visual line")
+nvmap("$", "g$", "Move to the end of the line")
+nvmap("0", "g0", "Move to the beginning of the line")
 
 nmap("gV", "`[v`]", "Highlight last inserted text.")
 
@@ -173,11 +179,11 @@ vmap(">", ">gv", "Allow fast unindenting when there is a chunck of text selected
 
 nmap("<C-n>", ":nohlsearch<CR>", "Clear search highlights")
 
-doc = "Comment and uncomment line or selection"
-nmap("<C-_>", ":Commentary<CR>", doc)
-vmap("<C-_>", ":Commentary<CR>", doc)
+nivmap("<C-_>", ":Commentary<CR>", "Comment and uncomment line or selection")
 
-nmap("<C-Tab>", "<Cmd>e #<CR>", "Easily alternate between the two most recent buffers")
+doc = "Easily alternate between the two most recent buffers"
+nmap("<C-Tab>", "<Cmd>e #<CR>", doc) -- Doesn't work in terminals.
+nmap("<S-Tab>", "<Cmd>e #<CR>", doc) -- This one does. But gt might be better.
 
 local colorscheme_init = require("colorscheme-init")
 nmap("<Leader>oct", colorscheme_init.set(nil), "Use time-based colorscheme")
@@ -188,5 +194,7 @@ nmap("<M-d>", colorscheme_init.toggle, "Set colorscheme to vim.g.colorscheme_mod
 doc = "Open explorer in root dir"
 nmap("<M-b>", u.partial(Snacks.explorer, { cwd = LazyVim.root() }), doc)
 nmap("<M-e>", u.partial(Snacks.explorer, { cwd = LazyVim.root() }), doc)
+
+nmap("<Leader>d", "<Leader>xx", "Toggle the diagnostics window", { remap = true })
 
 -- Next keymap/mapping/keybinding.

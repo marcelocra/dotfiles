@@ -13,12 +13,23 @@ M.docfn = function(text)
   end
 end
 
+M.test = function(fn, opts, ...)
+  opts = opts or { run = false }
+  if not opts.run then
+    return
+  end
+
+  local args = { ... }
+  fn(unpack(args))
+end
+
 -- Define a function to allow partial application.
 --
 -- Example usage:
 --    local function add(a, b, c)
 --      return a + b + c
 --    end
+--    local add_alias = partial(add)
 --    local add5 = partial(add, 5)
 --    print(add5(3, 2)) -- Output: 10
 --
@@ -33,6 +44,48 @@ M.partial = function(func, ...)
     return func(unpack(all_args)) -- Call the original function.
   end
 end
+
+-- Test the partial function.
+M.test(function()
+  local somefunc = function(a, b, c)
+    print(a, b, c)
+  end
+
+  local other = M.partial(somefunc)
+  other("hello", "you", "beautiful")
+end, { run = false })
+
+-- Different implementation.
+M.partial2 = function(func, ...)
+  local bound = { ... }
+  return function(...)
+    local new_args = { ... }
+
+    local args = {}
+
+    -- Copy bound args, if any.
+    for i = 1, #bound do
+      args[i] = bound[i]
+    end
+
+    -- Append new args.
+    for i = 1, #new_args do
+      -- print(#new_args, " ", i, " ", new_args[i])
+      args[#bound + i] = new_args[i]
+    end
+
+    -- Call the original function with whatever you got (even none).
+    return func(unpack(args))
+  end
+end
+
+M.test(function()
+  local somefunc = function(a, b, c)
+    print(a .. " " .. b .. " " .. c)
+  end
+  local other = M.partial2(somefunc)
+  other("hello", "you", "beautiful")
+end, { run = false })
 
 --- Simplifies the mapping of keys.
 ---
@@ -67,10 +120,11 @@ local map = function(mode, from, to, desc_or_opts, opts)
 end
 
 -- Simplifies even more the mapping of keys.
-M.imap = M.partial(map, "i")
 M.nmap = M.partial(map, "n")
+M.imap = M.partial(map, "i")
 M.vmap = M.partial(map, "v")
-M.inmap = M.partial(map, { "i", "n" })
-M.vnmap = M.partial(map, { "v", "n" })
+M.nimap = M.partial(map, { "i", "n" })
+M.nvmap = M.partial(map, { "v", "n" })
+M.nivmap = M.partial(map, { "n", "i", "v" })
 
 return M
