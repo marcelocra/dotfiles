@@ -58,13 +58,13 @@
 REQUIRED_ENVS=''
 
 verify_defined() {
-  local env_name="$1"
-  local env_value
-  eval env_value=\$$1
+    local env_name="$1"
+    local env_value
+    eval env_value=\$$1
 
-  if [ -z "$env_value" ]; then
-    REQUIRED_ENVS="${REQUIRED_ENVS}'$env_name' must be defined with the $2.\n\n"
-  fi
+    if [ -z "$env_value" ]; then
+        REQUIRED_ENVS="${REQUIRED_ENVS}'$env_name' must be defined with the $2.\n\n"
+    fi
 }
 
 verify_defined "MCRA_PROJECTS_FOLDER" 'path to the folder where you put all your programming projects'
@@ -73,13 +73,13 @@ verify_defined "MCRA_LOCAL_SHELL" 'path to your local shell init, with stuff tha
 verify_defined "MCRA_TMP_PLAYGROUND" 'path to a folder that you can use as a playground. I use /tmp/playground or something like this'
 
 if [ ! -z "$REQUIRED_ENVS" ]; then
-  echo $REQUIRED_ENVS
-  return 1
+    echo $REQUIRED_ENVS
+    return 1
 fi
 
 # Load commons.
 if [ ! -f $HOME/bin/.rc.common ]; then
-  ln -s $MCRA_PROJECTS_FOLDER/dotfiles/.rc.common $HOME/bin/.rc.common
+    ln -s $MCRA_PROJECTS_FOLDER/dotfiles/.rc.common $HOME/bin/.rc.common
 fi
 . $HOME/bin/.rc.common
 
@@ -89,105 +89,105 @@ fi
 # a new session and if it already exists, just
 # jump to it.
 tmx() {
-  local session_name
-  session_name="$1"
+    local session_name
+    session_name="$1"
 
-  # If no session name was given, use a default one.
-  if [ -z "$session_name" ]; then
-    session_name="default"
-  fi
+    # If no session name was given, use a default one.
+    if [ -z "$session_name" ]; then
+        session_name="default"
+    fi
 
-  # Try to create a new session.
-  tmux new -s $session_name >/dev/null 2>&1
-  if [ $? -eq 0 ]; then
-    return 0
-  fi
+    # Try to create a new session.
+    tmux new -s $session_name >/dev/null 2>&1
+    if [ $? -eq 0 ]; then
+        return 0
+    fi
 
-  echo "Trying to reuse session $session_name..."
-  sleep 0.5
-  # Try to load existing session.
-  tmux attach-session -t $session_name >/dev/null 2>&1
-  if [ $? -eq 0 ]; then
-    return 0
-  fi
+    echo "Trying to reuse session $session_name..."
+    sleep 0.5
+    # Try to load existing session.
+    tmux attach-session -t $session_name >/dev/null 2>&1
+    if [ $? -eq 0 ]; then
+        return 0
+    fi
 
-  # Something else happened.
-  echo "An error happened. Couldn't load $session_name"
-  return 1
+    # Something else happened.
+    echo "An error happened. Couldn't load $session_name"
+    return 1
 }
 alias t=tmx
 
 easy_jump_to_project() {
-  if [[ ! -z "${MCRA_PROJECTS_FOLDER}" ]]; then
-    if [[ ! -z "$1" ]]; then
-      pushd ${MCRA_PROJECTS_FOLDER}/$1
+    if [[ ! -z "${MCRA_PROJECTS_FOLDER}" ]]; then
+        if [[ ! -z "$1" ]]; then
+            pushd ${MCRA_PROJECTS_FOLDER}/$1
+        else
+            popd
+        fi
     else
-      popd
+        echo '${MCRA_PROJECTS_FOLDER} not defined'
     fi
-  else
-    echo '${MCRA_PROJECTS_FOLDER} not defined'
-  fi
 }
 alias j="easy_jump_to_project"
 
 # Setup the default text editor based on what is installed.
 if mm_is_command nvim; then
-  export EDITOR=nvim
+    export EDITOR=nvim
 
-  # alias vim="$EDITOR"
-  # alias vi=vim
-  # alias v=vim
-  # alias n=vim
-  alias n=$EDITOR
+    # alias vim="$EDITOR"
+    # alias vi=vim
+    # alias v=vim
+    # alias n=vim
+    alias n=$EDITOR
 elif mm_is_command vim; then
-  export EDITOR=vim
+    export EDITOR=vim
 
-  alias vim="$EDITOR"
-  alias vi=vim
-  alias v=vim
-  alias n=vim
-  alias n=$EDITOR
+    alias vim="$EDITOR"
+    alias vi=vim
+    alias v=vim
+    alias n=vim
+    alias n=$EDITOR
 elif mm_is_command vi; then
-  export EDITOR=vi
+    export EDITOR=vi
 elif mm_is_command nano; then
-  export EDITOR=nano
+    export EDITOR=nano
 else
-  echo "You don't have 'neovim' (nvim), 'vim', 'vi' or 'nano' installed."
-  echo "No idea what the EDITOR env will be haha. Actually, take a look:"
-  echo "$EDITOR"
+    echo "You don't have 'neovim' (nvim), 'vim', 'vi' or 'nano' installed."
+    echo "No idea what the EDITOR env will be haha. Actually, take a look:"
+    echo "$EDITOR"
 fi
 
 # Desktop notification to help me change tasks.
 function timer_notification() {
-  local summary="$1"
-  local default_summary='TEMPO ACABOU!'
-  local content="$2"
-  local default_content="Pronto! Hora de ir para a próxima tarefa!\n\nSe controla e faz isso, pra realmente conseguir avançar e não se sentir mal mais.\n\n\n----- IGNORE BELOW -----\n\n\nAgora vai um monte de texto, só pra isso ocupar bastante da tela e encher o saco. Agora vai um monte de texto, só pra isso ocupar bastante da tela e encher o saco. Agora vai um monte de texto, só pra isso ocupar bastante da tela e encher o saco. Agora vai um monte de texto, só pra isso ocupar bastante da tela e encher o saco. Agora vai um monte de texto, só pra isso ocupar bastante da tela e encher o saco. Agora vai um monte de texto, só pra isso ocupar bastante da tela e encher o saco. Agora vai um monte de texto, só pra isso ocupar bastante da tela e encher o saco. Agora vai um monte de texto, só pra isso ocupar bastante da tela e encher o saco. Agora vai um monte de texto, só pra isso ocupar bastante da tela e encher o saco. Agora vai um monte de texto, só pra isso ocupar bastante da tela e encher o saco. Agora vai um monte de texto, só pra isso ocupar bastante da tela e encher o saco. Agora vai um monte de texto, só pra isso ocupar bastante da tela e encher o saco. Agora vai um monte de texto, só pra isso ocupar bastante da tela e encher o saco. Agora vai um monte de texto, só pra isso ocupar bastante da tela e encher o saco. Agora vai um monte de texto, só pra isso ocupar bastante da tela e encher o saco. Agora vai um monte de texto, só pra isso ocupar bastante da tela e encher o saco. Agora vai um monte de texto, só pra isso ocupar bastante da tela e encher o saco. Agora vai um monte de texto, só pra isso ocupar bastante da tela e encher o saco. Agora vai um monte de texto, só pra isso ocupar bastante da tela e encher o saco. Agora vai um monte de texto, só pra isso ocupar bastante da tela e encher o saco. Agora vai um monte de texto, só pra isso ocupar bastante da tela e encher o saco. Agora vai um monte de texto, só pra isso ocupar bastante da tela e encher o saco. Agora vai um monte de texto, só pra isso ocupar bastante da tela e encher o saco. Agora vai um monte de texto, só pra isso ocupar bastante da tela e encher o saco. Agora vai um monte de texto, só pra isso ocupar bastante da tela e encher o saco. Agora vai um monte de texto, só pra isso ocupar bastante da tela e encher o saco. Agora vai um monte de texto, só pra isso ocupar bastante da tela e encher o saco. Agora vai um monte de texto, só pra isso ocupar bastante da tela e encher o saco."
+    local summary="$1"
+    local default_summary='TEMPO ACABOU!'
+    local content="$2"
+    local default_content="Pronto! Hora de ir para a próxima tarefa!\n\nSe controla e faz isso, pra realmente conseguir avançar e não se sentir mal mais.\n\n\n----- IGNORE BELOW -----\n\n\nAgora vai um monte de texto, só pra isso ocupar bastante da tela e encher o saco. Agora vai um monte de texto, só pra isso ocupar bastante da tela e encher o saco. Agora vai um monte de texto, só pra isso ocupar bastante da tela e encher o saco. Agora vai um monte de texto, só pra isso ocupar bastante da tela e encher o saco. Agora vai um monte de texto, só pra isso ocupar bastante da tela e encher o saco. Agora vai um monte de texto, só pra isso ocupar bastante da tela e encher o saco. Agora vai um monte de texto, só pra isso ocupar bastante da tela e encher o saco. Agora vai um monte de texto, só pra isso ocupar bastante da tela e encher o saco. Agora vai um monte de texto, só pra isso ocupar bastante da tela e encher o saco. Agora vai um monte de texto, só pra isso ocupar bastante da tela e encher o saco. Agora vai um monte de texto, só pra isso ocupar bastante da tela e encher o saco. Agora vai um monte de texto, só pra isso ocupar bastante da tela e encher o saco. Agora vai um monte de texto, só pra isso ocupar bastante da tela e encher o saco. Agora vai um monte de texto, só pra isso ocupar bastante da tela e encher o saco. Agora vai um monte de texto, só pra isso ocupar bastante da tela e encher o saco. Agora vai um monte de texto, só pra isso ocupar bastante da tela e encher o saco. Agora vai um monte de texto, só pra isso ocupar bastante da tela e encher o saco. Agora vai um monte de texto, só pra isso ocupar bastante da tela e encher o saco. Agora vai um monte de texto, só pra isso ocupar bastante da tela e encher o saco. Agora vai um monte de texto, só pra isso ocupar bastante da tela e encher o saco. Agora vai um monte de texto, só pra isso ocupar bastante da tela e encher o saco. Agora vai um monte de texto, só pra isso ocupar bastante da tela e encher o saco. Agora vai um monte de texto, só pra isso ocupar bastante da tela e encher o saco. Agora vai um monte de texto, só pra isso ocupar bastante da tela e encher o saco. Agora vai um monte de texto, só pra isso ocupar bastante da tela e encher o saco. Agora vai um monte de texto, só pra isso ocupar bastante da tela e encher o saco. Agora vai um monte de texto, só pra isso ocupar bastante da tela e encher o saco. Agora vai um monte de texto, só pra isso ocupar bastante da tela e encher o saco."
 
-  if [ -z "$summary" ]; then
-    summary=$default_summary
-  else
-    summary="$(echo $summary | tr '[:lower:]' '[:upper:]')"
-    summary="$summary - $default_summary"
-  fi
+    if [ -z "$summary" ]; then
+        summary=$default_summary
+    else
+        summary="$(echo $summary | tr '[:lower:]' '[:upper:]')"
+        summary="$summary - $default_summary"
+    fi
 
-  if [ -z "$content" ]; then
-    content="$default_content"
-  fi
+    if [ -z "$content" ]; then
+        content="$default_content"
+    fi
 
-  notify-send -u critical "$summary" "$content"
+    notify-send -u critical "$summary" "$content"
 }
 
 function timer() {
-  local time="$1"
-  local default_time="30m"
+    local time="$1"
+    local default_time="30m"
 
-  if [[ -z "$time" ]]; then
-    echo "Not time provided, using default ($default_time). You can either provide a value (format: 1s, 20m, 2h, 1h20m) or use an existing template (currently: t1, t5, t15, t30, t60) all in minutes."
-    time="$default_time"
-  fi
+    if [[ -z "$time" ]]; then
+        echo "Not time provided, using default ($default_time). You can either provide a value (format: 1s, 20m, 2h, 1h20m) or use an existing template (currently: t1, t5, t15, t30, t60) all in minutes."
+        time="$default_time"
+    fi
 
-  sleep "$time" && timer_notification
+    sleep "$time" && timer_notification
 }
 alias t5="sleep 5m && timer_notification"
 alias t15="sleep 15m && timer_notification"
@@ -195,154 +195,154 @@ alias t30="sleep 30m && timer_notification"
 alias t60="sleep 1h && timer_notification"
 
 function force_rm() {
-  local target="$(realpath $1)"
+    local target="$(realpath $1)"
 
-  # Verify that the target is not empty.
-  if [[ -z "$target" ]]; then
-    echo 'Please, provide the path to a file or folder.'
-    return 1
-  fi
+    # Verify that the target is not empty.
+    if [[ -z "$target" ]]; then
+        echo 'Please, provide the path to a file or folder.'
+        return 1
+    fi
 
-  echo -n "> Verifying if target is valid for '$target': "
+    echo -n "> Verifying if target is valid for '$target': "
 
-  # Verify that the target is inside the user home dir or the chosen tmp dir,
-  # to avoid removing system stuff.
-  case $target in
-  $HOME/*)
-    echo -n 'valid.'
-    echo
-    ;;
-  $MCRA_TMP_PLAYGROUND/*)
-    echo -n 'valid.'
-    echo
-    ;;
-  /*)
-    echo -n 'invalid.'
-    echo
-    echo
-    echo "All paths should be within '$HOME' or '$MCRA_TMP_PLAYGROUND'. If you want to remove something above it, do manually (and BE SURE to know what you are doing!)"
-    return 1
-    ;;
-  esac
-
-  # Verify that the target is a file/symlink or a directory.
-  if [[ ! -e "$target" && ! -d "$target" ]]; then
-    echo 'What you are trying to remove is not a file nor a directory:'
-    echo
-    echo "  $target"
-    echo
-    echo 'Aborting...'
-
-    return 1
-  fi
-
-  echo "> Running 'ls -la $target' ..."
-  echo
-  ls -la $target
-  echo
-  # while true; do
-  #     read 'Are you sure you wish to permanentely remove it all? [yN] ' yn
-  #     case $yn in
-  #         [Yy]* ) rm -rf ${target}; break;;
-  #         [Nn]* ) return 0;;
-  #         * ) return 0;;
-  #     esac
-  # done
-  echo '> Are you sure you wish to permanentely remove it all? [yN]'
-  echo
-  select yn in "y" "n"; do
-    case $yn in
-    y)
-      echo
-      echo "> Running 'rm -rf $target' ..."
-      rm -rf $target
-      return 0
-      ;;
-    n | *)
-      echo
-      echo 'Aborting...'
-      return 1
-      ;;
+    # Verify that the target is inside the user home dir or the chosen tmp dir,
+    # to avoid removing system stuff.
+    case $target in
+    $HOME/*)
+        echo -n 'valid.'
+        echo
+        ;;
+    $MCRA_TMP_PLAYGROUND/*)
+        echo -n 'valid.'
+        echo
+        ;;
+    /*)
+        echo -n 'invalid.'
+        echo
+        echo
+        echo "All paths should be within '$HOME' or '$MCRA_TMP_PLAYGROUND'. If you want to remove something above it, do manually (and BE SURE to know what you are doing!)"
+        return 1
+        ;;
     esac
-  done
 
-  # Other idea:
-  #
-  #local valid_prefixes=($HOME $MCRA_TMP_PLAYGROUND)
+    # Verify that the target is a file/symlink or a directory.
+    if [[ ! -e "$target" && ! -d "$target" ]]; then
+        echo 'What you are trying to remove is not a file nor a directory:'
+        echo
+        echo "  $target"
+        echo
+        echo 'Aborting...'
 
-  #echo "> Target should have one of the valid path prefixes:"
-  #echo
-  #echo "$target"
-  #echo
+        return 1
+    fi
 
-  #for valid in "${valid_prefixes[@]}"; do
-  #    if [[ $target == $valid/* ]]; then
-  #        echo "\t[x] valid"
-  #        echo "\t[ ] invalid"
-  #    else
-  #        echo "\t[ ] valid"
-  #        echo "\t[x] invalid"
-  #        echo
-  #        echo "All paths should be within '$HOME' or '$MCRA_TMP_PLAYGROUND'. If you want to remove something above it, do manually (and BE SURE to know what you are doing!)"
+    echo "> Running 'ls -la $target' ..."
+    echo
+    ls -la $target
+    echo
+    # while true; do
+    #     read 'Are you sure you wish to permanentely remove it all? [yN] ' yn
+    #     case $yn in
+    #         [Yy]* ) rm -rf ${target}; break;;
+    #         [Nn]* ) return 0;;
+    #         * ) return 0;;
+    #     esac
+    # done
+    echo '> Are you sure you wish to permanentely remove it all? [yN]'
+    echo
+    select yn in "y" "n"; do
+        case $yn in
+        y)
+            echo
+            echo "> Running 'rm -rf $target' ..."
+            rm -rf $target
+            return 0
+            ;;
+        n | *)
+            echo
+            echo 'Aborting...'
+            return 1
+            ;;
+        esac
+    done
 
-  #        return 1
-  #    fi
-  #done
+    # Other idea:
+    #
+    #local valid_prefixes=($HOME $MCRA_TMP_PLAYGROUND)
 
-  return 1
+    #echo "> Target should have one of the valid path prefixes:"
+    #echo
+    #echo "$target"
+    #echo
+
+    #for valid in "${valid_prefixes[@]}"; do
+    #    if [[ $target == $valid/* ]]; then
+    #        echo "\t[x] valid"
+    #        echo "\t[ ] invalid"
+    #    else
+    #        echo "\t[ ] valid"
+    #        echo "\t[x] invalid"
+    #        echo
+    #        echo "All paths should be within '$HOME' or '$MCRA_TMP_PLAYGROUND'. If you want to remove something above it, do manually (and BE SURE to know what you are doing!)"
+
+    #        return 1
+    #    fi
+    #done
+
+    return 1
 }
 
 mm_today() {
-  echo "$(date +%F)"
+    echo "$(date +%F)"
 
-  return 0
+    return 0
 }
 
 mm_time() {
-  echo "$(date +%Hh%M)"
+    echo "$(date +%Hh%M)"
 
-  return 0
+    return 0
 }
 
 zip-dir-usage() {
-  echo "Usage: zip-dir <folder-to-zip> <zip-name=folder-to-zip>
+    echo "Usage: zip-dir <folder-to-zip> <zip-name=folder-to-zip>
 
 Error: $1
 "
 }
 
 zip-dir() {
-  local folder_to_zip
-  local zip_name
+    local folder_to_zip
+    local zip_name
 
-  folder_to_zip="$1"
-  zip_name="$2"
+    folder_to_zip="$1"
+    zip_name="$2"
 
-  if [ -z "$folder_to_zip" ]; then
-    zip-dir-usage 'The first argument is the directory to zip. The second
+    if [ -z "$folder_to_zip" ]; then
+        zip-dir-usage 'The first argument is the directory to zip. The second
 argument is optional: if not provided, the first is used in its place.'
-    return 1
-  fi
+        return 1
+    fi
 
-  if [ ! -d "$folder_to_zip" ]; then
-    zip-dir-usage "'$folder_to_zip' is not a directory."
-    return 1
-  fi
+    if [ ! -d "$folder_to_zip" ]; then
+        zip-dir-usage "'$folder_to_zip' is not a directory."
+        return 1
+    fi
 
-  if [ -z "$zip_name" ]; then
-    zip_name=$(basename "$folder_to_zip")
-  fi
+    if [ -z "$zip_name" ]; then
+        zip_name=$(basename "$folder_to_zip")
+    fi
 
-  if ! command -v zip &>/dev/null; then
-    echo 'zip is not installed or not in the path'
-    return 1
-  fi
+    if ! command -v zip &>/dev/null; then
+        echo 'zip is not installed or not in the path'
+        return 1
+    fi
 
-  (
-    cd $(dirname $folder_to_zip)
-    zip -r "$zip_name" "$zip_name"
-  )
-  return 0
+    (
+        cd $(dirname $folder_to_zip)
+        zip -r "$zip_name" "$zip_name"
+    )
+    return 0
 }
 
 # help() {
@@ -451,116 +451,116 @@ argument is optional: if not provided, the first is used in its place.'
 # }
 
 regexfind() {
-  local dir="$1"
-  local regex="$2"
+    local dir="$1"
+    local regex="$2"
 
-  if [ ! -d "$dir" ]; then
-    echo "ERROR: '$dir' is not a directory"
-    return 1
-  fi
+    if [ ! -d "$dir" ]; then
+        echo "ERROR: '$dir' is not a directory"
+        return 1
+    fi
 
-  find "$dir" -regextype egrep -regex "$regex"
+    find "$dir" -regextype egrep -regex "$regex"
 }
 alias rfind=regexfind
 
 count_lines_of_code() {
-  local to_count='(js|cjs|mjs|jsx|ts|cts|mts|tsx|elm|sh)$'
-  local to_ignore='(compiled|vendored|cypress|e2e|bundle|config|example|[Ii]cons)'
-  local md_wrap='sh'
+    local to_count='(js|cjs|mjs|jsx|ts|cts|mts|tsx|elm|sh)$'
+    local to_ignore='(compiled|vendored|cypress|e2e|bundle|config|example|[Ii]cons)'
+    local md_wrap='sh'
 
-  while [[ $# -gt 0 ]]; do
-    case "$1" in
-    --count | -c)
-      to_count="$2"
+    while [[ $# -gt 0 ]]; do
+        case "$1" in
+        --count | -c)
+            to_count="$2"
 
-      shift
-      shift
-      ;;
+            shift
+            shift
+            ;;
 
-    --ignore | -i)
-      to_ignore="$2"
+        --ignore | -i)
+            to_ignore="$2"
 
-      shift
-      shift
-      ;;
+            shift
+            shift
+            ;;
 
-    --md-wrap | -w)
-      md_wrap="$2"
+        --md-wrap | -w)
+            md_wrap="$2"
 
-      shift
-      shift
-      ;;
+            shift
+            shift
+            ;;
 
-    --no-md-wrap | -no-w)
-      md_wrap=''
+        --no-md-wrap | -no-w)
+            md_wrap=''
 
-      shift
-      ;;
-    esac
-  done
+            shift
+            ;;
+        esac
+    done
 
-  # Only look at files tracked by git, i.e., ignore what is in `.gitignore`.
-  local cmd="git ls-files \
+    # Only look at files tracked by git, i.e., ignore what is in `.gitignore`.
+    local cmd="git ls-files \
         | egrep \"$to_count\" \
         | egrep -v \"$to_ignore\" \
         | xargs wc -l"
 
-  if [ -n "$md_wrap" ]; then
-    echo '```'"$md_wrap"
-  fi
+    if [ -n "$md_wrap" ]; then
+        echo '```'"$md_wrap"
+    fi
 
-  echo "looking at: $to_count"
-  echo "ignoring: $to_ignore"
-  echo "running command:\n  $cmd" | sed -E -e 's/\s{9}/\n    /g'
-  echo "result:"
+    echo "looking at: $to_count"
+    echo "ignoring: $to_ignore"
+    echo "running command:\n  $cmd" | sed -E -e 's/\s{9}/\n    /g'
+    echo "result:"
 
-  bash -c "$cmd"
+    bash -c "$cmd"
 
-  if [ -n "$md_wrap" ]; then
-    echo '```'
-  fi
+    if [ -n "$md_wrap" ]; then
+        echo '```'
+    fi
 
 }
 alias loc=count_lines_of_code
 
 x() {
-  # Execute stuff depending on what is in the folder.
-  #
-  # - If there's an `nx.json` file in the current directory
-  #   - If no arguments are given, list all `nx` tasks
-  #   - Else, run `nx` with the given arguments.
-  # - If there's a `package.json` file in the current directory
-  #   - If no arguments are given, list all `pnpm` scripts
-  #   - Else, run `pnpm run` with the given arguments.
+    # Execute stuff depending on what is in the folder.
+    #
+    # - If there's an `nx.json` file in the current directory
+    #   - If no arguments are given, list all `nx` tasks
+    #   - Else, run `nx` with the given arguments.
+    # - If there's a `package.json` file in the current directory
+    #   - If no arguments are given, list all `pnpm` scripts
+    #   - Else, run `pnpm run` with the given arguments.
 
-  local nx_json='nx.json'
-  local package_json='package.json'
+    local nx_json='nx.json'
+    local package_json='package.json'
 
-  if [ -f "$nx_json" ]; then
-    if [ $# -eq 0 ]; then
-      echo "No arguments given. Listing all 'nx' tasks."
-      echo
-      pnpx nx show projects | sort
+    if [ -f "$nx_json" ]; then
+        if [ $# -eq 0 ]; then
+            echo "No arguments given. Listing all 'nx' tasks."
+            echo
+            pnpx nx show projects | sort
+        else
+            echo "Running 'nx' with the given arguments."
+            echo
+            pnpx nx "$@"
+        fi
+    elif [ -f "$package_json" ]; then
+        if [ $# -eq 0 ]; then
+            echo "No arguments given. Listing all 'pnpm' scripts."
+            echo
+            cat package.json | jq -r '.scripts|to_entries[]| .key + " -> " + .value'
+        else
+            echo "Running 'pnpm run' with the given arguments."
+            echo
+            pnpm run "$@"
+        fi
     else
-      echo "Running 'nx' with the given arguments."
-      echo
-      pnpx nx "$@"
+        echo "No 'nx.json' or 'package.json' found in the current directory and you didn't configured any other behavior. Exiting."
     fi
-  elif [ -f "$package_json" ]; then
-    if [ $# -eq 0 ]; then
-      echo "No arguments given. Listing all 'pnpm' scripts."
-      echo
-      cat package.json | jq -r '.scripts|to_entries[]| .key + " -> " + .value'
-    else
-      echo "Running 'pnpm run' with the given arguments."
-      echo
-      pnpm run "$@"
-    fi
-  else
-    echo "No 'nx.json' or 'package.json' found in the current directory and you didn't configured any other behavior. Exiting."
-  fi
 
-  return 0
+    return 0
 }
 
 # StackOverflow: https://unix.stackexchange.com/a/38380/140493
@@ -577,15 +577,15 @@ x() {
 #   videos.
 #
 function compress_video() {
-  local input="${1:-input.mp4}"
-  local output="${2:-output.mp4}"
+    local input="${1:-input.mp4}"
+    local output="${2:-output.mp4}"
 
-  ffmpeg -i $input -vcodec libx265 -crf 28 $output
+    ffmpeg -i $input -vcodec libx265 -crf 28 $output
 }
 
 # List broken symlinks in folder.
 function broken_symlinks() {
-  find "${1:-.}" -type l ! -exec test -e {} \; -exec ls -lah --color {} \;
+    find "${1:-.}" -type l ! -exec test -e {} \; -exec ls -lah --color {} \;
 }
 
 # next function above.
@@ -610,13 +610,13 @@ function broken_symlinks() {
 # Show diffs between files.
 
 if command -v code &>/dev/null; then
-  # VSCode diff is great!
-  alias diff-code="code -d"
+    # VSCode diff is great!
+    alias diff-code="code -d"
 fi
 
 if [ "$EDITOR" = "nvim" ]; then
-  # Neovim diff is good too.
-  alias vimdiff="nvim -d"
+    # Neovim diff is good too.
+    alias vimdiff="nvim -d"
 fi
 
 # -l: print as a list.
@@ -677,85 +677,85 @@ EOF
 )'
 
 function improved_ls() {
-  local path_to_use=${1:-.}
-  local tree_level
-  local is_next=false
+    local path_to_use=${1:-.}
+    local tree_level
+    local is_next=false
 
-  [[ -n "$1" ]] && shift
+    [[ -n "$1" ]] && shift
 
-  # Try to get `path_to_use` from the --path option in $@.
-  for arg in "$@"; do
-    if [[ $arg == --path=* ]] || [[ $arg == -p=* ]]; then
-      path_to_use="${arg#*=}"
-    elif [[ "$arg" == "--path" ]] || [[ "$arg" == "-p" ]]; then
-      is_next=true
-    elif $is_next; then
-      path_to_use="$arg"
-      is_next=false
-    fi
-  done
+    # Try to get `path_to_use` from the --path option in $@.
+    for arg in "$@"; do
+        if [[ $arg == --path=* ]] || [[ $arg == -p=* ]]; then
+            path_to_use="${arg#*=}"
+        elif [[ "$arg" == "--path" ]] || [[ "$arg" == "-p" ]]; then
+            is_next=true
+        elif $is_next; then
+            path_to_use="$arg"
+            is_next=false
+        fi
+    done
 
-  for arg in "$@"; do
-    if [[ $arg == --level=* ]] || [[ $arg == -l=* ]]; then
-      tree_level="${arg#*=}"
-    elif [[ "$arg" == "--level" ]] || [[ "$arg" == "-l" ]]; then
-      is_next=true
-    elif $is_next; then
-      tree_level="$arg"
-      is_next=false
-    fi
-  done
+    for arg in "$@"; do
+        if [[ $arg == --level=* ]] || [[ $arg == -l=* ]]; then
+            tree_level="${arg#*=}"
+        elif [[ "$arg" == "--level" ]] || [[ "$arg" == "-l" ]]; then
+            is_next=true
+        elif $is_next; then
+            tree_level="$arg"
+            is_next=false
+        fi
+    done
 
-  echo "--path=${path_to_use}"
-  [[ -n "$tree_level" ]] && echo "--level=${tree_level}"
+    echo "--path=${path_to_use}"
+    [[ -n "$tree_level" ]] && echo "--level=${tree_level}"
 
-  # Remove the --path and --level option from the arguments.
-  local rest=$(echo "$@" | sed -E -e 's/(--path|-p)[= ][^ ]+//g' -e 's/(--level|-l)[= ][^ ]+//g')
+    # Remove the --path and --level option from the arguments.
+    local rest=$(echo "$@" | sed -E -e 's/(--path|-p)[= ][^ ]+//g' -e 's/(--level|-l)[= ][^ ]+//g')
 
-  myls ${path_to_use} ${rest} | myls_display_table
-  [[ -n "$tree_level" ]] &&
-    tree "${path_to_use}" -L $tree_level ||
-    true
+    myls ${path_to_use} ${rest} | myls_display_table
+    [[ -n "$tree_level" ]] &&
+        tree "${path_to_use}" -L $tree_level ||
+        true
 }
 
 function improved_ls_no_group() {
-  myls $@ | myls_display_no_group
+    myls $@ | myls_display_no_group
 }
 
 if [[ $(uname) == "Darwin" ]]; then
-  # Mac doesn't support the --time-style flag.
-  alias l='ls -lFh -t'
+    # Mac doesn't support the --time-style flag.
+    alias l='ls -lFh -t'
 else
-  alias l='improved_ls_no_group'
-  alias lt='improved_ls'
+    alias l='improved_ls_no_group'
+    alias lt='improved_ls'
 fi
 
 function improved_ls_full() {
-  local path_to_use=${1:-.}
-  [[ -n "$1" ]] && shift
-  improved_ls $path_to_use $@ -A
+    local path_to_use=${1:-.}
+    [[ -n "$1" ]] && shift
+    improved_ls $path_to_use $@ -A
 }
 alias ll='improved_ls_no_group -A'
 alias llt='improved_ls_full'
 
 if [[ ! -z "${MCRA_INIT_SHELL}" && ! -z "${MCRA_LOCAL_SHELL}" ]]; then
-  alias rc.='echo -n "Reloading configs at $(date +%F_%T)... " \
+    alias rc.='echo -n "Reloading configs at $(date +%F_%T)... " \
         && source $MCRA_LOCAL_SHELL \
         && source $MCRA_INIT_SHELL \
         && echo '\''done!'\'' \
         || echo '\''failed :('\'''
-  # # Changed in the last 10 minutes.
-  # alias rc_changed='find $MCRA_INIT_SHELL $MCRA_LOCAL_SHELL -mmin -10'
-  alias rc='cd $MCRA_PROJECTS_FOLDER/dotfiles; $EDITOR $MCRA_INIT_SHELL; rc.'
-  alias rcl='cd $MCRA_PROJECTS_FOLDER/dotfiles; $EDITOR $MCRA_LOCAL_SHELL; rc.'
-  alias rcz='cd $MCRA_PROJECTS_FOLDER/dotfiles; $EDITOR ~/.zshrc; rc.'
-  alias rcb='cd $MCRA_PROJECTS_FOLDER/dotfiles; $EDITOR ~/.bashrc; rc.'
+    # # Changed in the last 10 minutes.
+    # alias rc_changed='find $MCRA_INIT_SHELL $MCRA_LOCAL_SHELL -mmin -10'
+    alias rc='cd $MCRA_PROJECTS_FOLDER/dotfiles; $EDITOR $MCRA_INIT_SHELL; rc.'
+    alias rcl='cd $MCRA_PROJECTS_FOLDER/dotfiles; $EDITOR $MCRA_LOCAL_SHELL; rc.'
+    alias rcz='cd $MCRA_PROJECTS_FOLDER/dotfiles; $EDITOR ~/.zshrc; rc.'
+    alias rcb='cd $MCRA_PROJECTS_FOLDER/dotfiles; $EDITOR ~/.bashrc; rc.'
 else
-  alias rc="echo 'Define \$MCRA_INIT_SHELL and \$MCRA_LOCAL_SHELL in your rc file'"
-  alias rcl=rc
-  alias rcz=rc
-  alias rcb=rc
-  alias rc.=rc
+    alias rc="echo 'Define \$MCRA_INIT_SHELL and \$MCRA_LOCAL_SHELL in your rc file'"
+    alias rcl=rc
+    alias rcz=rc
+    alias rcb=rc
+    alias rc.=rc
 fi
 
 # Speech synthesizer.
@@ -769,9 +769,9 @@ alias falar="spd-say -w -l pt-BR -p 100 -r -30 -R 100 -m all"
 
 # Always use sed with extended regexes.
 if [[ $(uname) == "Darwin" ]]; then
-  alias sed='sed -E'
+    alias sed='sed -E'
 else
-  alias sed='sed -r'
+    alias sed='sed -r'
 fi
 
 # I never remember how to extract tar files. Now I discovered that it
@@ -782,7 +782,7 @@ alias untar="tar -xf"
 
 # Always use the same tmp and make it easy to go there.
 if [[ ! -d "$MCRA_TMP_PLAYGROUND" ]]; then
-  mkdir $MCRA_TMP_PLAYGROUND
+    mkdir $MCRA_TMP_PLAYGROUND
 fi
 alias tmp="pushd $MCRA_TMP_PLAYGROUND"
 
@@ -810,25 +810,25 @@ alias t5="tree -L 5"
 
 alias is_venv='which deactivate >/dev/null 2>&1 && true || false'
 function check_python_venv() {
-  local in_venv
-  if is_venv; then
-    in_venv="IN"
-  else
-    in_venv="NOT IN"
-  fi
+    local in_venv
+    if is_venv; then
+        in_venv="IN"
+    else
+        in_venv="NOT IN"
+    fi
 
-  printf "\n!!! %s A VIRTUAL ENVIRONMENT... !!!\n\n\n" $in_venv
+    printf "\n!!! %s A VIRTUAL ENVIRONMENT... !!!\n\n\n" $in_venv
 }
 alias python3='check_python_venv && python3'
 alias python=python3
 alias py='python'
 
 if mm_is_command rg; then
-  alias g=rg
+    alias g=rg
 elif mm_is_command egrep; then
-  alias g=egrep
+    alias g=egrep
 elif mm_is_command grep; then
-  alias g=grep
+    alias g=grep
 fi
 
 export LESS='-R'
@@ -854,13 +854,13 @@ alias list_process_to_port_tcp="netstat -lnpt"
 # -----
 
 fonts_install_packages_to_improve_rendering() {
-  # Great fonts with good rendering.
-  sudo apt install fonts-noto
-  sudo apt install ttf-mscorefonts-installer
+    # Great fonts with good rendering.
+    sudo apt install fonts-noto
+    sudo apt install ttf-mscorefonts-installer
 
-  # Packages that enhance font rendering.
-  sudo apt install fontconfig fontconfig-config
-  sudo apt install libfreetype6
+    # Packages that enhance font rendering.
+    sudo apt install fontconfig fontconfig-config
+    sudo apt install libfreetype6
 }
 
 alias fonts_update_cache="fc-cache -fv"
