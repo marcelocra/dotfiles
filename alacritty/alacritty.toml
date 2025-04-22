@@ -4,12 +4,25 @@ working_directory = "/home/marcelocra"
 live_config_reload = true
 
 
+[font]
+
+normal = { family = "MesloLGS Nerd Font", style = "Regular" }
+# normal = { family = "MesloLGM Nerd Font", style = "Regular" }
+# normal = { family = "Reddit Mono", style = "Regular" }
+# normal = { family = "Hack Nerd Font", style = "Regular" }
+# normal = { family = "JetBrainsMono Nerd Font Mono", style = "Regular" }
+# normal = { family = "CodeNewRoman Nerd Font Mono", style = "Regular" }
+size = 11
+
+
 [window]
 
-# position = { x = 1303, y = 0 }
-# dimensions = { columns = 126, lines = 50 }
-# decorations = "None"
-opacity = 0.95
+# dimensions = { columns = 157, lines = 100 } # Reddit|CodeNewRoman 11
+dimensions = { columns = 139, lines = 100 }   # MesloM|Hack|JB 11
+
+position = { x = 1303, y = 0 }
+decorations = "None"
+opacity = 0.97  # 0.93 is another good value to try.
 blur = true
 padding = { x = 3, y = 3 }
 dynamic_padding = true
@@ -20,22 +33,16 @@ dynamic_padding = true
 history = 100000
 
 
-[font]
-
-# normal = { family = "Reddit Mono", style = "Regular" }
-normal = { family = "MesloLGM Nerd Font", style = "Regular" }
-size = 11
-
-
 [colors]
 
 # cursor = { text = "#000000", cursor = "#ff4500" }
+transparent_background_colors = true
 
 
 [cursor]
 
 style = { shape = "Beam" }
-thickness = 0.2
+thickness = 0.3
 
 
 [terminal]
