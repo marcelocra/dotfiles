@@ -12,7 +12,7 @@ local act = wezterm.action
 -- Options: 'Fixed', 'Fixed Extended', 'Extended'.
 local which_iosevka = "Iosevka Fixed Extended"
 
-local default_font_size = 11
+local default_font_size = 13
 local default_font_weight = 400
 
 -- Function to create a font configuration with defaults.
@@ -36,7 +36,7 @@ local function create_font(font_family, opts)
 end
 
 local fonts = { -- <<(
-  meslo = create_font("MesloLGS Nerd Font", {
+  meslo = create_font("MesloLGM Nerd Font", {
     -- size = 13,
   }),
 
@@ -467,7 +467,74 @@ end)
 
 config.window_background_opacity = 1
 config.text_background_opacity = 1
+-- config.window_background_opacity = 0.7
+-- config.text_background_opacity = 0.8
 config.window_decorations = "RESIZE"
+-- config.window_background_gradient = {
+--   colors = { "#000", "#fff" },
+--   -- Specifies a Linear gradient starting in the top left corner.
+--   -- orientation = { Linear = { angle = -45.0 } },
+--   -- orientation = { Linear = { angle = 270 } },
+-- }
+-- config.window_background_gradient = {
+--   -- Can be "Vertical" or "Horizontal".  Specifies the direction
+--   -- in which the color gradient varies.  The default is "Horizontal",
+--   -- with the gradient going from left-to-right.
+--   -- Linear and Radial gradients are also supported; see the other
+--   -- examples below
+--   -- orientation = "Vertical",
+--   orientation = { Linear = { angle = 180.0 } },
+
+--   -- Specifies the set of colors that are interpolated in the gradient.
+--   -- Accepts CSS style color specs, from named colors, through rgb
+--   -- strings and more
+--   colors = {
+--     -- Combination of blues.
+--     -- "#0f0c29",
+--     -- "#302b63",
+--     -- "#24243e",
+
+--     -- Pink and orange.
+--     -- "#D13ABD",
+--     -- "#EEBD89",
+
+--     -- Other colors.
+--     "#000000",
+--   },
+
+--   -- Instead of specifying `colors`, you can use one of a number of
+--   -- predefined, preset gradients.
+--   -- A list of presets is shown in a section below.
+--   -- preset = "Warm",
+
+--   -- Specifies the interpolation style to be used.
+--   -- "Linear", "Basis" and "CatmullRom" as supported.
+--   -- The default is "Linear".
+--   interpolation = "Linear",
+
+--   -- How the colors are blended in the gradient.
+--   -- "Rgb", "LinearRgb", "Hsv" and "Oklab" are supported.
+--   -- The default is "Rgb".
+--   blend = "Rgb",
+
+--   -- To avoid vertical color banding for horizontal gradients, the
+--   -- gradient position is randomly shifted by up to the `noise` value
+--   -- for each pixel.
+--   -- Smaller values, or 0, will make bands more prominent.
+--   -- The default value is 64 which gives decent looking results
+--   -- on a retina macbook pro display.
+--   noise = 64,
+
+--   -- By default, the gradient smoothly transitions between the colors.
+--   -- You can adjust the sharpness by specifying the segment_size and
+--   -- segment_smoothness parameters.
+--   -- segment_size configures how many segments are present.
+--   -- segment_smoothness is how hard the edge is; 0.0 is a hard edge,
+--   -- 1.0 is a soft edge.
+
+--   -- segment_size = 11,
+--   -- segment_smoothness = 0.0,
+-- }
 
 local choose_random_font = function()
   local best_fonts = {
@@ -476,15 +543,15 @@ local choose_random_font = function()
     -- fonts.atkinson,
     -- fonts.commit_mono,
     -- fonts.dm,
-    -- fonts.geist,
+    -- fonts.geist, -- TODO: Figure out why width is weird.
     -- fonts.ibm,
     -- fonts.jb,
     -- fonts.jb_nf,
     -- fonts.liberation_mono,
-    -- fonts.noto,
+    fonts.noto,
     -- fonts.recursive_casual,
     -- fonts.recursive_duotone,
-    -- fonts.recursive_linear,
+    fonts.recursive_linear,
     -- fonts.recursive_semicasual,
     -- fonts.roboto,
     -- fonts.victor_mono,
@@ -499,10 +566,10 @@ local choose_random_font = function()
     -- fonts.hack,
     -- fonts.iosevka,
     -- fonts.iosevka_ss04_menlo,
-    -- fonts.iosevka_ss07_monaco,
+    fonts.iosevka_ss07_monaco,
     -- fonts.iosevka_ss08_pragmata,
     -- fonts.m_plus,
-    fonts.meslo,
+    -- fonts.meslo,
     -- fonts.red_hat_mono,
     -- fonts.reddit_mono,
     -- fonts.roboto,
@@ -563,14 +630,25 @@ local function change_color_scheme(window, pane)
   wezterm.gui.gui_windows()[1]:set_config_overrides({ color_scheme = get_scheme({ force_random = true }) })
 end
 
--- config.keys = {
---   { key = "h", mods = "SHIFT|CTRL", action = wezterm.action.Search({ Regex = "hello" }) },
---   { key = "j", mods = "ALT|SHIFT", action = act.ActivateTabRelative(-1) },
---   { key = "k", mods = "ALT|SHIFT", action = act.ActivateTabRelative(1) },
---   { key = "t", mods = "SHIFT|ALT", action = act.SpawnTab("CurrentPaneDomain") },
---   { key = "t", mods = "SHIFT|CTRL", action = wezterm.action_callback(change_color_scheme) },
---   { key = "r", mods = "CTRL|SHIFT", action = wezterm.action.ReloadConfiguration },
--- }
+config.keys = {
+  -- Examples
+  -- --------
+  -- Search for a regex:
+  -- { key = "h", mods = "SHIFT|CTRL", action = wezterm.action.Search({ Regex = "hello" }) },
+  --
+  -- Activate previous or next tabs (might conflict with Neovim):
+  -- { key = "j", mods = "ALT|SHIFT", action = act.ActivateTabRelative(-1) },
+  -- { key = "k", mods = "ALT|SHIFT", action = act.ActivateTabRelative(1) },
+  --
+  -- Create a new tab:
+  -- { key = "t", mods = "SHIFT|ALT", action = act.SpawnTab("CurrentPaneDomain") },
+  --
+  -- Reload the configuration:
+  -- { key = "r", mods = "CTRL|SHIFT", action = wezterm.action.ReloadConfiguration },
+
+  -- Randomly choose a theme.
+  { key = "t", mods = "SHIFT|CTRL", action = wezterm.action_callback(change_color_scheme) },
+}
 
 -- RETURN THE CONFIG OBJECT, TO APPLY ALL SETTINGS
 
