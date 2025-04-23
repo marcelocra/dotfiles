@@ -422,7 +422,7 @@
   //    more fish-like stuff (::<)
 
   ///auto-config-start:fonts
-  "editor.fontFamily": "'Reddit Mono', 'MesloLGS Nerd Font', 'M Plus 1 Code', 'CodeNewRoman Nerd Font Mono', 'RecMonoLinear Nerd Font', 'RecMonoDuotone Nerd Font', 'Hack Nerd Font', 'Geist Mono', Iosevka",
+  "editor.fontFamily": "'CodeNewRoman Nerd Font Mono', 'Reddit Mono', 'MesloLGS Nerd Font', 'M Plus 1 Code', 'RecMonoLinear Nerd Font', 'RecMonoDuotone Nerd Font', 'Hack Nerd Font', 'Geist Mono', Iosevka",
   "editor.fontSize": 15,
   "editor.fontWeight": "normal",
   ///auto-config-end:fonts
@@ -978,7 +978,14 @@
   "workbench.sideBar.location": "left",
   "workbench.panel.defaultLocation": "bottom",
   "workbench.editor.pinnedTabsOnSeparateRow": false,
-  "workbench.activityBar.location": "top"
+  "workbench.activityBar.location": "top",
+  "workbench.preferredDarkColorTheme": "Mariana (Sublime Text)",
+  "workbench.preferredLightColorTheme": "Night Owl Light",
+
+  // Keep the color theme last, as I'm always changing it and this way we won't
+  // have a problem with the comma.
+
+  "workbench.colorTheme": "Mariana (Sublime Text)"
 
   // #endregion workbench. }}}
 }
