@@ -2,13 +2,14 @@
 -- Default options that are always set: https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/config/options.lua
 -- Add any additional options here
 
-local utils = require("utils")
-local vimrc_folder = utils.vimrc_folder
-
 local the_leader = " "
 vim.g.mapleader = the_leader
 vim.g.maplocalleader = the_leader
 
-vim.opt.spell = true
-vim.opt.spelllang = "en,pt_br,pt"
-vim.opt.spellfile = vimrc_folder .. "/spell/dict.utf-8.add"
+-- Enable with <Leader>us.
+vim.opt.spell = false
+-- NOTE: The spelling_language and spelling_languages options in EditorConfig
+-- takes precedence over spelllang. If you are not seeing what you expect,
+-- check in your EditorConfig file.
+vim.opt.spelllang = "en,en_us,pt_br,pt"
+vim.opt.spellfile = os.getenv("MCRA_LOCAL_DOTFILES") .. "/backups/nvim/spell/dict.utf-8.add"
