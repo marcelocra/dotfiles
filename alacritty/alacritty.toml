@@ -3,16 +3,33 @@
 working_directory = "/home/marcelocra"
 live_config_reload = true
 
+import = [
+  # # Cool themes.
+  #
+  # # Light.
+  # "~/.config/alacritty/alacritty-theme/themes/catppuccin_latte.toml",
+  #
+  # # Dark.
+  # "~/.config/alacritty/alacritty-theme/themes/catppuccin.toml",
+  # "~/.config/alacritty/alacritty-theme/themes/catppuccin_frappe.toml",
+  # "~/.config/alacritty/alacritty-theme/themes/catppuccin_mocha.toml",
+  # "~/.config/alacritty/alacritty-theme/themes/catppuccin_macchiato.toml",
+  # "~/.config/alacritty/alacritty-theme/themes/monokai.toml",
+  # "~/.config/alacritty/alacritty-theme/themes/monokai_charcoal.toml",
+
+  "~/.config/alacritty/alacritty-theme/themes/cyber_punk_neon.toml",
+]
+
 
 [font]
 
-normal = { family = "MesloLGS Nerd Font", style = "Regular" }
+# normal = { family = "MesloLGS Nerd Font", style = "Regular" }
 # normal = { family = "MesloLGM Nerd Font", style = "Regular" }
 # normal = { family = "Reddit Mono", style = "Regular" }
 # normal = { family = "Hack Nerd Font", style = "Regular" }
 # normal = { family = "JetBrainsMono Nerd Font Mono", style = "Regular" }
-# normal = { family = "CodeNewRoman Nerd Font Mono", style = "Regular" }
-size = 11
+normal = { family = "CodeNewRoman Nerd Font", style = "Regular" }
+size = 13
 
 
 [window]
@@ -24,7 +41,7 @@ position = { x = 1303, y = 0 }
 decorations = "None"
 opacity = 0.97  # 0.93 is another good value to try.
 blur = true
-padding = { x = 3, y = 3 }
+padding = { x = 4, y = 1 }
 dynamic_padding = true
 
 
@@ -36,18 +53,39 @@ history = 100000
 [colors]
 
 # cursor = { text = "#000000", cursor = "#ff4500" }
-transparent_background_colors = true
+# draw_bold_text_with_bright_colors = false
+# transparent_background_colors = true
+
+# Using imported colors from the alacritty/alacritty-themes repo. Use the ones
+# here only as a backup, if necessary.
+#
+# [colors.line_indicator]
+#
+# foreground = "#00ffff"
+#
+# [colors.primary]
+#
+# # Light.
+# # foreground = "#000000"
+# # background = "#ffffff"
+#
+# # Dark.
+# foreground = "#e9e9e9"
+# background = "#171f2c"
 
 
 [cursor]
 
-style = { shape = "Beam" }
 thickness = 0.3
 
+[cursor.style]
+shape = "Beam"
 
-[terminal]
 
-shell = { program = "/usr/bin/xdotool", args = ["key", "Super+Right"] }
+[terminal.shell]
+
+program = "/usr/bin/xdotool"
+args = ["key", "Super+Right"]
 
 
 [[hints.enabled]]
@@ -59,13 +97,14 @@ hyperlinks = true
 post_processing = true
 persist = false
 mouse.enabled = true
-binding = { key = "O", mods = "Control|Shift" }
+binding = { key = "L", mods = "Control|Alt" }
 regex = "(ipfs:|ipns:|magnet:|mailto:|gemini://|gopher://|https://|http://|news:|file:|git://|ssh:|ftp://)[^\u0000-\u001F\u007F-\u009F<>\"\\s{-}\\^⟨⟩`\\\\]+"
 
 
 [keyboard]
 
 bindings = [
-  { key = "N", mods = "Control|Shift", action = "CreateNewWindow" },
+  { key = "V", mods = "Control|Alt", action = "ToggleViMode" },
   { key = "L", mods = "Control|Shift", chars = "l" },
 ]
+
