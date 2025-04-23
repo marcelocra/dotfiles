@@ -6,6 +6,9 @@ local the_leader = " "
 vim.g.mapleader = the_leader
 vim.g.maplocalleader = the_leader
 
+vim.o.smartindent = true
+vim.o.autoindent = true
+
 -- Enable with <Leader>us.
 vim.opt.spell = false
 -- NOTE: The spelling_language and spelling_languages options in EditorConfig
@@ -13,3 +16,5 @@ vim.opt.spell = false
 -- check in your EditorConfig file.
 vim.opt.spelllang = "en,en_us,pt_br,pt"
 vim.opt.spellfile = os.getenv("MCRA_LOCAL_DOTFILES") .. "/backups/nvim/spell/dict.utf-8.add"
+
+vim.o.wrap = true

@@ -153,7 +153,8 @@ doc = "Reminder that I'm using the wrong keyboard layout"
 nmap("Ç", ':echo "Wrong keyboard layout!"<CR>', doc)
 nmap("ç", ':echo "wrong keyboard layout!"<CR>', doc)
 
-nmap("<M-w>", ":set wrap!<CR>", "Toggle line wrapping", { vscode = false, silent = false })
+-- <Leader>uw
+-- nmap("<M-w>", ":set wrap!<CR>", "Toggle line wrapping", { vscode = false, silent = false })
 
 -- NOTE: Alternative format: %Y-%m-%d
 imap("<M-d>", '<C-r>=strftime("%d%b%y")<CR>', "Add date to current buffer in the format 21abr25")
