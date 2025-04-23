@@ -135,13 +135,13 @@
   {
     "key": "alt+k",
     "command": "workbench.action.nextEditor",
-    "when": "editorFocus"
+    "when": "!panelFocus"
   },
 
   {
     "key": "alt+j",
     "command": "workbench.action.previousEditor",
-    "when": "editorFocus"
+    "when": "!panelFocus"
   },
 
   {
