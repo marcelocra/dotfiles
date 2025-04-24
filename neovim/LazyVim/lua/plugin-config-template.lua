@@ -16,4 +16,12 @@
 -- https://www.lazyvim.org/configuration/plugins#%EF%B8%8F-customizing-plugin-specs
 --
 
-return {}
+return {
+  -- Here goes the plugin config, like this:
+  --
+  -- {
+  --   "saghen/blink.compat",
+  --   lazy = true,
+  --   opts = {},
+  -- },
+}
