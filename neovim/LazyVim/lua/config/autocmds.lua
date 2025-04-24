@@ -8,7 +8,7 @@
 -- e.g. vim.api.nvim_del_augroup_by_name("lazyvim_wrap_spell")
 
 -- Simplify the creation of autocommand groups.
-local function ensure_uniq_group(name)
+local ensure_uniq_group = function (name)
   return vim.api.nvim_create_augroup("my-autocmds-" .. name, { clear = true })
 end
 

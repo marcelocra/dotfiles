@@ -1,7 +1,9 @@
 -- vim: foldmethod=marker foldlevel=0
+--
 -- Keymaps are automatically loaded on the VeryLazy event
 -- Default keymaps that are always set: https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/config/keymaps.lua
 -- Add any additional keymaps here
+--
 
 -- Remove LazyVim default keymaps. {{{
 
@@ -29,10 +31,13 @@ local nimap = u.nimap
 local nvmap = u.nvmap
 local nivmap = u.nivmap
 
---- Write doc comment as a string, so it can be used in the keymap description
---- (DRY). See usages for some examples.
+--- Write doc comment as a string, so it can be used in the keymap description (DRY). See usages for some examples.
 --- @type string|function
 local doc
+
+--- If the same command is used in more than one mapping, write it here. See usages for some examples.
+--- @type string|function
+local cmd
 
 -- }}}
 
@@ -40,18 +45,18 @@ local doc
 imap("jf", "<Esc>", "Go to normal mode")
 imap("fj", "<Esc>", "Go to normal mode")
 
--- Save faster.
--- NOTE: Use <C-s> instead.
--- inmap(",w", "<Esc>:w<CR>", "Saves the current buffer")
--- inmap(",s", "<Esc>:w<CR>", "Saves the current buffer")
-imap(",w", "<Esc>:echo 'Use Ctrl+S!'<CR>a", "Saves the current buffer")
-imap(",s", "<Esc>:echo 'Use Ctrl+S!'<CR>a", "Saves the current buffer")
-nmap(",w", ":echo 'Use Ctrl+S!'<CR>", "Saves the current buffer")
-nmap(",s", ":echo 'Use Ctrl+S!'<CR>", "Saves the current buffer")
+local use_lazyvim_mappings = function(keys)
+  return "<Cmd>echo 'Use " .. keys .. " instead!'<CR>"
+end
 
--- Quit and close buffers faster.
-nmap(",q", ":q<CR>", "Close the current buffer")
-nmap(",,q", ":qa<CR>", "Close all buffers")
+-- INFO: Previously: <Cmd>w<CR>
+doc = "Saves the current buffer. If in INSERT mode, exits it"
+cmd = use_lazyvim_mappings("Ctrl+S")
+nimap(",w", cmd, doc)
+nimap(",s", cmd, doc)
+
+nmap(",q", "<Cmd>q<CR>", "Quit/Close current buffer")
+nmap(",,q", "<Leader>qq", "Quit/Close all buffers", { remap = true })
 
 -- Save and quit faster.
 nmap(",x", ":x<CR>", "Save and close the current buffer")
@@ -165,7 +170,7 @@ imap("<M-t>", '<C-r>=strftime("%Hh%M")<CR>', "Add time to current buffer")
 nmap("<Leader>es", ":exec 'r !' . getline('.')<CR>", "Run line external shell and paste output")
 vmap("<Leader>es", '"xy:r ! <C-r>x<CR>', "Run selection externally and paste output")
 
-nmap("/", "/\\v", "Use normal regex")
+-- nmap("/", "/\\v", "Use normal regex")
 vmap("//", "y/\\V<C-r>=escape(@\",'/\\')<CR><CR>", "Search for the currently selected text")
 
 nvmap("j", "gj", "Move down by visual line")
@@ -180,11 +185,7 @@ vmap(">", ">gv", "Allow fast unindenting when there is a chunck of text selected
 
 nmap("<C-n>", ":nohlsearch<CR>", "Clear search highlights")
 
-nivmap("<C-_>", ":Commentary<CR>", "Comment and uncomment line or selection")
-
-doc = "Easily alternate between the two most recent buffers"
-nmap("<C-Tab>", "<Cmd>e #<CR>", doc) -- Doesn't work in terminals.
-nmap("<S-Tab>", "<Cmd>e #<CR>", doc) -- This one does. But gt might be better.
+nivmap("<C-_>", "<Cmd>Commentary<CR>", "Comment and uncomment line or selection")
 
 local colorscheme_init = require("colorscheme-init")
 nmap("<Leader>oct", colorscheme_init.set(nil), "Use time-based colorscheme")
@@ -192,10 +193,79 @@ nmap("<Leader>ocd", colorscheme_init.set("dark"), "Set colorscheme to vim.g.colo
 nmap("<Leader>ocl", colorscheme_init.set("light"), "Set colorscheme to vim.g.colorscheme_mode_light")
 nmap("<M-d>", colorscheme_init.toggle, "Set colorscheme to vim.g.colorscheme_mode_light")
 
-doc = "Open explorer in root dir"
-nmap("<M-b>", u.partial(Snacks.explorer, { cwd = LazyVim.root() }), doc)
-nmap("<M-e>", u.partial(Snacks.explorer, { cwd = LazyVim.root() }), doc)
+local map = function(...)
+  -- Must have at least 1 argument: the function to call.
+  local args = { ... }
+  if #args == 0 then
+    error("You MUST provide at least a function to be called")
+  end
+
+  local utils = require("utils")
+
+  local fn
+  if #args == 1 then
+    fn = args[1]
+    if type(fn) ~= "function" then
+      error("The first argument MUST be a function")
+    end
+
+    return fn(utils)
+  end
+
+  local fn_doc
+  if #args == 2 then
+    fn_doc = args[1]
+    fn = args[2]
+
+    if type(fn_doc) ~= "string" then
+      error("The first argument MUST be a string with documentation")
+    end
+    if type(fn) ~= "function" then
+      error("The second argument MUST be a function")
+    end
+
+    return fn(fn_doc, utils)
+  end
+
+  local fn_opts
+  if #args == 3 then
+    fn_doc = args[1]
+    fn_opts = args[2]
+    fn = args[3]
+
+    if type(fn_doc) ~= "string" then
+      error("The first argument MUST be a string with documentation")
+    end
+    if type(fn_opts) ~= "table" then
+      error("The second argument MUST be a table")
+    end
+    if type(fn) ~= "function" then
+      error("The third argument MUST be a function")
+    end
+
+    return fn(fn_doc, fn_opts, utils)
+  end
+end
+
+map("Open explorer in root dir", { cwd = LazyVim.root() }, function(doc, opts, u)
+  u.nmap("<M-b>", u.partial(Snacks.explorer, opts), doc)
+  u.nmap("<M-e>", u.partial(Snacks.explorer, opts), doc)
+end)
 
 nmap("<Leader>d", "<Leader>xx", "Toggle the diagnostics window", { remap = true })
+
+doc = "Easily alternate between the two most recent buffers"
+nmap("<C-Tab>", "<Cmd>e #<CR>", doc) -- Doesn't work in terminals.
+nmap("<S-Tab>", "<Cmd>e #<CR>", doc) -- This one does, but gt might be better.
+nmap("<Leader><Leader>", "<Leader>bb", doc, { remap = true })
+
+nmap(
+  "<Leader>mt",
+  u.call_fn(function()
+    local tasks_file = vim.fn.resolve(os.getenv("MCRA_MONOREPO") .. "/todo.md")
+    vim.cmd("vspl " .. tasks_file)
+  end),
+  "Open my tasks files"
+)
 
 -- Next keymap/mapping/keybinding.
