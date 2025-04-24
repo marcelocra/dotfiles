@@ -44,3 +44,8 @@ require("utils").call_fn(function()
 end)
 
 vim.g.lazyvim_prettier_needs_config = false
+
+vim.g.markdown_fenced_languages = {
+
+  "ts=typescript",
+}

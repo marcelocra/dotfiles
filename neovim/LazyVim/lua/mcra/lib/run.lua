@@ -17,7 +17,6 @@ local M = {}
 ---
 --- @alias Doc string|nil
 --- @alias Opts table
---- @alias Utils {nmap: function, imap: function, vmap: function, nimap: function, nvmap: function, nivmap: function, partial: function}
 --- @param doc Doc
 --- @param opts table
 --- @param fn function(doc: Doc, opts: Opts, utils: Utils)

@@ -1,5 +1,19 @@
 -- Setup and helpers functions.
 
+--- @alias Utils {
+---   vimrc_folder: string,
+---   docfn: function,
+---   test: function,
+---   partial: function,
+---   callfn: function,
+---   nmap: function,
+---   imap: function,
+---   vmap: function,
+---   nimap: function,
+---   nvmap: function,
+---   nivmap: function,
+---   nixmap: function,
+--- }
 local M = {}
 
 M.vimrc_folder = vim.fn.fnamemodify(vim.env.MYVIMRC, ":h")
@@ -127,5 +141,6 @@ M.vmap = M.partial(map, "v")
 M.nimap = M.partial(map, { "i", "n" })
 M.nvmap = M.partial(map, { "v", "n" })
 M.nivmap = M.partial(map, { "n", "i", "v" })
+M.nixmap = M.partial(map, { "n", "i", "x" })
 
 return M
