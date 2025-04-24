@@ -44,6 +44,7 @@ M.partial = function(func, ...)
     return func(unpack(all_args)) -- Call the original function.
   end
 end
+M.call_fn = M.partial
 
 -- Test the partial function.
 M.test(function()
