@@ -25,10 +25,13 @@
 
   // ---
 
-  "font_face": "Noto Sans Mono",
-  "font_size": 11,
+  // "font_face": "Noto Sans Mono",
+  "font_face": "Iosevka Nerd Font",
+  "font_size": 14,
   "font_options": [
-    // "ss02"
+    "Extended",
+    // "ss04", // Menlo
+    "ss07" // Monaco
   ],
 
   "caret_extra_top": 4,
@@ -96,9 +99,7 @@
   "vintage_start_in_command_mode": true,
   "vintage_use_clipboard": true,
   "vintage_ctrl_keys": true,
-  "ignored_packages": ["Clojure Sublimed",
-    "Vintage",
-  ],
+  "ignored_packages": ["Clojure Sublimed", "Vintage"],
 
   "file_tab_style": "square",
 
@@ -110,5 +111,5 @@
   "color_scheme": "Mariana.sublime-color-scheme",
   "dark_color_scheme": "Mariana.sublime-color-scheme",
   "light_color_scheme": "Breakers.sublime-color-scheme",
-  "theme": "Default Dark.sublime-theme",
+  "theme": "Default Dark.sublime-theme"
 }

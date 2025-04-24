@@ -831,7 +831,8 @@ elif mm_is_command grep; then
     alias g=grep
 fi
 
-export LESS='-R'
+# export LESS='-R'
+export LESS='--use-color'
 # If `lesspipe` is available, we can use the following instead of the
 # `LESSOPEN` env.
 # eval "$(lesspipe)"
@@ -933,6 +934,9 @@ alias mem='list_process_by_mem | less'
 
 # Bat, a cat clone with wings.
 alias bat=batcat
+
+# List installed packages.
+alias list_installed_packages='dpkg --get-selections | grep -v deinstall'
 
 # next alias above, unless they fit in one of the other sections.
 # }}}general
