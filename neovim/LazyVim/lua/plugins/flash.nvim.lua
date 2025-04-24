@@ -13,14 +13,19 @@
 -- For ft, event, keys, cmd and opts you can instead also specify a values function that can make changes to the default values, or return new values to be used instead.
 --
 -- Docs from:
--- https://www.lazyvim.org/configuration/plugins#%EF%B8%8F-customizing-plugin-specs
+--  https://www.lazyvim.org/configuration/plugins#%EF%B8%8F-customizing-plugin-specs
+--  TODO: Replace the link above with this one: https://getpage.in/lazyvim-customize-plugins
 --
 
 return {
-  -- NOTE: Priority recommended for colorschemes:
-  -- https://lazy.folke.io/spec#spec-loading
-
-  { "altercation/vim-colors-solarized", priority = 1000 },
-  { "sjl/badwolf", priority = 1000 },
-  { "tpope/vim-vividchalk", priority = 1000 },
+  {
+    "folke/flash.nvim",
+    event = "VeryLazy",
+    ---@type Flash.Config
+    opts = {},
+    keys = {
+      { "s", false, mode = { "o" } },
+      { "S", false, mode = { "o" } },
+    },
+  },
 }

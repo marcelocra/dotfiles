@@ -17,10 +17,20 @@
 --
 
 return {
-  -- NOTE: Priority recommended for colorschemes:
-  -- https://lazy.folke.io/spec#spec-loading
+  {
+    "folke/snacks.nvim",
+    priority = 1000,
+    lazy = false,
 
-  { "altercation/vim-colors-solarized", priority = 1000 },
-  { "sjl/badwolf", priority = 1000 },
-  { "tpope/vim-vividchalk", priority = 1000 },
+    ---@type snacks.Config
+    opts = {
+      profiler = { enabled = false },
+      notifier = {
+        style = "fancy",
+
+        width = { min = 40, max = 0.8 },
+        height = { min = 1, max = 0.6 },
+      },
+    },
+  },
 }

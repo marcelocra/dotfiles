@@ -17,10 +17,30 @@
 --
 
 return {
-  -- NOTE: Priority recommended for colorschemes:
-  -- https://lazy.folke.io/spec#spec-loading
+--   { "saghen/blink.compat", lazy = true, opts = {} },
 
-  { "altercation/vim-colors-solarized", priority = 1000 },
-  { "sjl/badwolf", priority = 1000 },
-  { "tpope/vim-vividchalk", priority = 1000 },
+  {
+    "saghen/blink.cmp",
+    -- dependencies = { "hrsh7th/cmp-emoji" },
+
+    -- sources = {
+    --   providers = {
+    --     emoji = {
+    --       name = "emoji",
+    --       module = "blink.compat.source",
+    --     },
+    --   },
+    -- },
+
+    opts = {
+      keymap = {
+        -- Go back to using <Tab> and <S-Tab> for most things, like in VSCode.
+        -- Docs: https://cmp.saghen.dev/configuration/keymap.html#super-tab
+        preset = "super-tab",
+      },
+      appearance = {
+        nerd_font_variant = "normal",
+      },
+    },
+  },
 }
