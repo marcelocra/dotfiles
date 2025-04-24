@@ -5,6 +5,11 @@ local time_based = "time_based"
 local dark = "dark" -- Override with a dark mode of your choice.
 local light = "light" -- Override with a light mode of your choice.
 
+-- Defaults.
+vim.g.use_random_theme = true
+vim.g.colorscheme_mode_dark = "wildcharm"
+vim.g.colorscheme_mode_light = "catppuccin-latte"
+
 local set_random_theme = function()
   math.randomseed(os.time())
 
@@ -32,14 +37,11 @@ local set_random_theme = function()
   local light_mode_options = {
     "tokyonight-day",
     "catppuccin-latte",
+    "default",
   }
   vim.g.colorscheme_mode_dark = dark_mode_options[math.random(#dark_mode_options)]
   vim.g.colorscheme_mode_light = light_mode_options[math.random(#light_mode_options)]
 end
-
-vim.g.use_random_theme = false
-vim.g.colorscheme_mode_dark = "wildcharm"
-vim.g.colorscheme_mode_light = "catppuccin-latte"
 
 vim.g.colorscheme_modes = { time_based, dark, light }
 vim.g.colorscheme_mode = vim.g.colorscheme_modes[1]
