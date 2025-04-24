@@ -1,57 +1,97 @@
+################################################################################
+## More information in the configuration website:                             ##
+##   https://alacritty.org/config-alacritty.html                              ##
+################################################################################
 [general]
-
+################################################################################
 working_directory = "/home/marcelocra"
 live_config_reload = true
 
 import = [
-  # # Cool themes.
+  # Themes {{{
+  # ======
   #
-  # # Light.
+  # Good enough
+  # -----------
+  # Light:
+  # "~/.config/alacritty/alacritty-theme/themes/dawnfox.toml",
+  # "~/.config/alacritty/alacritty-theme/themes/dayfox.toml",
+  # "~/.config/alacritty/alacritty-theme/themes/github_light.toml",
+  # "~/.config/alacritty/alacritty-theme/themes/one_light.toml",
+  # Dark:
+
+  # Best
+  # ----
+  # Light:
   # "~/.config/alacritty/alacritty-theme/themes/catppuccin_latte.toml",
-  #
-  # # Dark.
+
+  # Dark:
+  "~/.config/alacritty/alacritty-theme/themes/cyber_punk_neon.toml",
+
+  # To check
+  # --------
+  # Light:
+  # Dark:
   # "~/.config/alacritty/alacritty-theme/themes/catppuccin.toml",
   # "~/.config/alacritty/alacritty-theme/themes/catppuccin_frappe.toml",
   # "~/.config/alacritty/alacritty-theme/themes/catppuccin_mocha.toml",
   # "~/.config/alacritty/alacritty-theme/themes/catppuccin_macchiato.toml",
   # "~/.config/alacritty/alacritty-theme/themes/monokai.toml",
   # "~/.config/alacritty/alacritty-theme/themes/monokai_charcoal.toml",
-
-  "~/.config/alacritty/alacritty-theme/themes/cyber_punk_neon.toml",
+  #
+  # }}}
 ]
 
-
+################################################################################
 [font]
+################################################################################
+size = 16.0
 
-# normal = { family = "MesloLGS Nerd Font", style = "Regular" }
-# normal = { family = "MesloLGM Nerd Font", style = "Regular" }
-# normal = { family = "Reddit Mono", style = "Regular" }
-# normal = { family = "Hack Nerd Font", style = "Regular" }
-# normal = { family = "JetBrainsMono Nerd Font Mono", style = "Regular" }
-normal = { family = "CodeNewRoman Nerd Font", style = "Regular" }
-size = 13
+[font.normal]
+style = "Regular"
+# family = "MesloLGM Nerd Font"
+# family = "Reddit Mono"
+# family = "Hack Nerd Font"
+# family = "JetBrainsMono Nerd Font Mono"
+# family = "CodeNewRoman Nerd Font"
+# family = "MesloLGS Nerd Font"
+# family = "Iosevka Nerd Font"
+family = "IosevkaTermSlab NF"
+# family = "RecMonoLinear Nerd Font"
 
+[font.italic]
+style = "Italic"
+# family = "Monaspace Radon Var"
+# family = "IBM Plex Mono"
+# family = "SourceCodeVF"
+family = "Iosevka NF"
 
+################################################################################
 [window]
-
-# dimensions = { columns = 157, lines = 100 } # Reddit|CodeNewRoman 11
-dimensions = { columns = 139, lines = 100 }   # MesloM|Hack|JB 11
-
+################################################################################
 position = { x = 1303, y = 0 }
 decorations = "None"
-opacity = 0.97  # 0.93 is another good value to try.
+opacity = 0.95                 # 0.93 is another good value to try.
 blur = true
-padding = { x = 4, y = 1 }
+padding = { x = 4, y = 1 }     # Good value.
+# padding = { x = 150, y = 130 }
+# padding = { x = 20, y = 9 }
+# padding = { x = 400, y = 1 }
 dynamic_padding = true
 
+[window.dimensions]
+lines = 100 # Fills the whole height for all fonts.
+# columns = 157 # Reddit|CodeNewRoman 11
+columns = 139 # MesloM|Hack|JB 11
 
+################################################################################
 [scrolling]
-
+################################################################################
 history = 100000
 
-
+################################################################################
 [colors]
-
+################################################################################
 # cursor = { text = "#000000", cursor = "#ff4500" }
 # draw_bold_text_with_bright_colors = false
 # transparent_background_colors = true
@@ -73,23 +113,23 @@ history = 100000
 # foreground = "#e9e9e9"
 # background = "#171f2c"
 
-
+################################################################################
 [cursor]
-
+################################################################################
 thickness = 0.3
 
 [cursor.style]
 shape = "Beam"
 
-
+################################################################################
 [terminal.shell]
-
+################################################################################
 program = "/usr/bin/xdotool"
 args = ["key", "Super+Right"]
 
-
+################################################################################
 [[hints.enabled]]
-
+################################################################################
 command = "xdg-open" # On Linux/BSD
 # command = "open" # On macOS
 # command = { program = "cmd", args = [ "/c", "start", "" ] } # On Windows
@@ -100,11 +140,10 @@ mouse.enabled = true
 binding = { key = "O", mods = "Control|Shift" }
 regex = "(ipfs:|ipns:|magnet:|mailto:|gemini://|gopher://|https://|http://|news:|file:|git://|ssh:|ftp://)[^\u0000-\u001F\u007F-\u009F<>\"\\s{-}\\^⟨⟩`\\\\]+"
 
-
+################################################################################
 [keyboard]
-
+################################################################################
 bindings = [
   { key = "V", mods = "Control|Alt", action = "ToggleViMode" },
   { key = "L", mods = "Control|Shift", chars = "l" },
 ]
-
