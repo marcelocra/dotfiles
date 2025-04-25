@@ -2,45 +2,37 @@
 ## More information in the configuration website:                             ##
 ##   https://alacritty.org/config-alacritty.html                              ##
 ################################################################################
+# [my-themes]
+# base_dir = "~/.config/alacritty/alacritty-theme/themes"
+# [my-themes.light]
+# best = "~/.config/alacritty/alacritty-theme/themes/catppuccin_latte.toml"
+# good = [
+#   "~/.config/alacritty/alacritty-theme/themes/dawnfox.toml",
+#   "~/.config/alacritty/alacritty-theme/themes/dayfox.toml",
+#   "~/.config/alacritty/alacritty-theme/themes/github_light.toml",
+#   "~/.config/alacritty/alacritty-theme/themes/one_light.toml",
+# ]
+# to_try = []
+
+# [my-themes.dark]
+# best = "~/.config/alacritty/alacritty-theme/themes/cyber_punk_neon.toml"
+# good = []
+# to_try = [
+#   "~/.config/alacritty/alacritty-theme/themes/catppuccin.toml",
+#   "~/.config/alacritty/alacritty-theme/themes/catppuccin_frappe.toml",
+#   "~/.config/alacritty/alacritty-theme/themes/catppuccin_mocha.toml",
+#   "~/.config/alacritty/alacritty-theme/themes/catppuccin_macchiato.toml",
+#   "~/.config/alacritty/alacritty-theme/themes/monokai.toml",
+#   "~/.config/alacritty/alacritty-theme/themes/monokai_charcoal.toml",
+# ]
+
+################################################################################
 [general]
 ################################################################################
 working_directory = "/home/marcelocra"
 live_config_reload = true
 
-import = [
-  # Themes {{{
-  # ======
-  #
-  # Good enough
-  # -----------
-  # Light:
-  # "~/.config/alacritty/alacritty-theme/themes/dawnfox.toml",
-  # "~/.config/alacritty/alacritty-theme/themes/dayfox.toml",
-  # "~/.config/alacritty/alacritty-theme/themes/github_light.toml",
-  # "~/.config/alacritty/alacritty-theme/themes/one_light.toml",
-  # Dark:
-
-  # Best
-  # ----
-  # Light:
-  # "~/.config/alacritty/alacritty-theme/themes/catppuccin_latte.toml",
-
-  # Dark:
-  "~/.config/alacritty/alacritty-theme/themes/cyber_punk_neon.toml",
-
-  # To check
-  # --------
-  # Light:
-  # Dark:
-  # "~/.config/alacritty/alacritty-theme/themes/catppuccin.toml",
-  # "~/.config/alacritty/alacritty-theme/themes/catppuccin_frappe.toml",
-  # "~/.config/alacritty/alacritty-theme/themes/catppuccin_mocha.toml",
-  # "~/.config/alacritty/alacritty-theme/themes/catppuccin_macchiato.toml",
-  # "~/.config/alacritty/alacritty-theme/themes/monokai.toml",
-  # "~/.config/alacritty/alacritty-theme/themes/monokai_charcoal.toml",
-  #
-  # }}}
-]
+import = []
 
 ################################################################################
 [font]
