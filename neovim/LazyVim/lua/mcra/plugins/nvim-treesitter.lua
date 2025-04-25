@@ -10,7 +10,9 @@
 --  * dependencies: the list of dependencies will be extended with your custom
 --    dependencies any other property will override the defaults
 --
--- For ft, event, keys, cmd and opts you can instead also specify a values function that can make changes to the default values, or return new values to be used instead.
+-- For ft, event, keys, cmd and opts you can instead also specify a values
+-- function that can make changes to the default values, or return new values to
+-- be used instead.
 --
 -- Docs from:
 -- https://www.lazyvim.org/configuration/plugins#%EF%B8%8F-customizing-plugin-specs
@@ -20,6 +22,11 @@ return {
   {
     "nvim-treesitter/nvim-treesitter",
     opts = function(_, opts)
+      -- WARN: This is necessary to avoid overwriting default options, as Lua
+      -- lists cannot be merged like tables. LazyVim docs about this here:
+      --    https://github.com/LazyVim/lazyvim.github.io/blob/485d853b1e52533c4e360d036f2d27f7c0dc06e1/docs/configuration/examples.md?plain=1#L146
+      -- Lua docs here:
+      --    https://neovim.io/doc/user/lua.html#vim.tbl_deep_extend()
       -- stylua: ignore
       vim.list_extend(opts.ensure_installed, {
 
