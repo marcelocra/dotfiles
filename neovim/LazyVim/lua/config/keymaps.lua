@@ -5,19 +5,23 @@
 --
 
 -------------------------------------------------------------------------------
--- Remove LazyVim default keymaps.
+-- REMOVE LAZYVIM DEFAULT KEYMAPS
 -------------------------------------------------------------------------------
 
--- Open the file explorer. New: <M-b>.
+-- LazyVim: Open the file explorer. New: <M-b>.
 vim.keymap.del("n", "<Leader>e")
 
 -- NOTE: <C-_> is <C-/>. Also, I use it to comment code mostly in visual
 -- mode, so I'll keep the default on for now. Edit: not actually true... I
--- immediatelly missed commenting with Ctrl-/.
--- Open/Close Neovim embedded terminal.
+-- immediatelly missed commenting code with Ctrl-/.
+-- NOTE: Remove (and add) <C-/> too, as it seems like the other one doesn't work
+-- in Wezterm.
+--
+-- LazyVim: Open/Close Neovim embedded terminal.
 vim.keymap.del({ "n", "t" }, "<C-_>")
+vim.keymap.del({ "n", "t" }, "<C-/>")
 
--- Open a profiler for debug.
+-- LazyVim: Open a profiler for debug.
 vim.keymap.del("n", "<Leader>dpp")
 vim.keymap.del("n", "<Leader>dph")
 vim.keymap.del("n", "<Leader>dps")
@@ -44,21 +48,14 @@ require("mcra.lib.utils").fn("NEOVIM ONLY!", function(_, u)
   vim.keymap.set({ "i" }, "jf", "<Esc>", { desc = "Go to normal mode" })
   vim.keymap.set({ "i" }, "fj", "<Esc>", { desc = "Go to normal mode" })
 
-  vim.keymap.set(
-    { "n", "i" },
-    ",w",
-    "<Cmd>w<CR>",
-    -- "<Cmd>echo 'Use Ctrl+S instead!'<CR>",
-    { desc = "Saves the current buffer. If in INSERT mode, exits it" }
-  )
-
-  vim.keymap.set(
-    { "n", "i" },
-    ",s",
-    "<Cmd>w<CR>",
-    -- "<Cmd>echo 'Use Ctrl+S instead!'<CR>",
-    { desc = "Saves the current buffer. If in INSERT mode, exits it" }
-  )
+  -- NOTE: I tried to use only the LazyVim default shortcut (ctrl+s), but I'm so
+  -- used to ,{w,s} that I missed them a LOT. Also, I do believe that they are
+  -- faster to type. I used this to try to change the habit:
+  -- <Cmd>echo 'Use Ctrl+S instead!'<CR>
+  vim.keymap.set({ "n", "v" }, ",w", "<Cmd>w<CR>", { desc = "Save current buffer" })
+  vim.keymap.set({ "i" }, ",w", "<Esc><Cmd>w<CR>", { desc = "Save current buffer and exit INSERT mode" })
+  vim.keymap.set({ "n", "v" }, ",s", "<Cmd>w<CR>", { desc = "Save current buffer" })
+  vim.keymap.set({ "i" }, ",s", "<Esc><Cmd>w<CR>", { desc = "Save current buffer and exit INSERT mode" })
 
   vim.keymap.set({ "n", "i" }, ",q", "<Cmd>q<CR>", { desc = "Quit/Close current buffer" })
   vim.keymap.set({ "n" }, ",,q", "<Leader>qq", { desc = "Quit/Close all buffers", remap = true })
@@ -72,7 +69,6 @@ require("mcra.lib.utils").fn("NEOVIM ONLY!", function(_, u)
   -- NOTE: It is not possible to have multiple tabs without multiple buffers.
   -- Therefore we can use the BufferLine plugin to manage the tabs and behave as
   -- if they were tabs. Previously: <Cmd>tabprev<CR> | <Cmd>tabnext<CR>
-
   vim.keymap.set({ "n", "i" }, "<M-j>", "<Cmd>BufferLineCyclePrev<CR>", { desc = "Focus on the buffer to the left" })
   vim.keymap.set({ "n", "i" }, "<M-k>", "<Cmd>BufferLineCycleNext<CR>", { desc = "Focus on the buffer to the right" })
 
@@ -102,6 +98,8 @@ require("mcra.lib.utils").fn("NEOVIM ONLY!", function(_, u)
 
   vim.keymap.set({ "n" }, ",f", ':echo expand("%:p:h")<CR>', { desc = "Print current file folder name" })
 
+  -- TODO: Figure out why this doesn't select all in some files (e.g. output of
+  -- fc-list).
   vim.keymap.set({ "n" }, ",a", "ggVG", { desc = "Select all the buffer content" })
   vim.keymap.set({ "i" }, ",a", "<Esc>ggVG", { desc = "Select all the buffer content" })
 
@@ -153,7 +151,15 @@ require("mcra.lib.utils").fn("NEOVIM ONLY!", function(_, u)
 
   vim.keymap.set({ "n" }, "<C-n>", ":nohlsearch<CR>", { desc = "Clear search highlights" })
 
-  vim.keymap.set({ "n", "i", "v" }, "<C-_>", ":Commentary<CR>gv", { desc = "Comment and uncomment line or selection" })
+  -- NOTE: Add both because some terminals might not recognize one or the other.
+  -- Wezterm doesn't recognize <C-_> but recognizes <C-/>.
+  -- Alacritty recognizes <C-_>.
+  vim.keymap.set({ "n" }, "<C-_>", "gcc", { desc = "Comment and uncomment line or selection", remap = true })
+  vim.keymap.set({ "n" }, "<C-/>", "gcc", { desc = "Comment and uncomment line or selection", remap = true })
+  vim.keymap.set({ "i" }, "<C-_>", "<Esc>gcc", { desc = "Comment and uncomment line or selection", remap = true })
+  vim.keymap.set({ "i" }, "<C-/>", "<Esc>gcc", { desc = "Comment and uncomment line or selection", remap = true })
+  vim.keymap.set({ "v" }, "<C-_>", "gcgv", { desc = "Comment and uncomment line or selection", remap = true })
+  vim.keymap.set({ "v" }, "<C-/>", "gcgv", { desc = "Comment and uncomment line or selection", remap = true })
 
   require("mcra.lib.utils").fn("Manage colorschemes, particularly changing between light and dark.", function()
     local color = require("mcra.lib.colorscheme")
@@ -179,14 +185,12 @@ require("mcra.lib.utils").fn("NEOVIM ONLY!", function(_, u)
     { desc = "Open explorer in root directory" }
   )
 
-  vim.keymap.set({ "n" }, "<C-Tab>", "<Cmd>e #<CR>", { desc = "Easily alternate between the two most recent buffers" }) -- Doesn't work in terminals.
-  vim.keymap.set({ "n" }, "<S-Tab>", "<Cmd>e #<CR>", { desc = "Easily alternate between the two most recent buffers" }) -- This one does, but gt might be better.
-  vim.keymap.set(
-    { "n" },
-    "<Leader><Leader>",
-    "<Leader>bb",
-    { desc = "Easily alternate between the two most recent buffers", remap = true }
-  )
+  -- Doesn't work in terminals.
+  vim.keymap.set({ "n" }, "<C-Tab>", "<Cmd>e #<CR>", { desc = "Easily alternate between the two most recent buffers" })
+  -- This one does, but gt might be better.
+  -- NOTE: actually, gt is for actual Neovim tabs while this is for buffers.
+  vim.keymap.set({ "n" }, "<S-Tab>", "<Cmd>e #<CR>", { desc = "Easily alternate between the two most recent buffers" })
+  vim.keymap.set({ "n" }, "<Leader><Leader>", "@q", { desc = "Easily run the macro stored at 'q'" })
 
   vim.keymap.set({ "n" }, "<Leader>d", "<Leader>xx", { desc = "Toggle the diagnostics window", remap = true })
 
@@ -253,7 +257,7 @@ end)
 -- VSCODE ONLY START
 --------------------------------------------------------------------------------
 
-require("mcra.lib.utils").fn("Mappings for when inside VSCode ONLY!", function()
+require("mcra.lib.utils").fn("VSCODE ONLY!", function()
   if not vim.g.vscode then
     print("VSCode-only code being ignored!")
     return

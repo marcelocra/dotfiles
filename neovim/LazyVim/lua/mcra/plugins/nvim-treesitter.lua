@@ -27,6 +27,11 @@ return {
       --    https://github.com/LazyVim/lazyvim.github.io/blob/485d853b1e52533c4e360d036f2d27f7c0dc06e1/docs/configuration/examples.md?plain=1#L146
       -- Lua docs here:
       --    https://neovim.io/doc/user/lua.html#vim.tbl_deep_extend()
+
+      -- NOTE: :checkhealth mentions that the following tree-sitter languages
+      -- are not installed (maybe they are just not loaded?): css, latex, norg,
+      -- scss, svelte, typst, vue.
+
       -- stylua: ignore
       vim.list_extend(opts.ensure_installed, {
 

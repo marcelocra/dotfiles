@@ -16,36 +16,15 @@
 -- https://www.lazyvim.org/configuration/plugins#%EF%B8%8F-customizing-plugin-specs
 --
 
+-- NOTE: Not using yet, but keeping it just in case.
+-- stylua: ignore
+if true then return {} end
+
 return {
-  {
-    "folke/snacks.nvim",
-
-    ---@type snacks.Config
-    opts = {
-      profiler = { enabled = false },
-      notifier = {
-        style = "fancy",
-
-        width = { min = 40, max = 0.8 },
-        height = { min = 1, max = 0.6 },
-      },
-
-      scratch = {
-        win = {
-          position = "right",
-          width = 0.3,
-          height = 1.0,
-          -- Options from the `scratch` style.
-          -- zindex = 20,
-          -- bo = { buftype = "", buflisted = false, bufhidden = "hide", swapfile = false },
-          -- minimal = false,
-          -- noautocmd = false,
-          -- wo = { winhighlight = "NormalFloat:Normal" },
-          -- border = "rounded",
-          -- title_pos = "center",
-          -- footer_pos = "center",
-        },
-      },
-    },
-  },
+  -- {
+  --   "williamboman/mason.nvim",
+  --   opts = {
+  --     ensure_installed = {},
+  --   },
+  -- },
 }

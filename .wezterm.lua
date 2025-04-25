@@ -13,7 +13,7 @@ local act = wezterm.action
 --    'Iosevka Nerd Font', 'IosevkaTermSlab Nerd Font'.
 local which_iosevka = "IosevkaTermSlab Nerd Font"
 
-local default_font_size = 13
+local default_font_size = 12
 local default_font_weight = 400
 
 -- Function to create a font configuration with defaults.
@@ -42,6 +42,12 @@ local fonts = { -- <<(
   }),
 
   jb = create_font("JetBrains Mono"),
+
+  jb_zero = create_font("JetBrains Mono", {
+    harfbuzz_features = {
+      "zero",
+    },
+  }),
 
   jb_nf = create_font("JetBrainsMono Nerd Font", {
     -- Ligature test:
@@ -409,7 +415,7 @@ end)()
 -- Fill this as I find schemes that I like. Later I can randomize only them.
 local color_scheme_override = {
   -- Use `false` to select a random color scheme or the index of the favorite to use as override.
-  override = false, -- 2, -- 22, -- Update override.
+  override = 35, -- 2, -- 22, -- Update override.
   -- stylua: ignore
   favorites = {
 
@@ -449,6 +455,7 @@ local color_scheme_override = {
     "catppuccin-macchiato",                   -- 32
     "Unikitty Reversible (base16)",           -- 33
     "Seti",                                   -- 34
+    "tokyonight",                             -- 35
 
     -- Next theme colorscheme override.
   },
@@ -562,6 +569,7 @@ local choose_random_font = function()
     -- fonts.geist, -- TODO: Figure out why width is weird.
     -- fonts.ibm,
     -- fonts.jb,
+    fonts.jb_zero,
     -- fonts.jb_nf,
     -- fonts.liberation_mono,
     -- fonts.noto,
@@ -580,7 +588,7 @@ local choose_random_font = function()
     -- fonts.fira,
     -- fonts.fira_crazy,
     -- fonts.hack,
-    fonts.iosevka,
+    -- fonts.iosevka,
     -- fonts.iosevka_ss04_menlo,
     -- fonts.iosevka_ss07_monaco,
     -- fonts.iosevka_ss08_pragmata,
@@ -622,10 +630,10 @@ config.window_padding = {
   bottom = 0,
 }
 
-config.colors = {
-  cursor_bg = "#ff4500", -- orange red (supposed to work with light/dark themes).
-  cursor_fg = "black",
-}
+-- config.colors = {
+--   cursor_bg = "#ff4500", -- orange red (supposed to work with light/dark themes).
+--   cursor_fg = "black",
+-- }
 
 -- The x is calculated as `(screen_width + panel_width) / 2`. See `gui-startup`
 -- above.

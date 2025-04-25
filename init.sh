@@ -134,11 +134,25 @@ alias j="easy_jump_to_project"
 if mm_is_command nvim; then
     export EDITOR=nvim
 
+    # NOTE: Trying to stop using these aliases.
+
     # alias vim="$EDITOR"
     # alias vi=vim
     # alias v=vim
     # alias n=vim
-    alias n=$EDITOR
+    # alias n=$EDITOR
+
+    function n() {
+        if [[ -z "$@" ]]; then
+            pushd $MCRA_MONOREPO >/dev/null
+        fi
+
+        _editor "$@"
+
+        if [[ -z "$@" ]]; then
+            popd >/dev/null
+        fi
+    }
 elif mm_is_command vim; then
     export EDITOR=vim
 
@@ -586,6 +600,14 @@ function compress_video() {
 # List broken symlinks in folder.
 function broken_symlinks() {
     find "${1:-.}" -type l ! -exec test -e {} \; -exec ls -lah --color {} \;
+}
+
+# Backup/disable Neovim installed packages and cache:
+function neovim_backup_state() {
+    local now=$(date +%F_%T | sed -e 's/:/-/g')
+    mv ~/.local/share/nvim{,.$now.bak}
+    mv ~/.local/state/nvim{,.$now.bak}
+    mv ~/.cache/nvim{,.$now.bak}
 }
 
 # next function above.

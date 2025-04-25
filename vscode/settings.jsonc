@@ -433,10 +433,30 @@
   //    more fish-like stuff (::<)
 
   ///auto-config-start:fonts
-  "editor.fontFamily": "'Iosevka NF', 'CodeNewRoman Nerd Font Mono', 'Reddit Mono', 'MesloLGS Nerd Font', 'M Plus 1 Code', 'RecMonoLinear Nerd Font', 'RecMonoDuotone Nerd Font', 'Hack Nerd Font', 'Geist Mono', Iosevka",
+  "editor.fontFamily": "'IosevkaTermSlab Nerd Font', 'Iosevka Nerd Font', 'CodeNewRoman Nerd Font Mono', 'Reddit Mono', 'MesloLGS Nerd Font', 'M Plus 1 Code', 'RecMonoLinear Nerd Font', 'RecMonoDuotone Nerd Font', 'Hack Nerd Font', 'Geist Mono', Iosevka, monospace",
   "editor.fontSize": 19,
   "editor.fontWeight": "normal",
-  "editor.fontLigatures": "'ss07'",
+  // "editor.fontLigatures": "'ss01'", // Andale Mono
+  // "editor.fontLigatures": "'ss02'", // Anonymous Pro
+  // "editor.fontLigatures": "'ss03'", // Consolas
+  // "editor.fontLigatures": "'ss04'", // Menlo // Great
+  // "editor.fontLigatures": "'ss05'", // Fira Mono
+  // "editor.fontLigatures": "'ss06'", // Liberation Mono
+  "editor.fontLigatures": "'ss07'", // Monaco // Great
+  // "editor.fontLigatures": "'ss08'", // Pragmata Pro
+  // "editor.fontLigatures": "'ss09'", // Source Code Pro
+  // "editor.fontLigatures": "'ss10'", // Envy Code R
+  // "editor.fontLigatures": "'ss11'", // X Window // Bad: zero 0 vs big O
+  // "editor.fontLigatures": "'ss12'", // Ubuntu Mono // Great
+  // "editor.fontLigatures": "'ss13'", // Lucida
+  // "editor.fontLigatures": "'ss14'", // JetBrains Mono
+  // "editor.fontLigatures": "'ss15'", // IBM Plex Mono
+  // "editor.fontLigatures": "'ss16'", // PT Mono
+  // "editor.fontLigatures": "'ss17'", // Recursive Mono
+  // "editor.fontLigatures": "'ss18'", // Input Mono
+  // "editor.fontLigatures": "'ss20'", // Curly
+
+
   ///auto-config-end:fonts
 
   "editor.tokenColorCustomizations": {
@@ -639,7 +659,7 @@
   // #region terminal. {{{
 
   // Choose the main font and add fallbacks.
-  "terminal.integrated.fontFamily": "'MesloLGS Nerd Font', 'Hack Nerd Font', 'RecMonoLinear Nerd Font', 'BlexMono Nerd Font', 'JetBrainsMono Nerd Font', 'Cascadia Code NF', 'JetBrainsMono NF', 'JetBrains Mono Nerd Font', 'JetBrains Mono NF', 'MesloLGM Nerd Font Mono', 'JetBrains Mono', 'Noto Sans Mono', 'Liberation Mono', 'DejaVu Sans Mono', monospace",
+  "terminal.integrated.fontFamily": "'JetBrainsMono Nerd Font', 'MesloLGS Nerd Font', 'Hack Nerd Font', 'RecMonoLinear Nerd Font', 'BlexMono Nerd Font', 'Cascadia Code NF', 'JetBrainsMono NF', 'JetBrains Mono Nerd Font', 'JetBrains Mono NF', 'MesloLGM Nerd Font Mono', 'JetBrains Mono', 'Noto Sans Mono', 'Liberation Mono', 'DejaVu Sans Mono', monospace",
   "terminal.integrated.fontSize": 15,
   "terminal.integrated.fontWeight": "400",
   "terminal.integrated.fontLigatures.enabled": true,

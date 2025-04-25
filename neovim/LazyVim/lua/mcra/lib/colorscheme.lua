@@ -6,7 +6,9 @@ local dark = "dark" -- Override with a dark mode of your choice.
 local light = "light" -- Override with a light mode of your choice.
 
 -- Defaults.
-vim.g.use_random_theme = false
+vim.g.use_random_theme = true
+vim.g.use_transparent_background = false
+
 vim.g.colorscheme_mode_dark = "tokyonight-night"
 vim.g.colorscheme_mode_light = "catppuccin-latte"
 vim.g.current_colorscheme = nil
@@ -58,6 +60,10 @@ local is_dark = function()
 end
 
 local transparent_background = function()
+  if not vim.g.use_transparent_background then
+    return
+  end
+
   vim.cmd("hi Normal guibg=none ctermbg=none")
   vim.cmd("hi NonText guibg=none ctermbg=none")
 end
