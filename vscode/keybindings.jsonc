@@ -233,10 +233,12 @@
   },
 
   {
-    // Enable default ctrl+w behavior, except in Insert mode.
+    // Enable default ctrl+w behavior to close current active editor (tab):
+    //  - Neovim: in all modes, except Insert
+    //  - in non-editor windows, e.g. the Settings UI
     "key": "ctrl+w",
     "command": "workbench.action.closeActiveEditor",
-    "when": "neovim.mode != 'insert'"
+    "when": "neovim.mode != 'insert' || !editorTextFocus"
   },
 
   {
@@ -271,8 +273,59 @@
     "when": "editorTextFocus"
   },
 
+  // {
+  //   // Better to do this in VSCode, as documented in vscode-neovim repo.
+  //   "key": "ctrl+d",
+  //   "command": "runCommands",
+  //   "args": {
+  //     "commands": [
+  //       {
+  //         "command": "type",
+  //         "args": {
+  //           "text": "A"
+  //         }
+  //       },
+  //       "editor.action.addSelectionToNextFindMatch"
+  //       // {
+  //       //   "command": "vscode-neovim.send",
+  //       //   "args": "i"
+  //       // },
+  //       // {
+  //       //   "command": "type", // Type the Esc key
+  //       //   "args": {
+  //       //     "text": "\u001b"
+  //       //   }
+  //       // }
+  //     ]
+  //   },
+  //   "when": "editorTextFocus && editorHasSelection && neovim.mode == 'visual'"
+  // },
+
   {
     "key": "NEXT KEYBINDING/KEYMAP/MAPPING 👆🏽"
+  },
+
+  {
+    "key": "ADDED THROUGH THE KEYBINDINGS UI 👇🏽"
+  },
+
+  {
+    "key": "ctrl+shift+d",
+    "command": "editor.action.selectHighlights",
+    "when": "editorFocus"
+  },
+  {
+    "key": "ctrl+shift+/",
+    "command": "editor.action.blockComment",
+    "when": "editorTextFocus && !editorReadonly"
+  },
+  {
+    "key": "ctrl+shift+s",
+    "command": "workbench.action.files.saveFiles"
+  },
+  {
+    "key": "ctrl+shift+s",
+    "command": "-workbench.action.files.saveAs"
   }
 
   //
