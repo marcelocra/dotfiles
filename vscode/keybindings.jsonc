@@ -35,7 +35,14 @@
 
   {
     "key": "alt+v",
-    "command": "toggleVim"
+    "command": "vscode-neovim.stop",
+    "when": "neovim.init"
+  },
+
+  {
+    "key": "alt+v",
+    "command": "vscode-neovim.restart",
+    "when": "!neovim.init"
   },
 
   {
@@ -299,6 +306,19 @@
   //     ]
   //   },
   //   "when": "editorTextFocus && editorHasSelection && neovim.mode == 'visual'"
+  // },
+
+  // {
+  //   // Toggle focus between panel and editor.
+  //   "key": "alt+t",
+  //   "command": "workbench.action.focusLastEditorGroup",
+  //   "when": "panelFocus"
+  // },
+  // {
+  //   // Toggle focus between panel and editor.
+  //   "key": "alt+t",
+  //   "command": "workbench.action.focusPanel",
+  //   "when": "!panelFocus"
   // },
 
   {
