@@ -41,7 +41,12 @@
     "markdown",
     "svelte"
   ],
-  "eslint.validate": ["javascript", "javascriptreact", "typescript", "typescriptreact"],
+  "eslint.validate": [
+    "javascript",
+    "javascriptreact",
+    "typescript",
+    "typescriptreact"
+  ],
 
   "[handlebars]": {
     "editor.defaultFormatter": "vscode.html-language-features"
@@ -121,7 +126,13 @@
     "elm": "html"
   },
 
-  "tailwindCSS.files.exclude": ["**/.git/**", "**/node_modules/**", "**/.hg/**", "**/.svn/**", "**/*.md"],
+  "tailwindCSS.files.exclude": [
+    "**/.git/**",
+    "**/node_modules/**",
+    "**/.hg/**",
+    "**/.svn/**",
+    "**/*.md"
+  ],
 
   "emmet.triggerExpansionOnTab": true,
   "emmet.showExpandedAbbreviation": "inMarkupAndStylesheetFilesOnly",
@@ -422,9 +433,10 @@
   //    more fish-like stuff (::<)
 
   ///auto-config-start:fonts
-  "editor.fontFamily": "'CodeNewRoman Nerd Font Mono', 'Reddit Mono', 'MesloLGS Nerd Font', 'M Plus 1 Code', 'RecMonoLinear Nerd Font', 'RecMonoDuotone Nerd Font', 'Hack Nerd Font', 'Geist Mono', Iosevka",
+  "editor.fontFamily": "'Iosevka NF', 'CodeNewRoman Nerd Font Mono', 'Reddit Mono', 'MesloLGS Nerd Font', 'M Plus 1 Code', 'RecMonoLinear Nerd Font', 'RecMonoDuotone Nerd Font', 'Hack Nerd Font', 'Geist Mono', Iosevka",
   "editor.fontSize": 19,
   "editor.fontWeight": "normal",
+  "editor.fontLigatures": "'ss07'",
   ///auto-config-end:fonts
 
   "editor.tokenColorCustomizations": {
@@ -659,7 +671,13 @@
 
   "terminal.integrated.enableFileLinks": "notRemote",
   "terminal.integrated.gpuAcceleration": "on",
-  "terminal.integrated.localEchoExcludePrograms": ["vim", "vi", "nano", "tmux", "nvim"],
+  "terminal.integrated.localEchoExcludePrograms": [
+    "vim",
+    "vi",
+    "nano",
+    "tmux",
+    "nvim"
+  ],
   "terminal.integrated.smoothScrolling": true,
   "terminal.integrated.stickyScroll.enabled": true,
   "terminal.integrated.suggest.enabled": true,
@@ -768,7 +786,7 @@
   "vscode-neovim.ctrlKeysForInsertMode": ["r", "u", "w"],
   "vscode-neovim.ctrlKeysForNormalMode": [
     "a",
-    // "b", -- I prefer half page (ctrl+d).
+    // "b", -- I prefer half page (ctrl+u/d).
     // "c",
     "d",
     "e",
@@ -985,7 +1003,7 @@
   // Keep the color theme last, as I'm always changing it and this way we won't
   // have a problem with the comma.
 
-  "workbench.colorTheme": "Night Owl Light"
+  "workbench.colorTheme": "Mariana (Sublime Text)"
 
   // #endregion workbench. }}}
 }
