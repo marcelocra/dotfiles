@@ -6,9 +6,10 @@ local dark = "dark" -- Override with a dark mode of your choice.
 local light = "light" -- Override with a light mode of your choice.
 
 -- Defaults.
-vim.g.use_random_theme = true
-vim.g.colorscheme_mode_dark = "wildcharm"
+vim.g.use_random_theme = false
+vim.g.colorscheme_mode_dark = "tokyonight-night"
 vim.g.colorscheme_mode_light = "catppuccin-latte"
+vim.g.current_colorscheme = nil
 
 local set_random_theme = function()
   math.randomseed(os.time())
@@ -72,32 +73,33 @@ local setup = function()
   transparent_background()
 end
 
-local set_colorscheme = function(new_colorscheme)
-  if vim.g.colors_name then
-    print("Changing from " .. vim.g.colors_name .. " to " .. new_colorscheme)
+local set_colorscheme = function(old_colorscheme, new_colorscheme)
+  if old_colorscheme then
+    print("Changing from " .. old_colorscheme .. " to " .. new_colorscheme)
   else
     print("Setting colorscheme to " .. new_colorscheme)
   end
 
+  vim.g.current_colorscheme = new_colorscheme
   vim.cmd.colorscheme(new_colorscheme)
 end
 
-local set_dark = function()
+local set_dark = function(curr)
   setup()
 
   vim.g.colorscheme_mode = dark
   vim.o.background = "dark"
 
-  set_colorscheme(vim.g.colorscheme_mode_dark)
+  set_colorscheme(curr, vim.g.colorscheme_mode_dark)
 end
 
-local set_light = function()
+local set_light = function(curr)
   setup()
 
   vim.g.colorscheme_mode = light
   vim.o.background = "light"
 
-  set_colorscheme(vim.g.colorscheme_mode_light)
+  set_colorscheme(curr, vim.g.colorscheme_mode_light)
 end
 
 --- Changes the colorscheme.
@@ -138,7 +140,7 @@ local toggle = function()
     new_mode = dark
   end
 
-  set(new_mode)()
+  set(new_mode)(vim.g.current_colorscheme)
 end
 
 return {

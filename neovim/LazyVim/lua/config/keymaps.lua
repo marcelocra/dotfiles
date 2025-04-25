@@ -20,46 +20,9 @@ vim.keymap.del("n", "<Leader>dph")
 vim.keymap.del("n", "<Leader>dps")
 
 -------------------------------------------------------------------------------
--- Utility functions.
--------------------------------------------------------------------------------
-
--- Simplifies loading functions to be used in this file. This is better for REPL
--- development.
-local u = (function()
-  ---
-  --- Use the given `cmd` to open the file `name`, changing the local working directory to the Neovim config folder.
-  ---
-  --- @param cmd string: Command to open the file. Shortcuts: b (buffer), h (horizontal split), v (vertical split).
-  --- @param name string: Name of the file to open. It should be in 'lua/config' folder.
-  --- @return string: Command to open the file.
-  ---
-  local cfg = function(cmd, name)
-    local cmds = { b = ":e ", h = ":spl ", v = ":vspl " }
-    local utils = require("mcra.lib.utils")
-
-    cmd = cmds[cmd] or ":e "
-    return cmd .. utils.vimrc_folder .. "/lua/config/" .. name .. "<CR>:lcd " .. utils.vimrc_folder .. "<CR>"
-  end
-
-  -- Helper to deal with colorschemes.
-  local colorscheme_init = require("mcra.lib.colorscheme-init")
-
-  -- Other utilities.
-  local u = require("mcra.lib.utils")
-
-  return {
-    cfg = cfg,
-    set_colorscheme = colorscheme_init.set,
-    toggle_colorscheme = colorscheme_init.toggle,
-    call = u.call,
-    call_doc = u.call_doc,
-    partial = u.partial,
-  }
-end)()
-
--------------------------------------------------------------------------------
 -- Actual mappings.
 -------------------------------------------------------------------------------
+
 vim.keymap.set({ "i" }, "jf", "<Esc>", { desc = "Go to normal mode" })
 vim.keymap.set({ "i" }, "fj", "<Esc>", { desc = "Go to normal mode" })
 
@@ -95,7 +58,7 @@ vim.keymap.set({ "n", "i" }, ",e", "<Cmd>e<CR>", { desc = "Reload current file" 
 vim.keymap.set({ "n", "i" }, "<M-j>", "<Cmd>BufferLineCyclePrev<CR>", { desc = "Focus on the buffer to the left" })
 vim.keymap.set({ "n", "i" }, "<M-k>", "<Cmd>BufferLineCycleNext<CR>", { desc = "Focus on the buffer to the right" })
 
-u.call_doc("Move line or selection down", function(doc)
+require("mcra.lib.utils").fn("Move line or selection down", function(doc)
   local desc = { desc = doc }
 
   vim.keymap.set({ "n" }, "<M-Down>", "<Cmd>execute 'move .+' . v:count1<CR>==", desc)
@@ -108,7 +71,7 @@ u.call_doc("Move line or selection down", function(doc)
   vim.keymap.set({ "v" }, "<M-S-j>", ":<C-U>execute \"'<lt>,'>move '>+\" . v:count1<CR>gv=gv", desc)
 end)
 
-u.call_doc("Move line or selection doc", function(doc)
+require("mcra.lib.utils").fn("Move line or selection doc", function(doc)
   local desc = { desc = doc }
 
   vim.keymap.set({ "n" }, "<M-Up>", "<Cmd>execute 'move .-' . (v:count1 + 1)<CR>==", desc)
@@ -136,12 +99,12 @@ vim.keymap.set(
   { desc = "Clear the last search, erasing from the register ('n' won't work)" }
 )
 
-u.call_doc("Reminder that I'm using the wrong keyboard layout", function(doc)
+require("mcra.lib.utils").fn("Reminder that I'm using the wrong keyboard layout", function(doc)
   vim.keymap.set({ "n" }, "Ç", ':echo "Wrong keyboard layout!"<CR>', { desc = doc })
   vim.keymap.set({ "n" }, "ç", ':echo "wrong keyboard layout!"<CR>', { desc = doc })
 end)
 
-u.call_doc("Insert date or time in current buffer", function()
+require("mcra.lib.utils").fn("Insert date or time in current buffer", function()
   local desc
 
   -- NOTE: Alternative format: %Y-%m-%d
@@ -174,31 +137,27 @@ vim.keymap.set({ "n" }, "<C-n>", ":nohlsearch<CR>", { desc = "Clear search highl
 
 vim.keymap.set({ "n", "i", "v" }, "<C-_>", "<Cmd>Commentary<CR>", { desc = "Comment and uncomment line or selection" })
 
-vim.keymap.set({ "n" }, "<Leader>oct", u.set_colorscheme(nil), { desc = "Use time-based colorscheme" })
-vim.keymap.set(
-  { "n" },
-  "<Leader>ocd",
-  u.set_colorscheme("dark"),
-  { desc = "Set colorscheme to vim.g.colorscheme_mode_dark" }
-)
-vim.keymap.set(
-  { "n" },
-  "<Leader>ocl",
-  u.set_colorscheme("light"),
-  { desc = "Set colorscheme to vim.g.colorscheme_mode_light" }
-)
-vim.keymap.set({ "n" }, "<M-d>", u.toggle_colorscheme, { desc = "Set colorscheme to vim.g.colorscheme_mode_light" })
+require("mcra.lib.utils").fn("Manage colorschemes, particularly changing between light and dark.", function()
+  local color = require("mcra.lib.colorscheme")
+  local set = color.set
+  local toggle = color.toggle
+
+  vim.keymap.set({ "n" }, "<Leader>oct", set(nil), { desc = "Use time-based colorscheme" })
+  vim.keymap.set({ "n" }, "<Leader>ocd", set("dark"), { desc = "Set colorscheme to vim.g.colorscheme_mode_dark" })
+  vim.keymap.set({ "n" }, "<Leader>ocl", set("light"), { desc = "Set colorscheme to vim.g.colorscheme_mode_light" })
+  vim.keymap.set({ "n" }, "<M-d>", toggle, { desc = "Set colorscheme to vim.g.colorscheme_mode_light" })
+end)
 
 vim.keymap.set(
   { "n" },
   "<M-b>",
-  u.partial(Snacks.explorer, { cwd = LazyVim.root() }),
+  require("mcra.lib.utils").partial(Snacks.explorer, { cwd = LazyVim.root() }),
   { desc = "Open explorer in root directory" }
 )
 vim.keymap.set(
   { "n" },
   "<M-e>",
-  u.partial(Snacks.explorer, { cwd = LazyVim.root() }),
+  require("mcra.lib.utils").partial(Snacks.explorer, { cwd = LazyVim.root() }),
   { desc = "Open explorer in root directory" }
 )
 
@@ -213,62 +172,92 @@ vim.keymap.set(
 
 vim.keymap.set({ "n" }, "<Leader>d", "<Leader>xx", { desc = "Toggle the diagnostics window", remap = true })
 
-vim.keymap.set(
-  { "n" },
-  "<Leader>mt",
-  require("mcra.lib.utils").call(function()
-    local tasks_file = vim.fn.resolve(os.getenv("HOME") .. "/TODO.md")
-    vim.cmd("vspl " .. tasks_file)
-  end),
-  { desc = "Open my tasks files" }
-)
+vim.keymap.set({ "n" }, "<Leader>mt", function()
+  local tasks_file = vim.fn.resolve(os.getenv("HOME") .. "/TODO.md")
+  vim.cmd("vspl " .. tasks_file)
+end, { desc = "Open my tasks files" })
 
--- Next keymap/mapping/keybinding.
+-- INFO: Native in LazyVim: <Leader>uw
+-- vim.keymap.set({"n", "i"}, "<M-w>", "<Esc>set wrap!<CR>", { desc = "Toggle line wrapping", silent = false })
 
-if vim.g.vscode then
-  print("In VSCode, not in native Neovim")
-else
+--------------------------------------------------------------------------------
+-- Next keymap/mapping/keybinding for Neovim AND VSCode above.
+--------------------------------------------------------------------------------
+
+require("mcra.lib.utils").fn("Mappings for when inside Neovim ONLY!", function(_, u)
+  if vim.g.vscode then
+    print("In VSCode, not in native Neovim")
+    return
+  end
   print("In Neovim, not in VSCode")
-  return
-end
 
--- Port my most used mappings from VSCode.
-vim.keymap.set({ "n" }, "<C-p>", function()
-  LazyVim.pick.open()
-end, { desc = "Fuzzy search for files in current folder" })
-vim.keymap.set({ "n" }, "<C-f>", function()
-  Snacks.picker.lines()
-end, { desc = "Fuzzy search for text in the current buffer" })
-vim.keymap.set({ "n" }, "<C-t>", function()
-  Snacks.picker.lsp_symbols({ filter = LazyVim.config.kind_filter })
-end, { desc = "Fuzzy search for symbols in the current file (buffer)" })
-vim.keymap.set({ "n" }, "<F2>", "<Leader>cr", { desc = "Rename variable", remap = true })
+  vim.keymap.set({ "n" }, "<C-p>", LazyVim.pick.open, { desc = "Fuzzy search for files in current folder" })
+  vim.keymap.set({ "n" }, "<C-f>", Snacks.picker.lines, { desc = "Fuzzy search for text in the current buffer" })
+  vim.keymap.set(
+    { "n" },
+    "<C-t>",
+    u.partial(Snacks.picker.lsp_symbols, { filter = LazyVim.config.kind_filter }),
+    { desc = "Fuzzy search for symbols in the current file (buffer)" }
+  )
+  vim.keymap.set({ "n" }, "<F2>", "<Leader>cr", { desc = "Rename variable", remap = true })
 
-vim.keymap.set({ "n" }, "<Leader>evk", u.cfg("b", "keymaps.lua"), { desc = "Edit Neovim keymaps file in a buffer" })
-vim.keymap.set({ "n" }, "<Leader>ev-k", u.cfg("h", "keymaps.lua"), { desc = "Edit Neovim keymaps file in a split" })
-vim.keymap.set({ "n" }, "<Leader>ev|k", u.cfg("v", "keymaps.lua"), { desc = "Edit Neovim keymaps file in a vsplit" })
+  require("mcra.lib.utils").fn("Simplify editing Neovim config files", function(_, u)
+    local keymap = vim.keymap.set
 
-vim.keymap.set({ "n" }, "<Leader>evo", u.cfg("b", "options.lua"), { desc = "Edit Neovim options file in a buffer" })
-vim.keymap.set({ "n" }, "<Leader>ev-o", u.cfg("h", "options.lua"), { desc = "Edit Neovim options file in a split" })
-vim.keymap.set({ "n" }, "<Leader>ev|o", u.cfg("v", "options.lua"), { desc = "Edit Neovim options file in a vsplit" })
+    ---
+    --- Use the given `cmd` to open the file `name`, changing the local working directory to the Neovim config folder.
+    ---
+    --- @param cmd string: Command to open the file. Shortcuts: b (buffer), h (horizontal split), v (vertical split).
+    --- @param name string: Name of the file to open. It should be in 'lua/config' folder.
+    --- @return string: Command to open the file.
+    local cfg = function(cmd, name)
+      local cmds = { b = ":e ", h = ":spl ", v = ":vspl " }
 
-vim.keymap.set({ "n" }, "<Leader>evl", u.cfg("b", "lazy.lua"), { desc = "Edit LazyVim file in a buffer" })
-vim.keymap.set({ "n" }, "<Leader>ev-l", u.cfg("h", "lazy.lua"), { desc = "Edit LazyVim file in a split" })
-vim.keymap.set({ "n" }, "<Leader>ev|l", u.cfg("v", "lazy.lua"), { desc = "Edit LazyVim file in a vsplit" })
+      cmd = cmds[cmd] or ":e "
+      return cmd .. u.vimrc_folder .. "/lua/config/" .. name .. "<CR>:lcd " .. u.vimrc_folder .. "<CR>"
+    end
 
-vim.keymap.set({ "n" }, "<Leader>eva", u.cfg("b", "autocmds.lua"), { desc = "Edit Neovim autocmds file in a buffer" })
-vim.keymap.set({ "n" }, "<Leader>ev-a", u.cfg("h", "autocmds.lua"), { desc = "Edit Neovim autocmds file in a split" })
-vim.keymap.set({ "n" }, "<Leader>ev|a", u.cfg("v", "autocmds.lua"), { desc = "Edit Neovim autocmds file in a vsplit" })
+    keymap({ "n" }, "<Leader>evk", cfg("b", "keymaps.lua"), { desc = "Edit Neovim keymaps file in a buffer" })
+    keymap({ "n" }, "<Leader>ev-k", cfg("h", "keymaps.lua"), { desc = "Edit Neovim keymaps file in a split" })
+    keymap({ "n" }, "<Leader>ev|k", cfg("v", "keymaps.lua"), { desc = "Edit Neovim keymaps file in a vsplit" })
 
-vim.keymap.set({ "n" }, "-", ":split<CR>", { desc = "Easy vertical split" })
-vim.keymap.set({ "n" }, "|", ":vsplit<CR>", { desc = "Easy horizontal split" })
+    keymap({ "n" }, "<Leader>evo", cfg("b", "options.lua"), { desc = "Edit Neovim options file in a buffer" })
+    keymap({ "n" }, "<Leader>ev-o", cfg("h", "options.lua"), { desc = "Edit Neovim options file in a split" })
+    keymap({ "n" }, "<Leader>ev|o", cfg("v", "options.lua"), { desc = "Edit Neovim options file in a vsplit" })
 
--- <Leader>uw
--- vim.keymap.set({"n"}, "<M-w>", ":set wrap!<CR>", { desc = "Toggle line wrapping", silent = false })
+    keymap({ "n" }, "<Leader>evl", cfg("b", "lazy.lua"), { desc = "Edit LazyVim file in a buffer" })
+    keymap({ "n" }, "<Leader>ev-l", cfg("h", "lazy.lua"), { desc = "Edit LazyVim file in a split" })
+    keymap({ "n" }, "<Leader>ev|l", cfg("v", "lazy.lua"), { desc = "Edit LazyVim file in a vsplit" })
 
-vim.keymap.set({ "n", "i", "x" }, "<C-d>", function()
-  local vscode = require("vscode")
-  vscode.with_insert(function()
-    vscode.action("editor.action.addSelectionToNextFindMatch")
+    keymap({ "n" }, "<Leader>eva", cfg("b", "autocmds.lua"), { desc = "Edit Neovim autocmds file in a buffer" })
+    keymap({ "n" }, "<Leader>ev-a", cfg("h", "autocmds.lua"), { desc = "Edit Neovim autocmds file in a split" })
+    keymap({ "n" }, "<Leader>ev|a", cfg("v", "autocmds.lua"), { desc = "Edit Neovim autocmds file in a vsplit" })
   end)
+
+  vim.keymap.set({ "n" }, "-", ":split<CR>", { desc = "Easy vertical split" })
+  vim.keymap.set({ "n" }, "|", ":vsplit<CR>", { desc = "Easy horizontal split" })
+
+  --------------------------------------------------------------------------------
+  -- Next keymap/mapping/keybinding for Neovim ONLY above.
+  --------------------------------------------------------------------------------
+end)
+
+require("mcra.lib.utils").fn("Mappings for when inside VSCode ONLY!", function()
+  if not vim.g.vscode then
+    print("In Neovim, not in VSCode")
+    return
+  end
+  print("In VSCode, not in native Neovim")
+
+  -- vim.keymap.del({ "n", "i", "x" }, "<C-d>")
+  vim.keymap.set({ "n", "i", "x" }, "<C-d>", function()
+    local vscode = require("vscode")
+    vscode.with_insert(function()
+      vscode.action("editor.action.addSelectionToNextFindMatch")
+    end)
+  end)
+
+  --------------------------------------------------------------------------------
+  -- Next keymap/mapping/keybinding for VSCode ONLY above.
+  --------------------------------------------------------------------------------
 end)

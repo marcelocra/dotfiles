@@ -21,7 +21,7 @@ require("lazy").setup({
       "LazyVim/LazyVim",
       import = "lazyvim.plugins",
       opts = {
-        colorscheme = require("mcra.lib.colorscheme-init").set(),
+        colorscheme = require("mcra.lib.colorscheme").set(),
       },
     },
     -- import/override with your plugins

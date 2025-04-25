@@ -90,24 +90,43 @@ M.TEST(function()
   other("hello", "you", "beautiful")
 end, { run = false })
 
+-------------------------------------------------------------------------------
+-- Next function/util above. The function below should be the last one in the
+-- file, to use the M table correctly.
+-------------------------------------------------------------------------------
+
 ---
---- Facilitates documenting a block of code, using a string as docs (1st arg).
---- The 2nd argument should the function that will be run. You can use the
---- string in the function if you want. It is the first parameter:
+--- Facilitates running and documenting a block of code.
 ---
 ---   run("This function is cool!", function(doc)
 ---     print(doc)   -- "This function is cool!"
 ---   end)
 ---
---- @param doc string The string used to document this block.
-M.call_doc = function(doc, fn)
-  if type(doc) ~= "string" or type(fn) ~= "function" then
-    error("Incorrect argument type... you should have a type error somewhere.")
+--- Or, if you have more options:
+---
+---   run({ doc = "This function is cool!", say_hello = true }, function(opts)
+---     print(opts.doc)   -- "This function is cool!"
+---     if opts.say_hello then
+---       print("Hello!")
+---     end
+---   end)
+---
+--- Or, if you want to use other functions from this module:
+---
+---   run({ doc = "This function is cool!" }, function(opts, u)
+---     -- Use the functions here, like: u.partial(...)
+---   end)
+---
+--- @param str_or_opts string|table A string documenting this block or a table
+--- with whatever you want, including a doc field.
+--- @param cb function The function that will be called. It can receive options
+--- if you need.
+M.fn = function(str_or_opts, cb)
+  if (type(str_or_opts) ~= "string" and type(str_or_opts) ~= "table") or type(cb) ~= "function" then
+    error("Incorrect argument type... you should have a type error somewhere")
   end
 
-  return fn()
+  return cb(str_or_opts, M)
 end
-
--- Next function/util above.
 
 return M
