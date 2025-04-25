@@ -18,8 +18,8 @@ local the_leader = " "
 vim.g.mapleader = the_leader
 vim.g.maplocalleader = the_leader
 
--- Configures all options in one go. Good to keep everything together.
-require("mcra.lib.utils").call(function()
+-- Good to keep everything together.
+require("mcra.lib.utils").fn("Configures all options in one go", function()
   local opt = vim.opt
 
   opt.smartindent = true
@@ -40,8 +40,13 @@ require("mcra.lib.utils").call(function()
   -- NOTE: The spelling_language and spelling_languages options in EditorConfig
   -- takes precedence over spelllang. If you are not seeing what you expect,
   -- check in your EditorConfig file.
-  opt.spelllang = "en,en_us,pt_br,pt"
-  opt.spellfile = os.getenv("MCRA_LOCAL_DOTFILES") .. "/backups/nvim/spell/dict.utf-8.add"
+  -- TODO: The spellchecker didn't work only with the EditorConfig settings,
+  -- ended up needing this one too, not sure why. Perhaps double check this.
+  opt.spelllang = "en_us,en,pt_br,pt"
+  opt.spellfile = (
+    (os.getenv("MCRA_LOCAL_DOTFILES") .. "/backups/nvim/spell/dict.utf-8.add")
+    or (os.getenv("HOME") .. "/Documents/spell_dict.utf-8.add")
+  )
 end)
 
 vim.g.lazyvim_prettier_needs_config = false

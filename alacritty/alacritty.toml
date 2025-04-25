@@ -32,12 +32,12 @@
 working_directory = "/home/marcelocra"
 live_config_reload = true
 
-import = []
+import = ["~/.config/alacritty/alacritty-theme/themes/cyber_punk_neon.toml"]
 
 ################################################################################
 [font]
 ################################################################################
-size = 16.0
+size = 11.0
 
 [font.normal]
 style = "Regular"
