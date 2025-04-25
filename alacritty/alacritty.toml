@@ -32,31 +32,52 @@
 working_directory = "/home/marcelocra"
 live_config_reload = true
 
-import = ["~/.config/alacritty/alacritty-theme/themes/cyber_punk_neon.toml"]
+import = [
+  "~/.config/alacritty/alacritty-theme/themes/cyber_punk_neon.toml",
+  "~/.config/alacritty/alacritty-theme/themes/catppuccin_latte.toml",
+]
 
 ################################################################################
 [font]
 ################################################################################
+# 7 or 8 are the minimum that are still readable, depending on the font. Very
+# small for my taste, though. The minimum that I find comfortable are 9 or 10.
 size = 11.0
 
 [font.normal]
 style = "Regular"
-# family = "MesloLGM Nerd Font"
-# family = "Reddit Mono"
-# family = "Hack Nerd Font"
-# family = "JetBrainsMono Nerd Font Mono"
-# family = "CodeNewRoman Nerd Font"
-# family = "MesloLGS Nerd Font"
-# family = "Iosevka Nerd Font"
-family = "IosevkaTermSlab NF"
+
+# Organized by height. This is not very precise, as some fonts have the same
+# height in some sizes but not in others.
+# --- Smaller ---
+# family = "CodeNewRoman Nerd Font" # 9+
+# family = "Iosevka Nerd Font" # min: 10, good: 12
+family = "IosevkaTermSlab Nerd Font" # min: 10, good: 12
+# family = "Hack Nerd Font" # min: 8, good: 9+
 # family = "RecMonoLinear Nerd Font"
+# family = "RecMonoDuotone Nerd Font"
+# family = "M PLUS 1 Code"
+# --- Small ---
+# family = "SourceCodeVF"
+# family = "MesloLGS Nerd Font"
+# family = "JetBrainsMono Nerd Font"
+# family = "BlexMono Nerd Font" # Lighter.
+# --- Medium ---
+# family = "MesloLGM Nerd Font"
+# family = "Noto Sans Mono"
+# family = "Red Hat Mono"
+# family = "Reddit Mono"
+# --- Large ---
+# family = "MesloLGL Nerd Font"
+# --- New and unchecked below ---
 
 [font.italic]
 style = "Italic"
+
 # family = "Monaspace Radon Var"
-# family = "IBM Plex Mono"
+# family = "Blex Mono Nerd Font"
 # family = "SourceCodeVF"
-family = "Iosevka NF"
+# family = "Iosevka Nerd Font"
 
 ################################################################################
 [window]

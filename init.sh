@@ -785,6 +785,7 @@ if [[ ! -d "$MCRA_TMP_PLAYGROUND" ]]; then
     mkdir $MCRA_TMP_PLAYGROUND
 fi
 alias tmp="pushd $MCRA_TMP_PLAYGROUND"
+alias temp=tmp
 
 # As in 'back'.
 alias b="popd"
@@ -831,8 +832,8 @@ elif mm_is_command grep; then
     alias g=grep
 fi
 
-# export LESS='-R'
-export LESS='--use-color'
+# ALWAYS use `-R`, otherwise terminals probably will keep printing ESC chars.
+export LESS='-R --use-color'
 # If `lesspipe` is available, we can use the following instead of the
 # `LESSOPEN` env.
 # eval "$(lesspipe)"

@@ -9,8 +9,9 @@ local act = wezterm.action
 
 -- Fonts I frequently use.
 
--- Options: 'Fixed', 'Fixed Extended', 'Extended'.
-local which_iosevka = "Iosevka Fixed Extended"
+-- Iosevka options: 'Iosevka Fixed', 'Iosevka Fixed Extended', 'Iosevka Extended',
+--    'Iosevka Nerd Font', 'IosevkaTermSlab Nerd Font'.
+local which_iosevka = "IosevkaTermSlab Nerd Font"
 
 local default_font_size = 13
 local default_font_weight = 400
@@ -185,9 +186,15 @@ local fonts = { -- <<(
   -- )>>
   iosevka = create_font(which_iosevka),
 
-  iosevka_ss08_pragmata = create_font(which_iosevka, { harfbuzz_features = { "ss08" } }),
+  iosevka_ss08_pragmata = create_font(
+    which_iosevka,
+    { harfbuzz_features = { "ss08" } }
+  ),
 
-  iosevka_ss14_jb = create_font(which_iosevka, { harfbuzz_features = { "ss14" } }),
+  iosevka_ss14_jb = create_font(
+    which_iosevka,
+    { harfbuzz_features = { "ss14" } }
+  ),
 
   iosevka_ss13_lucida = create_font(which_iosevka, {
     -- stylua: ignore
@@ -200,9 +207,15 @@ local fonts = { -- <<(
     },
   }),
 
-  iosevka_ss04_menlo = create_font(which_iosevka, { harfbuzz_features = { "ss04" } }),
+  iosevka_ss04_menlo = create_font(
+    which_iosevka,
+    { harfbuzz_features = { "ss04" } }
+  ),
 
-  iosevka_ss07_monaco = create_font(which_iosevka, { harfbuzz_features = { "ss07" } }),
+  iosevka_ss07_monaco = create_font(
+    which_iosevka,
+    { harfbuzz_features = { "ss07" } }
+  ),
 
   victor_mono = create_font("Victor Mono", {
     weight = 600,
@@ -255,60 +268,63 @@ local SCRATCH_SCRIPT = os.getenv("HOME") .. "/projects/dotfiles/.rc.scratch"
 
 -- EVENTS
 
-wezterm.on("format-tab-title", function(tab, _tabs, _panes, _config, hover, max_width)
-  -- The filled in variant of the < symbol
-  local solid_left_arrow = wezterm.nerdfonts.pl_right_hard_divider
+wezterm.on(
+  "format-tab-title",
+  function(tab, _tabs, _panes, _config, hover, max_width)
+    -- The filled in variant of the < symbol
+    local solid_left_arrow = wezterm.nerdfonts.pl_right_hard_divider
 
-  -- The filled in variant of the > symbol
-  local solid_right_arrow = wezterm.nerdfonts.pl_left_hard_divider
+    -- The filled in variant of the > symbol
+    local solid_right_arrow = wezterm.nerdfonts.pl_left_hard_divider
 
-  -- This function returns the suggested title for a tab.
-  -- It prefers the title that was set via `tab:set_title()`
-  -- or `wezterm cli set-tab-title`, but falls back to the
-  -- title of the active pane in that tab.
-  local function tab_title(tab_info)
-    local title = tab_info.tab_title
-    -- if the tab title is explicitly set, take that
-    if title and #title > 0 then
-      return title
+    -- This function returns the suggested title for a tab.
+    -- It prefers the title that was set via `tab:set_title()`
+    -- or `wezterm cli set-tab-title`, but falls back to the
+    -- title of the active pane in that tab.
+    local function tab_title(tab_info)
+      local title = tab_info.tab_title
+      -- if the tab title is explicitly set, take that
+      if title and #title > 0 then
+        return title
+      end
+      -- Otherwise, use the title from the active pane
+      -- in that tab
+      return tab_info.active_pane.title
     end
-    -- Otherwise, use the title from the active pane
-    -- in that tab
-    return tab_info.active_pane.title
+
+    local edge_background = "#0b0022"
+    local background = "#1b1032"
+    local foreground = "#808080"
+
+    if tab.is_active then
+      background = "#2b2042"
+      foreground = "#c0c0c0"
+    elseif hover then
+      background = "#3b3052"
+      foreground = "#909090"
+    end
+
+    local edge_foreground = background
+
+    local title = tab_title(tab)
+
+    -- ensure that the titles fit in the available space,
+    -- and that we have room for the edges.
+    title = wezterm.truncate_right(title, max_width - 2)
+
+    return {
+      { Background = { Color = edge_background } },
+      { Foreground = { Color = edge_foreground } },
+      { Text = solid_left_arrow },
+      { Background = { Color = background } },
+      { Foreground = { Color = foreground } },
+      { Text = title },
+      { Background = { Color = edge_background } },
+      { Foreground = { Color = edge_foreground } },
+      { Text = solid_right_arrow },
+    }
   end
-
-  local edge_background = "#0b0022"
-  local background = "#1b1032"
-  local foreground = "#808080"
-
-  if tab.is_active then
-    background = "#2b2042"
-    foreground = "#c0c0c0"
-  elseif hover then
-    background = "#3b3052"
-    foreground = "#909090"
-  end
-
-  local edge_foreground = background
-
-  local title = tab_title(tab)
-
-  -- ensure that the titles fit in the available space,
-  -- and that we have room for the edges.
-  title = wezterm.truncate_right(title, max_width - 2)
-
-  return {
-    { Background = { Color = edge_background } },
-    { Foreground = { Color = edge_foreground } },
-    { Text = solid_left_arrow },
-    { Background = { Color = background } },
-    { Foreground = { Color = foreground } },
-    { Text = title },
-    { Background = { Color = edge_background } },
-    { Foreground = { Color = edge_foreground } },
-    { Text = solid_right_arrow },
-  }
-end)
+)
 
 wezterm.on("window-focus-changed", function(window, pane)
   -- If window lost focus but is still open, do nothing
@@ -548,10 +564,10 @@ local choose_random_font = function()
     -- fonts.jb,
     -- fonts.jb_nf,
     -- fonts.liberation_mono,
-    fonts.noto,
+    -- fonts.noto,
     -- fonts.recursive_casual,
     -- fonts.recursive_duotone,
-    fonts.recursive_linear,
+    -- fonts.recursive_linear,
     -- fonts.recursive_semicasual,
     -- fonts.roboto,
     -- fonts.victor_mono,
@@ -564,9 +580,9 @@ local choose_random_font = function()
     -- fonts.fira,
     -- fonts.fira_crazy,
     -- fonts.hack,
-    -- fonts.iosevka,
+    fonts.iosevka,
     -- fonts.iosevka_ss04_menlo,
-    fonts.iosevka_ss07_monaco,
+    -- fonts.iosevka_ss07_monaco,
     -- fonts.iosevka_ss08_pragmata,
     -- fonts.m_plus,
     -- fonts.meslo,
@@ -627,7 +643,9 @@ end
 -- KEYBINDINGS
 
 local function change_color_scheme(window, pane)
-  wezterm.gui.gui_windows()[1]:set_config_overrides({ color_scheme = get_scheme({ force_random = true }) })
+  wezterm.gui
+    .gui_windows()[1]
+    :set_config_overrides({ color_scheme = get_scheme({ force_random = true }) })
 end
 
 config.keys = {
@@ -647,7 +665,11 @@ config.keys = {
   -- { key = "r", mods = "CTRL|SHIFT", action = wezterm.action.ReloadConfiguration },
 
   -- Randomly choose a theme.
-  { key = "t", mods = "SHIFT|CTRL", action = wezterm.action_callback(change_color_scheme) },
+  {
+    key = "t",
+    mods = "SHIFT|CTRL",
+    action = wezterm.action_callback(change_color_scheme),
+  },
 }
 
 -- RETURN THE CONFIG OBJECT, TO APPLY ALL SETTINGS
