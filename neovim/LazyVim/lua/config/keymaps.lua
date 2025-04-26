@@ -17,9 +17,27 @@ vim.keymap.del("n", "<Leader>e")
 -- NOTE: Remove (and add) <C-/> too, as it seems like the other one doesn't work
 -- in Wezterm.
 --
--- LazyVim: Open/Close Neovim embedded terminal.
+-- LazyVim: Open/Close Neovim embedded terminal. New: <M-/>.
 vim.keymap.del({ "n", "t" }, "<C-_>")
 vim.keymap.del({ "n", "t" }, "<C-/>")
+vim.keymap.set("n", "<M-_>", function()
+  Snacks.terminal(nil, { cwd = LazyVim.root() })
+end, { desc = "Terminal (Root Dir)" })
+vim.keymap.set("n", "<M-/>", function()
+  Snacks.terminal(nil, { cwd = LazyVim.root() })
+end, { desc = "Terminal (Root Dir)" })
+vim.keymap.set("t", "<M-_>", "<Cmd>close<CR>", { desc = "Close terminal" })
+vim.keymap.set("t", "<M-/>", "<Cmd>close<CR>", { desc = "Close terminal" })
+
+-- NOTE: Add both because some terminals might not recognize one or the other.
+-- Wezterm doesn't recognize <C-_> but recognizes <C-/>.
+-- Alacritty recognizes <C-_>.
+vim.keymap.set({ "n" }, "<C-_>", "gcc", { desc = "Comment and uncomment line or selection", remap = true })
+vim.keymap.set({ "n" }, "<C-/>", "gcc", { desc = "Comment and uncomment line or selection", remap = true })
+vim.keymap.set({ "i" }, "<C-_>", "<Esc>gcc", { desc = "Comment and uncomment line or selection", remap = true })
+vim.keymap.set({ "i" }, "<C-/>", "<Esc>gcc", { desc = "Comment and uncomment line or selection", remap = true })
+vim.keymap.set({ "v" }, "<C-_>", "gcgv", { desc = "Comment and uncomment line or selection", remap = true })
+vim.keymap.set({ "v" }, "<C-/>", "gcgv", { desc = "Comment and uncomment line or selection", remap = true })
 
 -- LazyVim: Open a profiler for debug.
 vim.keymap.del("n", "<Leader>dpp")
@@ -151,16 +169,6 @@ require("mcra.lib.utils").fn("NEOVIM ONLY!", function(_, u)
 
   vim.keymap.set({ "n" }, "<C-n>", ":nohlsearch<CR>", { desc = "Clear search highlights" })
 
-  -- NOTE: Add both because some terminals might not recognize one or the other.
-  -- Wezterm doesn't recognize <C-_> but recognizes <C-/>.
-  -- Alacritty recognizes <C-_>.
-  vim.keymap.set({ "n" }, "<C-_>", "gcc", { desc = "Comment and uncomment line or selection", remap = true })
-  vim.keymap.set({ "n" }, "<C-/>", "gcc", { desc = "Comment and uncomment line or selection", remap = true })
-  vim.keymap.set({ "i" }, "<C-_>", "<Esc>gcc", { desc = "Comment and uncomment line or selection", remap = true })
-  vim.keymap.set({ "i" }, "<C-/>", "<Esc>gcc", { desc = "Comment and uncomment line or selection", remap = true })
-  vim.keymap.set({ "v" }, "<C-_>", "gcgv", { desc = "Comment and uncomment line or selection", remap = true })
-  vim.keymap.set({ "v" }, "<C-/>", "gcgv", { desc = "Comment and uncomment line or selection", remap = true })
-
   require("mcra.lib.utils").fn("Manage colorschemes, particularly changing between light and dark.", function()
     local color = require("mcra.lib.colorscheme")
     local set = color.set
@@ -247,6 +255,13 @@ require("mcra.lib.utils").fn("NEOVIM ONLY!", function(_, u)
 
   vim.keymap.set({ "n" }, "-", ":split<CR>", { desc = "Easy vertical split" })
   vim.keymap.set({ "n" }, "|", ":vsplit<CR>", { desc = "Easy horizontal split" })
+
+  vim.keymap.set(
+    { "n" },
+    "<Leader>tn",
+    "<Cmd>vsplit<CR><Cmd>term<CR>i",
+    { desc = "Create a new terminal in a vertical split" }
+  )
 
   -- Next Neovim above.
 end)

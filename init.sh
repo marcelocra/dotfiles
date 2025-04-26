@@ -144,10 +144,10 @@ if mm_is_command nvim; then
 
     function n() {
         if [[ -z "$@" ]]; then
-            pushd $MCRA_MONOREPO >/dev/null
+            pushd $MCRA_DOTFILES >/dev/null
         fi
 
-        _editor "$@"
+        $EDITOR "$@"
 
         if [[ -z "$@" ]]; then
             popd >/dev/null
@@ -960,6 +960,19 @@ alias bat=batcat
 
 # List installed packages.
 alias list_installed_packages='dpkg --get-selections | grep -v deinstall'
+
+# Open nvim without plugins and/or configs. From the docs (:help noplugin):
+#
+# --noplugin  Skip loading plugins.  Resets the 'loadplugins' option.
+#             Note that the |-u| argument may also disable loading plugins:
+#                 argument    load vimrc files    load plugins ~
+#                 (nothing)       yes         yes
+#                 -u NONE         no          no
+#                 -u NORC         no          yes
+#                 --noplugin      yes         no
+alias neovim_none='nvim -u NONE'
+alias neovim_norc='nvim -u NORC'
+alias neovim_noplugin='nvim --noplugin'
 
 # next alias above, unless they fit in one of the other sections.
 # }}}general

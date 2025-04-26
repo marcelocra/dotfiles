@@ -28,7 +28,7 @@ style = "Regular"
 # --- Smaller ---
 # family = "CodeNewRoman Nerd Font" # 9+
 # family = "Iosevka Nerd Font" # min: 10, good: 12
-# family = "IosevkaTermSlab Nerd Font" # min: 10, good: 12
+family = "IosevkaTermSlab Nerd Font" # min: 10, good: 12
 # family = "Hack Nerd Font" # min: 8, good: 9+
 # family = "RecMonoLinear Nerd Font"
 # family = "RecMonoDuotone Nerd Font"
@@ -36,7 +36,7 @@ style = "Regular"
 # --- Small ---
 # family = "SourceCodeVF"
 # family = "MesloLGS Nerd Font"
-family = "JetBrainsMono Nerd Font Propo"
+# family = "JetBrainsMono Nerd Font Propo"
 # family = "JetBrains Mono"
 # family = "BlexMono Nerd Font" # Lighter.
 # --- Medium ---
