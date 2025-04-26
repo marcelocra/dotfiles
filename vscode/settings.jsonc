@@ -433,16 +433,17 @@
   //    more fish-like stuff (::<)
 
   ///auto-config-start:fonts
-  "editor.fontFamily": "'IosevkaTermSlab Nerd Font', 'Iosevka Nerd Font', 'CodeNewRoman Nerd Font Mono', 'Reddit Mono', 'MesloLGS Nerd Font', 'M Plus 1 Code', 'RecMonoLinear Nerd Font', 'RecMonoDuotone Nerd Font', 'Hack Nerd Font', 'Geist Mono', Iosevka, monospace",
+  "editor.fontFamily": "'Monaspace Neon Var', 'IosevkaTermSlab Nerd Font', 'Iosevka Nerd Font', 'CodeNewRoman Nerd Font Mono', 'Reddit Mono', 'MesloLGS Nerd Font', 'M Plus 1 Code', 'RecMonoLinear Nerd Font', 'RecMonoDuotone Nerd Font', 'Hack Nerd Font', 'Geist Mono', Iosevka, monospace",
   "editor.fontSize": 19,
   "editor.fontWeight": "normal",
+  "editor.fontLigatures": "'cv01' 3", // Andale Mono
   // "editor.fontLigatures": "'ss01'", // Andale Mono
   // "editor.fontLigatures": "'ss02'", // Anonymous Pro
   // "editor.fontLigatures": "'ss03'", // Consolas
   // "editor.fontLigatures": "'ss04'", // Menlo // Great
   // "editor.fontLigatures": "'ss05'", // Fira Mono
   // "editor.fontLigatures": "'ss06'", // Liberation Mono
-  "editor.fontLigatures": "'ss07'", // Monaco // Great
+  // "editor.fontLigatures": "'ss07'", // Monaco // Great
   // "editor.fontLigatures": "'ss08'", // Pragmata Pro
   // "editor.fontLigatures": "'ss09'", // Source Code Pro
   // "editor.fontLigatures": "'ss10'", // Envy Code R
@@ -455,7 +456,6 @@
   // "editor.fontLigatures": "'ss17'", // Recursive Mono
   // "editor.fontLigatures": "'ss18'", // Input Mono
   // "editor.fontLigatures": "'ss20'", // Curly
-
 
   ///auto-config-end:fonts
 

@@ -110,8 +110,8 @@
 
   "clojure_sublimed_formatter": "clj -Tcljfmt fix",
 
-  "color_scheme": "Mariana.sublime-color-scheme",
+  "color_scheme": "Celeste.sublime-color-scheme",
   "dark_color_scheme": "Mariana.sublime-color-scheme",
   "light_color_scheme": "Breakers.sublime-color-scheme",
-  "theme": "Default Dark.sublime-theme",
+  "theme": "Default.sublime-theme",
 }

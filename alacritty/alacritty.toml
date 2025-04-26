@@ -9,8 +9,8 @@ live_config_reload = true
 
 import = [
   "~/.config/alacritty/alacritty-theme/themes/cyber_punk_neon.toml",
-  "~/.config/alacritty/alacritty-theme/themes/catppuccin_latte.toml",
   "~/.config/alacritty/alacritty-theme/themes/catppuccin_mocha.toml",
+  "~/.config/alacritty/alacritty-theme/themes/catppuccin_latte.toml",
 ]
 
 ################################################################################
@@ -18,40 +18,77 @@ import = [
 ################################################################################
 # 7 or 8 are the minimum that are still readable, depending on the font. Very
 # small for my taste, though. The minimum that I find comfortable are 9 or 10.
-size = 13.0
+#-------------------------------------------------------------------------------
+# Common settings
+# ---------------
+offset = { x = 0, y = 0 }
+glyph_offset = { x = 0, y = 0 }
+# offset = { x = 0, y = 6 }
+# glyph_offset = { x = 0, y = 3 } # offset.y/2+1 (or without +1)
 
+builtin_box_drawing = true
+#-------------------------------------------------------------------------------
+# size = 11.0
+# [font.normal]
+# style = "Regular"
+# # Organized by height. This is not very precise, as some fonts have the same
+# # height in some sizes but not in others.
+# # --- Smaller ---
+# # family = "CodeNewRoman Nerd Font" # 9+
+# # family = "Iosevka Nerd Font" # min: 10, good: 12
+# # family = "IosevkaTermSlab Nerd Font" # min: 10, good: 12
+# # family = "Hack Nerd Font" # min: 8, good: 9+
+# # family = "RecMonoLinear Nerd Font"
+# # family = "RecMonoDuotone Nerd Font"
+# # family = "M PLUS 1 Code"
+# # --- Small ---
+# # family = "SourceCodeVF"
+# # family = "MesloLGS Nerd Font"
+# # family = "JetBrainsMono Nerd Font Propo"
+# # family = "JetBrains Mono"
+# # family = "BlexMono Nerd Font" # Lighter.
+# # --- Medium ---
+# # family = "MesloLGM Nerd Font"
+# # family = "Noto Sans Mono"
+# # family = "Red Hat Mono"
+# # family = "Reddit Mono"
+# # --- Large ---
+# # family = "MesloLGL Nerd Font"
+# # --- New and unchecked below ---
+
+# [font.italic]
+# style = "Italic"
+# # family = "Blex Mono Nerd Font"
+# # family = "SourceCodeVF"
+# # family = "Iosevka Nerd Font"
+
+#-------------------------------------------------------------------------------
+# Monaspace Font
+# Created a section for it because it requires custom settings.
+#-------------------------------------------------------------------------------
+size = 11.0
 [font.normal]
-style = "Regular"
+style = "SemiWide Regular"
+family = "Monaspace Argon Var"
+# family = "Monaspace Argon Var"
+# family = "Monaspace Xenon Var"
+# family = "Monaspace Radon Var"
+# family = "Monaspace Krypton Var"
 
-# Organized by height. This is not very precise, as some fonts have the same
-# height in some sizes but not in others.
-# --- Smaller ---
-# family = "CodeNewRoman Nerd Font" # 9+
-# family = "Iosevka Nerd Font" # min: 10, good: 12
-family = "IosevkaTermSlab Nerd Font" # min: 10, good: 12
-# family = "Hack Nerd Font" # min: 8, good: 9+
-# family = "RecMonoLinear Nerd Font"
-# family = "RecMonoDuotone Nerd Font"
-# family = "M PLUS 1 Code"
-# --- Small ---
-# family = "SourceCodeVF"
-# family = "MesloLGS Nerd Font"
-# family = "JetBrainsMono Nerd Font Propo"
-# family = "JetBrains Mono"
-# family = "BlexMono Nerd Font" # Lighter.
-# --- Medium ---
-# family = "MesloLGM Nerd Font"
-# family = "Noto Sans Mono"
-# family = "Red Hat Mono"
-# family = "Reddit Mono"
-# --- Large ---
-# family = "MesloLGL Nerd Font"
-# --- New and unchecked below ---
+[font.bold]
+style = "SemiWide ExtraBold"
+family = "Monaspace Xenon Var"
 
 [font.italic]
-style = "Italic"
+style = "SemiWide Regular"
+family = "Monaspace Radon Var"
+# family = "Blex Mono Nerd Font"
+# family = "SourceCodeVF"
+# family = "Iosevka Nerd Font"
 
-# family = "Monaspace Radon Var"
+[font.bold_italic]
+style = "SemiWide Bold Italic"
+family = "Monaspace Krypton Var"
 # family = "Blex Mono Nerd Font"
 # family = "SourceCodeVF"
 # family = "Iosevka Nerd Font"
@@ -135,7 +172,11 @@ regex = "(ipfs:|ipns:|magnet:|mailto:|gemini://|gopher://|https://|http://|news:
 ################################################################################
 bindings = [
   { key = "V", mods = "Control|Alt", action = "ToggleViMode" },
+  { key = "F11", action = "ToggleFullScreen" },
   { key = "L", mods = "Control|Shift", chars = "l" },
+  # I HATE that ctrl+z moves stuff to the background. It also breaks my
+  # toggleable terminal, so here I force it to just minimize the window.
+  { key = "Z", mods = "Control", action = "Minimize" },
 ]
 
 ################################################################################
