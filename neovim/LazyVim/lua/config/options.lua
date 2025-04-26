@@ -2,9 +2,9 @@
 -- Default options that are always set: https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/config/options.lua
 -- Add any additional options here
 
--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 -- Essential options
--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 -- TODO: Check if these are overwritten by LazyVim after it starts. I believe
 -- they are, but that's ok, as LazyVim sets most of them already. It is useful
 -- to have them here just in case there's some problem starting LazyVim and for
@@ -13,13 +13,13 @@
 -- TODO: Check where we should put options that overwrite LazyVim options. I
 -- believe it should be either in a specific plugin `init` function or in an
 -- `autocmd`.
--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 local the_leader = " "
 vim.g.mapleader = the_leader
 vim.g.maplocalleader = the_leader
 
 -- Good to keep everything together.
-require("mcra.lib.utils").fn("Configures all options in one go", function()
+require("i").run("Configures all options in one go", function()
   local opt = vim.opt
 
   opt.smartindent = true
@@ -31,9 +31,9 @@ require("mcra.lib.utils").fn("Configures all options in one go", function()
 
   opt.wrap = true
 
-  -------------------------------------------------------------------------------
+  ------------------------------------------------------------------------------
   -- Spell checker settings
-  -------------------------------------------------------------------------------
+  ------------------------------------------------------------------------------
   -- Enable with <Leader>us.
   opt.spell = false
 

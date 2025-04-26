@@ -1,33 +1,41 @@
---
+-------------------------------------------------------------------------------
 -- Keymaps are automatically loaded on the VeryLazy event
 -- Default keymaps that are always set: https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/config/keymaps.lua
 -- Add any additional keymaps here
---
-
 -------------------------------------------------------------------------------
--- REMOVE LAZYVIM DEFAULT KEYMAPS
+-- CHANGE SOME LAZYVIM DEFAULTS
 -------------------------------------------------------------------------------
 
--- LazyVim: Open the file explorer. New: <M-b>.
+-- LazyVim: Open the file explorer
+----------------------------------
 vim.keymap.del("n", "<Leader>e")
+vim.keymap.set(
+  { "n" },
+  "<M-b>",
+  require("i").partial(Snacks.explorer, { cwd = LazyVim.root() }),
+  { desc = "Open explorer in root directory" }
+)
+vim.keymap.set(
+  { "n" },
+  "<M-e>",
+  require("i").partial(Snacks.explorer, { cwd = LazyVim.root() }),
+  { desc = "Open explorer in root directory" }
+)
 
--- NOTE: <C-_> is <C-/>. Also, I use it to comment code mostly in visual
--- mode, so I'll keep the default on for now. Edit: not actually true... I
--- immediatelly missed commenting code with Ctrl-/.
+-- LazyVim: Open/Close Neovim embedded terminal
+-- New: <M-/>
+-----------------------------------------------
+-- NOTE: <C-_> is <C-/>. Also, I use it to comment code mostly in visual mode,
+-- so I'll keep the default on for now. Edit: I immediately missed commenting
+-- code with Ctrl-/ and reversed this..
 -- NOTE: Remove (and add) <C-/> too, as it seems like the other one doesn't work
 -- in Wezterm.
---
--- LazyVim: Open/Close Neovim embedded terminal. New: <M-/>.
 vim.keymap.del({ "n", "t" }, "<C-_>")
 vim.keymap.del({ "n", "t" }, "<C-/>")
-vim.keymap.set("n", "<M-_>", function()
-  Snacks.terminal(nil, { cwd = LazyVim.root() })
+vim.keymap.set("n", "<C-`>", function()
+  Snacks.terminal(nil, { cwd = LazyVim.root(), win = { position = "right" } })
 end, { desc = "Terminal (Root Dir)" })
-vim.keymap.set("n", "<M-/>", function()
-  Snacks.terminal(nil, { cwd = LazyVim.root() })
-end, { desc = "Terminal (Root Dir)" })
-vim.keymap.set("t", "<M-_>", "<Cmd>close<CR>", { desc = "Close terminal" })
-vim.keymap.set("t", "<M-/>", "<Cmd>close<CR>", { desc = "Close terminal" })
+vim.keymap.set("t", "<C-`>", "<Cmd>close<CR>", { desc = "Close terminal" })
 
 -- NOTE: Add both because some terminals might not recognize one or the other.
 -- Wezterm doesn't recognize <C-_> but recognizes <C-/>.
@@ -39,7 +47,8 @@ vim.keymap.set({ "i" }, "<C-/>", "<Esc>gcc", { desc = "Comment and uncomment lin
 vim.keymap.set({ "v" }, "<C-_>", "gcgv", { desc = "Comment and uncomment line or selection", remap = true })
 vim.keymap.set({ "v" }, "<C-/>", "gcgv", { desc = "Comment and uncomment line or selection", remap = true })
 
--- LazyVim: Open a profiler for debug.
+-- LazyVim: Open a profiler for debug
+-------------------------------------
 vim.keymap.del("n", "<Leader>dpp")
 vim.keymap.del("n", "<Leader>dph")
 vim.keymap.del("n", "<Leader>dps")
@@ -56,7 +65,7 @@ vim.keymap.del("n", "<Leader>dps")
 -- NEOVIM ONLY START
 --------------------------------------------------------------------------------
 
-require("mcra.lib.utils").fn("NEOVIM ONLY!", function(_, u)
+require("i").run("NEOVIM ONLY!", function(_, u)
   if vim.g.vscode then
     print("Neovim-only code being ignored!")
     return
@@ -90,7 +99,7 @@ require("mcra.lib.utils").fn("NEOVIM ONLY!", function(_, u)
   vim.keymap.set({ "n", "i" }, "<M-j>", "<Cmd>BufferLineCyclePrev<CR>", { desc = "Focus on the buffer to the left" })
   vim.keymap.set({ "n", "i" }, "<M-k>", "<Cmd>BufferLineCycleNext<CR>", { desc = "Focus on the buffer to the right" })
 
-  require("mcra.lib.utils").fn("Move line or selection down", function(doc)
+  require("i").run("Move line or selection down", function(doc)
     local desc = { desc = doc }
 
     vim.keymap.set({ "n" }, "<M-Down>", "<Cmd>execute 'move .+' . v:count1<CR>==", desc)
@@ -103,7 +112,7 @@ require("mcra.lib.utils").fn("NEOVIM ONLY!", function(_, u)
     vim.keymap.set({ "v" }, "<M-S-j>", ":<C-U>execute \"'<lt>,'>move '>+\" . v:count1<CR>gv=gv", desc)
   end)
 
-  require("mcra.lib.utils").fn("Move line or selection doc", function(doc)
+  require("i").run("Move line or selection doc", function(doc)
     local desc = { desc = doc }
 
     vim.keymap.set({ "n" }, "<M-Up>", "<Cmd>execute 'move .-' . (v:count1 + 1)<CR>==", desc)
@@ -133,12 +142,12 @@ require("mcra.lib.utils").fn("NEOVIM ONLY!", function(_, u)
     { desc = "Clear the last search, erasing from the register ('n' won't work)" }
   )
 
-  require("mcra.lib.utils").fn("Reminder that I'm using the wrong keyboard layout", function(doc)
+  require("i").run("Reminder that I'm using the wrong keyboard layout", function(doc)
     vim.keymap.set({ "n" }, "Ç", ':echo "Wrong keyboard layout!"<CR>', { desc = doc })
     vim.keymap.set({ "n" }, "ç", ':echo "wrong keyboard layout!"<CR>', { desc = doc })
   end)
 
-  require("mcra.lib.utils").fn("Insert date or time in current buffer", function()
+  require("i").run("Insert date or time in current buffer", function()
     local desc
 
     -- NOTE: Alternative format: %Y-%m-%d
@@ -167,9 +176,9 @@ require("mcra.lib.utils").fn("NEOVIM ONLY!", function(_, u)
   vim.keymap.set({ "v" }, "<", "<gv", { desc = "Allow fast indenting when there is a chunck of text selected" })
   vim.keymap.set({ "v" }, ">", ">gv", { desc = "Allow fast unindenting when there is a chunck of text selected" })
 
-  vim.keymap.set({ "n" }, "<C-n>", ":nohlsearch<CR>", { desc = "Clear search highlights" })
+  vim.keymap.set({ "n" }, "<C-n>", ":nohlsearch<CR>", { desc = "Clear search highlights", silent = true })
 
-  require("mcra.lib.utils").fn("Manage colorschemes, particularly changing between light and dark.", function()
+  require("i").run("Manage colorschemes, particularly changing between light and dark.", function()
     local color = require("mcra.lib.colorscheme")
     local set = color.set
     local toggle = color.toggle
@@ -180,30 +189,23 @@ require("mcra.lib.utils").fn("NEOVIM ONLY!", function(_, u)
     vim.keymap.set({ "n" }, "<M-d>", toggle, { desc = "Set colorscheme to vim.g.colorscheme_mode_light" })
   end)
 
-  vim.keymap.set(
-    { "n" },
-    "<M-b>",
-    require("mcra.lib.utils").partial(Snacks.explorer, { cwd = LazyVim.root() }),
-    { desc = "Open explorer in root directory" }
-  )
-  vim.keymap.set(
-    { "n" },
-    "<M-e>",
-    require("mcra.lib.utils").partial(Snacks.explorer, { cwd = LazyVim.root() }),
-    { desc = "Open explorer in root directory" }
-  )
-
   -- Doesn't work in terminals.
   vim.keymap.set({ "n" }, "<C-Tab>", "<Cmd>e #<CR>", { desc = "Easily alternate between the two most recent buffers" })
   -- This one does, but gt might be better.
   -- NOTE: actually, gt is for actual Neovim tabs while this is for buffers.
   vim.keymap.set({ "n" }, "<S-Tab>", "<Cmd>e #<CR>", { desc = "Easily alternate between the two most recent buffers" })
-  vim.keymap.set({ "n" }, "<Leader><Leader>", "@q", { desc = "Easily run the macro stored at 'q'" })
+  -- vim.keymap.set({ "n" }, "<Leader><Leader>", "@q", { desc = "Easily run the macro stored at 'q'" })
+  vim.keymap.set(
+    { "n" },
+    "<Leader><Leader>",
+    "<Leader>bb",
+    { desc = "Easily run the macro stored at 'q'", remap = true }
+  )
 
   vim.keymap.set({ "n" }, "<Leader>d", "<Leader>xx", { desc = "Toggle the diagnostics window", remap = true })
 
   vim.keymap.set({ "n" }, "<Leader>mt", function()
-    local tasks_file = vim.fn.resolve(os.getenv("HOME") .. "/Documents/TODO.md")
+    local tasks_file = vim.fn.resolve(os.getenv("HOME") .. "/docs/TODO.md")
     vim.cmd("vspl " .. tasks_file)
   end, { desc = "Open my tasks files" })
 
@@ -220,7 +222,7 @@ require("mcra.lib.utils").fn("NEOVIM ONLY!", function(_, u)
   )
   vim.keymap.set({ "n" }, "<F2>", "<Leader>cr", { desc = "Rename variable", remap = true })
 
-  require("mcra.lib.utils").fn("Simplify editing Neovim config files", function(_, u)
+  require("i").run("Simplify editing Neovim config files", function(_, u)
     local keymap = vim.keymap.set
 
     ---
@@ -272,7 +274,7 @@ end)
 -- VSCODE ONLY START
 --------------------------------------------------------------------------------
 
-require("mcra.lib.utils").fn("VSCODE ONLY!", function()
+require("i").run("VSCODE ONLY!", function()
   if not vim.g.vscode then
     print("VSCode-only code being ignored!")
     return

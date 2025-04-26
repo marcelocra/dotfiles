@@ -1,4 +1,9 @@
--- Setup and helpers functions.
+-- This module provides utility functions for Neovim configuration. I know the
+-- name is bad, but the idea is to simplify importing in config files, like:
+--
+--    require('i').partial(call_me, with_this_arg)
+--    require('i').fun(or_me_with_this_fun_alias, and_this_arg)
+--
 
 local M = {}
 
@@ -14,7 +19,7 @@ M.docfn = function(text)
 end
 
 --- @type function
-M.TEST = function(fn, opts, ...)
+M.test = function(fn, opts, ...)
   opts = opts or { run = false }
   if not opts.run then
     return
@@ -46,10 +51,12 @@ M.partial = function(func, ...)
     return func(unpack(all_args)) -- Call the original function.
   end
 end
-M.call = M.partial
+
+--- Alias to `partial`.
+M.fn = M.partial
 
 -- Test the partial function.
-M.TEST(function()
+M.test(function()
   local somefunc = function(a, b, c)
     print(a, b, c)
   end
@@ -82,7 +89,7 @@ M.partial2 = function(func, ...)
   end
 end
 
-M.TEST(function()
+M.test(function()
   local somefunc = function(a, b, c)
     print(a .. " " .. b .. " " .. c)
   end
@@ -121,7 +128,7 @@ end, { run = false })
 --- with whatever you want, including a doc field.
 --- @param cb function The function that will be called. It can receive options
 --- if you need.
-M.fn = function(str_or_opts, cb)
+M.run = function(str_or_opts, cb)
   if (type(str_or_opts) ~= "string" and type(str_or_opts) ~= "table") or type(cb) ~= "function" then
     error("Incorrect argument type... you should have a type error somewhere")
   end

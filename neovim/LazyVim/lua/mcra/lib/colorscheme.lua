@@ -19,11 +19,13 @@ local set_random_theme = function()
   -- When choosing light or dark mode randomly, use these options.
   local dark_mode_options = {
     -- -- These are nice, but with at least one weird color.
-    -- 'sorbet',  -- telescope thingy is weird grey
-    -- 'zaibatsu',  -- telescope thingy is weird light grey
-    -- 'vim',  -- accent color is bright pink that hurt my eyes (and I like pink)
-    -- 'goodwolf',  -- very few colors...
-    -- --
+    -- -- EDIT: Perhaps it was because of the problem I had with tmux. Now I'm
+    -- tryign to use nvim only.
+    "sorbet", -- telescope thingy is weird grey
+    "zaibatsu", -- telescope thingy is weird light grey
+    "vim", -- accent color is bright pink that hurt my eyes (and I like pink)
+    "goodwolf", -- very few colors...
+    --
 
     "habamax", -- a bit dead, but still nice
     "badwolf", -- classic and still good!
@@ -38,9 +40,10 @@ local set_random_theme = function()
     "catppuccin-mocha",
   }
   local light_mode_options = {
-    "tokyonight-day",
+    -- "tokyonight-day",
     "catppuccin-latte",
-    "default",
+    "lunaperche",
+    -- "default",
   }
   vim.g.colorscheme_mode_dark = dark_mode_options[math.random(#dark_mode_options)]
   vim.g.colorscheme_mode_light = light_mode_options[math.random(#light_mode_options)]

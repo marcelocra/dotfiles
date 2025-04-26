@@ -81,10 +81,10 @@ local run = function(doc, opts, fn)
     error("Incorrect argument type")
   end
 
-  return fn(doc, opts, require("mcra.lib.utils"))
+  return fn(doc, opts, require("i"))
 end
 
-local u = require("mcra.lib.utils")
+local u = require("i")
 
 -- Simplifies even more the mapping of keys.
 local nmap = u.partial(map, "n")
