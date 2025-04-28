@@ -68,30 +68,30 @@ builtin_box_drawing = true
 #-------------------------------------------------------------------------------
 size = 11.0
 [font.normal]
-style = "SemiWide Regular"
-family = "Monaspace Argon Var"
+style = "Regular"
+family = "Monaspace Argon"
 # family = "Monaspace Argon Var"
 # family = "Monaspace Xenon Var"
 # family = "Monaspace Radon Var"
 # family = "Monaspace Krypton Var"
 
-[font.bold]
-style = "SemiWide ExtraBold"
-family = "Monaspace Xenon Var"
+# [font.bold]
+# style = "SemiWide Bold"
+# family = "Monaspace Argon"
 
-[font.italic]
-style = "SemiWide Regular"
-family = "Monaspace Radon Var"
-# family = "Blex Mono Nerd Font"
-# family = "SourceCodeVF"
-# family = "Iosevka Nerd Font"
+# [font.italic]
+# style = "SemiWide Italic"
+# family = "Monaspace Argon"
+# # family = "Blex Mono Nerd Font"
+# # family = "SourceCodeVF"
+# # family = "Iosevka Nerd Font"
 
-[font.bold_italic]
-style = "SemiWide Bold Italic"
-family = "Monaspace Krypton Var"
-# family = "Blex Mono Nerd Font"
-# family = "SourceCodeVF"
-# family = "Iosevka Nerd Font"
+# [font.bold_italic]
+# style = "SemiWide Bold Italic"
+# family = "Monaspace Argon"
+# # family = "Blex Mono Nerd Font"
+# # family = "SourceCodeVF"
+# # family = "Iosevka Nerd Font"
 
 ################################################################################
 [window]
