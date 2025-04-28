@@ -1,24 +1,52 @@
-################################################################################
-## More information in the configuration website:                             ##
-##   https://alacritty.org/config-alacritty.html                              ##
-################################################################################
+#===============================================================================
+# More information in the configuration website:
+#   https://alacritty.org/config-alacritty.html
+#===============================================================================
 [general]
-################################################################################
+#===============================================================================
 working_directory = "/home/marcelocra"
 live_config_reload = true
 
 import = [
-  "~/.config/alacritty/alacritty-theme/themes/cyber_punk_neon.toml",
-  "~/.config/alacritty/alacritty-theme/themes/catppuccin_mocha.toml",
+  #-----------------------------------------------------------------------------
+  # Themes
+  # ------
+  # Only the last one will actually be applied.
+
+  # Light themes
+  # ------------
+  # Best:
+  # "~/.config/alacritty/alacritty-theme/themes/catppuccin_latte.toml",
+
+  # Good:
+  # "~/.config/alacritty/alacritty-theme/themes/dawnfox.toml",
+  # "~/.config/alacritty/alacritty-theme/themes/dayfox.toml",
+  # "~/.config/alacritty/alacritty-theme/themes/github_light.toml",
+  # "~/.config/alacritty/alacritty-theme/themes/one_light.toml",
+
+  # Dark themes
+  # -----------
+  # Best:
   "~/.config/alacritty/alacritty-theme/themes/catppuccin_latte.toml",
+
+  # Good:
+  # "~/.config/alacritty/alacritty-theme/themes/catppuccin_mocha.toml",
+
+  # To try:
+  # "~/.config/alacritty/alacritty-theme/themes/catppuccin.toml",
+  # "~/.config/alacritty/alacritty-theme/themes/catppuccin_frappe.toml",
+  # "~/.config/alacritty/alacritty-theme/themes/catppuccin_mocha.toml",
+  # "~/.config/alacritty/alacritty-theme/themes/catppuccin_macchiato.toml",
+  # "~/.config/alacritty/alacritty-theme/themes/monokai.toml",
+  # "~/.config/alacritty/alacritty-theme/themes/monokai_charcoal.toml",
+  #-----------------------------------------------------------------------------
 ]
 
-################################################################################
+#===============================================================================
 [font]
-################################################################################
 # 7 or 8 are the minimum that are still readable, depending on the font. Very
 # small for my taste, though. The minimum that I find comfortable are 9 or 10.
-#-------------------------------------------------------------------------------
+#===============================================================================
 # Common settings
 # ---------------
 offset = { x = 0, y = 0 }
@@ -28,79 +56,75 @@ glyph_offset = { x = 0, y = 0 }
 
 builtin_box_drawing = true
 #-------------------------------------------------------------------------------
-# size = 11.0
-# [font.normal]
-# style = "Regular"
-# # Organized by height. This is not very precise, as some fonts have the same
-# # height in some sizes but not in others.
-# # --- Smaller ---
-# # family = "CodeNewRoman Nerd Font" # 9+
-# # family = "Iosevka Nerd Font" # min: 10, good: 12
-# # family = "IosevkaTermSlab Nerd Font" # min: 10, good: 12
-# # family = "Hack Nerd Font" # min: 8, good: 9+
-# # family = "RecMonoLinear Nerd Font"
-# # family = "RecMonoDuotone Nerd Font"
-# # family = "M PLUS 1 Code"
-# # --- Small ---
-# # family = "SourceCodeVF"
-# # family = "MesloLGS Nerd Font"
-# # family = "JetBrainsMono Nerd Font Propo"
-# # family = "JetBrains Mono"
-# # family = "BlexMono Nerd Font" # Lighter.
-# # --- Medium ---
-# # family = "MesloLGM Nerd Font"
-# # family = "Noto Sans Mono"
-# # family = "Red Hat Mono"
-# # family = "Reddit Mono"
-# # --- Large ---
-# # family = "MesloLGL Nerd Font"
-# # --- New and unchecked below ---
-
-# [font.italic]
-# style = "Italic"
-# # family = "Blex Mono Nerd Font"
-# # family = "SourceCodeVF"
-# # family = "Iosevka Nerd Font"
-
-#-------------------------------------------------------------------------------
-# Monaspace Font
-# Created a section for it because it requires custom settings.
-#-------------------------------------------------------------------------------
 size = 11.0
 [font.normal]
 style = "Regular"
-family = "Monaspace Argon"
-# family = "Monaspace Argon Var"
-# family = "Monaspace Xenon Var"
-# family = "Monaspace Radon Var"
-# family = "Monaspace Krypton Var"
+# Organized by height. This is not very precise, as some fonts have the same
+# height in some sizes but not in others.
+# --- Smaller ---
+# family = "CodeNewRoman Nerd Font" # 9+
+# family = "Iosevka Nerd Font" # min: 10, good: 12
+family = "IosevkaTermSlab Nerd Font" # min: 10, good: 11
+# family = "Hack Nerd Font" # min: 8, good: 9+
+# family = "RecMonoLinear Nerd Font"
+# family = "RecMonoDuotone Nerd Font"
+# family = "M PLUS 1 Code"
+# --- Small ---
+# family = "SourceCodeVF"
+# family = "MesloLGS Nerd Font"
+# family = "JetBrainsMono Nerd Font Propo"
+# family = "JetBrains Mono"
+# family = "BlexMono Nerd Font" # Lighter.
+# --- Medium ---
+# family = "MesloLGM Nerd Font"
+# family = "Noto Sans Mono"
+# family = "Red Hat Mono"
+# family = "Reddit Mono"
+# --- Large ---
+# family = "MesloLGL Nerd Font"
+# --- New and unchecked below ---
+
+#-------------------------------------------------------------------------------
+# Monaspace Font
+# --------------
+# This is a very interesting font, with many variations that I wanted to
+# configure separately.
+#-------------------------------------------------------------------------------
+# size = 9.0
+# [font.normal]
+# style = "Wide Regular"
+# family = "Monaspace Neon"
+# # family = "Monaspace Argon Var"
+# # family = "Monaspace Xenon Var"
+# # family = "Monaspace Radon Var"
+# # family = "Monaspace Krypton Var"
 
 # [font.bold]
-# style = "SemiWide Bold"
-# family = "Monaspace Argon"
+# style = "Wide ExtraBold"
+# family = "Monaspace Neon"
 
 # [font.italic]
-# style = "SemiWide Italic"
-# family = "Monaspace Argon"
+# style = "Wide Medium"
+# family = "Monaspace Radon"
 # # family = "Blex Mono Nerd Font"
 # # family = "SourceCodeVF"
 # # family = "Iosevka Nerd Font"
 
 # [font.bold_italic]
-# style = "SemiWide Bold Italic"
-# family = "Monaspace Argon"
+# style = "Wide ExtraBold"
+# family = "Monaspace Radon"
 # # family = "Blex Mono Nerd Font"
 # # family = "SourceCodeVF"
 # # family = "Iosevka Nerd Font"
 
-################################################################################
+#===============================================================================
 [window]
-################################################################################
+#===============================================================================
 position = { x = 1303, y = 0 }
-decorations = "None"
-opacity = 0.95                 # 0.93 is another good value to try.
+# decorations = "None"
+opacity = 0.95             # 0.93 is another good value to try.
 blur = true
-padding = { x = 4, y = 1 }     # Good value.
+padding = { x = 4, y = 1 } # Good value.
 # padding = { x = 150, y = 130 }
 # padding = { x = 20, y = 9 }
 # padding = { x = 400, y = 1 }
@@ -109,16 +133,17 @@ dynamic_padding = true
 [window.dimensions]
 lines = 100 # Fills the whole height for all fonts.
 # columns = 157 # Reddit|CodeNewRoman 11
-columns = 139 # MesloM|Hack|JB 11
+# columns = 139 # MesloM|Hack|JB 11
+columns = 178 # Iosevka 11
 
-################################################################################
+#===============================================================================
 [scrolling]
-################################################################################
+#===============================================================================
 history = 100000
 
-################################################################################
+#===============================================================================
 [colors]
-################################################################################
+#===============================================================================
 # cursor = { text = "#000000", cursor = "#ff4500" }
 # draw_bold_text_with_bright_colors = false
 # transparent_background_colors = true
@@ -140,23 +165,23 @@ history = 100000
 # foreground = "#e9e9e9"
 # background = "#171f2c"
 
-################################################################################
+#===============================================================================
 [cursor]
-################################################################################
+#===============================================================================
 thickness = 0.3
 
 [cursor.style]
 shape = "Beam"
 
-# ################################################################################
+#===============================================================================
 # [terminal.shell]
-# ################################################################################
+#===============================================================================
 # program = "/usr/bin/xdotool"
 # args = ["key", "Super+Right"]
 
-################################################################################
+#===============================================================================
 [[hints.enabled]]
-################################################################################
+#===============================================================================
 command = "xdg-open" # On Linux/BSD
 # command = "open" # On macOS
 # command = { program = "cmd", args = [ "/c", "start", "" ] } # On Windows
@@ -167,9 +192,9 @@ mouse.enabled = true
 binding = { key = "O", mods = "Control|Shift" }
 regex = "(ipfs:|ipns:|magnet:|mailto:|gemini://|gopher://|https://|http://|news:|file:|git://|ssh:|ftp://)[^\u0000-\u001F\u007F-\u009F<>\"\\s{-}\\^⟨⟩`\\\\]+"
 
-################################################################################
+#===============================================================================
 [keyboard]
-################################################################################
+#===============================================================================
 bindings = [
   { key = "V", mods = "Control|Alt", action = "ToggleViMode" },
   { key = "F11", action = "ToggleFullScreen" },
@@ -178,29 +203,3 @@ bindings = [
   # toggleable terminal, so here I force it to just minimize the window.
   { key = "Z", mods = "Control", action = "Minimize" },
 ]
-
-################################################################################
-# [my-themes]
-################################################################################
-# base_dir = "~/.config/alacritty/alacritty-theme/themes"
-# [my-themes.light]
-# best = "~/.config/alacritty/alacritty-theme/themes/catppuccin_latte.toml"
-# good = [
-#   "~/.config/alacritty/alacritty-theme/themes/dawnfox.toml",
-#   "~/.config/alacritty/alacritty-theme/themes/dayfox.toml",
-#   "~/.config/alacritty/alacritty-theme/themes/github_light.toml",
-#   "~/.config/alacritty/alacritty-theme/themes/one_light.toml",
-# ]
-# to_try = []
-
-# [my-themes.dark]
-# best = "~/.config/alacritty/alacritty-theme/themes/cyber_punk_neon.toml"
-# good = []
-# to_try = [
-#   "~/.config/alacritty/alacritty-theme/themes/catppuccin.toml",
-#   "~/.config/alacritty/alacritty-theme/themes/catppuccin_frappe.toml",
-#   "~/.config/alacritty/alacritty-theme/themes/catppuccin_mocha.toml",
-#   "~/.config/alacritty/alacritty-theme/themes/catppuccin_macchiato.toml",
-#   "~/.config/alacritty/alacritty-theme/themes/monokai.toml",
-#   "~/.config/alacritty/alacritty-theme/themes/monokai_charcoal.toml",
-# ]

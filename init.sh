@@ -823,7 +823,9 @@ alias bbge='$EDITOR ~/.config/babashka/bb.edn'
 
 alias colines='echo "Columns: $COLUMNS, Lines: $LINES"'
 
-alias ppath="echo $PATH | tr ':' '\n'"
+alias ppath='echo $PATH | tr ":" "\n"'
+alias print_path=ppath
+alias print_path_unique='ppath | sort | uniq'
 
 alias t1="tree -L 1"
 alias t2="tree -L 2"
@@ -973,6 +975,9 @@ alias list_installed_packages='dpkg --get-selections | grep -v deinstall'
 alias neovim_none='nvim -u NONE'
 alias neovim_norc='nvim -u NORC'
 alias neovim_noplugin='nvim --noplugin'
+
+# Clear the screen with the same alias used in Windows.
+alias cls="clear"
 
 # next alias above, unless they fit in one of the other sections.
 # }}}general
