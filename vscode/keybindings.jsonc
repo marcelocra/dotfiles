@@ -331,6 +331,11 @@
   },
 
   {
+    "key": "ctrl+j",
+    "command": "-workbench.action.togglePanel"
+  },
+
+  {
     "key": "NEXT KEYBINDING/KEYMAP/MAPPING 👆🏽"
   },
 
