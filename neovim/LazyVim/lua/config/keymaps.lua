@@ -67,28 +67,6 @@ require("i").run("NEOVIM AND VSCODE", function()
   vim.keymap.set({ "n", "v" }, ",s", "<Cmd>w<CR>", { desc = "Save current buffer", silent = true })
   vim.keymap.set({ "i" }, ",s", "<Esc><Cmd>w<CR>", { desc = "Save current buffer and exit INSERT mode", silent = true })
 
-  require("i").run("Move line or selection down", function(doc)
-    local desc = { desc = doc }
-
-    vim.keymap.set({ "n" }, "<M-Down>", "<Cmd>execute 'move .+' . v:count1<CR>==", desc)
-    vim.keymap.set({ "n" }, "<M-S-j>", "<Cmd>execute 'move .+' . v:count1<CR>==", desc)
-    vim.keymap.set({ "i" }, "<M-Down>", "<Esc><Cmd>m .+1<CR>==gi", desc)
-    vim.keymap.set({ "i" }, "<M-S-j>", "<Esc><Cmd>m .+1<CR>==gi", desc)
-    vim.keymap.set({ "v" }, "<M-Down>", ":<C-U>execute \"'<lt>,'>move '>+\" . v:count1<CR>gv=gv", desc)
-    vim.keymap.set({ "v" }, "<M-S-j>", ":<C-U>execute \"'<lt>,'>move '>+\" . v:count1<CR>gv=gv", desc)
-  end)
-
-  require("i").run("Move line or selection up", function(doc)
-    local desc = { desc = doc }
-
-    vim.keymap.set({ "n" }, "<M-Up>", "<Cmd>execute 'move .-' . (v:count1 + 1)<CR>==", desc)
-    vim.keymap.set({ "n" }, "<M-S-k>", "<Cmd>execute 'move .-' . (v:count1 + 1)<CR>==", desc)
-    vim.keymap.set({ "i" }, "<M-Up>", "<Esc><Cmd>m .-2<CR>==gi", desc)
-    vim.keymap.set({ "i" }, "<M-S-k>", "<Esc><Cmd>m .-2<CR>==gi", desc)
-    vim.keymap.set({ "v" }, "<M-Up>", ":<C-U>execute \"'<lt>,'>move '<lt>-\" . (v:count1 + 1)<CR>gv=gv", desc)
-    vim.keymap.set({ "v" }, "<M-S-k>", ":<C-U>execute \"'<lt>,'>move '<lt>-\" . (v:count1 + 1)<CR>gv=gv", desc)
-  end)
-
   vim.keymap.set({ "n", "i", "v" }, ",f", '<Cmd>echo expand("%:p:h")<CR>', { desc = "Print current file folder name" })
 
   -- TODO: Figure out why this doesn't select all in some files (e.g. output of
@@ -157,16 +135,18 @@ require("i").run("NEOVIM ONLY!", function(_, u)
   end
   print("In Neovim, not in VSCode")
 
+  -- INFO: Don't work in VSCode.
   vim.keymap.set({ "i" }, "jf", "<Esc>", { desc = "Go to normal mode" })
   vim.keymap.set({ "i" }, "fj", "<Esc>", { desc = "Go to normal mode" })
 
+  -- INFO: Don't work in VSCode.
   vim.keymap.set({ "n", "i" }, ",q", "<Cmd>q<CR>", { desc = "Quit/Close current buffer", silent = true })
   vim.keymap.set({ "n" }, ",,q", "<Leader>qq", { desc = "Quit/Close all buffers", remap = true, silent = true })
 
-  -- Save and quit faster.
+  -- Save and quit faster. INFO: Don't work in VSCode.
   vim.keymap.set({ "n", "i" }, ",x", "<Cmd>x<CR>", { desc = "Save and close the current buffer", silent = true })
 
-  -- Reload current file.
+  -- Reload current file. INFO: Don't work in VSCode.
   vim.keymap.set({ "n", "i" }, ",e", "<Cmd>e<CR>", { desc = "Reload current file", silent = true })
 
   -- NOTE: It is not possible to have multiple tabs without multiple buffers.
@@ -175,6 +155,31 @@ require("i").run("NEOVIM ONLY!", function(_, u)
   vim.keymap.set({ "n", "i" }, "<M-j>", "<Cmd>BufferLineCyclePrev<CR>", { desc = "Focus on the buffer to the left" })
   vim.keymap.set({ "n", "i" }, "<M-k>", "<Cmd>BufferLineCycleNext<CR>", { desc = "Focus on the buffer to the right" })
 
+  -- INFO: Don't work in VSCode.
+  require("i").run("Move line or selection down", function(doc)
+    local desc = { desc = doc }
+
+    vim.keymap.set({ "n" }, "<M-Down>", "<Cmd>execute 'move .+' . v:count1<CR>==", desc)
+    vim.keymap.set({ "n" }, "<M-S-j>", "<Cmd>execute 'move .+' . v:count1<CR>==", desc)
+    vim.keymap.set({ "i" }, "<M-Down>", "<Esc><Cmd>m .+1<CR>==gi", desc)
+    vim.keymap.set({ "i" }, "<M-S-j>", "<Esc><Cmd>m .+1<CR>==gi", desc)
+    vim.keymap.set({ "v" }, "<M-Down>", ":<C-U>execute \"'<lt>,'>move '>+\" . v:count1<CR>gv=gv", desc)
+    vim.keymap.set({ "v" }, "<M-S-j>", ":<C-U>execute \"'<lt>,'>move '>+\" . v:count1<CR>gv=gv", desc)
+  end)
+
+  -- INFO: Don't work in VSCode.
+  require("i").run("Move line or selection up", function(doc)
+    local desc = { desc = doc }
+
+    vim.keymap.set({ "n" }, "<M-Up>", "<Cmd>execute 'move .-' . (v:count1 + 1)<CR>==", desc)
+    vim.keymap.set({ "n" }, "<M-S-k>", "<Cmd>execute 'move .-' . (v:count1 + 1)<CR>==", desc)
+    vim.keymap.set({ "i" }, "<M-Up>", "<Esc><Cmd>m .-2<CR>==gi", desc)
+    vim.keymap.set({ "i" }, "<M-S-k>", "<Esc><Cmd>m .-2<CR>==gi", desc)
+    vim.keymap.set({ "v" }, "<M-Up>", ":<C-U>execute \"'<lt>,'>move '<lt>-\" . (v:count1 + 1)<CR>gv=gv", desc)
+    vim.keymap.set({ "v" }, "<M-S-k>", ":<C-U>execute \"'<lt>,'>move '<lt>-\" . (v:count1 + 1)<CR>gv=gv", desc)
+  end)
+
+  -- INFO: Don't work in VSCode.
   require("i").run("Manage colorschemes, particularly changing between light and dark.", function()
     local color = require("mcra.lib.colorscheme")
     local set = color.set
@@ -187,19 +192,22 @@ require("i").run("NEOVIM ONLY!", function(_, u)
   end)
 
   -- Doesn't work in terminals. EDIT: Not true. It works in Alacritty without
-  -- tmux.
+  -- tmux. INFO: Don't work in VSCode.
   vim.keymap.set({ "n" }, "<C-Tab>", "<Cmd>e #<CR>", { desc = "Easily alternate between the two most recent buffers" })
   -- This one does, but gt might be better. EDIT: actually, gt is for actual
-  -- Neovim tabs while this is for buffers.
+  -- Neovim tabs while this is for buffers. INFO: Don't work in VSCode.
   vim.keymap.set({ "n" }, "<S-Tab>", "<Cmd>e #<CR>", { desc = "Easily alternate between the two most recent buffers" })
 
+  -- INFO: Don't work in VSCode.
   vim.keymap.set({ "n" }, "<Leader>d", "<Leader>xx", { desc = "Toggle the diagnostics window", remap = true })
 
+  -- INFO: Don't work in VSCode.
   vim.keymap.set({ "n" }, "<Leader>mt", function()
     local tasks_file = os.getenv("HOME") .. "/doc/TODO.md"
     vim.cmd("vspl " .. tasks_file)
   end, { desc = "Open my tasks files" })
 
+  -- INFO: Don't work in VSCode.
   require("i").run("Insert date or time in current buffer", function()
     local desc
 
@@ -211,6 +219,7 @@ require("i").run("NEOVIM ONLY!", function(_, u)
     vim.keymap.set({ "i" }, "<M-t>", '<C-r>=strftime("%Hh%M")<CR>', { desc = desc })
   end)
 
+  -- INFO: Not necessary in VSCode.
   require("i").run("Port some VSCode mappings that I like back to Neovim", function()
     vim.keymap.set({ "n" }, "<C-p>", LazyVim.pick.open, { desc = "Fuzzy search for files in current folder" })
     vim.keymap.set({ "n" }, "<C-f>", Snacks.picker.lines, { desc = "Fuzzy search for text in the current buffer" })
@@ -223,6 +232,7 @@ require("i").run("NEOVIM ONLY!", function(_, u)
     vim.keymap.set({ "n" }, "<F2>", "<Leader>cr", { desc = "Rename variable", remap = true })
   end)
 
+  -- INFO: Don't work in VSCode.
   require("i").run("Simplify editing Neovim config files", function(_, u)
     local keymap = vim.keymap.set
 
@@ -260,9 +270,11 @@ require("i").run("NEOVIM ONLY!", function(_, u)
     keymap({ "n" }, "<Leader>ev|a", cfg("v", "autocmds.lua"), desc("autocmds", "vsplit"))
   end)
 
+  -- INFO: Don't work in VSCode.
   vim.keymap.set({ "n" }, "-", ":split<CR>", { desc = "Easy vertical split", silent = true })
   vim.keymap.set({ "n" }, "|", ":vsplit<CR>", { desc = "Easy horizontal split", silent = true })
 
+  -- INFO: Don't work in VSCode.
   vim.keymap.set(
     { "n" },
     "<Leader>tn",
