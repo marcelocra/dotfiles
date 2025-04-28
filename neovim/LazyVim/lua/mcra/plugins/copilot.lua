@@ -18,28 +18,9 @@
 
 return {
   {
-    "folke/snacks.nvim",
-
-    ---@type snacks.Config
+    "zbirenbaum/copilot.lua",
     opts = {
-      profiler = { enabled = false },
-      notifier = {
-        ---@type snacks.notifier.style
-        style = "fancy",
-
-        width = { min = 40, max = 0.4 },
-        height = { min = 1, max = 0.6 },
-        -- Try bottom left.
-        margin = { top = 0, left = 1, bottom = 1, right = 0 },
-      },
-
-      scratch = {
-        win = {
-          position = "right",
-          width = 0.3,
-          height = 1.0,
-        },
-      },
+      copilot_model = "o4-mini",
     },
   },
 }
