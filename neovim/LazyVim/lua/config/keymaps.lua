@@ -255,8 +255,8 @@ require("i").run("NEOVIM ONLY!", function(_, u)
     keymap({ "n" }, "<Leader>ev|a", cfg("v", "autocmds.lua"), { desc = "Edit Neovim autocmds file in a vsplit" })
   end)
 
-  vim.keymap.set({ "n" }, "-", ":split<CR>", { desc = "Easy vertical split" })
-  vim.keymap.set({ "n" }, "|", ":vsplit<CR>", { desc = "Easy horizontal split" })
+  vim.keymap.set({ "n" }, "-", ":split<CR>", { desc = "Easy vertical split", silent = true })
+  vim.keymap.set({ "n" }, "|", ":vsplit<CR>", { desc = "Easy horizontal split", silent = true })
 
   vim.keymap.set(
     { "n" },
