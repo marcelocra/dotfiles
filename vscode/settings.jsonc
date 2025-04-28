@@ -321,11 +321,21 @@
 
   // #region editor. {{{
 
+  //============================================================================
+  //= Programming fonts and their settings
+  //============================================================================
+
+  // // IBM Plex Mono
+  // // -------------
   // "editor.fontFamily": "IBM Plex Mono",
   // "editor.fontLigatures": "'zero'",
 
+  // // CodeNewRoman
+  // // ------------
   // "editor.fontFamily": "CodeNewRoman Nerd Font",
 
+  // // Cascadia Code
+  // // -------------
   // "editor.fontFamily": "Cascadia Code NF",
   // 'calt' and 'cv01' 3 were here, don't know why... don't seem to do anything.
   // "editor.fontLigatures": "'ss01', 'ss19', 'ss20'",
@@ -338,12 +348,16 @@
   //    ( ) * & ^ % $ # @ ! { } [ ] \ | / ? : ; , . ` ' " ´ ` ˜ => -> <> <= >=
   //    != !== === ~= |> <- --> || .- :- .= {..}
 
+  // // DM Mono
+  // // -------
   // "editor.fontFamily": "DM Mono",
   // "editor.fontLigatures": "'ss01','ss03','ss04'",
   // Available stylistic sets:
   //    ss01: curved comma, ss02: curved a, ss03: curved g, ss04: less rounded
   //    numbers, ss05: remove rounded borders of f
 
+  // // Source Code Pro
+  // // ---------------
   // "editor.fontFamily": "SourceCodeVF",
   // "editor.letterSpacing": -0.4,
   // // "editor.fontLigatures": "'cv17', 'zero'",
@@ -352,6 +366,8 @@
   //    cv01 and cv02: clearer 'a' and 'g', cv08: alternate &, cv09: alternate @
   //    cv17: improved 1, zero: reverse dashed zero
 
+  // // JetBrains Mono
+  // // --------------
   // "editor.fontFamily": "JetBrainsMono Nerd Font",
   // Minimal (Fira Code like):
   // "editor.fontLigatures": "'ss01', 'ss19', 'ss20', 'zero', 'cv99'",
@@ -368,12 +384,16 @@
   //    broken equals ligatures (yay!), ss20: raised bar f, zero: slashed zero,
   //    frac: fractions
 
+  // // Geist Mono
+  // // ----------
   // "editor.fontFamily": "Geist Mono",
   // "editor.fontLigatures": "'ss02', 'ss03', 'ss06', 'ss13', 'liga' 0",
   // Available stylistic sets:
   //    ss01: normal, ss02: circular a, ss03: non-1-like l, ss06: circular
   //    uppercase G, ss08: compact (semi) colon, ss09: non slashed zero
 
+  // // Recursive Mono
+  // // --------------
   // "editor.fontFamily": "Rec Mono Duotone",
   // Some customizations that I like (details below).
   // "editor.fontLigatures": "true",
@@ -390,6 +410,8 @@
   //    numr: superior/numerators - H0123456789, sinf, dnom:
   //    inferior/denominators
 
+  // // Iosevka
+  // // -------
   // "editor.fontFamily": "Iosevka Fixed Extended",
   // // Source Code Pro, with changes to: 1, 4, 0, l (lowercase L).
   // "editor.fontLigatures": "'ss09', 'cv01' 3, 'cv04' 5, 'cv10' 4, 'cv47' 8",
@@ -407,6 +429,8 @@
   //    ss14: JetBrains Mono, ss15: IBM Plex Mono, ss16: PT Mono, ss17:
   //    Recursive Mono, ss18: Input Mono, ss20: Curly
 
+  // // Victor Mono
+  // // --------------
   // "editor.fontFamily": "Victor Mono",
   // "editor.fontLigatures": "'ss01', 'ss02', 'ss07', 'ss08'",
   // "editor.fontLigatures": "'calt' 0, 'ss01', 'ss02', 'ss06', 'ss07', 'ss08'",
@@ -425,6 +449,8 @@
   //    (up to ss05), ss06: crossed '7', ss07: different '6' and  '9', ss08:
   //    more fish-like stuff (::<)
 
+  // // Hack
+  // // ----
   // "editor.fontFamily": "Hack Nerd Font",
   // Available stylistic sets:
   //    calt=0: no ligatures (particularly for `==` and `!=`, but also disable
@@ -432,32 +458,30 @@
   //    (up to ss05), ss06: crossed '7', ss07: different '6' and  '9', ss08:
   //    more fish-like stuff (::<)
 
-  ///auto-config-start:fonts
-  "editor.fontFamily": "'Monaspace Neon Var', 'IosevkaTermSlab Nerd Font', 'Iosevka Nerd Font', 'CodeNewRoman Nerd Font Mono', 'Reddit Mono', 'MesloLGS Nerd Font', 'M Plus 1 Code', 'RecMonoLinear Nerd Font', 'RecMonoDuotone Nerd Font', 'Hack Nerd Font', 'Geist Mono', Iosevka, monospace",
-  "editor.fontSize": 19,
+  // // Monaspace
+  // // ---------
+  "editor.fontFamily": "Monaspace Neon",
+  "editor.fontSize": 15,
   "editor.fontWeight": "normal",
-  "editor.fontLigatures": "'cv01' 3", // Andale Mono
-  // "editor.fontLigatures": "'ss01'", // Andale Mono
-  // "editor.fontLigatures": "'ss02'", // Anonymous Pro
-  // "editor.fontLigatures": "'ss03'", // Consolas
-  // "editor.fontLigatures": "'ss04'", // Menlo // Great
-  // "editor.fontLigatures": "'ss05'", // Fira Mono
-  // "editor.fontLigatures": "'ss06'", // Liberation Mono
-  // "editor.fontLigatures": "'ss07'", // Monaco // Great
-  // "editor.fontLigatures": "'ss08'", // Pragmata Pro
-  // "editor.fontLigatures": "'ss09'", // Source Code Pro
-  // "editor.fontLigatures": "'ss10'", // Envy Code R
-  // "editor.fontLigatures": "'ss11'", // X Window // Bad: zero 0 vs big O
-  // "editor.fontLigatures": "'ss12'", // Ubuntu Mono // Great
-  // "editor.fontLigatures": "'ss13'", // Lucida
-  // "editor.fontLigatures": "'ss14'", // JetBrains Mono
-  // "editor.fontLigatures": "'ss15'", // IBM Plex Mono
-  // "editor.fontLigatures": "'ss16'", // PT Mono
-  // "editor.fontLigatures": "'ss17'", // Recursive Mono
-  // "editor.fontLigatures": "'ss18'", // Input Mono
-  // "editor.fontLigatures": "'ss20'", // Curly
+  "editor.fontLigatures": "'calt', 'cv01' 2, 'cv02' 0, 'cv10' 1, 'cv11' 0, 'cv30' 0, 'cv31' 1",
 
-  ///auto-config-end:fonts
+  // ss01: ligatures related to the equals glyph like != and ===.
+  // ss02: ligatures for greater/less or equal (<=, >=).
+  // ss03: ligatures related to arrows like -> and ~>.
+  // ss04: ligatures related to markup, like </ and />.
+  // ss05: ligatures related to the F# programming language, like |>.
+  // ss06: ligatures related to repeated uses of #, +, and &.
+  // ss07: ligatures related to colons like :: or =:=.
+  // ss08: ligatures related to combinations of periods with other glyphs like ..= or .-.
+  // ss09: ligatures related to combinations of the greater/less than and equals signs, like <=>,>>, and =<<.
+  // ss10: other tags, like #[ and #(
+
+  // // Random
+  // // ------
+  // "editor.fontFamily": "'Monaspace Neon', 'IosevkaTermSlab Nerd Font', 'Iosevka Nerd Font', 'CodeNewRoman Nerd Font Mono', 'Reddit Mono', 'MesloLGS Nerd Font', 'M Plus 1 Code', 'RecMonoLinear Nerd Font', 'RecMonoDuotone Nerd Font', 'Hack Nerd Font', 'Geist Mono', Iosevka, monospace",
+  // "editor.fontSize": 15,
+  // "editor.fontWeight": "normal",
+  // "editor.fontLigatures": "",
 
   "editor.tokenColorCustomizations": {
     // "[*Light*]": { // Match all themes with "Light" in the name.
@@ -579,6 +603,8 @@
   "editor.minimap.markSectionHeaderRegex": "\\bMARK:\\s*(?<separator>-?)\\s*(?<label>.*)$",
   "editor.minimap.showMarkSectionHeaders": true,
   "editor.minimap.showRegionSectionHeaders": true,
+
+  "editor.inlineSuggest.fontFamily": "'Monaspace Krypton', monospace",
 
   // Next editor.
 
