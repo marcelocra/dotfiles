@@ -590,11 +590,21 @@ x() {
 #   values correspond to higher bitrates, and hence produce higher quality
 #   videos.
 #
-function compress_video() {
+function video_compress() {
     local input="${1:-input.mp4}"
     local output="${2:-output.mp4}"
 
     ffmpeg -i $input -vcodec libx265 -crf 28 $output
+}
+
+# AskUbuntu: https://askubuntu.com/a/539886/121101
+#
+# Extract mp3 from mp4.
+function mp3_from_mp4() {
+    local input="${1:-input.mp4}"
+    local output="${2:-output.mp3}"
+
+    ffmpeg -i $input $output
 }
 
 # List broken symlinks in folder.
@@ -609,6 +619,10 @@ function neovim_backup_state() {
     mv ~/.local/state/nvim{,.$now.bak}
     mv ~/.cache/nvim{,.$now.bak}
 }
+
+if ! command -v codene &>/dev/null; then
+    alias codene='code --disable-extensions'
+fi
 
 # next function above.
 # }}}functions
@@ -648,7 +662,8 @@ fi
 # --time-style: how to show time. Currently, 30mar23-22h10.
 # --hyperlink=auto: stuff becomes clickable. For example, it is possbile to
 #   open images in kitty term.
-alias myls='ls -lFt --group-directories-first --color=always --time-style="+%d%b%y-%Hh%M"'
+alias ls='ls -lFh --no-group --group-directories-first --color=always --time-style="+%d%b%y-%Hh%M"'
+alias myls="ls -t"
 alias myls_display_no_group='awk -f <(cat - <<-'\''EOF'\''
     BEGIN {
         print
@@ -747,9 +762,12 @@ function improved_ls_no_group() {
 if [[ $(uname) == "Darwin" ]]; then
     # Mac doesn't support the --time-style flag.
     alias l='ls -lFh -t'
+    # ol means original ls
+    alias ol=l
 else
-    alias l='improved_ls_no_group'
+    alias l="ls -t $mcra_common_ls_options"
     alias lt='improved_ls'
+    alias ol="ls $mcra_common_ls_options"
 fi
 
 function improved_ls_full() {
@@ -768,10 +786,10 @@ if [[ ! -z "${MCRA_INIT_SHELL}" && ! -z "${MCRA_LOCAL_SHELL}" ]]; then
         || echo '\''failed :('\'''
     # # Changed in the last 10 minutes.
     # alias rc_changed='find $MCRA_INIT_SHELL $MCRA_LOCAL_SHELL -mmin -10'
-    alias rc='cd $MCRA_PROJECTS_FOLDER/dotfiles; $EDITOR $MCRA_INIT_SHELL; rc.'
-    alias rcl='cd $MCRA_PROJECTS_FOLDER/dotfiles; $EDITOR $MCRA_LOCAL_SHELL; rc.'
-    alias rcz='cd $MCRA_PROJECTS_FOLDER/dotfiles; $EDITOR ~/.zshrc; rc.'
-    alias rcb='cd $MCRA_PROJECTS_FOLDER/dotfiles; $EDITOR ~/.bashrc; rc.'
+    alias rc='(cd $MCRA_PROJECTS_FOLDER/dotfiles; $EDITOR $MCRA_INIT_SHELL); rc.'
+    alias rcl='(cd $MCRA_PROJECTS_FOLDER/dotfiles; $EDITOR $MCRA_LOCAL_SHELL); rc.'
+    alias rcz='(cd $MCRA_PROJECTS_FOLDER/dotfiles; $EDITOR ~/.zshrc); rc.'
+    alias rcb='(cd $MCRA_PROJECTS_FOLDER/dotfiles; $EDITOR ~/.bashrc); rc.'
 else
     alias rc="echo 'Define \$MCRA_INIT_SHELL and \$MCRA_LOCAL_SHELL in your rc file'"
     alias rcl=rc
@@ -978,6 +996,17 @@ alias neovim_noplugin='nvim --noplugin'
 
 # Clear the screen with the same alias used in Windows.
 alias cls="clear"
+
+# Show folder differences.
+# Usage: folder_diff dir1 dir2
+alias folder_diff='diff --brief --recursive --new-file'
+
+# Time ago in millis.
+alias time_ago="date -d '10 hours ago' +%s%3N"
+
+# Change user and group owners of a folder and all of its files and folders
+# recursively.
+alias change_owners='sudo chown -R $USER:$USER'
 
 # next alias above, unless they fit in one of the other sections.
 # }}}general
