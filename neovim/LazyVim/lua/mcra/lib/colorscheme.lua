@@ -7,7 +7,7 @@ local light = "light" -- Override with a light mode of your choice.
 
 -- Defaults.
 vim.g.use_random_theme = true
-vim.g.use_transparent_background = false
+vim.g.use_transparent_background = true
 
 vim.g.colorscheme_mode_dark = "tokyonight-night"
 vim.g.colorscheme_mode_light = "catppuccin-latte"
@@ -38,12 +38,17 @@ local set_random_theme = function()
     "catppuccin-frappe",
     "catppuccin-macchiato",
     "catppuccin-mocha",
+    "solarized",
   }
   local light_mode_options = {
-    -- "tokyonight-day",
+    "tokyonight-day",
     "catppuccin-latte",
     "lunaperche",
-    -- "default",
+    "default",
+    "delek",
+    "morning",
+    "solarized",
+    "retrobox",
   }
   vim.g.colorscheme_mode_dark = dark_mode_options[math.random(#dark_mode_options)]
   vim.g.colorscheme_mode_light = light_mode_options[math.random(#light_mode_options)]
@@ -82,7 +87,20 @@ local setup = function()
   transparent_background()
 end
 
-local set_colorscheme = function(old_colorscheme, new_colorscheme)
+local set_colorscheme = function(old_colorscheme, new_mode)
+  local new_colorscheme
+  if new_mode == dark then
+    vim.g.colorscheme_mode = dark
+    vim.opt.background = "dark"
+    new_colorscheme = vim.g.colorscheme_mode_dark
+  else
+    vim.g.colorscheme_mode = light
+    vim.opt.background = "light"
+    new_colorscheme = vim.g.colorscheme_mode_light
+  end
+
+  setup()
+
   if old_colorscheme then
     print("Changing from " .. old_colorscheme .. " to " .. new_colorscheme)
   else
@@ -94,21 +112,11 @@ local set_colorscheme = function(old_colorscheme, new_colorscheme)
 end
 
 local set_dark = function(curr)
-  setup()
-
-  vim.g.colorscheme_mode = dark
-  vim.o.background = "dark"
-
-  set_colorscheme(curr, vim.g.colorscheme_mode_dark)
+  set_colorscheme(curr, dark)
 end
 
 local set_light = function(curr)
-  setup()
-
-  vim.g.colorscheme_mode = light
-  vim.o.background = "light"
-
-  set_colorscheme(curr, vim.g.colorscheme_mode_light)
+  set_colorscheme(curr, light)
 end
 
 --- Changes the colorscheme.

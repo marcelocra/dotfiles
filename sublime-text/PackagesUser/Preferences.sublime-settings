@@ -26,13 +26,17 @@
   // ---
 
   // "font_face": "Noto Sans Mono",
-  "font_face": "Iosevka Nerd Font",
-  "font_size": 14,
-  "font_options": [
-    "Extended",
-    // "ss04", // Menlo
-    "ss07" // Monaco
-  ],
+  "font_face": "AdwaitaMono Nerd Font",
+  // "font_face": "Atkinson Hyperlegible Mono",
+
+  // "font_face": "Iosevka Nerd Font",
+  // "font_size": 12,
+  // "font_options": [
+  //   // "Extended",
+  //   // "ss04", // Menlo
+  //   // "ss07", // Monaco
+  //   "ss08", // Pragmata Pro
+  // ],
 
   "caret_extra_top": 4,
   "caret_extra_bottom": 4,
@@ -110,8 +114,9 @@
 
   "clojure_sublimed_formatter": "clj -Tcljfmt fix",
 
-  "color_scheme": "Celeste.sublime-color-scheme",
+  "color_scheme": "Mariana.sublime-color-scheme",
   "dark_color_scheme": "Mariana.sublime-color-scheme",
   "light_color_scheme": "Breakers.sublime-color-scheme",
-  "theme": "Default.sublime-theme",
+  "theme": "Default Dark.sublime-theme",
+  "font_size": 10,
 }

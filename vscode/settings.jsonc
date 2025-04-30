@@ -1049,7 +1049,7 @@
   // Keep the color theme last, as I'm always changing it and this way we won't
   // have a problem with the comma.
 
-  "workbench.colorTheme": "Night Owl Light"
+  "workbench.colorTheme": "Kimbie Dark"
 
   // #endregion workbench. }}}
 }

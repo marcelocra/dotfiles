@@ -5,16 +5,17 @@
 -- IMPORTS, VARIABLES AND OTHER CONFIG SETTINGS
 
 local wezterm = require("wezterm")
-local act = wezterm.action
 
 -- Fonts I frequently use.
 
+local default_font_size = 11
+local default_font_weight = 400
+
 -- Iosevka options: 'Iosevka Fixed', 'Iosevka Fixed Extended', 'Iosevka Extended',
 --    'Iosevka Nerd Font', 'IosevkaTermSlab Nerd Font'.
-local which_iosevka = "IosevkaTermSlab Nerd Font"
-
-local default_font_size = 12
-local default_font_weight = 400
+-- local which_iosevka = "IosevkaTermSlab Nerd Font"
+local which_iosevka = "Iosevka Nerd Font"
+local iosevka_size = default_font_size + 5
 
 -- Function to create a font configuration with defaults.
 local function create_font(font_family, opts)
@@ -190,17 +191,19 @@ local fonts = { -- <<(
   -- 'ss13', 'cv02 4', 'cv04 11', 'cv05 8', 'cv10 10',
   -- 'ss13', 'cv02 1', 'cv04 3', 'cv05 4', 'cv10 25',
   -- )>>
-  iosevka = create_font(which_iosevka),
+  iosevka = create_font(which_iosevka, {
+    size = iosevka_size,
+  }),
 
-  iosevka_ss08_pragmata = create_font(
-    which_iosevka,
-    { harfbuzz_features = { "ss08" } }
-  ),
+  iosevka_ss08_pragmata = create_font(which_iosevka, {
+    harfbuzz_features = { "ss08" },
+    size = iosevka_size,
+  }),
 
-  iosevka_ss14_jb = create_font(
-    which_iosevka,
-    { harfbuzz_features = { "ss14" } }
-  ),
+  iosevka_ss14_jb = create_font(which_iosevka, {
+    harfbuzz_features = { "ss14" },
+    size = iosevka_size,
+  }),
 
   iosevka_ss13_lucida = create_font(which_iosevka, {
     -- stylua: ignore
@@ -211,17 +214,18 @@ local fonts = { -- <<(
       -- 'ss13', 'cv02 4', 'cv04 11', 'cv05 8', 'cv10 10',
       -- 'ss13', 'cv02 1', 'cv04 3', 'cv05 4', 'cv10 25',
     },
+    size = iosevka_size,
   }),
 
-  iosevka_ss04_menlo = create_font(
-    which_iosevka,
-    { harfbuzz_features = { "ss04" } }
-  ),
+  iosevka_ss04_menlo = create_font(which_iosevka, {
+    harfbuzz_features = { "ss04" },
+    size = iosevka_size,
+  }),
 
-  iosevka_ss07_monaco = create_font(
-    which_iosevka,
-    { harfbuzz_features = { "ss07" } }
-  ),
+  iosevka_ss07_monaco = create_font(which_iosevka, {
+    harfbuzz_features = { "ss07" },
+    size = iosevka_size,
+  }),
 
   victor_mono = create_font("Victor Mono", {
     weight = 600,
@@ -270,7 +274,7 @@ local fonts = { -- <<(
 
 local config = wezterm.config_builder()
 
-local SCRATCH_SCRIPT = os.getenv("HOME") .. "/projects/dotfiles/.rc.scratch"
+-- local SCRATCH_SCRIPT = os.getenv("HOME") .. "/projects/dotfiles/.rc.scratch"
 
 -- EVENTS
 
@@ -569,7 +573,7 @@ local choose_random_font = function()
     -- fonts.geist, -- TODO: Figure out why width is weird.
     -- fonts.ibm,
     -- fonts.jb,
-    fonts.jb_zero,
+    -- fonts.jb_zero,
     -- fonts.jb_nf,
     -- fonts.liberation_mono,
     -- fonts.noto,
@@ -588,10 +592,12 @@ local choose_random_font = function()
     -- fonts.fira,
     -- fonts.fira_crazy,
     -- fonts.hack,
-    -- fonts.iosevka,
-    -- fonts.iosevka_ss04_menlo,
-    -- fonts.iosevka_ss07_monaco,
-    -- fonts.iosevka_ss08_pragmata,
+    fonts.iosevka,
+    fonts.iosevka_ss04_menlo,
+    fonts.iosevka_ss07_monaco,
+    fonts.iosevka_ss08_pragmata,
+    fonts.iosevka_ss13_lucida,
+    fonts.iosevka_ss14_jb,
     -- fonts.m_plus,
     -- fonts.meslo,
     -- fonts.red_hat_mono,
@@ -707,6 +713,7 @@ return config
 -- end)
 
 -- TODO: get this to work one day?
+--
 -- wezterm.on('window-focus-changed', function(window, pane)
 --   if window:is_focused() then
 --     act.SpawnCommandInNewWindow {
