@@ -7,7 +7,7 @@ local light = "light" -- Override with a light mode of your choice.
 
 -- Defaults.
 vim.g.use_random_theme = true
-vim.g.use_transparent_background = true
+vim.g.use_transparent_background = false
 
 vim.g.colorscheme_mode_dark = "tokyonight-night"
 vim.g.colorscheme_mode_light = "catppuccin-latte"
@@ -108,6 +108,7 @@ local set_colorscheme = function(old_colorscheme, new_mode)
   end
 
   vim.g.current_colorscheme = new_colorscheme
+  require("mcra.lib.modern-term-support").setup()
   vim.cmd.colorscheme(new_colorscheme)
 end
 

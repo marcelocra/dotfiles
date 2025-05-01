@@ -1,3 +1,8 @@
+--
+-- Original repo and options at:
+-- https://github.com/LazyVim/starter
+--
+
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not (vim.uv or vim.loop).fs_stat(lazypath) then
   local lazyrepo = "https://github.com/folke/lazy.nvim.git"
@@ -20,9 +25,9 @@ require("lazy").setup({
     {
       "LazyVim/LazyVim",
       import = "lazyvim.plugins",
-      opts = {
-        colorscheme = require("mcra.lib.colorscheme").set(),
-      },
+      -- opts = {
+      --   colorscheme = require("mcra.lib.colorscheme").set(),
+      -- },
     },
     -- import/override with your plugins
     { import = "mcra.plugins" },

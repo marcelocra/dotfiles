@@ -20,7 +20,15 @@ return {
   -- NOTE: Priority recommended for colorschemes:
   -- https://lazy.folke.io/spec#spec-loading
 
-  { "altercation/vim-colors-solarized", priority = 1000 },
-  { "sjl/badwolf", priority = 1000 },
-  { "tpope/vim-vividchalk", priority = 1000 },
+  { "catppuccin/nvim", name = "catppuccin", priority = 1000 },
+  { "altercation/vim-colors-solarized" },
+  { "sjl/badwolf" },
+  { "tpope/vim-vividchalk" },
+
+  {
+    "LazyVim/LazyVim",
+    opts = {
+      colorscheme = "catppuccin",
+    },
+  },
 }
