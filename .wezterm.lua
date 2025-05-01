@@ -1,6 +1,8 @@
 -- vim:tw=100:ts=2:sw=2:ai:et:ff=unix:fenc=utf-8:et:fixeol:eol:fdm=marker:fdl=0:fen:fmr=<<(,)>>:
 --
 -- WezTerm configuration file.
+--
+-- Docs at: https://wezterm.org/cli/general.html
 
 -- IMPORTS, VARIABLES AND OTHER CONFIG SETTINGS
 

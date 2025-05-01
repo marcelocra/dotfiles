@@ -17,7 +17,7 @@ import = [
   # ------------
   # Best:
   # "~/.config/alacritty/alacritty-theme/themes/catppuccin_latte.toml",
-  # "~/.config/alacritty/alacritty-theme/themes/solarized_light.toml",
+  "~/.config/alacritty/alacritty-theme/themes/solarized_light.toml",
 
   # Good:
   # "~/.config/alacritty/alacritty-theme/themes/dawnfox.toml",
@@ -28,7 +28,7 @@ import = [
   # Dark themes
   # -----------
   # Best:
-  "~/.config/alacritty/alacritty-theme/themes/catppuccin_mocha.toml",
+  # "~/.config/alacritty/alacritty-theme/themes/catppuccin_mocha.toml",
 
   # Good:
   # "~/.config/alacritty/alacritty-theme/themes/catppuccin_mocha.toml",
@@ -88,6 +88,8 @@ family = "Monoid Nerd Font Propo" # Good: 9.
 # --- Large ---
 # family = "MesloLGL Nerd Font"
 # --- New and unchecked below ---
+# family = "Input Mono"
+# family = "JuliaMono"
 
 # [font.bold]
 # style = "Bold"

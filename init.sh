@@ -662,7 +662,7 @@ fi
 # --time-style: how to show time. Currently, 30mar23-22h10.
 # --hyperlink=auto: stuff becomes clickable. For example, it is possbile to
 #   open images in kitty term.
-alias ls='ls -lFh --no-group --group-directories-first --color=always --time-style="+%d%b%y-%Hh%M"'
+alias ls='ls -lF --no-group --group-directories-first --color=always --time-style="+%d%b%y-%Hh%M"'
 alias myls="ls -t"
 alias myls_display_no_group='awk -f <(cat - <<-'\''EOF'\''
     BEGIN {
@@ -767,7 +767,7 @@ if [[ $(uname) == "Darwin" ]]; then
 else
     alias l="ls -t $mcra_common_ls_options"
     alias lt='improved_ls'
-    alias ol="ls $mcra_common_ls_options"
+    alias ol="ls -h $mcra_common_ls_options"
 fi
 
 function improved_ls_full() {
@@ -775,7 +775,8 @@ function improved_ls_full() {
     [[ -n "$1" ]] && shift
     improved_ls $path_to_use $@ -A
 }
-alias ll='improved_ls_no_group -A'
+alias ll='l -A'
+alias oll='ol -A'
 alias llt='improved_ls_full'
 
 if [[ ! -z "${MCRA_INIT_SHELL}" && ! -z "${MCRA_LOCAL_SHELL}" ]]; then
