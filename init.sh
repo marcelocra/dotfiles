@@ -655,15 +655,20 @@ if [ "$EDITOR" = "nvim" ]; then
     alias vimdiff="nvim -d"
 fi
 
+# NOTE:
 # -l: print as a list.
 # -F: classify (folder vs files).
 # -h: print human readable sizes (using K, M, G instead of bytes).
 # -t: sort by time, most recently updated first.
+# -o: omit group name
 # --time-style: how to show time. Currently, 30mar23-22h10.
 # --hyperlink=auto: stuff becomes clickable. For example, it is possbile to
 #   open images in kitty term.
-alias ls='ls -lF --no-group --group-directories-first --color=always --time-style="+%d%b%y-%Hh%M"'
-alias myls="ls -t"
+#
+# Set my preferred defaults for ls.
+alias ls='ls -F --group-directories-first --color=always --time-style="+%d%b%y-%Hh%M"'
+# My daily driver ls.
+alias l="ls -ltho"
 alias myls_display_no_group='awk -f <(cat - <<-'\''EOF'\''
     BEGIN {
         print
@@ -749,25 +754,21 @@ function improved_ls() {
     # Remove the --path and --level option from the arguments.
     local rest=$(echo "$@" | sed -E -e 's/(--path|-p)[= ][^ ]+//g' -e 's/(--level|-l)[= ][^ ]+//g')
 
-    myls ${path_to_use} ${rest} | myls_display_table
+    l ${path_to_use} ${rest} | myls_display_table
     [[ -n "$tree_level" ]] &&
         tree "${path_to_use}" -L $tree_level ||
         true
 }
 
 function improved_ls_no_group() {
-    myls $@ | myls_display_no_group
+    l $@ | myls_display_no_group
 }
 
 if [[ $(uname) == "Darwin" ]]; then
     # Mac doesn't support the --time-style flag.
-    alias l='ls -lFh -t'
-    # ol means original ls
-    alias ol=l
+    alias l='ls -lFh -t --no-group'
 else
-    alias l="ls -t $mcra_common_ls_options"
     alias lt='improved_ls'
-    alias ol="ls -h $mcra_common_ls_options"
 fi
 
 function improved_ls_full() {
@@ -776,13 +777,11 @@ function improved_ls_full() {
     improved_ls $path_to_use $@ -A
 }
 alias ll='l -A'
-alias oll='ol -A'
 alias llt='improved_ls_full'
 
 if [[ ! -z "${MCRA_INIT_SHELL}" && ! -z "${MCRA_LOCAL_SHELL}" ]]; then
     alias rc.='echo -n "Reloading configs at $(date +%F_%T)... " \
-        && source $MCRA_LOCAL_SHELL \
-        && source $MCRA_INIT_SHELL \
+        && source $HOME/init_all.sh \
         && echo '\''done!'\'' \
         || echo '\''failed :('\'''
     # # Changed in the last 10 minutes.
@@ -953,7 +952,23 @@ alias chrome_br='LANGUAGE=pt_BR google-chrome-stable'
 # Python
 # ------
 
-alias venv_activate='source .venv/bin/activate'
+function venv_activate() {
+    local the_venv="./.venv/bin/activate"
+
+    if [[ -f "$the_venv" ]]; then
+        source "$the_venv"
+        return 0
+    fi
+
+    the_venv="$HOME/.python-global-venv/.venv/bin/activate"
+    if [[ -f "$the_venv" ]]; then
+        source "$the_venv"
+        return 0
+    fi
+
+    echo 'No valid venv found.'
+    return 1
+}
 
 # Init local python environment and install pip.
 alias initpy='uv init && uv venv && uv add pip && venv_activate'

@@ -57,7 +57,7 @@ glyph_offset = { x = 0, y = 0 }
 
 builtin_box_drawing = true
 #-------------------------------------------------------------------------------
-size = 9.0 # {{{
+size = 13.0 # {{{
 [font.normal]
 style = "Regular"
 # Organized by height. This is not very precise, as some fonts have the same
@@ -83,13 +83,14 @@ style = "Regular"
 # family = "MesloLGM Nerd Font"
 # family = "Noto Sans Mono"
 # family = "Red Hat Mono"
-family = "Monoid Nerd Font Propo" # Good: 9.
+# family = "Monoid Nerd Font Propo" # Good: 9.
 # family = "Monoid Tight" # Good: 9.
 # --- Large ---
 # family = "MesloLGL Nerd Font"
 # --- New and unchecked below ---
-# family = "Input Mono"
+family = "Input Mono"
 # family = "JuliaMono"
+# family = "Unifont"
 
 # [font.bold]
 # style = "Bold"
