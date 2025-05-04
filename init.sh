@@ -1024,6 +1024,9 @@ alias time_ago="date -d '10 hours ago' +%s%3N"
 # recursively.
 alias change_owners='sudo chown -R $USER:$USER'
 
+# Check shasum easily.
+alias shasum_easy='echo "b87366b62eddfbecb60e681ba83299c61884a0d97569abe797695c8861f5dea4 *ubuntu-25.04-desktop-amd64.iso" | shasum -a 256 --check'
+
 # next alias above, unless they fit in one of the other sections.
 # }}}general
 # git frequent{{{
