@@ -139,9 +139,11 @@ require("i").run("NEOVIM ONLY!", function(_, u)
   vim.keymap.set({ "i" }, "jf", "<Esc>", { desc = "Go to normal mode" })
   vim.keymap.set({ "i" }, "fj", "<Esc>", { desc = "Go to normal mode" })
 
-  -- INFO: Don't work in VSCode.
-  vim.keymap.set({ "n", "i" }, ",q", "<Cmd>q<CR>", { desc = "Quit/Close current buffer", silent = true })
-  vim.keymap.set({ "n" }, ",,q", "<Leader>qq", { desc = "Quit/Close all buffers", remap = true, silent = true })
+  -- [info] Don't work in VSCode.
+  vim.keymap.set({ "n", "i", "v" }, ",q", "<Cmd>q<CR>", { desc = "Quit/Close current buffer", silent = true })
+  vim.keymap.set({ "n" }, ",,q", "<Leader>qq", { desc = "Quit/Close all buffers", silent = true, remap = true })
+
+  vim.keymap.set({ "n", "i", "v" }, ",d", "<Leader>bd", { desc = "Delete current buffer", silent = true, remap = true })
 
   -- Save and quit faster. INFO: Don't work in VSCode.
   vim.keymap.set({ "n", "i" }, ",x", "<Cmd>x<CR>", { desc = "Save and close the current buffer", silent = true })
