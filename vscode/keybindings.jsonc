@@ -248,16 +248,52 @@
     "when": "neovim.mode != 'insert' || !editorTextFocus"
   },
 
+  // {
+  //   "key": "ctrl+d",
+  //   "command": "runCommands",
+  //   "args": {
+  //     "commands": [
+  //       // "editor.action.addSelectionToNextFindMatch",
+  //       {
+  //         "command": "type", // Type the Esc key
+  //         "args": {
+  //           "text": "\u001bi"
+  //         }
+  //       },
+  //       // {
+  //       //   "command": "type",
+  //       //   "args": {
+  //       //     "text": "i"
+  //       //   }
+  //       // },
+
+  //       // {
+  //       //   "command": "vscode-neovim.send",
+  //       //   "args": ""
+  //       // },
+  //       "editor.action.addSelectionToNextFindMatch"
+  //     ]
+  //   },
+  //   "when": "editorTextFocus"
+  // },
+
+  {
+    "key": "ctrl+d",
+    "command": "vscode-neovim.send",
+    "args": "<C-d>",
+    "when": "editorTextFocus && neovim.mode == 'visual'"
+  },
+
   {
     "key": "ctrl+n",
     "command": "editor.action.moveSelectionToNextFindMatch",
-    "when": "editorTextFocus && neovim.mode == 'insert'"
+    "when": "editorTextFocus && editorHasSelection && neovim.mode == 'insert'"
   },
 
   {
     "key": "ctrl+p",
     "command": "editor.action.moveSelectionToPreviousFindMatch",
-    "when": "editorTextFocus && neovim.mode == 'insert'"
+    "when": "editorTextFocus && editorHasSelection && neovim.mode == 'insert'"
   },
 
   {

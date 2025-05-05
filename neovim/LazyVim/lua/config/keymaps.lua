@@ -301,11 +301,43 @@ require("i").run("VSCODE ONLY!", function()
   local vscode = require("vscode")
   -- vscode.notify("Hello from Neovim keymaps config!")
 
-  -- TODO: Figure out why this is not working when the same thing for a
-  -- different mapping (below) works.
+  -- WARN: What is necessary for <C-d> to work as expected in VSCode.
   --
-  -- vim.keymap.del({ "n", "i", "x" }, "<C-d>")
+  -- The documentation suggests[1] using the keybinding below to have
+  -- <C-d> working in all modes, but I couldn't get that to work. I tried the
+  -- same thing with <C-a> and <C-n> and they worked, as long as I put them in
+  -- the ctrlKeysForNormalMode setting option. But doing the same with <C-d>
+  -- wouldn't make it work, I don't know why. In the end, I found a way to send
+  -- <C-d> to Neovim through VSCode keybindings[2] and this way it worked! My
+  -- keybinding file has the following:
+  --
+  --    {
+  --      "key": "ctrl+d",
+  --      "command": "vscode-neovim.send",
+  --      "args": "<C-d>",
+  --      "when": "editorTextFocus && neovim.mode == 'visual'"
+  --    },
+  --    {
+  --      "key": "ctrl+n",
+  --      "command": "editor.action.moveSelectionToNextFindMatch",
+  --      "when": "editorTextFocus && editorHasSelection && neovim.mode == 'insert'"
+  --    },
+  --    {
+  --      "key": "ctrl+p",
+  --      "command": "editor.action.moveSelectionToPreviousFindMatch",
+  --      "when": "editorTextFocus && editorHasSelection && neovim.mode == 'insert'"
+  --    },
+  --
+  -- Links:
+  --  [1]: https://github.com/vscode-neovim/vscode-neovim?tab=readme-ov-file#vscodewith_insertcallback
+  --  [2]: https://github.com/vscode-neovim/vscode-neovim?tab=readme-ov-file#keybinding-passthroughs
+
   vim.keymap.set({ "n", "i", "x" }, "<C-d>", function()
+    vscode.with_insert(function()
+      vscode.action("editor.action.addSelectionToNextFindMatch")
+    end)
+  end)
+  vim.keymap.set({ "n", "i", "x" }, "<C-n>", function()
     vscode.with_insert(function()
       vscode.action("editor.action.addSelectionToNextFindMatch")
     end)
