@@ -383,6 +383,48 @@
   },
 
   {
+    // Move the panel to a new position.
+    "key": "ctrl+; ctrl+l",
+    "command": "workbench.action.positionPanelRight",
+    "when": "panelFocus && panelPosition == 'bottom'"
+  },
+
+  {
+    // Move the panel to a new position.
+    "key": "ctrl+; ctrl+j",
+    "command": "workbench.action.positionPanelBottom",
+    "when": "panelFocus && panelPosition == 'right'"
+  },
+
+  {
+    // Resize panel.
+    "key": "ctrl+; ctrl+k",
+    "command": "workbench.action.terminal.resizePaneUp",
+    "when": "panelFocus"
+  },
+
+  {
+    // Resize panel.
+    "key": "ctrl+; ctrl+j",
+    "command": "workbench.action.terminal.resizePaneDown",
+    "when": "panelFocus && panelPosition == 'bottom'"
+  },
+
+  {
+    // Resize panel.
+    "key": "ctrl+; ctrl+h",
+    "command": "workbench.action.terminal.resizePaneLeft",
+    "when": "panelFocus"
+  },
+
+  {
+    // Resize panel.
+    "key": "ctrl+; ctrl+l",
+    "command": "workbench.action.terminal.resizePaneRight",
+    "when": "panelFocus && panelPosition == 'right'"
+  },
+
+  {
     "key": "NEXT KEYBINDING/KEYMAP/MAPPING 👆🏽"
   },
 
