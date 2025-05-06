@@ -969,6 +969,7 @@ function venv_activate() {
     echo 'No valid venv found.'
     return 1
 }
+alias va=venv_activate
 
 # Init local python environment and install pip.
 alias initpy='uv init && uv venv && uv add pip && venv_activate'
