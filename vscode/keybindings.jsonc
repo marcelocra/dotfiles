@@ -344,18 +344,18 @@
   //   "when": "editorTextFocus && editorHasSelection && neovim.mode == 'visual'"
   // },
 
-  // {
-  //   // Toggle focus between panel and editor.
-  //   "key": "alt+t",
-  //   "command": "workbench.action.focusLastEditorGroup",
-  //   "when": "panelFocus"
-  // },
-  // {
-  //   // Toggle focus between panel and editor.
-  //   "key": "alt+t",
-  //   "command": "workbench.action.focusPanel",
-  //   "when": "!panelFocus"
-  // },
+  {
+    // Toggle focus between panel and editor.
+    "key": "alt+t",
+    "command": "workbench.action.focusLastEditorGroup",
+    "when": "panelFocus"
+  },
+  {
+    // Toggle focus between panel and editor.
+    "key": "alt+t",
+    "command": "workbench.action.focusPanel",
+    "when": "!panelFocus"
+  },
 
   {
     "key": "ctrl+p",
@@ -425,11 +425,31 @@
   },
 
   {
-    "key": "NEXT KEYBINDING/KEYMAP/MAPPING 👆🏽"
+    "key": "ctrl+enter",
+    "command": "-github.copilot.generate"
   },
 
   {
-    "key": "ADDED THROUGH THE KEYBINDINGS UI 👇🏽"
+    "key": "ctrl+s",
+    "command": "runCommands",
+    "args": {
+      "commands": ["workbench.action.files.save", "vscode-neovim.escape"]
+    },
+    "when": "neovim.mode == 'insert'"
+  },
+
+  {
+    // Default keybinding.
+    "key": "ctrl+e",
+    "command": "-workbench.action.quickOpen"
+  },
+
+  {
+    "key": "NEXT KEYBINDING/KEYMAP/MAPPING - ADD MANUALLY 👆🏽"
+  },
+
+  {
+    "key": "NEXT KEYBINDING/KEYMAP/MAPPING - ADD WITH KEYBINDINGS UI 👇🏽"
   },
 
   {
@@ -449,6 +469,20 @@
   {
     "key": "ctrl+shift+s",
     "command": "-workbench.action.files.saveAs"
+  },
+  {
+    "key": "ctrl+enter",
+    "command": "python.execInREPL",
+    "when": "config.python.REPL.sendToNativeREPL && editorTextFocus && !isCompositeNotebook && !jupyter.ownsSelection && !notebookEditorFocused && editorLangId == 'python'"
+  },
+  {
+    "key": "ctrl+enter",
+    "command": "python.execSelectionInTerminal",
+    "when": "editorTextFocus && !findInputFocussed && !isCompositeNotebook && !jupyter.ownsSelection && !notebookEditorFocused && !replaceInputFocussed && editorLangId == 'python'"
+  },
+
+  {
+    "key": "THE END! 👆🏽"
   }
 
   //
