@@ -284,6 +284,21 @@ require("i").run("NEOVIM ONLY!", function(_, u)
     { desc = "Create a new terminal in a vertical split" }
   )
 
+  -- [info] Doesn't work in VSCode.
+  vim.keymap.set({ "n" }, "<C-CR>", "<LocalLeader>ee", { silent = true, remap = true })
+  vim.keymap.set({ "n" }, "<C-S-CR>", "<LocalLeader>ece", { silent = true, remap = true })
+
+  vim.keymap.set({ "n" }, "<M-CR>", "<LocalLeader>er", { silent = true, remap = true })
+  vim.keymap.set({ "n" }, "<M-S-CR>", "<LocalLeader>ecr", { silent = true, remap = true })
+
+  vim.keymap.set({ "i" }, "<C-CR>", "<Esc><LocalLeader>eea", { silent = true, remap = true })
+  vim.keymap.set({ "i" }, "<C-S-CR>", "<Esc><LocalLeader>ecea", { silent = true, remap = true })
+
+  vim.keymap.set({ "i" }, "<M-CR>", "<Esc><LocalLeader>era", { silent = true, remap = true })
+  vim.keymap.set({ "i" }, "<M-S-CR>", "<Esc><LocalLeader>ecra", { silent = true, remap = true })
+
+  vim.keymap.set({ "v" }, "<C-CR>", "<LocalLeader>E", { silent = true, remap = true })
+
   -- Next Neovim-only above.
 end)
 
