@@ -229,8 +229,8 @@
 
   "jupyter.disableJupyterAutoStart": true,
 
+  "python.REPL.enableREPLSmartSend": true,
   "python.REPL.sendToNativeREPL": true,
-  "python.REPL.enableREPLSmartSend": false,
   "ruff.nativeServer": "on",
 
   "[python]": {
@@ -238,6 +238,7 @@
   },
 
   "python.venvFolders": [".python-global-venv"],
+  "python.terminal.activateEnvironment": true,
 
   "rubyLsp.rubyVersionManager": "asdf",
 
@@ -812,12 +813,21 @@
     "fj": {
       // Easier way to leave insert mode.
       "command": "vscode-neovim.escape"
+    },
+    ",w": {
+      // Easier way to leave insert mode and save the file.
+      "command": "vscode-neovim.lua",
+      "args": [
+        "vim.api.nvim_input('<Esc>') require('vscode').action('workbench.action.files.save')"
+      ]
+    },
+    ",s": {
+      // Easier way to leave insert mode and save the file.
+      "command": "vscode-neovim.lua",
+      "args": [
+        "vim.api.nvim_input('<Esc>') require('vscode').action('workbench.action.files.save')"
+      ]
     }
-    // ",w": {
-    //   // Easier way to leave insert mode and save the file.
-    //   "command": "vscode-neovim.lua",
-    //   "args": ["vim.api.nvim_input('<Esc>') require('vscode').action('workbench.action.files.save')"]
-    // }
     // ",s": {
     //   // Easier way to leave insert mode and save the file.
     //   // TODO: figure out why this is not working.
