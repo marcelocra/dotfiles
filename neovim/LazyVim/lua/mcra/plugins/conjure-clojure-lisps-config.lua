@@ -1,3 +1,21 @@
+--
+-- Defaults merging rules:
+--  * cmd: the list of commands will be extended with your custom commands
+--  * event: the list of events will be extended with your custom events
+--  * ft: the list of filetypes will be extended with your custom filetypes
+--  * keys: the list of keymaps will be extended with your custom keymaps
+--  * opts: your custom opts will be merged with the default opts
+--  * dependencies: the list of dependencies will be extended with your custom
+--    dependencies any other property will override the defaults
+--
+-- For ft, event, keys, cmd and opts you can instead also specify a values
+-- function that can make changes to the default values, or return new values to
+-- be used instead.
+--
+-- Docs from:
+-- https://www.lazyvim.org/configuration/plugins#%EF%B8%8F-customizing-plugin-specs
+--
+
 return {
   {
     -- Clojure, Lisps, Python, etc, REPL support in Neovim.
@@ -26,10 +44,10 @@ return {
 
       vim.g["conjure#highlight#enabled"] = true
 
-      -- Uses clj with nrepl instead of babashka. Requires an alias named
-      -- :repl/conjure in ~/.clojure/deps.edn (mine is in the root of this
-      -- repo).
-      vim.g["conjure#client#clojure#nrepl#connection#auto_repl#cmd"] = "clj -M:repl/conjure"
+      -- -- Uses clj with nrepl instead of babashka. Requires an alias named
+      -- -- :repl/conjure in ~/.clojure/deps.edn (mine is in the root of this
+      -- -- repo).
+      -- vim.g["conjure#client#clojure#nrepl#connection#auto_repl#cmd"] = "clj -M:repl/conjure"
     end,
 
     config = function()
@@ -43,14 +61,14 @@ return {
   },
 
   {
-    -- Better Lisp support.
+    -- Better Lisp (s-exp) support.
     "guns/vim-sexp",
     ft = { "clojure", "fennel", "racket" }, -- etc
     lazy = true,
   },
 
   {
-    -- Better Lisp support.
+    -- Better Lisp (s-exp) mappings.
     "tpope/vim-sexp-mappings-for-regular-people",
     ft = { "clojure", "fennel", "racket" }, -- etc
     lazy = true,

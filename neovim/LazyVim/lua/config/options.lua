@@ -18,8 +18,8 @@ local the_leader = " "
 vim.g.mapleader = the_leader
 vim.g.maplocalleader = the_leader
 
--- Good to keep everything together.
-require("i").run("Configures all options in one go", function()
+-- Configures all options in one go. Good to keep everything together.
+do
   local opt = vim.opt
 
   opt.smartindent = true
@@ -43,11 +43,8 @@ require("i").run("Configures all options in one go", function()
   -- TODO: The spellchecker didn't work only with the EditorConfig settings,
   -- ended up needing this one too, not sure why. Perhaps double check this.
   opt.spelllang = "en_us,en,pt_br,pt"
-  opt.spellfile = (
-    (os.getenv("MCRA_LOCAL_DOTFILES") .. "/backups/nvim/spell/dict.utf-8.add")
-    or (os.getenv("HOME") .. "/Documents/spell_dict.utf-8.add")
-  )
-end)
+  opt.spellfile = (os.getenv("HOME") .. "/.mcra/spell/spell_dict.utf-8.add")
+end
 
 vim.g.lazyvim_prettier_needs_config = false
 vim.g.markdown_fenced_languages = { "ts=typescript" }

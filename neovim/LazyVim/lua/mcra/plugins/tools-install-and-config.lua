@@ -1,7 +1,5 @@
 --
--- Customizing Plugin Specs
 -- Defaults merging rules:
---
 --  * cmd: the list of commands will be extended with your custom commands
 --  * event: the list of events will be extended with your custom events
 --  * ft: the list of filetypes will be extended with your custom filetypes
@@ -18,19 +16,88 @@
 -- https://www.lazyvim.org/configuration/plugins#%EF%B8%8F-customizing-plugin-specs
 --
 
+-- Add here the LSPs and tools that you want automatically installed. Notice
+-- that they are listed separately, since LSPs also accept a configuration.
+
+local lsps = {
+  -- Written by a Nubanker. https://github.com/clojure-lsp/clojure-lsp
+  clojure_lsp = {},
+
+  -- Official LSP for F#, initially by FSharp Software Foundation, now
+  -- maintained by Ionide.
+  fsautocomplete = {},
+
+  -- Official LSP.
+  -- https://github.com/ocaml/ocaml-lsp
+  ocamllsp = {},
+
+  -- Used by the official VSCode YAML extension, by RedHat.
+  yamlls = {},
+}
+
+-- For more examples of packages, see at the end of this file.
+local ensure_installed = vim.tbl_keys(lsps or {})
+vim.list_extend(ensure_installed, {
+
+  -- Tools installed by default.
+  "stylua",
+  "shfmt",
+
+  -- Static Type Checker for Python, by Microsoft.
+  -- https://github.com/microsoft/pyright
+  "pyright",
+
+  -- Widely used Python linter and formatter.
+  -- https://github.com/astral-sh/ruff
+  "ruff",
+
+  -- From Borkdude, creator or Babashka and many widely used Clojure
+  -- tools. https://github.com/clj-kondo/clj-kondo
+  "clj-kondo",
+
+  -- From Wavejeaster, also creator of many widely used Clojure tools.
+  -- https://github.com/weavejester/cljfmt
+  "cljfmt",
+
+  -- Most commonly used F# formatter.
+  -- https://github.com/fsprojects/fantomas
+  "fantomas",
+
+  -- Next tool above this line.
+})
+
 return {
+  -- {
+  --   -- [note] kept here to simplify adding configs eventually.
+  --   "williamboman/mason.nvim",
+  --   opts = {},
+  -- },
+
+  {
+    "marcelocra/mason-tool-installer.nvim",
+    opts = { ensure_installed = ensure_installed },
+  },
+
+  {
+    "neovim/nvim-lspconfig",
+    opts = {
+      servers = lsps,
+    },
+  },
+
   {
     "nvim-treesitter/nvim-treesitter",
     opts = function(_, opts)
-      -- WARN: This is necessary to avoid overwriting default options, as Lua
-      -- lists cannot be merged like tables. LazyVim docs about this here:
-      --    https://github.com/LazyVim/lazyvim.github.io/blob/485d853b1e52533c4e360d036f2d27f7c0dc06e1/docs/configuration/examples.md?plain=1#L146
-      -- Lua docs here:
-      --    https://neovim.io/doc/user/lua.html#vim.tbl_deep_extend()
+      -- WARN: This is necessary, to avoid overwriting the default options, as
+      -- Lua lists cannot be merged like tables can[1]. It was mentioned in
+      -- lazyvim examples config[2].
+      -- Links:
+      --  [1]: https://neovim.io/doc/user/lua.html#vim.tbl_deep_extend()
+      --  [2]: https://github.com/LazyVim/lazyvim.github.io/blob/485d853b1e52533c4e360d036f2d27f7c0dc06e1/docs/configuration/examples.md?plain=1#L146
 
-      -- NOTE: :checkhealth mentions that the following tree-sitter languages
-      -- are not installed (maybe they are just not loaded?): css, latex, norg,
-      -- scss, svelte, typst, vue.
+      -- TODO: Double check which tree-sitter languages are required.
+      -- :checkhealth mentions that the following are not installed (maybe they
+      -- are just not loaded?): css, latex, norg, scss, svelte, typst, vue.
 
       -- stylua: ignore
       vim.list_extend(opts.ensure_installed, {
@@ -61,9 +128,9 @@ return {
         ----------------------------------------------------------------------------------------------
         -- Added by me.
         ----------------------------------------------------------------------------------------------
-        -- "c_sharp",                 -- [Official] https://github.com/tree-sitter/tree-sitter-c-sharp
-        -- "css",                     -- [Official] https://github.com/tree-sitter/tree-sitter-css
-        -- "fsharp",                  -- [Ionide] https://github.com/ionide/tree-sitter-fsharp
+        "c_sharp",                 -- [Official] https://github.com/tree-sitter/tree-sitter-c-sharp
+        "css",                     -- [Official] https://github.com/tree-sitter/tree-sitter-css
+        "fsharp",                  -- [Ionide] https://github.com/ionide/tree-sitter-fsharp
         -- "go",                      -- [Official] https://github.com/tree-sitter/tree-sitter-go
         -- "javascript",              -- [Official] https://github.com/tree-sitter/tree-sitter-javascript
         -- "rust",                    -- [Official] https://github.com/tree-sitter/tree-sitter-rust
@@ -81,3 +148,26 @@ return {
     end,
   },
 }
+
+-- Packages I have installed at 6mai25. Most of these are automatically
+-- installed either by LazyVim or by the associated LazyVim extra.
+--
+-- eslint-lsp eslint (keywords: javascript, typescript)
+-- gofumpt (keywords: go)
+-- goimports (keywords: go)
+-- gopls (keywords: go)
+-- json-lsp jsonls (keywords: json)
+-- lua-language-server lua_ls (keywords: lua)
+-- markdown-toc (keywords: markdown)
+-- markdownlint-cli2 (keywords: markdown)
+-- marksman (keywords: markdown)
+-- ocaml-lsp ocamllsp (keywords: ocaml)
+-- prettier (keywords: angular, css, flow, graphql, html, json, jsx, javascript, less, markdown, scss, typescript, vue, yaml)
+-- pyright (keywords: python)
+-- ruff (keywords: python)
+-- shfmt (keywords: bash, mksh, shell)
+-- stylua (keywords: lua, luau)
+-- tailwindcss-language-server tailwindcss (keywords: css)
+-- taplo (keywords: toml)
+-- vtsls (keywords: javascript, typescript)
+-- yaml-language-server yamlls (keywords: yaml)

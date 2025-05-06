@@ -3,22 +3,13 @@
 -- Keymaps are automatically loaded on the VeryLazy event
 -- Default keymaps that are always set: https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/config/keymaps.lua
 -- Add any additional keymaps here
--------------------------------------------------------------------------------
--- CHANGE SOME LAZYVIM DEFAULTS START {{{
--------------------------------------------------------------------------------
 
-require("i").run("LazyVim: Open the file explorer", function()
-  vim.keymap.del("n", "<Leader>e")
+-- LazyVim: Handle embedded terminal and commenting.
+do
+  -- NOTE: <C-_> is <C-/>, but we need to use both as some terminals don't
+  -- recognize one or the other: Alacritty seems to recognize both, while Wezterm
+  -- only recognizes <C-/>.
 
-  local desc = "Open explorer in root directory"
-  vim.keymap.set({ "n" }, "<M-b>", require("i").partial(Snacks.explorer, { cwd = LazyVim.root() }), { desc = desc })
-  vim.keymap.set({ "n" }, "<M-e>", require("i").partial(Snacks.explorer, { cwd = LazyVim.root() }), { desc = desc })
-end)
-
--- NOTE: <C-_> is <C-/>, but we need to use both, as some terminals don't
--- recognize one or the other: Alacritty seems to recognize both, while Wezterm
--- only recognizes <C-/>.
-require("i").run("LazyVim: Handle embedded terminal and commenting", function()
   local ctrl_underscore = "<C-_>"
   local ctrl_slash = "<C-/>"
 
@@ -42,26 +33,32 @@ require("i").run("LazyVim: Handle embedded terminal and commenting", function()
   -- Visual.
   vim.keymap.set({ "v" }, ctrl_underscore, "gcgv", opts)
   vim.keymap.set({ "v" }, ctrl_slash, "gcgv", opts)
-end)
+end
 
--- LazyVim: Open a profiler for debug
--------------------------------------
-vim.keymap.del("n", "<Leader>dpp")
-vim.keymap.del("n", "<Leader>dph")
-vim.keymap.del("n", "<Leader>dps")
+-- LazyVim: Open a profiler for debug.
+do
+  vim.keymap.del("n", "<Leader>dpp")
+  vim.keymap.del("n", "<Leader>dph")
+  -- vim.keymap.del("n", "<Leader>dps")
+end
 
 -------------------------------------------------------------------------------
--- CHANGE SOME LAZYVIM DEFAULTS END }}}
+-- CHANGE LAZYVIM DEFAULTS END }}}
+-------------------------------------------------------------------------------
+
 -------------------------------------------------------------------------------
 -- NEOVIM AND VSCODE START {{{
 --------------------------------------------------------------------------------
 
--- INFO: n/v bindings work in VSCode, but i bindings don't.
-require("i").run("NEOVIM AND VSCODE", function()
+-- INFO: Normal and visual mode keymaps might work in VSCode, while insert mode
+-- ones most likely won't.
+
+do
   -- NOTE: I tried to use only the LazyVim default shortcut (ctrl+s), but I'm so
   -- used to ,{w,s} that I missed them a LOT. Also, I do believe that they are
   -- faster to type. I used this to try to change the habit:
-  -- <Cmd>echo 'Use Ctrl+S instead!'<CR>
+  --  <Cmd>echo 'Use Ctrl+S instead!'<CR>
+
   vim.keymap.set({ "n", "v" }, ",w", "<Cmd>w<CR>", { desc = "Save current buffer", silent = true })
   vim.keymap.set({ "i" }, ",w", "<Esc><Cmd>w<CR>", { desc = "Save current buffer and exit INSERT mode", silent = true })
   vim.keymap.set({ "n", "v" }, ",s", "<Cmd>w<CR>", { desc = "Save current buffer", silent = true })
@@ -86,10 +83,11 @@ require("i").run("NEOVIM AND VSCODE", function()
     { desc = "Clear the last search, erasing from the register ('n' won't work)", silent = true }
   )
 
-  require("i").run("Reminder that I'm using the wrong keyboard layout", function(doc)
+  do
+    local doc = "Reminder that I'm using the wrong keyboard layout"
     vim.keymap.set({ "n" }, "Ç", ':echo "Wrong keyboard layout!"<CR>', { desc = doc })
     vim.keymap.set({ "n" }, "ç", ':echo "wrong keyboard layout!"<CR>', { desc = doc })
-  end)
+  end
 
   -- vim.keymap.set({"n"}, "/", "/\\v", { desc = "Use normal regex"})
   vim.keymap.set(
@@ -99,28 +97,31 @@ require("i").run("NEOVIM AND VSCODE", function()
     { desc = "Search for the currently selected text" }
   )
 
-  vim.keymap.set({ "n", "v" }, "j", "gj", { desc = "Move down by visual line" })
-  vim.keymap.set({ "n", "v" }, "k", "gk", { desc = "Move up by visual line" })
-  vim.keymap.set({ "n", "v" }, "$", "g$", { desc = "Move to the end of the line" })
-  vim.keymap.set({ "n", "v" }, "0", "g0", { desc = "Move to the beginning of the line" })
+  vim.keymap.set({ "n", "v" }, "j", "gj", { desc = "Move down by visual line", silent = true })
+  vim.keymap.set({ "n", "v" }, "k", "gk", { desc = "Move up by visual line", silent = true })
+  vim.keymap.set({ "n", "v" }, "$", "g$", { desc = "Move to the end of the line", silent = true })
+  vim.keymap.set({ "n", "v" }, "0", "g0", { desc = "Move to the beginning of the line", silent = true })
 
   vim.keymap.set({ "n" }, "gV", "`[v`]", { desc = "Highlight last inserted text." })
 
-  vim.keymap.set({ "v" }, "<", "<gv", { desc = "Allow fast indenting when there is a chunck of text selected" })
-  vim.keymap.set({ "v" }, ">", ">gv", { desc = "Allow fast unindenting when there is a chunck of text selected" })
+  do
+    local desc = "Allow fast indenting (>) and unindenting (<) the selected text"
+    vim.keymap.set({ "v" }, "<", "<gv", { desc = desc, silent = true })
+    vim.keymap.set({ "v" }, ">", ">gv", { desc = desc, silent = true })
+  end
 
   vim.keymap.set({ "n" }, "<C-n>", ":nohlsearch<CR>", { desc = "Clear search highlights", silent = true })
 
-  -- vim.keymap.set({ "n" }, "<Leader><Leader>", "@q", { desc = "Easily run the macro stored at 'q'" })
-  vim.keymap.set(
-    { "n" },
-    "<Leader><Leader>",
-    "<Leader>bb",
-    { desc = "Easily run the macro stored at 'q'", remap = true }
-  )
+  vim.keymap.set({ "n" }, "<Leader><Leader>", "@q", { desc = "Easily run the macro stored at 'q'" })
+
+  do
+    local desc = "Go to previous buffer"
+    vim.keymap.set({ "n" }, "<Leader><Leader>", "<Leader>bb", { desc = desc, remap = true, silent = true })
+    vim.keymap.set({ "n" }, "<M-l>", "<Leader>bb", { desc = desc, remap = true, silent = true })
+  end
 
   -- Next common keymaps/mappings/bindings for Neovim and VSCode above.
-end)
+end
 
 --------------------------------------------------------------------------------
 -- NEOVIM AND VSCODE END }}}
@@ -128,7 +129,7 @@ end)
 -- NEOVIM ONLY START {{{
 --------------------------------------------------------------------------------
 
-require("i").run("NEOVIM ONLY!", function(_, u)
+do
   if vim.g.vscode then
     print("Neovim-only code being ignored!")
     return
@@ -140,10 +141,9 @@ require("i").run("NEOVIM ONLY!", function(_, u)
   vim.keymap.set({ "i" }, "fj", "<Esc>", { desc = "Go to normal mode" })
 
   -- [info] Don't work in VSCode.
+  vim.keymap.set({ "n", "i", "v" }, ",d", "<Leader>bd", { desc = "Delete current buffer", silent = true, remap = true })
   vim.keymap.set({ "n", "i", "v" }, ",q", "<Cmd>q<CR>", { desc = "Quit/Close current buffer", silent = true })
   vim.keymap.set({ "n" }, ",,q", "<Leader>qq", { desc = "Quit/Close all buffers", silent = true, remap = true })
-
-  vim.keymap.set({ "n", "i", "v" }, ",d", "<Leader>bd", { desc = "Delete current buffer", silent = true, remap = true })
 
   -- Save and quit faster. INFO: Don't work in VSCode.
   vim.keymap.set({ "n", "i" }, ",x", "<Cmd>x<CR>", { desc = "Save and close the current buffer", silent = true })
@@ -158,7 +158,8 @@ require("i").run("NEOVIM ONLY!", function(_, u)
   vim.keymap.set({ "n", "i" }, "<M-k>", "<Cmd>BufferLineCycleNext<CR>", { desc = "Focus on the buffer to the right" })
 
   -- INFO: Don't work in VSCode.
-  require("i").run("Move line or selection down", function(doc)
+  do
+    local doc = "Move line or selection down"
     local desc = { desc = doc }
 
     vim.keymap.set({ "n" }, "<M-Down>", "<Cmd>execute 'move .+' . v:count1<CR>==", desc)
@@ -167,10 +168,11 @@ require("i").run("NEOVIM ONLY!", function(_, u)
     vim.keymap.set({ "i" }, "<M-S-j>", "<Esc><Cmd>m .+1<CR>==gi", desc)
     vim.keymap.set({ "v" }, "<M-Down>", ":<C-U>execute \"'<lt>,'>move '>+\" . v:count1<CR>gv=gv", desc)
     vim.keymap.set({ "v" }, "<M-S-j>", ":<C-U>execute \"'<lt>,'>move '>+\" . v:count1<CR>gv=gv", desc)
-  end)
+  end
 
   -- INFO: Don't work in VSCode.
-  require("i").run("Move line or selection up", function(doc)
+  do
+    local doc = "Move line or selection up"
     local desc = { desc = doc }
 
     vim.keymap.set({ "n" }, "<M-Up>", "<Cmd>execute 'move .-' . (v:count1 + 1)<CR>==", desc)
@@ -179,10 +181,11 @@ require("i").run("NEOVIM ONLY!", function(_, u)
     vim.keymap.set({ "i" }, "<M-S-k>", "<Esc><Cmd>m .-2<CR>==gi", desc)
     vim.keymap.set({ "v" }, "<M-Up>", ":<C-U>execute \"'<lt>,'>move '<lt>-\" . (v:count1 + 1)<CR>gv=gv", desc)
     vim.keymap.set({ "v" }, "<M-S-k>", ":<C-U>execute \"'<lt>,'>move '<lt>-\" . (v:count1 + 1)<CR>gv=gv", desc)
-  end)
+  end
 
+  -- Manage colorschemes, particularly changing between light and dark.
   -- INFO: Don't work in VSCode.
-  require("i").run("Manage colorschemes, particularly changing between light and dark.", function()
+  do
     local color = require("mcra.lib.colorscheme")
     local set = color.set
     local toggle = color.toggle
@@ -191,7 +194,7 @@ require("i").run("NEOVIM ONLY!", function(_, u)
     vim.keymap.set({ "n" }, "<Leader>ocd", set("dark"), { desc = "Set colorscheme to vim.g.colorscheme_mode_dark" })
     vim.keymap.set({ "n" }, "<Leader>ocl", set("light"), { desc = "Set colorscheme to vim.g.colorscheme_mode_light" })
     vim.keymap.set({ "n" }, "<M-d>", toggle, { desc = "Set colorscheme to vim.g.colorscheme_mode_light" })
-  end)
+  end
 
   -- Doesn't work in terminals. EDIT: Not true. It works in Alacritty without
   -- tmux. INFO: Don't work in VSCode.
@@ -209,8 +212,9 @@ require("i").run("NEOVIM ONLY!", function(_, u)
     vim.cmd("vspl " .. tasks_file)
   end, { desc = "Open my tasks files" })
 
+  -- Insert date or time in current buffer.
   -- INFO: Don't work in VSCode.
-  require("i").run("Insert date or time in current buffer", function()
+  do
     local desc
 
     -- NOTE: Alternative format: %Y-%m-%d
@@ -219,24 +223,25 @@ require("i").run("NEOVIM ONLY!", function(_, u)
 
     desc = "Add time to current buffer"
     vim.keymap.set({ "i" }, "<M-t>", '<C-r>=strftime("%Hh%M")<CR>', { desc = desc })
-  end)
+  end
 
+  -- Port some VSCode mappings that I like back to Neovim.
   -- INFO: Not necessary in VSCode.
-  require("i").run("Port some VSCode mappings that I like back to Neovim", function()
+  do
     vim.keymap.set({ "n" }, "<C-p>", LazyVim.pick.open, { desc = "Fuzzy search for files in current folder" })
     vim.keymap.set({ "n" }, "<C-f>", Snacks.picker.lines, { desc = "Fuzzy search for text in the current buffer" })
-    vim.keymap.set(
-      { "n" },
-      "<C-t>",
-      u.partial(Snacks.picker.lsp_symbols, { filter = LazyVim.config.kind_filter }),
-      { desc = "Fuzzy search for symbols in the current file (buffer)" }
-    )
-    vim.keymap.set({ "n" }, "<F2>", "<Leader>cr", { desc = "Rename variable", remap = true })
-  end)
 
+    local symbol = require("i").partial(Snacks.picker.lsp_symbols, { filter = LazyVim.config.kind_filter })
+    vim.keymap.set({ "n" }, "<C-t>", symbol, { desc = "Fuzzy search for symbols in the current file (buffer)" })
+
+    vim.keymap.set({ "n" }, "<F2>", "<Leader>cr", { desc = "Rename variable", remap = true })
+  end
+
+  -- Simplify editing Neovim config files.
   -- INFO: Don't work in VSCode.
-  require("i").run("Simplify editing Neovim config files", function(_, u)
+  do
     local keymap = vim.keymap.set
+    local vimrc_folder = require("i").vimrc_folder
 
     ---
     --- Use the given `cmd` to open the file `name`, changing the local working directory to the Neovim config folder.
@@ -248,7 +253,7 @@ require("i").run("NEOVIM ONLY!", function(_, u)
       local cmds = { b = ":e ", h = ":spl ", v = ":vspl " }
 
       cmd = cmds[cmd] or ":e "
-      return cmd .. u.vimrc_folder .. "/lua/config/" .. name .. "<CR>:lcd " .. u.vimrc_folder .. "<CR>"
+      return cmd .. vimrc_folder .. "/lua/config/" .. name .. "<CR>:lcd " .. vimrc_folder .. "<CR>"
     end
 
     local desc = function(file, pos)
@@ -270,37 +275,39 @@ require("i").run("NEOVIM ONLY!", function(_, u)
     keymap({ "n" }, "<Leader>eva", cfg("b", "autocmds.lua"), desc("autocmds", "buffer"))
     keymap({ "n" }, "<Leader>ev-a", cfg("h", "autocmds.lua"), desc("autocmds", "split"))
     keymap({ "n" }, "<Leader>ev|a", cfg("v", "autocmds.lua"), desc("autocmds", "vsplit"))
-  end)
+  end
 
   -- INFO: Don't work in VSCode.
   vim.keymap.set({ "n" }, "-", ":split<CR>", { desc = "Easy vertical split", silent = true })
   vim.keymap.set({ "n" }, "|", ":vsplit<CR>", { desc = "Easy horizontal split", silent = true })
 
   -- INFO: Don't work in VSCode.
-  vim.keymap.set(
-    { "n" },
-    "<Leader>tn",
-    "<Cmd>vsplit<CR><Cmd>term<CR>i",
-    { desc = "Create a new terminal in a vertical split" }
-  )
+  do
+    local desc = "Create a new terminal in a vertical split"
+    vim.keymap.set({ "n" }, "<Leader>tn", "<Cmd>vsplit<CR><Cmd>term<CR>i", { desc = desc })
+  end
 
   -- [info] Doesn't work in VSCode.
+  vim.keymap.set({ "n" }, "<S-CR>", "<LocalLeader>ew", { silent = true, remap = true })
+  vim.keymap.set({ "n" }, "<M-S-CR>", "<LocalLeader>ew", { silent = true, remap = true })
+  vim.keymap.set({ "i" }, "<S-CR>", "<Esc><LocalLeader>ewa", { silent = true, remap = true })
+  vim.keymap.set({ "i" }, "<M-S-CR>", "<Esc><LocalLeader>ewa", { silent = true, remap = true })
+
   vim.keymap.set({ "n" }, "<C-CR>", "<LocalLeader>ee", { silent = true, remap = true })
-  vim.keymap.set({ "n" }, "<C-S-CR>", "<LocalLeader>ece", { silent = true, remap = true })
+  vim.keymap.set({ "n" }, "<M-C-CR>", "<LocalLeader>ece", { silent = true, remap = true })
+  vim.keymap.set({ "i" }, "<C-CR>", "<Esc><LocalLeader>eea", { silent = true, remap = true })
+  vim.keymap.set({ "i" }, "<M-C-CR>", "<Esc><LocalLeader>ecea", { silent = true, remap = true })
 
   vim.keymap.set({ "n" }, "<M-CR>", "<LocalLeader>er", { silent = true, remap = true })
-  vim.keymap.set({ "n" }, "<M-S-CR>", "<LocalLeader>ecr", { silent = true, remap = true })
-
-  vim.keymap.set({ "i" }, "<C-CR>", "<Esc><LocalLeader>eea", { silent = true, remap = true })
-  vim.keymap.set({ "i" }, "<C-S-CR>", "<Esc><LocalLeader>ecea", { silent = true, remap = true })
-
+  vim.keymap.set({ "n" }, "<C-S-M-CR>", "<LocalLeader>ecr", { silent = true, remap = true })
   vim.keymap.set({ "i" }, "<M-CR>", "<Esc><LocalLeader>era", { silent = true, remap = true })
-  vim.keymap.set({ "i" }, "<M-S-CR>", "<Esc><LocalLeader>ecra", { silent = true, remap = true })
+  vim.keymap.set({ "i" }, "<C-S-M-CR>", "<Esc><LocalLeader>ecra", { silent = true, remap = true })
 
   vim.keymap.set({ "v" }, "<C-CR>", "<LocalLeader>E", { silent = true, remap = true })
+  vim.keymap.set({ "v" }, "<M-CR>", "<LocalLeader>e!", { silent = true, remap = true })
 
   -- Next Neovim-only above.
-end)
+end
 
 --------------------------------------------------------------------------------
 -- NEOVIM ONLY END }}}
@@ -308,7 +315,7 @@ end)
 -- VSCODE ONLY START {{{
 --------------------------------------------------------------------------------
 
-require("i").run("VSCODE ONLY!", function()
+do
   if not vim.g.vscode then
     print("VSCode-only code being ignored!")
     return
@@ -373,7 +380,7 @@ require("i").run("VSCODE ONLY!", function()
   -- end)
 
   -- Next VSCode-only above.
-end)
+end
 
 --------------------------------------------------------------------------------
 -- VSCODE ONLY END }}}
