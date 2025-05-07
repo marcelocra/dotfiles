@@ -30,14 +30,22 @@ return {
     "folke/tokyonight.nvim",
     priority = 1000,
 
+    opts = {
+      transparent = true,
+      styles = {
+        sidebars = "transparent",
+        floats = "transparent",
+      },
+    },
+
     -- INFO: Example on how to configure.
-    config = function()
-      require("tokyonight").setup({
-        styles = {
-          -- comments = { italic = false }, -- Disable italics in comments
-        },
-      })
-    end,
+    -- config = function()
+    --   require("tokyonight").setup({
+    --     styles = {
+    --       comments = { italic = false }, -- Disable italics in comments
+    --     },
+    --   })
+    -- end,
   },
 
   -- INFO: Choose the default colorscheme here. I also have a mapping (<M-d>)
