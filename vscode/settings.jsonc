@@ -883,9 +883,9 @@
   // I mostly use automated formatters for my code, but I prefer comments.
   "vim.textwidth": 80,
 
-  "vim.enableNeovim": true,
-  "vim.neovimUseConfigFile": false,
-  "vim.neovimConfigPath": "~/.config/nvim/vscode.lua",
+  // This integration is not working for me and it seems like it is not being
+  // maintained anymore: https://github.com/VSCodeVim/Vim/issues/1735
+  "vim.enableNeovim": false,
 
   // // When using `useCtrlKeys = false`, this is my preferred configuration.
   // "vim.useCtrlKeys": false,
@@ -1528,7 +1528,7 @@
   // Keep the color theme last, as I'm always changing it and this way we won't
   // have a problem with the comma.
 
-  "workbench.colorTheme": "Monokai"
+  "workbench.colorTheme": "Night Owl Light"
 
   // #endregion workbench. }}}
 }
