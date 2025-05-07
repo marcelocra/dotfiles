@@ -168,4 +168,7 @@ return {
   is_light = function()
     return not is_dark()
   end,
+
+  -- Used at lua/mcra/plugins/colorschemes.lua
+  default = "gruvbox",
 }
