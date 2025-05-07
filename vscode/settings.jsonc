@@ -887,6 +887,14 @@
   // maintained anymore: https://github.com/VSCodeVim/Vim/issues/1735
   "vim.enableNeovim": false,
 
+  "vim.useCtrlKeys": true,
+  "vim.handleKeys": {
+    "<C-c>": false,
+    "<C-v>": false,
+    "<C-x>": false,
+    "<C-f>": false
+  },
+
   // // When using `useCtrlKeys = false`, this is my preferred configuration.
   // "vim.useCtrlKeys": false,
   // "vim.handleKeys": {
@@ -923,21 +931,21 @@
       "before": ["f", "j"],
       "after": ["<esc>"]
     },
-    {
-      // Copy.
-      "before": ["<C-c>"],
-      "commands": ["editor.action.clipboardCopyAction"]
-    },
-    {
-      // Paste.
-      "before": ["<C-v>"],
-      "commands": ["editor.action.clipboardPasteAction"]
-    },
-    {
-      // Cut.
-      "before": ["<C-x>"],
-      "commands": ["editor.action.clipboardCutAction"]
-    },
+    // {
+    //   // Copy.
+    //   "before": ["<C-c>"],
+    //   "commands": ["editor.action.clipboardCopyAction"]
+    // },
+    // {
+    //   // Paste.
+    //   "before": ["<C-v>"],
+    //   "commands": ["editor.action.clipboardPasteAction"]
+    // },
+    // {
+    //   // Cut.
+    //   "before": ["<C-x>"],
+    //   "commands": ["editor.action.clipboardCutAction"]
+    // },
     {
       // Select all.
       "before": ["<C-a>"],
@@ -948,11 +956,11 @@
       "before": ["<C-d>"],
       "commands": ["editor.action.addSelectionToNextFindMatch"]
     },
-    {
-      // Default VSCode search.
-      "before": ["<C-f>"],
-      "commands": ["actions.find"]
-    },
+    // {
+    //   // Default VSCode search.
+    //   "before": ["<C-f>"],
+    //   "commands": ["actions.find"]
+    // },
     {
       // Save and go to normal mode.
       "before": [",", "w"],
@@ -1303,13 +1311,13 @@
     //   },
 
     {
-      "before": ["<c-a>"],
+      "before": ["<C-a>"],
       "commands": ["editor.action.selectAll"]
     },
     {
       // Use `s` to trigger easymotion full search.
       "before": ["s"],
-      "after": ["leader", "leader", "s"]
+      "after": ["<Leader>", "<Leader>", "s"]
     }
   ],
 

@@ -237,7 +237,7 @@
   },
 
   // {
-  //   // VSCode Neovim.
+  //   // VSCodeNeovim.
   //   // Enable default ctrl+w behavior to close current active editor (tab):
   //   //  - Neovim: in all modes, except Insert
   //   //  - in non-editor windows, e.g. the Settings UI
@@ -276,7 +276,7 @@
   // },
 
   // {
-  //   // VSCode Neovim. Sends the command to Neovim, to make it work as
+  //   // VSCodeNeovim. Sends the command to Neovim, to make it work as
   //   // expected.
   //   "key": "ctrl+d",
   //   "command": "vscode-neovim.send",
@@ -441,7 +441,7 @@
   },
 
   // {
-  //   // VSCode Neovim.
+  //   // VSCodeNeovim.
   //   "key": "ctrl+s",
   //   "command": "runCommands",
   //   "args": {
@@ -462,6 +462,16 @@
     "command": "editor.action.inlineSuggest.acceptNextWord",
     "when": "editorTextFocus && inlineSuggestionVisible"
     // "when": "editorTextFocus && vim.active && vim.mode != 'Normal'"
+  },
+
+  {
+    // VSCodeVim / VSCodeNeovim.
+    // Enable default ctrl+w behavior to close current active editor (tab):
+    //  - nvim: in all modes, except Insert
+    //  - in non-editor windows, e.g. the Settings UI
+    "key": "ctrl+w",
+    "command": "workbench.action.closeActiveEditor",
+    "when": "vim.mode != 'Insert' || !editorTextFocus"
   },
 
   {
@@ -788,17 +798,6 @@
   //   "key": "ctrl+p", // "ctrl+k",
   //   "command": "selectPrevCodeAction",
   //   "when": "codeActionMenuVisible"
-  // },
-  // {
-  //   // Override VSCode Vim's ctrl+f. Use ctrl+d and / inst
-  //   "key": "ctrl+f",
-  //   "command": "actions.find"
-  // },
-  // {
-  //   // Enable default ctrl+w behavior, except in Insert mode.
-  //   "key": "ctrl+w",
-  //   "command": "workbench.action.closeActiveEditor",
-  //   "when": "editorTextFocus && vim.mode != 'Insert'"
   // },
   // {
   //   // Example:
