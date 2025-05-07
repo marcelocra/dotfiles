@@ -1,12 +1,4 @@
 [
-  //----------------------------------------------------------------------------
-  // I'm trying vscode-neovim (https://github.com/vscode-neovim/vscode-neovim)
-  // and want to use the same keybindings here as in my Neovim config, so I'll
-  // start from scratch and see what I miss.
-  //
-  // Will leave previous keybindings commented out to make it easier to revert.
-  //----------------------------------------------------------------------------
-
   {
     "key": "PANEL SHORTCUT CONFIGURATION"
   },
@@ -35,15 +27,20 @@
 
   {
     "key": "alt+v",
-    "command": "vscode-neovim.stop",
-    "when": "neovim.init"
+    "command": "toggleVim"
   },
 
-  {
-    "key": "alt+v",
-    "command": "vscode-neovim.restart",
-    "when": "!neovim.init"
-  },
+  // {
+  //   "key": "alt+v",
+  //   "command": "vscode-neovim.stop",
+  //   "when": "neovim.init"
+  // },
+
+  // {
+  //   "key": "alt+v",
+  //   "command": "vscode-neovim.restart",
+  //   "when": "!neovim.init"
+  // },
 
   {
     "key": "alt+shift+m",
@@ -239,14 +236,15 @@
     "command": "actions.find"
   },
 
-  {
-    // Enable default ctrl+w behavior to close current active editor (tab):
-    //  - Neovim: in all modes, except Insert
-    //  - in non-editor windows, e.g. the Settings UI
-    "key": "ctrl+w",
-    "command": "workbench.action.closeActiveEditor",
-    "when": "neovim.mode != 'insert' || !editorTextFocus"
-  },
+  // {
+  //   // VSCode Neovim.
+  //   // Enable default ctrl+w behavior to close current active editor (tab):
+  //   //  - Neovim: in all modes, except Insert
+  //   //  - in non-editor windows, e.g. the Settings UI
+  //   "key": "ctrl+w",
+  //   "command": "workbench.action.closeActiveEditor",
+  //   "when": "neovim.mode != 'insert' || !editorTextFocus"
+  // },
 
   // {
   //   "key": "ctrl+d",
@@ -277,24 +275,28 @@
   //   "when": "editorTextFocus"
   // },
 
-  {
-    "key": "ctrl+d",
-    "command": "vscode-neovim.send",
-    "args": "<C-d>",
-    "when": "editorTextFocus && neovim.mode == 'visual'"
-  },
+  // {
+  //   // VSCode Neovim. Sends the command to Neovim, to make it work as
+  //   // expected.
+  //   "key": "ctrl+d",
+  //   "command": "vscode-neovim.send",
+  //   "args": "<C-d>",
+  //   "when": "editorTextFocus && neovim.mode == 'visual'"
+  // },
 
-  {
-    "key": "ctrl+n",
-    "command": "editor.action.moveSelectionToNextFindMatch",
-    "when": "editorTextFocus && editorHasSelection && neovim.mode == 'insert'"
-  },
+  // {
+  //   // <C-n/p> to move to the next/previous find match.
+  //   "key": "ctrl+n",
+  //   "command": "editor.action.moveSelectionToNextFindMatch",
+  //   "when": "editorTextFocus && editorHasSelection && neovim.mode == 'insert'"
+  // },
 
-  {
-    "key": "ctrl+p",
-    "command": "editor.action.moveSelectionToPreviousFindMatch",
-    "when": "editorTextFocus && editorHasSelection && neovim.mode == 'insert'"
-  },
+  // {
+  //   // <C-n/p> to move to the next/previous find match.
+  //   "key": "ctrl+p",
+  //   "command": "editor.action.moveSelectionToPreviousFindMatch",
+  //   "when": "editorTextFocus && editorHasSelection && neovim.mode == 'insert'"
+  // },
 
   {
     // If the panel is active, but not maximized, maximize it.
@@ -433,15 +435,33 @@
     "key": "ctrl+s",
     "command": "runCommands",
     "args": {
-      "commands": ["workbench.action.files.save", "vscode-neovim.escape"]
+      "commands": ["workbench.action.files.save", "extension.vim_escape"]
     },
-    "when": "neovim.mode == 'insert'"
+    "when": "vim.mode == 'Insert'"
   },
+
+  // {
+  //   // VSCode Neovim.
+  //   "key": "ctrl+s",
+  //   "command": "runCommands",
+  //   "args": {
+  //     "commands": ["workbench.action.files.save", "vscode-neovim.escape"]
+  //   },
+  //   "when": "neovim.mode == 'insert'"
+  // },
 
   {
     // Default keybinding.
     "key": "ctrl+e",
     "command": "-workbench.action.quickOpen"
+  },
+
+  {
+    // Insert the next suggested word instead of the full suggestion.
+    "key": "ctrl+l",
+    "command": "editor.action.inlineSuggest.acceptNextWord",
+    "when": "editorTextFocus && inlineSuggestionVisible"
+    // "when": "editorTextFocus && vim.active && vim.mode != 'Normal'"
   },
 
   {
@@ -483,6 +503,10 @@
 
   {
     "key": "THE END! 👆🏽"
+  },
+  {
+    "key": "ctrl+q",
+    "command": "-workbench.action.quit"
   }
 
   //

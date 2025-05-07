@@ -322,9 +322,9 @@
 
   // #region editor. {{{
 
-  //============================================================================
-  //= Programming fonts and their settings
-  //============================================================================
+  //----------------------------------------------------------------------------
+  // Programming fonts and their settings
+  //----------------------------------------------------------------------------
 
   // // IBM Plex Mono
   // // -------------
@@ -461,17 +461,17 @@
 
   // // Monoid
   // // ------
-  "editor.fontFamily": "Monoid",
-  "editor.fontSize": 17,
-  "editor.fontWeight": "normal",
-  "editor.fontLigatures": "'calt' 1, 'liga' 0, 'ss01' 0, 'ss02' 0, 'ss03' 0, 'ss04' 0, 'ss05' 1, 'ss06' 0, 'ss07' 1, 'ss08' 1, 'ss09' 1, 'ss10' 0, 'ss11' 0, 'ss12' 0, 'ss13' 0, 'ss14' 0, 'ss15' 0",
-
-  // // Monaspace
-  // // ---------
-  // "editor.fontFamily": "Monaspace Neon Var",
-  // "editor.fontSize": 15,
+  // "editor.fontFamily": "Monoid",
+  // "editor.fontSize": 13,
   // "editor.fontWeight": "normal",
-  // "editor.fontLigatures": "'calt' 1, 'liga' 1, 'ss01' 1, 'ss02' 1, 'ss03' 1, 'ss04' 1, 'ss05' 1, 'ss06' 1, 'ss07' 1, 'ss08' 0, 'ss09' 1, 'ss10' 1, 'cv01' 3, 'cv02' 0, 'cv10' 1, 'cv11' 1, 'cv30' 0, 'cv31' 0, 'cv62' 0",
+  // "editor.fontLigatures": "'calt' 1, 'liga' 0, 'ss01' 0, 'ss02' 0, 'ss03' 0, 'ss04' 0, 'ss05' 1, 'ss06' 0, 'ss07' 1, 'ss08' 1, 'ss09' 1, 'ss10' 0, 'ss11' 0, 'ss12' 0, 'ss13' 0, 'ss14' 0, 'ss15' 0",
+
+  // Monaspace
+  // ---------
+  "editor.fontFamily": "Monaspace Xenon Var",
+  "editor.fontSize": 15,
+  "editor.fontWeight": "normal",
+  "editor.fontLigatures": "'calt' 1, 'liga' 1, 'ss01' 1, 'ss02' 1, 'ss03' 1, 'ss04' 1, 'ss05' 1, 'ss06' 1, 'ss07' 1, 'ss08' 0, 'ss09' 1, 'ss10' 1, 'cv01' 3, 'cv02' 0, 'cv10' 1, 'cv11' 1, 'cv30' 0, 'cv31' 0, 'cv62' 0",
 
   // ss01: ligatures related to the equals glyph like != and ===.
   // ss02: ligatures for greater/less or equal (<=, >=).
@@ -604,15 +604,19 @@
   "editor.showFoldingControls": "always",
   "editor.foldingHighlight": true,
 
-  //#region this
-
   "editor.minimap.sectionHeaderLetterSpacing": 0,
   "editor.minimap.size": "fit",
   "editor.minimap.markSectionHeaderRegex": "\\bMARK:\\s*(?<separator>-?)\\s*(?<label>.*)$",
   "editor.minimap.showMarkSectionHeaders": true,
   "editor.minimap.showRegionSectionHeaders": true,
 
-  "editor.inlineSuggest.fontFamily": "'Monaspace Krypton', monospace",
+  "editor.inlineSuggest.fontFamily": "'Monaspace Krypton Var', monospace",
+
+  // Performance related.
+  "extensions.experimental.affinity": {
+    "vscodevim.vim": 1
+    // "asvetliakov.vscode-neovim": 1
+  },
 
   // Next editor.
 
@@ -632,15 +636,10 @@
   //   "package.json": "package-lock.json, yarn.lock, pnpm-lock.yaml, bun.lockb, pnpm-workspace.yaml, deno.json, deno.lock"
   // },
 
+  // prettier-ignore
   "files.associations": {
-    "*.adoc": "asciidoc",
-    "*.css": "css",
-    "*.erb": "erb",
-    "*.liquid": "html",
-    "*.mdx": "markdown",
-    "*.svg": "html",
-    "*.svx": "markdown",
-    "*.vue": "vue",
+    "*.adoc": "asciidoc", "*.css": "css", "*.erb": "erb", "*.liquid": "html",
+    "*.mdx": "markdown", "*.svg": "html", "*.svx": "markdown", "*.vue": "vue",
     "json5": "jsonc",
 
     // Add above this line (avoid the comma problem).
@@ -795,9 +794,6 @@
     // "editor.fontWeight": "300"
     // "editor.fontLigatures": "'ss02', 'ss19', 'ss20', 'zero', 'cv03', 'cv04', 'cv16', 'cv19', 'cv20', 'cv99'"
   },
-  "extensions.experimental.affinity": {
-    "asvetliakov.vscode-neovim": 1
-  },
   "@azure.argTenant": "",
   "dev.containers.dockerPath": "podman",
   "geminicodeassist.enableTelemetry": false,
@@ -810,7 +806,10 @@
   // Detect remapped keys better (e.g. caps lock -> ctrl).
   "keyboard.dispatch": "keyCode",
 
-  //#region vscode-neovim {{{
+  //----------------------------------------------------------------------------
+  // #region VSCode Neovim. {{{
+  //----------------------------------------------------------------------------
+
   "vscode-neovim.compositeTimeout": 100,
   "vscode-neovim.compositeKeys": {
     "jf": {
@@ -847,39 +846,501 @@
     // }
   },
   "vscode-neovim.ctrlKeysForInsertMode": ["r", "u", "w"],
+  // prettier-ignore
   "vscode-neovim.ctrlKeysForNormalMode": [
     "a",
     // "b", -- I prefer half page (ctrl+u/d).
     // "c",
-    "d",
-    "e",
+    "d", "e",
     // "h",
-    "i",
-    "j",
-    "k",
-    "l",
-    "n",
-    "m",
-    "o",
-    "r",
-    "t",
-    "u",
-    "v",
-    "w",
-    "x",
-    "y",
-    "z",
+    "i", "j", "k", "l", "n", "m", "o", "r", "t", "u", "v", "w", "x", "y", "z",
     // "/", -- open terminal in a new tab. I don't want this.
-    "]",
-    "right",
-    "left",
-    "up",
-    "down",
-    "backspace",
-    "delete"
+    "]", "right", "left", "up", "down", "backspace", "delete"
   ],
 
   // #endregion vscode-neovim }}}
+  //----------------------------------------------------------------------------
+
+  //----------------------------------------------------------------------------
+  // #region VSCodeVim. {{{
+  //----------------------------------------------------------------------------
+
+  "vim.leader": ",",
+
+  "vim.easymotion": true,
+  "vim.sneak": false,
+  "vim.surround": true,
+
+  "vim.incsearch": true,
+  "vim.hlsearch": true,
+
+  "vim.useSystemClipboard": true,
+
+  // "vim.smartRelativeLine": true,
+  // "vim.foldfix": true,
+  // "vim.camelCaseMotion.enable": true,
+
+  // I mostly use automated formatters for my code, but I prefer comments.
+  "vim.textwidth": 80,
+
+  "vim.enableNeovim": true,
+  "vim.neovimUseConfigFile": false,
+  "vim.neovimConfigPath": "~/.config/nvim/vscode.lua",
+
+  // // When using `useCtrlKeys = false`, this is my preferred configuration.
+  // "vim.useCtrlKeys": false,
+  // "vim.handleKeys": {
+  //   "<C-[>": true,
+  //   "<C-]>": true,
+  //   "<C-d>": true,
+  //   "<C-i>": true,
+  //   "<C-o>": true,
+  //   "<C-r>": true,
+  //   "<C-u>": true,
+  //   "<C-v>": true,
+  //   "<C-w>": true
+  // },
+
+  // This is VERY, PAINFULLY, UNUSABLY slow in Ubuntu 20.04. It uses gdbus, as
+  // shown in the following link. I also got the scripts (get-im and set-im)
+  // from there:
+  //
+  //    https://github.com/daipeihust/im-select?tab=readme-ov-file#gdbus
+  //
+  // "vim.autoSwitchInputMethod.enable": true,
+  // "vim.autoSwitchInputMethod.defaultIM": "1",
+  // "vim.autoSwitchInputMethod.obtainIMCmd": "/home/marcelocra/bin/get-im",
+  // "vim.autoSwitchInputMethod.switchIMCmd": "/home/marcelocra/bin/set-im {im}",
+
+  "vim.insertModeKeyBindings": [
+    {
+      // Leave insert mode.
+      "before": ["j", "f"],
+      "after": ["<esc>"]
+    },
+    {
+      // Leave insert mode.
+      "before": ["f", "j"],
+      "after": ["<esc>"]
+    },
+    {
+      // Copy.
+      "before": ["<C-c>"],
+      "commands": ["editor.action.clipboardCopyAction"]
+    },
+    {
+      // Paste.
+      "before": ["<C-v>"],
+      "commands": ["editor.action.clipboardPasteAction"]
+    },
+    {
+      // Cut.
+      "before": ["<C-x>"],
+      "commands": ["editor.action.clipboardCutAction"]
+    },
+    {
+      // Select all.
+      "before": ["<C-a>"],
+      "commands": ["editor.action.selectAll"]
+    },
+    {
+      // Add next match to selection.
+      "before": ["<C-d>"],
+      "commands": ["editor.action.addSelectionToNextFindMatch"]
+    },
+    {
+      // Default VSCode search.
+      "before": ["<C-f>"],
+      "commands": ["actions.find"]
+    },
+    {
+      // Save and leave insert mode.
+      "before": ["<Leader>", "w"],
+      "commands": ["workbench.action.files.save"],
+      "after": ["<Esc>"]
+    },
+    {
+      // Save and leave insert mode.
+      "before": ["<Leader>", "s"],
+      "commands": ["workbench.action.files.save"],
+      "after": ["<Esc>"]
+    },
+    {
+      // Try to quit without saving.
+      "before": ["<Leader>", "q"],
+      "commands": ["workbench.action.closeActiveEditor"]
+    },
+    {
+      // Save and quit.
+      "before": ["<Leader>", "x"],
+      "commands": [
+        "workbench.action.files.save",
+        "workbench.action.closeActiveEditor"
+      ]
+    },
+    {
+      // Move using visual lines.
+      "before": ["<Up>"],
+      "commands": ["cursorUp"]
+    },
+    {
+      // Move using visual lines.
+      "before": ["<Down>"],
+      "commands": ["cursorDown"]
+    }
+  ],
+
+  "vim.normalModeKeyBindings": [
+    {
+      // Use `s` to trigger Easymotion's full search.
+      "before": ["s"],
+      "after": ["<Leader>", "<Leader>", "s"]
+    },
+    {
+      // Unimpaired: Insert a new line above the current line.
+      "before": ["[", "<Space>"],
+      "commands": ["editor.action.insertLineBefore", "cursorDown"]
+    },
+    {
+      // Unimpaired: Insert a new line below the current line.
+      "before": ["]", "<Space>"],
+      "commands": ["editor.action.insertLineAfter", "cursorUp"]
+    },
+    {
+      "before": ["<C-n>"],
+      "commands": [":nohl"]
+    },
+    {
+      "before": ["<C-l>"],
+      "after": ["<C-w>", "l"]
+    },
+    {
+      "before": ["<C-h>"],
+      "after": ["<C-w>", "h"]
+    },
+    {
+      "before": ["<C-j>"],
+      "after": ["<C-w>", "j"]
+    },
+    {
+      "before": ["<C-k>"],
+      "after": ["<C-w>", "k"]
+    }
+  ],
+
+  "vim.visualModeKeyBindings": [
+    {
+      // Add next match to selection.
+      "before": ["<C-d>"],
+      "commands": ["editor.action.addSelectionToNextFindMatch"]
+    },
+    {
+      // Move selection to next match.
+      "before": ["<C-n>"],
+      "commands": ["editor.action.moveSelectionToNextFindMatch"]
+    },
+    {
+      // Move selection to previous match.
+      "before": ["<C-p>"],
+      "commands": ["editor.action.moveSelectionToPreviousFindMatch"]
+    }
+  ],
+
+  "vim.operatorPendingModeKeyBindings": [
+    {
+      "before": ["L"],
+      "after": ["$"]
+    },
+    {
+      "before": ["H"],
+      "after": ["^"]
+    }
+  ],
+  // //vimnormal(
+  // "vim.normalModeKeyBindingsNonRecursive": [
+  //   {
+  //     "before": ["<space>"],
+  //     "after": ["@", "q"]
+  //   },
+  //   {
+  //     "before": ["u"],
+  //     "commands": ["undo"]
+  //   },
+  //   {
+  //     "before": ["<c-r>"],
+  //     "commands": ["redo"]
+  //   },
+  //   {
+  //     "before": ["<leader>", "a"],
+  //     "after": ["g", "g", "V", "G"]
+  //   },
+  //   // -- visual lines - Move using visual lines.
+  //   {
+  //     "before": ["j"],
+  //     "after": ["g", "j"]
+  //   },
+  //   {
+  //     "before": ["k"],
+  //     "after": ["g", "k"]
+  //   },
+  //   {
+  //     "before": ["0"],
+  //     "after": ["g", "0"]
+  //   },
+  //   {
+  //     "before": ["$"],
+  //     "after": ["g", "$"]
+  //   },
+  //   {
+  //     "before": ["<up>"],
+  //     "after": ["g", "<up>"]
+  //   },
+  //   {
+  //     "before": ["<down>"],
+  //     "after": ["g", "<down>"]
+  //   },
+  //   // -- visual lines - end
+  //   {
+  //     // Use `s` to trigger easymotion full search.
+  //     "before": ["s"],
+  //     "after": ["leader", "leader", "s"]
+  //   },
+  //   {
+  //     "before": ["<c-p>"],
+  //     "commands": ["workbench.action.quickOpen"]
+  //   },
+  //   {
+  //     "before": ["<c-shift-r>"],
+  //     "commands": ["jupyter.restartkernel"]
+  //   },
+
+  //   // --- calva keybindings - making them more conjure-ish
+  //   {
+  //     // evaluates current form
+  //     // default: ctrl+enter
+  //     "before": [" ", "e", "e"],
+  //     "commands": ["calva.evaluateSelection"]
+  //   },
+  //   {
+  //     // evaluates current top level form
+  //     // default: alt+enter
+  //     "before": [" ", "e", "r"],
+  //     "commands": ["calva.evaluateCurrentTopLevelForm"]
+  //   },
+  //   {
+  //     "before": [" ", "e", "c", "e"],
+  //     "commands": ["calva.evaluateSelectionAsComment"]
+  //   },
+  //   {
+  //     "before": [" ", "e", "c", "r"],
+  //     "commands": ["calva.evaluateTopLevelFormAsComment"]
+  //   },
+  //   {
+  //     "before": [" ", "e", "b"],
+  //     "commands": ["calva.loadFile"]
+  //   },
+  //   {
+  //     "before": ["<a-i>"],
+  //     "commands": ["editor.action.showHover"]
+  //   },
+  //   {
+  //     "before": ["K"],
+  //     "commands": ["calva.printClojureDocsToOutputWindow"]
+  //   },
+  //   {
+  //     "before": [" ", "d", "$"],
+  //     "commands": ["paredit.killListForward"]
+  //   },
+  //   {
+  //     "before": [" ", "d", "0"],
+  //     "commands": ["paredit.killListBackward"]
+  //   },
+  //   {
+  //     "before": [" ", "d", "w"],
+  //     "commands": ["paredit.spliceSexpKillForward"]
+  //   },
+  //   {
+  //     "before": [" ", "d", "b"],
+  //     "commands": ["paredit.spliceSexpKillBackward"]
+  //   },
+  //   // --- calva keybindings end
+  //   {
+  //     "before": ["|"],
+  //     "commands": ["workbench.action.splitEditor"]
+  //   },
+  //   {
+  //     "before": ["-"],
+  //     "commands": ["workbench.action.splitEditorDown"]
+  //   },
+  //   {
+  //     "before": ["g", "e"],
+  //     "commands": ["editor.action.marker.nextInFiles"]
+  //   },
+  //   {
+  //     "before": ["g", "E"],
+  //     "commands": ["editor.action.marker.prevInFiles"]
+  //   },
+  //   {
+  //     "before": ["<a-l>"],
+  //     "commands": ["cursorWordPartRight"]
+  //   },
+  //   // TODO: move this to the keybindings file. See Python example as reference.
+  //   // //#region Use Conjure-like keybindings for FSharp. {{{
+  //   // {
+  //   //   "before": [" ", "e", "e"],
+  //   //   "commands": ["fsi.SendLine", "extension.vim_up"]
+  //   // },
+  //   // {
+  //   //   "before": [" ", "e", "r"],
+  //   //   "commands": ["fsi.SendSelection"],
+  //   //   "after": ["v", "i", "p"]
+  //   // },
+  //   // {
+  //   //   "before": [" ", "e", "w"],
+  //   //   "commands": ["fsi.SendSelection", "extension.vim_escape"],
+  //   //   "after": ["v", "i", "w"]
+  //   // },
+  //   // {
+  //   //   "before": [" ", "e", "f"],
+  //   //   "commands": ["fsi.SendFile"]
+  //   // },
+  //   // {
+  //   //   "before": [" ", "e", "b"],
+  //   //   "commands": ["fsi.SendFile"]
+  //   // },
+  //   // //#endregion }}}
+  //   // {
+  //   //   "before": ["<c-h>"],
+  //   //   "commands": ["editor.action.startFindReplaceAction"]
+  //   // },
+  //   {
+  //     "before": ["Y"],
+  //     "after": ["y", "$"]
+  //   },
+  //   {
+  //     "before": [" ", "w", "s"],
+  //     "commands": ["workbench.action.quickTextSearch"]
+  //   }
+
+  //   // Next normal keybinding.
+  // ],
+  // //vimnormal)
+
+  // // -vimvisual
+  // "vim.visualModeKeyBindingsNonRecursive": [
+  //   // -- visual lines - Move using visual lines.
+  //   {
+  //     "before": ["j"],
+  //     "after": ["g", "j"]
+  //   },
+  //   {
+  //     "before": ["k"],
+  //     "after": ["g", "k"]
+  //   },
+  //   {
+  //     "before": ["0"],
+  //     "after": ["g", "0"]
+  //   },
+  //   {
+  //     "before": ["$"],
+  //     "after": ["g", "$"]
+  //   },
+  //   {
+  //     "before": ["<up>"],
+  //     "after": ["g", "<up>"]
+  //   },
+  //   {
+  //     "before": ["<down>"],
+  //     "after": ["g", "<down>"]
+  //   },
+  //   // -- visual lines - end
+  //   {
+  //     // Save and leave visual mode.
+  //     "before": ["<leader>", "s"],
+  //     "commands": [":w"],
+  //     "after": ["<esc>"]
+  //   },
+  //   {
+  //     "before": ["<leader>", "x"],
+  //     "commands": [":x"],
+  //     "after": ["<esc>"]
+  //   },
+  //   {
+  //     "before": ["<leader>", "q"],
+  //     "commands": [":q"],
+  //     "after": ["<esc>"]
+  //   },
+  //   {
+  //     // The next keybinding prevents `p` from replacing clipboard content. When that is desirable, use `gp` instead.
+  //     "before": ["g", "p"],
+  //     "after": ["p"]
+  //   },
+  //   {
+  //     // Paste without replacing clipboard. (Better than below?)
+  //     "before": ["p"],
+  //     "after": ["p", "g", "v", "y"]
+  //   },
+  //   // {
+  //   //   // Paste without replacing clipboard.
+  //   //   "before": ["p"],
+  //   //   "after": ["\"", "_", "d", "P"]
+  //   // },
+  //   {
+  //     // search for all occurences of the selected text
+  //     "before": ["/", "/"],
+  //     "after": ["y", "/", "<c-r>", "*", "<cr>"]
+  //   },
+  //   // {
+  //   //   "before": ["<c-v>"],
+  //   //   "after": ["p"]
+  //   // },
+  //   {
+  //     "before": [">"],
+  //     "commands": ["editor.action.indentLines"]
+  //   },
+  //   {
+  //     "before": ["<"],
+  //     "commands": ["editor.action.outdentLines"]
+  //   },
+  //   // {
+  //   //   "before": [" ", "E"],
+  //   //   "commands": ["calva.evaluateSelectionToSelectionEnd"]
+  //   // },
+  //   {
+  //     "before": ["<c-a>"],
+  //     "commands": ["editor.action.selectAll"]
+  //   },
+
+  //   {
+  //     // Use Conjure-like keybindings for FSharp.
+  //     "before": [" ", "E"],
+  //     "commands": ["fsi.SendSelection"]
+  //   },
+
+  //   {
+  //     // Use `s` to trigger easymotion full search.
+  //     "before": ["s"],
+  //     "after": ["leader", "leader", "s"]
+  //   }
+  // ],
+
+  // "vim.operatorPendingModeKeyBindingsNonRecursive": [
+  //   {
+  //     "before": ["("],
+  //     "after": ["i", "("]
+  //   },
+  //   {
+  //     "before": ["["],
+  //     "after": ["i", "["]
+  //   },
+  //   {
+  //     "before": ["{"],
+  //     "after": ["i", "{"]
+  //   }
+  // ],
+
+  // #endregion VSCodeVim. }}}
+  //----------------------------------------------------------------------------
 
   // #region workbench {{{
 
