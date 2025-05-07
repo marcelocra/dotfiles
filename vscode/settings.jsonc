@@ -468,10 +468,29 @@
 
   // Monaspace
   // ---------
-  "editor.fontFamily": "Monaspace Xenon Var",
+  // Docs: https://github.com/githubnext/monaspace#character-variants
+  "editor.fontFamily": "Monaspace Krypton Var",
   "editor.fontSize": 15,
   "editor.fontWeight": "normal",
   "editor.fontLigatures": "'calt' 1, 'liga' 1, 'ss01' 1, 'ss02' 1, 'ss03' 1, 'ss04' 1, 'ss05' 1, 'ss06' 1, 'ss07' 1, 'ss08' 0, 'ss09' 1, 'ss10' 1, 'cv01' 3, 'cv02' 0, 'cv10' 1, 'cv11' 1, 'cv30' 0, 'cv31' 0, 'cv62' 0",
+
+  // cv01-cv09: figure variants
+  //  - cv01: 0 alternates: 1: plain 2: slash 3: reverse slash 4: cut-out slash
+  //  - cv02: 1 alternate (no serif)
+  // cv10-cv29: letter variants
+  //  - cv10: l i alternates (Neon, Argon, Xenon, Radon)
+  //  - cv11: j f r t alternates (Neon, Argon)
+  // cv30-cv59: symbol variants
+  //  - cv30: * vertically aligned closer to the top of the space
+  //  - cv31: * 6-pointed asterisk
+  //  - cv32: ≥ ≤ angled lower line
+  // cv60-cv79: optional ligatures
+  //  - cv60: forces the <= pair to render in a fashion that matches => instead
+  //          of swapping for ≤.
+  //  - cv61: enables the optional closed square ligature for []. This can be
+  //          distracting
+  //  - cv62: @_ ligature
+  // cv80-cv99: reserved for future use
 
   // ss01: ligatures related to the equals glyph like != and ===.
   // ss02: ligatures for greater/less or equal (<=, >=).
@@ -610,12 +629,12 @@
   "editor.minimap.showMarkSectionHeaders": true,
   "editor.minimap.showRegionSectionHeaders": true,
 
-  "editor.inlineSuggest.fontFamily": "'Monaspace Krypton Var', monospace",
+  "editor.inlineSuggest.fontFamily": "'Monaspace Radon Var', monospace",
 
   // Performance related.
   "extensions.experimental.affinity": {
-    "vscodevim.vim": 1
-    // "asvetliakov.vscode-neovim": 1
+    // "vscodevim.vim": 1,
+    "asvetliakov.vscode-neovim": 1
   },
 
   // Next editor.
@@ -693,7 +712,7 @@
 
   // Choose the main font and add fallbacks.
   "terminal.integrated.fontFamily": "'JetBrainsMono Nerd Font', 'MesloLGS Nerd Font', 'Hack Nerd Font', 'RecMonoLinear Nerd Font', 'BlexMono Nerd Font', 'Cascadia Code NF', 'JetBrainsMono NF', 'JetBrains Mono Nerd Font', 'JetBrains Mono NF', 'MesloLGM Nerd Font Mono', 'JetBrains Mono', 'Noto Sans Mono', 'Liberation Mono', 'DejaVu Sans Mono', monospace",
-  "terminal.integrated.fontSize": 15,
+  "terminal.integrated.fontSize": 13,
   "terminal.integrated.fontWeight": "400",
   "terminal.integrated.fontLigatures.enabled": true,
   // // IBM Plex Mono features:
@@ -703,7 +722,7 @@
   "terminal.integrated.cursorStyleInactive": "outline",
 
   "debug.console.fontFamily": "'JetBrainsMono Nerd Font', 'Cascadia Code NF', 'JetBrainsMono NF', 'JetBrains Mono Nerd Font', 'JetBrains Mono NF', 'MesloLGM Nerd Font Mono', 'MesloLGS Nerd Font Mono', 'JetBrains Mono', 'Liberation Mono', 'DejaVu Sans Mono', monospace",
-  "debug.console.fontSize": 13,
+  "debug.console.fontSize": 11,
 
   // Good alternatives:
   //    "terminal.integrated.fontFamily": "Iosevka Fixed",
@@ -787,9 +806,10 @@
   "telemetry.telemetryLevel": "off",
 
   "[log][Log]": {
-    // "editor.fontSize": 15,
-    // "editor.fontWeight": "400"
-    // "editor.fontFamily": "JetBrains Mono",
+    "editor.fontSize": 13,
+    "editor.fontWeight": "400",
+    "editor.fontFamily": "Geist Mono"
+    // "editor.fontFamily": "JetBrains Mono"
     // "editor.fontSize": 11,
     // "editor.fontWeight": "300"
     // "editor.fontLigatures": "'ss02', 'ss19', 'ss20', 'zero', 'cv03', 'cv04', 'cv16', 'cv19', 'cv20', 'cv99'"
@@ -807,7 +827,7 @@
   "keyboard.dispatch": "keyCode",
 
   //----------------------------------------------------------------------------
-  // #region VSCode Neovim. {{{
+  // #region VSCodeNeovim. {{{
   //----------------------------------------------------------------------------
 
   "vscode-neovim.compositeTimeout": 100,
@@ -846,19 +866,39 @@
     // }
   },
   "vscode-neovim.ctrlKeysForInsertMode": ["r", "u", "w"],
-  // prettier-ignore
   "vscode-neovim.ctrlKeysForNormalMode": [
     "a",
     // "b", -- I prefer half page (ctrl+u/d).
     // "c",
-    "d", "e",
+    "d",
+    "e",
     // "h",
-    "i", "j", "k", "l", "n", "m", "o", "r", "t", "u", "v", "w", "x", "y", "z",
+    "i",
+    "j",
+    "k",
+    "l",
+    "n",
+    "m",
+    "o",
+    "r",
+    "t",
+    "u",
+    "v",
+    "w",
+    "x",
+    "y",
+    "z",
     // "/", -- open terminal in a new tab. I don't want this.
-    "]", "right", "left", "up", "down", "backspace", "delete"
+    "]",
+    "right",
+    "left",
+    "up",
+    "down",
+    "backspace",
+    "delete"
   ],
 
-  // #endregion VSCode Neovim. }}}
+  // #endregion VSCodeNeovim. }}}
   //----------------------------------------------------------------------------
 
   //----------------------------------------------------------------------------
@@ -886,14 +926,6 @@
   // This integration is not working for me and it seems like it is not being
   // maintained anymore: https://github.com/VSCodeVim/Vim/issues/1735
   "vim.enableNeovim": false,
-
-  "vim.useCtrlKeys": true,
-  "vim.handleKeys": {
-    "<C-c>": false,
-    "<C-v>": false,
-    "<C-x>": false,
-    "<C-f>": false
-  },
 
   // // When using `useCtrlKeys = false`, this is my preferred configuration.
   // "vim.useCtrlKeys": false,
@@ -931,21 +963,26 @@
       "before": ["f", "j"],
       "after": ["<esc>"]
     },
-    // {
-    //   // Copy.
-    //   "before": ["<C-c>"],
-    //   "commands": ["editor.action.clipboardCopyAction"]
-    // },
-    // {
-    //   // Paste.
-    //   "before": ["<C-v>"],
-    //   "commands": ["editor.action.clipboardPasteAction"]
-    // },
-    // {
-    //   // Cut.
-    //   "before": ["<C-x>"],
-    //   "commands": ["editor.action.clipboardCutAction"]
-    // },
+    {
+      // Copy.
+      "before": ["<C-c>"],
+      "commands": ["editor.action.clipboardCopyAction"]
+    },
+    {
+      // Paste.
+      "before": ["<C-v>"],
+      "commands": ["editor.action.clipboardPasteAction"]
+    },
+    {
+      // Cut.
+      "before": ["<C-x>"],
+      "commands": ["editor.action.clipboardCutAction"]
+    },
+    {
+      // Search (VSCode search).
+      "before": ["<C-f>"],
+      "commands": ["actions.find"]
+    },
     {
       // Select all.
       "before": ["<C-a>"],
@@ -956,11 +993,6 @@
       "before": ["<C-d>"],
       "commands": ["editor.action.addSelectionToNextFindMatch"]
     },
-    // {
-    //   // Default VSCode search.
-    //   "before": ["<C-f>"],
-    //   "commands": ["actions.find"]
-    // },
     {
       // Save and go to normal mode.
       "before": [",", "w"],
@@ -996,6 +1028,8 @@
       "before": ["<Down>"],
       "commands": ["cursorDown"]
     }
+
+    // Next insert keybinding above.
   ],
 
   "vim.normalModeKeyBindings": [
@@ -1191,11 +1225,6 @@
       "before": ["g", "E"],
       "commands": ["editor.action.marker.prevInFiles"]
     },
-
-    {
-      "before": ["<c-h>"],
-      "commands": ["editor.action.startFindReplaceAction"]
-    },
     {
       "before": ["Y"],
       "after": ["y", "$"]
@@ -1211,9 +1240,31 @@
     {
       "before": ["g", "w", "w"],
       "after": ["g", "q", "q"]
+    },
+
+    {
+      // Copy.
+      "before": ["<C-c>"],
+      "commands": ["editor.action.clipboardCopyAction"]
+    },
+    {
+      // Search (VSCode search).
+      "before": ["<C-f>"],
+      "commands": ["actions.find"]
+    },
+
+    {
+      // Go back.
+      "before": ["<C-o>"],
+      "commands": ["workbench.action.navigateBack"]
+    },
+    {
+      // Go forward.
+      "before": ["<C-i>"],
+      "commands": ["workbench.action.navigateForward"]
     }
 
-    // Next normal keybinding.
+    // Next normal keybinding above.
   ],
 
   "vim.visualModeKeyBindings": [

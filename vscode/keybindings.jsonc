@@ -1,6 +1,127 @@
 [
   {
-    "key": "PANEL SHORTCUT CONFIGURATION"
+    "key": "VSCODE NEOVIM CONFIGURATION"
+  },
+
+  {
+    "key": "alt+v",
+    "command": "vscode-neovim.stop",
+    "when": "neovim.init"
+  },
+
+  {
+    "key": "alt+v",
+    "command": "vscode-neovim.restart",
+    "when": "!neovim.init"
+  },
+
+  {
+    // VSCodeNeovim.
+    // Enable default ctrl+w behavior to close current active editor (tab):
+    //  - Neovim: in all modes, except Insert
+    //  - in non-editor windows, e.g. the Settings UI
+    "key": "ctrl+w",
+    "command": "workbench.action.closeActiveEditor",
+    "when": "neovim.mode != 'insert' || !editorTextFocus"
+  },
+
+  // {
+  //   "key": "ctrl+d",
+  //   "command": "runCommands",
+  //   "args": {
+  //     "commands": [
+  //       // "editor.action.addSelectionToNextFindMatch",
+  //       {
+  //         "command": "type", // Type the Esc key
+  //         "args": {
+  //           "text": "\u001bi"
+  //         }
+  //       },
+  //       // {
+  //       //   "command": "type",
+  //       //   "args": {
+  //       //     "text": "i"
+  //       //   }
+  //       // },
+
+  //       // {
+  //       //   "command": "vscode-neovim.send",
+  //       //   "args": ""
+  //       // },
+  //       "editor.action.addSelectionToNextFindMatch"
+  //     ]
+  //   },
+  //   "when": "editorTextFocus"
+  // },
+
+  {
+    // VSCodeNeovim.
+    // Sends <C-d> to Neovim, trying to make it work like <C-d> works in
+    // VSCode by default (whatever is selected in visual mode will initiate
+    // a multi-cursor selection).
+    // I'm not sure how to make it work consistently, but I ended up
+    // preferring not to use it anyway.
+    "key": "ctrl+d",
+    "command": "vscode-neovim.send",
+    "args": "<C-d>",
+    "when": "editorTextFocus && neovim.mode == 'visual'"
+  },
+
+  {
+    // VSCodeNeovim. <C-n/p> to move to the next/previous find match.
+    "key": "ctrl+n",
+    "command": "editor.action.moveSelectionToNextFindMatch",
+    "when": "editorTextFocus && editorHasSelection && neovim.mode == 'insert'"
+  },
+
+  {
+    // VSCodeNeovim. <C-n/p> to move to the next/previous find match.
+    "key": "ctrl+p",
+    "command": "editor.action.moveSelectionToPreviousFindMatch",
+    "when": "editorTextFocus && editorHasSelection && neovim.mode == 'insert'"
+  },
+
+  // {
+  //   // Better to do this in VSCode, as documented in vscode-neovim repo.
+  //   // Keeping this here because it might be useful for something else.
+  //   "key": "ctrl+d",
+  //   "command": "runCommands",
+  //   "args": {
+  //     "commands": [
+  //       {
+  //         "command": "type",
+  //         "args": {
+  //           "text": "A"
+  //         }
+  //       },
+  //       "editor.action.addSelectionToNextFindMatch"
+  //       // {
+  //       //   "command": "vscode-neovim.send",
+  //       //   "args": "i"
+  //       // },
+  //       // {
+  //       //   "command": "type", // Type the Esc key
+  //       //   "args": {
+  //       //     "text": "\u001b"
+  //       //   }
+  //       // }
+  //     ]
+  //   },
+  //   "when": "editorTextFocus && editorHasSelection && neovim.mode == 'visual'"
+  // },
+
+  {
+    // VSCodeNeovim.
+    "key": "ctrl+s",
+    "command": "runCommands",
+    "args": {
+      "commands": ["workbench.action.files.save", "vscode-neovim.escape"]
+    },
+    "when": "neovim.mode == 'insert'"
+  },
+
+  {
+    "key": "VSCODE NEOVIM END - PANEL SHORTCUT CONFIGURATION START"
   },
 
   {
@@ -25,21 +146,9 @@
     "when": "sideBarFocus && activeViewlet == 'workbench.view.extensions'"
   },
 
-  {
-    "key": "alt+v",
-    "command": "toggleVim"
-  },
-
   // {
   //   "key": "alt+v",
-  //   "command": "vscode-neovim.stop",
-  //   "when": "neovim.init"
-  // },
-
-  // {
-  //   "key": "alt+v",
-  //   "command": "vscode-neovim.restart",
-  //   "when": "!neovim.init"
+  //   "command": "toggleVim"
   // },
 
   {
@@ -118,23 +227,14 @@
     "command": "issue.copyGithubPermalink"
   },
 
-  {
-    "key": "alt+l",
-    "command": "workbench.action.quickOpenPreviousRecentlyUsedEditor",
-    "when": "!terminalFocus"
-  },
-
-  {
-    "key": "alt+shift+l",
-    "command": "workbench.action.nextEditor",
-    "when": "!panelFocus"
-  },
-
-  {
-    "key": "alt+shift+h",
-    "command": "workbench.action.previousEditor",
-    "when": "!panelFocus"
-  },
+  // NOTE: I'm trying to do this through the VSCode settings, also adding
+  // "alt+shift+l".
+  // {
+  //   // Open the previous recently used editor.
+  //   "key": "alt+l",
+  //   "command": "workbench.action.quickOpenPreviousRecentlyUsedEditor",
+  //   "when": "!terminalFocus"
+  // },
 
   {
     "key": "alt+k",
@@ -230,72 +330,14 @@
     "command": "workbench.action.gotoSymbol"
   },
 
-  {
-    // Override VSCode Vim's ctrl+f. Use ctrl+d and / inst
-    "key": "ctrl+f",
-    "command": "actions.find"
-  },
-
   // {
-  //   // VSCodeNeovim.
+  //   // VSCodeVim.
   //   // Enable default ctrl+w behavior to close current active editor (tab):
-  //   //  - Neovim: in all modes, except Insert
+  //   //  - nvim: in all modes, except Insert
   //   //  - in non-editor windows, e.g. the Settings UI
   //   "key": "ctrl+w",
   //   "command": "workbench.action.closeActiveEditor",
-  //   "when": "neovim.mode != 'insert' || !editorTextFocus"
-  // },
-
-  // {
-  //   "key": "ctrl+d",
-  //   "command": "runCommands",
-  //   "args": {
-  //     "commands": [
-  //       // "editor.action.addSelectionToNextFindMatch",
-  //       {
-  //         "command": "type", // Type the Esc key
-  //         "args": {
-  //           "text": "\u001bi"
-  //         }
-  //       },
-  //       // {
-  //       //   "command": "type",
-  //       //   "args": {
-  //       //     "text": "i"
-  //       //   }
-  //       // },
-
-  //       // {
-  //       //   "command": "vscode-neovim.send",
-  //       //   "args": ""
-  //       // },
-  //       "editor.action.addSelectionToNextFindMatch"
-  //     ]
-  //   },
-  //   "when": "editorTextFocus"
-  // },
-
-  // {
-  //   // VSCodeNeovim. Sends the command to Neovim, to make it work as
-  //   // expected.
-  //   "key": "ctrl+d",
-  //   "command": "vscode-neovim.send",
-  //   "args": "<C-d>",
-  //   "when": "editorTextFocus && neovim.mode == 'visual'"
-  // },
-
-  // {
-  //   // <C-n/p> to move to the next/previous find match.
-  //   "key": "ctrl+n",
-  //   "command": "editor.action.moveSelectionToNextFindMatch",
-  //   "when": "editorTextFocus && editorHasSelection && neovim.mode == 'insert'"
-  // },
-
-  // {
-  //   // <C-n/p> to move to the next/previous find match.
-  //   "key": "ctrl+p",
-  //   "command": "editor.action.moveSelectionToPreviousFindMatch",
-  //   "when": "editorTextFocus && editorHasSelection && neovim.mode == 'insert'"
+  //   "when": "vim.mode != 'Insert' || !editorTextFocus"
   // },
 
   {
@@ -313,40 +355,6 @@
   },
 
   {
-    "key": "ctrl+alt+space",
-    "command": "github.copilot.generate",
-    "when": "editorTextFocus"
-  },
-
-  // {
-  //   // Better to do this in VSCode, as documented in vscode-neovim repo.
-  //   "key": "ctrl+d",
-  //   "command": "runCommands",
-  //   "args": {
-  //     "commands": [
-  //       {
-  //         "command": "type",
-  //         "args": {
-  //           "text": "A"
-  //         }
-  //       },
-  //       "editor.action.addSelectionToNextFindMatch"
-  //       // {
-  //       //   "command": "vscode-neovim.send",
-  //       //   "args": "i"
-  //       // },
-  //       // {
-  //       //   "command": "type", // Type the Esc key
-  //       //   "args": {
-  //       //     "text": "\u001b"
-  //       //   }
-  //       // }
-  //     ]
-  //   },
-  //   "when": "editorTextFocus && editorHasSelection && neovim.mode == 'visual'"
-  // },
-
-  {
     // Toggle focus between panel and editor.
     "key": "alt+t",
     "command": "workbench.action.focusLastEditorGroup",
@@ -360,6 +368,8 @@
   },
 
   {
+    // Ctrl+p is very useful in the terminal, so we override the default and
+    // send the key sequence to the terminal.
     "key": "ctrl+p",
     "command": "workbench.action.terminal.sendSequence",
     "args": {
@@ -369,6 +379,7 @@
   },
 
   {
+    // Annoying default keybinding.
     "key": "ctrl+j",
     "command": "-workbench.action.togglePanel"
   },
@@ -432,6 +443,7 @@
   },
 
   {
+    // VSCodeVim.
     "key": "ctrl+s",
     "command": "runCommands",
     "args": {
@@ -440,18 +452,8 @@
     "when": "vim.mode == 'Insert'"
   },
 
-  // {
-  //   // VSCodeNeovim.
-  //   "key": "ctrl+s",
-  //   "command": "runCommands",
-  //   "args": {
-  //     "commands": ["workbench.action.files.save", "vscode-neovim.escape"]
-  //   },
-  //   "when": "neovim.mode == 'insert'"
-  // },
-
   {
-    // Default keybinding.
+    // Unnecessary default keybinding (ctrl+p is better).
     "key": "ctrl+e",
     "command": "-workbench.action.quickOpen"
   },
@@ -461,17 +463,17 @@
     "key": "ctrl+l",
     "command": "editor.action.inlineSuggest.acceptNextWord",
     "when": "editorTextFocus && inlineSuggestionVisible"
-    // "when": "editorTextFocus && vim.active && vim.mode != 'Normal'"
   },
 
   {
-    // VSCodeVim / VSCodeNeovim.
-    // Enable default ctrl+w behavior to close current active editor (tab):
-    //  - nvim: in all modes, except Insert
-    //  - in non-editor windows, e.g. the Settings UI
-    "key": "ctrl+w",
-    "command": "workbench.action.closeActiveEditor",
-    "when": "vim.mode != 'Insert' || !editorTextFocus"
+    "key": "ctrl+o",
+    "command": "workbench.action.navigateBack",
+    "when": "editorTextFocus"
+  },
+  {
+    "key": "ctrl+i",
+    "command": "workbench.action.navigateForward",
+    "when": "editorTextFocus"
   },
 
   {
@@ -512,11 +514,48 @@
   },
 
   {
-    "key": "THE END! 👆🏽"
-  },
-  {
+    // Sometimes I press it by mistake and it simply closes all of VSCode.
     "key": "ctrl+q",
     "command": "-workbench.action.quit"
+  },
+  {
+    // Sometimes I press it by mistake and it simply closes all of VSCode.
+    "key": "ctrl+shift+q",
+    "command": "-workbench.action.quit"
+  },
+  {
+    "key": "alt+h",
+    "command": "editor.action.startFindReplaceAction",
+    "when": "editorFocus || editorIsOpen"
+  },
+  {
+    "key": "ctrl+h",
+    "command": "-editor.action.startFindReplaceAction",
+    "when": "editorFocus || editorIsOpen"
+  },
+  {
+    "key": "alt+l",
+    "command": "workbench.action.quickOpenPreviousRecentlyUsedEditorInGroup",
+    "when": "!activeEditorGroupEmpty"
+  },
+  {
+    "key": "alt+l",
+    "command": "workbench.action.quickOpenNavigateNextInEditorPicker",
+    "when": "inEditorsPicker && inQuickOpen"
+  },
+  {
+    "key": "shift+alt+l",
+    "command": "workbench.action.quickOpenLeastRecentlyUsedEditorInGroup",
+    "when": "!activeEditorGroupEmpty"
+  },
+  {
+    "key": "shift+alt+l",
+    "command": "workbench.action.quickOpenNavigatePreviousInEditorPicker",
+    "when": "inEditorsPicker && inQuickOpen"
+  },
+
+  {
+    "key": "THE END! 👆🏽"
   }
 
   //
