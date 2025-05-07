@@ -24,13 +24,13 @@ return {
   { "tpope/vim-fugitive" },
 
   -- Improve mappings for default stuff.
-  { "tpope/vim-unimpaired" },
+  { "tpope/vim-unimpaired", vscode = true },
 
   -- Simplify handling "wrappings" (parens, [curly]braces, quotes, etc).
-  { "tpope/vim-surround" },
+  { "tpope/vim-surround", vscode = true },
 
   -- Improve repeat support (e.g. for surrounding stuff).
-  { "tpope/vim-repeat" },
+  { "tpope/vim-repeat", vscode = true },
 
   -- [note] Seems unnecessary with LazyVim.
   -- Simplify (un)commenting stuff out.
@@ -84,6 +84,7 @@ return {
 
   {
     "junegunn/vim-easy-align",
+    vscode = true,
 
     init = function()
       -- Default: vim.g.easy_align_ignore_groups = { "Comment",  "String" }
