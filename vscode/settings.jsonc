@@ -794,7 +794,6 @@
   "search.showLineNumbers": true,
   "search.smartCase": true,
 
-  // #region Misc {{{
   // Random one-off settings that doesn't make sense to put in a separate
   // category.
 
