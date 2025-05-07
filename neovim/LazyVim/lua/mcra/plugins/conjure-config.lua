@@ -58,7 +58,24 @@ return {
         ["sexp_swap_list_forward"] = "",
       }
     end,
+
+    -- TODO: Uncomment this once the integration is fixed.
+    -- -- Optional cmp-conjure integration
+    -- dependencies = { 'marcelocra/cmp-conjure' },
   },
+
+  -- TODO: Figure out how to use this with blink.
+  -- {
+  --   -- Integrates Conjure with cmp.
+  --   "marcelocra/cmp-conjure",
+  --   lazy = true,
+  --   config = function()
+  --     local cmp = require("cmp")
+  --     local config = cmp.get_config()
+  --     table.insert(config.sources, { name = "conjure" })
+  --     return cmp.setup(config)
+  --   end,
+  -- },
 
   {
     -- Better Lisp (s-exp) support.
