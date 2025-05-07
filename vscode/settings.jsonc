@@ -459,19 +459,26 @@
   //    (up to ss05), ss06: crossed '7', ss07: different '6' and  '9', ss08:
   //    more fish-like stuff (::<)
 
+  // // Monoid
+  // // ------
+  "editor.fontFamily": "Monoid",
+  "editor.fontSize": 17,
+  "editor.fontWeight": "normal",
+  "editor.fontLigatures": "'calt' 1, 'liga' 0, 'ss01' 0, 'ss02' 0, 'ss03' 0, 'ss04' 0, 'ss05' 1, 'ss06' 0, 'ss07' 1, 'ss08' 1, 'ss09' 1, 'ss10' 0, 'ss11' 0, 'ss12' 0, 'ss13' 0, 'ss14' 0, 'ss15' 0",
+
   // // Monaspace
   // // ---------
-  "editor.fontFamily": "Monaspace Neon",
-  "editor.fontSize": 15,
-  "editor.fontWeight": "normal",
-  "editor.fontLigatures": "'calt', 'cv01' 2, 'cv02' 0, 'cv10' 1, 'cv11' 0, 'cv30' 0, 'cv31' 1",
+  // "editor.fontFamily": "Monaspace Neon Var",
+  // "editor.fontSize": 15,
+  // "editor.fontWeight": "normal",
+  // "editor.fontLigatures": "'calt' 1, 'liga' 1, 'ss01' 1, 'ss02' 1, 'ss03' 1, 'ss04' 1, 'ss05' 1, 'ss06' 1, 'ss07' 1, 'ss08' 0, 'ss09' 1, 'ss10' 1, 'cv01' 3, 'cv02' 0, 'cv10' 1, 'cv11' 1, 'cv30' 0, 'cv31' 0, 'cv62' 0",
 
   // ss01: ligatures related to the equals glyph like != and ===.
   // ss02: ligatures for greater/less or equal (<=, >=).
   // ss03: ligatures related to arrows like -> and ~>.
   // ss04: ligatures related to markup, like </ and />.
   // ss05: ligatures related to the F# programming language, like |>.
-  // ss06: ligatures related to repeated uses of #, +, and &.
+  // ss06: ligatures related to repeated uses of ###, +++, and &&&.
   // ss07: ligatures related to colons like :: or =:=.
   // ss08: ligatures related to combinations of periods with other glyphs like ..= or .-.
   // ss09: ligatures related to combinations of the greater/less than and equals signs, like <=>,>>, and =<<.

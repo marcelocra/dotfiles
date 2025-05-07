@@ -17,7 +17,7 @@ local default_font_weight = 400
 --    'Iosevka Nerd Font', 'IosevkaTermSlab Nerd Font'.
 -- local which_iosevka = "IosevkaTermSlab Nerd Font"
 local which_iosevka = "Iosevka Nerd Font"
-local iosevka_size = default_font_size + 5
+local iosevka_size = default_font_size + 2
 
 -- Function to create a font configuration with defaults.
 local function create_font(font_family, opts)
@@ -269,6 +269,55 @@ local fonts = { -- <<(
 
   reddit_mono = create_font("Reddit Mono", {
     size = 13,
+  }),
+
+  monoid = create_font("Monoid", {
+    size = 10,
+  }),
+
+  sometype_mono = create_font("Sometype Mono"),
+
+  maple_mono = create_font("Maple Mono", {
+    -- size = 15,
+  }),
+
+  inconsolata = create_font("Inconsolata", {
+    size = 15,
+  }),
+
+  input_mono = create_font("Input Mono", {
+    size = 15,
+  }),
+
+  julia_mono = create_font("Julia Mono"),
+
+  intel_one_mono = create_font("Intel One Mono", {
+    -- size = 13,
+  }),
+
+  monaspace = create_font("Monaspace Neon", {
+    size = 13,
+    harfbuzz_features = {
+      "calt=1",
+      "liga=1",
+      "ss01=1",
+      "ss02=1",
+      "ss03=1",
+      "ss04=1",
+      "ss05=1",
+      "ss06=1",
+      "ss07=1",
+      "ss08=0",
+      "ss09=1",
+      "ss10=1",
+      "cv01=3",
+      "cv02=0",
+      "cv10=1",
+      "cv11=1",
+      "cv30=0",
+      "cv31=0",
+      "cv62=0",
+    },
   }),
 
   -- Next font.
@@ -594,18 +643,26 @@ local choose_random_font = function()
     -- fonts.fira,
     -- fonts.fira_crazy,
     -- fonts.hack,
-    fonts.iosevka,
-    fonts.iosevka_ss04_menlo,
-    fonts.iosevka_ss07_monaco,
-    fonts.iosevka_ss08_pragmata,
-    fonts.iosevka_ss13_lucida,
-    fonts.iosevka_ss14_jb,
+    -- fonts.iosevka,
+    -- fonts.iosevka_ss04_menlo,
+    -- fonts.iosevka_ss07_monaco,
+    -- fonts.iosevka_ss08_pragmata,
+    -- fonts.iosevka_ss13_lucida,
+    -- fonts.iosevka_ss14_jb,
     -- fonts.m_plus,
     -- fonts.meslo,
     -- fonts.red_hat_mono,
     -- fonts.reddit_mono,
     -- fonts.roboto,
     -- fonts.source_code_pro,
+    -- fonts.monoid,
+    -- fonts.sometype_mono,
+    -- fonts.maple_mono,
+    -- fonts.inconsolata,
+    -- fonts.input_mono,
+    -- fonts.julia_mono,
+    -- fonts.intel_one_mono,
+    fonts.monaspace,
 
     -- Next font above.
   }
