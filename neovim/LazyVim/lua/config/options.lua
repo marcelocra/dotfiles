@@ -1,7 +1,9 @@
--- INFO: Options are automatically loaded before lazy.nvim startup.
--- WARN: Default options that are always set:
---  https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/config/options.lua
+--
+-- Options are automatically loaded before lazy.nvim startup.
+-- Default options that are always set:
+-- https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/config/options.lua
 -- Add any additional options here.
+--
 
 -- NOTE: LazyVim has great defaults, which you can check in the link above. Most
 -- likely I didn't need to set many of the options below, but I do because they

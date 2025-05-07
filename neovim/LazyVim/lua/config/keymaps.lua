@@ -1,8 +1,9 @@
--- vim: foldmethod=marker foldlevel=1 foldenable
--------------------------------------------------------------------------------
--- Keymaps are automatically loaded on the VeryLazy event
--- Default keymaps that are always set: https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/config/keymaps.lua
--- Add any additional keymaps here
+--
+-- Keymaps are automatically loaded on the VeryLazy event.
+-- Default keymaps that are always set:
+-- https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/config/keymaps.lua
+-- Add any additional keymaps here.
+--
 
 -- LazyVim: Handle embedded terminal and commenting.
 do
@@ -64,7 +65,7 @@ do
   vim.keymap.set({ "n", "v" }, ",s", "<Cmd>w<CR>", { desc = "Save current buffer", silent = true })
   vim.keymap.set({ "i" }, ",s", "<Esc><Cmd>w<CR>", { desc = "Save current buffer and exit INSERT mode", silent = true })
 
-  vim.keymap.set({ "n", "i", "v" }, ",f", '<Cmd>echo expand("%:p:h")<CR>', { desc = "Print current file folder name" })
+  vim.keymap.set({ "n", "i", "v" }, ",,f", '<Cmd>echo expand("%:p")<CR>', { desc = "Print current file path." })
 
   -- TODO: Figure out why this doesn't select all in some files (e.g. output of
   -- fc-list).
@@ -112,7 +113,7 @@ do
 
   vim.keymap.set({ "n" }, "<C-n>", ":nohlsearch<CR>", { desc = "Clear search highlights", silent = true })
 
-  vim.keymap.set({ "n" }, "<Leader><Leader>", "@q", { desc = "Easily run the macro stored at 'q'" })
+  vim.keymap.set({ "n" }, "<Leader><Leader>q", "@q", { desc = "Easily run the macro stored at 'q'", silent = true })
 
   do
     local desc = "Go to previous buffer"
@@ -131,10 +132,10 @@ end
 
 do
   if vim.g.vscode then
-    print("Neovim-only code being ignored!")
+    print("Neovim-only config being ignored!")
     return
   end
-  print("In Neovim, not in VSCode")
+  print("In Neovim, not in VSCode. Activating Neovim-only config.")
 
   -- INFO: Don't work in VSCode.
   vim.keymap.set({ "i" }, "jf", "<Esc>", { desc = "Go to normal mode" })
@@ -306,6 +307,17 @@ do
   vim.keymap.set({ "v" }, "<C-CR>", "<LocalLeader>E", { silent = true, remap = true })
   vim.keymap.set({ "v" }, "<M-CR>", "<LocalLeader>e!", { silent = true, remap = true })
 
+  do
+    local desc = "Open explorer in root directory"
+    vim.keymap.set({ "n" }, "<M-b>", require("i").partial(Snacks.explorer, { cwd = LazyVim.root() }), { desc = desc })
+    vim.keymap.set({ "n" }, "<M-e>", require("i").partial(Snacks.explorer, { cwd = LazyVim.root() }), { desc = desc })
+  end
+
+  -- Exit terminal mode in the builtin terminal.
+  -- NOTE: This won't work in all terminal emulators/tmux/etc. Try your own mapping
+  -- or just use <C-\><C-n> to exit terminal mode.
+  vim.keymap.set("t", "<Esc><Esc>", "<C-\\><C-n>", { desc = "Exit terminal mode" })
+
   -- Next Neovim-only above.
 end
 
@@ -317,10 +329,10 @@ end
 
 do
   if not vim.g.vscode then
-    print("VSCode-only code being ignored!")
+    print("VSCode-only config being ignored!")
     return
   end
-  print("In VSCode, not in native Neovim")
+  print("In VSCode, not in native Neovim. Activating VSCode-only config.")
 
   local vscode = require("vscode")
   -- vscode.notify("Hello from Neovim keymaps config!")
