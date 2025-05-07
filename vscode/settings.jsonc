@@ -858,14 +858,14 @@
     "]", "right", "left", "up", "down", "backspace", "delete"
   ],
 
-  // #endregion vscode-neovim }}}
+  // #endregion VSCode Neovim. }}}
   //----------------------------------------------------------------------------
 
   //----------------------------------------------------------------------------
   // #region VSCodeVim. {{{
   //----------------------------------------------------------------------------
 
-  "vim.leader": ",",
+  "vim.leader": " ",
 
   "vim.easymotion": true,
   "vim.sneak": false,
@@ -875,10 +875,10 @@
   "vim.hlsearch": true,
 
   "vim.useSystemClipboard": true,
+  "vim.camelCaseMotion.enable": true,
 
   // "vim.smartRelativeLine": true,
   // "vim.foldfix": true,
-  // "vim.camelCaseMotion.enable": true,
 
   // I mostly use automated formatters for my code, but I prefer comments.
   "vim.textwidth": 80,
@@ -954,29 +954,29 @@
       "commands": ["actions.find"]
     },
     {
-      // Save and leave insert mode.
-      "before": ["<Leader>", "w"],
+      // Save and go to normal mode.
+      "before": [",", "w"],
       "commands": ["workbench.action.files.save"],
       "after": ["<Esc>"]
     },
     {
-      // Save and leave insert mode.
-      "before": ["<Leader>", "s"],
+      // Save and go to normal mode.
+      "before": [",", "s"],
       "commands": ["workbench.action.files.save"],
       "after": ["<Esc>"]
-    },
-    {
-      // Try to quit without saving.
-      "before": ["<Leader>", "q"],
-      "commands": ["workbench.action.closeActiveEditor"]
     },
     {
       // Save and quit.
-      "before": ["<Leader>", "x"],
+      "before": [",", "x"],
       "commands": [
         "workbench.action.files.save",
         "workbench.action.closeActiveEditor"
       ]
+    },
+    {
+      // Try to quit without saving.
+      "before": [",", "q"],
+      "commands": ["workbench.action.closeActiveEditor"]
     },
     {
       // Move using visual lines.
@@ -1025,7 +1025,187 @@
     {
       "before": ["<C-k>"],
       "after": ["<C-w>", "k"]
+    },
+    {
+      "before": ["<Leader>", "<Leader>", "q"],
+      "after": ["@", "q"]
+    },
+    {
+      "before": ["u"],
+      "commands": ["undo"]
+    },
+    {
+      "before": ["<C-r>"],
+      "commands": ["redo"]
+    },
+
+    // #region Move using visual lines. {{{
+    {
+      "before": ["j"],
+      "commands": ["cursorDown"]
+    },
+    {
+      "before": ["k"],
+      "commands": ["cursorUp"]
+    },
+    {
+      "before": ["0"],
+      "after": ["g", "0"]
+    },
+    {
+      "before": ["$"],
+      "after": ["g", "$"]
+    },
+    {
+      "before": ["<Up>"],
+      "commands": ["cursorUp"]
+    },
+    {
+      "before": ["<Down>"],
+      "commands": ["cursorDown"]
+    },
+    // #endregion Move using visual lines. }}}
+
+    {
+      "before": ["<C-p>"],
+      "commands": ["workbench.action.quickOpen"]
+    },
+
+    //
+    // #region Conjure-like keybindings. {{{
+    //
+    // TODO: Move these to the keybindings file? I tried something similar with
+    // Python there, use it as reference.
+    //
+    // #region Use Conjure-like keybindings for Calva/Clojure. {{{
+    // {
+    //   // evaluates current form
+    //   // default: ctrl+enter
+    //   "before": [" ", "e", "e"],
+    //   "commands": ["calva.evaluateSelection"]
+    // },
+    // {
+    //   // evaluates current top level form
+    //   // default: alt+enter
+    //   "before": [" ", "e", "r"],
+    //   "commands": ["calva.evaluateCurrentTopLevelForm"]
+    // },
+    // {
+    //   "before": [" ", "e", "c", "e"],
+    //   "commands": ["calva.evaluateSelectionAsComment"]
+    // },
+    // {
+    //   "before": [" ", "e", "c", "r"],
+    //   "commands": ["calva.evaluateTopLevelFormAsComment"]
+    // },
+    // {
+    //   "before": [" ", "e", "b"],
+    //   "commands": ["calva.loadFile"]
+    // },
+    // {
+    //   "before": ["<a-i>"],
+    //   "commands": ["editor.action.showHover"]
+    // },
+    // {
+    //   "before": ["K"],
+    //   "commands": ["calva.printClojureDocsToOutputWindow"]
+    // },
+    // {
+    //   "before": [" ", "d", "$"],
+    //   "commands": ["paredit.killListForward"]
+    // },
+    // {
+    //   "before": [" ", "d", "e"],
+    //   "commands": ["paredit.killListForward"]
+    // },
+    // {
+    //   "before": [" ", "d", "0"],
+    //   "commands": ["paredit.killListBackward"]
+    // },
+    // {
+    //   "before": [" ", "d", "b"],
+    //   "commands": ["paredit.killListBackward"]
+    // },
+    // {
+    //   "before": [" ", "s", "e"],
+    //   "commands": ["paredit.spliceSexpKillForward"]
+    // },
+    // {
+    //   "before": [" ", "s", "b"],
+    //   "commands": ["paredit.spliceSexpKillBackward"]
+    // }
+    //
+    // #endregion Making Calva keybindings more like Conjure ones. }}}
+
+    // #region Use Conjure-like keybindings for FSharp. {{{
+    //
+    // {
+    //   "before": [" ", "e", "e"],
+    //   "commands": ["fsi.SendLine", "extension.vim_up"]
+    // },
+    // {
+    //   "before": [" ", "e", "r"],
+    //   "commands": ["fsi.SendSelection"],
+    //   "after": ["v", "i", "p"]
+    // },
+    // {
+    //   "before": [" ", "e", "w"],
+    //   "commands": ["fsi.SendSelection", "extension.vim_escape"],
+    //   "after": ["v", "i", "w"]
+    // },
+    // {
+    //   "before": [" ", "e", "f"],
+    //   "commands": ["fsi.SendFile"]
+    // },
+    // {
+    //   "before": [" ", "e", "b"],
+    //   "commands": ["fsi.SendFile"]
+    // },
+    //
+    // #endregion Use Conjure-like keybindings for FSharp. }}}
+
+    // #endregion Conjure-like keybindings. }}}
+    //
+
+    {
+      "before": ["|"],
+      "commands": ["workbench.action.splitEditor"]
+    },
+    {
+      "before": ["-"],
+      "commands": ["workbench.action.splitEditorDown"]
+    },
+    {
+      "before": ["g", "e"],
+      "commands": ["editor.action.marker.nextInFiles"]
+    },
+    {
+      "before": ["g", "E"],
+      "commands": ["editor.action.marker.prevInFiles"]
+    },
+
+    {
+      "before": ["<c-h>"],
+      "commands": ["editor.action.startFindReplaceAction"]
+    },
+    {
+      "before": ["Y"],
+      "after": ["y", "$"]
+    },
+    {
+      "before": [" ", "w", "s"],
+      "commands": ["workbench.action.quickTextSearch"]
+    },
+    {
+      "before": ["g", "w"],
+      "after": ["g", "q"]
+    },
+    {
+      "before": ["g", "w", "w"],
+      "after": ["g", "q", "q"]
     }
+
+    // Next normal keybinding.
   ],
 
   "vim.visualModeKeyBindings": [
@@ -1043,6 +1223,104 @@
       // Move selection to previous match.
       "before": ["<C-p>"],
       "commands": ["editor.action.moveSelectionToPreviousFindMatch"]
+    },
+
+    // #region Move using visual lines. {{{
+    {
+      "before": ["j"],
+      "after": ["g", "j"]
+    },
+    {
+      "before": ["k"],
+      "after": ["g", "k"]
+    },
+    {
+      "before": ["0"],
+      "after": ["g", "0"]
+    },
+    {
+      "before": ["$"],
+      "after": ["g", "$"]
+    },
+    {
+      "before": ["<Up>"],
+      "after": ["g", "<Up>"]
+    },
+    {
+      "before": ["<Down>"],
+      "after": ["g", "<Down>"]
+    },
+    // #endregion Move using visual lines. }}}
+
+    {
+      // Save and exit normal mode.
+      "before": [",", "w"],
+      "commands": ["workbench.action.files.save"],
+      "after": ["<Esc>"]
+    },
+    {
+      // Save and exit normal mode.
+      "before": [",", "s"],
+      "commands": ["workbench.action.files.save"],
+      "after": ["<Esc>"]
+    },
+    // {
+    //   // Paste without replacing clipboard. Better than the one below? This
+    //   // one replaces the clipboard content twice, so when using a clipboard
+    //   // manager it can be useful.
+    //   "before": ["p"],
+    //   "after": ["p", "g", "v", "y"]
+    // }
+    {
+      // Paste without replacing clipboard content.
+      "before": ["p"],
+      "after": ["\"", "_", "d", "P"]
+    },
+    {
+      // Search for all occurences of the selected text.
+      // TODO: Figure out how to escape '/' here. Doesn't work if there's any.
+      "before": ["/", "/"],
+      "after": ["y", "/", "<C-r>", "*", "<CR>"]
+    },
+    {
+      "before": [">"],
+      "commands": ["editor.action.indentLines"]
+    },
+    {
+      "before": ["<"],
+      "commands": ["editor.action.outdentLines"]
+    },
+
+    // {
+    //   // Use Conjure-like keybindings for Calva/Clojure.
+    //   "before": [" ", "E"],
+    //   "commands": ["calva.evaluateSelectionToSelectionEnd"]
+    // },
+    //   {
+    //     // Use Conjure-like keybindings for FSharp.
+    //     "before": [" ", "E"],
+    //     "commands": ["fsi.SendSelection"]
+    //   },
+
+    {
+      "before": ["<c-a>"],
+      "commands": ["editor.action.selectAll"]
+    },
+    {
+      // Use `s` to trigger easymotion full search.
+      "before": ["s"],
+      "after": ["leader", "leader", "s"]
+    }
+  ],
+
+  "vim.visualModeKeyBindingsNonRecursive": [
+    {
+      // I have a keybinding that makes 'p' paste over a selection without
+      // loosing clipboard content. If the selection content is desirable, this
+      // keybinding can be used instead, and it will copy the selection over the
+      // clipboard. to avoid loosing clipboard content.
+      "before": ["g", "p"],
+      "after": ["p"]
     }
   ],
 
@@ -1056,288 +1334,21 @@
       "after": ["^"]
     }
   ],
-  // //vimnormal(
-  // "vim.normalModeKeyBindingsNonRecursive": [
-  //   {
-  //     "before": ["<space>"],
-  //     "after": ["@", "q"]
-  //   },
-  //   {
-  //     "before": ["u"],
-  //     "commands": ["undo"]
-  //   },
-  //   {
-  //     "before": ["<c-r>"],
-  //     "commands": ["redo"]
-  //   },
-  //   {
-  //     "before": ["<leader>", "a"],
-  //     "after": ["g", "g", "V", "G"]
-  //   },
-  //   // -- visual lines - Move using visual lines.
-  //   {
-  //     "before": ["j"],
-  //     "after": ["g", "j"]
-  //   },
-  //   {
-  //     "before": ["k"],
-  //     "after": ["g", "k"]
-  //   },
-  //   {
-  //     "before": ["0"],
-  //     "after": ["g", "0"]
-  //   },
-  //   {
-  //     "before": ["$"],
-  //     "after": ["g", "$"]
-  //   },
-  //   {
-  //     "before": ["<up>"],
-  //     "after": ["g", "<up>"]
-  //   },
-  //   {
-  //     "before": ["<down>"],
-  //     "after": ["g", "<down>"]
-  //   },
-  //   // -- visual lines - end
-  //   {
-  //     // Use `s` to trigger easymotion full search.
-  //     "before": ["s"],
-  //     "after": ["leader", "leader", "s"]
-  //   },
-  //   {
-  //     "before": ["<c-p>"],
-  //     "commands": ["workbench.action.quickOpen"]
-  //   },
-  //   {
-  //     "before": ["<c-shift-r>"],
-  //     "commands": ["jupyter.restartkernel"]
-  //   },
 
-  //   // --- calva keybindings - making them more conjure-ish
-  //   {
-  //     // evaluates current form
-  //     // default: ctrl+enter
-  //     "before": [" ", "e", "e"],
-  //     "commands": ["calva.evaluateSelection"]
-  //   },
-  //   {
-  //     // evaluates current top level form
-  //     // default: alt+enter
-  //     "before": [" ", "e", "r"],
-  //     "commands": ["calva.evaluateCurrentTopLevelForm"]
-  //   },
-  //   {
-  //     "before": [" ", "e", "c", "e"],
-  //     "commands": ["calva.evaluateSelectionAsComment"]
-  //   },
-  //   {
-  //     "before": [" ", "e", "c", "r"],
-  //     "commands": ["calva.evaluateTopLevelFormAsComment"]
-  //   },
-  //   {
-  //     "before": [" ", "e", "b"],
-  //     "commands": ["calva.loadFile"]
-  //   },
-  //   {
-  //     "before": ["<a-i>"],
-  //     "commands": ["editor.action.showHover"]
-  //   },
-  //   {
-  //     "before": ["K"],
-  //     "commands": ["calva.printClojureDocsToOutputWindow"]
-  //   },
-  //   {
-  //     "before": [" ", "d", "$"],
-  //     "commands": ["paredit.killListForward"]
-  //   },
-  //   {
-  //     "before": [" ", "d", "0"],
-  //     "commands": ["paredit.killListBackward"]
-  //   },
-  //   {
-  //     "before": [" ", "d", "w"],
-  //     "commands": ["paredit.spliceSexpKillForward"]
-  //   },
-  //   {
-  //     "before": [" ", "d", "b"],
-  //     "commands": ["paredit.spliceSexpKillBackward"]
-  //   },
-  //   // --- calva keybindings end
-  //   {
-  //     "before": ["|"],
-  //     "commands": ["workbench.action.splitEditor"]
-  //   },
-  //   {
-  //     "before": ["-"],
-  //     "commands": ["workbench.action.splitEditorDown"]
-  //   },
-  //   {
-  //     "before": ["g", "e"],
-  //     "commands": ["editor.action.marker.nextInFiles"]
-  //   },
-  //   {
-  //     "before": ["g", "E"],
-  //     "commands": ["editor.action.marker.prevInFiles"]
-  //   },
-  //   {
-  //     "before": ["<a-l>"],
-  //     "commands": ["cursorWordPartRight"]
-  //   },
-  //   // TODO: move this to the keybindings file. See Python example as reference.
-  //   // //#region Use Conjure-like keybindings for FSharp. {{{
-  //   // {
-  //   //   "before": [" ", "e", "e"],
-  //   //   "commands": ["fsi.SendLine", "extension.vim_up"]
-  //   // },
-  //   // {
-  //   //   "before": [" ", "e", "r"],
-  //   //   "commands": ["fsi.SendSelection"],
-  //   //   "after": ["v", "i", "p"]
-  //   // },
-  //   // {
-  //   //   "before": [" ", "e", "w"],
-  //   //   "commands": ["fsi.SendSelection", "extension.vim_escape"],
-  //   //   "after": ["v", "i", "w"]
-  //   // },
-  //   // {
-  //   //   "before": [" ", "e", "f"],
-  //   //   "commands": ["fsi.SendFile"]
-  //   // },
-  //   // {
-  //   //   "before": [" ", "e", "b"],
-  //   //   "commands": ["fsi.SendFile"]
-  //   // },
-  //   // //#endregion }}}
-  //   // {
-  //   //   "before": ["<c-h>"],
-  //   //   "commands": ["editor.action.startFindReplaceAction"]
-  //   // },
-  //   {
-  //     "before": ["Y"],
-  //     "after": ["y", "$"]
-  //   },
-  //   {
-  //     "before": [" ", "w", "s"],
-  //     "commands": ["workbench.action.quickTextSearch"]
-  //   }
-
-  //   // Next normal keybinding.
-  // ],
-  // //vimnormal)
-
-  // // -vimvisual
-  // "vim.visualModeKeyBindingsNonRecursive": [
-  //   // -- visual lines - Move using visual lines.
-  //   {
-  //     "before": ["j"],
-  //     "after": ["g", "j"]
-  //   },
-  //   {
-  //     "before": ["k"],
-  //     "after": ["g", "k"]
-  //   },
-  //   {
-  //     "before": ["0"],
-  //     "after": ["g", "0"]
-  //   },
-  //   {
-  //     "before": ["$"],
-  //     "after": ["g", "$"]
-  //   },
-  //   {
-  //     "before": ["<up>"],
-  //     "after": ["g", "<up>"]
-  //   },
-  //   {
-  //     "before": ["<down>"],
-  //     "after": ["g", "<down>"]
-  //   },
-  //   // -- visual lines - end
-  //   {
-  //     // Save and leave visual mode.
-  //     "before": ["<leader>", "s"],
-  //     "commands": [":w"],
-  //     "after": ["<esc>"]
-  //   },
-  //   {
-  //     "before": ["<leader>", "x"],
-  //     "commands": [":x"],
-  //     "after": ["<esc>"]
-  //   },
-  //   {
-  //     "before": ["<leader>", "q"],
-  //     "commands": [":q"],
-  //     "after": ["<esc>"]
-  //   },
-  //   {
-  //     // The next keybinding prevents `p` from replacing clipboard content. When that is desirable, use `gp` instead.
-  //     "before": ["g", "p"],
-  //     "after": ["p"]
-  //   },
-  //   {
-  //     // Paste without replacing clipboard. (Better than below?)
-  //     "before": ["p"],
-  //     "after": ["p", "g", "v", "y"]
-  //   },
-  //   // {
-  //   //   // Paste without replacing clipboard.
-  //   //   "before": ["p"],
-  //   //   "after": ["\"", "_", "d", "P"]
-  //   // },
-  //   {
-  //     // search for all occurences of the selected text
-  //     "before": ["/", "/"],
-  //     "after": ["y", "/", "<c-r>", "*", "<cr>"]
-  //   },
-  //   // {
-  //   //   "before": ["<c-v>"],
-  //   //   "after": ["p"]
-  //   // },
-  //   {
-  //     "before": [">"],
-  //     "commands": ["editor.action.indentLines"]
-  //   },
-  //   {
-  //     "before": ["<"],
-  //     "commands": ["editor.action.outdentLines"]
-  //   },
-  //   // {
-  //   //   "before": [" ", "E"],
-  //   //   "commands": ["calva.evaluateSelectionToSelectionEnd"]
-  //   // },
-  //   {
-  //     "before": ["<c-a>"],
-  //     "commands": ["editor.action.selectAll"]
-  //   },
-
-  //   {
-  //     // Use Conjure-like keybindings for FSharp.
-  //     "before": [" ", "E"],
-  //     "commands": ["fsi.SendSelection"]
-  //   },
-
-  //   {
-  //     // Use `s` to trigger easymotion full search.
-  //     "before": ["s"],
-  //     "after": ["leader", "leader", "s"]
-  //   }
-  // ],
-
-  // "vim.operatorPendingModeKeyBindingsNonRecursive": [
-  //   {
-  //     "before": ["("],
-  //     "after": ["i", "("]
-  //   },
-  //   {
-  //     "before": ["["],
-  //     "after": ["i", "["]
-  //   },
-  //   {
-  //     "before": ["{"],
-  //     "after": ["i", "{"]
-  //   }
-  // ],
+  "vim.operatorPendingModeKeyBindingsNonRecursive": [
+    {
+      "before": ["("],
+      "after": ["a", "("]
+    },
+    {
+      "before": ["["],
+      "after": ["a", "["]
+    },
+    {
+      "before": ["{"],
+      "after": ["a", "{"]
+    }
+  ],
 
   // #endregion VSCodeVim. }}}
   //----------------------------------------------------------------------------
