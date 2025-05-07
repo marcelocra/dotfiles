@@ -7,6 +7,11 @@
 -- Or remove existing autocmds by their group name (which is prefixed with `lazyvim_` for the defaults)
 -- e.g. vim.api.nvim_del_augroup_by_name("lazyvim_wrap_spell")
 
+-- INFO: In VSCode, load the correct file (if any) and ignore this one.
+if vim.g.vscode then
+  return
+end
+
 -- Simplify the creation of autocommand groups.
 local group = function(name)
   return vim.api.nvim_create_augroup("my-autocmds-" .. name, { clear = true })
