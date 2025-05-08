@@ -122,6 +122,11 @@ do
   vim.keymap.set({ "n" }, "<M-d>", toggle, { desc = "Set colorscheme to vim.g.colorscheme_mode_light" })
 end
 
+-- vim.keymap.set({ "n", "v" }, "j", "gj", { desc = "Move down by visual line", silent = true })
+-- vim.keymap.set({ "n", "v" }, "k", "gk", { desc = "Move up by visual line", silent = true })
+-- vim.keymap.set({ "n", "v" }, "$", "g$", { desc = "Move to the end of the line", silent = true })
+-- vim.keymap.set({ "n", "v" }, "0", "g0", { desc = "Move to the beginning of the line", silent = true })
+
 vim.keymap.set({ "n" }, "<Leader>d", "<Leader>xx", { desc = "Toggle the diagnostics window", remap = true })
 
 vim.keymap.set({ "n" }, "<Leader>mt", function()

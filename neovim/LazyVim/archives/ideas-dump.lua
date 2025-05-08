@@ -7,3 +7,8 @@ local check_opts = function(opts)
   opts = opts or {}
   return opts
 end
+
+--- Dump all keymaps to a file.
+-- :redir! > vim_keys.txt
+-- :silent verbose map
+-- :redir END

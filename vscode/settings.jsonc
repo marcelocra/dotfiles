@@ -333,7 +333,7 @@
 
   // // CodeNewRoman
   // // ------------
-  // "editor.fontFamily": "CodeNewRoman Nerd Font",
+  "editor.fontFamily": "CodeNewRoman Nerd Font Mono",
 
   // // Cascadia Code
   // // -------------
@@ -395,7 +395,7 @@
 
   // // Recursive Mono
   // // --------------
-  // "editor.fontFamily": "Rec Mono Duotone",
+  // "editor.fontFamily": "Recursive",
   // Some customizations that I like (details below).
   // "editor.fontLigatures": "true",
   // "editor.fontLigatures": "'ss01', 'ss02', 'ss03', 'ss04', 'ss05', 'ss06', 'ss07', 'ss11', 'ss12', 'case', 'frac' 0",
@@ -469,10 +469,10 @@
   // Monaspace
   // ---------
   // Docs: https://github.com/githubnext/monaspace#character-variants
-  "editor.fontFamily": "Monaspace Krypton Var",
-  "editor.fontSize": 15,
-  "editor.fontWeight": "normal",
-  "editor.fontLigatures": "'calt' 1, 'liga' 1, 'ss01' 1, 'ss02' 1, 'ss03' 1, 'ss04' 1, 'ss05' 1, 'ss06' 1, 'ss07' 1, 'ss08' 0, 'ss09' 1, 'ss10' 1, 'cv01' 3, 'cv02' 0, 'cv10' 1, 'cv11' 1, 'cv30' 0, 'cv31' 0, 'cv62' 0",
+  // "editor.fontFamily": "Monaspace Neon Var",
+  // "editor.fontSize": 15,
+  // "editor.fontWeight": "400",
+  // "editor.fontLigatures": "'calt' 1, 'liga' 0, 'ss01' 0, 'ss02' 0, 'ss03' 1, 'ss04' 0, 'ss05' 0, 'ss06' 0, 'ss07' 0, 'ss08' 0, 'ss09' 0, 'ss10' 0, 'cv01' 3, 'cv02' 0, 'cv10' 1, 'cv11' 0, 'cv30' 0, 'cv31' 0, 'cv62' 0",
 
   // cv01-cv09: figure variants
   //  - cv01: 0 alternates: 1: plain 2: slash 3: reverse slash 4: cut-out slash
@@ -505,8 +505,8 @@
 
   // // Random
   // // ------
-  // "editor.fontFamily": "'Monaspace Neon', 'IosevkaTermSlab Nerd Font', 'Iosevka Nerd Font', 'CodeNewRoman Nerd Font Mono', 'Reddit Mono', 'MesloLGS Nerd Font', 'M Plus 1 Code', 'RecMonoLinear Nerd Font', 'RecMonoDuotone Nerd Font', 'Hack Nerd Font', 'Geist Mono', Iosevka, monospace",
-  // "editor.fontSize": 15,
+  // "editor.fontFamily": "'Maple Mono', 'Monaspace Neon', 'IosevkaTermSlab Nerd Font', 'Iosevka Nerd Font', 'CodeNewRoman Nerd Font Mono', 'Reddit Mono', 'MesloLGS Nerd Font', 'M Plus 1 Code', 'RecMonoLinear Nerd Font', 'RecMonoDuotone Nerd Font', 'Hack Nerd Font', 'Geist Mono', Iosevka, monospace",
+  // "editor.fontSize": 17,
   // "editor.fontWeight": "normal",
   // "editor.fontLigatures": "",
 
@@ -629,7 +629,7 @@
   "editor.minimap.showMarkSectionHeaders": true,
   "editor.minimap.showRegionSectionHeaders": true,
 
-  "editor.inlineSuggest.fontFamily": "'Monaspace Radon Var', monospace",
+  "editor.inlineSuggest.fontFamily": "'CodeNewRoman Nerd Font', monospace",
 
   // Performance related.
   "extensions.experimental.affinity": {
@@ -805,7 +805,7 @@
   "telemetry.telemetryLevel": "off",
 
   "[log][Log]": {
-    "editor.fontSize": 13,
+    "editor.fontSize": 11,
     "editor.fontWeight": "400",
     "editor.fontFamily": "Geist Mono"
     // "editor.fontFamily": "JetBrains Mono"
@@ -1597,7 +1597,7 @@
   // Keep the color theme last, as I'm always changing it and this way we won't
   // have a problem with the comma.
 
-  "workbench.colorTheme": "Night Owl Light"
+  "workbench.colorTheme": "Monokai"
 
   // #endregion workbench. }}}
 }
