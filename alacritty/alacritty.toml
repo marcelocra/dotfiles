@@ -17,7 +17,7 @@ import = [
   # ------------
   # Best:
   # "~/.config/alacritty/alacritty-theme/themes/catppuccin_latte.toml",
-  "~/.config/alacritty/alacritty-theme/themes/solarized_light.toml",
+  # "~/.config/alacritty/alacritty-theme/themes/solarized_light.toml",
 
   # Good:
   # "~/.config/alacritty/alacritty-theme/themes/dawnfox.toml",
@@ -38,7 +38,7 @@ import = [
   # "~/.config/alacritty/alacritty-theme/themes/catppuccin_frappe.toml",
   # "~/.config/alacritty/alacritty-theme/themes/catppuccin_mocha.toml",
   # "~/.config/alacritty/alacritty-theme/themes/catppuccin_macchiato.toml",
-  # "~/.config/alacritty/alacritty-theme/themes/monokai.toml",
+  "~/.config/alacritty/alacritty-theme/themes/monokai.toml",
   # "~/.config/alacritty/alacritty-theme/themes/monokai_charcoal.toml",
   #-----------------------------------------------------------------------------
 ]
@@ -57,12 +57,18 @@ glyph_offset = { x = 0, y = 0 }
 
 builtin_box_drawing = true
 #-------------------------------------------------------------------------------
-size = 13.0 # {{{
+# {{{
+#
+size = 11.0
+
 [font.normal]
+
 style = "Regular"
 # Organized by height. This is not very precise, as some fonts have the same
 # height in some sizes but not in others.
+
 # --- Smaller ---
+
 # family = "CodeNewRoman Nerd Font" # 9+
 # family = "Iosevka Nerd Font" # min: 10, good: 12
 # family = "IosevkaTermSlab Nerd Font" # min: 10, good: 11
@@ -71,26 +77,39 @@ style = "Regular"
 # family = "RecMonoDuotone Nerd Font"
 # family = "M PLUS 1 Code"
 # family = "AdwaitaMono Nerd Font" # Iosevka with Inter.
-# family = "AtkynsonMono NF" # From the Braille Institute. Good: 9+
+family = "AtkynsonMono NF" # From the Braille Institute. Good: 9+
+
 # --- Small ---
+
 # family = "SourceCodeVF"
 # family = "MesloLGS Nerd Font"
-# family = "JetBrainsMono Nerd Font Propo"
+# family = "JetBrainsMono Nerd Font"
 # family = "JetBrains Mono"
 # family = "BlexMono Nerd Font" # Lighter.
 # family = "Reddit Mono"
+
 # --- Medium ---
+
 # family = "MesloLGM Nerd Font"
 # family = "Noto Sans Mono"
 # family = "Red Hat Mono"
 # family = "Monoid Nerd Font Propo" # Good: 9.
 # family = "Monoid Tight" # Good: 9.
+
 # --- Large ---
+
 # family = "MesloLGL Nerd Font"
-# --- New and unchecked below ---
-family = "Input Mono"
+
+# --- New and unchecked ---
+
+# family = "Input Mono"
 # family = "JuliaMono"
 # family = "Unifont"
+# family = 'Maple Mono'
+# family = 'Cascadia Code NF'
+# family = 'Monaspace Argon Var'
+
+# Next font above.
 
 # [font.bold]
 # style = "Bold"
@@ -100,6 +119,7 @@ family = "Input Mono"
 
 # [font.bold_italic]
 # style = "Bold Italic"
+#
 # }}}
 #-------------------------------------------------------------------------------
 # Monaspace Font
@@ -107,8 +127,10 @@ family = "Input Mono"
 # This is a very interesting font, with many variations that I wanted to
 # configure separately.
 #-------------------------------------------------------------------------------
-# size = 10.0 # {{{
-
+# {{{
+#
+# size = 10.0
+#
 # [font.normal]
 # style = "SemiWide Regular"
 # family = "Monaspace Neon"
@@ -117,34 +139,34 @@ family = "Input Mono"
 # # family = "Monaspace Neon"
 # # family = "Monaspace Radon"
 # # family = "Monaspace Xenon"
-
-# # [font.bold]
-# # style = "ExtraBold"
-# # family = "Monaspace Neon"
-
-# # [font.italic]
-# # style = "Medium"
-# # family = "Monaspace Radon"
-# # # family = "Blex Mono Nerd Font"
-# # # family = "SourceCodeVF"
-# # # family = "Iosevka Nerd Font"
-
-# # [font.bold_italic]
-# # style = "ExtraBold"
-# # family = "Monaspace Radon"
-# # # family = "Blex Mono Nerd Font"
-# # # family = "SourceCodeVF"
-# # # family = "Iosevka Nerd Font"
-
-# # }}}
+#
+# [font.bold]
+# style = "SemiWide Bold"
+# family = "Monaspace Neon"
+#
+# [font.italic]
+# style = "SemiWide Medium Italic"
+# family = "Monaspace Krypton"
+# # family = "Blex Mono Nerd Font"
+# # family = "SourceCodeVF"
+# # family = "Iosevka Nerd Font"
+#
+# [font.bold_italic]
+# style = "SemiWide Bold Italic"
+# family = "Monaspace Krypton"
+# # family = "Blex Mono Nerd Font"
+# # family = "SourceCodeVF"
+# # family = "Iosevka Nerd Font"
+#
+# }}}
 #===============================================================================
 [window]
 #===============================================================================
 position = { x = 1303, y = 0 }
-# decorations = "None"
-opacity = 0.95             # 0.93 is another good value to try.
+decorations = "None"
+opacity = 0.95                 # 0.93 is another good value to try.
 blur = true
-padding = { x = 4, y = 1 } # Good value.
+padding = { x = 4, y = 1 }     # Good value.
 # padding = { x = 150, y = 130 }
 # padding = { x = 20, y = 9 }
 # padding = { x = 400, y = 1 }
