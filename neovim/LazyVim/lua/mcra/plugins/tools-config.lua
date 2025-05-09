@@ -117,31 +117,38 @@ return {
         ----------------------------------------------------------------------------------------------
         -- Added by Kickstart.
         ----------------------------------------------------------------------------------------------
-        -- "bash",                    -- [Official] https://github.com/tree-sitter/tree-sitter-bash
-        -- "diff",                    -- [Kickstart] https://github.com/the-mikedavis/tree-sitter-diff
-        -- "html",                    -- [Official] https://github.com/tree-sitter/tree-sitter-html
-        -- --,                        --     but changed to:
-        -- --,                        --     https://github.com/tree-sitter-grammars/tree-sitter-lua
-        -- "luadoc",                  -- [Kickstart] It was: https://github.com/amaanq/tree-sitter-luadoc
-        -- --,                        --     but changed to:
-        -- --,                        --     https://github.com/tree-sitter-grammars/tree-sitter-luadoc
+        -- "bash",                 -- [Official] https://github.com/tree-sitter/tree-sitter-bash
+        -- "diff",                 -- [Kickstart] https://github.com/the-mikedavis/tree-sitter-diff
+        -- "html",                 -- [Official] https://github.com/tree-sitter/tree-sitter-html
+        -- --,                     --   but changed to:
+        -- --,                     --   https://github.com/tree-sitter-grammars/tree-sitter-lua
+        -- "luadoc",               -- [Kickstart] It was: https://github.com/amaanq/tree-sitter-luadoc
+        -- --,                     --   but changed to:
+        -- --,                     --   https://github.com/tree-sitter-grammars/tree-sitter-luadoc
         ----------------------------------------------------------------------------------------------
-        -- Added by me.
+        -- Added by me in my previous install (with Kickstart).
         ----------------------------------------------------------------------------------------------
         "c_sharp",                 -- [Official] https://github.com/tree-sitter/tree-sitter-c-sharp
         "css",                     -- [Official] https://github.com/tree-sitter/tree-sitter-css
         "fsharp",                  -- [Ionide] https://github.com/ionide/tree-sitter-fsharp
-        -- "go",                      -- [Official] https://github.com/tree-sitter/tree-sitter-go
-        -- "javascript",              -- [Official] https://github.com/tree-sitter/tree-sitter-javascript
-        -- "rust",                    -- [Official] https://github.com/tree-sitter/tree-sitter-rust
-        -- "regex",                   -- [Official] https://github.com/tree-sitter/tree-sitter-regex
-        -- Have a LazyVim extra, so no need to install manually:
-        -- "ocaml",                   -- [Official] https://github.com/tree-sitter/tree-sitter-ocaml
-        -- "python",                  -- [Official] https://github.com/tree-sitter/tree-sitter-python
-        -- "json",                    -- [Official] https://github.com/tree-sitter/tree-sitter-json
-        -- "typescript",              -- [Official] https://github.com/tree-sitter/tree-sitter-typescript
-        -- "tsx",                     -- [Official] https://github.com/tree-sitter/tree-sitter-typescript
-        -- "yaml",                    -- https://github.com/tree-sitter-grammars/tree-sitter-yaml
+        -- "go",                   -- [Official] https://github.com/tree-sitter/tree-sitter-go
+        -- "javascript",           -- [Official] https://github.com/tree-sitter/tree-sitter-javascript
+        -- "rust",                 -- [Official] https://github.com/tree-sitter/tree-sitter-rust
+        -- "regex",                -- [Official] https://github.com/tree-sitter/tree-sitter-regex
+        -- -- The ones below have a LazyVim extra. No need to install manually
+        -- -- if using the extra:
+        -- "ocaml",                -- [Official] https://github.com/tree-sitter/tree-sitter-ocaml
+        -- "python",               -- [Official] https://github.com/tree-sitter/tree-sitter-python
+        -- "json",                 -- [Official] https://github.com/tree-sitter/tree-sitter-json
+        -- "typescript",           -- [Official] https://github.com/tree-sitter/tree-sitter-typescript
+        -- "tsx",                  -- [Official] https://github.com/tree-sitter/tree-sitter-typescript
+        -- "yaml",                 -- https://github.com/tree-sitter-grammars/tree-sitter-yaml
+        ----------------------------------------------------------------------------------------------
+        -- Next below.
+        ----------------------------------------------------------------------------------------------
+        "clojure",                 -- Contributed by sogaiu and borkdude,
+        -- --,                     --   both with more contributions in the community. Code:
+        -- --,                     --   https://github.com/sogaiu/tree-sitter-clojure
 
 
       })
