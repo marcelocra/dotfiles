@@ -841,9 +841,10 @@ alias bbge='$EDITOR ~/.config/babashka/bb.edn'
 
 alias colines='echo "Columns: $COLUMNS, Lines: $LINES"'
 
-alias ppath='echo $PATH | tr ":" "\n"'
-alias print_path=ppath
-alias print_path_unique='ppath | sort | uniq'
+alias path_print='echo $PATH | tr ":" "\n"'
+alias ppath=path_print
+alias path_print_unique='path_print | sort | uniq'
+alias ppathu=path_print_unique
 
 alias t1="tree -L 1"
 alias t2="tree -L 2"
@@ -1030,6 +1031,11 @@ alias shasum_easy='echo "b87366b62eddfbecb60e681ba83299c61884a0d97569abe797695c8
 
 # Diff using kitty.
 alias d='kitten diff'
+
+# Print the PATH without values added by init scripts.
+# NOTE: It MUST be written with the single quotes as it is not, otherwise it
+# will be expanded in the current shell and not in the new one.
+alias path_clean='env -i sh -c '\''echo $PATH'\'''
 
 # next alias above, unless they fit in one of the other sections.
 # }}}general
