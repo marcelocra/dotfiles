@@ -612,12 +612,24 @@ function broken_symlinks() {
     find "${1:-.}" -type l ! -exec test -e {} \; -exec ls -lah --color {} \;
 }
 
-# Backup/disable Neovim installed packages and cache:
+# Backup/disable Neovim installed packages and cache.
 function neovim_backup_state() {
     local now=$(date +%F_%T | sed -e 's/:/-/g')
     mv ~/.local/share/nvim{,.$now.bak}
     mv ~/.local/state/nvim{,.$now.bak}
     mv ~/.cache/nvim{,.$now.bak}
+}
+
+# Backup Neovim installed packages, cache and lazy-lock to a tmp dir.
+# WARN: Remember that it will be removed on reboot.
+function neovim_backup_state_to_tmp() {
+    # Make a tmp folder with the current date.
+    local tmp_dir=$(mktemp -d -t nvim_$(date +%F_%T | sed -e 's/:/-/g')_XXXXXX)
+
+    mv ~/.local/share/nvim $tmp_dir/local-share-nvim
+    mv ~/.local/state/nvim $tmp_dir/local-state-nvim
+    mv ~/.cache/nvim $tmp_dir/cache-nvim
+    mv ~/.config/nvim/lazy-lock.json $tmp_dir
 }
 
 if ! command -v codene &>/dev/null; then
