@@ -1,9 +1,6 @@
 print("Loading my-plugins.lua")
 
 return {
-  -- INFO: Example of how to disable a plugin.
-  -- { "folke/trouble.nvim", enabled = false },
-
   -- Amazing Git support.
   { "tpope/vim-fugitive" },
 
@@ -15,10 +12,6 @@ return {
 
   -- Improve repeat support (e.g. for surrounding stuff).
   { "tpope/vim-repeat", vscode = true },
-
-  -- [note] Seems unnecessary with LazyVim.
-  -- Simplify (un)commenting stuff out.
-  -- { "tpope/vim-commentary" },
 
   {
     -- Copilot support.
@@ -54,15 +47,12 @@ return {
       })
 
       -- Default mappings:
-
       -- <C-]>       Dismiss the current suggestion.                               <Plug>(copilot-dismiss)
       -- <M-]>       Cycle to the next suggestion, if one is available.            <Plug>(copilot-next)
       -- <M-[>       Cycle to the previous suggestion.                             <Plug>(copilot-previous)
       -- <M-\>       Explicitly request a suggestion, even if Copilot is disabled. <Plug>(copilot-suggest)
       -- <M-Right>   Accept the next word of the current suggestion.               <Plug>(copilot-accept-word)
       -- <M-C-Right> Accept the next line of the current suggestion.               <Plug>(copilot-accept-line)
-
-      --
     end,
   },
 
@@ -86,44 +76,6 @@ return {
     end,
   },
 
-  -- NOTE: Not using F# now and support is better in VSCode.
-  -- {
-  --   -- F# / FSharp support.
-  --   "ionide/Ionide-vim",
-  --   ft = { "fsharp" },
-  --   lazy = true,
-  --   init = function()
-  --     -- vim.g['fsharp#fsautocomplete_command'] = { 'dotnet', 'fsautocomplete', '--background-service-enabled' }
-  --
-  --     -- Custom mapping example. The default is vscode.
-  --     -- vim.g['fsharp#fsi_keymap'] = 'custom' -- vscode
-  --     -- vim.g['fsharp#fsi_keymap_send'] = '<C-e>' -- vscode: Alt+Enter
-  --     -- vim.g['fsharp#fsi_keymap_toggle'] = '<C-@>' -- vscode: Alt+Shift+2 (Alt+@)
-  --
-  --     vim.g["fsharp#exclude_project_directories"] = { "paket-files" }
-  --     -- vim.g['fsharp#fsi_command'] = 'dotnet fsi --compilertool:~/.nuget/packages/paket/8.0.3/tools/netcoreapp2.1/any/'
-  --     -- vim.g['fsharp#use_sdk_scripts'] = false -- for net462 FSI
-  --   end,
-  -- },
-
-  -- NOTE: Currently disabled because there's a lazyextra for go.
-  -- {
-  --   -- Golang support.
-  --   'fatih/vim-go',
-  --   ft = { 'go' }, -- etc
-  -- },
-
-  -- {
-  --   -- Add emoji support.
-  --   "hrsh7th/nvim-cmp",
-  --   dependencies = { "hrsh7th/cmp-emoji" },
-  --   opts = function(_, opts)
-  --     if type(opts.sources) == "table" then
-  --       vim.list_extend(opts.sources, { name = "emoji" })
-  --     end
-  --   end,
-  -- },
-
   {
     -- Change the default (gpt-4o) Copilot model to use in chat.
     "CopilotC-Nvim/CopilotChat.nvim",
@@ -131,4 +83,6 @@ return {
       model = "claude-3.7-sonnet",
     },
   },
+
+  -- Next plugin above.
 }

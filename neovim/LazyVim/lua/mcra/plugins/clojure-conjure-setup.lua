@@ -96,27 +96,6 @@ return {
   -- Clojure, Lisps, Python, etc, REPL support in Neovim.
   {
     "Olical/conjure",
-    dependencies = {
-      -- "marcelocra/cmp-conjure",
-      -- "marcelocra/baleia.nvim",
-      -- {
-      --   "LazyVim/LazyVim",
-      --
-      --   keys = {
-      --     { "]]", false },
-      --     { "[[", false },
-      --   },
-      --
-      --   init = function()
-      --     --
-      --     -- Remove some LazyVim default mappings before loading Conjure's.
-      --     --
-      --
-      --     vim.keymap.del("n", "]]")
-      --     vim.keymap.del("n", "[[")
-      --   end,
-      -- },
-    },
 
     ft = { "clojure", "edn", "fennel", "python", "racket", "lua" },
     lazy = true,
@@ -199,6 +178,7 @@ return {
     config = function()
       --
       -- Load Conjure defaults.
+      -- Extracted from LazyVim Extras for Clojure.
       --
 
       require("conjure.main").main()
