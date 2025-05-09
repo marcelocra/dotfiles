@@ -67,6 +67,8 @@ local fonts = { -- <<(
   }),
 
   cascadia = create_font("Cascadia Code NF", {
+    weight = 350,
+    size = 14,
     -- If using fonts from Nerd Font, use "CaskaydiaCove NF".
     -- stylua: ignore
     harfbuzz_features = {
@@ -75,8 +77,7 @@ local fonts = { -- <<(
   }),
 
   fira = create_font("Fira Code", {
-    weight = 450, -- Retina.
-    stretch = "UltraCondensed",
+    -- weight = 450, -- Retina.
     harfbuzz_features = {
       "calt=0", -- No ligatures.
     },
@@ -254,7 +255,7 @@ local fonts = { -- <<(
 
   hack = create_font("Hack Nerd Font"),
 
-  commit_mono = create_font("CommitMono Nerd Font"),
+  commit_mono = create_font("CommitMono"),
 
   roboto = create_font("RobotoMono Nerd Font"),
 
@@ -264,7 +265,7 @@ local fonts = { -- <<(
 
   atkinson = create_font("Atkinson Hyperlegible Mono", {
     weight = "Regular",
-    size = 13,
+    size = 11,
   }),
 
   reddit_mono = create_font("Reddit Mono", {
@@ -295,8 +296,8 @@ local fonts = { -- <<(
     -- size = 13,
   }),
 
-  monaspace = create_font("Monaspace Neon", {
-    size = 13,
+  monaspace = create_font("Monaspace Argon", {
+    size = 11,
     harfbuzz_features = {
       "calt=1",
       "liga=1",
@@ -329,63 +330,22 @@ local config = wezterm.config_builder()
 
 -- EVENTS
 
-wezterm.on(
-  "format-tab-title",
-  function(tab, _tabs, _panes, _config, hover, max_width)
-    -- The filled in variant of the < symbol
-    local solid_left_arrow = wezterm.nerdfonts.pl_right_hard_divider
+wezterm.on("format-window-title", function(tab, pane, _, _, _)
+  -- Check if a custom title has been set.
+  local custom_title = os.getenv("WEZTERM_CUSTOM_TITLE")
 
-    -- The filled in variant of the > symbol
-    local solid_right_arrow = wezterm.nerdfonts.pl_left_hard_divider
-
-    -- This function returns the suggested title for a tab.
-    -- It prefers the title that was set via `tab:set_title()`
-    -- or `wezterm cli set-tab-title`, but falls back to the
-    -- title of the active pane in that tab.
-    local function tab_title(tab_info)
-      local title = tab_info.tab_title
-      -- if the tab title is explicitly set, take that
-      if title and #title > 0 then
-        return title
-      end
-      -- Otherwise, use the title from the active pane
-      -- in that tab
-      return tab_info.active_pane.title
-    end
-
-    local edge_background = "#0b0022"
-    local background = "#1b1032"
-    local foreground = "#808080"
-
-    if tab.is_active then
-      background = "#2b2042"
-      foreground = "#c0c0c0"
-    elseif hover then
-      background = "#3b3052"
-      foreground = "#909090"
-    end
-
-    local edge_foreground = background
-
-    local title = tab_title(tab)
-
-    -- ensure that the titles fit in the available space,
-    -- and that we have room for the edges.
-    title = wezterm.truncate_right(title, max_width - 2)
-
-    return {
-      { Background = { Color = edge_background } },
-      { Foreground = { Color = edge_foreground } },
-      { Text = solid_left_arrow },
-      { Background = { Color = background } },
-      { Foreground = { Color = foreground } },
-      { Text = title },
-      { Background = { Color = edge_background } },
-      { Foreground = { Color = edge_foreground } },
-      { Text = solid_right_arrow },
-    }
+  if custom_title and custom_title ~= "" then
+    -- Return the custom title if one exists.
+    return custom_title
   end
-)
+
+  -- Fall back to default title behavior.
+  local zoomed = ""
+  if tab.active_pane.is_zoomed then
+    zoomed = "[Z] "
+  end
+  return zoomed .. tab.active_pane.title
+end)
 
 wezterm.on("window-focus-changed", function(window, pane)
   -- If window lost focus but is still open, do nothing
@@ -470,7 +430,7 @@ end)()
 -- Fill this as I find schemes that I like. Later I can randomize only them.
 local color_scheme_override = {
   -- Use `false` to select a random color scheme or the index of the favorite to use as override.
-  override = 35, -- 2, -- 22, -- Update override.
+  override = 36, -- 2, -- 22, -- Update override.
   -- stylua: ignore
   favorites = {
 
@@ -511,6 +471,8 @@ local color_scheme_override = {
     "Unikitty Reversible (base16)",           -- 33
     "Seti",                                   -- 34
     "tokyonight",                             -- 35
+    "Batman",                                 -- 36
+    "catppuccin-latte",                       -- 37
 
     -- Next theme colorscheme override.
   },
@@ -531,15 +493,25 @@ local function get_scheme(opts)
 end
 
 wezterm.on("window-config-reloaded", function(window, pane)
-  if not window:get_config_overrides() then
-    window:set_config_overrides({
-      color_scheme = get_scheme({ force_random = false }),
-    })
-  end
   print("Current font: ", window:effective_config().font)
+
+  local overrides = window:get_config_overrides()
+    or {
+      color_scheme = get_scheme({ force_random = false }),
+    }
+
+  -- merge overrides with force_overrides
+  local force_overrides = {
+    color_scheme = get_scheme({ force_random = false }),
+  }
+  for k, v in pairs(force_overrides) do
+    overrides[k] = v
+  end
+
+  window:set_config_overrides(overrides)
 end)
 
--- Next event.
+-- Next event above.
 
 -- MAIN SETTINGS
 
@@ -547,7 +519,7 @@ config.window_background_opacity = 1
 config.text_background_opacity = 1
 -- config.window_background_opacity = 0.7
 -- config.text_background_opacity = 0.8
-config.window_decorations = "RESIZE"
+config.window_decorations = "RESIZE" -- Removes the window title bar.
 -- config.window_background_gradient = {
 --   colors = { "#000", "#fff" },
 --   -- Specifies a Linear gradient starting in the top left corner.
@@ -618,50 +590,50 @@ local choose_random_font = function()
   local best_fonts = {
     -- Keep sorted, please.
 
-    -- fonts.atkinson,
-    -- fonts.commit_mono,
-    -- fonts.dm,
-    -- fonts.geist, -- TODO: Figure out why width is weird.
-    -- fonts.ibm,
-    -- fonts.jb,
-    -- fonts.jb_zero,
-    -- fonts.jb_nf,
-    -- fonts.liberation_mono,
-    -- fonts.noto,
-    -- fonts.recursive_casual,
-    -- fonts.recursive_duotone,
-    -- fonts.recursive_linear,
-    -- fonts.recursive_semicasual,
-    -- fonts.roboto,
-    -- fonts.victor_mono,
+    fonts.atkinson,
+    fonts.commit_mono,
+    fonts.dm,
+    fonts.geist, -- TODO: Figure out why width is weird.
+    fonts.ibm,
+    fonts.jb,
+    fonts.jb_zero,
+    fonts.jb_nf,
+    fonts.liberation_mono,
+    fonts.noto,
+    fonts.recursive_casual,
+    fonts.recursive_duotone,
+    fonts.recursive_linear,
+    fonts.recursive_semicasual,
+    fonts.roboto,
+    fonts.victor_mono,
 
     -- Active.
 
-    -- fonts.blex,
-    -- fonts.cascadia,
-    -- fonts.code_new_roman,
-    -- fonts.fira,
-    -- fonts.fira_crazy,
-    -- fonts.hack,
-    -- fonts.iosevka,
-    -- fonts.iosevka_ss04_menlo,
-    -- fonts.iosevka_ss07_monaco,
-    -- fonts.iosevka_ss08_pragmata,
-    -- fonts.iosevka_ss13_lucida,
-    -- fonts.iosevka_ss14_jb,
-    -- fonts.m_plus,
-    -- fonts.meslo,
-    -- fonts.red_hat_mono,
-    -- fonts.reddit_mono,
-    -- fonts.roboto,
-    -- fonts.source_code_pro,
-    -- fonts.monoid,
-    -- fonts.sometype_mono,
-    -- fonts.maple_mono,
-    -- fonts.inconsolata,
-    -- fonts.input_mono,
-    -- fonts.julia_mono,
-    -- fonts.intel_one_mono,
+    fonts.blex,
+    fonts.cascadia,
+    fonts.code_new_roman,
+    fonts.fira,
+    fonts.fira_crazy,
+    fonts.hack,
+    fonts.iosevka,
+    fonts.iosevka_ss04_menlo,
+    fonts.iosevka_ss07_monaco,
+    fonts.iosevka_ss08_pragmata,
+    fonts.iosevka_ss13_lucida,
+    fonts.iosevka_ss14_jb,
+    fonts.m_plus,
+    fonts.meslo,
+    fonts.red_hat_mono,
+    fonts.reddit_mono,
+    fonts.roboto,
+    fonts.source_code_pro,
+    fonts.monoid,
+    fonts.sometype_mono,
+    fonts.maple_mono,
+    fonts.inconsolata,
+    fonts.input_mono,
+    fonts.julia_mono,
+    fonts.intel_one_mono,
     fonts.monaspace,
 
     -- Next font above.
@@ -859,4 +831,64 @@ return config
 --   end
 -- end)
 
+
+-- wezterm.on(
+--   "format-tab-title",
+--   function(tab, _tabs, _panes, _config, hover, max_width)
+--     -- The filled in variant of the < symbol
+--     local solid_left_arrow = wezterm.nerdfonts.pl_right_hard_divider
+--
+--     -- The filled in variant of the > symbol
+--     local solid_right_arrow = wezterm.nerdfonts.pl_left_hard_divider
+--
+--     -- This function returns the suggested title for a tab.
+--     -- It prefers the title that was set via `tab:set_title()`
+--     -- or `wezterm cli set-tab-title`, but falls back to the
+--     -- title of the active pane in that tab.
+--     local function tab_title(tab_info)
+--       local title = tab_info.tab_title
+--       -- if the tab title is explicitly set, take that
+--       if title and #title > 0 then
+--         return title
+--       end
+--       -- Otherwise, use the title from the active pane
+--       -- in that tab
+--       return tab_info.active_pane.title
+--     end
+--
+--     local edge_background = "#0b0022"
+--     local background = "#1b1032"
+--     local foreground = "#808080"
+--
+--     if tab.is_active then
+--       background = "#2b2042"
+--       foreground = "#c0c0c0"
+--     elseif hover then
+--       background = "#3b3052"
+--       foreground = "#909090"
+--     end
+--
+--     local edge_foreground = background
+--
+--     local title = tab_title(tab)
+--
+--     -- ensure that the titles fit in the available space,
+--     -- and that we have room for the edges.
+--     title = wezterm.truncate_right(title, max_width - 2)
+--
+--     return {
+--       { Background = { Color = edge_background } },
+--       { Foreground = { Color = edge_foreground } },
+--       { Text = solid_left_arrow },
+--       { Background = { Color = background } },
+--       { Foreground = { Color = foreground } },
+--       { Text = title },
+--       { Background = { Color = edge_background } },
+--       { Foreground = { Color = edge_foreground } },
+--       { Text = solid_right_arrow },
+--     }
+--   end
+-- )
+
+-- Next graveyard code.
 --]]
