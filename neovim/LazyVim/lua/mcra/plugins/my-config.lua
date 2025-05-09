@@ -128,14 +128,16 @@ return {
   --   ft = { 'go' }, -- etc
   -- },
 
-  {
-    -- Emoji support.
-    "hrsh7th/nvim-cmp",
-    dependencies = { "hrsh7th/cmp-emoji" },
-    opts = function(_, opts)
-      table.insert(opts.sources, { name = "emoji" })
-    end,
-  },
+  -- {
+  --   -- Add emoji support.
+  --   "hrsh7th/nvim-cmp",
+  --   dependencies = { "hrsh7th/cmp-emoji" },
+  --   opts = function(_, opts)
+  --     if type(opts.sources) == "table" then
+  --       vim.list_extend(opts.sources, { name = "emoji" })
+  --     end
+  --   end,
+  -- },
 
   {
     -- Change the default (gpt-4o) Copilot model to use in chat.
