@@ -3,7 +3,16 @@ return {
     "saghen/blink.cmp",
     dependencies = { "saghen/blink.compat", "hrsh7th/cmp-emoji" },
 
+    ---@module 'blink.cmp'
+    ---@type blink.cmp.Config
     opts = {
+      fuzzy = {
+        implementation = "rust",
+        prebuilt_binaries = {
+          download = true,
+        },
+      },
+
       appearance = {
         -- Set to 'mono' for 'Nerd Font Mono' or 'normal' for 'Nerd Font'
         -- adjusts spacing to ensure icons are aligned.
@@ -59,6 +68,8 @@ return {
   {
     "folke/flash.nvim",
     event = "VeryLazy",
+
+    ---@module 'flash.nvim'
     ---@type Flash.Config
     opts = {},
     keys = {

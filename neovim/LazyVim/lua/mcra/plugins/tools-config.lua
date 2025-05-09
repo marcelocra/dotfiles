@@ -1,89 +1,156 @@
---
--- Defaults merging rules:
---  * cmd: the list of commands will be extended with your custom commands
---  * event: the list of events will be extended with your custom events
---  * ft: the list of filetypes will be extended with your custom filetypes
---  * keys: the list of keymaps will be extended with your custom keymaps
---  * opts: your custom opts will be merged with the default opts
---  * dependencies: the list of dependencies will be extended with your custom
---    dependencies any other property will override the defaults
---
--- For ft, event, keys, cmd and opts you can instead also specify a values
--- function that can make changes to the default values, or return new values to
--- be used instead.
---
--- Docs from:
--- https://www.lazyvim.org/configuration/plugins#%EF%B8%8F-customizing-plugin-specs
---
-
--- Add here the LSPs and tools that you want automatically installed. Notice
--- that they are listed separately, since LSPs also accept a configuration.
-
-local lsps = {
-  -- Written by a Nubanker. https://github.com/clojure-lsp/clojure-lsp
-  clojure_lsp = {},
-
-  -- Official LSP for F#, initially by FSharp Software Foundation, now
-  -- maintained by Ionide.
-  fsautocomplete = {},
-
-  -- Official LSP.
-  -- https://github.com/ocaml/ocaml-lsp
-  ocamllsp = {},
-
-  -- Used by the official VSCode YAML extension, by RedHat.
-  yamlls = {},
-}
-
--- For more examples of packages, see at the end of this file.
-local ensure_installed = vim.tbl_keys(lsps or {})
-vim.list_extend(ensure_installed, {
-
-  -- Tools installed by default.
-  "stylua",
-  "shfmt",
-
-  -- Static Type Checker for Python, by Microsoft.
-  -- https://github.com/microsoft/pyright
-  "pyright",
-
-  -- Widely used Python linter and formatter.
-  -- https://github.com/astral-sh/ruff
-  "ruff",
-
-  -- From Borkdude, creator or Babashka and many widely used Clojure
-  -- tools. https://github.com/clj-kondo/clj-kondo
-  "clj-kondo",
-
-  -- From Wavejeaster, also creator of many widely used Clojure tools.
-  -- https://github.com/weavejester/cljfmt
-  "cljfmt",
-
-  -- Most commonly used F# formatter.
-  -- https://github.com/fsprojects/fantomas
-  "fantomas",
-
-  -- Next tool above this line.
-})
-
 return {
-  -- {
-  --   -- [note] kept here to simplify adding configs eventually.
-  --   "williamboman/mason.nvim",
-  --   opts = {},
-  -- },
-
   {
-    "marcelocra/mason-tool-installer.nvim",
-    opts = { ensure_installed = ensure_installed },
+    "williamboman/mason.nvim",
+    opts = {
+      ensure_installed = {
+        -- Tools installed by default (I think?).
+        "stylua",
+        "shfmt",
+
+        -- Static Type Checker for Python, by Microsoft.
+        -- https://github.com/microsoft/pyright
+        "pyright",
+
+        -- Widely used Python linter and formatter.
+        -- https://github.com/astral-sh/ruff
+        "ruff",
+
+        -- From Borkdude, creator or Babashka and many widely used Clojure
+        -- tools. https://github.com/clj-kondo/clj-kondo
+        "clj-kondo",
+
+        -- From Wavejeaster, also creator of many widely used Clojure tools.
+        -- https://github.com/weavejester/cljfmt
+        "cljfmt",
+
+        -- Most commonly used F# formatter.
+        -- https://github.com/fsprojects/fantomas
+        "fantomas",
+
+        -- Next tool above this line.
+      },
+    },
   },
 
   {
     "neovim/nvim-lspconfig",
     opts = {
-      servers = lsps,
+      servers = {
+        -- Written by a Nubanker. https://github.com/clojure-lsp/clojure-lsp
+        clojure_lsp = {},
+
+        -- Official LSP for F#, initially by FSharp Software Foundation, now
+        -- maintained by Ionide.
+        fsautocomplete = {},
+
+        -- Official LSP. Requires opam (i.e. install OCaml before using this).
+        -- https://github.com/ocaml/ocaml-lsp
+        -- ocamllsp = {},
+
+        -- Used by the official VSCode YAML extension, by RedHat.
+        yamlls = {},
+
+        -- Next lsp above.
+      },
     },
   },
+
+  -- {
+  --   "neovim/nvim-lspconfig",
+  --   dependencies = {
+  --     -- Mason must be loaded before its dependents so we need to set it up here.
+  --     -- NOTE: `opts = {}` is the same as calling `require('mason').setup({})`
+  --     { "williamboman/mason.nvim", opts = {} },
+  --     "williamboman/mason-lspconfig.nvim",
+  --     "marcelocra/mason-tool-installer.nvim",
+  --   },
+  --   -- opts = {
+  --   --   servers = lsps,
+  --   -- },
+  --   opts = function(_, opts)
+  --     -- Add here the LSPs and tools that you want automatically installed.
+  --     -- Notice that they are listed separately, since LSPs also accept a
+  --     -- configuration.
+  --     --
+  --     -- Add any additional override configuration in the following tables.
+  --     -- Available keys are:
+  --     --  - cmd (table): Override the default command used to start the server
+  --     --  - filetypes (table): Override the default list of associated filetypes
+  --     --    for the server
+  --     --  - capabilities (table): Override fields in capabilities. Can be used
+  --     --    to disable certain LSP features.
+  --     --  - settings (table): Override the default settings passed when
+  --     --    initializing the server.
+  --     -- For example, to see the options for `lua_ls`, you could go to:
+  --     -- https://luals.github.io/wiki/settings/
+  --     local servers = {
+  --       -- Written by a Nubanker. https://github.com/clojure-lsp/clojure-lsp
+  --       clojure_lsp = {},
+  --
+  --       -- Official LSP for F#, initially by FSharp Software Foundation, now
+  --       -- maintained by Ionide.
+  --       fsautocomplete = {},
+  --
+  --       -- Official LSP.
+  --       -- https://github.com/ocaml/ocaml-lsp
+  --       ocamllsp = {},
+  --
+  --       -- Used by the official VSCode YAML extension, by RedHat.
+  --       yamlls = {},
+  --
+  --       -- Next lsp above.
+  --     }
+  --
+  --     -- For more examples of packages, see at the end of this file.
+  --     local ensure_installed = vim.tbl_keys(servers or {})
+  --     vim.list_extend(ensure_installed, {
+  --
+  --       -- Tools installed by default.
+  --       "stylua",
+  --       "shfmt",
+  --
+  --       -- Static Type Checker for Python, by Microsoft.
+  --       -- https://github.com/microsoft/pyright
+  --       "pyright",
+  --
+  --       -- Widely used Python linter and formatter.
+  --       -- https://github.com/astral-sh/ruff
+  --       "ruff",
+  --
+  --       -- From Borkdude, creator or Babashka and many widely used Clojure
+  --       -- tools. https://github.com/clj-kondo/clj-kondo
+  --       "clj-kondo",
+  --
+  --       -- From Wavejeaster, also creator of many widely used Clojure tools.
+  --       -- https://github.com/weavejester/cljfmt
+  --       "cljfmt",
+  --
+  --       -- Most commonly used F# formatter.
+  --       -- https://github.com/fsprojects/fantomas
+  --       "fantomas",
+  --
+  --       -- Next tool above this line.
+  --     })
+  --
+  --     require("mason-tool-installer").setup({ ensure_installed = ensure_installed })
+  --     require("mason-lspconfig").setup({
+  --       ensure_installed = {}, -- Install via mason-tool-installer, above.
+  --       automatic_installation = false,
+  --       handlers = {
+  --         function(server_name)
+  --           local default_server = opts.servers[server_name] or {}
+  --           local server = servers[server_name] or {}
+  --           -- This handles overriding only values explicitly passed by the
+  --           -- server configuration above. Useful when disabling certain
+  --           -- features of an LSP (for example, turning off formatting for
+  --           -- ts_ls).
+  --           server = vim.tbl_deep_extend("force", {}, default_server, server or {})
+  --           require("lspconfig")[server_name].setup(server)
+  --         end,
+  --       },
+  --     })
+  --   end,
+  -- },
 
   {
     "nvim-treesitter/nvim-treesitter",

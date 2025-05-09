@@ -34,6 +34,8 @@ return {
   {
     "hrsh7th/nvim-cmp",
     dependencies = { "hrsh7th/cmp-emoji" },
+
+    ---@module 'cmp'
     ---@param opts cmp.ConfigSchema
     opts = function(_, opts)
       table.insert(opts.sources, { name = "emoji" })
@@ -68,6 +70,7 @@ return {
     "neovim/nvim-lspconfig",
     ---@class PluginLspOpts
     opts = {
+      ---@module 'lspconfig'
       ---@type lspconfig.options
       servers = {
         -- pyright will be automatically installed with mason and loaded with lspconfig

@@ -30,7 +30,10 @@ require("lazy").setup({
       -- },
     },
     -- import/override with your plugins
-    { import = "mcra.plugins" },
+    {
+      import = "mcra.plugins",
+      enable = require("mcra.lib.plugins-config").enable,
+    },
   },
   defaults = {
     -- By default, only LazyVim plugins will be lazy-loaded. Your custom plugins
@@ -44,7 +47,7 @@ require("lazy").setup({
     -- Try installing the latest stable version for plugins that support semver
     -- version = "*",
   },
-  -- install = { colorscheme = { "tokyonight", "habamax" } },
+  install = { colorscheme = { "tokyonight", "habamax" } },
   checker = {
     enabled = true, -- check for plugin updates periodically
     notify = false, -- notify on update
