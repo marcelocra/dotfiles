@@ -24,7 +24,13 @@ local the_leader = " "
 vim.g.mapleader = the_leader
 vim.g.maplocalleader = the_leader
 
-if not vim.g.vscode then
+if vim.g.vscode then
+  -- NOTE: VSCode-only.
+
+  -- VSCode-only next option here.
+else
+  -- NOTE: Neovim-only.
+
   -- Set to true if you have a Nerd Font installed and selected in the terminal.
   vim.g.have_nerd_font = true
 
@@ -57,9 +63,6 @@ vim.opt.relativenumber = true
 vim.opt.mouse = "a"
 
 -- Don't show the mode, since it's already in the status line.
---------------------------------------------------------------------------------
--- Options
---------------------------------------------------------------------------------
 vim.opt.showmode = false
 
 -- Sync clipboard between OS and Neovim. Schedule the setting after `UiEnter`
@@ -107,6 +110,9 @@ vim.opt.scrolloff = 10
 
 -- Set rulers +N columns after the `textwidth`.
 vim.opt.colorcolumn = { "+1", "+21", "+41" }
+
+-- Virtual edit mode. Read :h 've' (with quotes).
+vim.opt.ve = "onemore"
 
 -- Next option above.
 
