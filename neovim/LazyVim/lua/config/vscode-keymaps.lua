@@ -50,10 +50,17 @@ vim.keymap.set({ "n", "i", "x" }, "<C-d>", function()
   end)
 end)
 
--- -- NOTE: See above. This was a test to help debug the problem.
---
--- -- It doesn't print the ctrl+a, but otherwise it works as expected, showing
--- -- the notification and creating a new selection.
+-- TODO: Enable this in VSCode.
+-- vim.keymap.set({ "n", "x" }, "<C-z>", function()
+--   vscode.action("undo")
+-- end)
+
+-- Next VSCode-only above.
+
+--------------------------------------------------------------------------------
+-- Examples
+--------------------------------------------------------------------------------
+
 -- vim.keymap.set({ "x" }, "<C-a>", function()
 --   print("ctrl+a in visual mode") -- This never prints.
 --   vscode.notify(vscode.eval("return vscode.window.activeTextEditor.document.fileName"))
@@ -62,5 +69,4 @@ end)
 --   end)
 -- end)
 
--- Next VSCode-only above.
 vscode.notify("Successfully loaded VSCode-specific Neovim keymaps file!")
