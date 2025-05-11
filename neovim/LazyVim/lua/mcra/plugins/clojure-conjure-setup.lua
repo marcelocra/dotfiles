@@ -3,6 +3,7 @@ return {
   {
     "saghen/blink.cmp",
     dependencies = { "saghen/blink.compat", "marcelocra/cmp-conjure" },
+
     -- TODO: Try adding "clojure" to `compat` and see if it improves.
     opts = { sources = { compat = { "conjure" } } },
   },
@@ -38,6 +39,7 @@ return {
     "guns/vim-sexp",
     ft = { "racket" },
     lazy = true,
+
     config = function()
       -- 'vim-sexp' defaults that use Alt (M).
       -- <M-k>      *<Plug>(sexp_swap_list_backward)*
@@ -79,9 +81,11 @@ return {
   {
     "marcelocra/baleia.nvim",
     lazy = true,
+
     opts = {
       line_starts_at = 3,
     },
+
     config = function(_, opts)
       vim.g.conjure_baleia = require("baleia").setup(opts)
 
