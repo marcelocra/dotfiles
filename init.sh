@@ -1049,6 +1049,12 @@ alias d='kitten diff'
 # will be expanded in the current shell and not in the new one.
 alias path_clean='env -i sh -c '\''echo $PATH'\'''
 
+# List all block devices.
+alias list_devices='lsblk -o NAME,SIZE,FSTYPE,MODEL'
+
+# Regenerate grup entries.
+alias grub_update='sudo update-grub'
+
 # next alias above, unless they fit in one of the other sections.
 # }}}general
 # git frequent{{{
