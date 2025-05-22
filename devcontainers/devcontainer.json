@@ -3,7 +3,7 @@
 // The base image below has three versions, with `debian` meaning the latest Debian.
 {
   "name": "Debian",
-  
+
   // Or use a Dockerfile or Docker Compose file. More info: https://containers.dev/guide/dockerfile
   "image": "mcr.microsoft.com/devcontainers/base:debian",
 
@@ -15,8 +15,7 @@
   // the setup is done, comment this again and use the next one, choosing which folders/projects should be mounted
   // as in the examples.
   "mounts": [
-    "source=${localEnv:HOME}${localEnv:USERPROFILE}/code,target=/workspaces/code,type=bind,consistency=cached",
-    // "source=${localWorkspaceFolder},target=/workspaces/project,type=bind,consistency=cached"
+    "source=${localEnv:HOME}${localEnv:USERPROFILE}/code,target=/workspaces/code,type=bind,consistency=cached"
   ],
 
   // NOTE: When setting up a new machine, use the one above. Once you are done, comment it and uncomment this one,
@@ -26,8 +25,6 @@
   //   // Support code.
   //   "source=${localEnv:HOME}${localEnv:USERPROFILE}/code/dotfiles,target=/workspaces/code/dotfiles,type=bind,consistency=cached",
   //   "source=${localEnv:HOME}${localEnv:USERPROFILE}/code/dotfiles_local,target=/workspaces/code/dotfiles_local,type=bind,consistency=cached",
-  //   // Project code.
-  //   "source=${localWorkspaceFolder},target=/workspaces/code/project,type=bind,consistency=cached"
   //   // We can also create an environment variable with the full desired path if we want.
   //   //   Win:           set EXAMPLE_ENV_WITH_FOLDER_PATH=c:\some\path
   //   //   MacOS/Linux:   export EXAMPLE_ENV_WITH_FOLDER_PATH=/some/path
@@ -35,7 +32,8 @@
   // ],
 
   // Make sure that the container has this folder. It will be populated by the local folders listed above.
-  "workspaceFolder": "/workspaces/code",
+  "workspaceMount": "source=${localWorkspaceFolder},target=/workspaces/code/project,type=bind,consistency=cached",
+  "workspaceFolder": "/workspaces/code/project",
 
   // Features to add to the dev container. More info: https://containers.dev/features.
   "features": {
@@ -93,7 +91,7 @@
         // "ms-vscode.cpptools-extension-pack"
       ]
     }
-  },
+  }
 
   // Uncomment to connect as root instead. More info: https://aka.ms/dev-containers-non-root.
   // "remoteUser": "root"
