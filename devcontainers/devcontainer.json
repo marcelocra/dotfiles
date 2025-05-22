@@ -1,0 +1,47 @@
+// For format details, see https://aka.ms/devcontainer.json. For config options, see the
+// README at: https://github.com/devcontainers/templates/tree/main/src/debian
+// The base image below has three versions, with `debian` meaning the latest Debian.
+{
+  "name": "Debian",
+  
+  // Or use a Dockerfile or Docker Compose file. More info: https://containers.dev/guide/dockerfile
+  "image": "mcr.microsoft.com/devcontainers/base:debian",
+
+  // IMPORTANT: Keep the "consistency=cached" option in the bind mounts, as it improves performance. More details:
+  // https://github.com/microsoft/vscode-remote-release/issues/1210#issue-482734160
+
+  // NOTE: When setting up a new machine, uncomment and use this one. It will make code from `~/code` available in
+  // the container, allowing us to use git and other tools without having to install them to the main system. Once
+  // the setup is done, comment this again and use the next one, choosing which folders/projects should be mounted
+  // as in the examples.
+  "mounts": [
+    "source=${localEnv:HOME}${localEnv:USERPROFILE}/code,target=/workspaces/code,type=bind,consistency=cached"
+  ],
+
+  // NOTE: When setting up a new machine, use the one above. Once you are done, comment it and uncomment this one,
+  // choosing which folders/projects should be mounted.
+  // "mounts": [
+  //   // HOME for MacOS/Linux, USERPROFILE for Windows.
+  //   "source=${localEnv:HOME}${localEnv:USERPROFILE}/code/dotfiles,target=/workspaces/dotfiles,type=bind,consistency=cached",
+  //   "source=${localEnv:HOME}${localEnv:USERPROFILE}/code/dotfiles_local,target=/workspaces/dotfiles_local,type=bind,consistency=cached"
+  //   // We can also create an environment variable with the full desired path if we want.
+  //   //   Win:           set EXAMPLE_ENV_WITH_FOLDER_PATH=c:\some\path
+  //   //   MacOS/Linux:   export EXAMPLE_ENV_WITH_FOLDER_PATH=/some/path
+  //   "source=${localEnv:EXAMPLE_ENV_WITH_FOLDER_PATH},target=/workspaces/path_in_container,type=bind,consistency=cached"
+  // ],
+
+  // Make sure that the container has this folder. It will be populated by the local folders listed above.
+  "workspaceFolder": "/workspaces"
+
+  // Features to add to the dev container. More info: https://containers.dev/features.
+  // "features": {},
+
+  // Use 'forwardPorts' to make a list of ports inside the container available locally.
+  // "forwardPorts": [],
+
+  // Configure tool-specific properties.
+  // "customizations": {},
+
+  // Uncomment to connect as root instead. More info: https://aka.ms/dev-containers-non-root.
+  // "remoteUser": "root"
+}
