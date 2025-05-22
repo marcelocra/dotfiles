@@ -10,13 +10,14 @@
   // IMPORTANT: Keep the "consistency=cached" option in the bind mounts, as it improves performance. More details:
   // https://github.com/microsoft/vscode-remote-release/issues/1210#issue-482734160
 
+  // TODO: This is not necessary. Remove it and update the following block to consider it.
   // NOTE: When setting up a new machine, uncomment and use this one. It will make code from `~/code` available in
   // the container, allowing us to use git and other tools without having to install them to the main system. Once
   // the setup is done, comment this again and use the next one, choosing which folders/projects should be mounted
   // as in the examples.
-  "mounts": [
-    "source=${localEnv:HOME}${localEnv:USERPROFILE}/code,target=/workspaces/code,type=bind,consistency=cached"
-  ],
+  // "mounts": [
+  //   "source=${localEnv:HOME}${localEnv:USERPROFILE}/code,target=/workspaces/code,type=bind,consistency=cached"
+  // ],
 
   // NOTE: When setting up a new machine, use the one above. Once you are done, comment it and uncomment this one,
   // choosing which folders/projects should be mounted.
