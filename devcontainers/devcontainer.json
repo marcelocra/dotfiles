@@ -15,15 +15,19 @@
   // the setup is done, comment this again and use the next one, choosing which folders/projects should be mounted
   // as in the examples.
   "mounts": [
-    "source=${localEnv:HOME}${localEnv:USERPROFILE}/code,target=/workspaces/code,type=bind,consistency=cached"
+    "source=${localEnv:HOME}${localEnv:USERPROFILE}/code,target=/workspaces/code,type=bind,consistency=cached",
+    // "source=${localWorkspaceFolder},target=/workspaces/project,type=bind,consistency=cached"
   ],
 
   // NOTE: When setting up a new machine, use the one above. Once you are done, comment it and uncomment this one,
   // choosing which folders/projects should be mounted.
   // "mounts": [
   //   // HOME for MacOS/Linux, USERPROFILE for Windows.
-  //   "source=${localEnv:HOME}${localEnv:USERPROFILE}/code/dotfiles,target=/workspaces/dotfiles,type=bind,consistency=cached",
-  //   "source=${localEnv:HOME}${localEnv:USERPROFILE}/code/dotfiles_local,target=/workspaces/dotfiles_local,type=bind,consistency=cached"
+  //   // Support code.
+  //   "source=${localEnv:HOME}${localEnv:USERPROFILE}/code/dotfiles,target=/workspaces/code/dotfiles,type=bind,consistency=cached",
+  //   "source=${localEnv:HOME}${localEnv:USERPROFILE}/code/dotfiles_local,target=/workspaces/code/dotfiles_local,type=bind,consistency=cached",
+  //   // Project code.
+  //   "source=${localWorkspaceFolder},target=/workspaces/code/project,type=bind,consistency=cached"
   //   // We can also create an environment variable with the full desired path if we want.
   //   //   Win:           set EXAMPLE_ENV_WITH_FOLDER_PATH=c:\some\path
   //   //   MacOS/Linux:   export EXAMPLE_ENV_WITH_FOLDER_PATH=/some/path
@@ -31,16 +35,65 @@
   // ],
 
   // Make sure that the container has this folder. It will be populated by the local folders listed above.
-  "workspaceFolder": "/workspaces"
+  "workspaceFolder": "/workspaces/code"
 
   // Features to add to the dev container. More info: https://containers.dev/features.
-  // "features": {},
+  "features": {
+    "ghcr.io/devcontainers/features/common-utils:2": {
+      // https://github.com/devcontainers/features/tree/94ed0bbb7de8db07ba99a2929c1042c20dab1555/src/common-utils
+      "installZsh": true,
+      "installOhMyZsh": true,
+      "configureZshAsDefaultShell": true
+    },
+    "ghcr.io/devcontainers/features/git-lfs:1": {
+      // https://github.com/devcontainers/features/tree/94ed0bbb7de8db07ba99a2929c1042c20dab1555/src/git-lfs
+    },
+    "ghcr.io/devcontainers/features/github-cli:1": {
+      // https://github.com/devcontainers/features/tree/94ed0bbb7de8db07ba99a2929c1042c20dab1555/src/github-cli
+    },
+    "ghcr.io/devcontainers/features/go:1": {
+      // https://github.com/devcontainers/features/tree/94ed0bbb7de8db07ba99a2929c1042c20dab1555/src/go
+    },
+    "ghcr.io/devcontainers/features/node:1": {
+      // https://github.com/devcontainers/features/tree/94ed0bbb7de8db07ba99a2929c1042c20dab1555/src/node
+      "installYarnUsingApt": false // I don't care about yarn... prefer pnpm.
+    },
+    "ghcr.io/devcontainers/features/python:1": {
+      // https://github.com/devcontainers/features/tree/94ed0bbb7de8db07ba99a2929c1042c20dab1555/src/python
+      "version": "latest",
+      "installJupyterlab": true
+    }
+  },
 
   // Use 'forwardPorts' to make a list of ports inside the container available locally.
   // "forwardPorts": [],
 
   // Configure tool-specific properties.
-  // "customizations": {},
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "charliermarsh.ruff",
+        "dbaeumer.vscode-eslint",
+        "denoland.vscode-deno",
+        "docker.docker",
+        "dracula-theme.theme-dracula",
+        "eamodio.gitlens",
+        "EditorConfig.EditorConfig",
+        "esbenp.prettier-vscode",
+        "GitHub.codespaces",
+        "GitHub.copilot-chat",
+        "github.copilot-workspace",
+        "GitHub.copilot",
+        "GitHub.github-vscode-theme",
+        "GitHub.vscode-pull-request-github",
+        "golang.go",
+        "ms-azuretools.vscode-docker",
+        "ms-python.python",
+        "ms-vscode-remote.vscode-remote-extensionpack"
+        // "ms-vscode.cpptools-extension-pack"
+      ]
+    }
+  },
 
   // Uncomment to connect as root instead. More info: https://aka.ms/dev-containers-non-root.
   // "remoteUser": "root"
