@@ -1,7 +1,116 @@
-# Load relevant config.
+# Load defaults and overrides (see includes at the end).
 
-# Load in this order, so that the next one can override the previous. And if it
-# doesn't exist, it is ignored.
+#
+# -- [ Main configs ] ----------------------------------------------------------
+#
+
+[core]
+    # Always use lf (\n) to avoid issues with Windows CRLF (\r\n).
+    autocrlf = false
+    eol = lf
+    pager = less -F -X
+
+[user]
+    name = Marcelo Almeida
+    email = 2532492+marcelocra@users.noreply.github.com
+
+[init]
+    defaultBranch = main
+
+[push]
+    autoSetupRemote = true
+
+[pull]
+    rebase = false
+
+[color]
+    ui = true
+
+#
+# -- [ Aliases ] ---------------------------------------------------------------
+#
+
+[alias]
+    # Diff stuff.
+    dw = diff --word-diff --color-words
+    dwm = diff --word-diff --color-words master
+    d = dw HEAD
+    ds = diff --stat  # Summary of current diff.
+
+    dk = difftool --no-symlinks --dir-diff
+
+    # Other stuff.
+    b = branch
+    co = checkout
+    l = lol
+    s = status
+    st = status
+    ps = push --set-upstream
+    pso = push --set-upstream origin
+    rom = rebase origin/master
+
+    # The 'f' in the beginning stands for 'full'. So 'fd' -> 'full diff',
+    # piping it through less (with colors!).
+    fd = ! git diff --color=always | less -R
+    fl = ! git log --color=always | less -R
+
+    # One line colored log with date, committer and other info.
+    lol = log --abbrev-commit --decorate --date=relative --format=format:'%C(yellow)%h%C(reset) %C(green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(cyan)%d%C(reset)'
+    # Similar to the log version above, but also shows the graph, with relative.
+    dag = log --graph --abbrev-commit --decorate --date=relative --format=format:'%C(yellow)%h%C(reset) %C(green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(cyan)%d%C(reset)' --all
+    # The next two commands are the same as the previous two, but with date formatted differently.
+    lold = log --abbrev-commit --decorate --format=format:'%C(yellow)%h%C(reset) %C(magenta)%aD%C(reset) %C(green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(cyan)%d%C(reset)'
+    dagd = log --graph --abbrev-commit --decorate --format=format:'%C(yellow)%h%C(reset) %C(magenta)%aD%C(reset) %C(green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(cyan)%d%C(reset)' --all
+
+    # Uncomment the next line when using git credential manager core.
+    # FYI: github cli is better.
+    # gcm = credential-manager-core
+
+#
+# -- [ Git LFS ] ---------------------------------------------------------------
+#
+
+[filter "lfs"]
+    clean = git-lfs clean -- %f
+    smudge = git-lfs smudge -- %f
+    process = git-lfs filter-process
+    required = true
+
+#
+# -- [ Extra configs ] ---------------------------------------------------------
+#
+
+# Load in this order, so that the next one can override the previous.
+# If it any of them don't exist, they are ignored.
 [include]
     path = .gitconfig.local.gitconfig
-    path = .gitconfig.override.gitconfig
+
+    # This file should only exist in Windows systems.
+    path = .gitconfig.windows.gitconfig
+
+    # This file should only exist in Unix systems (Mac, Debian, Ubuntu, etc).
+    path = .gitconfig.unix.gitconfig
+
+    # This file should only exist in Linux systems (but not in a Mac).
+    path = .gitconfig.linux.gitconfig
+
+#
+# Examples of how to include extra configs conditionally, based on the current
+# directory or the current git repository.
+#
+# NOTE: This naming is so that editors recognize the file as a git config and
+# also for them to stay close in the directory structure.
+#
+#    [includeIf "gitdir:~/Private/"]
+#        path = .gitconfig.personal.gitconfig
+#
+#    [includeIf "gitdir:~/projects/"]
+#        path = .gitconfig.personal.gitconfig
+#
+#    [includeIf "gitdir:~/projects/some-repo/"]
+#        path = .gitconfig.some-repo-custom-config.gitconfig
+#
+#    [includeIf "gitdir:/workspaces/"]  # Containers.
+#        # Loaded in this order. If work file doesn't exist, it is ignored.
+#        path = .gitconfig.work.gitconfig
+#
