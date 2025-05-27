@@ -1,138 +1,144 @@
-# vim: autoindent expandtab tabstop=2 shiftwidth=2
-# [ Main configs ] -------------------------------------------------------------
-
+#
+# -- [ Main configs ] ----------------------------------------------------------
+#
 
 [core]
-  # Never plays with end of line character. Configure your editor to always use
-  # lf (\n).
-  autocrlf = false
-  eol = lf
-  pager = less -F -X
+    # Never plays with end of line character. Configure your editor to always use
+    # lf (\n).
+    autocrlf = false
+    eol = lf
+    pager = less -F -X
 
 [user]
-  name = Marcelo Almeida
-  email = 2532492+marcelocra@users.noreply.github.com
+    name = Marcelo Almeida
+    email = 2532492+marcelocra@users.noreply.github.com
 
 [init]
-  defaultBranch = main
+    defaultBranch = main
 
 [push]
-  autoSetupRemote = true
+    autoSetupRemote = true
 
 [pull]
-  rebase = false
+    rebase = false
 
 [diff]
-  tool = kitty
-  guitool = kitty.gui
+    tool = kitty
+    guitool = kitty.gui
 
-  # # When kitty is not available.
-  # tool = nvim -d
+    # # When kitty is not available.
+    # tool = nvim -d
 
-  # TODO: Not sure what is this.
-  # submodule = log
+    # TODO: Not sure what is this.
+    # submodule = log
 
 [difftool]
-  prompt = false
-  trustExitCode = true
+    prompt = false
+    trustExitCode = true
 
 [difftool "kitty"]
-  cmd = kitten diff $LOCAL $REMOTE
+    cmd = kitten diff $LOCAL $REMOTE
 
 [difftool "kitty.gui"]
-  cmd = kitten diff $LOCAL $REMOTE
+    cmd = kitten diff $LOCAL $REMOTE
 
 [color]
-  ui = true
+    ui = true
 
-# [ Aliases ] ------------------------------------------------------------------
-
+#
+# -- [ Aliases ] ---------------------------------------------------------------
+#
 
 [alias]
-  # Diff stuff.
-  dw = diff --word-diff --color-words
-  dwm = diff --word-diff --color-words master
-  d = dw HEAD
-  ds = diff --stat  # Summary of current diff.
+    # Diff stuff.
+    dw = diff --word-diff --color-words
+    dwm = diff --word-diff --color-words master
+    d = dw HEAD
+    ds = diff --stat  # Summary of current diff.
 
-  dk = difftool --no-symlinks --dir-diff
+    dk = difftool --no-symlinks --dir-diff
 
-  # Other stuff.
-  b = branch
-  co = checkout
-  l = lol
-  s = status
-  st = status
-  ps = push --set-upstream
-  pso = push --set-upstream origin
-  rom = rebase origin/master
+    # Other stuff.
+    b = branch
+    co = checkout
+    l = lol
+    s = status
+    st = status
+    ps = push --set-upstream
+    pso = push --set-upstream origin
+    rom = rebase origin/master
 
-  # The 'f' in the beginning stands for 'full'. So 'fd' -> 'full diff',
-  # piping it through less (with colors!).
-  fd = ! git diff --color=always | less -R
-  fl = ! git log --color=always | less -R
+    # The 'f' in the beginning stands for 'full'. So 'fd' -> 'full diff',
+    # piping it through less (with colors!).
+    fd = ! git diff --color=always | less -R
+    fl = ! git log --color=always | less -R
 
-  # One line colored log with date, committer and other info.
-  lol = log --abbrev-commit --decorate --date=relative --format=format:'%C(yellow)%h%C(reset) %C(green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(cyan)%d%C(reset)'
-  # Similar to the log version above, but also shows the graph, with relative.
-  dag = log --graph --abbrev-commit --decorate --date=relative --format=format:'%C(yellow)%h%C(reset) %C(green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(cyan)%d%C(reset)' --all
-  # The next two commands are the same as the previous two, but with date formatted differently.
-  lold = log --abbrev-commit --decorate --format=format:'%C(yellow)%h%C(reset) %C(magenta)%aD%C(reset) %C(green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(cyan)%d%C(reset)'
-  dagd = log --graph --abbrev-commit --decorate --format=format:'%C(yellow)%h%C(reset) %C(magenta)%aD%C(reset) %C(green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(cyan)%d%C(reset)' --all
+    # One line colored log with date, committer and other info.
+    lol = log --abbrev-commit --decorate --date=relative --format=format:'%C(yellow)%h%C(reset) %C(green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(cyan)%d%C(reset)'
+    # Similar to the log version above, but also shows the graph, with relative.
+    dag = log --graph --abbrev-commit --decorate --date=relative --format=format:'%C(yellow)%h%C(reset) %C(green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(cyan)%d%C(reset)' --all
+    # The next two commands are the same as the previous two, but with date formatted differently.
+    lold = log --abbrev-commit --decorate --format=format:'%C(yellow)%h%C(reset) %C(magenta)%aD%C(reset) %C(green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(cyan)%d%C(reset)'
+    dagd = log --graph --abbrev-commit --decorate --format=format:'%C(yellow)%h%C(reset) %C(magenta)%aD%C(reset) %C(green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(cyan)%d%C(reset)' --all
 
-  gcm = credential-manager-core
+    gcm = credential-manager-core
 
-
-# [ Configs ] ------------------------------------------------------------------
+#
+# -- [ Configs ] ---------------------------------------------------------------
+#
 
 
 [includeIf "gitdir:~/Private/"]
-  path = .gitconfig.personal.gitconfig
+    path = .gitconfig.personal.gitconfig
 
 [includeIf "gitdir:~/projects/"]
-  path = .gitconfig.personal.gitconfig
+    path = .gitconfig.personal.gitconfig
 
 [includeIf "gitdir:~/projects/work/"]
-  path = .gitconfig.work.gitconfig
+    path = .gitconfig.work.gitconfig
 
 [includeIf "gitdir:/workspaces/"]  # Containers.
-  # Loaded in this order. If work file doesn't exist, it is ignored.
-  path = .gitconfig.personal.gitconfig
-  path = .gitconfig.work.gitconfig
+    # Loaded in this order. If work file doesn't exist, it is ignored.
+    path = .gitconfig.personal.gitconfig
+    path = .gitconfig.work.gitconfig
 
-
-# [ OS specific configs ] ------------------------------------------------------
-
+#
+# -- [ OS specific configs ] ---------------------------------------------------
+#
 
 [include]
-  # This file should only exist in Windows systems.
-  path = .gitconfig.windows.gitconfig
+    # This file should only exist in Windows systems.
+    path = .gitconfig.windows.gitconfig
 
-  # This file should only exist in Unix systems (Mac, Debian, Ubuntu, etc).
-  path = .gitconfig.unix.gitconfig
+    # This file should only exist in Unix systems (Mac, Debian, Ubuntu, etc).
+    path = .gitconfig.unix.gitconfig
 
-  # This file should only exist in Linux systems (but not in a Mac).
-  path = .gitconfig.linux.gitconfig
+    # This file should only exist in Linux systems (but not in a Mac).
+    path = .gitconfig.linux.gitconfig
 
 
-# [ Git LFS ] ------------------------------------------------------------------
-
+#
+# -- [ Git LFS ] ---------------------------------------------------------------
+#
 
 [filter "lfs"]
-  smudge = git-lfs smudge -- %f
-  process = git-lfs filter-process
-  required = true
-  clean = git-lfs clean -- %f
+    smudge = git-lfs smudge -- %f
+    process = git-lfs filter-process
+    required = true
+    clean = git-lfs clean -- %f
 
-
-# [ Credential ] ---------------------------------------------------------------
-
+#
+# -- [ Credential ] ------------------------------------------------------------
+#
 
 [credential "https://github.com"]
-	helper =
-	helper = !/usr/bin/gh auth git-credential
+    helper =
+    helper = !/usr/bin/gh auth git-credential
 
 [credential "https://gist.github.com"]
-	helper =
-	helper = !/usr/bin/gh auth git-credential
+    helper =
+    helper = !/usr/bin/gh auth git-credential
 
+#
+# -- [ Added by external tools ] -----------------------------------------------
+#
