@@ -78,10 +78,10 @@ if [ ! -z "$REQUIRED_ENVS" ]; then
 fi
 
 # Load commons.
-if [ ! -f $HOME/bin/.rc.common ]; then
-    ln -s $MCRA_PROJECTS_FOLDER/dotfiles/.rc.common $HOME/bin/.rc.common
+if [ ! -f $HOME/lib/.rc.common ]; then
+    ln -s $MCRA_PROJECTS_FOLDER/dotfiles/.rc.common $HOME/lib/.rc.common
 fi
-. $HOME/bin/.rc.common
+. $HOME/lib/.rc.common
 
 # functions{{{
 
