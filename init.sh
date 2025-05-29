@@ -25,7 +25,37 @@ fi
 # Load commons.
 . $HOME/lib/.rc.common
 
-# #region .functions. {{{
+# ------------------------------------------------------------------------------
+# Exports.
+# ------------------------------------------------------------------------------
+
+if mm_is_command nvim; then
+    export EDITOR='nvim'
+elif mm_is_command vim; then
+    export EDITOR='vim'
+elif mm_is_command vi; then
+    export EDITOR='vi'
+else
+    echo "Didn't find Neovim, Vim or Vi. Using nano as the default editor."
+    export EDITOR='nano'
+fi
+# Hopefully, Neovim (hence, 'n'). Works for Nano too, I guess...
+alias n="$EDITOR"
+
+# Use my version of less.
+# export MANPAGER='lesstmp'
+
+# Uses Neovim's built in pager support as the man pager.
+export MANPAGER='nvim +Man!'
+
+# Swap Caps Lock and Ctrl keys when using X11.
+export XKB_DEFAULT_OPTIONS="ctrl:swapcaps"
+
+# Next export above.
+# ------------------------------------------------------------------------------
+# Functions.
+# ------------------------------------------------------------------------------
+# #region {{{
 
 # Simplifies working with tmux. Tries to create
 # a new session and if it already exists, just
@@ -85,7 +115,7 @@ function timer() {
     local default_time="30m"
 
     if [[ -z "$time" ]]; then
-        echo "Not time provided, using default ($default_time). You can either provide a value (format: 1s, 20m, 2h, 1h20m) or use an existing template (currently: t1, t5, t15, t30, t60) all in minutes."
+        echo "No time provided, using default ($default_time). You can either provide a value (format: 1s, 20m, 2h, 1h20m) or use an existing template (currently: t1, t5, t15, t30, t60) all in minutes."
         time="$default_time"
     fi
 
@@ -323,23 +353,25 @@ if ! command -v codene &>/dev/null; then
 fi
 
 # Next function above.
-# #endregion .functions. }}}
-
-# #region .aliases. {{{
+# #endregion Functions. }}}
 
 # ------------------------------------------------------------------------------
-# Reserved one lettered aliases.
+# Aliases.
+# ------------------------------------------------------------------------------
+# #region {{{
+
+# ------------------------------------------------------------------------------
+# Reserved aliases with one lettered.
 # ------------------------------------------------------------------------------
 
 # Used in the following sections:
-# b = popd
-# l = ls ...
-# n = reserved
-# r = js run
-# s = reserved
-# t = go to my temp dir
-# v = vim
-# g = some type of grep
+# b=popd
+# l=ls ...
+# n=$EDITOR (hopefully, Neovim)
+# r=js run
+# s=reserved
+# t=easy tmux
+# g=some type of grep
 
 # ------------------------------------------------------------------------------
 # Show diffs between files.
@@ -554,7 +586,7 @@ alias neovim_none='nvim -u NONE'
 alias neovim_norc='nvim -u NORC'
 alias neovim_noplugin='nvim --noplugin'
 
-# Next alias section above.
+# Next multiline alias (section) above.
 # ------------------------------------------------------------------------------
 # Misc.
 # ------------------------------------------------------------------------------
@@ -639,8 +671,19 @@ alias list_devices='lsblk -o NAME,SIZE,FSTYPE,MODEL'
 # Regenerate grup entries.
 alias grub_update='sudo update-grub'
 
+# Run programs without installing them.
+alias tsx='pnpx tsx'
+
+# Better Copilot CLI aliases. Requires gh cli copilot extensions to be
+# installed.
+alias copilot="ghcs"
+alias cpl="copilot"
+
+# Always start lua using rlwrap, as the default repl is quite limited.
+alias lua='rlwrap lua'
+
 # Next alias above, unless they fit in one of the other sections.
-# #endregion .aliases. }}}
+# #endregion Aliases. }}}
 
 # #region .git-frequent. {{{
 
