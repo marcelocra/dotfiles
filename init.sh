@@ -126,7 +126,6 @@ alias t15="sleep 15m && timer_notification"
 alias t30="sleep 30m && timer_notification"
 alias t60="sleep 1h && timer_notification"
 
-
 mm_today() {
     echo "$(date +%F)"
 
@@ -467,20 +466,20 @@ alias t3="tree -L 3"
 alias t4="tree -L 4"
 alias t5="tree -L 5"
 
-alias is_venv='which deactivate >/dev/null 2>&1 && true || false'
-function check_python_venv() {
-    local in_venv
-    if is_venv; then
-        in_venv="IN"
-    else
-        in_venv="NOT IN"
-    fi
-
-    printf "\n!!! %s A VIRTUAL ENVIRONMENT... !!!\n\n\n" $in_venv
-}
-alias python3='check_python_venv && python3'
-alias python=python3
-alias py='python'
+# alias is_venv='which deactivate >/dev/null 2>&1 && true || false'
+# function check_python_venv() {
+#     local in_venv
+#     if is_venv; then
+#         in_venv="IN"
+#     else
+#         in_venv="NOT IN"
+#     fi
+#
+#     printf "\n!!! %s A VIRTUAL ENVIRONMENT... !!!\n\n\n" $in_venv
+# }
+# alias python3='check_python_venv && python3'
+# alias python=python3
+# alias py='python'
 
 if mm_is_command rg; then
     alias g=rg
@@ -616,7 +615,6 @@ alias files_size_in_mb='awk '\''{sum += $5} END {print sum/1024/1024 " MB"}'\'''
 
 # Get os version, name and details.
 alias system_info='cat /etc/os-release && lsb_release -a && hostnamectl && uname -r'
-
 
 # Start Chrome using other language.
 alias chrome_br='LANGUAGE=pt_BR google-chrome-stable'
