@@ -1,9 +1,8 @@
 # Load defaults and overrides (see includes at the end).
 
-#
-# -- [ Main configs ] ----------------------------------------------------------
-#
-
+# ------------------------------------------------------------------------------
+# Main config.
+# ------------------------------------------------------------------------------
 [core]
     # Always use lf (\n) to avoid issues with Windows CRLF (\r\n).
     autocrlf = false
@@ -26,10 +25,9 @@
 [color]
     ui = true
 
-#
-# -- [ Aliases ] ---------------------------------------------------------------
-#
-
+# ------------------------------------------------------------------------------
+# Aliases.
+# ------------------------------------------------------------------------------
 [alias]
     # Diff stuff.
     dw = diff --word-diff --color-words
@@ -66,24 +64,23 @@
     # FYI: github cli is better.
     # gcm = credential-manager-core
 
-#
-# -- [ Git LFS ] ---------------------------------------------------------------
-#
-
+# ------------------------------------------------------------------------------
+# Git LFS.
+# ------------------------------------------------------------------------------
 [filter "lfs"]
     clean = git-lfs clean -- %f
     smudge = git-lfs smudge -- %f
     process = git-lfs filter-process
     required = true
 
-#
-# -- [ Extra configs ] ---------------------------------------------------------
-#
-
+# ------------------------------------------------------------------------------
+# Extra configs to include.
+# ------------------------------------------------------------------------------
 # Load in this order, so that the next one can override the previous.
 # If it any of them don't exist, they are ignored.
 [include]
-    path = .gitconfig.local.gitconfig
+    # OS-specific
+    # -----------
 
     # This file should only exist in Windows systems.
     path = .gitconfig.windows.gitconfig
@@ -94,23 +91,31 @@
     # This file should only exist in Linux systems (but not in a Mac).
     path = .gitconfig.linux.gitconfig
 
-#
-# Examples of how to include extra configs conditionally, based on the current
-# directory or the current git repository.
-#
-# NOTE: This naming is so that editors recognize the file as a git config and
-# also for them to stay close in the directory structure.
-#
-#    [includeIf "gitdir:~/Private/"]
-#        path = .gitconfig.personal.gitconfig
-#
-#    [includeIf "gitdir:~/projects/"]
-#        path = .gitconfig.personal.gitconfig
-#
-#    [includeIf "gitdir:~/projects/some-repo/"]
-#        path = .gitconfig.some-repo-custom-config.gitconfig
-#
-#    [includeIf "gitdir:/workspaces/"]  # Containers.
-#        # Loaded in this order. If work file doesn't exist, it is ignored.
-#        path = .gitconfig.work.gitconfig
-#
+    # Installation-specific
+    # ---------------------
+
+    # My overrides.
+    path = .gitconfig.local.gitconfig
+
+    # Temporary overrides like what the VSCode Remote Containers extension
+    # creates.
+    path = .gitconfig.tmp.gitconfig
+
+    # Examples of how to include extra configs conditionally, based on the current
+    # directory or the current git repository.
+    #
+    # NOTE: This naming is so that editors recognize the file as a git config and
+    # also for them to stay close in the directory structure.
+    #
+    #    [includeIf "gitdir:~/Private/"]
+    #        path = .gitconfig.personal.gitconfig
+    #
+    #    [includeIf "gitdir:~/projects/"]
+    #        path = .gitconfig.personal.gitconfig
+    #
+    #    [includeIf "gitdir:~/projects/some-repo/"]
+    #        path = .gitconfig.some-repo-custom-config.gitconfig
+    #
+    #    [includeIf "gitdir:/workspaces/"]  # Containers.
+    #        # Loaded in this order. If work file doesn't exist, it is ignored.
+    #        path = .gitconfig.work.gitconfig
