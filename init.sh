@@ -1,59 +1,5 @@
 #!/usr/bin/env bash
-# vim:tw=80:ts=4:sw=4:ai:et:ff=unix:fenc=utf-8:et:fixeol:eol:fdm=marker:fdl=1:fen:ft=sh
-#
-# Main shell configuration script. {{{
-#
-# File docs and posix shell how-to. {{{
-#
-# TODO: ideas
-# -----------
-#
-#
-# - [ ] add documentation on how this file works?
-# - [ ] split files per sections?
-# - [ ] use a different programming language for some stuff?
-#
-#
-#
-# Shell HOW-TO
-# ------------
-#
-#
-# - Discard commands outputs
-#   - stdout: > /dev/null
-#   - stderr: 2> /dev/null
-#   - both
-#     - more portable: > /dev/null 2>&1
-#     - less portable (but good enough), shorter: &> /dev/null
-# - Scripts and functions arguments
-#   - each argument get a number: $1, $2, $3 ...
-#   - for all arguments:
-#     - $* => $1 $2 ... ${N}
-#     - $@ => $1 $2 ... ${N}
-#     - "$*" => "$1c$2c ... ${N}"
-#     - "$@" => "$1" "$2" ... "${N}"
-# - Difference between [[ and [
-#   - [ is posix
-#   - [[ is bash, inspired by the korn shell
-#   - there are a lot of differences, described in more details in the answer below
-#     - https://stackoverflow.com/a/47576482/1814970
-#   - the recommendation is to always use [], as it is more portable and it has equivalents for
-#     everything from [[]]
-# - Function variables are not scoped to the function unless they are defined with `local`
-#
-#
-#
-# To learn
-# --------
-#
-#
-# Move stuff from here to the section above after learning!
-#
-# - more posix stuff!
-#
-# }}}
-#
-# }}}
+# Main shell configuration script.
 
 REQUIRED_ENVS=''
 
@@ -62,28 +8,24 @@ verify_defined() {
     local env_value
     eval env_value=\$$1
 
-    if [ -z "$env_value" ]; then
+    if [[ -z "$env_value" ]]; then
         REQUIRED_ENVS="${REQUIRED_ENVS}'$env_name' must be defined with the $2.\n\n"
     fi
 }
 
-verify_defined "MCRA_PROJECTS_FOLDER" 'path to the folder where you put all your programming projects'
 verify_defined "MCRA_INIT_SHELL" 'path to your shell init. I use the `.rc` file in this repo'
 verify_defined "MCRA_LOCAL_SHELL" 'path to your local shell init, with stuff that you do not want tracked in a public repo'
 verify_defined "MCRA_TMP_PLAYGROUND" 'path to a folder that you can use as a playground. I use /tmp/playground or something like this'
 
-if [ ! -z "$REQUIRED_ENVS" ]; then
+if [[ ! -z "$REQUIRED_ENVS" ]]; then
     echo $REQUIRED_ENVS
     return 1
 fi
 
 # Load commons.
-if [ ! -f $HOME/lib/.rc.common ]; then
-    ln -s $MCRA_PROJECTS_FOLDER/dotfiles/.rc.common $HOME/lib/.rc.common
-fi
 . $HOME/lib/.rc.common
 
-# functions{{{
+# #region .functions. {{{
 
 # Simplifies working with tmux. Tries to create
 # a new session and if it already exists, just
@@ -116,60 +58,6 @@ tmx() {
     return 1
 }
 alias t=tmx
-
-easy_jump_to_project() {
-    if [[ ! -z "${MCRA_PROJECTS_FOLDER}" ]]; then
-        if [[ ! -z "$1" ]]; then
-            pushd ${MCRA_PROJECTS_FOLDER}/$1
-        else
-            popd
-        fi
-    else
-        echo '${MCRA_PROJECTS_FOLDER} not defined'
-    fi
-}
-alias j="easy_jump_to_project"
-
-# Setup the default text editor based on what is installed.
-if mm_is_command nvim; then
-    export EDITOR=nvim
-
-    # NOTE: Trying to stop using these aliases.
-
-    # alias vim="$EDITOR"
-    # alias vi=vim
-    # alias v=vim
-    # alias n=vim
-    # alias n=$EDITOR
-
-    function n() {
-        if [[ -z "$@" ]]; then
-            pushd $MCRA_DOTFILES >/dev/null
-        fi
-
-        $EDITOR "$@"
-
-        if [[ -z "$@" ]]; then
-            popd >/dev/null
-        fi
-    }
-elif mm_is_command vim; then
-    export EDITOR=vim
-
-    alias vim="$EDITOR"
-    alias vi=vim
-    alias v=vim
-    alias n=vim
-    alias n=$EDITOR
-elif mm_is_command vi; then
-    export EDITOR=vi
-elif mm_is_command nano; then
-    export EDITOR=nano
-else
-    echo "You don't have 'neovim' (nvim), 'vim', 'vi' or 'nano' installed."
-    echo "No idea what the EDITOR env will be haha. Actually, take a look:"
-    echo "$EDITOR"
-fi
 
 # Desktop notification to help me change tasks.
 function timer_notification() {
@@ -208,103 +96,6 @@ alias t15="sleep 15m && timer_notification"
 alias t30="sleep 30m && timer_notification"
 alias t60="sleep 1h && timer_notification"
 
-function force_rm() {
-    local target="$(realpath $1)"
-
-    # Verify that the target is not empty.
-    if [[ -z "$target" ]]; then
-        echo 'Please, provide the path to a file or folder.'
-        return 1
-    fi
-
-    echo -n "> Verifying if target is valid for '$target': "
-
-    # Verify that the target is inside the user home dir or the chosen tmp dir,
-    # to avoid removing system stuff.
-    case $target in
-    $HOME/*)
-        echo -n 'valid.'
-        echo
-        ;;
-    $MCRA_TMP_PLAYGROUND/*)
-        echo -n 'valid.'
-        echo
-        ;;
-    /*)
-        echo -n 'invalid.'
-        echo
-        echo
-        echo "All paths should be within '$HOME' or '$MCRA_TMP_PLAYGROUND'. If you want to remove something above it, do manually (and BE SURE to know what you are doing!)"
-        return 1
-        ;;
-    esac
-
-    # Verify that the target is a file/symlink or a directory.
-    if [[ ! -e "$target" && ! -d "$target" ]]; then
-        echo 'What you are trying to remove is not a file nor a directory:'
-        echo
-        echo "  $target"
-        echo
-        echo 'Aborting...'
-
-        return 1
-    fi
-
-    echo "> Running 'ls -la $target' ..."
-    echo
-    ls -la $target
-    echo
-    # while true; do
-    #     read 'Are you sure you wish to permanentely remove it all? [yN] ' yn
-    #     case $yn in
-    #         [Yy]* ) rm -rf ${target}; break;;
-    #         [Nn]* ) return 0;;
-    #         * ) return 0;;
-    #     esac
-    # done
-    echo '> Are you sure you wish to permanentely remove it all? [yN]'
-    echo
-    select yn in "y" "n"; do
-        case $yn in
-        y)
-            echo
-            echo "> Running 'rm -rf $target' ..."
-            rm -rf $target
-            return 0
-            ;;
-        n | *)
-            echo
-            echo 'Aborting...'
-            return 1
-            ;;
-        esac
-    done
-
-    # Other idea:
-    #
-    #local valid_prefixes=($HOME $MCRA_TMP_PLAYGROUND)
-
-    #echo "> Target should have one of the valid path prefixes:"
-    #echo
-    #echo "$target"
-    #echo
-
-    #for valid in "${valid_prefixes[@]}"; do
-    #    if [[ $target == $valid/* ]]; then
-    #        echo "\t[x] valid"
-    #        echo "\t[ ] invalid"
-    #    else
-    #        echo "\t[ ] valid"
-    #        echo "\t[x] invalid"
-    #        echo
-    #        echo "All paths should be within '$HOME' or '$MCRA_TMP_PLAYGROUND'. If you want to remove something above it, do manually (and BE SURE to know what you are doing!)"
-
-    #        return 1
-    #    fi
-    #done
-
-    return 1
-}
 
 mm_today() {
     echo "$(date +%F)"
@@ -358,111 +149,6 @@ argument is optional: if not provided, the first is used in its place.'
     )
     return 0
 }
-
-# help() {
-#   local args="$@"
-#   local the_cmd="$1"
-
-#   # The first argument MUST be a command.
-#   if ! mm_is_command $the_cmd; then
-#     echo "It seems like '$the_cmd' is not a command."
-#     return 1
-#   fi
-
-#   # Already saved the first argument.
-#   shift
-
-#   local default_help_opt='help'
-#   # Use nvim as pager. Options:
-#   #  -R: readonly
-#   #  -M: not modifiable or writeable (can't even save)
-#   #  - : read from stdin
-#   local default_pager='nvim -R -'
-#   local default_manpager="nvim '+Man!'"
-
-#   local help_opt="$default_help_opt"
-#   if ! $the_cmd $help_opt >/dev/null 2>&1; then
-#     help_opt='--help'
-#   fi
-
-#   if ! $the_cmd $help >/dev/null 2>&1; then
-#     help_opt='-h'
-#   fi
-
-#   if ! $the_cmd $help >/dev/null 2>&1; then
-#     help_opt=''
-#   fi
-
-#   local pager="$default_pager"
-#   local use_man=$_FALSE
-#   local manpager="$default_manpager"
-#   while [ $# -ne 0 ]; do
-#     case "$1" in
-#       help|--help|-h)
-#         help_opt="$2"; shift
-
-#         ;;
-#       pager|--pager|-p)
-#         if $use_man; then break; fi # Ignore option if using man.
-#         pager="$2"; shift
-#         ;;
-#       manpager|--manpager|-mp)
-#         manpager="$2"; shift
-#         ;;
-#       man|-m)
-#         use_man=$_TRUE
-#         pager="$manpager"
-
-#         shift
-#         ;;
-#       *)
-#         ;;
-#     esac
-#     shift
-#   done
-
-#   if [ -z "$help_opt" ] || [ -z "$pager" ] || [ -z "$manpager" ]
-#   then
-#     mm_trim "
-#       ERROR:
-#           Args: $@
-#           help_opt: $help_opt
-#           pager: $pager
-#           manpager: $manpager
-
-#       Usage: $0 <cmd> [opts]
-
-#       Opts:
-
-#       -h,--help,help <help option/cmd name> (default '$default_help_opt')
-
-#           The function already tests 'help', '--help' and '-h'. If those don't
-#           work, provide another one with this option.
-
-#           Example: help some_cmd -h 'info' (some_cmd help command is called 'info')
-
-#       -p,--pager,pager <pager to use> (default '$default_pager')
-
-#           Choose a different pager.
-
-#           Example: help some_cmd -p less
-
-#       -m (default: false)
-
-#           Use a manpager.
-
-#       -mp,--manpager,manpager <manpager to use> (default: '$default_manpager')
-
-#           Chooses a different manpager. When used, the -p option is ignored.
-#           Ignored if -m is not provided.
-
-#           Example: help some_cmd -m -mp less
-#     " 4
-#     return 1
-#   fi
-
-#   $the_cmd $help_opt | $pager
-# }
 
 regexfind() {
     local dir="$1"
@@ -636,13 +322,16 @@ if ! command -v codene &>/dev/null; then
     alias codene='code --disable-extensions'
 fi
 
-# next function above.
-# }}}functions
-# aliases{{{
-# one lettered{{{
+# Next function above.
+# #endregion .functions. }}}
+
+# #region .aliases. {{{
+
+# ------------------------------------------------------------------------------
+# Reserved one lettered aliases.
+# ------------------------------------------------------------------------------
 
 # Used in the following sections:
-
 # b = popd
 # l = ls ...
 # n = reserved
@@ -652,21 +341,23 @@ fi
 # v = vim
 # g = some type of grep
 
-# }}}one lettered
-# general{{{
-
+# ------------------------------------------------------------------------------
 # Show diffs between files.
+# ------------------------------------------------------------------------------
 
-if command -v code &>/dev/null; then
+if mm_is_command code; then
     # VSCode diff is great!
-    alias diff-code="code -d"
+    alias diffc="code -d"
 fi
 
-if [ "$EDITOR" = "nvim" ]; then
+if [[ "$EDITOR" = "nvim" ]]; then
     # Neovim diff is good too.
     alias vimdiff="nvim -d"
 fi
 
+# ------------------------------------------------------------------------------
+# Set my preferred defaults for ls.
+# ------------------------------------------------------------------------------
 # NOTE:
 # -l: print as a list.
 # -F: classify (folder vs files).
@@ -676,163 +367,43 @@ fi
 # --time-style: how to show time. Currently, 30mar23-22h10.
 # --hyperlink=auto: stuff becomes clickable. For example, it is possbile to
 #   open images in kitty term.
-#
-# Set my preferred defaults for ls.
-alias ls='ls -F --group-directories-first --color=always --time-style="+%d%b%y-%Hh%M"'
-# My daily driver ls.
-alias l="ls -ltho"
-alias myls_display_no_group='awk -f <(cat - <<-'\''EOF'\''
-    BEGIN {
-        print
-    }
 
-    {
-        # If the line starts with "total", print as is.
-        if (index($1, "total") == 1) {
-            print $0;
-            next;
-        }
-
-        total += $5;
-        printf "%-10s   %-4.4s%3s   %-13s   %s\n", $1, $5/1024, "KB", $6, substr($0, index($0,$7));
-    }
-
-    END {
-        total_kb = total/1024;
-        total_mb = total_kb/1024;
-        printf "\nSize: %s MB (%s KB)\n", total_mb, total_kb;
-    }
-EOF
-)'
-
-alias myls_display_table='awk -f <(cat - <<-'\''EOF'\''
-    BEGIN {
-        sep = "";
-        "tput cols" | getline the_cols;
-        for (i=0; i < the_cols ; i++) {
-            sep = sep"-";
-        }
-    }
-
-    NR == 1 {
-        printf "%sSize (B) |  Date (Desc)  | Files and Folders\n%s", sep, sep;
-    }
-
-    NR > 1 {
-        total += $5;
-        printf "%-9s| %-14s| %s\n", $5, $6, substr($0, index($0,$7));
-    }
-
-    END {
-        printf "\nTotal (KB): %s\nTotal (MB): %s\n", total/1024, total/1024/1024;
-        printf "%s\n", sep;
-    }
-EOF
-)'
-
-function improved_ls() {
-    local path_to_use=${1:-.}
-    local tree_level
-    local is_next=false
-
-    [[ -n "$1" ]] && shift
-
-    # Try to get `path_to_use` from the --path option in $@.
-    for arg in "$@"; do
-        if [[ $arg == --path=* ]] || [[ $arg == -p=* ]]; then
-            path_to_use="${arg#*=}"
-        elif [[ "$arg" == "--path" ]] || [[ "$arg" == "-p" ]]; then
-            is_next=true
-        elif $is_next; then
-            path_to_use="$arg"
-            is_next=false
-        fi
-    done
-
-    for arg in "$@"; do
-        if [[ $arg == --level=* ]] || [[ $arg == -l=* ]]; then
-            tree_level="${arg#*=}"
-        elif [[ "$arg" == "--level" ]] || [[ "$arg" == "-l" ]]; then
-            is_next=true
-        elif $is_next; then
-            tree_level="$arg"
-            is_next=false
-        fi
-    done
-
-    echo "--path=${path_to_use}"
-    [[ -n "$tree_level" ]] && echo "--level=${tree_level}"
-
-    # Remove the --path and --level option from the arguments.
-    local rest=$(echo "$@" | sed -E -e 's/(--path|-p)[= ][^ ]+//g' -e 's/(--level|-l)[= ][^ ]+//g')
-
-    l ${path_to_use} ${rest} | myls_display_table
-    [[ -n "$tree_level" ]] &&
-        tree "${path_to_use}" -L $tree_level ||
-        true
-}
-
-function improved_ls_no_group() {
-    l $@ | myls_display_no_group
-}
-
+# My daily driver `ls`.
 if [[ $(uname) == "Darwin" ]]; then
-    # Mac doesn't support the --time-style flag.
+    # Mac doesn't support the --time-style flag. I haven't checked the others.
     alias l='ls -lFh -t --no-group'
 else
-    alias lt='improved_ls'
+    alias l='ls -F --group-directories-first --color=always --time-style="+%d%b%y-%Hh%M" -ltho'
 fi
 
-function improved_ls_full() {
-    local path_to_use=${1:-.}
-    [[ -n "$1" ]] && shift
-    improved_ls $path_to_use $@ -A
-}
 alias ll='l -A'
-alias llt='improved_ls_full'
 
-if [[ ! -z "${MCRA_INIT_SHELL}" && ! -z "${MCRA_LOCAL_SHELL}" ]]; then
-    alias rc.='echo -n "Reloading configs at $(date +%F_%T)... " \
-        && source $HOME/init_all.sh \
-        && echo '\''done!'\'' \
-        || echo '\''failed :('\'''
-    # # Changed in the last 10 minutes.
-    # alias rc_changed='find $MCRA_INIT_SHELL $MCRA_LOCAL_SHELL -mmin -10'
-    alias rc='(cd $MCRA_PROJECTS_FOLDER/dotfiles; $EDITOR $MCRA_INIT_SHELL); rc.'
-    alias rcl='(cd $MCRA_PROJECTS_FOLDER/dotfiles; $EDITOR $MCRA_LOCAL_SHELL); rc.'
-    alias rcz='(cd $MCRA_PROJECTS_FOLDER/dotfiles; $EDITOR ~/.zshrc); rc.'
-    alias rcb='(cd $MCRA_PROJECTS_FOLDER/dotfiles; $EDITOR ~/.bashrc); rc.'
-else
-    alias rc="echo 'Define \$MCRA_INIT_SHELL and \$MCRA_LOCAL_SHELL in your rc file'"
-    alias rcl=rc
-    alias rcz=rc
-    alias rcb=rc
-    alias rc.=rc
-fi
+# ------------------------------------------------------------------------------
+# Easily edit and reload shell configs.
+# ------------------------------------------------------------------------------
+alias rc.='echo "Reloading configs at $(date +%F_%T)... " \
+    && source $HOME/init_all.sh \
+    && echo '\''done!'\'' \
+    || echo '\''failed :('\'''
+# # Changed in the last 10 minutes.
+# alias rc_changed='find $MCRA_INIT_SHELL $MCRA_LOCAL_SHELL -mmin -10'
+alias rc='($EDITOR $MCRA_INIT_SHELL); rc.'
+alias rcl='($EDITOR $MCRA_LOCAL_SHELL); rc.'
+alias rcz='($EDITOR ~/.zshrc); rc.'
+alias rcb='($EDITOR ~/.bashrc); rc.'
 
-# Speech synthesizer.
-alias say="spd-say -w -l pt-BR -p 100 -r -30 -R 100 -m all"
-alias fala="spd-say -w -l pt-BR -p 100 -r -30 -R 100 -m all"
-alias falar="spd-say -w -l pt-BR -p 100 -r -30 -R 100 -m all"
-
-# # AsciiDoc.
-# alias asciidoctor="docker run --rm -it -v $(pwd):/documents/ asciidoctor/docker-asciidoctor"
-# alias asciidoctor-gen="docker run --rm -v $(pwd):/documents/ asciidoctor/docker-asciidoctor asciidoctor-pdf index.adoc"
-
-# Always use sed with extended regexes.
-if [[ $(uname) == "Darwin" ]]; then
-    alias sed='sed -E'
-else
-    alias sed='sed -r'
-fi
-
+# ------------------------------------------------------------------------------
+# Untar (extract) files.
+# ------------------------------------------------------------------------------
 # I never remember how to extract tar files. Now I discovered that it
 # automatically detect the compression format, so I only need to provide the -x
 # (extract) and the -f (point to file) options (f has to be the last one if
 # they are provided together).
 alias untar="tar -xf"
 
+# ------------------------------------------------------------------------------
 # Always use the same tmp and make it easy to go there.
+# ------------------------------------------------------------------------------
 if [[ ! -d "$MCRA_TMP_PLAYGROUND" ]]; then
     mkdir $MCRA_TMP_PLAYGROUND
 fi
@@ -887,6 +458,9 @@ elif mm_is_command grep; then
     alias g=grep
 fi
 
+# ------------------------------------------------------------------------------
+# My preffered less options.
+# ------------------------------------------------------------------------------
 # ALWAYS use `-R`, otherwise terminals probably will keep printing ESC chars.
 export LESS='-R --use-color'
 # If `lesspipe` is available, we can use the following instead of the
@@ -901,15 +475,9 @@ export LESS='-R --use-color'
 # Less with vim support as the editor (pressing v in less).
 alias lesv='lesstmp'
 
-# List processes bound to all ports.
-alias list_process_to_port_all="netstat -lnp"
-# Same, but for TCP only. This is usually what I want, e.g. when a server hold
-# it even after ctrl+c.
-alias list_process_to_port_tcp="netstat -lnpt"
-
-# Fonts
-# -----
-
+# ------------------------------------------------------------------------------
+# Font-related aliases and functions.
+# ------------------------------------------------------------------------------
 fonts_install_packages_to_improve_rendering() {
     # Great fonts with good rendering.
     sudo apt install fonts-noto
@@ -924,23 +492,12 @@ alias fonts_update_cache="fc-cache -fv"
 alias fonts_rebuild_cache="sudo fc-cache -r -v"
 alias fonts_list="ll ~/.local/share/fonts"
 
-# Monitor
-# -------
+# List monospaced fonts.
+alias list_mono_fonts='fc-list : family spacing outline scalable | grep -e spacing=100 -e spacing=90 | grep -e outline=True | grep -e scalable=True'
 
-alias monitor_show_dpi="xdpyinfo | grep dots"
-
-# Last time a user logged into the system.
-alias last_login="last -10"
-
-# Print the size of the files in the current directory.
-alias files_cwd_size_in_mb='ls -la | awk '\''{sum += $5} END {print sum/1024/1024 " MB"}'\'''
-alias files_size_in_mb='awk '\''{sum += $5} END {print sum/1024/1024 " MB"}'\'''
-
-# Get os version, name and details.
-alias system_info='cat /etc/os-release && lsb_release -a && hostnamectl && uname -r'
-
-# Pnpm stuff
-# ----------
+# ------------------------------------------------------------------------------
+# Pnpm stuff.
+# ------------------------------------------------------------------------------
 
 alias pnpm_add_tailwind="pnpm add -D @tailwindcss/typography daisyui@latest tailwindcss postcss autoprefixer tailwind-merge react-markdown && npx tailwindcss init -p"
 alias pnpm_add_tailwind_utils="pnpm add -D tailwind-merge @popperjs/core @tailwindcss/typography daisyui@latest tailwind-merge react-markdown"
@@ -956,15 +513,9 @@ alias pnpm_add_mui2='echo "Add this to your index.html:\n\n\n<link rel=\"preconn
 alias pnpm_add_lodash="pnpm add -D lodash @types/lodash"
 alias pnpm_add_immer="pnpm add immer use-immer"
 
-# Chrome
-# ------
-
-# Start Chrome using other language.
-alias chrome_br='LANGUAGE=pt_BR google-chrome-stable'
-
-# Python
-# ------
-
+# ------------------------------------------------------------------------------
+# Python stuff.
+# ------------------------------------------------------------------------------
 function venv_activate() {
     local the_venv="./.venv/bin/activate"
 
@@ -987,10 +538,56 @@ alias va=venv_activate
 # Init local python environment and install pip.
 alias initpy='uv init && uv venv && uv add pip && venv_activate'
 
-# List monospaced fonts.
-# ---------------------
+# ------------------------------------------------------------------------------
+# Neovim stuff.
+# ------------------------------------------------------------------------------
+# Open nvim without plugins and/or configs. From the docs (:help noplugin):
+#
+# --noplugin  Skip loading plugins.  Resets the 'loadplugins' option.
+#             Note that the |-u| argument may also disable loading plugins:
+#                 argument    load vimrc files    load plugins ~
+#                 (nothing)       yes         yes
+#                 -u NONE         no          no
+#                 -u NORC         no          yes
+#                 --noplugin      yes         no
+alias neovim_none='nvim -u NONE'
+alias neovim_norc='nvim -u NORC'
+alias neovim_noplugin='nvim --noplugin'
 
-alias list_mono_fonts='fc-list : family spacing outline scalable | grep -e spacing=100 -e spacing=90 | grep -e outline=True | grep -e scalable=True'
+# Next alias section above.
+# ------------------------------------------------------------------------------
+# Misc.
+# ------------------------------------------------------------------------------
+# Speech synthesizer.
+alias say="spd-say -w -l pt-BR -p 100 -r -30 -R 100 -m all"
+alias fala="spd-say -w -l pt-BR -p 100 -r -30 -R 100 -m all"
+alias falar="spd-say -w -l pt-BR -p 100 -r -30 -R 100 -m all"
+
+# Always use sed with extended regexes. Mac supports `-E` but not `-r`.
+alias sed='sed -E'
+
+# List processes bound to all ports.
+alias list_process_to_port_all="netstat -lnp"
+# Same, but for TCP only. This is usually what I want, e.g. when a server hold
+# it even after ctrl+c.
+alias list_process_to_port_tcp="netstat -lnpt"
+
+# Monitor.
+alias monitor_show_dpi="xdpyinfo | grep dots"
+
+# Last time a user logged into the system.
+alias last_login="last -10"
+
+# Print the size of the files in the current directory.
+alias files_cwd_size_in_mb='ls -la | awk '\''{sum += $5} END {print sum/1024/1024 " MB"}'\'''
+alias files_size_in_mb='awk '\''{sum += $5} END {print sum/1024/1024 " MB"}'\'''
+
+# Get os version, name and details.
+alias system_info='cat /etc/os-release && lsb_release -a && hostnamectl && uname -r'
+
+
+# Start Chrome using other language.
+alias chrome_br='LANGUAGE=pt_BR google-chrome-stable'
 
 # List processes using the most memory. Fix header using sed (gambiarra).
 alias list_process_by_mem_gambs='ps -eo pid,comm,rss --sort=-rss \
@@ -1010,19 +607,6 @@ alias bat=batcat
 
 # List installed packages.
 alias list_installed_packages='dpkg --get-selections | grep -v deinstall'
-
-# Open nvim without plugins and/or configs. From the docs (:help noplugin):
-#
-# --noplugin  Skip loading plugins.  Resets the 'loadplugins' option.
-#             Note that the |-u| argument may also disable loading plugins:
-#                 argument    load vimrc files    load plugins ~
-#                 (nothing)       yes         yes
-#                 -u NONE         no          no
-#                 -u NORC         no          yes
-#                 --noplugin      yes         no
-alias neovim_none='nvim -u NONE'
-alias neovim_norc='nvim -u NORC'
-alias neovim_noplugin='nvim --noplugin'
 
 # Clear the screen with the same alias used in Windows.
 alias cls="clear"
@@ -1055,9 +639,10 @@ alias list_devices='lsblk -o NAME,SIZE,FSTYPE,MODEL'
 # Regenerate grup entries.
 alias grub_update='sudo update-grub'
 
-# next alias above, unless they fit in one of the other sections.
-# }}}general
-# git frequent{{{
+# Next alias above, unless they fit in one of the other sections.
+# #endregion .aliases. }}}
+
+# #region .git-frequent. {{{
 
 alias gs='git status'
 # simple and resumed, no branches
@@ -1133,14 +718,15 @@ alias grco='grc origin'
 
 alias gcct="echo 'git conventional commit types (gcct): fix, feat, build, chore, ci, docs, style, refactor, perf, test'"
 
-# }}}git frequent
-# git lfs{{{
+# Next git frequent alias above.
 
+# git lfs
 alias glfsdry="git lfs push origin main --dry-run --all"
 alias glfss="git lfs status"
 
-# }}}git lfs
-# docker{{{
+# #endregion .git-frequent. }}}
+
+# #region .docker. {{{
 
 alias dc="docker compose"
 alias docker-prune-month-old-images='docker image prune -a --filter "until=720h"'
@@ -1158,11 +744,43 @@ alias docker-prune-two-week-old-images='docker image prune -a --filter "until=33
 # }
 # alias di='docker_images_sorted'
 
-# }}}docker
-# }}}aliases
+# Next docker/podman alias above.
+# #endregion .docker. }}}
 
-# The end.
+# ------------------------------------------------------------------------------
+# THE END!
+# ------------------------------------------------------------------------------
 
-# Must be last, otherwise any failure above could cause the script to return non zero, which could
-# have weird consequences.
+# Must be last, otherwise any failure above could cause the script to return non
+# zero, which could have weird consequences.
 return 0
+
+# ------------------------------------------------------------------------------
+# Documentation.
+# ------------------------------------------------------------------------------
+#
+# #region .Shell HOW-TO. {{{
+#
+# - Discard commands outputs
+#   - stdout: > /dev/null
+#   - stderr: 2> /dev/null
+#   - both
+#     - more portable: > /dev/null 2>&1
+#     - less portable (but good enough), shorter: &> /dev/null
+# - Scripts and functions arguments
+#   - each argument get a number: $1, $2, $3 ...
+#   - for all arguments:
+#     - $* => $1 $2 ... ${N}
+#     - $@ => $1 $2 ... ${N}
+#     - "$*" => "$1c$2c ... ${N}"
+#     - "$@" => "$1" "$2" ... "${N}"
+# - Difference between [[ and [
+#   - [ is posix
+#   - [[ is bash, inspired by the korn shell
+#   - there are a lot of differences, described in more details in the answer below
+#     - https://stackoverflow.com/a/47576482/1814970
+#   - the recommendation is to always use [], as it is more portable and it has equivalents for
+#     everything from [[]]
+# - Function variables are not scoped to the function unless they are defined with `local`
+#
+# #endregion .Shell HOW-TO. }}}
