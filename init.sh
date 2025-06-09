@@ -769,6 +769,9 @@ alias glfss="git lfs status"
 
 # #region .docker. {{{
 
+alias pod=podman
+alias docker=podman
+
 alias dc="docker compose"
 alias docker-prune-month-old-images='docker image prune -a --filter "until=720h"'
 alias docker-prune-two-week-old-images='docker image prune -a --filter "until=336h"'
