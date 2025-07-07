@@ -123,9 +123,9 @@
 # to work. It is highly recommended, as it provides a convenient way to use git
 # with GitHub from the terminal (in containers too).
 # ------------------------------------------------------------------------------
-[credential "https://github.com"]
-    helper =
-    helper = !/usr/bin/gh auth git-credential
-[credential "https://gist.github.com"]
-    helper =
-    helper = !/usr/bin/gh auth git-credential
+# [credential "https://github.com"]
+#     helper =
+#     helper = !/usr/bin/gh auth git-credential
+# [credential "https://gist.github.com"]
+#     helper =
+#     helper = !/usr/bin/gh auth git-credential
