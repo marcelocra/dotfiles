@@ -1,0 +1,32 @@
+# Essential VSCode Extensions for Dotfiles
+# These extensions are considered essential for most development workflows
+
+# Core Development
+github.copilot
+github.copilot-chat
+github.vscode-pull-request-github
+eamodio.gitlens
+esbenp.prettier-vscode
+editorconfig.editorconfig
+
+# Editor Enhancement
+vscodevim.vim
+github.github-vscode-theme
+sdras.night-owl
+
+# Language Support - Core
+ms-python.python
+ms-python.vscode-pylance
+ms-python.black-formatter
+dbaeumer.vscode-eslint
+bradlc.vscode-tailwindcss
+redhat.vscode-yaml
+
+# Remote Development
+ms-vscode-remote.remote-containers
+ms-vscode-remote.remote-ssh
+ms-vscode-remote.remote-wsl
+ms-vscode.remote-explorer
+
+# Docker
+ms-azuretools.vscode-docker

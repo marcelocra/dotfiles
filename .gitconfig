@@ -8,6 +8,12 @@
     autocrlf = false
     eol = lf
     pager = less -F -X
+    # Use better compression for repositories
+    precomposeUnicode = true
+    # Speed up operations on large repositories
+    preloadindex = true
+    # Use multiple threads when available
+    fscache = true
 
 [user]
     name = Marcelo Almeida
@@ -18,12 +24,74 @@
 
 [push]
     autoSetupRemote = true
+    # Push current branch to upstream branch of same name
+    default = simple
+    # Automatically follow tags when pushing
+    followTags = true
 
 [pull]
     rebase = false
 
+[fetch]
+    # Automatically prune deleted remote branches
+    prune = true
+    # Fetch all tags
+    tags = true
+
+[rebase]
+    # Show conflict resolutions
+    autoStash = true
+    autoSquash = true
+
+[merge]
+    # Show common ancestor in merge conflicts
+    conflictStyle = diff3
+    # Use better merge algorithm
+    algorithm = patience
+
+[diff]
+    # Better whitespace handling
+    algorithm = patience
+    compactionHeuristic = true
+    colorMoved = default
+    # Show renames
+    renames = copies
+
+[status]
+    # Show untracked files
+    showUntrackedFiles = all
+    # Show submodule status
+    submoduleSummary = true
+
 [color]
     ui = true
+
+[color "branch"]
+    current = yellow reverse
+    local = yellow
+    remote = green
+
+[color "diff"]
+    meta = yellow bold
+    frag = magenta bold
+    old = red bold
+    new = green bold
+
+[color "status"]
+    added = yellow
+    changed = green
+    untracked = cyan
+
+# Modern Git features
+[rerere]
+    enabled = true
+
+[help]
+    autoCorrect = 1
+
+[transfer]
+    # Use protocol v2 for better performance
+    protocol = 2
 
 # ------------------------------------------------------------------------------
 # Aliases.
@@ -60,6 +128,60 @@
     lold = log --abbrev-commit --decorate --format=format:'%C(yellow)%h%C(reset) %C(magenta)%aD%C(reset) %C(green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(cyan)%d%C(reset)'
     dagd = log --graph --abbrev-commit --decorate --format=format:'%C(yellow)%h%C(reset) %C(magenta)%aD%C(reset) %C(green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(cyan)%d%C(reset)' --all
 
+    # Modern workflow aliases
+    sw = switch
+    swc = switch -c
+    sw- = switch -
+    restore = restore
+    unstage = restore --staged
+    
+    # Quick status checks
+    ss = status --short
+    sb = status --short --branch
+    
+    # Improved log commands
+    recent = log --oneline -10
+    today = log --since="midnight" --oneline
+    yesterday = log --since="yesterday" --until="midnight" --oneline
+    
+    # Branch management
+    cleanup = "!git branch --merged | grep -v '\\*\\|main\\|master' | xargs -r git branch -d"
+    branches = branch -a
+    remotes = remote -v
+    
+    # Stash improvements
+    stash-staged = stash --staged
+    stash-keep = stash --keep-index
+    
+    # Diff improvements
+    word-diff = diff --word-diff=color
+    stat = diff --stat
+    
+    # Commit helpers
+    amend = commit --amend --no-edit
+    fix = commit --fixup
+    squash = commit --squash
+    
+    # Push/pull shortcuts
+    pushf = push --force-with-lease
+    pusha = push --all
+    pusht = push --tags
+    
+    # Find commits
+    find = "!git log --pretty=format:'%h %s' --grep"
+    grep = grep -Ii
+    
+    # Show contributors
+    contributors = shortlog --summary --numbered
+    
+    # Undo operations
+    undo = reset HEAD~1 --mixed
+    undo-hard = reset HEAD~1 --hard
+    
+    # Working tree operations
+    save = "!git add -A && git commit -m 'WIP: savepoint'"
+    wip = "!git add -A && git commit -m 'WIP'"
+    
     # Uncomment the next line when using git credential manager core.
     # FYI: github cli is better.
     # gcm = credential-manager-core
