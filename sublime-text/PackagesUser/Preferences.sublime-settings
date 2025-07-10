@@ -25,18 +25,11 @@
 
   // ---
 
-  // "font_face": "Noto Sans Mono",
-  "font_face": "AdwaitaMono Nerd Font",
-  // "font_face": "Atkinson Hyperlegible Mono",
-
-  // "font_face": "Iosevka Nerd Font",
-  // "font_size": 12,
-  // "font_options": [
-  //   // "Extended",
-  //   // "ss04", // Menlo
-  //   // "ss07", // Monaco
-  //   "ss08", // Pragmata Pro
-  // ],
+  "font_face": "JetBrainsMono Nerd Font",
+  "font_size": 11,
+  "font_options": [
+    // "ss02"
+  ],
 
   "caret_extra_top": 4,
   "caret_extra_bottom": 4,
@@ -117,6 +110,5 @@
   "color_scheme": "Mariana.sublime-color-scheme",
   "dark_color_scheme": "Mariana.sublime-color-scheme",
   "light_color_scheme": "Breakers.sublime-color-scheme",
-  "theme": "Default Dark.sublime-theme",
-  "font_size": 14,
+  "theme": "auto",
 }
