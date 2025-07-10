@@ -65,24 +65,115 @@ fi
 # Platform-Specific Configuration Loading
 # ------------------------------------------------------------------------------
 
-# Load common utilities (if available)
-if [[ -f "$HOME/lib/.rc.common" ]]; then
-    . "$HOME/lib/.rc.common"
-elif [[ -f "$(dirname "$MCRA_INIT_SHELL")/common.sh" ]]; then
-    . "$(dirname "$MCRA_INIT_SHELL")/common.sh"
-fi
+# ------------------------------------------------------------------------------
+# Utility Functions (consolidated from common.sh)
+# ------------------------------------------------------------------------------
 
-# Utility function to check if command exists
-command_exists() {
+# Check if command exists
+mm_is_command() {
     command -v "$1" >/dev/null 2>&1
 }
 
-# Create mm_is_command function if not available from common
-if ! declare -f mm_is_command >/dev/null 2>&1; then
-    mm_is_command() {
-        command_exists "$1"
-    }
-fi
+# Alternative name for backward compatibility
+command_exists() {
+    mm_is_command "$1"
+}
+
+# Date formatting utilities
+mm_now() {
+    local mode="${1:-}"
+    
+    if [[ "$mode" == "--path" ]]; then
+        echo "$(date '+%F_%T' | tr ':' '-')"
+    elif [[ "$mode" == "--simple" ]]; then
+        echo "$(date '+%d%b%y/%Hh%M')"
+    else
+        if [[ -z "$mode" ]]; then
+            mode='+%F %T'
+        fi
+        echo "$(date "$mode")"
+    fi
+}
+
+# Debug and error handling utilities
+is_debug() {
+    # If the variable is empty, we are not in debug mode.
+    if [[ -z "${MCRA_DEBUG:-}" ]]; then
+        return 1  # Not debug mode
+    else
+        return 0  # Debug mode
+    fi
+}
+
+debug() {
+    if ! is_debug; then
+        return 0
+    fi
+    echo "[$(date '+%F %T')] [debug] $*"
+}
+
+error() {
+    debug "$1"
+    return 1
+}
+
+fatal() {
+    echo
+    echo "$*"
+    exit 1
+}
+
+# Shell settings utility
+mm_set() {
+    local mode="${1:-}"
+    
+    if [[ "$mode" == "all" ]]; then
+        set -euxo pipefail
+    elif [[ "$mode" == "u" ]]; then
+        # Exit on undefined variable
+        set -u
+    elif [[ "$mode" == "x" ]]; then
+        # Print all commands before execution
+        set -x
+    else
+        # Exit on error
+        set -e
+    fi
+}
+
+# File path utilities
+mm_file_path() {
+    local filepath="${1:-}"
+    if mm_is_command readlink; then
+        echo "$(readlink -f "$filepath")"
+    elif mm_is_command realpath; then
+        echo "$(realpath "$filepath")"
+    else
+        echo "Need 'readlink' or 'realpath' and they were not found."
+    fi
+}
+
+mm_dir_path() {
+    echo "$(dirname "$(mm_file_path "$1")")"
+}
+
+get_this_file_dir() {
+    local file="${1:-}"
+    echo "$(command -v readlink >/dev/null 2>&1 && dirname "$(readlink -f "$file")" || dirname "$file")"
+}
+
+# String prefix checking
+has_prefix() {
+    if [[ $# -ne 2 ]]; then
+        error 'Usage: has_prefix "original string" "prefix to check".'
+    fi
+    
+    if [[ "${1#$2}" != "$1" ]]; then
+        return 0  # true - has prefix
+    else
+        return 1  # false - no prefix
+    fi
+}
 
 # Debug output (can be enabled with DOTFILES_DEBUG=1)
 if [[ "${DOTFILES_DEBUG:-0}" == "1" ]]; then
