@@ -1,0 +1,76 @@
+# Language-Specific VSCode Extensions
+# Install these based on your development needs
+
+# Web Development
+astro-build.astro-vscode
+svelte.svelte-vscode
+vue.volar
+unifiedjs.vscode-mdx
+styled-components.vscode-styled-components
+bierner.lit-html
+runem.lit-plugin
+
+# Mobile Development
+dart-code.dart-code
+dart-code.flutter
+expo.vscode-expo-tools
+
+# Systems Programming
+rust-lang.rust-analyzer
+golang.go
+ziglang.vscode-zig
+vlanguage.vscode-vlang
+
+# Functional Programming
+betterthantomorrow.calva
+betterthantomorrow.calva-spritz
+haskell.haskell
+justusadam.language-haskell
+ocamllabs.ocaml-platform
+
+# .NET Development
+ms-dotnettools.csdevkit
+ms-dotnettools.csharp
+ms-dotnettools.dotnet-interactive-vscode
+ms-dotnettools.vscode-dotnet-runtime
+ionide.ionide-fsharp
+ionide.ionide-fake
+ionide.ionide-paket
+
+# C/C++ Development
+ms-vscode.cpptools
+ms-vscode.cpptools-extension-pack
+ms-vscode.cpptools-themes
+ms-vscode.cmake-tools
+
+# Ruby Development
+shopify.ruby-extensions-pack
+shopify.ruby-lsp
+shopify.vscode-shadowenv
+sorbet.sorbet-vscode-extension
+koichisasada.vscode-rdbg
+
+# Data Science & Notebooks
+ms-toolsai.jupyter
+ms-toolsai.jupyter-keymap
+ms-toolsai.jupyter-renderers
+ms-toolsai.vscode-jupyter-cell-tags
+ms-toolsai.vscode-jupyter-slideshow
+ms-python.debugpy
+
+# Build Tools & Infrastructure
+bazelbuild.vscode-bazel
+github.vscode-github-actions
+denoland.vscode-deno
+prisma.prisma
+
+# Documentation & Writing
+asciidoctor.asciidoctor-vscode
+
+# Collaboration
+ms-vsliveshare.vsliveshare
+ms-vsliveshare.vsliveshare-pack
+github.codespaces
+
+# CSS Frameworks
+sastan.twind-intellisense

@@ -1,9 +1,0 @@
-[Desktop Entry]
-Name=Logseq
-Comment=Markdown Notetaking App
-GenericName=Text Editor
-Type=Application
-Exec=/home/marcelocra/bin/logseq %U
-Icon=logseq
-StartupWMClass=logseq
-MimeType=x-scheme-handler/logseq;
