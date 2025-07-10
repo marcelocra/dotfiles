@@ -42,12 +42,19 @@ export DOTFILES_PLATFORM DOTFILES_IN_CONTAINER DOTFILES_IN_WSL
 REQUIRED_ENVS=''
 
 verify_defined() {
-    local env_name="$1"
+    local env_name="${1:-}"
+    local description="${2:-}"
+    
+    if [[ -z "$env_name" ]]; then
+        echo "verify_defined: Missing environment variable name"
+        return 1
+    fi
+    
     local env_value
-    eval env_value=\$$1
-
+    eval env_value=\$$env_name
+    
     if [[ -z "$env_value" ]]; then
-        REQUIRED_ENVS="${REQUIRED_ENVS}'$env_name' must be defined with the $2.\n\n"
+        REQUIRED_ENVS="${REQUIRED_ENVS}'$env_name' must be defined with the $description.\n\n"
     fi
 }
 
@@ -113,7 +120,7 @@ debug() {
 }
 
 error() {
-    debug "$1"
+    debug "${1:-Error occurred}"
     return 1
 }
 

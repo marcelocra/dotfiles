@@ -28,7 +28,7 @@ readonly DEBUG='false'
 # and -1.1 gives error. I believe the maximum is 1).
 readonly DEVICE_SENSITIVITY="-1"
 
-# TODO: move this and the following ideas to `.rc.common`.
+# TODO: move this and the following ideas to `init.sh`.
 now() {
     echo "$(date '+%F_%T')"
 }
