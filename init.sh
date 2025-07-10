@@ -1,5 +1,43 @@
 #!/usr/bin/env bash
 # Main shell configuration script.
+# Enhanced with environment detection and better error handling.
+
+set -euo pipefail  # Exit on error, undefined variables, and pipe failures
+
+# ------------------------------------------------------------------------------
+# Environment Detection and Variables
+# ------------------------------------------------------------------------------
+
+# Detect platform
+DOTFILES_PLATFORM="unknown"
+DOTFILES_IN_CONTAINER="false"
+DOTFILES_IN_WSL="false"
+
+# Platform detection
+if [[ "$OSTYPE" == "linux-gnu"* ]]; then
+    if grep -q Microsoft /proc/version 2>/dev/null; then
+        DOTFILES_PLATFORM="wsl"
+        DOTFILES_IN_WSL="true"
+    else
+        DOTFILES_PLATFORM="linux"
+    fi
+elif [[ "$OSTYPE" == "darwin"* ]]; then
+    DOTFILES_PLATFORM="macos"
+else
+    DOTFILES_PLATFORM="unknown"
+fi
+
+# Container detection
+if [[ -f /.dockerenv ]] || [[ -n "${CONTAINER:-}" ]]; then
+    DOTFILES_IN_CONTAINER="true"
+fi
+
+# Export environment variables for use in other scripts
+export DOTFILES_PLATFORM DOTFILES_IN_CONTAINER DOTFILES_IN_WSL
+
+# ------------------------------------------------------------------------------
+# Environment Variable Validation
+# ------------------------------------------------------------------------------
 
 REQUIRED_ENVS=''
 
@@ -18,38 +56,90 @@ verify_defined "MCRA_LOCAL_SHELL" 'path to your local shell init, with stuff tha
 verify_defined "MCRA_TMP_PLAYGROUND" 'path to a folder that you can use as a playground. I use /tmp/playground or something like this'
 
 if [[ ! -z "$REQUIRED_ENVS" ]]; then
-    echo $REQUIRED_ENVS
+    echo -e "❌ Missing required environment variables:\n$REQUIRED_ENVS"
+    echo "Run 'check-dependencies.sh' for setup instructions."
     return 1
 fi
 
-# Load commons.
-. $HOME/lib/.rc.common
-
 # ------------------------------------------------------------------------------
-# Exports.
+# Platform-Specific Configuration Loading
 # ------------------------------------------------------------------------------
 
+# Load common utilities (if available)
+if [[ -f "$HOME/lib/.rc.common" ]]; then
+    . "$HOME/lib/.rc.common"
+elif [[ -f "$(dirname "$MCRA_INIT_SHELL")/common.sh" ]]; then
+    . "$(dirname "$MCRA_INIT_SHELL")/common.sh"
+fi
+
+# Utility function to check if command exists
+command_exists() {
+    command -v "$1" >/dev/null 2>&1
+}
+
+# Create mm_is_command function if not available from common
+if ! declare -f mm_is_command >/dev/null 2>&1; then
+    mm_is_command() {
+        command_exists "$1"
+    }
+fi
+
+# Debug output (can be enabled with DOTFILES_DEBUG=1)
+if [[ "${DOTFILES_DEBUG:-0}" == "1" ]]; then
+    echo "🔍 Dotfiles Environment Detection:"
+    echo "  Platform: $DOTFILES_PLATFORM"
+    echo "  Container: $DOTFILES_IN_CONTAINER"
+    echo "  WSL: $DOTFILES_IN_WSL"
+    echo ""
+fi
+
+# ------------------------------------------------------------------------------
+# Exports and Editor Configuration
+# ------------------------------------------------------------------------------
+
+# Smart editor selection with platform considerations
 if mm_is_command nvim; then
     export EDITOR='nvim'
+    # Use Neovim's built-in pager support as the man pager
+    export MANPAGER='nvim +Man!'
 elif mm_is_command vim; then
     export EDITOR='vim'
+    export MANPAGER='vim +Man!'
 elif mm_is_command vi; then
     export EDITOR='vi'
 else
-    echo "Didn't find Neovim, Vim or Vi. Using nano as the default editor."
+    if [[ "${DOTFILES_DEBUG:-0}" == "1" ]]; then
+        echo "⚠️  Didn't find Neovim, Vim or Vi. Using nano as the default editor."
+    fi
     export EDITOR='nano'
 fi
+
 # Hopefully, Neovim (hence, 'n'). Works for Nano too, I guess...
 alias n="$EDITOR"
 
-# Use my version of less.
-# export MANPAGER='lesstmp'
+# Platform-specific exports
+case "$DOTFILES_PLATFORM" in
+    "linux"|"wsl")
+        # Swap Caps Lock and Ctrl keys when using X11 (Linux/WSL)
+        export XKB_DEFAULT_OPTIONS="ctrl:swapcaps"
+        ;;
+    "macos")
+        # macOS-specific exports can go here
+        ;;
+    *)
+        if [[ "${DOTFILES_DEBUG:-0}" == "1" ]]; then
+            echo "⚠️  Unknown platform: $DOTFILES_PLATFORM"
+        fi
+        ;;
+esac
 
-# Uses Neovim's built in pager support as the man pager.
-export MANPAGER='nvim +Man!'
-
-# Swap Caps Lock and Ctrl keys when using X11.
-export XKB_DEFAULT_OPTIONS="ctrl:swapcaps"
+# Container-specific configurations
+if [[ "$DOTFILES_IN_CONTAINER" == "true" ]]; then
+    # In containers, we might want different defaults
+    export DEBIAN_FRONTEND=noninteractive
+    # Don't use X11 features in containers
+    unset XKB_DEFAULT_OPTIONS
+fi
 
 # Next export above.
 # ------------------------------------------------------------------------------
@@ -399,13 +489,17 @@ fi
 # --hyperlink=auto: stuff becomes clickable. For example, it is possbile to
 #   open images in kitty term.
 
-# My daily driver `ls`.
-if [[ $(uname) == "Darwin" ]]; then
-    # Mac doesn't support the --time-style flag. I haven't checked the others.
-    alias l='ls -lFh -t --no-group'
-else
-    alias l='ls -F --group-directories-first --color=always --time-style="+%d%b%y-%Hh%M" -ltho'
-fi
+# My daily driver `ls` with platform-specific options
+case "$DOTFILES_PLATFORM" in
+    "macos")
+        # Mac doesn't support the --time-style flag and some other GNU ls options
+        alias l='ls -lFh -t'
+        ;;
+    "linux"|"wsl"|*)
+        # GNU ls with enhanced features
+        alias l='ls -F --group-directories-first --color=always --time-style="+%d%b%y-%Hh%M" -ltho'
+        ;;
+esac
 
 alias ll='l -A'
 
