@@ -23,8 +23,7 @@ Starting comprehensive analysis of dotfiles project...
 
 2. **Shell & System:**
 
-   - `init.sh` - Main shell configuration script
-   - `common.sh` - Common shell functions
+   - `init.sh` - Main shell configuration script (self-contained)
    - `.gitconfig` - Git configuration
    - `devcontainers/` - Dev container setup
 
