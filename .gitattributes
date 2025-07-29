@@ -10,31 +10,14 @@
 **/*.json linguist-language=jsonc
 
 # Ignore these, as they are not really code code.
-
-# vendored
-apps/** linguist-vendored
-docs/** linguist-vendored
+deprecated/** linguist-vendored
+nvim/** linguist-vendored
 sublime-text/** linguist-vendored
-vim/** linguist-vendored
 vscode/** linguist-vendored
-windows/** linguist-vendored
-**/*.json linguist-vendored
-**/*.sh linguist-vendored
-.rc* linguist-vendored
-.tmux.conf linguist-vendored
-.npmrc linguist-vendored
-.gitconfig linguist-vendored
-.XCompose linguist-vendored
-bin/ linguist-vendored
-
-# generated
-archives/** linguist-generated
-bun.lockb linguist-generated
-
 
 # Git LFS
 # -------
 
 *.png filter=lfs diff=lfs merge=lfs -text
 *.ico filter=lfs diff=lfs merge=lfs -text
-bin/programs/** filter=lfs diff=lfs merge=lfs -text
+*.svg filter=lfs diff=lfs merge=lfs -text

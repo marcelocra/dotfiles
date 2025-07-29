@@ -134,54 +134,54 @@
     sw- = switch -
     restore = restore
     unstage = restore --staged
-    
+
     # Quick status checks
     ss = status --short
     sb = status --short --branch
-    
+
     # Improved log commands
     recent = log --oneline -10
     today = log --since="midnight" --oneline
     yesterday = log --since="yesterday" --until="midnight" --oneline
-    
+
     # Branch management
     cleanup = "!git branch --merged | grep -v '\\*\\|main\\|master' | xargs -r git branch -d"
     branches = branch -a
     remotes = remote -v
-    
+
     # Stash improvements
     stash-staged = stash --staged
     stash-keep = stash --keep-index
-    
+
     # Diff improvements
     word-diff = diff --word-diff=color
     stat = diff --stat
-    
+
     # Commit helpers
     amend = commit --amend --no-edit
     fix = commit --fixup
     squash = commit --squash
-    
+
     # Push/pull shortcuts
     pushf = push --force-with-lease
     pusha = push --all
     pusht = push --tags
-    
+
     # Find commits
     find = "!git log --pretty=format:'%h %s' --grep"
     grep = grep -Ii
-    
+
     # Show contributors
     contributors = shortlog --summary --numbered
-    
+
     # Undo operations
     undo = reset HEAD~1 --mixed
     undo-hard = reset HEAD~1 --hard
-    
+
     # Working tree operations
     save = "!git add -A && git commit -m 'WIP: savepoint'"
     wip = "!git add -A && git commit -m 'WIP'"
-    
+
     # Uncomment the next line when using git credential manager core.
     # FYI: github cli is better.
     # gcm = credential-manager-core

@@ -1,216 +1,244 @@
 # Personal Dotfiles
 
-A comprehensive collection of configuration files for development environments, supporting both host machines (Linux/Windows WSL) and development containers.
+A modernized collection of configuration files for development environments, supporting both host machines (Linux/Windows WSL) and development containers.
+
+## 🚨 Important Notice
+
+This project has undergone **major refactoring**. Most configuration files have been moved to the `deprecated/` directory while a new, consolidated system has been implemented.
+
+### Current Status:
+
+- **Active Configuration**: `shell/main.sh` (Google Shell Style Guide compliant)
+- **Deprecated Files**: All old files moved to `deprecated/` directory for reference
+- **Migration Period**: Deprecated files will be removed after 30+ days of stable operation
 
 ## Quick Start
 
 1. **Clone the repository:**
+
    ```bash
-   git clone https://github.com/yourusername/dotfiles.git ~/dotfiles
+   git clone https://github.com/marcelocra/dotfiles.git ~/dotfiles
    cd ~/dotfiles
    ```
 
-2. **Set up environment variables:**
+2. **Source the main configuration:**
+
    ```bash
-   export MCRA_INIT_SHELL="$HOME/dotfiles/init.sh"
-   export MCRA_LOCAL_SHELL="$HOME/.local-shell"  # Create this file for local configs
-   export MCRA_TMP_PLAYGROUND="/tmp/playground"
+   source ~/dotfiles/shell/main.sh
    ```
 
-3. **Source the main configuration:**
+3. **Add to your shell profile:**
    ```bash
-   source ~/dotfiles/init.sh
+   # Add to ~/.bashrc, ~/.zshrc, etc.
+   source "$HOME/dotfiles/shell/main.sh"
    ```
 
 ## Configuration Overview
 
-### Core Editors
-- **Neovim**: LazyVim configuration with Clojure support
-- **VSCode**: Settings, keybindings, snippets, and extensions
-- **Zed**: Modern editor configuration
-- **Sublime Text**: Complete settings and keymaps
+### New System (Active)
 
-### Terminal Emulators
-- **Kitty**: Feature-rich terminal with themes
-- **Alacritty**: GPU-accelerated terminal
+**Primary Shell Configuration:**
 
-### Development Tools
-- **Git**: Enhanced configuration with aliases and modern features
-- **Shell**: Bash/Zsh configuration with aliases and functions
-- **Development Containers**: Ready-to-use devcontainer configuration
+- `shell/main.sh` - Main shell configuration with multi-platform support
+- `shell/amuse-datetime.zsh-theme` - Custom zsh theme
+
+**Core Editors:**
+
+- `nvim/` - LazyVim-based Neovim configuration
+- `vscode/` - VSCode settings, keybindings, and extensions
+- `zed/` - Zed editor configuration
+
+**System Configuration:**
+
+- `git/.gitconfig` - Enhanced Git configuration
+- `tmux/.tmux.config` - Tmux configuration
+
+### Deprecated System (Reference Only)
+
+⚠️ **DO NOT USE** - Files in `deprecated/` directory are for reference only:
+
+- Old `init.sh` and `common.sh` → Merged into `shell/main.sh`
+- Legacy configurations → Use new system equivalents
+- Application configs → Most moved to deprecated, core ones updated
+
+## Features
+
+### Multi-Platform Support
+
+- **Ubuntu**: Full support for containers and host systems
+- **Alpine**: Lightweight container support with doas handling
+- **openSUSE**: Tumbleweed distribution support
+- **WSL**: Windows Subsystem for Linux detection and adaptation
+- **Container Detection**: Automatic environment detection and adaptation
+
+### Enhanced Shell Configuration
+
+- **Environment Detection**: Automatically detects and adapts to runtime environment
+- **50+ Git Aliases**: Comprehensive Git workflow shortcuts
+- **Development Tools**: pnpm, Node.js, Python utilities
+- **System Utilities**: Navigation, file operations, search tools
+- **Smart Editor Selection**: Automatic nvim > vim > vi > nano detection
+
+### Google Shell Style Guide Compliance
+
+- Proper error handling with `set -euo pipefail`
+- Consistent function naming with underscores
+- Clear section organization and documentation
+- Modular configuration structure
 
 ## Installation Guide
 
 ### Prerequisites
 
-**Required Tools:**
 - Git
-- A terminal emulator (Kitty/Alacritty recommended)
-- Text editor (Neovim/VSCode/Zed)
-
-**Optional Tools:**
-- Node.js (for some VSCode extensions)
-- Python 3 (for some scripts)
-- Docker (for development containers)
+- Bash or Zsh shell
+- Terminal emulator (recommended: Kitty, Alacritty, or built-in)
 
 ### Platform-Specific Setup
 
-#### Linux (Host)
+#### Linux (Host or WSL)
+
 ```bash
-# Install dependencies
-sudo apt update
-sudo apt install git curl wget build-essential
+# Clone dotfiles
+git clone https://github.com/marcelocra/dotfiles.git ~/dotfiles
 
-# Clone and setup
-git clone https://github.com/yourusername/dotfiles.git ~/dotfiles
-cd ~/dotfiles
+# Add to shell profile
+echo 'source "$HOME/dotfiles/shell/main.sh"' >> ~/.bashrc
+# or for zsh:
+echo 'source "$HOME/dotfiles/shell/main.sh"' >> ~/.zshrc
 
-# Add to your shell profile (.bashrc, .zshrc, etc.)
-echo 'export MCRA_INIT_SHELL="$HOME/dotfiles/init.sh"' >> ~/.bashrc
-echo 'export MCRA_LOCAL_SHELL="$HOME/.local-shell"' >> ~/.bashrc
-echo 'export MCRA_TMP_PLAYGROUND="/tmp/playground"' >> ~/.bashrc
-echo 'source "$MCRA_INIT_SHELL"' >> ~/.bashrc
-```
-
-#### Windows WSL
-```bash
-# Same as Linux, but ensure WSL-specific configs are used
-# The configuration automatically detects WSL environment
+# Reload shell
+source ~/.bashrc  # or ~/.zshrc
 ```
 
 #### Development Containers
-```bash
-# The devcontainer configuration in devcontainers/ directory
-# automatically sets up the environment when using VS Code Dev Containers
-```
 
-### Editor-Specific Setup
+The configuration automatically detects container environments and adapts accordingly. No special setup required.
+
+### Editor Setup
 
 #### Neovim
+
 ```bash
-# LazyVim configuration is in neovim/LazyVim/
-# Symlink or copy to your neovim config directory
-ln -sf ~/dotfiles/neovim/LazyVim ~/.config/nvim
+# LazyVim configuration
+ln -sf ~/dotfiles/nvim ~/.config/nvim
 ```
 
 #### VSCode
-```bash
-# Install extensions
-~/dotfiles/vscode/extensions-installed.sh
 
-# Symlink configurations (adjust paths for your OS)
+```bash
+# Link configurations (Linux/WSL paths)
 ln -sf ~/dotfiles/vscode/settings.jsonc ~/.config/Code/User/settings.json
 ln -sf ~/dotfiles/vscode/keybindings.jsonc ~/.config/Code/User/keybindings.json
 ```
 
-#### Kitty Terminal
-```bash
-# Symlink kitty configuration
-ln -sf ~/dotfiles/kitty ~/.config/kitty
-```
+## Available Commands & Aliases
 
-## Configuration Structure
+### System Navigation
 
-```
-~/dotfiles/
-├── neovim/           # Neovim configurations
-│   ├── LazyVim/      # Main LazyVim setup
-│   └── nvim/         # Alternative config
-├── vscode/           # VSCode settings and extensions
-├── kitty/            # Kitty terminal configuration
-├── alacritty/        # Alacritty terminal configuration
-├── apps/             # Desktop application configs
-├── windows/          # Windows-specific configurations
-├── devcontainers/    # Development container setup
-├── legacy/           # Archived configurations
-├── .gitconfig        # Git configuration
-├── init.sh           # Main shell configuration
-└── common.sh         # Common shell functions
-```
+- `l` - Enhanced file listing with timestamps
+- `ll` - List all files including hidden
+- `cls` - Clear screen
+- `b` - Go back (popd)
 
-## Features
+### Git Shortcuts (50+ aliases)
 
-### Shell Configuration
-- **Smart editor detection**: Automatically uses nvim > vim > vi > nano
-- **Environment detection**: Automatically adapts to host vs container
-- **Modular design**: Easy to extend and customize
-- **Cross-platform**: Works on Linux and Windows WSL
+- `gs` - git status
+- `ga` - git add
+- `gaa` - git add --all
+- `gc` - git commit -v
+- `gco` - git checkout
+- `gl` - git log (last 10)
+- `gps` - git push
+- `gpl` - git pull
 
-### Git Configuration
-- **Modern aliases**: Shortcuts for common operations
-- **Better defaults**: Improved merge and diff settings
-- **Credential helpers**: Secure credential management
-- **Multi-environment**: Separate configs for work/personal
+### Development Tools
 
-### Editor Integration
-- **Consistent themes**: Coordinated color schemes across editors
-- **Shared keybindings**: Similar shortcuts across different editors
-- **Plugin management**: Automated plugin installation and updates
+- `p` - pnpm
+- `r` - pnpm run
+- `n` - editor (nvim/vim/vi/nano)
+- `t` - tmux session manager
+- `va` - activate Python virtual environment
 
-## Customization
+### Utilities
 
-### Local Overrides
-Create `~/.local-shell` for local configurations that shouldn't be tracked:
-```bash
-# ~/.local-shell
-export CUSTOM_VAR="value"
-alias myalias="command"
-```
+- `t5`, `t15`, `t30`, `t60` - Timer functions (5, 15, 30, 60 minutes)
+- `colines` - Show terminal dimensions
+- `path_print` - Display PATH variable formatted
 
-### Environment Variables
-Key environment variables for customization:
-- `MCRA_INIT_SHELL`: Path to main init script
-- `MCRA_LOCAL_SHELL`: Path to local shell configuration
-- `MCRA_TMP_PLAYGROUND`: Path to temporary workspace
+## Migration from Old System
 
-### Adding New Configurations
-1. Create configuration files in appropriate directories
-2. Update `init.sh` if shell integration is needed
-3. Add installation instructions to this README
+If you were using the previous system:
+
+1. **Your aliases still work** - Most functionality has been preserved
+2. **Check new location** - Features may be reorganized but available
+3. **Temporary fallback** - Reference `deprecated/` files if needed
+4. **Migrate custom changes** - Move any personal modifications to new system
+
+### Finding Migrated Features
+
+1. **Check `shell/main.sh`** - Main location for all shell configuration
+2. **Look in sections** - Functions organized by category (Git, Development, System, etc.)
+3. **Search by name** - Use grep to find specific aliases or functions
+4. **Check TODO section** - Some functions marked for review
 
 ## Troubleshooting
 
 ### Common Issues
 
-**Problem**: `init.sh` reports missing environment variables
-**Solution**: Ensure all required environment variables are set:
+**Problem**: Old aliases not working
+**Solution**: Source the new configuration:
+
 ```bash
-export MCRA_INIT_SHELL="$HOME/dotfiles/init.sh"
-export MCRA_LOCAL_SHELL="$HOME/.local-shell"
-export MCRA_TMP_PLAYGROUND="/tmp/playground"
+source ~/dotfiles/shell/main.sh
 ```
 
-**Problem**: VSCode extensions not working
-**Solution**: Run the extension installation script:
+**Problem**: Missing functionality from old system
+**Solution**:
+
+1. Check if it exists in `shell/main.sh`
+2. Look in the TODO section
+3. Temporarily reference `deprecated/` files
+4. Always migrate to new system
+
+**Problem**: Environment-specific issues
+**Solution**: Enable debug mode:
+
 ```bash
-~/dotfiles/vscode/extensions-installed.sh
+export DOTFILES_DEBUG=1
+source ~/dotfiles/shell/main.sh
 ```
 
-**Problem**: Neovim plugins not loading
-**Solution**: Ensure LazyVim is properly linked and run `:Lazy sync` in Neovim
+### Debug Information
 
-**Problem**: Git credentials not working
-**Solution**: Check git credential helper configuration in `.gitconfig`
+The system provides debug information about:
+
+- Detected environment (container, WSL, distribution)
+- Platform-specific configurations applied
+- Editor selection process
 
 ### Getting Help
-- Check the configuration files for inline documentation
-- Review the `legacy/` directory for historical configurations
-- Open an issue if you find bugs or have suggestions
+
+1. Check `CLAUDE.md` for detailed technical information
+2. Review `deprecated/README.md` for migration guidance
+3. Examine `shell/main.sh` sections for specific functionality
+4. Open an issue for bugs or missing features
 
 ## Contributing
 
 1. Fork the repository
 2. Create a feature branch
-3. Make your changes
-4. Test on different environments
+3. Test across different environments (host, container, WSL)
+4. Update documentation as needed
 5. Submit a pull request
 
 ## License
 
-This project is licensed under the MIT License - see the LICENSE file for details.
+See the LICENSE file for details.
 
 ## Acknowledgments
 
-- LazyVim for the excellent Neovim configuration framework
+- Google Shell Style Guide for coding standards
+- LazyVim for excellent Neovim configuration framework
 - The dotfiles community for inspiration and best practices
-- Contributors to the various tools and configurations used
+- Claude Code for great AI assistance in refactoring
