@@ -124,8 +124,7 @@ ln -sf ~/dotfiles/kitty ~/.config/kitty
 ├── devcontainers/    # Development container setup
 ├── legacy/           # Archived configurations
 ├── .gitconfig        # Git configuration
-├── init.sh           # Main shell configuration
-└── common.sh         # Common shell functions
+└── init.sh           # Main shell configuration (self-contained)
 ```
 
 ## Features

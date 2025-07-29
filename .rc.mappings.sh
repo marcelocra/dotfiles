@@ -7,7 +7,19 @@
 #
 # To see all keycodes, run `xmodmap -pke` in your terminal.
 #
-. $HOME/bin/.rc.common
+# Source the main init script for utility functions (like debug)
+# Try multiple possible locations for the init script
+if [[ -f "$HOME/init.sh" ]]; then
+    . "$HOME/init.sh"
+elif [[ -f "$(dirname "$0")/init.sh" ]]; then
+    . "$(dirname "$0")/init.sh"
+else
+    # Fallback: define minimal debug function if not available
+    if ! command -v debug >/dev/null 2>&1; then
+        debug() { echo "[debug] $*"; }
+        is_debug() { [[ "${MCRA_DEBUG:-}" == "1" ]]; }
+    fi
+fi
 
 if [ "$1" = "reset" ]; then
     # Resets the mappings in the current keyboard layout.
