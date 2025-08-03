@@ -703,6 +703,7 @@ configure_zsh() {
         export HISTFILE="$HOME/.zsh_history"
         export HISTSIZE=10000
         export SAVEHIST=10000
+        export HIST_STAMPS="yyyy-mm-dd"
         
         if [[ -d "$HOME/.oh-my-zsh" ]]; then
             # Oh-my-zsh setup (handles most configuration automatically)
@@ -724,9 +725,7 @@ configure_zsh() {
             plugins=()
             
             # Source oh-my-zsh
-            if [[ -f "$ZSH/oh-my-zsh.sh" ]]; then
-                source "$ZSH/oh-my-zsh.sh"
-            fi
+            source "$ZSH/oh-my-zsh.sh"
         else
             # Standalone zsh setup (when oh-my-zsh not available)
             
@@ -774,6 +773,7 @@ configure_bash() {
         export HISTSIZE=10000
         export HISTFILESIZE=10000
         export HISTCONTROL=ignoredups:erasedups
+        export HISTTIMEFORMAT="%Y-%m-%d %H:%M:%S "
         shopt -s histappend
 
         # Custom prompt with git branch and timestamp
