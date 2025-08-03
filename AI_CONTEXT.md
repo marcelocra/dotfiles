@@ -91,12 +91,12 @@ source ~/dotfiles/shell/main.sh
 - Utility functions (tmux, media processing, code analysis)
 - Platform-specific adaptations
 
-**Google Shell Style Guide Compliance:**
+**Shell Configuration Architecture:**
 
-- Proper error handling with `set -euo pipefail`
-- Function naming with underscores
-- Clear section organization
-- Comprehensive documentation
+- Cross-shell compatibility (bash and zsh support)
+- Conditional shell-specific features (oh-my-zsh integration for zsh)
+- Interactive shell configuration (no strict error handling for compatibility)
+- Function naming with underscores and clear section organization
 
 ### Migration Notes:
 
@@ -164,3 +164,32 @@ This represents a complete modernization and consolidation of the dotfiles proje
 2. Test configuration across different environments
 3. Monitor for any missing functionality from old system
 4. Schedule removal of `deprecated/` directory after 30+ days of stable operation
+
+## Shell Configuration Migration (Updated 2025-08-03)
+
+**RECENT MIGRATION: Centralized Configuration + Oh-My-Zsh Integration**
+
+✅ **Completed Migration:**
+
+- **Centralized Configuration**: Moved from scattered Dockerfile shell setup to unified `main.sh`
+- **Oh-my-zsh Integration**: Added oh-my-zsh support with Microsoft security-vetted installation
+- **Symlink Architecture**: `main.sh` serves as both `.bashrc` and `.zshrc` via symlinks
+- **Custom Theme Support**: `amuse-datetime.zsh-theme` integration with fallback
+- **Interactive Shell Compatibility**: Removed strict error handling for oh-my-zsh compatibility
+
+**Current Shell Architecture:**
+
+- **Single Configuration**: `shell/main.sh` replaces scattered shell configuration
+- **Cross-Shell Support**: Conditional bash and zsh feature configuration
+- **Oh-My-Zsh Integration**: Custom theme symlinking with minimal security-focused plugins
+- **Container Integration**: Works with Microsoft devcontainer Alpine base with pre-installed oh-my-zsh
+- **Variable Compatibility**: Proper initialization for oh-my-zsh and VS Code shell integration
+
+**Key Technical Decisions:**
+
+- Removed `set -euo pipefail` for interactive shell compatibility with oh-my-zsh
+- Maintained Google Shell Style Guide principles where compatible with interactive use
+- Leveraged Microsoft's security-vetted oh-my-zsh installation rather than custom setup
+
+**Container Usage:**
+The centralized configuration now seamlessly integrates with devcontainer environments, providing consistent shell experience across both bash and zsh while leveraging Microsoft's pre-installed and security-reviewed oh-my-zsh.

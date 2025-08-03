@@ -6,8 +6,6 @@
 # Follows Google Shell Style Guide:
 #   https://google.github.io/styleguide/shellguide.html
 
-set -euo pipefail
-
 # =============================================================================
 # ENVIRONMENT DETECTION
 # =============================================================================
@@ -695,6 +693,109 @@ alias t30="sleep 30m && timer_notification"
 alias t60="sleep 1h && timer_notification"
 
 # =============================================================================
+# ZSH CONFIGURATION
+# =============================================================================
+
+configure_zsh() {
+    # Only configure zsh-specific features if we're running in zsh
+    if [[ -n "${ZSH_VERSION:-}" ]]; then
+        # Set oh-my-zsh path
+        export ZSH="$HOME/.oh-my-zsh"
+        export ZSH_CUSTOM="$ZSH/custom"
+        
+        # Use custom theme from dotfiles
+        local ZSH_THEME_PATH="$HOME/.config/marcelocra/shell/amuse-datetime.zsh-theme"
+        if [[ -f "$ZSH_THEME_PATH" ]]; then
+            # Symlink custom theme to oh-my-zsh themes directory
+            ln -sf "$ZSH_THEME_PATH" "$ZSH_CUSTOM/themes/"
+            ZSH_THEME="amuse-datetime"
+        else
+            # Fallback to a safe default theme
+            ZSH_THEME="robbyrussell"
+        fi
+        
+        # History configuration
+        export HISTSIZE=10000
+        export SAVEHIST=10000
+        export HISTFILE="$HOME/.zsh_history"
+        setopt HIST_IGNORE_DUPS
+        setopt HIST_IGNORE_ALL_DUPS
+        setopt HIST_SAVE_NO_DUPS
+        setopt SHARE_HISTORY
+        setopt APPEND_HISTORY
+        
+        # zsh options
+        setopt AUTO_CD              # cd by typing directory name if it's not a command
+        setopt CORRECT              # command auto-correction
+        setopt COMPLETE_ALIASES     # complete aliases
+        
+        # Enable oh-my-zsh plugins (keep minimal for security)
+        plugins=()
+        
+        # Source oh-my-zsh
+        if [[ -f "$ZSH/oh-my-zsh.sh" ]]; then
+            source "$ZSH/oh-my-zsh.sh"
+        fi
+    fi
+}
+
+# =============================================================================
+# BASH CONFIGURATION
+# =============================================================================
+
+configure_bash() {
+    # Only configure bash-specific features if we're running in bash
+    if [[ -n "${BASH_VERSION:-}" ]]; then
+        # History configuration
+        export HISTSIZE=10000
+        export HISTFILESIZE=10000
+        export HISTCONTROL=ignoredups:erasedups
+        shopt -s histappend
+
+        # Custom prompt with git branch and timestamp
+        __bash_prompt() {
+            local userpart='`export XIT=$? \
+                && [ ! -z "${GITHUB_USER:-}" ] && echo -n "\[\033[0;32m\]@${GITHUB_USER:-} " || echo -n "\[\033[0;32m\]\u " \
+                && [ "$XIT" -ne "0" ] && echo -n "\[\033[1;31m\]➜" || echo -n "\[\033[0m\]➜"`'
+            local gitbranch='`\
+                if [ "$(git config --get devcontainers-theme.hide-status 2>/dev/null)" != 1 ] && [ "$(git config --get codespaces-theme.hide-status 2>/dev/null)" != 1 ]; then \
+                    export BRANCH="$(git --no-optional-locks symbolic-ref --short HEAD 2>/dev/null || git --no-optional-locks rev-parse --short HEAD 2>/dev/null)"; \
+                    if [ "${BRANCH:-}" != "" ]; then \
+                        echo -n "\[\033[0;36m\](\[\033[1;31m\]${BRANCH:-}" \
+                        && if [ "$(git config --get devcontainers-theme.show-dirty 2>/dev/null)" = 1 ] && \
+                            git --no-optional-locks ls-files --error-unmatch -m --directory --no-empty-directory -o --exclude-standard ":/*" > /dev/null 2>&1; then \
+                                echo -n " \[\033[1;33m\]✗"; \
+                        fi \
+                        && echo -n "\[\033[0;36m\]) "; \
+                    fi; \
+                fi`'
+            local timestamp='`echo -n "\[\033[33m\][$(date "+%Y-%m-%d %H:%M:%S")]\[\033[0m\]"`'
+            local lightblue='\[\033[1;34m\]'
+            local removecolor='\[\033[0m\]'
+            PS1="${userpart} ${lightblue}\w ${gitbranch}${timestamp}${removecolor}\n\$ "
+            unset -f __bash_prompt
+        }
+        __bash_prompt
+        export PROMPT_DIRTRIM=4
+
+        # Terminal title configuration for xterm
+        if [[ "$TERM" == "xterm" ]]; then
+            preexec() {
+                local cmd="${BASH_COMMAND}"
+                echo -ne "\033]0;${USER}@${HOSTNAME}: ${cmd}\007"
+            }
+            
+            precmd() {
+                echo -ne "\033]0;${USER}@${HOSTNAME}: ${SHELL}\007"
+            }
+            
+            trap 'preexec' DEBUG
+            PROMPT_COMMAND="${PROMPT_COMMAND:+$PROMPT_COMMAND; }precmd"
+        fi
+    fi
+}
+
+# =============================================================================
 # TODO SECTION - REVIEW NEEDED
 # =============================================================================
 # These functions/aliases might need review or could potentially be removed
@@ -716,6 +817,8 @@ main() {
     detect_environment
     configure_editor
     configure_platform
+    configure_zsh
+    configure_bash
     configure_system_aliases
     configure_dev_aliases
     configure_pnpm_aliases
@@ -729,12 +832,13 @@ main() {
 }
 
 # Only run main if script is sourced, not executed
-if [[ "${BASH_SOURCE[0]}" == "${0}" ]]; then
+# Generic POSIX check works for both bash and zsh
+if [ "$0" = "${0##*/}" ]; then
     echo "This script should be sourced, not executed directly."
     exit 1
-else
-    main "$@"
 fi
+
+main "$@"
 
 # =============================================================================
 # SHELL SCRIPTING REFERENCE
