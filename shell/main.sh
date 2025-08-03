@@ -699,43 +699,67 @@ alias t60="sleep 1h && timer_notification"
 configure_zsh() {
     # Only configure zsh-specific features if we're running in zsh
     if [[ -n "${ZSH_VERSION:-}" ]]; then
-        # Set oh-my-zsh path
-        export ZSH="$HOME/.oh-my-zsh"
-        export ZSH_CUSTOM="$ZSH/custom"
-        
-        # Use custom theme from dotfiles
-        local ZSH_THEME_PATH="$HOME/.config/marcelocra/shell/amuse-datetime.zsh-theme"
-        if [[ -f "$ZSH_THEME_PATH" ]]; then
-            # Symlink custom theme to oh-my-zsh themes directory
-            ln -sf "$ZSH_THEME_PATH" "$ZSH_CUSTOM/themes/"
-            ZSH_THEME="amuse-datetime"
-        else
-            # Fallback to a safe default theme
-            ZSH_THEME="robbyrussell"
-        fi
-        
-        # History configuration
+        # Common configuration (applies to both oh-my-zsh and standalone)
+        export HISTFILE="$HOME/.zsh_history"
         export HISTSIZE=10000
         export SAVEHIST=10000
-        export HISTFILE="$HOME/.zsh_history"
-        setopt HIST_IGNORE_DUPS
-        setopt HIST_IGNORE_ALL_DUPS
-        setopt HIST_SAVE_NO_DUPS
-        setopt SHARE_HISTORY
-        setopt APPEND_HISTORY
         
-        # zsh options
+        if [[ -d "$HOME/.oh-my-zsh" ]]; then
+            # Oh-my-zsh setup (handles most configuration automatically)
+            export ZSH="$HOME/.oh-my-zsh"
+            export ZSH_CUSTOM="$ZSH/custom"
+            
+            # Use custom theme from dotfiles
+            local ZSH_THEME_PATH="$HOME/.config/marcelocra/shell/amuse-datetime.zsh-theme"
+            if [[ -f "$ZSH_THEME_PATH" ]]; then
+                # Symlink custom theme to oh-my-zsh themes directory
+                ln -sf "$ZSH_THEME_PATH" "$ZSH_CUSTOM/themes/"
+                ZSH_THEME="amuse-datetime"
+            else
+                # Fallback to a safe default theme
+                ZSH_THEME="robbyrussell"
+            fi
+            
+            # Enable oh-my-zsh plugins (keep minimal for security)
+            plugins=()
+            
+            # Source oh-my-zsh
+            if [[ -f "$ZSH/oh-my-zsh.sh" ]]; then
+                source "$ZSH/oh-my-zsh.sh"
+            fi
+        else
+            # Standalone zsh setup (when oh-my-zsh not available)
+            
+            # History options
+            setopt HIST_IGNORE_DUPS
+            setopt HIST_IGNORE_ALL_DUPS
+            setopt HIST_SAVE_NO_DUPS
+            setopt SHARE_HISTORY
+            setopt APPEND_HISTORY
+            
+            # Enable completion system
+            autoload -Uz compinit
+            compinit
+            
+            # Completion options
+            setopt COMPLETE_IN_WORD     # complete from both ends of word
+            setopt ALWAYS_TO_END        # move cursor to end of word on completion
+            setopt AUTO_MENU            # show completion menu on successive tab press
+            setopt AUTO_LIST            # automatically list choices on ambiguous completion
+            setopt AUTO_PARAM_SLASH     # add trailing slash for directory completions
+            
+            # Case-insensitive completion
+            zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=*' 'l:|=* r:|=*'
+            
+            # Basic prompt
+            setopt PROMPT_SUBST
+            PS1='%F{green}%n@%m%f %F{blue}%~%f %# '
+        fi
+        
+        # Common zsh options (useful for both setups)
         setopt AUTO_CD              # cd by typing directory name if it's not a command
         setopt CORRECT              # command auto-correction
         setopt COMPLETE_ALIASES     # complete aliases
-        
-        # Enable oh-my-zsh plugins (keep minimal for security)
-        plugins=()
-        
-        # Source oh-my-zsh
-        if [[ -f "$ZSH/oh-my-zsh.sh" ]]; then
-            source "$ZSH/oh-my-zsh.sh"
-        fi
     fi
 }
 
