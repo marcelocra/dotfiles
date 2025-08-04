@@ -711,7 +711,7 @@ configure_zsh() {
             export ZSH_CUSTOM="$ZSH/custom"
             
             # Use custom theme from dotfiles
-            local ZSH_THEME_PATH="$HOME/.config/marcelocra/shell/amuse-datetime.zsh-theme"
+            local ZSH_THEME_PATH="$HOME/.config/marcelocra/dotfiles/shell/amuse-datetime.zsh-theme"
             if [[ -f "$ZSH_THEME_PATH" ]]; then
                 # Symlink custom theme to oh-my-zsh themes directory
                 ln -sf "$ZSH_THEME_PATH" "$ZSH_CUSTOM/themes/"
@@ -889,3 +889,11 @@ main "$@"
 #   - Use local for function variables: local var="value"
 #   - Always quote variable expansions: "$var"
 #   - Use ${var:-default} for default values
+
+# Activate mise for version management
+eval "$(mise activate zsh)"
+
+# Enable fzf key bindings and completion
+[ -f /usr/share/doc/fzf/examples/key-bindings.zsh ] && source /usr/share/doc/fzf/examples/key-bindings.zsh
+[ -f /usr/share/doc/fzf/examples/completion.zsh ] && source /usr/share/doc/fzf/examples/completion.zsh
+
