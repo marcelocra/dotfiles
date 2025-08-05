@@ -193,3 +193,49 @@ This represents a complete modernization and consolidation of the dotfiles proje
 
 **Container Usage:**
 The centralized configuration now seamlessly integrates with devcontainer environments, providing consistent shell experience across both bash and zsh while leveraging Microsoft's pre-installed and security-reviewed oh-my-zsh.
+
+## VS Code Git Credential Management (Updated 2025-08-05)
+
+**Issue**: VS Code automatically adds container-specific credential helper lines to `.gitconfig` that are unsafe to commit to public repositories.
+
+**Solution Implemented**: Three-layer prevention strategy:
+
+1. **Global Credential Helper Configuration**:
+
+   ```properties
+   [credential]
+       helper =
+       helper = !/usr/bin/gh auth git-credential
+   ```
+
+   - Takes precedence over VS Code's automatic credential helper
+   - Uses GitHub CLI for all authentication
+
+2. **VS Code Settings** (`vscode/settings.jsonc`):
+
+   ```jsonc
+   "git.useIntegratedAskPass": false,
+   "git.terminalAuthentication": false,
+   ```
+
+   - Tells VS Code not to manage git authentication
+   - Lets git handle credentials with configured helpers
+
+3. **Pre-commit Hook** (`git/hooks/pre-commit`):
+   - Python script that detects VS Code credential helper lines
+   - Fails commits with clear error message if detected
+   - Prevents accidental commits of container-specific credentials
+   - Symlinked to `.git/hooks/pre-commit` for git to find it
+
+**Why This Matters**:
+
+- VS Code credential helpers contain session-specific paths and IDs
+- These lines change between containers/sessions and are not portable
+- Committing them to public repositories exposes internal system information
+- GitHub CLI provides secure, portable authentication
+
+**Files Modified**:
+
+- `git/.gitconfig` - Added global credential configuration
+- `vscode/settings.jsonc` - Disabled VS Code git credential management
+- `git/hooks/pre-commit` - Added safety check (executable Python script, symlinked to `.git/hooks/`)
