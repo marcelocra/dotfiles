@@ -711,18 +711,18 @@ configure_zsh() {
             export ZSH_CUSTOM="$ZSH/custom"
             
             # Use custom theme from dotfiles
-            local ZSH_THEME_PATH="$HOME/.config/marcelocra/dotfiles/shell/amuse-datetime.zsh-theme"
+            local ZSH_THEME_PATH="$HOME/.config/marcelocra/dotfiles/shell/marcelocra.zsh-theme"
             if [[ -f "$ZSH_THEME_PATH" ]]; then
                 # Symlink custom theme to oh-my-zsh themes directory
                 ln -sf "$ZSH_THEME_PATH" "$ZSH_CUSTOM/themes/"
-                ZSH_THEME="amuse-datetime"
+                ZSH_THEME="marcelocra"
             else
                 # Fallback to a safe default theme
                 ZSH_THEME="robbyrussell"
             fi
             
             # Enable oh-my-zsh plugins (keep minimal for security)
-            if [[ "$ZSH_CUSTOM/plugins/zsh-autosuggestions"]] && [[ "$ZSH_CUSTOM/plugins/zsh-syntax-highlighting" ]]; then
+            if [[ "$ZSH_CUSTOM/plugins/zsh-autosuggestions" ]] && [[ "$ZSH_CUSTOM/plugins/zsh-syntax-highlighting" ]]; then
                 plugins=(zsh-autosuggestions zsh-syntax-highlighting)
             else
                 plugins=()
@@ -900,4 +900,3 @@ command_exists mise && eval "$(mise activate zsh)"
 # Enable fzf key bindings and completion
 [ -f /usr/share/doc/fzf/examples/key-bindings.zsh ] && source /usr/share/doc/fzf/examples/key-bindings.zsh
 [ -f /usr/share/doc/fzf/examples/completion.zsh ] && source /usr/share/doc/fzf/examples/completion.zsh
-
