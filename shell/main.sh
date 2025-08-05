@@ -891,7 +891,7 @@ main "$@"
 #   - Use ${var:-default} for default values
 
 # Activate mise for version management
-eval "$(mise activate zsh)"
+command_exists mise && eval "$(mise activate zsh)"
 
 # Enable fzf key bindings and completion
 [ -f /usr/share/doc/fzf/examples/key-bindings.zsh ] && source /usr/share/doc/fzf/examples/key-bindings.zsh
