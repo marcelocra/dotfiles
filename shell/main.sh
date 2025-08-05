@@ -722,7 +722,11 @@ configure_zsh() {
             fi
             
             # Enable oh-my-zsh plugins (keep minimal for security)
-            plugins=()
+            if [[ "$ZSH_CUSTOM/plugins/zsh-autosuggestions"]] && [[ "$ZSH_CUSTOM/plugins/zsh-syntax-highlighting" ]]; then
+                plugins=(zsh-autosuggestions zsh-syntax-highlighting)
+            else
+                plugins=()
+            fi
             
             # Source oh-my-zsh
             source "$ZSH/oh-my-zsh.sh"
