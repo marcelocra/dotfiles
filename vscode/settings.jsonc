@@ -672,6 +672,9 @@
   "git.ignoreMissingGitWarning": true,
   "git.confirmSync": false,
   "git.openRepositoryInParentFolders": "never",
+  // Setting both to false tells VS Code: "Don't try to manage git authentication - let git handle it with the configured credential helpers."
+  "git.useIntegratedAskPass": false,
+  "git.terminalAuthentication": false,
 
   "gitlens.defaultDateLocale": "pt-BR",
   "gitlens.defaultDateStyle": "absolute",
