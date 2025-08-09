@@ -653,8 +653,6 @@ nvim_backup_to_tmp() {
     echo "Neovim state backed up to: $tmp_dir"
 }
 
-# Next function marker
-
 # =============================================================================
 # FUNCTIONS - NOTIFICATION & TIMER
 # =============================================================================
@@ -691,6 +689,18 @@ alias t5="sleep 5m && timer_notification"
 alias t15="sleep 15m && timer_notification"
 alias t30="sleep 30m && timer_notification"
 alias t60="sleep 1h && timer_notification"
+
+# =============================================================================
+# FUNCTIONS - MISC
+# =============================================================================
+
+# Load SSH agent and add key.
+load_ssh() {
+    eval "$(ssh-agent -s)"
+    ssh-add ~/.ssh/id_ed25519    
+}
+
+# Next function marker
 
 # =============================================================================
 # ZSH CONFIGURATION
@@ -900,3 +910,7 @@ command_exists mise && eval "$(mise activate zsh)"
 # Enable fzf key bindings and completion
 [ -f /usr/share/doc/fzf/examples/key-bindings.zsh ] && source /usr/share/doc/fzf/examples/key-bindings.zsh
 [ -f /usr/share/doc/fzf/examples/completion.zsh ] && source /usr/share/doc/fzf/examples/completion.zsh
+
+# Add deno completions to search path
+if [[ ":$FPATH:" != *":/home/vscode/.zsh/completions:"* ]]; then export FPATH="/home/vscode/.zsh/completions:$FPATH"; fi
+. "/home/vscode/.deno/env"
