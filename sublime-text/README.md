@@ -1,33 +1,27 @@
 # Sublime Text settings
 
-The `PackagesUser` folder contains Sublime Text 4's `User` directory, to be found at the user's `~/config/sublime-text` dir (usually) on Linux machines.
+The `User` folder contains Sublime Text 4's `User` directory, usually found at:
 
-Copy these files to that location (or other appropriate), backing up existing content when needed.
+- Linux: `~/config/sublime-text/Packages/User`
+- Windows: `~/AppData/Roaming/Sublime Text/Packages/User`
+
+Usually I symlink my configs, but it seems that Sublime Text doesn't like that. When you do, editing the symlinked settings won't apply instantaneously until you restart Sublime.
+
+If you don't care about that, go for it. If you do, try a backup cronjob.
+
+## How to use
+
+Copy these files to the appropriate location, backing up any existing content.
 
 ```sh
-ST_USER_FOLDER="$HOME/.config/sublime-text/Packages/User"
-ST_USER_FOLDER_CONTENT="$(pwd)/sublime-text/"
-
-# (Optional) If folder exits, back it up somewhere.
-[ -d $HOME/.tmp ] && mkdir $HOME/.tmp
-mv $ST_USER_FOLDER ~/.tmp/backup-sublime-settings
-
-# Copy stuff to User folder.
-cp $ST_USER_FOLDER_CONTENT/* $ST_USER_FOLDER
+cp ./sublime-text/User/* ~/.config/sublime-text/Packages/User/*
 ```
 
-Create a cronjob to backup stuff from the user folder to here.
+Create a cronjob to backup stuff back here.
 
 ```sh
+$ crontab -e
 
-# Edit the crontab file and copy there the contents below the command.
-crontab -e
-
-# Copy the lines below, updating times to whatever you prefer.
-
-#
-#
-# Backup Sublime Text `User` content frequently.
-#
-*/60 * * * * cp -r $HOME/.config/sublime-text/Packages/User/* $HOME/projects/dotfiles/sublime-text/
+# Add this to the crontab file.
+*/60 * * * * cp -r $HOME/.config/sublime-text/Packages/User/* `$(pwd)`/sublime-text/
 ```
