@@ -234,8 +234,6 @@ configure_pnpm_aliases() {
     alias pnpm_clean="rm ./pnpm-lock.yaml && rm -rf ./node_modules && pnpm install"
 }
 
-# Next alias marker
-
 # =============================================================================
 # ALIASES - FONTS
 # =============================================================================
@@ -394,9 +392,12 @@ configure_system_utility_aliases() {
     if command_exists rlwrap; then
         alias lua='rlwrap lua'
     fi
-}
 
-# Next system alias marker
+    # TODO: make this system specific.
+    alias i='sudo dnf install'
+
+    # Next alias marker
+}
 
 # =============================================================================
 # FUNCTIONS - TMUX
@@ -732,11 +733,15 @@ configure_zsh() {
             fi
             
             # Enable oh-my-zsh plugins (keep minimal for security)
-            if [[ -d "$ZSH_CUSTOM/plugins/zsh-autosuggestions" ]] && [[ -d "$ZSH_CUSTOM/plugins/zsh-syntax-highlighting" ]]; then
-                plugins=(zsh-autosuggestions zsh-syntax-highlighting)
-            else
-                plugins=()
+            if [[ ! -d "$ZSH_CUSTOM/plugins/zsh-autosuggestions" ]]; then
+                git clone https://github.com/marcelocra/zsh-autosuggestions $ZSH_CUSTOM/plugins/zsh-autosuggestions
             fi
+
+            if [[ ! -d "$ZSH_CUSTOM/plugins/zsh-syntax-highlighting" ]]; then
+                git clone https://github.com/marcelocra/zsh-syntax-highlighting $ZSH_CUSTOM/plugins/zsh-syntax-highlighting
+            fi
+            
+            plugins=(zsh-autosuggestions zsh-syntax-highlighting)
             
             # Source oh-my-zsh
             source "$ZSH/oh-my-zsh.sh"
