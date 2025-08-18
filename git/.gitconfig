@@ -253,12 +253,12 @@
 # with GitHub from the terminal (in containers too).
 # ------------------------------------------------------------------------------
 # Global credential configuration - prevents VS Code from adding its own
-[credential]
-    helper =
-    helper = !/usr/bin/gh auth git-credential
-[credential "https://github.com"]
-    helper =
-    helper = !/usr/bin/gh auth git-credential
-[credential "https://gist.github.com"]
-    helper =
-    helper = !/usr/bin/gh auth git-credential
+# [credential]
+#     helper =
+#     helper = !/usr/bin/gh auth git-credential
+# [credential "https://github.com"]
+#     helper =
+#     helper = !/usr/bin/gh auth git-credential
+# [credential "https://gist.github.com"]
+#     helper =
+#     helper = !/usr/bin/gh auth git-credential
