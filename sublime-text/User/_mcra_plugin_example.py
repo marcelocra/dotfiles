@@ -32,7 +32,7 @@
 #     def run(self, edit):
 #         import datetime
 #         timestamp = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-        
+
 #         for region in self.view.sel():
 #             self.view.insert(edit, region.begin(), timestamp)
 
@@ -46,7 +46,7 @@
 #             # Get the line containing the cursor
 #             line = self.view.line(region)
 #             line_text = self.view.substr(line)
-            
+
 #             # Toggle comment
 #             if line_text.strip().startswith('#'):
 #                 # Remove comment
@@ -54,7 +54,7 @@
 #             else:
 #                 # Add comment
 #                 new_text = '# ' + line_text
-            
+
 #             self.view.replace(edit, line, new_text)
 
 
@@ -67,11 +67,11 @@
 #         file_name = view.file_name() or "Untitled"
 #         line_count = view.rowcol(view.size())[0] + 1
 #         char_count = view.size()
-        
+
 #         info = f"""
 # File: {file_name}
 # Lines: {line_count}
 # Characters: {char_count}
 #         """
-        
+
 #         sublime.message_dialog(info.strip())

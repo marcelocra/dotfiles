@@ -1,129 +1,187 @@
 [
-    ///////////////////////////////////////////////////////////////////////////
-    /////////////////////// My plugins keybindings ////////////////////////////
-    ///////////////////////////////////////////////////////////////////////////
+  ///////////////////////////////////////////////////////////////////////////
+  /////////////////////// My plugins keybindings ////////////////////////////
+  ///////////////////////////////////////////////////////////////////////////
 
-    //
-    // _mcra_plugin_examples.py
-    //
+  //
+  // _mcra_plugin_commands.py
+  //
 
-    // {
-    //     "keys": ["alt+h"],
-    //     "command": "hello_world",
-    // },
+  {
+    // Markdown: Create new heading 2 with timestamps (general markdown files) or tasks formatting (tasks.md).
+    "keys": ["alt+enter"],
+    "command": "markdown_new_heading",
+    "context": [
+      { "key": "overlay_visible", "operator": "equal", "operand": false },
+      { "key": "panel_has_focus", "operator": "equal", "operand": false },
+      {
+        "key": "selector",
+        "operator": "equal",
+        "operand": "text.html.markdown"
+      }
+    ]
+  },
 
-    // {
-    //  // Insert date in the format used by Obsidian's journals: [[2025-08-01]].
-    //     "keys": ["alt+d"],
-    //     "command": "insert_obsidian_date"
-    // },
-    
-    // {
-    //  // Insert date in the format used by Obsidian's journals: [[2025-08-01]].
-    //     "keys": ["alt+d"],
-    //     "command": "insert_obsidian_date"
-    // },
-    
-    // {
-    //  // Show file info
-    //     "keys": ["ctrl+shift+i"],
-    //     "command": "show_file_info"
-    // },
+  {
+    // Markdown: Toggle task state (- text -> - [ ] text -> - [x] text)
+    "keys": ["ctrl+enter"],
+    "command": "toggle_markdown_task",
+    "context": [
+      {
+        "key": "selector",
+        "operator": "equal",
+        "operand": "text.html.markdown"
+      }
+    ]
+  },
 
-    //
-    // _mcra_plugin_commands.py
-    //
-    
-    {
-        // Markdown: Create new heading 2 with timestamp.
-        "keys": ["alt+enter"],
-        "command": "markdown_new_heading",
-        "context": [
-            { "key": "overlay_visible", "operator": "equal", "operand": false },
-            { "key": "panel_has_focus", "operator": "equal", "operand": false },
-            { "key": "selector", "operator": "equal", "operand": "text.html.markdown" }
-        ],
-    },
-    
-    {
-        // Toggle line position (top/middle/bottom).
-        "keys": ["alt+l"],
-        "command": "toggle_line_position",
-    },
+  {
+    // Toggle line position (top/middle/bottom).
+    "keys": ["alt+l"],
+    "command": "toggle_line_position"
+  },
 
-    {
-        "keys": ["ctrl+u"],
-        "command": "uppercase_selection"
-    },
-    
-    {
-        "keys": ["ctrl+shift+u"],
-        "command": "lowercase_selection"
-    },
-    
-    {
-        "keys": ["alt+t", "f"],
-        "command": "insert_timestamp"
-    },
-    
-    {
-        "keys": ["alt+t", "d"],
-        "command": "insert_date"
-    },
-    
-    {
-        "keys": ["alt+t", "t"],
-        "command": "insert_time"
-    },
-    
-    ///////////////////////////////////////////////////////////////////////////
-    ///////////////////////// System keybindings //////////////////////////////
-    ///////////////////////////////////////////////////////////////////////////
+  {
+    "keys": ["ctrl+u"],
+    "command": "uppercase_selection"
+  },
 
-    { "keys": ["alt+b"], "command": "toggle_side_bar" },
-    { "keys": ["ctrl+b"], "command": "toggle_side_bar" },
+  {
+    "keys": ["ctrl+shift+u"],
+    "command": "lowercase_selection"
+  },
 
-    { "keys": ["alt+d"], "command": "duplicate_line" },
+  {
+    "keys": ["alt+t", "f"],
+    "command": "insert_timestamp"
+  },
 
-    { "keys": ["alt+shift+up"], "command": "expand_selection", "args": {"to": "smart"} },
+  {
+    "keys": ["alt+t", "d"],
+    "command": "insert_date"
+  },
 
-    { "keys": ["alt+up"], "command": "swap_line_up" },
-    { "keys": ["alt+down"], "command": "swap_line_down" },
+  {
+    "keys": ["alt+t", "t"],
+    "command": "insert_time"
+  },
 
-    { "keys": ["ctrl+t"], "command": "show_overlay", "args": {"overlay": "goto", "text": "#"} },
+  // New commands: Improved shrink selection and proper find navigation
+  {
+    "keys": ["alt+shift+down"],
+    "command": "shrink_selection"
+  },
 
-    { "keys": ["alt+k"], "command": "next_view" },
-    { "keys": ["alt+j"], "command": "prev_view" },
-    
-    { "keys": ["ctrl+shift+pagedown"], "command": "next_view", "args": {"extend": true} },
-    { "keys": ["ctrl+shift+pageup"], "command": "prev_view", "args": {"extend": true} },
+  ///////////////////////////////////////////////////////////////////////////
+  ///////////////////////// System keybindings //////////////////////////////
+  ///////////////////////////////////////////////////////////////////////////
 
-    { "keys": ["ctrl+i"], "command": "jump_forward" },
-    { "keys": ["ctrl+]"], "command": "jump_forward" },
-    { "keys": ["ctrl+o"], "command": "jump_back" },
-    { "keys": ["ctrl+["], "command": "jump_back" },
+  { "keys": ["alt+b"], "command": "toggle_side_bar" },
+  { "keys": ["alt+e"], "command": "toggle_side_bar" },
+  { "keys": ["ctrl+b"], "command": "toggle_side_bar" },
 
-    // Once a selection is made with ctrl+d (default), hitting it again will add
-    // more selections. ctrl+n/p allows skipping one forwards/backwards.
-    { "keys": ["ctrl+d"], "command": "find_under_expand" },
-    { "keys": ["ctrl+n"], "command": "find_under_expand_skip",
-        "context": [
-            { "key": "selection_empty", "operator": "equal", "operand": false, "match_all": true }
-        ],
-    },
-    { "keys": ["ctrl+p"], "command": "find_under_expand_skip", "args": { "reverse": true },
-        "context": [
-            { "key": "selection_empty", "operator": "equal", "operand": false, "match_all": true }
-        ],
-    },
+  { "keys": ["alt+d"], "command": "duplicate_line" },
 
-    // Similar to VSCode search editor.
-    { "keys": ["alt+f"], "command": "show_panel", "args": {"panel": "find_in_files"} },
+  {
+    "keys": ["alt+shift+up"],
+    "command": "expand_selection",
+    "args": { "to": "smart" }
+  },
 
-    { "keys": ["ctrl+shift+["], "command": "fold" }, // Default.
-    { "keys": ["ctrl+shift+]"], "command": "unfold" }, // Default.
-    { "keys": ["alt+a"], "command": "fold_by_level", "args": {"level": 0} },
-    { "keys": ["alt+shift+a"], "command": "unfold_all" },
-    
-    // End. Next keybinding/keymap/mapping/shortcut above.
+  { "keys": ["alt+up"], "command": "swap_line_up" },
+  { "keys": ["alt+down"], "command": "swap_line_down" },
+
+  {
+    "keys": ["ctrl+t"],
+    "command": "show_overlay",
+    "args": { "overlay": "goto", "text": "#" }
+  },
+
+  { "keys": ["alt+k"], "command": "next_view" },
+  { "keys": ["alt+j"], "command": "prev_view" },
+
+  {
+    "keys": ["ctrl+shift+pagedown"],
+    "command": "next_view",
+    "args": { "extend": true }
+  },
+  {
+    "keys": ["ctrl+shift+pageup"],
+    "command": "prev_view",
+    "args": { "extend": true }
+  },
+
+  { "keys": ["ctrl+i"], "command": "jump_forward" },
+  { "keys": ["ctrl+]"], "command": "jump_forward" },
+  { "keys": ["ctrl+o"], "command": "jump_back" },
+  { "keys": ["ctrl+["], "command": "jump_back" },
+
+  // Once a selection is made with ctrl+d (default), hitting it again will add
+  // more selections. ctrl+n/p allows skipping one forwards/backwards.
+  { "keys": ["ctrl+d"], "command": "find_under_expand" },
+  {
+    // Replaces the native equivalent below.
+    "keys": ["ctrl+n"],
+    "command": "find_under_expand_skip_forward",
+    "context": [
+      {
+        "key": "selection_empty",
+        "operator": "equal",
+        "operand": false,
+        "match_all": true
+      }
+    ]
+  },
+  // { "keys": ["ctrl+n"], "command": "find_under_expand_skip",
+  //     "context": [
+  //         { "key": "selection_empty", "operator": "equal", "operand": false, "match_all": true }
+  //     ],
+  // },
+
+  {
+    // Replaces the native equivalent below.
+    "keys": ["ctrl+p"],
+    "command": "find_under_expand_skip_backward",
+    "context": [
+      {
+        "key": "selection_empty",
+        "operator": "equal",
+        "operand": false,
+        "match_all": true
+      }
+    ]
+  },
+  // { "keys": ["ctrl+p"], "command": "find_under_expand_skip", "args": { "reverse": true },
+  //     "context": [
+  //         { "key": "selection_empty", "operator": "equal", "operand": false, "match_all": true }
+  //     ],
+  // },
+
+  // Similar to VSCode search editor.
+  {
+    "keys": ["alt+f"],
+    "command": "show_panel",
+    "args": { "panel": "find_in_files" }
+  },
+
+  { "keys": ["ctrl+shift+["], "command": "fold" }, // Default.
+  { "keys": ["ctrl+shift+]"], "command": "unfold" }, // Default.
+  { "keys": ["alt+a"], "command": "fold_by_level", "args": { "level": 0 } },
+  { "keys": ["alt+shift+a"], "command": "unfold_all" },
+
+  // I prefer to use ctrl(+shift)+tab to go right/left instead of alternating
+  // through the most recent ones.
+  // Alternate through the most recent ones.
+  { "keys": ["alt+q"], "command": "next_view_in_stack" },
+  { "keys": ["alt+shift+q"], "command": "prev_view_in_stack" },
+  { "keys": ["alt+l"], "command": "next_view_in_stack" },
+  { "keys": ["alt+shift+l"], "command": "prev_view_in_stack" },
+  // Go right/left in tabs one by one.
+  { "keys": ["ctrl+tab"], "command": "next_view" },
+  { "keys": ["ctrl+shift+tab"], "command": "prev_view" },
+
+  // I use 'z' for 'zen mode'.
+  { "keys": ["alt+z"], "command": "toggle_distraction_free" }
+
+  // End. Next keybinding/keymap/mapping/shortcut above.
 ]

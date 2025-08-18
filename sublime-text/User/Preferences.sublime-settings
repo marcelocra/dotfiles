@@ -1,14 +1,59 @@
 // Settings in here override those in "Default/Preferences.sublime-settings",
 // and are overridden in turn by syntax-specific settings.
 {
-    "theme": "auto",
-    "color_scheme": "Breakers.sublime-color-scheme",
+    "theme": "Adaptive.sublime-theme",
+    "color_scheme": "Mariana.sublime-color-scheme",
 
-    "font_face": "Geist Mono",
-    "font_size": 11,
+    // Examples: --- != === !== <> <= >= <-> [:] -~ ?? ->> -< >- .. ''"" <| |> >>> ...Fl Tl fi fj fl ft
+    "font_face": "FiraCode Nerd Font Mono",
+    "font_size": 13,
     "font_options": [
-        // "ss02",
-        // "ss03",
+        "calt",
+        "cv01",
+        "cv02",
+        "cv06",
+        "cv12",
+        "cv14",
+        "cv16",
+        "cv30",
+        "cv31",
+        "ss03",
+        "ss05",
+        "ss08",
+        "ss10"
+    ],
+
+    // Examples: --- != === !== <> <= >= <-> [:] -~ ?? ->> -< >- .. ''"" <| |> >>> ...Fl Tl fi fj fl ft
+    "font_face": "Geist Mono",
+    "font_size": 13,
+    "font_options": [
+        //----- Like -----------------------
+        // "liga", // disable ligatures
+        // "ss02", // alt a
+        // "ss03", // alt l
+        // "ss04", // alt R
+        // "ss08", // rounded dot
+        //----- Don't like -----------------
+        // "ss01", // no tail a
+        // "ss06", // alt G
+        // "ss09", // no slash/dot in zero
+        //----- Didn't work ----------------
+        // "aalt", // all
+        // "ss07", // alt arrows
+    ],
+
+   // Examples: --- != === !== <> <= >= <-> [:] -~ ?? ->> -< >- .. ''"" <| |> >>> ...Fl Tl fi fj fl ft
+    "font_face": "Reddit Mono Light",
+    "font_size": 13,
+    "font_options": [
+    ],
+
+   // Examples: --- != === !== <> <= >= <-> [:] -~ ?? ->> -< >- .. ''"" <| |> >>> ...Fl Tl fi fj fl ft
+    "font_face": "Google Sans Code",
+    "font_size": 13,
+    "font_options": [
+        "ss01", // alt g
+        "cv03", // alt
     ],
 
     "caret_extra_top": 6,
