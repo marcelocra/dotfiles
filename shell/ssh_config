@@ -1,0 +1,24 @@
+# ---------------------------------------
+# Global settings for all hosts.
+# ---------------------------------------
+
+Host *
+    # Automatically add private keys to SSH agent when first used.
+    AddKeysToAgent yes
+
+    # Only use explicitly specified keys, prevents SSH from trying all available keys.
+    IdentitiesOnly yes
+
+# ---------------------------------------
+# Specific host configuration (optional).
+# ---------------------------------------
+
+# Examples:
+#
+# Host github.com
+#     IdentityFile ~/.ssh/id_ed25519
+#     User git
+# 
+# Host gitlab.com
+#     IdentityFile ~/.ssh/id_ed25519
+#     User git
