@@ -715,7 +715,6 @@
 
   // Choose the main font and add fallbacks.
   "terminal.integrated.fontFamily": "'JetBrainsMono Nerd Font', 'MesloLGS Nerd Font', 'Hack Nerd Font', 'RecMonoLinear Nerd Font', 'BlexMono Nerd Font', 'Cascadia Code NF', 'JetBrainsMono NF', 'JetBrains Mono Nerd Font', 'JetBrains Mono NF', 'MesloLGM Nerd Font Mono', 'JetBrains Mono', 'Noto Sans Mono', 'Liberation Mono', 'DejaVu Sans Mono', monospace",
-  "terminal.integrated.fontSize": 13,
   "terminal.integrated.fontWeight": "400",
   "terminal.integrated.fontLigatures.enabled": true,
   // // IBM Plex Mono features:
@@ -1600,7 +1599,8 @@
   // Keep the color theme last, as I'm always changing it and this way we won't
   // have a problem with the comma.
 
-  "workbench.colorTheme": "Monokai"
+  "workbench.colorTheme": "Monokai",
+  "terminal.integrated.fontSize": 22
 
   // #endregion workbench. }}}
 }
