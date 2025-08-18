@@ -123,7 +123,8 @@
     "aspnetcorerazor": "html",
     "razor": "html",
     "*.razor": "html",
-    "elm": "html"
+    "elm": "html",
+    "md": "html"
   },
 
   "tailwindCSS.files.exclude": [
@@ -229,16 +230,18 @@
 
   "jupyter.disableJupyterAutoStart": true,
 
-  "python.REPL.enableREPLSmartSend": true,
+  "python.terminal.activateEnvInCurrentTerminal": false,
+  "python.terminal.executeInFileDir": false,
+  "python.terminal.shellIntegration.enabled": false,
+  "python.REPL.enableREPLSmartSend": false,
   "python.REPL.sendToNativeREPL": true,
   "ruff.nativeServer": "on",
 
   "[python]": {
     "editor.defaultFormatter": "charliermarsh.ruff"
   },
-
-  "python.venvFolders": [".python-global-venv"],
   "python.terminal.activateEnvironment": true,
+  "python.analysis.typeCheckingMode": "strict",
 
   "rubyLsp.rubyVersionManager": "asdf",
 
@@ -290,9 +293,6 @@
     }
   },
 
-  "zig.path": "zig",
-  "zig.zls.path": "zls",
-
   "[ocaml]": {
     "editor.defaultFormatter": "ocamllabs.ocaml-platform"
   },
@@ -301,13 +301,19 @@
     "editor.defaultFormatter": "vscode.json-language-features"
   },
 
+  "github.copilot.nextEditSuggestions.enabled": false,
+  "github.copilot.chat.codesearch.enabled": true,
   "github.copilot.enable": {
     "*": true,
     "plaintext": false,
-    "markdown": true,
-    "scminput": false
+    "markdown": false,
+    "scminput": false,
+    "shellscript": true
   },
-  "chat.agent.": true,
+  "github.copilot.chat.byok.ollamaEndpoint": "http://localhost:11434",
+
+  "geminicodeassist.enableTelemetry": false,
+  "geminicodeassist.inlineSuggestions.enableAuto": true,
 
   // TODO: figure out from what extension this comes from. Perhaps the Dev
   // Container one.
@@ -322,205 +328,29 @@
 
   // #region editor. {{{
 
-  //----------------------------------------------------------------------------
-  // Programming fonts and their settings
-  //----------------------------------------------------------------------------
+  // Default. Keep it here and override below. Copy/pastes and fonts options at the bottom of this file.
+  "editor.fontFamily": "'MesloLGS Nerd Font', 'MesloLGS NF', Consolas, 'Courier New', monospace",
 
-  // // IBM Plex Mono
-  // // -------------
-  // "editor.fontFamily": "IBM Plex Mono",
-  // "editor.fontLigatures": "'zero'",
-
-  // // CodeNewRoman
-  // // ------------
-  "editor.fontFamily": "CodeNewRoman Nerd Font Mono",
-
-  // // Cascadia Code
-  // // -------------
-  // "editor.fontFamily": "Cascadia Code NF",
-  // 'calt' and 'cv01' 3 were here, don't know why... don't seem to do anything.
-  // "editor.fontLigatures": "'ss01', 'ss19', 'ss20'",
-  // Available stylistic sets:
-  //    cursive italics: 'ss01', alternate not equal: 'ss02' ~= (appears as !=),
-  //    serbian locl forms (italic only): 'ss03', slashed zero: 'ss19',
-  //    graphical control characters: 'ss20'
-  // To test:
-  //    ! " # $ % & ' ( ) * + , - . / : ; < = > ? @ [ \ ] ^ _ ` { } ~ < > = + _
-  //    ( ) * & ^ % $ # @ ! { } [ ] \ | / ? : ; , . ` ' " ´ ` ˜ => -> <> <= >=
-  //    != !== === ~= |> <- --> || .- :- .= {..}
-
-  // // DM Mono
-  // // -------
-  // "editor.fontFamily": "DM Mono",
-  // "editor.fontLigatures": "'ss01','ss03','ss04'",
-  // Available stylistic sets:
-  //    ss01: curved comma, ss02: curved a, ss03: curved g, ss04: less rounded
-  //    numbers, ss05: remove rounded borders of f
-
-  // // Source Code Pro
-  // // ---------------
-  // "editor.fontFamily": "SourceCodeVF",
-  // "editor.letterSpacing": -0.4,
-  // // "editor.fontLigatures": "'cv17', 'zero'",
-  // "editor.fontLigatures": "'cv01', 'cv02', 'cv17', 'zero'",
-  // Available stylistic sets:
-  //    cv01 and cv02: clearer 'a' and 'g', cv08: alternate &, cv09: alternate @
-  //    cv17: improved 1, zero: reverse dashed zero
-
-  // // JetBrains Mono
-  // // --------------
-  // "editor.fontFamily": "JetBrainsMono Nerd Font",
-  // Minimal (Fira Code like):
-  // "editor.fontLigatures": "'ss01', 'ss19', 'ss20', 'zero', 'cv99'",
-  // Very different (Ubuntu Mono like):
-  //    closed construction set (ss02), alternative ligatures for g (03), j
-  //    (04), Q (16), 269 (18), 8 (19), 5 (20), and some inverted color
-  //    ligatures (99).
-  // "editor.fontLigatures": "'ss02', 'ss19', 'ss20', 'zero', 'cv03', 'cv04', 'cv16', 'cv18', 'cv19', 'cv20', 'cv99'",
-  // Available stylistic sets:
-  //    cv01,05: l, cv02: t, cv03: g, cv04: j, cv06: m , cv07: w, cv08: k,
-  //    cv09,17: f, cv10: r, cv11: y, cv12: u, cv14: $¢, cv15: &, cv16: Q, cv18:
-  //    269 , cv19: 8, cv20: 5, cv99: bg inverted color to differentiate some
-  //    gliphs, ss01: classic construction, ss02: closed construction, ss19:
-  //    broken equals ligatures (yay!), ss20: raised bar f, zero: slashed zero,
-  //    frac: fractions
-
-  // // Geist Mono
-  // // ----------
-  // "editor.fontFamily": "Geist Mono",
-  // "editor.fontLigatures": "'ss02', 'ss03', 'ss06', 'ss13', 'liga' 0",
-  // Available stylistic sets:
-  //    ss01: normal, ss02: circular a, ss03: non-1-like l, ss06: circular
-  //    uppercase G, ss08: compact (semi) colon, ss09: non slashed zero
-
-  // // Recursive Mono
-  // // --------------
-  // "editor.fontFamily": "Recursive",
-  // Some customizations that I like (details below).
-  // "editor.fontLigatures": "true",
-  // "editor.fontLigatures": "'ss01', 'ss02', 'ss03', 'ss04', 'ss05', 'ss06', 'ss07', 'ss11', 'ss12', 'case', 'frac' 0",
-  // "editor.fontLigatures": "'ss04', 'ss05', 'ss12', 'case', 'frac' 0",
-  // Available stylistic sets:
-  //    dlig: ligatures - => && === ff it ti (more below), ss01: a, ss02: g,
-  //    ss03: f, ss04: i, ss05: l, ss06: r, ss07: simplified italic diagonals -
-  //    kwxyz, ss08: no-serif on L and Z, ss09: less rounded six and nine - 6 9,
-  //    ss10: dotted zero, ss11: 1 without the bottom line, ss12: simpler @,
-  //    case: uppercase punctuation (put punctuation around mid-line), frac:
-  //    contextual fractions - 1/2 3/4 9/74, afrc: alternative fractions, ordn:
-  //    ordinals - 1.o 8.a, titl: Q leg to the right instead of down, sups,
-  //    numr: superior/numerators - H0123456789, sinf, dnom:
-  //    inferior/denominators
-
-  // // Iosevka
-  // // -------
-  // "editor.fontFamily": "Iosevka Fixed Extended",
-  // // Source Code Pro, with changes to: 1, 4, 0, l (lowercase L).
-  // "editor.fontLigatures": "'ss09', 'cv01' 3, 'cv04' 5, 'cv10' 4, 'cv47' 8",
-  // // Monaco.
-  // "editor.fontLigatures": "'ss17'",
-  // // Lucida, with changes to: 2, 4, 5, 0, *, ', #, $, %, ?.
-  // "editor.fontLigatures": "'ss13', 'cv02' 4, 'cv04' 11, 'cv05' 8, 'cv10' 10, 'VSAB' 6, 'VSAF' 2, 'VSAJ' 4, 'VSAM' 1, 'VSAO' 1, 'VSAQ' 3",
-  // Other:
-  //    cv02: change 2, cv04: change 4, cv05: change 5, cv10: change 0, cv47:
-  //    change l, VSAB: * position (top, middle, bottom), VSAF: ' (straight,
-  //    curved), VSAJ: #, VSAM: $, VSAO: %, VSAQ: ?, ss01: Andale Mono, ss02:
-  //    Anonymous Pro, ss03: Consolas, ss04: Menlo, ss05: Fira Mono, ss06:
-  //    Liberation Mono, ss07: Monaco, ss08: Pragmata Pro, ss09: Source Code
-  //    Pro, ss10: Envy Code R, ss11: X Window, ss12: Ubuntu Mono, ss13: Lucida,
-  //    ss14: JetBrains Mono, ss15: IBM Plex Mono, ss16: PT Mono, ss17:
-  //    Recursive Mono, ss18: Input Mono, ss20: Curly
-
-  // // Victor Mono
-  // // --------------
-  // "editor.fontFamily": "Victor Mono",
-  // "editor.fontLigatures": "'ss01', 'ss02', 'ss07', 'ss08'",
-  // "editor.fontLigatures": "'calt' 0, 'ss01', 'ss02', 'ss06', 'ss07', 'ss08'",
-  // Available stylistic sets:
-  //    calt=0: no ligatures (particularly for `==` and `!=`, but also disable
-  //    for ff fi il re tl ke), ss01: different 'a', ss02: different dashed zero
-  //    (up to ss05), ss06: crossed '7', ss07: different '6' and  '9', ss08:
-  //    more fish-like stuff (::<)
-
-  // "editor.fontFamily": "BlexMono Nerd Font",
-  // // "editor.fontLigatures": "'ss01', 'ss02', 'zero'",
-  // "editor.fontLigatures": "'zero'",
-  // Available stylistic sets:
-  //    calt=0: no ligatures (particularly for `==` and `!=`, but also disable
-  //    for ff fi il re tl ke), ss01: different 'a', ss02: different dashed zero
-  //    (up to ss05), ss06: crossed '7', ss07: different '6' and  '9', ss08:
-  //    more fish-like stuff (::<)
-
-  // // Hack
-  // // ----
-  // "editor.fontFamily": "Hack Nerd Font",
-  // Available stylistic sets:
-  //    calt=0: no ligatures (particularly for `==` and `!=`, but also disable
-  //    for ff fi il re tl ke), ss01: different 'a', ss02: different dashed zero
-  //    (up to ss05), ss06: crossed '7', ss07: different '6' and  '9', ss08:
-  //    more fish-like stuff (::<)
-
-  // // Monoid
-  // // ------
-  // "editor.fontFamily": "Monoid",
-  // "editor.fontSize": 13,
-  // "editor.fontWeight": "normal",
-  // "editor.fontLigatures": "'calt' 1, 'liga' 0, 'ss01' 0, 'ss02' 0, 'ss03' 0, 'ss04' 0, 'ss05' 1, 'ss06' 0, 'ss07' 1, 'ss08' 1, 'ss09' 1, 'ss10' 0, 'ss11' 0, 'ss12' 0, 'ss13' 0, 'ss14' 0, 'ss15' 0",
-
-  // Monaspace
-  // ---------
-  // Docs: https://github.com/githubnext/monaspace#character-variants
-  // "editor.fontFamily": "Monaspace Neon Var",
-  // "editor.fontSize": 15,
-  // "editor.fontWeight": "400",
-  // "editor.fontLigatures": "'calt' 1, 'liga' 0, 'ss01' 0, 'ss02' 0, 'ss03' 1, 'ss04' 0, 'ss05' 0, 'ss06' 0, 'ss07' 0, 'ss08' 0, 'ss09' 0, 'ss10' 0, 'cv01' 3, 'cv02' 0, 'cv10' 1, 'cv11' 0, 'cv30' 0, 'cv31' 0, 'cv62' 0",
-
-  // cv01-cv09: figure variants
-  //  - cv01: 0 alternates: 1: plain 2: slash 3: reverse slash 4: cut-out slash
-  //  - cv02: 1 alternate (no serif)
-  // cv10-cv29: letter variants
-  //  - cv10: l i alternates (Neon, Argon, Xenon, Radon)
-  //  - cv11: j f r t alternates (Neon, Argon)
-  // cv30-cv59: symbol variants
-  //  - cv30: * vertically aligned closer to the top of the space
-  //  - cv31: * 6-pointed asterisk
-  //  - cv32: ≥ ≤ angled lower line
-  // cv60-cv79: optional ligatures
-  //  - cv60: forces the <= pair to render in a fashion that matches => instead
-  //          of swapping for ≤.
-  //  - cv61: enables the optional closed square ligature for []. This can be
-  //          distracting
-  //  - cv62: @_ ligature
-  // cv80-cv99: reserved for future use
-
-  // ss01: ligatures related to the equals glyph like != and ===.
-  // ss02: ligatures for greater/less or equal (<=, >=).
-  // ss03: ligatures related to arrows like -> and ~>.
-  // ss04: ligatures related to markup, like </ and />.
-  // ss05: ligatures related to the F# programming language, like |>.
-  // ss06: ligatures related to repeated uses of ###, +++, and &&&.
-  // ss07: ligatures related to colons like :: or =:=.
-  // ss08: ligatures related to combinations of periods with other glyphs like ..= or .-.
-  // ss09: ligatures related to combinations of the greater/less than and equals signs, like <=>,>>, and =<<.
-  // ss10: other tags, like #[ and #(
-
-  // // Random
-  // // ------
-  // "editor.fontFamily": "'Maple Mono', 'Monaspace Neon', 'IosevkaTermSlab Nerd Font', 'Iosevka Nerd Font', 'CodeNewRoman Nerd Font Mono', 'Reddit Mono', 'MesloLGS Nerd Font', 'M Plus 1 Code', 'RecMonoLinear Nerd Font', 'RecMonoDuotone Nerd Font', 'Hack Nerd Font', 'Geist Mono', Iosevka, monospace",
-  // "editor.fontSize": 17,
-  // "editor.fontWeight": "normal",
-  // "editor.fontLigatures": "",
+  // ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()_+-
+  // = <- -> <= => <=> <| |> fi Tl Fl != !== === /= ;:* :- --- ---- .: -. .- !?
+  // < > www <> >= <-> [:] -~ ?? ->> -< >- .. '' "" >>> Fl Tl fi fj fl ft
+  "editor.fontFamily": "Azeret Mono",
+  "editor.fontSize": 15,
+  "editor.fontWeight": "400",
+  "editor.fontLigatures": "'calt' 0, 'liga' 0, 'ss02' 1, 'ss03' 1, 'ss04' 1, 'ss05' 1, 'ss07' 1, 'ss08' 1, 'ss10' 1, 'ss11' 1, 'ss12' 1, 'ss14' 1, 'ss15' 1, 'calt' 1, 'liga' 1, 'zero' 1",
 
   "editor.tokenColorCustomizations": {
-    // "[*Light*]": { // Match all themes with "Light" in the name.
-    //   "textMateRules": [
-    //     {
-    //       "scope": "ref.matchtext",
-    //       "settings": {
-    //         "foreground": "#000"
-    //       }
-    //     }
-    //   ]
-    // },
+    "[*Light*]": {
+      // Match all themes with "Light" in the name.
+      "textMateRules": [
+        {
+          // "scope": "ref.matchtext",  // Not sure what this is for.
+          "settings": {
+            "foreground": "#000"
+          }
+        }
+      ]
+    },
     "[Spiral Tattoo Ink Dark Dim]": {
       "textMateRules": [
         // Test custom colors here, before moving to the theme.
@@ -561,7 +391,7 @@
     // "source.removeUnusedImports": "always"
   },
   "editor.lineNumbers": "on",
-  "zenMode.hideLineNumbers": false, // `editor.` related
+  "zenMode.hideLineNumbers": true, // `editor.` related
   "editor.parameterHints.enabled": false,
   "editor.guides.bracketPairs": "active",
   "editor.bracketPairColorization.enabled": true,
@@ -575,11 +405,11 @@
 
   // Cursor.
   "editor.cursorStyle": "line",
-  "editor.cursorWidth": 3,
+  "editor.cursorWidth": 2,
   "editor.cursorSmoothCaretAnimation": "on",
   "editor.cursorBlinking": "blink",
 
-  "editor.rulers": [80, 100, 120],
+  "editor.rulers": [80, 120],
   "editor.formatOnSave": true,
   "editor.tabCompletion": "onlySnippets",
   "editor.suggest.snippetsPreventQuickSuggestions": false,
@@ -591,14 +421,15 @@
   "editor.renderWhitespace": "none",
   "editor.acceptSuggestionOnCommitCharacter": false,
   "editor.hover.delay": 1000,
-  "editor.wordWrap": "bounded",
+  "editor.wordWrap": "off",
   "editor.wrappingIndent": "deepIndent",
   "editor.wordWrapColumn": 120,
-  // "editor.lineHeight": 1.5, // Interesting values: 1.6; 1.8; 2; 2.2
-  // The default letter spacing (i.e. commented next line) is good for most
-  // fonts. It might be good for some fonts, so I'm keeping it here. Test for a
-  // font and if it is good, move to that font section.
-  // "editor.letterSpacing": -0.8,
+  "editor.lineHeight": 1.8, // Interesting values: 1.6; 1.8; 2; 2.2
+  // Doesn't make a lot of sense to change the letter spacing when using
+  // monospaced fonts, unless the font is too wide (like OpenDyslexicM Nerd Font).
+  // Therefore, keep the default value (comment `letterSpacing`), which is good
+  // for most fonts. (Exceptions: OpenDyslexicM = -2 is good.)
+  // "editor.letterSpacing": -2,
   "editor.roundedSelection": false,
   "editor.autoIndent": "full",
   "editor.screenReaderAnnounceInlineSuggestion": false,
@@ -609,7 +440,6 @@
   "editor.suggestOnTriggerCharacters": true,
   "editor.acceptSuggestionOnEnter": "on",
   "editor.suggestSelection": "recentlyUsedByPrefix",
-  "editor.multiCursorModifier": "ctrlCmd",
   "editor.renderLineHighlight": "all",
   "editor.scrollbar.vertical": "hidden",
   "editor.scrollbar.horizontal": "hidden",
@@ -617,19 +447,23 @@
   "editor.colorDecorators": true,
   "editor.glyphMargin": true, // Space between the explorer and the line number.
   "editor.mouseWheelZoom": true,
-  "editor.minimap.showSlider": "always",
   "editor.inlineSuggest.enabled": true,
+  // "editor.inlineSuggest.fontFamily": "'Maple Mono', 'CodeNewRoman Nerd Font', monospace",
   "editor.accessibilitySupport": "off",
   "editor.showFoldingControls": "always",
   "editor.foldingHighlight": true,
-
-  "editor.minimap.sectionHeaderLetterSpacing": 0,
-  "editor.minimap.size": "fit",
-  "editor.minimap.markSectionHeaderRegex": "\\bMARK:\\s*(?<separator>-?)\\s*(?<label>.*)$",
+  "editor.minimap.autohide": "none",
+  "editor.minimap.renderCharacters": false,
+  "editor.minimap.showSlider": "always",
+  "editor.minimap.sectionHeaderLetterSpacing": 1,
+  "editor.minimap.size": "proportional",
+  // "editor.minimap.markSectionHeaderRegex": "\\bMARK:\\s*(?<separator>-?)\\s*(?<label>.*)$",
+  "editor.minimap.sectionHeaderFontSize": 9,
   "editor.minimap.showMarkSectionHeaders": true,
   "editor.minimap.showRegionSectionHeaders": true,
-
-  "editor.inlineSuggest.fontFamily": "'CodeNewRoman Nerd Font', monospace",
+  "editor.minimap.maxColumn": 80,
+  "editor.minimap.side": "right",
+  "editor.minimap.scale": 1,
 
   // Performance related.
   "extensions.experimental.affinity": {
@@ -673,7 +507,7 @@
   "git.confirmSync": false,
   "git.openRepositoryInParentFolders": "never",
   // Setting both to false tells VS Code: "Don't try to manage git authentication - let git handle it with the configured credential helpers."
-  "git.useIntegratedAskPass": false,
+  "git.useIntegratedAskPass": true,
   "git.terminalAuthentication": false,
 
   "gitlens.defaultDateLocale": "pt-BR",
@@ -708,66 +542,120 @@
   "gitlens.codeLens.authors.enabled": false,
   "gitlens.codeLens.recentChange.enabled": false,
   "gitlens.telemetry.enabled": false,
+  "gitlens.views.commitDetails.files.layout": "list",
 
   // #endregion Git and GitLens }}}
 
   // #region terminal. {{{
 
-  // Choose the main font and add fallbacks.
-  "terminal.integrated.fontFamily": "'JetBrainsMono Nerd Font', 'MesloLGS Nerd Font', 'Hack Nerd Font', 'RecMonoLinear Nerd Font', 'BlexMono Nerd Font', 'Cascadia Code NF', 'JetBrainsMono NF', 'JetBrains Mono Nerd Font', 'JetBrains Mono NF', 'MesloLGM Nerd Font Mono', 'JetBrains Mono', 'Noto Sans Mono', 'Liberation Mono', 'DejaVu Sans Mono', monospace",
+  // Best terminal fonts to be the default. DO NOT REMOVE, experiment with the lines below.
+  "terminal.integrated.fontFamily": "'MesloLGS Nerd Font Mono', 'MesloLGS NF', 'JetBrainsMono Nerd Font', 'Cascadia Code', Consolas, monospace",
+
+  // For experiments.
+  "terminal.integrated.fontFamily": "JetBrainsMono Nerd Font",
+  "terminal.integrated.fontFamily": "Fragment Mono",
+  "terminal.integrated.fontFamily": "Geist Mono",
+  "terminal.integrated.fontFamily": "Maple Mono NF",
+  "terminal.integrated.fontFamily": "Cascadia Code",
+
+  // Remaining terminal settings.
+  "terminal.integrated.fontSize": 15,
   "terminal.integrated.fontWeight": "400",
   "terminal.integrated.fontLigatures.enabled": true,
-  // // IBM Plex Mono features:
-  // "terminal.integrated.fontLigatures.featureSettings": "'zero', 'ss01', 'ss02'",
-  "terminal.integrated.cursorStyle": "line",
-  "terminal.integrated.cursorWidth": 3,
+  "terminal.integrated.fontLigatures.featureSettings": "'calt' 1, 'ss01' 1, 'ss19' 1, 'ss20' 1",
+  "terminal.integrated.cursorWidth": 3, // For when it is a bar.
+  "terminal.integrated.cursorStyle": "underline", // I want to use 'underline', but it is so thin that it disappears sometimes.
   "terminal.integrated.cursorStyleInactive": "outline",
-
-  "debug.console.fontFamily": "'JetBrainsMono Nerd Font', 'Cascadia Code NF', 'JetBrainsMono NF', 'JetBrains Mono Nerd Font', 'JetBrains Mono NF', 'MesloLGM Nerd Font Mono', 'MesloLGS Nerd Font Mono', 'JetBrains Mono', 'Liberation Mono', 'DejaVu Sans Mono', monospace",
-  "debug.console.fontSize": 11,
-
-  // Good alternatives:
-  //    "terminal.integrated.fontFamily": "Iosevka Fixed",
-  //    "terminal.integrated.fontFamily": "JetBrains Mono",
-  //    "terminal.integrated.fontFamily": "Victor Mono",
-  //    "terminal.integrated.fontFamily": "MesloLGS NF",
-  //    "terminal.integrated.fontFamily": "RecMonoLinear Nerd Font",
-  //    "terminal.integrated.fontFamily": "MesloLGS Nerd Font Mono",
-
-  "terminal.integrated.tabs.enabled": true,
   "terminal.integrated.macOptionClickForcesSelection": true,
   "terminal.integrated.allowChords": false,
-  "terminal.integrated.shellIntegration.enabled": true,
+  "terminal.integrated.shellIntegration.enabled": false,
+  "terminal.integrated.shellIntegration.decorationsEnabled": "both",
   "terminal.integrated.enableVisualBell": true,
   "terminal.integrated.bellDuration": 3000,
   "terminal.integrated.cursorBlinking": true,
   "terminal.integrated.mouseWheelZoom": true,
-
   "terminal.integrated.enableFileLinks": "notRemote",
   "terminal.integrated.gpuAcceleration": "on",
-  "terminal.integrated.localEchoExcludePrograms": [
-    "vim",
-    "vi",
-    "nano",
-    "tmux",
-    "nvim"
-  ],
+  // prettier-ignore
+  "terminal.integrated.localEchoExcludePrograms": [ "vim", "vi", "nano", "tmux", "nvim" ],
   "terminal.integrated.smoothScrolling": true,
-  "terminal.integrated.stickyScroll.enabled": true,
+  "terminal.integrated.stickyScroll.enabled": false,
   "terminal.integrated.suggest.enabled": true,
-  "terminal.integrated.tabs.defaultColor": "terminal.ansiMagenta",
+  "terminal.integrated.tabs.defaultColor": "terminal.ansiGreen",
+  "terminal.integrated.enableMultiLinePasteWarning": "always",
+  "terminal.integrated.defaultProfile.linux": "zsh",
+  "terminal.integrated.profiles.linux": {
+    "bash": { "path": "bash", "icon": "terminal-bash" },
+    "zsh": { "path": "zsh" },
+    "fish": { "path": "fish" },
+    "tmux": { "path": "tmux", "icon": "terminal-tmux" },
+    "pwsh": null
+  },
+
+  "terminal.integrated.defaultProfile.osx": "zsh",
+  "terminal.integrated.profiles.osx": {
+    "bash": { "path": "bash", "icon": "terminal-bash" },
+    "zsh": { "path": "zsh" },
+    "fish": { "path": "fish" },
+    "tmux": { "path": "tmux", "icon": "terminal-tmux" },
+    "pwsh": null
+  },
+  "terminal.integrated.defaultProfile.windows": "pwsh",
+  "terminal.integrated.profiles.windows": { "pwsh": null },
+  "terminal.integrated.customGlyphs": true,
+  "terminal.integrated.suggest.inlineSuggestion": "alwaysOnTopExceptExactMatch",
+  // Most recent try:
+  "terminal.integrated.suggest.providers": {
+    "terminal-suggest": true,
+    "pwsh-shell-integration": false,
+    "lsp": true
+  },
+
+  "terminal.integrated.mcraNext": null,
 
   "terminal.external.linuxExec": "kitty",
   "terminal.external.osxExec": "kitty.app",
   "terminal.external.windowsExec": "C:\\Windows\\System32\\kitty.exe",
 
-  "terminal.integrated.enableMultiLinePasteWarning": "always",
-  "terminal.integrated.minimumContrastRatio": 1,
-
   // #endregion terminal. }}}
 
+  // "debug.console.fontFamily": "'Liberation Mono', 'DejaVu Sans Mono', monospace",
+  // "debug.console.fontSize": 11,
+
+  // #region window and search stuff. {{{
+
   "window.titleBarStyle": "custom",
-  "window.title": "[${rootNameShort}] [${activeRepositoryBranchName}] ${activeEditorMedium}",
+  // "window.title": "/ 📂 ${activeRepositoryName} / 🌿 ${activeRepositoryBranchName} / 📄 ${activeEditorMedium}",
+  // "window.title": "⚡${activeRepositoryName} 🌿 ${activeRepositoryBranchName} 📝 ${activeEditorMedium}",
+  // "window.title": "⚡${activeRepositoryName} 🔀 ${activeRepositoryBranchName} 📝 ${activeEditorMedium}",
+  // "window.title": "🧩 ${activeRepositoryName} / 🔀 ${activeRepositoryBranchName} / 📝 ${activeEditorMedium}",
+  // "window.title": "⚡${activeRepositoryName} 🔀 ${activeRepositoryBranchName} 📝 ${activeEditorMedium}",
+  // "window.title": "⦗⚡${activeRepositoryName} ⦘ ⦗🔀${activeRepositoryBranchName} ⦘ ⦗📝${activeEditorMedium} ⦘",
+  // "window.title": "【${activeRepositoryName}】◇【${activeRepositoryBranchName}】◇【${activeEditorMedium}】",
+  // "window.title": "⦗${activeRepositoryName}⦘ ⦗${activeRepositoryBranchName}⦘ ⦗${activeEditorMedium}⦘",
+  // "window.title": "[${activeRepositoryName}] [${activeRepositoryBranchName}] [${activeEditorMedium}] ",
+  // "window.title": "[${activeRepositoryName} | ${activeRepositoryBranchName}] ${activeEditorMedium} ",
+  // "window.title": "⚙︎ ${activeRepositoryName} 🌿 ${activeRepositoryBranchName} 📄 ${activeEditorMedium}",
+  // "window.title": "┣ ${activeRepositoryName} ━ ${activeRepositoryBranchName} ━ ${activeEditorMedium}",
+  // "window.title": "⦓${activeRepositoryName} ⌇ ${activeRepositoryBranchName}⦔ ${activeEditorMedium}",
+  // "window.title": "『${activeRepositoryName} ⫸${activeRepositoryBranchName}』 ${activeEditorMedium}",
+  // "window.title": "((${activeRepositoryName})) ∿ ${activeRepositoryBranchName} ∿ ${activeEditorMedium}",
+  // "window.title": "⦗${activeRepositoryName}⦘ ⧨ ${activeRepositoryBranchName} ⧨ ${activeEditorMedium}",
+  // "window.title": "⧫ ${activeRepositoryName} ⧫ ${activeRepositoryBranchName} ⧫ ${activeEditorMedium} ⧫",
+  // "window.title": "🔷${activeRepositoryName}🌿${activeRepositoryBranchName} ◈ ${activeEditorMedium}",
+  // "window.title": "⚡${activeRepositoryName} ∿ 🔀${activeRepositoryBranchName} ∿ 📄${activeEditorMedium}",
+  // "window.title": "🔥${activeRepositoryName}🌳${activeRepositoryBranchName}📋${activeEditorMedium}",
+  // "window.title": "🔮⟪${activeRepositoryName}⟫ ◈ ✨${activeRepositoryBranchName} ◈ ${activeEditorMedium}",
+  // "window.title": "💎⦗${activeRepositoryName}⦘ ∿ 🌿${activeRepositoryBranchName} ∿ ${activeEditorMedium}",
+  // "window.title": "🌳⟨${activeRepositoryName}⟩ ◈ 🌿${activeRepositoryBranchName} ◈ 🍃${activeEditorMedium}", // Nature theme.
+  // "window.title": "⚙️⦗${activeRepositoryName}⦘ ⧫ 🔀${activeRepositoryBranchName} ⧫ 💻${activeEditorMedium}", // Tech theme.
+  // "window.title": "🌌【${activeRepositoryName}】 ∿ ⭐${activeRepositoryBranchName} ∿ 🛸${activeEditorMedium}", // Space theme.
+  // "window.title": "💎⟬${activeRepositoryName}⟭ ◊ 🔹${activeRepositoryBranchName} ◊ 💠${activeEditorMedium}", // Crystal theme.
+  // "window.title": "💎⟬${activeRepositoryName}⟭ ◊ 🔹${activeRepositoryBranchName} ◊ 💠${activeEditorMedium}", // Crystal theme.
+  // // "window.title": "🌸${activeRepositoryName}🌿 ${activeRepositoryBranchName} ${activeEditorMedium}",
+  // "window.title": "⧸⚡${activeRepositoryName} ⧸🌿${activeRepositoryBranchName} ⧸ ${activeEditorMedium}",
+  // "window.title": "⧸ ${activeRepositoryName} ⧸ ${activeRepositoryBranchName} ⧸ ➜${activeEditorMedium}",
+  "window.title": "[${rootNameShort}/${activeRepositoryBranchName}] ${activeEditorMedium}",
   "window.newWindowDimensions": "inherit",
   "window.restoreWindows": "all",
   "window.newWindowProfile": "Default",
@@ -792,10 +680,21 @@
   },
   "search.defaultViewMode": "tree",
   "search.mode": "newEditor",
-  "search.searchOnTypeDebouncePeriod": 500,
+  "search.searchOnTypeDebouncePeriod": 200,
   "search.showLineNumbers": true,
   "search.smartCase": true,
+  // No context lines by default. Works great for md tasks, but not so much for
+  // code. I'm testing the `reusePriorSearchConfiguration` setting instead.
+  "search.searchEditor.defaultNumberOfContextLines": null,
+  "search.searchEditor.reusePriorSearchConfiguration": true,
+  "search.searchEditor.singleClickBehaviour": "default",
+  "search.searchEditor.doubleClickBehaviour": "openLocationToSide",
+  // "search.searchEditor.focusResultsOnSearch": true,  // Terrible, with short debounce. Or in general.
 
+  // #endregion window and search stuff. }}}
+
+  // #region Misc. {{{
+  //
   // Random one-off settings that doesn't make sense to put in a separate
   // category.
 
@@ -805,27 +704,47 @@
   "scm.compactFolders": false,
   "scm.diffDecorationsGutterWidth": 5,
   "telemetry.telemetryLevel": "off",
-
-  "[log][Log]": {
-    "editor.fontSize": 11,
-    "editor.fontWeight": "400",
-    "editor.fontFamily": "Geist Mono"
-    // "editor.fontFamily": "JetBrains Mono"
-    // "editor.fontSize": 11,
-    // "editor.fontWeight": "300"
-    // "editor.fontLigatures": "'ss02', 'ss19', 'ss20', 'zero', 'cv03', 'cv04', 'cv16', 'cv19', 'cv20', 'cv99'"
-  },
-  "@azure.argTenant": "",
-  "dev.containers.dockerPath": "podman",
-  "geminicodeassist.enableTelemetry": false,
   "postman.settings.dotenv-detection-notification-visibility": false,
 
   "diffEditor.codeLens": true,
-  "diffEditor.ignoreTrimWhitespace": true,
+  "diffEditor.ignoreTrimWhitespace": false,
   "diffEditor.renderSideBySide": true,
 
   // Detect remapped keys better (e.g. caps lock -> ctrl).
   "keyboard.dispatch": "keyCode",
+
+  "markdown.copyFiles.destination": {
+    // Insert the copied file in the root assets/images folder of the workspace.
+    // Other possibilities:
+    //  - ${documentDirName} — Absolute parent directory path of the Markdown document, e.g. /Users/me/myProject/docs.
+    //  - ${documentRelativeDirName} — Relative parent directory path of the Markdown document, e.g. docs. This is the same as ${documentDirName} if the file is not part of a workspace.
+    //  - ${documentFileName} — The full filename of the Markdown document, e.g. README.md.
+    //  - ${documentBaseName} — The basename of the Markdown document, e.g. README.
+    //  - ${documentExtName} — The extension of the Markdown document, e.g. md.
+    //  - ${documentFilePath} — Absolute path of the Markdown document, e.g. /Users/me/myProject/docs/README.md.
+    //  - ${documentRelativeFilePath} — Relative path of the Markdown document, e.g. docs/README.md. This is the same as ${documentFilePath} if the file is not part of a workspace.
+    //  - ${documentWorkspaceFolder} — The workspace folder for the Markdown document, e.g. /Users/me/myProject. This is the same as ${documentDirName} if the file is not part of a workspace.
+    //  - ${fileName} — The file name of the dropped file, e.g. image.png.
+    //  - ${fileExtName} — The extension of the dropped file, e.g. png.
+    //  - ${unixTime} — The current Unix timestamp in milliseconds.
+    // "path": "${documentRelativeDirName}/images/${unixTime}image.png",
+    // IMPORTANT: This can be replicated in a workspace. If that's the case,
+    // changing it here will seem like it is not working. Check there first.
+    "**": "${documentWorkspaceFolder}/assets/images/pasted-from-clipboard/${documentBaseName}/${unixTime}-image.png"
+  },
+
+  "accessibility.voice.speechLanguage": "pt-BR",
+  "mcra next misc thing above this": "",
+
+  // #endregion Misc. }}}
+
+  // #region devcontainer. {{{
+
+  "@azure.argTenant": "",
+  "dev.containers.dockerPath": "podman",
+  "dev.containers.dockerComposePath": "podman-compose",
+
+  // #endregion devcontainer. }}}
 
   //----------------------------------------------------------------------------
   // #region VSCodeNeovim. {{{
@@ -1416,33 +1335,38 @@
   // #region workbench {{{
 
   "workbench.colorCustomizations": {
-    // "editorCursor.foreground": "#00ffff", // cyan
-    "editorCursor.foreground": "#cc00ff", // orange red
-    // "editorCursor.foreground": "#00ffc8", // blue-green
-    "editorCursor.background": "#000",
-
-    "terminalCursor.foreground": "#cc00ff", // orange red
-    "terminalCursor.background": "#000",
-
-    // Testing some colors. Not great.
-    // "minimap.background": "#00000055",
-    // "minimapSlider.activeBackground": "#5533ff44",
-    // "minimapSlider.hoverBackground": "#ff450044",
-    // "minimapSlider.background": "#ff450022",
-
     // My colors:
-    // - most backgrounds: #33475C
-    // - focus and active tab borders: #A699FF
-    // - most other borders: #4b6786
-    // - active tab and sticky section backgrounds: #332c5f
-    // - most errors: #ff4500
-    // - most warnings: #ffa70f
+    // - most backgrounds: #33475C (dark blue gray)
+    // - focus and active tab borders: #A699FF (light purple)
+    // - most other borders: #4b6786 (blue gray)
+    // - active tab and sticky section backgrounds: #332c5f (dark purple)
+    // - most errors: # (red orange)
+    // - most warnings: #ffa70f (yellow orange)
     //
     // Other interesting ones (from v0.dev):
     // --geist-cyan-lighter: #aaffec;
     // --geist-cyan-light: #79ffe1;
     // --geist-cyan: #50e3c2;
     // --geist-cyan-dark: #29bc9b;
+    //
+    // Nice colors for the cursor:
+    // - purple: #cc00ff
+    // - orange red: #ff4500
+    // - violet: #8a2be2
+    // - magenta: #ff00ff
+    // - pink: #ff1493
+
+    "editorCursor.foreground": "#ff4500",
+    "editorCursor.background": "#000",
+
+    "terminalCursor.foreground": "#ff4500",
+    "terminalCursor.background": "#000",
+
+    // Testing some colors. Not great.
+    // "minimap.background": "#00000055",
+    // "minimapSlider.activeBackground": "#5533ff44",
+    // "minimapSlider.hoverBackground": "#44",
+    // "minimapSlider.background": "#22",
 
     "[Tokyo Night][Tokyo Night Storm]": {
       "menu.border": "#5588ff55",
@@ -1492,7 +1416,7 @@
       // "list.inactiveFocusBackground": "#5588ff33",
 
       // // Not sure what this is.
-      // "list.deemphasizedForeground": "#ff450055",
+      // "list.deemphasizedForeground": "#55",
 
       "editor.inactiveSelectionBackground": "#5533ff22",
       // "editor.selectionHighlightBorder": "#008800",
@@ -1529,12 +1453,12 @@
       // "editorSuggestWidget.foreground": "#000",
 
       // // Element that is focused in the explorer.
-      // "list.focusBackground": "#ff450055",
+      // "list.focusBackground": "#55",
       // // Element that was focused in the explorer.
       // "list.inactiveFocusBackground": "#00000011",
 
       // // Not sure what this is.
-      // "list.deemphasizedForeground": "#ff450055",
+      // "list.deemphasizedForeground": "#55",
 
       "editor.inactiveSelectionBackground": "#00ffff22",
       // "editor.selectionHighlightBorder": "#008800",
@@ -1579,8 +1503,14 @@
     },
 
     "[Solarized Light]": {
+      // "editor.foreground": "#171f2c",
+      "editor.foreground": "#000",
       "editor.selectionBackground": "#00ffff55",
-      "editor.wordHighlightBackground": "#00ffff22"
+      "editor.wordHighlightBackground": "#00ffff22",
+      "editor.wordHighlightTextBackground": "#00ff0022",
+      "editor.wordHighlightStrongBackground": "#ff000022",
+      "editor.findMatchBackground": "#00ff0055",
+      "editor.findMatchHighlightBackground": "#0000ff44"
     }
 
     // Next theme colorscheme customization.
@@ -1592,15 +1522,290 @@
   "workbench.sideBar.location": "left",
   "workbench.panel.defaultLocation": "bottom",
   "workbench.editor.pinnedTabsOnSeparateRow": false,
-  "workbench.activityBar.location": "top",
-  "workbench.preferredDarkColorTheme": "Monokai",
-  "workbench.preferredLightColorTheme": "Night Owl Light",
+  "workbench.activityBar.location": "hidden",
+  "workbench.preferredDarkColorTheme": "Solarized Dark",
+  "workbench.preferredLightColorTheme": "Quiet Light",
+  "workbench.editor.empty.hint": "hidden",
+  "workbench.editorAssociations": {
+    // Associate all files with the default editor, rendering as plain text and
+    // not executing anything (e.g. JavaScript in a browser).
+    "**": "default"
+
+    // To override a specific file type, add it below, with the desired editor.
+    // "*.md": "vscode.markdown.preview.editor",
+    // , "*.png": "imagePreview.previewEditor"
+  },
 
   // Keep the color theme last, as I'm always changing it and this way we won't
   // have a problem with the comma.
 
-  "workbench.colorTheme": "Monokai",
-  "terminal.integrated.fontSize": 22
+  "workbench.colorTheme": "Quiet Light"
 
   // #endregion workbench. }}}
 }
+
+// #region Documentation. {{{
+
+//----------------------------------------------------------------------------
+// Programming fonts and their settings
+//----------------------------------------------------------------------------
+
+// Random
+// ------
+// "editor.fontFamily": "'Atkinson Hyperlegible Mono', 'Fragment Mono', 'Maple Mono', 'M Plus 1 Code'",
+
+// // IBM Plex Mono
+// // -------------
+// "editor.fontFamily": "IBM Plex Mono",
+// "editor.fontLigatures": "'zero'",
+
+// "editor.fontFamily": "BlexMono Nerd Font",
+// // "editor.fontLigatures": "'ss01', 'ss02', 'zero'",
+// "editor.fontLigatures": "'zero'",
+// Available stylistic sets:
+//    calt=0: no ligatures (particularly for `==` and `!=`, but also disable
+//    for ff fi il re tl ke), ss01: different 'a', ss02: different dashed zero
+//    (up to ss05), ss06: crossed '7', ss07: different '6' and  '9', ss08:
+//    more fish-like stuff (::<)
+
+// // CodeNewRoman
+// // ------------
+// "editor.fontFamily": "CodeNewRoman Nerd Font Mono",
+
+// // Cascadia Code
+// // -------------
+// "editor.fontFamily": "Cascadia Code NF",
+// 'calt' and 'cv01' 3 were here, don't know why... don't seem to do anything.
+// "editor.fontLigatures": "'ss01', 'ss19', 'ss20'",
+// Available stylistic sets:
+//    cursive italics: 'ss01', alternate not equal: 'ss02' ~= (appears as !=),
+//    serbian locl forms (italic only): 'ss03', slashed zero: 'ss19',
+//    graphical control characters: 'ss20'
+// To test:
+//    ! " # $ % & ' ( ) * + , - . / : ; < = > ? @ [ \ ] ^ _ ` { } ~ < > = + _
+//    ( ) * & ^ % $ # @ ! { } [ ] \ | / ? : ; , . ` ' " ´ ` ˜ => -> <> <= >=
+//    != !== === ~= |> <- --> || .- :- .= {..}
+
+// // DM Mono
+// // -------
+// "editor.fontFamily": "DM Mono",
+// "editor.fontLigatures": "'ss01','ss03','ss04'",
+// "editor.fontLigatures": "'ss01', 'ss02', 'ss03', 'ss04'",
+// Available stylistic sets:
+//    ss01: curved comma, ss02: curved a, ss03: curved g, ss04: less rounded
+//    numbers, ss05: remove rounded borders of f
+
+// // Source Code Pro
+// // ---------------
+// "editor.fontFamily": "SourceCodeVF",
+// "editor.letterSpacing": -0.4,
+// // "editor.fontLigatures": "'cv17', 'zero'",
+// "editor.fontLigatures": "'cv01', 'cv02', 'cv17', 'zero'",
+// Available stylistic sets:
+//    cv01 and cv02: clearer 'a' and 'g', cv08: alternate &, cv09: alternate @
+//    cv17: improved 1, zero: reverse dashed zero
+
+// JetBrains Mono
+// --------------
+// "editor.fontFamily": "JetBrainsMono Nerd Font",
+// "editor.fontLigatures": "'zero' 1, 'ss19' 1",
+// Minimal (Fira Code like):
+// "editor.fontLigatures": "'ss01', 'ss19', 'ss20', 'zero', 'cv99'",
+// Very different (Ubuntu Mono like):
+//    closed construction set (ss02), alternative ligatures for g (03), j
+//    (04), Q (16), 269 (18), 8 (19), 5 (20), and some inverted color
+//    ligatures (99).
+// "editor.fontLigatures": "'ss02', 'ss19', 'ss20', 'zero', 'cv03', 'cv04', 'cv16', 'cv18', 'cv19', 'cv20', 'cv99'",
+// Available stylistic sets:
+//    cv01,05: l, cv02: t, cv03: g, cv04: j, cv06: m , cv07: w, cv08: k,
+//    cv09,17: f, cv10: r, cv11: y, cv12: u, cv14: $¢, cv15: &, cv16: Q, cv18:
+//    269 , cv19: 8, cv20: 5, cv99: bg inverted color to differentiate some
+//    gliphs, ss01: classic construction, ss02: closed construction, ss19:
+//    broken equals ligatures (yay!), ss20: raised bar f, zero: slashed zero,
+//    frac: fractions
+
+// // Geist Mono
+// // ----------
+// // Available stylistic sets:
+// //    ss01: normal, ss02: circular a, ss03: non-1-like l, ss06: circular
+// //    uppercase G, ss08: compact (semi) colon, ss09: non slashed zero
+// "editor.fontFamily": "Geist Mono",
+// "editor.fontLigatures": "'ss02', 'ss03', 'ss06', 'ss13', 'liga' 1",
+
+// // Recursive Mono
+// // --------------
+// "editor.fontFamily": "Recursive",
+// Some customizations that I like (details below).
+// "editor.fontLigatures": "true",
+// "editor.fontLigatures": "'ss01', 'ss02', 'ss03', 'ss04', 'ss05', 'ss06', 'ss07', 'ss11', 'ss12', 'case', 'frac' 0",
+// "editor.fontLigatures": "'ss04', 'ss05', 'ss12', 'case', 'frac' 0",
+// Available stylistic sets:
+//    dlig: ligatures - => && === ff it ti (more below), ss01: a, ss02: g,
+//    ss03: f, ss04: i, ss05: l, ss06: r, ss07: simplified italic diagonals -
+//    kwxyz, ss08: no-serif on L and Z, ss09: less rounded six and nine - 6 9,
+//    ss10: dotted zero, ss11: 1 without the bottom line, ss12: simpler @,
+//    case: uppercase punctuation (put punctuation around mid-line), frac:
+//    contextual fractions - 1/2 3/4 9/74, afrc: alternative fractions, ordn:
+//    ordinals - 1.o 8.a, titl: Q leg to the right instead of down, sups,
+//    numr: superior/numerators - H0123456789, sinf, dnom:
+//    inferior/denominators
+
+// // Iosevka
+// // -------
+// "editor.fontFamily": "Iosevka Fixed Extended",
+// // Source Code Pro, with changes to: 1, 4, 0, l (lowercase L).
+// "editor.fontLigatures": "'ss09', 'cv01' 3, 'cv04' 5, 'cv10' 4, 'cv47' 8",
+// // Monaco.
+// "editor.fontLigatures": "'ss17'",
+// // Lucida, with changes to: 2, 4, 5, 0, *, ', #, $, %, ?.
+// "editor.fontLigatures": "'ss13', 'cv02' 4, 'cv04' 11, 'cv05' 8, 'cv10' 10, 'VSAB' 6, 'VSAF' 2, 'VSAJ' 4, 'VSAM' 1, 'VSAO' 1, 'VSAQ' 3",
+// Other:
+//    cv02: change 2, cv04: change 4, cv05: change 5, cv10: change 0, cv47:
+//    change l, VSAB: * position (top, middle, bottom), VSAF: ' (straight,
+//    curved), VSAJ: #, VSAM: $, VSAO: %, VSAQ: ?, ss01: Andale Mono, ss02:
+//    Anonymous Pro, ss03: Consolas, ss04: Menlo, ss05: Fira Mono, ss06:
+//    Liberation Mono, ss07: Monaco, ss08: Pragmata Pro, ss09: Source Code
+//    Pro, ss10: Envy Code R, ss11: X Window, ss12: Ubuntu Mono, ss13: Lucida,
+//    ss14: JetBrains Mono, ss15: IBM Plex Mono, ss16: PT Mono, ss17:
+//    Recursive Mono, ss18: Input Mono, ss20: Curly
+
+// // Victor Mono
+// // --------------
+// "editor.fontFamily": "Victor Mono",
+// "editor.fontLigatures": "'ss01', 'ss02', 'ss07', 'ss08'",
+// "editor.fontLigatures": "'calt' 0, 'ss01', 'ss02', 'ss06', 'ss07', 'ss08'",
+// Available stylistic sets:
+//    calt=0: no ligatures (particularly for `==` and `!=`, but also disable
+//    for ff fi il re tl ke), ss01: different 'a', ss02: different dashed zero
+//    (up to ss05), ss06: crossed '7', ss07: different '6' and  '9', ss08:
+//    more fish-like stuff (::<)
+
+// // Hack
+// // ----
+// "editor.fontFamily": "Hack Nerd Font",
+// Available stylistic sets:
+//    calt=0: no ligatures (particularly for `==` and `!=`, but also disable
+//    for ff fi il re tl ke), ss01: different 'a', ss02: different dashed zero
+//    (up to ss05), ss06: crossed '7', ss07: different '6' and  '9', ss08:
+//    more fish-like stuff (::<)
+
+// // Monoid
+// // ------
+// "editor.fontFamily": "Monoid",
+// "editor.fontSize": 12,
+// "editor.fontWeight": "normal",
+// "editor.fontLigatures": "'calt' 1, 'liga' 0, 'ss01' 0, 'ss02' 0, 'ss03' 0, 'ss04' 0, 'ss05' 1, 'ss06' 0, 'ss07' 1, 'ss08' 1, 'ss09' 1, 'ss10' 0, 'ss11' 0, 'ss12' 0, 'ss13' 0, 'ss14' 0, 'ss15' 0",
+
+// // Monaspace
+// // ---------
+// // Docs: https://github.com/githubnext/monaspace#character-variants
+// // ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()_+-
+// // = <- -> <= => <=> <| |> fi Tl Fl != !== === /= ;:* :- --- ---- .: -. .- !?
+// // < > www <> >= <-> [:] -~ ?? ->> -< >- .. '' "" >>> Fl Tl fi fj fl ft
+// "editor.fontFamily": "Monaspace Neon Var",
+// "editor.fontSize": 15,
+// "editor.fontWeight": "400",
+// "editor.fontLigatures": "'calt' 1, 'liga' 0, 'ss01' 0, 'ss02' 0, 'ss03' 1, 'ss04' 0, 'ss05' 0, 'ss06' 0, 'ss07' 0, 'ss08' 0, 'ss09' 0, 'ss10' 0, 'cv01' 3, 'cv02' 0, 'cv10' 1, 'cv11' 0, 'cv30' 0, 'cv31' 0, 'cv62' 0",
+
+// cv01-cv09: figure variants
+//  - cv01: 0 alternates: 1: plain 2: slash 3: reverse slash 4: cut-out slash
+//  - cv02: 1 alternate (no serif)
+// cv10-cv29: letter variants
+//  - cv10: l i alternates (Neon, Argon, Xenon, Radon)
+//  - cv11: j f r t alternates (Neon, Argon)
+// cv30-cv59: symbol variants
+//  - cv30: * vertically aligned closer to the top of the space
+//  - cv31: * 6-pointed asterisk
+//  - cv32: ≥ ≤ angled lower line
+// cv60-cv79: optional ligatures
+//  - cv60: forces the <= pair to render in a fashion that matches => instead
+//          of swapping for ≤.
+//  - cv61: enables the optional closed square ligature for []. This can be
+//          distracting
+//  - cv62: @_ ligature
+// cv80-cv99: reserved for future use
+
+// ss01: ligatures related to the equals glyph like != and ===.
+// ss02: ligatures for greater/less or equal (<=, >=).
+// ss03: ligatures related to arrows like -> and ~>.
+// ss04: ligatures related to markup, like </ and />.
+// ss05: ligatures related to the F# programming language, like |>.
+// ss06: ligatures related to repeated uses of ###, +++, and &&&.
+// ss07: ligatures related to colons like :: or =:=.
+// ss08: ligatures related to combinations of periods with other glyphs like ..= or .-.
+// ss09: ligatures related to combinations of the greater/less than and equals signs, like <=>,>>, and =<<.
+// ss10: other tags, like #[ and #(
+
+// // Reddit Mono
+// // -----------
+// // ss02: alternated 'a' and 'i'.
+// "editor.fontFamily": "Reddit Mono",
+// "editor.fontWeight": "400",
+// "editor.fontSize": 13,
+// "editor.fontLigatures": "'ss02' 1",
+
+// // JuliaMono
+// // ---------
+// // ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()_+-
+// // = <- -> <= => <=> <| |> fi Tl Fl != !== === /= ;:* :- --- ---- .: -. .- !?
+// // < > www <> >= <-> [:] -~ ?? ->> -< >- .. '' "" >>> Fl Tl fi fj fl ft
+// "editor.fontFamily": "JuliaMono",
+// // Examples:   -> <-- <|   ligat.    dash 0    alt. g    alt. @    alt. a    alt. ~
+// "editor.fontLigatures": "'calt' 1, 'zero' 1, 'ss01' 1, 'ss02' 1, 'ss06' 0, 'cv03' 1",
+
+// // Consolas
+// // --------
+// // ss04: r, f (regular); r, f, i, l (italic)
+// // ss05: r, f, i, l (regular); r, f, i (italic)
+// //  - I like this version. Seems like Reddit Mono, but the 'f' seems broken.
+// // ss06: r, f, i, l (regular); r, f, l (italic)
+// // ss07: no dash or dot in zero
+// // ss08: dotted zero
+// //
+// "editor.fontFamily": "Consolas",
+
+// // Fira Code
+// // ---------
+// // https://github.com/tonsky/FiraCode/wiki/How-to-enable-stylistic-sets
+// "editor.fontFamily": "FiraCode Nerd Font Mono",
+// "editor.fontSize": 15,
+// "editor.fontWeight": "400",
+// "editor.fontLigatures": "'cv01' 1, 'cv02' 1, 'cv06' 1, 'cv12' 1, 'cv14' 1, 'cv16' 1, 'cv30' 1, 'cv31' 1, 'ss03' 1, 'ss05' 1, 'ss08' 1, 'ss10' 1",
+// "editor.fontLigatures": "'cv01' 1, 'cv02' 1, 'cv05' 1, 'cv09' 1, 'cv12' 1, 'cv14' 1,",
+
+// // Azeret Mono
+// // -----------
+// // ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()_+-
+// // = <- -> <= => <=> <| |> fi Tl Fl != !== === /= ;:* :- --- ---- .: -. .- !?
+// // < > www <> >= <-> [:] -~ ?? ->> -< >- .. '' "" >>> Fl Tl fi fj fl ft
+// "editor.fontFamily": "Azeret Mono",
+// "editor.fontSize": 13,
+// "editor.fontWeight": "400",
+// "editor.fontLigatures": "'calt' 0, 'liga' 0, 'ss02' 1, 'ss03' 1, 'ss04' 1, 'ss05' 1, 'ss07' 1, 'ss08' 1, 'ss10' 1, 'ss11' 1, 'ss12' 1, 'ss14' 1, 'ss15' 1, 'calt' 1, 'liga' 1, 'zero' 1",
+
+// // Intel One Mono
+// // --------------
+// // ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()_+-
+// // = <- -> <= => <=> <| |> fi Tl Fl != !== === /= ;:* :- --- ---- .: -. .- !?
+// // < > www <> >= <-> [:] -~ ?? ->> -< >- .. '' "" >>> Fl Tl fi fj fl ft
+// "editor.fontFamily": "Intel One Mono",
+// "editor.fontSize": 16,
+// "editor.fontWeight": "400",
+// "editor.fontLigatures": "'ss01', 'ss02', 'ss03'",
+
+// // Input Mono
+// // ----------
+// "editor.fontFamily": "Input Mono",
+// "editor.fontLigatures": "'ss01' 1, 'ss02' 1, 'ss05' 1, 'ss06' 1, 'zero' 1",
+
+// // Overpass Mono
+// // -------------
+// "editor.fontFamily": "Overpass Mono",
+// "editor.fontLigatures": "'zero' 1, 'liga' 0, 'calt' 0",
+
+// // Chivo Mono
+// // ----------
+// "editor.fontFamily": "Chivo Mono",
+// "editor.fontLigatures": "'zero' 1",
+
+// #endregion Documentation. }}}
