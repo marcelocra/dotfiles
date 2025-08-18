@@ -15,7 +15,7 @@ ZSH_THEME_RUBY_PROMPT_SUFFIX="›%{$reset_color%}"
 
 PROMPT='
 %{$fg_bold[green]%}%~%{$reset_color%}$(git_prompt_info)$(virtualenv_prompt_info) ⌚%{$fg_bold[red]%} %*%{$reset_color%} 📅%{$fg_bold[blue]%} %D{%Y-%m-%d}%{$reset_color%}
-%(?:%{$fg_bold[green]%}%1{➜%} :%{$fg_bold[red]%}%1{➜%} ) %{$reset_color%}'
+%(?:%{$fg_bold[green]%}%1{➜%} :%{$fg_bold[red]%}%1{➜%} )%{$reset_color%}'
 
 RPROMPT='$(ruby_prompt_info)'
 
