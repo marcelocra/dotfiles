@@ -1,0 +1,129 @@
+// Settings in here override those in "Default/Preferences.sublime-settings",
+// and are overridden in turn by syntax-specific settings.
+{
+    "theme": "Adaptive.sublime-theme",
+    "color_scheme": "Mariana.sublime-color-scheme",
+
+    // Examples: --- != === !== <> <= >= <-> [:] -~ ?? ->> -< >- .. ''"" <| |> >>> ...Fl Tl fi fj fl ft
+    "font_face": "FiraCode Nerd Font Mono",
+    "font_size": 13,
+    "font_options": [
+        "calt",
+        "cv01",
+        "cv02",
+        "cv06",
+        "cv12",
+        "cv14",
+        "cv16",
+        "cv30",
+        "cv31",
+        "ss03",
+        "ss05",
+        "ss08",
+        "ss10"
+    ],
+
+    // Examples: --- != === !== <> <= >= <-> [:] -~ ?? ->> -< >- .. ''"" <| |> >>> ...Fl Tl fi fj fl ft
+    "font_face": "Geist Mono",
+    "font_size": 13,
+    "font_options": [
+        //----- Like -----------------------
+        // "liga", // disable ligatures
+        // "ss02", // alt a
+        // "ss03", // alt l
+        // "ss04", // alt R
+        // "ss08", // rounded dot
+        //----- Don't like -----------------
+        // "ss01", // no tail a
+        // "ss06", // alt G
+        // "ss09", // no slash/dot in zero
+        //----- Didn't work ----------------
+        // "aalt", // all
+        // "ss07", // alt arrows
+    ],
+
+   // Examples: --- != === !== <> <= >= <-> [:] -~ ?? ->> -< >- .. ''"" <| |> >>> ...Fl Tl fi fj fl ft
+    "font_face": "Reddit Mono Light",
+    "font_size": 13,
+    "font_options": [
+    ],
+
+   // Examples: --- != === !== <> <= >= <-> [:] -~ ?? ->> -< >- .. ''"" <| |> >>> ...Fl Tl fi fj fl ft
+    "font_face": "Google Sans Code",
+    "font_size": 13,
+    "font_options": [
+        "ss01", // alt g
+        "cv03", // alt
+    ],
+
+    "caret_extra_top": 6,
+    "caret_extra_bottom": 6,
+    "caret_extra_width": 2,
+
+    // Increase the line height with space.
+    // "line_padding_bottom": 3,
+    // "line_padding_top": 3,
+
+    "highlight_line": true,
+
+    "open_files_in_new_window": "always",
+
+    "always_show_minimap_viewport": false,  // era true
+
+    "auto_complete_commit_on_tab": true,
+
+    "bold_folder_labels": true,
+
+    "draw_minimap_border": true,
+
+    // Allows tabs to scroll left and right, instead of simply shrinking
+    "enable_tab_scrolling": false,
+
+    "fade_fold_buttons": false,
+
+    // Makes tabs with modified files more visible
+    "highlight_modified_tabs": true,
+
+    "indent_guide_options": ["draw_active"],
+
+    // Adds whitespace up to the first open bracket when indenting. Requires
+    // auto_indent to be enabled.
+    "indent_to_bracket": true,
+
+    // Set to true to insert spaces when tab is pressed
+    "translate_tabs_to_spaces": true,
+
+    // Display line endings in the status bar
+    "show_line_endings": true,
+
+    // Set to true to automatically save files when switching to a different file
+    // or application
+    "save_on_focus_lost": true,
+
+    // Show the full path to files in the title bar. On Mac, this value is
+    // overridden in the platform specific settings, with a default value of
+    // false.
+    "show_full_path": false,
+
+    // Show the relative path to files in the title bar. This overrides
+    // show_full_path for files that are listed in the sidebar, however
+    // show_full_path is still used for other files.
+    "show_rel_path": true,
+
+    // Show "project - file" or "file - project" in the title bar.
+    "show_project_first": true,
+
+    "auto_hide_menu": true,
+
+    // When false, disables alt-tapping revealing the menu when hidden on Linux
+    // and Windows. Does not affect auto hiding or toggling the menu through
+    // the command palette.
+    "reveal_menu": false,
+
+    // Columns in which to display vertical rulers. Each entry may also be a
+    // list of the column, the ruler style and optionally the ruler width, for
+    // example: [[80, "solid", 2], 78, [90, "dotted"]]
+    "rulers": [78, [80, "solid", 1], 98, [100, "solid", 2], 118, [120, "solid", 3]],
+
+    // End. Next setting above.
+}
