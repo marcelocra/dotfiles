@@ -2,31 +2,20 @@
 // and are overridden in turn by syntax-specific settings.
 {
     "theme": "Adaptive.sublime-theme",
-    "color_scheme": "Mariana.sublime-color-scheme",
+    "color_scheme": "auto",
 
     // Examples: --- != === !== <> <= >= <-> [:] -~ ?? ->> -< >- .. ''"" <| |> >>> ...Fl Tl fi fj fl ft
-    "font_face": "FiraCode Nerd Font Mono",
-    "font_size": 13,
+    "font_face": "Google Sans Code",
+    "font_size": 10,
     "font_options": [
-        "calt",
-        "cv01",
-        "cv02",
-        "cv06",
-        "cv12",
-        "cv14",
-        "cv16",
-        "cv30",
-        "cv31",
-        "ss03",
-        "ss05",
-        "ss08",
-        "ss10"
+        "ss01",
+        "cv03",
     ],
 
     // Examples: --- != === !== <> <= >= <-> [:] -~ ?? ->> -< >- .. ''"" <| |> >>> ...Fl Tl fi fj fl ft
-    "font_face": "Geist Mono",
-    "font_size": 13,
-    "font_options": [
+    /*"font_face": "Geist Mono",*/
+    /*"font_size": 13,*/
+    /*"font_options": [
         //----- Like -----------------------
         // "liga", // disable ligatures
         // "ss02", // alt a
@@ -40,21 +29,21 @@
         //----- Didn't work ----------------
         // "aalt", // all
         // "ss07", // alt arrows
-    ],
+    ],*/
 
    // Examples: --- != === !== <> <= >= <-> [:] -~ ?? ->> -< >- .. ''"" <| |> >>> ...Fl Tl fi fj fl ft
-    "font_face": "Reddit Mono Light",
-    "font_size": 13,
-    "font_options": [
-    ],
+    /*"font_face": "Reddit Mono Light",*/
+    /*"font_size": 13,*/
+    /*"font_options": [
+    ],*/
 
    // Examples: --- != === !== <> <= >= <-> [:] -~ ?? ->> -< >- .. ''"" <| |> >>> ...Fl Tl fi fj fl ft
-    "font_face": "Google Sans Code",
-    "font_size": 13,
-    "font_options": [
+    /*"font_face": "Google Sans Code",*/
+    /*"font_size": 13,*/
+    /*"font_options": [
         "ss01", // alt g
         "cv03", // alt
-    ],
+    ],*/
 
     "caret_extra_top": 6,
     "caret_extra_bottom": 6,
@@ -126,4 +115,6 @@
     "rulers": [78, [80, "solid", 1], 98, [100, "solid", 2], 118, [120, "solid", 3]],
 
     // End. Next setting above.
+    "dark_color_scheme": "Mariana.sublime-color-scheme",
+    "light_color_scheme": "Celeste.sublime-color-scheme",
 }
