@@ -1,2 +1,3 @@
 @echo off
-pwsh.exe -WindowStyle Hidden -NoProfile -Command "& '%~dp0toggle-mic.ps1'"
+@REM pwsh.exe -WindowStyle Hidden -NoProfile -Command "& '%~dp0toggle-mic.ps1'"
+wscript.exe "%~dp0toggle-mic.vbs"
