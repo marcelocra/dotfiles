@@ -698,7 +698,7 @@ alias t60="sleep 1h && timer_notification"
 # Load SSH agent and add key.
 load_ssh() {
     eval "$(ssh-agent -s)"
-    ssh-add ~/.ssh/id_ed25519    
+    ssh-add ~/.ssh/id_ed25519
 }
 
 # Next function marker
@@ -715,12 +715,12 @@ configure_zsh() {
         export HISTSIZE=10000
         export SAVEHIST=10000
         export HIST_STAMPS="yyyy-mm-dd"
-        
+
         if [[ -d "$HOME/.oh-my-zsh" ]]; then
             # Oh-my-zsh setup (handles most configuration automatically)
             export ZSH="$HOME/.oh-my-zsh"
             export ZSH_CUSTOM="$ZSH/custom"
-            
+
             # Use custom theme from dotfiles
             local ZSH_THEME_PATH="$HOME/.config/marcelocra/dotfiles/shell/marcelocra.zsh-theme"
             if [[ -f "$ZSH_THEME_PATH" ]]; then
@@ -731,49 +731,45 @@ configure_zsh() {
                 # Fallback to a safe default theme
                 ZSH_THEME="robbyrussell"
             fi
-            
+
             # Enable oh-my-zsh plugins (keep minimal for security)
-            if [[ ! -d "$ZSH_CUSTOM/plugins/zsh-autosuggestions" ]]; then
-                git clone https://github.com/marcelocra/zsh-autosuggestions $ZSH_CUSTOM/plugins/zsh-autosuggestions
+            if [[ -d "$ZSH_CUSTOM/plugins/zsh-autosuggestions" ]] && [[ -d "$ZSH_CUSTOM/plugins/zsh-syntax-highlighting" ]]; then
+                plugins=(zsh-autosuggestions zsh-syntax-highlighting)
+            else
+                plugins=()
             fi
 
-            if [[ ! -d "$ZSH_CUSTOM/plugins/zsh-syntax-highlighting" ]]; then
-                git clone https://github.com/marcelocra/zsh-syntax-highlighting $ZSH_CUSTOM/plugins/zsh-syntax-highlighting
-            fi
-            
-            plugins=(zsh-autosuggestions zsh-syntax-highlighting)
-            
             # Source oh-my-zsh
             source "$ZSH/oh-my-zsh.sh"
         else
             # Standalone zsh setup (when oh-my-zsh not available)
-            
+
             # History options
             setopt HIST_IGNORE_DUPS
             setopt HIST_IGNORE_ALL_DUPS
             setopt HIST_SAVE_NO_DUPS
             setopt SHARE_HISTORY
             setopt APPEND_HISTORY
-            
+
             # Enable completion system
             autoload -Uz compinit
             compinit
-            
+
             # Completion options
             setopt COMPLETE_IN_WORD     # complete from both ends of word
             setopt ALWAYS_TO_END        # move cursor to end of word on completion
             setopt AUTO_MENU            # show completion menu on successive tab press
             setopt AUTO_LIST            # automatically list choices on ambiguous completion
             setopt AUTO_PARAM_SLASH     # add trailing slash for directory completions
-            
+
             # Case-insensitive completion
             zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=*' 'l:|=* r:|=*'
-            
+
             # Basic prompt
             setopt PROMPT_SUBST
             PS1='%F{green}%n@%m%f %F{blue}%~%f %# '
         fi
-        
+
         # Common zsh options (useful for both setups)
         setopt AUTO_CD              # cd by typing directory name if it's not a command
         setopt CORRECT              # command auto-correction
@@ -827,11 +823,11 @@ configure_bash() {
                 local cmd="${BASH_COMMAND}"
                 echo -ne "\033]0;${USER}@${HOSTNAME}: ${cmd}\007"
             }
-            
+
             precmd() {
                 echo -ne "\033]0;${USER}@${HOSTNAME}: ${SHELL}\007"
             }
-            
+
             trap 'preexec' DEBUG
             PROMPT_COMMAND="${PROMPT_COMMAND:+$PROMPT_COMMAND; }precmd"
         fi
