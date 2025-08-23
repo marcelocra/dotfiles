@@ -1,0 +1,103 @@
+{
+  "name": "projects",
+  // Use a specific version tag for better caching.
+  "image": "mcr.microsoft.com/devcontainers/universal:3-noble",
+
+  "features": {
+    // Pin feature versions for consistent builds.
+    "ghcr.io/devcontainers/features/common-utils:2": {
+      "username": "marcelo",
+      "userUid": "1000",
+      "userGid": "1000",
+      // Skip package updates to speed up builds.
+      "upgradePackages": "false",
+      // Set your preferred shell.
+      "configureZshAsDefaultShell": "true",
+      // Install additional utilities.
+      "installOhMyZsh": "true"
+    }
+  },
+
+  // Set the default user for the container.
+  "remoteUser": "marcelo",
+
+  // Set custom hostname for the container.
+  "runArgs": ["--hostname=automaton"],
+
+  "containerEnv": {
+    "TZ": "America/Sao_Paulo",
+    "LC_ALL": "en_US.UTF-8",
+    "LANG": "en_US.UTF-8",
+    "MCRA_GITHUB_HANDLE": "marcelocra",
+    "MCRA_CONFIG": "/home/marcelo/.config/marcelocra",
+    "MCRA_PROJECTS": "/home/marcelo/projects"
+  },
+
+  // This approach should work reliably across Docker Desktop, Podman, Windows,
+  // Linux, macOS.
+  // Host directory mounts for persistent data across container rebuilds.
+  // Cross-platform aths: Windows uses USERPROFILE, Linux/macOS use HOME.
+  "mounts": [
+    // SSH credentials for Git operations and SSH-based authentication/signing.
+    // Mount as read-only to prevent accidental modification of host SSH keys.
+    "source=${localEnv:HOME}${localEnv:USERPROFILE}/.ssh,target=/home/marcelo/.ssh-from-host,type=bind,readonly",
+
+    // GitHub CLI credentials for seamless GitHub integration.
+    "source=${localEnv:HOME}${localEnv:USERPROFILE}/.config/gh,target=/home/marcelo/.config/gh,type=bind,consistency=cached",
+
+    // Gemini CLI credentials for AI assistance tools.
+    "source=${localEnv:HOME}${localEnv:USERPROFILE}/.gemini,target=/home/marcelo/.gemini,type=bind,consistency=cached",
+
+    // Claude credentials and configuration for AI development tools.
+    "source=${localEnv:HOME}${localEnv:USERPROFILE}/.claude,target=/home/marcelo/.claude,type=bind,consistency=cached",
+    "source=${localEnv:HOME}${localEnv:USERPROFILE}/.claude.json,target=/home/marcelo/.claude.json,type=bind,consistency=cached"
+  ],
+
+  // Port forwarding for development services.
+  "forwardPorts": [
+    11434 // Ollama API server for local LLM development.
+  ],
+
+  "postCreateCommand": "curl -fsSL https://raw.githubusercontent.com/marcelocra/dotfiles/main/devcontainer-setup.sh | bash",
+
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        // Python development.
+        "charliermarsh.ruff",
+        "ms-python.python",
+
+        // JavaScript/TypeScript development.
+        "dbaeumer.vscode-eslint",
+        "denoland.vscode-deno",
+        "esbenp.prettier-vscode",
+
+        // Git and version control.
+        "eamodio.gitlens",
+
+        // Code formatting and standards.
+        "EditorConfig.EditorConfig",
+
+        // GitHub integration.
+        "GitHub.codespaces",
+        "GitHub.copilot-chat",
+        "GitHub.copilot",
+        "GitHub.github-vscode-theme",
+        "GitHub.vscode-pull-request-github",
+
+        // Container and Docker support.
+        "ms-azuretools.vscode-containers",
+        "ms-azuretools.vscode-docker",
+
+        // Remote development support.
+        "ms-vscode-remote.remote-containers",
+        "ms-vscode-remote.remote-ssh-edit",
+        "ms-vscode-remote.vscode-remote-extensionpack",
+
+        // Accessibility and language support.
+        "ms-vscode.vscode-speech-language-pack-pt-br",
+        "ms-vscode.vscode-speech"
+      ]
+    }
+  }
+}
