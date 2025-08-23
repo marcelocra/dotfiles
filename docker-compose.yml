@@ -1,25 +1,35 @@
 version: "3.8"
 
 services:
-  # Main development container
+  # Main development container.
   devcontainer:
     image: "mcr.microsoft.com/devcontainers/universal:3-noble"
     volumes:
       - ../..:/workspaces:cached
-      # SSH and config mounts (adjust paths as needed for your project structure)
+
+      # Host directory mounts for persistent data across container rebuilds
+      # adjust paths as needed for your project structure.
+
+      # Mount as read-only to prevent accidental modification of host SSH keys.
       - ${HOME}/.ssh:/home/marcelo/.ssh-from-host:ro
+
+      # GitHub CLI credentials for seamless GitHub integration.
       - ${HOME}/.config/gh:/home/marcelo/.config/gh:cached
+
+      # Gemini CLI credentials for AI assistance tools.
       - ${HOME}/.gemini:/home/marcelo/.gemini:cached
+
+      # Claude credentials and configuration for AI development tools.
       - ${HOME}/.claude:/home/marcelo/.claude:cached
       - ${HOME}/.claude.json:/home/marcelo/.claude.json:cached
+
+      # Ollama models - persist downloaded models on host system.
+      - ${HOME}/.ollama:/home/marcelo/.ollama:cached
     environment:
       - TZ=America/Sao_Paulo
       - LC_ALL=en_US.UTF-8
       - LANG=en_US.UTF-8
-      - MCRA_GITHUB_HANDLE=marcelocra
-      - MCRA_CONFIG=/home/marcelo/.config/marcelocra
-      - MCRA_PROJECTS=/home/marcelo/projects
-      # Point to Ollama service
+      # Point to Ollama service if enabled.
       - OLLAMA_HOST=http://ollama:11434
     depends_on:
       - ollama
@@ -27,24 +37,50 @@ services:
       - dev-network
     hostname: automaton
     command: sleep infinity
+    profiles:
+      - with-ollama
 
-  # Ollama for local AI/LLM development
+  # Minimal devcontainer without Ollama dependency.
+
+  # Ollama for local AI/LLM development.
   ollama:
     image: ollama/ollama:latest
     ports:
       - "11434:11434"
     volumes:
       - ollama-data:/root/.ollama
+      # Mount host ollama folder to persist models across containers.
+      - ${HOME}/.ollama:/root/.ollama-host:cached
     networks:
       - dev-network
-    # Uncomment if you have NVIDIA GPU support
-    # deploy:
-    #   resources:
-    #     reservations:
-    #       devices:
-    #         - driver: nvidia
-    #           count: 1
-    #           capabilities: [gpu]
+    environment:
+      # Use host GPU if available (Windows with NVIDIA, or Linux with proper setup).
+      - NVIDIA_VISIBLE_DEVICES=all
+    # GPU support - automatically enabled if NVIDIA runtime is available.
+    # Works on Windows with Docker Desktop + NVIDIA, may need setup on Linux.
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
+    # Fallback command if GPU support fails.
+
+    profiles: [with-ollama, gpu]
+
+  # Ollama CPU-only fallback (use when GPU not available).
+  ollama-cpu:
+    image: ollama/ollama:latest
+    ports:
+      - "11434:11434"
+    volumes:
+      - ollama-data:/root/.ollama
+      # Mount host ollama folder to persist models across containers.
+      - ${HOME}/.ollama:/root/.ollama-host:cached
+    networks:
+      - dev-network
+    profiles: [with-ollama, cpu]
 
   # Database services (commented out by default - uncomment as needed)
 

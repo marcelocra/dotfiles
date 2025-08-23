@@ -1,7 +1,7 @@
 {
   "name": "prj-compose",
 
-  "dockerComposeFile": "docker-compose.yml",
+  "dockerComposeFile": "https://raw.githubusercontent.com/marcelocra/dotfiles/main/docker-compose.yml",
   "service": "devcontainer",
   "workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}",
 
@@ -20,6 +20,7 @@
     }
   },
 
+  // Set the default user for the container.
   "remoteUser": "marcelo",
 
   // Services will be available at these addresses from within the container:
@@ -29,6 +30,24 @@
   // - mongodb:27017 (MongoDB, with --profile full)
   // - minio:9000 (MinIO, with --profile full)
 
+  "containerEnv": {
+    "TZ": "America/Sao_Paulo", // My preferred. Change as needed.
+
+    // Most likely the default, but set explicitly, just in case. I had really
+    // weird git locale issues because the container didn't have these set.
+    "LC_ALL": "en_US.UTF-8",
+    "LANG": "en_US.UTF-8"
+  },
+
+  // Port forwarding for development services.
+  // Note: When using Docker Compose, services communicate via container networks.
+  // Add ports here only if you need direct host access to container services.
+  "forwardPorts": [
+    // 11434 // Ollama API server for local LLM development.
+  ],
+
+  // Run setup script for container initialization.
+  // This script handles SSH key setup, dotfiles installation, and environment configuration.
   "postCreateCommand": "curl -fsSL https://raw.githubusercontent.com/marcelocra/dotfiles/main/devcontainer-setup.sh | bash",
 
   // Stop all services when devcontainer stops.
@@ -37,23 +56,40 @@
   "customizations": {
     "vscode": {
       "extensions": [
+        // Python development.
         "charliermarsh.ruff",
+        "ms-python.python",
+
+        // JavaScript/TypeScript development.
         "dbaeumer.vscode-eslint",
         "denoland.vscode-deno",
-        "eamodio.gitlens",
-        "EditorConfig.EditorConfig",
         "esbenp.prettier-vscode",
+
+        // Git and version control.
+        "eamodio.gitlens",
+
+        // Code formatting and standards.
+        "EditorConfig.EditorConfig",
+
+        // GitHub integration.
         "GitHub.codespaces",
         "GitHub.copilot-chat",
         "GitHub.copilot",
+        "GitHub.github-vscode-theme",
+        "GitHub.vscode-pull-request-github",
 
-        // Database extensions
-        "ms-mssql.mssql",
-        "cweijan.vscode-postgresql-client2",
-        "bradlc.vscode-tailwindcss",
+        // Container and Docker support.
+        "ms-azuretools.vscode-containers",
+        "ms-azuretools.vscode-docker",
 
-        // Docker extensions
-        "ms-azuretools.vscode-docker"
+        // Remote development support.
+        "ms-vscode-remote.remote-containers",
+        "ms-vscode-remote.remote-ssh-edit",
+        "ms-vscode-remote.vscode-remote-extensionpack",
+
+        // Accessibility and language support.
+        "ms-vscode.vscode-speech-language-pack-pt-br",
+        "ms-vscode.vscode-speech"
       ]
     }
   }
