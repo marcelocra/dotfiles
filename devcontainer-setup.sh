@@ -5,13 +5,16 @@
 
 set -e
 
-# Configuration (can be overridden via environment variables).
+# Configuration from environment variables or defaults.
 GITHUB_HANDLE="${MCRA_GITHUB_HANDLE:-marcelocra}"
 CONFIG_DIR="${MCRA_CONFIG:-$HOME/.config/marcelocra}"
 PROJECTS_DIR="${MCRA_PROJECTS:-$HOME/prj}"
-DOTFILES_DIR="${PROJECTS_DIR}/dotfiles"
+DOTFILES_DIR="$CONFIG_DIR/dotfiles"
 SETUP_DOTFILES="${MCRA_SETUP_DOTFILES:-true}"
 SETUP_ZSH_PLUGINS="${MCRA_SETUP_ZSH_PLUGINS:-true}"
+SETUP_VSCODE="${MCRA_SETUP_VSCODE:-true}"
+SETUP_SUBLIME="${MCRA_SETUP_SUBLIME:-true}"
+SETUP_ZED="${MCRA_SETUP_ZED:-true}"
 
 echo "🚀 Starting devcontainer setup"
 echo "👤 User: $(whoami)"
@@ -60,38 +63,38 @@ if [ "$SETUP_DOTFILES" = "true" ]; then
         log "✅ Dotfiles updated"
     fi
 
-    # Create symlinks for dotfiles.
-    log "🔗 Creating dotfile symlinks..."
-
-    # Shell configuration.
-    ln -sf "$DOTFILES_DIR/tmux/.tmux.conf" "$HOME/.tmux.conf"
+    # Create symlinks for shell configuration.
+    log "🔗 Creating shell configuration symlinks..."
+    ln -sf "$DOTFILES_DIR/shell/.tmux.conf" "$HOME/.tmux.conf"
     ln -sf "$DOTFILES_DIR/shell/init.sh" "$HOME/.bashrc"
     ln -sf "$DOTFILES_DIR/shell/init.sh" "$HOME/.zshrc"
+    log "✅ Shell configuration symlinks created"
 
-    # Editor configurations.
-    if [ -d "$DOTFILES_DIR/sublime" ]; then
-        mkdir -p "$HOME/.config/sublime-text-3/Packages/User"
-        ln -sf "$DOTFILES_DIR/sublime/"* "$HOME/.config/sublime-text-3/Packages/User/"
-    fi
-
-    if [ -d "$DOTFILES_DIR/vscode" ]; then
+    # Create symlinks for editor configurations.
+    if [ "$SETUP_VSCODE" = "true" ] && [ -d "$DOTFILES_DIR/vscode" ]; then
+        log "🔗 Setting up VS Code configuration..."
         mkdir -p "$HOME/.config/Code/User"
         ln -sf "$DOTFILES_DIR/vscode/"* "$HOME/.config/Code/User/"
+        log "✅ VS Code configuration linked"
     fi
 
-    if [ -d "$DOTFILES_DIR/zed" ]; then
+    if [ "$SETUP_SUBLIME" = "true" ] && [ -d "$DOTFILES_DIR/sublime" ]; then
+        log "🔗 Setting up Sublime Text configuration..."
+        mkdir -p "$HOME/.config/sublime-text-3/Packages/User"
+        ln -sf "$DOTFILES_DIR/sublime/"* "$HOME/.config/sublime-text-3/Packages/User/"
+        log "✅ Sublime Text configuration linked"
+    fi
+
+    if [ "$SETUP_ZED" = "true" ] && [ -d "$DOTFILES_DIR/zed" ]; then
+        log "🔗 Setting up Zed configuration..."
         mkdir -p "$HOME/.config/zed"
         ln -sf "$DOTFILES_DIR/zed/"* "$HOME/.config/zed/"
+        log "✅ Zed configuration linked"
     fi
 
-    # Source the new shell configuration to make it available immediately.
-    if [ -f "$HOME/.zshrc" ]; then
-        log "🔄 Sourcing zsh configuration..."
-        # Note: This only affects the current shell, new shells will pick it up automatically.
-    fi
-    log "✅ Dotfile symlinks created"
+    log "✅ All dotfile symlinks created"
 else
-    log "⏭️  Skipping dotfiles setup"
+    log "⏭️  Skipping dotfiles setup (MCRA_SETUP_DOTFILES=false)"
 fi
 
 # Setup zsh plugins.
@@ -116,7 +119,7 @@ if [ "$SETUP_ZSH_PLUGINS" = "true" ]; then
         (cd "$ZSH_CUSTOM_DIR/plugins/zsh-syntax-highlighting" && git pull)
     fi
 else
-    log "⏭️  Skipping zsh plugins setup"
+    log "⏭️  Skipping zsh plugins setup (MCRA_SETUP_ZSH_PLUGINS=false)"
 fi
 
 # Additional project-specific setup can go here.
