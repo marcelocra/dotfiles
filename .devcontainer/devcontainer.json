@@ -1,5 +1,5 @@
 {
-  "name": "projects",
+  "name": "prj",
   // Use a specific version tag for better caching.
   "image": "mcr.microsoft.com/devcontainers/universal:3-noble",
 
@@ -27,36 +27,7 @@
   "containerEnv": {
     "TZ": "America/Sao_Paulo",
     "LC_ALL": "en_US.UTF-8",
-    "LANG": "en_US.UTF-8",
-    "MCRA_GITHUB_HANDLE": "marcelocra",
-    "MCRA_CONFIG": "/home/marcelo/.config/marcelocra",
-    "MCRA_PROJECTS": "/home/marcelo/projects",
-
-    // Dotfiles setup configuration - set to false if using VS Code's built-in
-    // dotfiles support (your VSCode Settings or project's .vscode/settings.json
-    // must specify the dotfiles repository, like the example below).
-    //
-    //  {
-    //    // Project-specific VS Code dotfiles override.
-    //    // This will only affect this project when opened in a devcontainer.
-    //    "dotfiles.repository": "marcelocra/special-project-dotfiles",
-    //    "dotfiles.targetPath": "~/dotfiles",
-    //    "dotfiles.installCommand": "install-special.sh",
-    //
-    //    // Other project-specific VS Code settings.
-    //    "python.defaultInterpreterPath": "/usr/local/bin/python",
-    //    "editor.tabSize": 2
-    //  }
-    //
-    // If you don't setup dotfiles, keep this true. The example show more
-    // options (in ./example/devcontainer.json).
-    "MCRA_SETUP_DOTFILES": "true",
-    "MCRA_SETUP_ZSH_PLUGINS": "true",
-
-    // Editor configuration setup - set to false to skip specific editors.
-    "MCRA_SETUP_VSCODE": "true",
-    "MCRA_SETUP_SUBLIME": "true",
-    "MCRA_SETUP_ZED": "true"
+    "LANG": "en_US.UTF-8"
   },
 
   // Host directory mounts for persistent data across container rebuilds.
@@ -76,17 +47,21 @@
 
     // Claude credentials and configuration for AI development tools.
     "source=${localEnv:HOME}${localEnv:USERPROFILE}/.claude,target=/home/marcelo/.claude,type=bind,consistency=cached",
-    "source=${localEnv:HOME}${localEnv:USERPROFILE}/.claude.json,target=/home/marcelo/.claude.json,type=bind,consistency=cached"
+    "source=${localEnv:HOME}${localEnv:USERPROFILE}/.claude.json,target=/home/marcelo/.claude.json,type=bind,consistency=cached",
+
+    // Ollama models - persist downloaded models on host system.
+    "source=${localEnv:HOME}${localEnv:USERPROFILE}/.ollama,target=/home/marcelo/.ollama,type=bind,consistency=cached"
   ],
 
   // Port forwarding for development services.
+  // Note: When using Docker Compose, services communicate via container networks.
+  // Add ports here only if you need direct host access to container services.
   "forwardPorts": [
-    11434 // Ollama API server for local LLM development.
+    // 11434 // Ollama API server for local LLM development.
   ],
 
   // Run setup script for container initialization.
-  // This script handles SSH key setup, dotfiles installation, and environment
-  // configuration.
+  // This script handles SSH key setup, dotfiles installation, and environment configuration.
   "postCreateCommand": "curl -fsSL https://raw.githubusercontent.com/marcelocra/dotfiles/main/devcontainer-setup.sh | bash",
 
   "customizations": {

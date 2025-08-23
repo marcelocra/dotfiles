@@ -8,6 +8,33 @@ This project uses a devcontainer for consistent development environments.
 2. **Reopen in container**: `F1` → "Dev Containers: Reopen in Container"
 3. **Wait for setup**: The container will build and configure automatically
 
+### With Compose Services
+
+```bash
+# Tell VS Code to use the compose version
+code your-project
+# Then: F1 → "Dev Containers: Open Folder in Container..."
+# Select: .devcontainer/compose/devcontainer.json
+```
+
+Or create a VS Code workspace file:
+
+```json
+// your-project.code-workspace
+{
+  "folders": [
+    {
+      "path": "."
+    }
+  ],
+  "settings": {
+    "remote.containers.configFilePaths": [
+      ".devcontainer/compose/devcontainer.json"
+    ]
+  }
+}
+```
+
 ## What Gets Installed
 
 - **Base**: Universal development image with multiple language runtimes

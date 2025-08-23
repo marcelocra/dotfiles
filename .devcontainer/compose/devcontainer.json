@@ -1,0 +1,60 @@
+{
+  "name": "prj-compose",
+
+  "dockerComposeFile": "docker-compose.yml",
+  "service": "devcontainer",
+  "workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}",
+
+  "features": {
+    // Pin feature versions for consistent builds.
+    "ghcr.io/devcontainers/features/common-utils:2": {
+      "username": "marcelo",
+      "userUid": "1000",
+      "userGid": "1000",
+      // Skip package updates to speed up builds.
+      "upgradePackages": "false",
+      // Set your preferred shell.
+      "configureZshAsDefaultShell": "true",
+      // Install additional utilities.
+      "installOhMyZsh": "true"
+    }
+  },
+
+  "remoteUser": "marcelo",
+
+  // Services will be available at these addresses from within the container:
+  // - ollama:11434 (Ollama API)
+  // - postgres:5432 (PostgreSQL)
+  // - redis:6379 (Redis)
+  // - mongodb:27017 (MongoDB, with --profile full)
+  // - minio:9000 (MinIO, with --profile full)
+
+  "postCreateCommand": "curl -fsSL https://raw.githubusercontent.com/marcelocra/dotfiles/main/devcontainer-setup.sh | bash",
+
+  // Stop all services when devcontainer stops.
+  "shutdownAction": "stopCompose",
+
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "charliermarsh.ruff",
+        "dbaeumer.vscode-eslint",
+        "denoland.vscode-deno",
+        "eamodio.gitlens",
+        "EditorConfig.EditorConfig",
+        "esbenp.prettier-vscode",
+        "GitHub.codespaces",
+        "GitHub.copilot-chat",
+        "GitHub.copilot",
+
+        // Database extensions
+        "ms-mssql.mssql",
+        "cweijan.vscode-postgresql-client2",
+        "bradlc.vscode-tailwindcss",
+
+        // Docker extensions
+        "ms-azuretools.vscode-docker"
+      ]
+    }
+  }
+}
