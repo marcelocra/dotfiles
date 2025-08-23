@@ -30,15 +30,41 @@
     "LANG": "en_US.UTF-8",
     "MCRA_GITHUB_HANDLE": "marcelocra",
     "MCRA_CONFIG": "/home/marcelo/.config/marcelocra",
-    "MCRA_PROJECTS": "/home/marcelo/projects"
+    "MCRA_PROJECTS": "/home/marcelo/projects",
+
+    // Dotfiles setup configuration - set to false if using VS Code's built-in
+    // dotfiles support (your VSCode Settings or project's .vscode/settings.json
+    // must specify the dotfiles repository, like the example below).
+    //
+    //  {
+    //    // Project-specific VS Code dotfiles override.
+    //    // This will only affect this project when opened in a devcontainer.
+    //    "dotfiles.repository": "marcelocra/special-project-dotfiles",
+    //    "dotfiles.targetPath": "~/dotfiles",
+    //    "dotfiles.installCommand": "install-special.sh",
+    //
+    //    // Other project-specific VS Code settings.
+    //    "python.defaultInterpreterPath": "/usr/local/bin/python",
+    //    "editor.tabSize": 2
+    //  }
+    //
+    // If you don't setup dotfiles, keep this true. The example
+    // (example.devcontainer.json) show more options.
+    "MCRA_SETUP_DOTFILES": "true",
+    "MCRA_SETUP_ZSH_PLUGINS": "true",
+
+    // Editor configuration setup - set to false to skip specific editors.
+    "MCRA_SETUP_VSCODE": "true",
+    "MCRA_SETUP_SUBLIME": "true",
+    "MCRA_SETUP_ZED": "true"
   },
 
-  // This approach should work reliably across Docker Desktop, Podman, Windows,
-  // Linux, macOS.
   // Host directory mounts for persistent data across container rebuilds.
-  // Cross-platform aths: Windows uses USERPROFILE, Linux/macOS use HOME.
+  // Cross-platform paths: Windows uses USERPROFILE, Linux/macOS use HOME.
+  // This approach works reliably across Docker, Podman, Windows, Linux, macOS.
   "mounts": [
     // SSH credentials for Git operations and SSH-based authentication/signing.
+    // SSH agent forwarding is container runtime-specific and less reliable.
     // Mount as read-only to prevent accidental modification of host SSH keys.
     "source=${localEnv:HOME}${localEnv:USERPROFILE}/.ssh,target=/home/marcelo/.ssh-from-host,type=bind,readonly",
 
@@ -58,6 +84,9 @@
     11434 // Ollama API server for local LLM development.
   ],
 
+  // Run setup script for container initialization.
+  // This script handles SSH key setup, dotfiles installation, and environment
+  // configuration.
   "postCreateCommand": "curl -fsSL https://raw.githubusercontent.com/marcelocra/dotfiles/main/devcontainer-setup.sh | bash",
 
   "customizations": {
