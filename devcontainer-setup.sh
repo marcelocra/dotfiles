@@ -74,21 +74,43 @@ if [ "$SETUP_DOTFILES" = "true" ]; then
     if [ "$SETUP_VSCODE" = "true" ] && [ -d "$DOTFILES_DIR/vscode" ]; then
         log "🔗 Setting up VS Code configuration..."
         mkdir -p "$HOME/.config/Code/User"
-        ln -sf "$DOTFILES_DIR/vscode/"* "$HOME/.config/Code/User/"
+
+        # Only symlink specific VS Code config files, not the entire directory.
+        [ -f "$DOTFILES_DIR/vscode/settings.json" ] && ln -sf "$DOTFILES_DIR/vscode/settings.json" "$HOME/.config/Code/User/settings.json"
+        [ -f "$DOTFILES_DIR/vscode/keybindings.json" ] && ln -sf "$DOTFILES_DIR/vscode/keybindings.json" "$HOME/.config/Code/User/keybindings.json"
+        [ -f "$DOTFILES_DIR/vscode/snippets" ] && ln -sf "$DOTFILES_DIR/vscode/snippets" "$HOME/.config/Code/User/snippets"
+        [ -d "$DOTFILES_DIR/vscode/snippets" ] && ln -sf "$DOTFILES_DIR/vscode/snippets" "$HOME/.config/Code/User/snippets"
+
         log "✅ VS Code configuration linked"
     fi
 
     if [ "$SETUP_SUBLIME" = "true" ] && [ -d "$DOTFILES_DIR/sublime" ]; then
         log "🔗 Setting up Sublime Text configuration..."
         mkdir -p "$HOME/.config/sublime-text-3/Packages/User"
-        ln -sf "$DOTFILES_DIR/sublime/"* "$HOME/.config/sublime-text-3/Packages/User/"
+
+        # Only symlink specific Sublime config files.
+        [ -f "$DOTFILES_DIR/sublime/Preferences.sublime-settings" ] && ln -sf "$DOTFILES_DIR/sublime/Preferences.sublime-settings" "$HOME/.config/sublime-text-3/Packages/User/Preferences.sublime-settings"
+        [ -f "$DOTFILES_DIR/sublime/Default.sublime-keymap" ] && ln -sf "$DOTFILES_DIR/sublime/Default.sublime-keymap" "$HOME/.config/sublime-text-3/Packages/User/Default.sublime-keymap"
+        [ -f "$DOTFILES_DIR/sublime/Package Control.sublime-settings" ] && ln -sf "$DOTFILES_DIR/sublime/Package Control.sublime-settings" "$HOME/.config/sublime-text-3/Packages/User/Package Control.sublime-settings"
+
+        # Symlink any .sublime-snippet files.
+        if [ -d "$DOTFILES_DIR/sublime/snippets" ]; then
+            ln -sf "$DOTFILES_DIR/sublime/snippets" "$HOME/.config/sublime-text-3/Packages/User/snippets"
+        fi
+
         log "✅ Sublime Text configuration linked"
     fi
 
     if [ "$SETUP_ZED" = "true" ] && [ -d "$DOTFILES_DIR/zed" ]; then
         log "🔗 Setting up Zed configuration..."
         mkdir -p "$HOME/.config/zed"
-        ln -sf "$DOTFILES_DIR/zed/"* "$HOME/.config/zed/"
+
+        # Only symlink specific Zed config files.
+        [ -f "$DOTFILES_DIR/zed/settings.json" ] && ln -sf "$DOTFILES_DIR/zed/settings.json" "$HOME/.config/zed/settings.json"
+        [ -f "$DOTFILES_DIR/zed/keymap.json" ] && ln -sf "$DOTFILES_DIR/zed/keymap.json" "$HOME/.config/zed/keymap.json"
+        [ -f "$DOTFILES_DIR/zed/themes" ] && ln -sf "$DOTFILES_DIR/zed/themes" "$HOME/.config/zed/themes"
+        [ -d "$DOTFILES_DIR/zed/themes" ] && ln -sf "$DOTFILES_DIR/zed/themes" "$HOME/.config/zed/themes"
+
         log "✅ Zed configuration linked"
     fi
 
