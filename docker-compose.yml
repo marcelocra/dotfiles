@@ -1,0 +1,118 @@
+version: "3.8"
+
+services:
+  # Main development container
+  devcontainer:
+    image: "mcr.microsoft.com/devcontainers/universal:3-noble"
+    volumes:
+      - ../..:/workspaces:cached
+      # SSH and config mounts (adjust paths as needed for your project structure)
+      - ${HOME}/.ssh:/home/marcelo/.ssh-from-host:ro
+      - ${HOME}/.config/gh:/home/marcelo/.config/gh:cached
+      - ${HOME}/.gemini:/home/marcelo/.gemini:cached
+      - ${HOME}/.claude:/home/marcelo/.claude:cached
+      - ${HOME}/.claude.json:/home/marcelo/.claude.json:cached
+    environment:
+      - TZ=America/Sao_Paulo
+      - LC_ALL=en_US.UTF-8
+      - LANG=en_US.UTF-8
+      - MCRA_GITHUB_HANDLE=marcelocra
+      - MCRA_CONFIG=/home/marcelo/.config/marcelocra
+      - MCRA_PROJECTS=/home/marcelo/projects
+      # Point to Ollama service
+      - OLLAMA_HOST=http://ollama:11434
+    depends_on:
+      - ollama
+    networks:
+      - dev-network
+    hostname: automaton
+    command: sleep infinity
+
+  # Ollama for local AI/LLM development
+  ollama:
+    image: ollama/ollama:latest
+    ports:
+      - "11434:11434"
+    volumes:
+      - ollama-data:/root/.ollama
+    networks:
+      - dev-network
+    # Uncomment if you have NVIDIA GPU support
+    # deploy:
+    #   resources:
+    #     reservations:
+    #       devices:
+    #         - driver: nvidia
+    #           count: 1
+    #           capabilities: [gpu]
+
+  # Database services (commented out by default - uncomment as needed)
+
+  # # PostgreSQL for database experiments
+  # postgres:
+  #   image: postgres:16-alpine
+  #   environment:
+  #     - POSTGRES_DB=devdb
+  #     - POSTGRES_USER=marcelo
+  #     - POSTGRES_PASSWORD=devpass
+  #   ports:
+  #     - "5432:5432"
+  #   volumes:
+  #     - postgres-data:/var/lib/postgresql/data
+  #     - ./scripts/init-db.sql:/docker-entrypoint-initdb.d/init.sql:ro
+  #   networks:
+  #     - dev-network
+
+  # # Redis for caching experiments
+  # redis:
+  #   image: redis:7-alpine
+  #   ports:
+  #     - "6379:6379"
+  #   volumes:
+  #     - redis-data:/data
+  #   networks:
+  #     - dev-network
+
+  # # MongoDB for document database experiments
+  # mongodb:
+  #   image: mongo:7
+  #   environment:
+  #     - MONGO_INITDB_ROOT_USERNAME=marcelo
+  #     - MONGO_INITDB_ROOT_PASSWORD=devpass
+  #   ports:
+  #     - "27017:27017"
+  #   volumes:
+  #     - mongodb-data:/data/db
+  #   networks:
+  #     - dev-network
+  #   profiles:
+  #     - full  # Only start with --profile full
+
+  # # MinIO for S3-compatible object storage experiments
+  # minio:
+  #   image: minio/minio:latest
+  #   command: server /data --console-address ":9001"
+  #   environment:
+  #     - MINIO_ROOT_USER=marcelo
+  #     - MINIO_ROOT_PASSWORD=devpassword123
+  #   ports:
+  #     - "9000:9000"   # API
+  #     - "9001:9001"   # Console
+  #   volumes:
+  #     - minio-data:/data
+  #   networks:
+  #     - dev-network
+  #   profiles:
+  #     - full
+
+volumes:
+  ollama-data:
+  # Uncomment database volumes as needed
+  # postgres-data:
+  # redis-data:
+  # mongodb-data:
+  # minio-data:
+
+networks:
+  dev-network:
+    driver: bridge
