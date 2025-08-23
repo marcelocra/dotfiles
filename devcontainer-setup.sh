@@ -45,7 +45,12 @@ log "✅ Directories created"
 
 # Setup dotfiles.
 if [ "$SETUP_DOTFILES" = "true" ]; then
-    if [ ! -d "$DOTFILES_DIR" ]; then
+    # Check if VS Code already cloned dotfiles.
+    if [ -d "$HOME/dotfiles" ] && [ ! -d "$DOTFILES_DIR" ]; then
+        log "🔗 Found VS Code dotfiles, creating symlink..."
+        ln -sf "$HOME/dotfiles" "$DOTFILES_DIR"
+        log "✅ VS Code dotfiles linked"
+    elif [ ! -d "$DOTFILES_DIR" ]; then
         log "📦 Cloning dotfiles..."
         git clone --depth 1 "https://github.com/$GITHUB_HANDLE/dotfiles.git" "$DOTFILES_DIR"
         log "✅ Dotfiles cloned"
