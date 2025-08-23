@@ -1,0 +1,52 @@
+{
+  "name": "special-project",
+  "image": "mcr.microsoft.com/devcontainers/universal:3-noble",
+
+  "features": {
+    "ghcr.io/devcontainers/features/common-utils:2": {
+      "username": "SYSTEM_USER",
+      "userUid": "1000",
+      "userGid": "1000",
+      "upgradePackages": "false",
+      "configureZshAsDefaultShell": "true",
+      "installOhMyZsh": "true"
+    }
+  },
+
+  "remoteUser": "SYSTEM_USER",
+  "runArgs": ["--hostname=automaton"],
+
+  "containerEnv": {
+    "TZ": "America/Sao_Paulo",
+    "LC_ALL": "en_US.UTF-8",
+    "LANG": "en_US.UTF-8",
+    "MCRA_GITHUB_HANDLE": "GITHUB_USERNAME",
+    "MCRA_CONFIG": "/home/SYSTEM_USER/.config/GITHUB_USERNAME",
+    "MCRA_PROJECTS": "/home/SYSTEM_USER/projects",
+
+    // Project-specific overrides - this project doesn't want dotfiles setup.
+    "MCRA_SETUP_DOTFILES": "false",
+    // But still wants zsh plugins.
+    "MCRA_SETUP_ZSH_PLUGINS": "true",
+    // Only wants VS Code setup, not Sublime or Zed.
+    "MCRA_SETUP_VSCODE": "true",
+    "MCRA_SETUP_SUBLIME": "false",
+    "MCRA_SETUP_ZED": "false"
+  },
+
+  "mounts": [
+    "source=${localEnv:HOME}${localEnv:USERPROFILE}/.ssh,target=/home/SYSTEM_USER/.ssh-from-host,type=bind,readonly",
+    "source=${localEnv:HOME}${localEnv:USERPROFILE}/.config/gh,target=/home/SYSTEM_USER/.config/gh,type=bind,consistency=cached"
+  ],
+
+  "forwardPorts": [3000, 8080],
+
+  // Still runs the same script, but with different environment variables.
+  "postCreateCommand": "curl -fsSL https://raw.githubusercontent.com/GITHUB_USERNAME/dotfiles/main/devcontainer-setup.sh | bash",
+
+  "customizations": {
+    "vscode": {
+      "extensions": ["ms-python.python", "GitHub.copilot"]
+    }
+  }
+}

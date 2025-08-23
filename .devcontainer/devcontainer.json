@@ -48,8 +48,8 @@
     //    "editor.tabSize": 2
     //  }
     //
-    // If you don't setup dotfiles, keep this true. The example
-    // (example.devcontainer.json) show more options.
+    // If you don't setup dotfiles, keep this true. The example show more
+    // options (in ./example/devcontainer.json).
     "MCRA_SETUP_DOTFILES": "true",
     "MCRA_SETUP_ZSH_PLUGINS": "true",
 
