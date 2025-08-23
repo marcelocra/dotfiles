@@ -1,6 +1,6 @@
 #!/bin/bash
 # devcontainer-setup.sh
-# Personal devcontainer setup script for my development environment.
+# Personal devcontainer setup script for development environment.
 # Usage: curl -fsSL https://raw.githubusercontent.com/marcelocra/dotfiles/main/devcontainer-setup.sh | bash
 
 set -e
@@ -9,6 +9,7 @@ set -e
 GITHUB_HANDLE="${MCRA_GITHUB_HANDLE:-marcelocra}"
 CONFIG_DIR="${MCRA_CONFIG:-$HOME/.config/marcelocra}"
 PROJECTS_DIR="${MCRA_PROJECTS:-$HOME/prj}"
+DOTFILES_DIR="${PROJECTS_DIR}/dotfiles"
 SETUP_DOTFILES="${MCRA_SETUP_DOTFILES:-true}"
 SETUP_ZSH_PLUGINS="${MCRA_SETUP_ZSH_PLUGINS:-true}"
 
@@ -18,6 +19,7 @@ echo "🏠 Home: $HOME"
 echo "📋 GitHub Handle: $GITHUB_HANDLE"
 echo "📁 Config Dir: $CONFIG_DIR"
 echo "📁 Projects Dir: $PROJECTS_DIR"
+echo "📦 Dotfiles Dir: $DOTFILES_DIR"
 
 # Function to log with timestamps.
 log() {
@@ -43,21 +45,39 @@ log "✅ Directories created"
 
 # Setup dotfiles.
 if [ "$SETUP_DOTFILES" = "true" ]; then
-    if [ ! -d "$CONFIG_DIR/dotfiles" ]; then
+    if [ ! -d "$DOTFILES_DIR" ]; then
         log "📦 Cloning dotfiles..."
-        git clone "https://github.com/$GITHUB_HANDLE/dotfiles.git" "$CONFIG_DIR/dotfiles"
+        git clone --depth 1 "https://github.com/$GITHUB_HANDLE/dotfiles.git" "$DOTFILES_DIR"
         log "✅ Dotfiles cloned"
     else
         log "ℹ️  Dotfiles already exist, updating..."
-        (cd "$CONFIG_DIR/dotfiles" && git pull)
+        (cd "$DOTFILES_DIR" && git pull)
         log "✅ Dotfiles updated"
     fi
 
     # Create symlinks for dotfiles.
     log "🔗 Creating dotfile symlinks..."
-    ln -sf "$CONFIG_DIR/dotfiles/tmux/.tmux.conf" "$HOME/.tmux.conf"
-    ln -sf "$CONFIG_DIR/dotfiles/shell/init.sh" "$HOME/.bashrc"
-    ln -sf "$CONFIG_DIR/dotfiles/shell/init.sh" "$HOME/.zshrc"
+
+    # Shell configuration.
+    ln -sf "$DOTFILES_DIR/tmux/.tmux.conf" "$HOME/.tmux.conf"
+    ln -sf "$DOTFILES_DIR/shell/init.sh" "$HOME/.bashrc"
+    ln -sf "$DOTFILES_DIR/shell/init.sh" "$HOME/.zshrc"
+
+    # Editor configurations.
+    if [ -d "$DOTFILES_DIR/sublime" ]; then
+        mkdir -p "$HOME/.config/sublime-text-3/Packages/User"
+        ln -sf "$DOTFILES_DIR/sublime/"* "$HOME/.config/sublime-text-3/Packages/User/"
+    fi
+
+    if [ -d "$DOTFILES_DIR/vscode" ]; then
+        mkdir -p "$HOME/.config/Code/User"
+        ln -sf "$DOTFILES_DIR/vscode/"* "$HOME/.config/Code/User/"
+    fi
+
+    if [ -d "$DOTFILES_DIR/zed" ]; then
+        mkdir -p "$HOME/.config/zed"
+        ln -sf "$DOTFILES_DIR/zed/"* "$HOME/.config/zed/"
+    fi
 
     # Source the new shell configuration to make it available immediately.
     if [ -f "$HOME/.zshrc" ]; then
@@ -75,7 +95,7 @@ if [ "$SETUP_ZSH_PLUGINS" = "true" ]; then
 
     if [ ! -d "$ZSH_CUSTOM_DIR/plugins/zsh-autosuggestions" ]; then
         log "🔌 Installing zsh-autosuggestions plugin..."
-        git clone "https://github.com/$GITHUB_HANDLE/zsh-autosuggestions" "$ZSH_CUSTOM_DIR/plugins/zsh-autosuggestions"
+        git clone --depth 1 "https://github.com/$GITHUB_HANDLE/zsh-autosuggestions" "$ZSH_CUSTOM_DIR/plugins/zsh-autosuggestions"
         log "✅ zsh-autosuggestions installed"
     else
         log "ℹ️  zsh-autosuggestions already exists, updating..."
@@ -84,7 +104,7 @@ if [ "$SETUP_ZSH_PLUGINS" = "true" ]; then
 
     if [ ! -d "$ZSH_CUSTOM_DIR/plugins/zsh-syntax-highlighting" ]; then
         log "🔌 Installing zsh-syntax-highlighting plugin..."
-        git clone "https://github.com/$GITHUB_HANDLE/zsh-syntax-highlighting.git" "$ZSH_CUSTOM_DIR/plugins/zsh-syntax-highlighting"
+        git clone --depth 1 "https://github.com/$GITHUB_HANDLE/zsh-syntax-highlighting.git" "$ZSH_CUSTOM_DIR/plugins/zsh-syntax-highlighting"
         log "✅ zsh-syntax-highlighting installed"
     else
         log "ℹ️  zsh-syntax-highlighting already exists, updating..."
