@@ -29,16 +29,20 @@ log() {
     echo "[$(date +'%Y-%m-%d %H:%M:%S')] $1"
 }
 
-# Change ownership of the mounted workspace first.
-sudo chown -R marcelo:marcelo /workspaces
-# Fix permissions for the NVM directory.
-sudo chown -R marcelo:marcelo /usr/local/share/nvm
+# TODO(claude): Figure out why this is doesn't work as expected. It also require
+# sudo in the `cp -r ~/.ssh-from-host/. ~/.ssh` command below and in the command
+# below it (chmod). Then, when I create folders in here, it ends up with a
+# 525288 user in the host system, which breaks permissions there.
+# 
+# # Change ownership of the mounted workspace first.
+# sudo chown -R marcelo:marcelo /workspaces
+# # Fix permissions for the NVM directory.
+# sudo chown -R marcelo:marcelo /usr/local/share/nvm
 
 # Copy SSH keys with proper permissions for cross-platform compatibility.
 if [ -d "$HOME/.ssh-from-host" ]; then
     log "🔑 Setting up SSH keys..."
-    sudo cp -r ~/.ssh-from-host/. ~/.ssh
-    sudo chown -R marcelo:marcelo ~/.ssh
+    cp -r ~/.ssh-from-host/. ~/.ssh
     chmod 700 ~/.ssh
     find ~/.ssh -type f -exec chmod 600 {} \;
     log "✅ SSH keys configured"

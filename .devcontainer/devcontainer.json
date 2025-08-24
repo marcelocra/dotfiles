@@ -22,7 +22,7 @@
   },
 
   // Set the default user for the container.
-  "remoteUser": "marcelo",
+  "remoteUser": "codespace",
 
   // Set custom hostname for the container.
   "runArgs": ["--hostname=automaton"],
@@ -41,20 +41,20 @@
     // SSH credentials for Git operations and SSH-based authentication/signing.
     // SSH agent forwarding is container runtime-specific and less reliable.
     // Mount as read-only to prevent accidental modification of host SSH keys.
-    "source=${localEnv:HOME}${localEnv:USERPROFILE}/.ssh,target=/home/marcelo/.ssh-from-host,type=bind,readonly",
+    "source=${localEnv:HOME}${localEnv:USERPROFILE}/.ssh,target=/home/codespace/.ssh-from-host,type=bind,readonly",
 
     // GitHub CLI credentials for seamless GitHub integration.
-    "source=${localEnv:HOME}${localEnv:USERPROFILE}/.config/gh,target=/home/marcelo/.config/gh,type=bind,consistency=cached",
+    "source=${localEnv:HOME}${localEnv:USERPROFILE}/.config/gh,target=/home/codespace/.config/gh,type=bind,consistency=cached",
 
     // Gemini CLI credentials for AI assistance tools.
-    "source=${localEnv:HOME}${localEnv:USERPROFILE}/.gemini,target=/home/marcelo/.gemini,type=bind,consistency=cached",
+    "source=${localEnv:HOME}${localEnv:USERPROFILE}/.gemini,target=/home/codespace/.gemini,type=bind,consistency=cached",
 
     // Claude credentials and configuration for AI development tools.
-    "source=${localEnv:HOME}${localEnv:USERPROFILE}/.claude,target=/home/marcelo/.claude,type=bind,consistency=cached",
-    "source=${localEnv:HOME}${localEnv:USERPROFILE}/.claude.json,target=/home/marcelo/.claude.json,type=bind,consistency=cached",
+    "source=${localEnv:HOME}${localEnv:USERPROFILE}/.claude,target=/home/codespace/.claude,type=bind,consistency=cached",
+    "source=${localEnv:HOME}${localEnv:USERPROFILE}/.claude.json,target=/home/codespace/.claude.json,type=bind,consistency=cached",
 
     // Ollama models - persist downloaded models on host system.
-    "source=${localEnv:HOME}${localEnv:USERPROFILE}/.ollama,target=/home/marcelo/.ollama,type=bind,consistency=cached"
+    "source=${localEnv:HOME}${localEnv:USERPROFILE}/.ollama,target=/home/codespace/.ollama,type=bind,consistency=cached"
   ],
 
   // Port forwarding for development services.
