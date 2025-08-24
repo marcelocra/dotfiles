@@ -839,29 +839,34 @@ configure_bash() {
 # =============================================================================
 
 configure_mise() {
+    local mise_activated="/tmp/mise-activated"
     if [ -n "${MCRA_USE_MISE:-}" ] && [ "${MCRA_USE_MISE}" = "true" ]; then
-        
-
-        if [ -f /tmp/mise-activated ]; then
+        if [ -f "$mise_activated" ]; then
+            echo 'Mise already installed and activated.'
             return 0
         fi
 
-        # Create a file to indicate mise was activated
-        touch /tmp/mise-activated
-
-        curl https://mise.run | sh && \
+        # Previous install, before using the universal devcontainer image.
+        # curl https://mise.run | sh && \
             # mise use --global node@22 python@3.13 uv clojure babashka deno && \
             # mise exec -- corepack enable && \
             # mise exec -- corepack prepare pnpm@latest --activate && \
+            # mise use --global uv clojure babashka deno && \
+            # mise exec -- npm install -g @google/gemini-cli @anthropic-ai/claude-code
+
+        curl https://mise.run | sh && \
             mise use --global uv clojure babashka deno && \
-            mise exec -- npm install -g @google/gemini-cli @anthropic-ai/claude-code || \
+            mise exec -- npm install -g @google/gemini-cli @anthropic-ai/claude-code && \
+            touch "$mise_activated" && \
+            echo 'Mise installed successfully!' || \
             { echo "Failed to install/configure mise or some packages"; return 1; }
         
-        # Activate mise for version management
+        # Activate mise for version management.
         command_exists mise && eval "$(mise activate zsh)"
         export PATH="$HOME/.local/bin:$PATH"
+    else
+        echo 'To install and activate mise, set MCRA_USE_MISE=true in your environment.'
     fi
-
 }
 
 # =============================================================================

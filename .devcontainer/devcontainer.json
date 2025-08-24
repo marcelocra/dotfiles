@@ -31,7 +31,7 @@
     "TZ": "America/Sao_Paulo",
     "LC_ALL": "en_US.UTF-8",
     "LANG": "en_US.UTF-8",
-    "MCRA_USE_MISE": "false"
+    "MCRA_USE_MISE": "true"
   },
 
   // Host directory mounts for persistent data across container rebuilds.
