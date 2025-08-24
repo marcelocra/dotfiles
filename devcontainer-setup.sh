@@ -29,15 +29,22 @@ log() {
     echo "[$(date +'%Y-%m-%d %H:%M:%S')] $1"
 }
 
-# TODO(claude): Figure out why this is doesn't work as expected. It also require
-# sudo in the `cp -r ~/.ssh-from-host/. ~/.ssh` command below and in the command
-# below it (chmod). Then, when I create folders in here, it ends up with a
-# 525288 user in the host system, which breaks permissions there.
+# TODO(claude): Figure out why this doesn't work as expected. I do get a
+# 'marcelo' user that works mostly right, but it breaks in weird ways:
+# [1] When trying to use claude code, claude code can't use the bind mounts to
+#     save its settings. Likely because those folders are owned by codespace,
+#     but if I change them to marcelo (sudo chown -R marcelo:marcelo ~/.claude*)
+#     it still doesn't work and also change my host system ~/.claude* to be
+#     owned by 525288, which is not good and break things in the host.
+# [2] I end up having to fiddle with sudo a lot, so I decided to just use the
+#     default user (codespace) for now.
 # 
 # # Change ownership of the mounted workspace first.
 # sudo chown -R marcelo:marcelo /workspaces
 # # Fix permissions for the NVM directory.
 # sudo chown -R marcelo:marcelo /usr/local/share/nvm
+# It also require sudo in the `cp -r ~/.ssh-from-host/. ~/.ssh` command below
+# and in the command below it (chmod 700).
 
 # Copy SSH keys with proper permissions for cross-platform compatibility.
 if [ -d "$HOME/.ssh-from-host" ]; then
