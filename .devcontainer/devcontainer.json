@@ -6,9 +6,12 @@
   "features": {
     // Pin feature versions for consistent builds.
     "ghcr.io/devcontainers/features/common-utils:2": {
-      "username": "marcelo",
-      "userUid": "1000",
-      "userGid": "1000",
+      // Cannot set UID/GID to these values when using some images, see details
+      // here: https://github.com/devcontainers/features/tree/main/src/common-utils#using-with-dev-container-images
+      // "username": "marcelo",
+      // "userUid": "1000",
+      // "userGid": "1000",
+
       // Skip package updates to speed up builds.
       "upgradePackages": "false",
       // Set your preferred shell.
@@ -27,7 +30,8 @@
   "containerEnv": {
     "TZ": "America/Sao_Paulo",
     "LC_ALL": "en_US.UTF-8",
-    "LANG": "en_US.UTF-8"
+    "LANG": "en_US.UTF-8",
+    "MCRA_USE_MISE": "false"
   },
 
   // Host directory mounts for persistent data across container rebuilds.
@@ -62,8 +66,7 @@
 
   // Run setup script for container initialization.
   // This script handles SSH key setup, dotfiles installation, and environment configuration.
-  "postCreateCommand": "curl -fsSL https://raw.githubusercontent.com/marcelocra/dotfiles/main/devcontainer-setup.sh | bash",
-
+  "postCreateCommand": "((cat ./devcontainer-setup.sh) || (curl -fsSL https://raw.githubusercontent.com/marcelocra/dotfiles/main/devcontainer-setup.sh)) | bash",
   "customizations": {
     "vscode": {
       "extensions": [
