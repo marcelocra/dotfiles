@@ -35,18 +35,35 @@ else
     echo -e "${BLUE}📁 .devcontainer directory already exists${NC}"
 fi
 
-# Download devcontainer.json.
+# Download devcontainer.json and docker-compose.yml.
 echo -e "${BLUE}📥 Downloading DevMagic configuration...${NC}"
 curl -fsSL https://raw.githubusercontent.com/marcelocra/dotfiles/main/.devcontainer/devcontainer.json -o .devcontainer/devcontainer.json
+
+if [ $? -ne 0 ]; then
+    echo -e "${RED}❌ Failed to download devcontainer.json${NC}"
+    exit 1
+fi
+
+echo -e "${BLUE}📥 Downloading Docker Compose configuration...${NC}"
+curl -fsSL https://raw.githubusercontent.com/marcelocra/dotfiles/main/docker-compose.yml -o docker-compose.yml
 
 if [ $? -eq 0 ]; then
     echo -e "${GREEN}✅ DevMagic configuration downloaded${NC}"
 else
-    echo -e "${RED}❌ Failed to download configuration${NC}"
+    echo -e "${RED}❌ Failed to download docker-compose.yml${NC}"
     exit 1
 fi
 
 # Show available service profiles.
+# TODO: This prints incorrectly, likely because of the escape codes.
+#   minimal    • Development container only (default)
+#   ai          • + Ollama GPU               (port 11434)
+#   ai-cpu      • + Ollama CPU               (port 11435)
+#   postgres  • + PostgreSQL database      (port 5432)
+#   redis     • + Redis cache              (port 6379)
+#   mongodb   • + MongoDB database         (port 27017)
+#   minio     • + MinIO S3 storage         (ports 9000/9001)
+
 echo -e "${PURPLE}"
 echo "🎛️  Available Service Profiles:"
 echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"

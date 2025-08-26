@@ -5,6 +5,7 @@
 **Primary Approach**: Docker Compose-based development environment with profile-based services.
 
 ### Key Components
+
 - `docker-compose.yml` - Service definitions with profiles
 - `.devcontainer/devcontainer.json` - 🚀 DevMagic configuration (points to remote compose file)
 - `setup/devmagic.sh` - One-line setup script
@@ -14,11 +15,13 @@
 - `shell/init.sh` - Consolidated shell configuration (Google Shell Style Guide compliant)
 
 ### Service Profiles
+
 - `minimal` (default): Just development container
 - `ai`: + Ollama GPU (port 11434) | `ai-cpu`: + Ollama CPU (port 11435)
 - `postgres`, `redis`, `mongodb`, `minio`: Database and storage services
 
 ### Usage Pattern
+
 ```bash
 # One-line DevMagic setup.
 curl -fsSL https://raw.githubusercontent.com/marcelocra/dotfiles/main/setup/devmagic.sh | bash
@@ -31,15 +34,17 @@ MCRA_COMPOSE_PROFILES=minimal,ai,postgres code myproject
 ```
 
 ### Technical Decisions
+
 - **Cross-platform paths**: `${HOME}${USERPROFILE}` for Windows/Linux compatibility
 - **Container networks**: Services communicate via service names (security + simplicity)
 - **Named volumes**: Data persistence across container rebuilds
-- **MCRA_ prefix**: Consistent environment variable naming
+- **MCRA\_ prefix**: Consistent environment variable naming
 - **Remote compose**: Easy updates without copying files
 
 ### Architecture Benefits
+
 - **Service isolation**: Easier debugging, independent scaling
-- **Profile-based**: Only run needed services per project  
+- **Profile-based**: Only run needed services per project
 - **Cross-platform**: Works on Windows/Linux/WSL/containers
 - **Secure by default**: Container network isolation
 - **One-line setup**: Minimal friction for new projects
@@ -53,6 +58,7 @@ MCRA_COMPOSE_PROFILES=minimal,ai,postgres code myproject
 - **Functions**: tmux wrapper, timer functions, venv activation
 
 ## Environment Variables
+
 ```bash
 MCRA_COMPOSE_PROFILES="minimal,ai,postgres"  # Which services to start
 MCRA_DEV_DB_PASSWORD="YourSecurePassword!"   # Database password
@@ -61,6 +67,7 @@ MCRA_USE_MISE="true"                         # Enable mise tool manager
 ```
 
 ## Current Project Structure
+
 ```
 dotfiles/
 ├── .devcontainer/
@@ -74,7 +81,7 @@ dotfiles/
 ├── docker-compose.yml         # Service definitions
 ├── shell/
 │   └── init.sh               # Primary shell configuration
-├── git/.gitconfig            # Git configuration  
+├── git/.gitconfig            # Git configuration
 ├── vscode/                   # VS Code settings
 └── CHANGELOG.md              # Version history
 ```

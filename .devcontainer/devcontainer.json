@@ -1,8 +1,8 @@
 {
   "name": "🚀 DevMagic",
 
-  // Use remote docker-compose for easy updates.
-  "dockerComposeFile": "https://raw.githubusercontent.com/marcelocra/dotfiles/main/docker-compose.yml",
+  // Use local docker-compose file downloaded by devmagic.sh.
+  "dockerComposeFile": "../docker-compose.yml",
   "service": "devcontainer",
   "workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}",
 
@@ -45,7 +45,7 @@
   ],
 
   // Run setup script for container initialization.
-  "postCreateCommand": "((cat ./setup/devcontainer-setup.sh) || (curl -fsSL https://raw.githubusercontent.com/marcelocra/dotfiles/main/setup/devcontainer-setup.sh)) | bash",
+  "postCreateCommand": "curl -fsSL https://raw.githubusercontent.com/marcelocra/dotfiles/main/setup/devcontainer-setup.sh | bash",
 
   // Stop all services when devcontainer stops.
   "shutdownAction": "stopCompose",
