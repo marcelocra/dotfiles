@@ -7,8 +7,10 @@
 ### Key Components
 - `docker-compose.yml` - Service definitions with profiles
 - `.devcontainer/devcontainer.json` - 🚀 DevMagic configuration (points to remote compose file)
-- `devmagic.sh` - One-line setup script
-- `devcontainer-setup.sh` - Cross-platform container initialization
+- `setup/devmagic.sh` - One-line setup script
+- `setup/devcontainer-setup.sh` - Cross-platform container initialization
+- `setup/host-setup-linux.sh` - Linux host editor configuration
+- `setup/host-setup-windows.ps1` - Windows host editor configuration
 - `shell/init.sh` - Consolidated shell configuration (Google Shell Style Guide compliant)
 
 ### Service Profiles
@@ -19,7 +21,7 @@
 ### Usage Pattern
 ```bash
 # One-line DevMagic setup.
-curl -fsSL https://raw.githubusercontent.com/marcelocra/dotfiles/main/devmagic.sh | bash
+curl -fsSL https://raw.githubusercontent.com/marcelocra/dotfiles/main/setup/devmagic.sh | bash
 
 # Or manual setup.
 mkdir -p .devcontainer && curl -fsSL https://raw.githubusercontent.com/marcelocra/dotfiles/main/.devcontainer/devcontainer.json -o .devcontainer/devcontainer.json
@@ -64,9 +66,12 @@ dotfiles/
 ├── .devcontainer/
 │   ├── devcontainer.json      # 🚀 DevMagic configuration
 │   └── README.md              # Setup instructions
+├── setup/
+│   ├── devmagic.sh            # One-line setup script
+│   ├── devcontainer-setup.sh  # Container initialization
+│   ├── host-setup-linux.sh    # Linux host editor setup
+│   └── host-setup-windows.ps1 # Windows host editor setup
 ├── docker-compose.yml         # Service definitions
-├── devmagic.sh                # One-line setup script
-├── devcontainer-setup.sh      # Container initialization
 ├── shell/
 │   └── init.sh               # Primary shell configuration
 ├── git/.gitconfig            # Git configuration  

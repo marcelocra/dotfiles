@@ -45,7 +45,7 @@
   ],
 
   // Run setup script for container initialization.
-  "postCreateCommand": "((cat ./devcontainer-setup.sh) || (curl -fsSL https://raw.githubusercontent.com/marcelocra/dotfiles/main/devcontainer-setup.sh)) | bash",
+  "postCreateCommand": "((cat ./setup/devcontainer-setup.sh) || (curl -fsSL https://raw.githubusercontent.com/marcelocra/dotfiles/main/setup/devcontainer-setup.sh)) | bash",
 
   // Stop all services when devcontainer stops.
   "shutdownAction": "stopCompose",

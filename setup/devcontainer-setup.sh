@@ -1,7 +1,7 @@
 #!/bin/bash
 # devcontainer-setup.sh
 # Personal devcontainer setup script for development environment.
-# Usage: curl -fsSL https://raw.githubusercontent.com/marcelocra/dotfiles/main/devcontainer-setup.sh | bash
+# Usage: curl -fsSL https://raw.githubusercontent.com/marcelocra/dotfiles/main/setup/devcontainer-setup.sh | bash
 
 set -e
 
@@ -117,4 +117,4 @@ fi
 
 log "🎉 Container setup complete! Welcome to your development environment."
 log "💡 Your dotfiles are linked and zsh plugins are ready to use."
-log "🔧 To customize this setup, edit: https://github.com/$GITHUB_HANDLE/dotfiles/blob/main/devcontainer-setup.sh"
+log "🔧 To customize this setup, edit: https://github.com/$GITHUB_HANDLE/dotfiles/blob/main/setup/devcontainer-setup.sh"

@@ -1,6 +1,6 @@
 #!/bin/bash
 # DevMagic v1.0.0 - One-line development environment setup
-# Usage: curl -fsSL https://raw.githubusercontent.com/marcelocra/dotfiles/main/devmagic.sh | bash
+# Usage: curl -fsSL https://raw.githubusercontent.com/marcelocra/dotfiles/main/setup/devmagic.sh | bash
 
 set -e
 
