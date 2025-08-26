@@ -5,8 +5,8 @@ services:
   devcontainer:
     image: "mcr.microsoft.com/devcontainers/universal:3-noble"
     volumes:
-      # TODO(claude): Review if this path is correct. The devcontainer for the compose file was two folders down, but now it is only one. Is this about that?
-      - ../..:/workspaces:cached
+      # Mount project workspace (one level up from .devcontainer/devcontainer.json location).
+      - ..:/workspaces:cached
 
       # Cross-platform SSH mount (Windows uses USERPROFILE, Linux/macOS use HOME).
       # Using 'codespace', the default user in the universal image. For other
@@ -143,7 +143,8 @@ services:
     profiles:
       - minio
 
-# TODO(claude): These are persisted even if I rebuild the containers, right?
+# Named volumes persist data across container rebuilds and restarts.
+# Only removed when running `docker compose down -v`.
 volumes:
   ollama-data:
 
@@ -157,5 +158,5 @@ volumes:
 
 networks:
   dev-network:
-    # TODO(claude): What does this mean?
+    # Bridge network: Creates isolated network for container communication.
     driver: bridge

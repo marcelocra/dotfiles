@@ -2,6 +2,23 @@
 
 Everything you need to know to effectively use Docker Compose.
 
+## TL;DR - Essential Points
+
+**Never Forget These:**
+- **Service names = hostnames**: Use `postgres:5432`, not `localhost:5432` inside containers
+- **Profiles = selective services**: `COMPOSE_PROFILES=minimal,ai,postgres` chooses what runs
+- **Volumes persist data**: Named volumes survive `docker compose down` (but not `down -v`)
+- **Network isolation = security**: Services only accessible within containers unless port-mapped
+- **Environment overrides**: Host variables override compose file defaults
+
+**Quick Commands:**
+```bash
+COMPOSE_PROFILES=minimal,ai code myproject    # Start with AI
+docker compose ps                             # See what's running
+docker compose logs ollama                    # Debug services
+docker compose down -v                       # Nuclear option
+```
+
 ## Core Concepts
 
 ### What is Docker Compose?
@@ -65,8 +82,12 @@ COMPOSE_PROFILES=minimal,postgres,redis docker compose up
 
 ## Why Two Ollama Services?
 
-<!-- TODO(claude): Update the comments in the docker-compose file to remove the 'fallback' comment. Mention that it is an alternative. Questions: [1] will the gpu one simply fail in a system without gpus? [2] I imagine that if I have non-nvidia gpus (say, AMD), I will need  a different service, right? No need to implement it now, I just want to understand. My gpus are nvidia. [3] So one will never run them at the same time, right? If so, why use different ports? -->
 **You were right to be confused!** They're **alternatives**, not fallbacks:
+
+**GPU Service Behavior:**
+1. **No GPU systems**: GPU service gracefully falls back to CPU mode
+2. **AMD GPUs**: Would need different configuration (NVIDIA-specific currently)  
+3. **Never simultaneous**: Different ports prevent conflicts if both accidentally started
 
 - `ollama` (profile: `ai`) - GPU version on port 11434
 - `ollama-cpu` (profile: `ai-cpu`) - CPU version on port 11435
@@ -98,6 +119,15 @@ conn = psycopg2.connect(host="postgres", port=5432)  # Not localhost!
 # Connecting to ollama service  
 response = requests.get("http://ollama:11434/api/health")
 ```
+
+### Security: Network Isolation by Default
+
+**🔒 Important**: Services are only accessible within the container network unless explicitly exposed:
+
+- **Internal communication**: `http://ollama:11434` works only inside containers
+- **External access**: Requires port mapping in docker-compose.yml (`ports:` section)
+- **Your WiFi network**: Cannot access services unless you explicitly expose them
+- **Current setup**: Only mapped ports (5432, 6379, 11434, etc.) are accessible from host
 
 ## Volumes: The Confusing Part
 
@@ -140,8 +170,11 @@ export COMPOSE_PROFILES=minimal,ai
 docker compose up
 ```
 
-<!-- TODO(claude): So if I set MCRA_USE_MISE to false before calling `docker compose up`, it will override the `true` defined in the compose file, right? -->
-**Yes, MCRA_USE_MISE reads from your shell environment automatically!**
+**Host environment variables override compose file defaults:**
+```bash
+# Override the default MCRA_USE_MISE=true from compose file
+MCRA_USE_MISE=false docker compose up
+```
 
 ## Common Commands
 
@@ -181,7 +214,6 @@ docker compose exec postgres psql -U marcelo -d devdb
 - `mongodb`: + MongoDB database  
 - `minio`: + S3-compatible storage
 
-<!-- TODO(claude): The .devcontainer/README.md should be updated with something like this and the 'Common Commands' mentioned above. -->
 **Usage Examples:**
 ```bash
 # Basic development
@@ -194,7 +226,6 @@ COMPOSE_PROFILES=minimal,ai,postgres code myproject
 COMPOSE_PROFILES=minimal,ai,postgres,redis code myproject
 ```
 
-<!-- TODO(claude): Make a TL;DR section at the top with these and whatever else are the key points that I should never forget. It should be a small, summarized, section, like this one. -->
 **Key Points:**
 - Services in same compose file can talk via service names (`ollama:11434`, not `localhost:11434`)
 - Profiles let you pick which services to run per project

@@ -48,7 +48,6 @@ Services communicate via container network names:
 
 ```python
 # Connecting to Ollama from inside devcontainer
-# TODO(claude): Question: This will only be accessible from inside the container, right? I don't want to expose it outside, to people in the same network (wifi) I'll be using. (You can remove this todo after answering.)
 response = requests.post("http://ollama:11434/api/generate", ...)
 
 # Connecting to PostgreSQL

@@ -7,8 +7,10 @@ A modernized collection of configuration files for development environments, sup
 **For new projects**, get a complete development environment with optional AI, databases, and services:
 
 ```bash
-# TODO(marcelocra): Update with the one-liner script when ready.
-# Add DevMagic to your project.
+# One-line DevMagic setup (interactive).
+curl -fsSL https://raw.githubusercontent.com/marcelocra/dotfiles/main/devmagic.sh | bash
+
+# Or manual setup.
 mkdir -p .devcontainer && curl -fsSL https://raw.githubusercontent.com/marcelocra/dotfiles/main/.devcontainer/devcontainer.json -o .devcontainer/devcontainer.json
 
 # Choose your services and open in VS Code.

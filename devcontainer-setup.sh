@@ -29,15 +29,15 @@ log() {
     echo "[$(date +'%Y-%m-%d %H:%M:%S')] $1"
 }
 
-# TODO(claude): Figure out why this doesn't work as expected. I do get a
-# 'marcelo' user that works mostly right, but it breaks in weird ways:
-# [1] When trying to use claude code, claude code can't use the bind mounts to
-#     save its settings. Likely because those folders are owned by codespace,
-#     but if I change them to marcelo (sudo chown -R marcelo:marcelo ~/.claude*)
-#     it still doesn't work and also change my host system ~/.claude* to be
-#     owned by 525288, which is not good and break things in the host.
-# [2] I end up having to fiddle with sudo a lot, so I decided to just use the
-#     default user (codespace) for now.
+# User Management Decision: Using default 'codespace' user.
+# 
+# Attempted custom 'marcelo' user but encountered UID/GID mismatch issues:
+# [1] Bind mounts break with permission conflicts (Claude Code settings fail).
+# [2] Changing ownership affects host system files with wrong UID (525288).
+# [3] Requires excessive sudo usage for basic operations.
+# 
+# DevMagic v1.0.0 architecture: Stick with container defaults for better
+# cross-platform compatibility and fewer permission headaches.
 # 
 # # Change ownership of the mounted workspace first.
 # sudo chown -R marcelo:marcelo /workspaces
