@@ -41,7 +41,7 @@ services:
 
   # Ollama for local AI/LLM development.
   ollama:
-    image: ollama/ollama:latest
+    image: docker.io/ollama/ollama:latest
     ports:
       - "11434:11434"
     volumes:
@@ -68,7 +68,7 @@ services:
   # Ollama CPU-only version (alternative to GPU version above).
   # Choose either 'ai' profile (GPU) OR 'ai-cpu' profile (CPU-only), not both.
   ollama-cpu:
-    image: ollama/ollama:latest
+    image: docker.io/ollama/ollama:latest
     ports:
       - "11435:11434" # Different port to avoid conflict with GPU version.
     volumes:
@@ -83,10 +83,10 @@ services:
 
   # PostgreSQL for database experiments.
   postgres:
-    image: postgres:16-alpine
+    image: docker.io/library/postgres:16-alpine
     environment:
       - POSTGRES_DB=devdb
-      - POSTGRES_USER=marcelo
+      - POSTGRI_USER=marcelo
       - POSTGRES_PASSWORD=${MCRA_DEV_DB_PASSWORD:-DevTime2024!coding}
     ports:
       - "5432:5432"
@@ -101,7 +101,7 @@ services:
 
   # Redis for caching experiments.
   redis:
-    image: redis:7-alpine
+    image: docker.io/library/redis:7-alpine
     ports:
       - "6379:6379"
     volumes:
@@ -113,7 +113,7 @@ services:
 
   # MongoDB for document database experiments.
   mongodb:
-    image: mongo:7
+    image: docker.io/library/mongo:7
     environment:
       - MONGO_INITDB_ROOT_USERNAME=marcelo
       - MONGO_INITDB_ROOT_PASSWORD=${MCRA_DEV_DB_PASSWORD:-DevTime2024!coding}
@@ -128,7 +128,7 @@ services:
 
   # MinIO for S3-compatible object storage experiments.
   minio:
-    image: minio/minio:latest
+    image: docker.io/minio/minio:latest
     command: server /data --console-address ":9001"
     environment:
       - MINIO_ROOT_USER=marcelo
