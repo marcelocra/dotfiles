@@ -85,9 +85,10 @@ COMPOSE_PROFILES=minimal,postgres,redis docker compose up
 **You were right to be confused!** They're **alternatives**, not fallbacks:
 
 **GPU Service Behavior:**
-1. **No GPU systems**: GPU service gracefully falls back to CPU mode
+1. **No GPU systems**: GPU service will fail to start (no automatic fallback)
 2. **AMD GPUs**: Would need different configuration (NVIDIA-specific currently)  
 3. **Never simultaneous**: Different ports prevent conflicts if both accidentally started
+4. **Manual choice**: You explicitly choose `ai` (GPU) OR `ai-cpu` (CPU), not both
 
 - `ollama` (profile: `ai`) - GPU version on port 11434
 - `ollama-cpu` (profile: `ai-cpu`) - CPU version on port 11435
@@ -226,10 +227,31 @@ COMPOSE_PROFILES=minimal,ai,postgres code myproject
 COMPOSE_PROFILES=minimal,ai,postgres,redis code myproject
 ```
 
+## Docker vs Podman Compatibility
+
+**Good news: Everything works the same!**
+
+- **Alias approach**: `alias docker=podman` in shell/init.sh makes commands identical
+- **Docker Compose**: Works perfectly with Podman Compose
+- **Volume handling**: Named volumes work identically
+- **Network isolation**: Same security benefits
+- **Documentation**: Uses `docker` commands, but `podman` works identically
+
+## Service Access Security Summary
+
+**Q: Are services like Ollama accessible from my local network/WiFi?**
+**A: No, they're completely isolated by default.**
+
+- ✅ **Container-to-container**: `http://ollama:11434` works inside containers
+- ❌ **WiFi network access**: External devices cannot access services
+- ✅ **Host access only**: Only mapped ports (like 11434) accessible from your machine
+- 🔒 **Network isolation**: Docker/Podman networks provide security by default
+
 **Key Points:**
 - Services in same compose file can talk via service names (`ollama:11434`, not `localhost:11434`)
 - Profiles let you pick which services to run per project
 - Volumes persist data between container restarts
 - Environment variables control both compose behavior and container settings
+- Container networks provide excellent security isolation
 
 That's really all you need to know! The rest is just variations on these concepts.

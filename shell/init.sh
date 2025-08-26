@@ -842,7 +842,7 @@ configure_mise() {
     local mise_activated="/tmp/mise-activated"
     if [ -n "${MCRA_USE_MISE:-}" ] && [ "${MCRA_USE_MISE}" = "true" ]; then
         if [ -f "$mise_activated" ]; then
-            echo 'Mise already installed and activated.'
+            log_debug "Mise already installed and activated"
             return 0
         fi
 
@@ -865,7 +865,7 @@ configure_mise() {
         command_exists mise && eval "$(mise activate zsh)"
         export PATH="$HOME/.local/bin:$PATH"
     else
-        echo 'To install and activate mise, set MCRA_USE_MISE=true in your environment.'
+        log_debug "Mise configuration skipped (MCRA_USE_MISE not enabled)"
     fi
 }
 

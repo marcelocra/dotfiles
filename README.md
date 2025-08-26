@@ -7,7 +7,7 @@ A modernized collection of configuration files for development environments, sup
 **For new projects**, get a complete development environment with optional AI, databases, and services:
 
 ```bash
-# One-line DevMagic setup (interactive).
+# One-line DevMagic setup.
 curl -fsSL https://raw.githubusercontent.com/marcelocra/dotfiles/main/devmagic.sh | bash
 
 # Or manual setup.

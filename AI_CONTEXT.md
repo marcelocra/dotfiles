@@ -7,7 +7,7 @@
 ### Key Components
 - `docker-compose.yml` - Service definitions with profiles
 - `.devcontainer/devcontainer.json` - 🚀 DevMagic configuration (points to remote compose file)
-- `devmagic.sh` - One-line interactive setup script
+- `devmagic.sh` - One-line setup script
 - `devcontainer-setup.sh` - Cross-platform container initialization
 - `shell/init.sh` - Consolidated shell configuration (Google Shell Style Guide compliant)
 
@@ -18,13 +18,13 @@
 
 ### Usage Pattern
 ```bash
-# One-line DevMagic setup (interactive)
+# One-line DevMagic setup.
 curl -fsSL https://raw.githubusercontent.com/marcelocra/dotfiles/main/devmagic.sh | bash
 
-# Or manual setup
+# Or manual setup.
 mkdir -p .devcontainer && curl -fsSL https://raw.githubusercontent.com/marcelocra/dotfiles/main/.devcontainer/devcontainer.json -o .devcontainer/devcontainer.json
 
-# Choose services
+# Choose services.
 MCRA_COMPOSE_PROFILES=minimal,ai,postgres code myproject
 ```
 
