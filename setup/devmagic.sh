@@ -1,10 +1,15 @@
 #!/bin/bash
-# DevMagic v1.0.0 - One-line development environment setup
+# DevMagic v2.0.0 - Submodule-based development environment setup
 # Usage: curl -fsSL https://raw.githubusercontent.com/marcelocra/dotfiles/main/setup/devmagic.sh | bash
 
 set -e
 
-# Colors for output.
+# --- Configuration ---
+# The URL of the repository containing your devcontainer.json and docker-compose.yml.
+# TODO: Replace this with your actual repository URL once created.
+DEVCONTAINER_REPO_URL="https://github.com/marcelocra/devmagic.git"
+
+# --- Colors for output ---
 RED='\033[0;31m'
 GREEN='\033[0;32m'
 YELLOW='\033[1;33m'
@@ -12,101 +17,76 @@ BLUE='\033[0;34m'
 PURPLE='\033[0;35m'
 NC='\033[0m' # No Color
 
-# DevMagic header.
+# --- Header ---
 echo -e "${PURPLE}"
-echo "🚀 DevMagic v1.0.0"
+echo "🚀 DevMagic v2.0.0"
 echo "━━━━━━━━━━━━━━━━━━━"
-echo "One-line development environment setup"
+echo "Submodule-based development environment setup"
 echo -e "${NC}"
 
-# Check if we're in a project directory.
-if [ ! -f "package.json" ] && [ ! -f "Cargo.toml" ] && [ ! -f "go.mod" ] && [ ! -f "pyproject.toml" ] && [ ! -f ".git/config" ]; then
-    echo -e "${YELLOW}⚠️  No project files detected. Creating example project structure...${NC}"
-    mkdir -p src
-    echo "# $(basename "$PWD")" > README.md
-    echo -e "${GREEN}✅ Basic project structure created${NC}"
+# --- Prerequisite Checks ---
+# 1. Check if Git is installed
+if ! command -v git &> /dev/null; then
+    echo -e "${RED}❌ Git is not installed. Please install Git to continue.${NC}"
+    exit 1
 fi
 
-# Create .devcontainer directory if it doesn't exist.
-if [ ! -d ".devcontainer" ]; then
-    echo -e "${BLUE}📁 Creating .devcontainer directory...${NC}"
-    mkdir -p .devcontainer
-else
-    echo -e "${BLUE}📁 .devcontainer directory already exists${NC}"
+# 2. Check if inside a Git repository
+if ! git rev-parse --is-inside-work-tree &> /dev/null; then
+    echo -e "${YELLOW}⚠️ This directory is not a Git repository.${NC}"
+    read -p "Do you want to initialize a new Git repository here? (y/N) " -n 1 -r
+    echo
+    if [[ $REPLY =~ ^[Yy]$ ]]; then
+        git init
+        echo -e "${GREEN}✅ Git repository initialized.${NC}"
+    else
+        echo -e "${RED}Aborting. Please run this script inside a Git repository.${NC}"
+        exit 1
+    fi
 fi
 
-# Download devcontainer.json and docker-compose.yml.
-echo -e "${BLUE}📥 Downloading DevMagic configuration...${NC}"
-curl -fsSL https://raw.githubusercontent.com/marcelocra/dotfiles/main/.devcontainer/devcontainer.json -o .devcontainer/devcontainer.json
+# 3. Check for existing .devcontainer directory
+if [ -d ".devcontainer" ]; then
+    echo -e "${RED}❌ A '.devcontainer' directory already exists.${NC}"
+    echo -e "${YELLOW}Please remove or rename it, then run the script again.${NC}"
+    exit 1
+fi
+
+# --- Main Logic ---
+echo -e "${BLUE}⚙️ Adding DevMagic environment as a Git submodule...${NC}"
+
+# Add the submodule to the .devcontainer directory
+git submodule add "${DEVCONTAINER_REPO_URL}" .devcontainer
 
 if [ $? -ne 0 ]; then
-    echo -e "${RED}❌ Failed to download devcontainer.json${NC}"
+    echo -e "${RED}❌ Failed to add the Git submodule.${NC}"
+    echo -e "${YELLOW}Please check the repository URL and your permissions.${NC}"
     exit 1
 fi
 
-echo -e "${BLUE}📥 Downloading Docker Compose configuration...${NC}"
-curl -fsSL https://raw.githubusercontent.com/marcelocra/dotfiles/main/docker-compose.yml -o docker-compose.yml
-
-if [ $? -eq 0 ]; then
-    echo -e "${GREEN}✅ DevMagic configuration downloaded${NC}"
-else
-    echo -e "${RED}❌ Failed to download docker-compose.yml${NC}"
-    exit 1
-fi
-
-# Show available service profiles.
-# TODO: This prints incorrectly, likely because of the escape codes.
-#   minimal    • Development container only (default)
-#   ai          • + Ollama GPU               (port 11434)
-#   ai-cpu      • + Ollama CPU               (port 11435)
-#   postgres  • + PostgreSQL database      (port 5432)
-#   redis     • + Redis cache              (port 6379)
-#   mongodb   • + MongoDB database         (port 27017)
-#   minio     • + MinIO S3 storage         (ports 9000/9001)
-
-echo -e "${PURPLE}"
-echo "🎛️  Available Service Profiles:"
-echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
-echo -e "${NC}"
-echo -e "${GREEN}minimal${NC}    • Development container only (default)"
-echo -e "${BLUE}ai${NC}          • + Ollama GPU               (port 11434)"
-echo -e "${BLUE}ai-cpu${NC}      • + Ollama CPU               (port 11435)"
-echo -e "${YELLOW}postgres${NC}  • + PostgreSQL database      (port 5432)"
-echo -e "${YELLOW}redis${NC}     • + Redis cache              (port 6379)"
-echo -e "${YELLOW}mongodb${NC}   • + MongoDB database         (port 27017)"
-echo -e "${YELLOW}minio${NC}     • + MinIO S3 storage         (ports 9000/9001)"
+echo -e "${GREEN}✅ DevMagic submodule added successfully to '.devcontainer'.${NC}"
 echo
 
-# Environment variable setup.
-echo -e "${PURPLE}🔧 Environment Configuration:${NC}"
-echo "Set MCRA_COMPOSE_PROFILES to choose services:"
-echo -e "${GREEN}export MCRA_COMPOSE_PROFILES=\"minimal,ai,postgres\"${NC}"
+# --- Next Steps ---
+echo -e "${PURPLE}🚀 Your DevMagic environment is ready!${NC}"
 echo
-echo "Optional database password:"
-echo -e "${GREEN}export MCRA_DEV_DB_PASSWORD=\"YourSecurePassword\"${NC}"
+echo -e "${YELLOW}Next steps:${NC}"
+echo "1. Commit the new submodule to your repository:"
+echo -e "   ${GREEN}git add .gitmodules .devcontainer${NC}"
+echo -e "   ${GREEN}git commit -m \"feat: Add DevMagic development environment\""
 echo
 
-# VS Code detection and instructions.
-if command -v code >/dev/null 2>&1; then
-    echo -e "${PURPLE}🚀 Ready to launch!${NC}"
-    echo "Run one of these commands:"
-    echo
-    echo -e "${GREEN}# Basic development${NC}"
-    echo "MCRA_COMPOSE_PROFILES=minimal code ."
-    echo
-    echo -e "${GREEN}# AI development with database${NC}"
-    echo "MCRA_COMPOSE_PROFILES=minimal,ai,postgres code ."
-    echo
-    echo -e "${GREEN}# Full stack development${NC}"
-    echo "MCRA_COMPOSE_PROFILES=minimal,ai,postgres,redis code ."
-else
-    echo -e "${YELLOW}💡 VS Code not detected${NC}"
-    echo "Install VS Code, then run:"
-    echo -e "${GREEN}MCRA_COMPOSE_PROFILES=minimal code .${NC}"
-fi
+# Note: The original prompt had an issue with the escaped quotes for the commit message. 
+# The corrected version below ensures the commit message is properly quoted.
+# Original: git commit -m "feat: Add DevMagic development environment"
+# Corrected: git commit -m "feat: Add DevMagic development environment"
 
+echo "2. Open this project in VS Code with the Dev Containers extension."
+echo "   It will automatically prompt you to reopen in the container."
+
+echo "3. To update the environment in the future, run:"
+echo -e "   ${GREEN}git submodule update --remote --merge${NC}"
 echo
-echo -e "${PURPLE}🎯 DevMagic Setup Complete!${NC}"
-echo -e "${GREEN}✨ Your development environment is ready${NC}"
-echo
+
+
 echo "Learn more: https://github.com/marcelocra/dotfiles"

@@ -1,8 +1,8 @@
 {
   "name": "🚀 DevMagic",
 
-  // Use local docker-compose file downloaded by devmagic.sh.
-  "dockerComposeFile": "../docker-compose.yml",
+  // This file is part of a submodule. See docker-compose.yml in the same directory.
+  "dockerComposeFile": "docker-compose.yml",
   "service": "devcontainer",
   "workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}",
 
