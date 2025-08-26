@@ -2,32 +2,40 @@
 
 A modernized collection of configuration files for development environments, supporting both host machines (Linux/Windows WSL) and development containers.
 
-## 🚨 Important Notice
+## 🚀 Quick Start - DevMagic Development Environment
 
-This project has undergone **major refactoring**. Most configuration files have been moved to the `deprecated/` directory while a new, consolidated system has been implemented.
+**For new projects**, get a complete development environment with optional AI, databases, and services:
 
-### Current Status:
+```bash
+# TODO(marcelocra): Update with the one-liner script when ready.
+# Add DevMagic to your project.
+mkdir -p .devcontainer && curl -fsSL https://raw.githubusercontent.com/marcelocra/dotfiles/main/.devcontainer/devcontainer.json -o .devcontainer/devcontainer.json
 
-- **Active Configuration**: `shell/init.sh` (Google Shell Style Guide compliant)
-- **Deprecated Files**: All old files moved to `deprecated/` directory for reference
-- **Migration Period**: Deprecated files will be removed after 30+ days of stable operation
+# Choose your services and open in VS Code.
+MCRA_COMPOSE_PROFILES=minimal,ai,postgres code myproject
+```
 
-## Quick Start
+**Available services:** `minimal` (default), `ai` (Ollama), `postgres`, `redis`, `mongodb`, `minio`
+
+## Host Machine Setup
+
+For setting up dotfiles directly on your host machine:
 
 1. **Clone the repository:**
 
    ```sh
-   DOTFILES="$HOME/dotfiles"
-
-   git clone https://github.com/marcelocra/dotfiles.git $DOTFILES
-   cd $DOTFILES
+   git clone https://github.com/marcelocra/dotfiles.git ~/.config/marcelocra/dotfiles
    ```
 
-2. **Run the install script:**
-
-   > [!IMPORTANT]
-   > By default, it will install a bunch of things (.gitconfig, .tmux.conf, sublime/vscode configs, etc). Take a look at the script to customize.
-
+2. **Source shell configuration:**
    ```sh
-   ./install.sh  
+   # Add to your .bashrc or .zshrc, but keep in mind that it will override a
+   # bunch of stuff (in zsh, oh-my-zsh themes, plugins, etc).
+   source ~/.config/marcelocra/dotfiles/shell/init.sh
    ```
+
+## Project Status
+
+- **🚀 DevMagic**: Modern Docker Compose development environment (recommended)
+- **🐚 Shell**: Consolidated `shell/init.sh` (Google Shell Style Guide compliant)
+- **⚙️ Legacy**: Old files in `deprecated/` directory for reference

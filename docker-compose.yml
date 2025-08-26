@@ -1,46 +1,43 @@
 version: "3.8"
 
 services:
-  # Main development container.
+  # Main development container (always available).
   devcontainer:
     image: "mcr.microsoft.com/devcontainers/universal:3-noble"
     volumes:
+      # TODO(claude): Review if this path is correct. The devcontainer for the compose file was two folders down, but now it is only one. Is this about that?
       - ../..:/workspaces:cached
 
-      # Host directory mounts for persistent data across container rebuilds
-      # adjust paths as needed for your project structure.
-
-      # Mount as read-only to prevent accidental modification of host SSH keys.
-      - ${HOME}/.ssh:/home/marcelo/.ssh-from-host:ro
+      # Cross-platform SSH mount (Windows uses USERPROFILE, Linux/macOS use HOME).
+      # Using 'codespace', the default user in the universal image. For other
+      # images, adjust in the devcontainer.json file.
+      - ${HOME}${USERPROFILE}/.ssh:/home/${MCRA_DEVCONTAINER_USER:-codespace}/.ssh-from-host:ro
 
       # GitHub CLI credentials for seamless GitHub integration.
-      - ${HOME}/.config/gh:/home/marcelo/.config/gh:cached
+      - ${HOME}${USERPROFILE}/.config/gh:/home/${MCRA_DEVCONTAINER_USER:-codespace}/.config/gh:cached
 
       # Gemini CLI credentials for AI assistance tools.
-      - ${HOME}/.gemini:/home/marcelo/.gemini:cached
+      - ${HOME}${USERPROFILE}/.gemini:/home/${MCRA_DEVCONTAINER_USER:-codespace}/.gemini:cached
 
       # Claude credentials and configuration for AI development tools.
-      - ${HOME}/.claude:/home/marcelo/.claude:cached
-      - ${HOME}/.claude.json:/home/marcelo/.claude.json:cached
+      - ${HOME}${USERPROFILE}/.claude:/home/${MCRA_DEVCONTAINER_USER:-codespace}/.claude:cached
+      - ${HOME}${USERPROFILE}/.claude.json:/home/${MCRA_DEVCONTAINER_USER:-codespace}/.claude.json:cached
 
       # Ollama models - persist downloaded models on host system.
-      - ${HOME}/.ollama:/home/marcelo/.ollama:cached
+      - ${HOME}${USERPROFILE}/.ollama:/home/${MCRA_DEVCONTAINER_USER:-codespace}/.ollama:cached
     environment:
       - TZ=America/Sao_Paulo
       - LC_ALL=en_US.UTF-8
       - LANG=en_US.UTF-8
-      # Point to Ollama service if enabled.
+      - MCRA_USE_MISE=true
+      # Point to Ollama service if enabled (will be ignored if ollama not running).
       - OLLAMA_HOST=http://ollama:11434
-    depends_on:
-      - ollama
     networks:
       - dev-network
     hostname: automaton
     command: sleep infinity
     profiles:
-      - with-ollama
-
-  # Minimal devcontainer without Ollama dependency.
+      - minimal # Always included in minimal profile.
 
   # Ollama for local AI/LLM development.
   ollama:
@@ -50,7 +47,7 @@ services:
     volumes:
       - ollama-data:/root/.ollama
       # Mount host ollama folder to persist models across containers.
-      - ${HOME}/.ollama:/root/.ollama-host:cached
+      - ${HOME}${USERPROFILE}/.ollama:/root/.ollama-host:cached
     networks:
       - dev-network
     environment:
@@ -66,89 +63,99 @@ services:
               count: all
               capabilities: [gpu]
     # Fallback command if GPU support fails.
+    profiles: [ai]
 
-    profiles: [with-ollama, gpu]
-
-  # Ollama CPU-only fallback (use when GPU not available).
+  # Ollama CPU-only version (alternative to GPU version above).
+  # Choose either 'ai' profile (GPU) OR 'ai-cpu' profile (CPU-only), not both.
   ollama-cpu:
     image: ollama/ollama:latest
     ports:
-      - "11434:11434"
+      - "11435:11434" # Different port to avoid conflict with GPU version.
     volumes:
       - ollama-data:/root/.ollama
       # Mount host ollama folder to persist models across containers.
-      - ${HOME}/.ollama:/root/.ollama-host:cached
+      - ${HOME}${USERPROFILE}/.ollama:/root/.ollama-host:cached
     networks:
       - dev-network
-    profiles: [with-ollama, cpu]
+    profiles: [ai-cpu]
 
-  # Database services (commented out by default - uncomment as needed)
+  # Database services - enabled via profiles.
 
-  # # PostgreSQL for database experiments
-  # postgres:
-  #   image: postgres:16-alpine
-  #   environment:
-  #     - POSTGRES_DB=devdb
-  #     - POSTGRES_USER=marcelo
-  #     - POSTGRES_PASSWORD=devpass
-  #   ports:
-  #     - "5432:5432"
-  #   volumes:
-  #     - postgres-data:/var/lib/postgresql/data
-  #     - ./scripts/init-db.sql:/docker-entrypoint-initdb.d/init.sql:ro
-  #   networks:
-  #     - dev-network
+  # PostgreSQL for database experiments.
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      - POSTGRES_DB=devdb
+      - POSTGRES_USER=marcelo
+      - POSTGRES_PASSWORD=${MCRA_DEV_DB_PASSWORD:-DevTime2024!coding}
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+      # Optional: initialize database with custom script.
+      # - ./scripts/init-db.sql:/docker-entrypoint-initdb.d/init.sql:ro
+    networks:
+      - dev-network
+    profiles:
+      - postgres
 
-  # # Redis for caching experiments
-  # redis:
-  #   image: redis:7-alpine
-  #   ports:
-  #     - "6379:6379"
-  #   volumes:
-  #     - redis-data:/data
-  #   networks:
-  #     - dev-network
+  # Redis for caching experiments.
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis-data:/data
+    networks:
+      - dev-network
+    profiles:
+      - redis
 
-  # # MongoDB for document database experiments
-  # mongodb:
-  #   image: mongo:7
-  #   environment:
-  #     - MONGO_INITDB_ROOT_USERNAME=marcelo
-  #     - MONGO_INITDB_ROOT_PASSWORD=devpass
-  #   ports:
-  #     - "27017:27017"
-  #   volumes:
-  #     - mongodb-data:/data/db
-  #   networks:
-  #     - dev-network
-  #   profiles:
-  #     - full  # Only start with --profile full
+  # MongoDB for document database experiments.
+  mongodb:
+    image: mongo:7
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=marcelo
+      - MONGO_INITDB_ROOT_PASSWORD=${MCRA_DEV_DB_PASSWORD:-DevTime2024!coding}
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb-data:/data/db
+    networks:
+      - dev-network
+    profiles:
+      - mongodb
 
-  # # MinIO for S3-compatible object storage experiments
-  # minio:
-  #   image: minio/minio:latest
-  #   command: server /data --console-address ":9001"
-  #   environment:
-  #     - MINIO_ROOT_USER=marcelo
-  #     - MINIO_ROOT_PASSWORD=devpassword123
-  #   ports:
-  #     - "9000:9000"   # API
-  #     - "9001:9001"   # Console
-  #   volumes:
-  #     - minio-data:/data
-  #   networks:
-  #     - dev-network
-  #   profiles:
-  #     - full
+  # MinIO for S3-compatible object storage experiments.
+  minio:
+    image: minio/minio:latest
+    command: server /data --console-address ":9001"
+    environment:
+      - MINIO_ROOT_USER=marcelo
+      - MINIO_ROOT_PASSWORD=${MCRA_DEV_DB_PASSWORD:-DevTime2024!coding}
+    ports:
+      - "9000:9000" # API.
+      - "9001:9001" # Console.
+    volumes:
+      - minio-data:/data
+    networks:
+      - dev-network
+    profiles:
+      - minio
 
+# TODO(claude): These are persisted even if I rebuild the containers, right?
 volumes:
   ollama-data:
-  # Uncomment database volumes as needed
-  # postgres-data:
-  # redis-data:
-  # mongodb-data:
-  # minio-data:
+
+  # Named volumes - Docker creates these automatically when services reference
+  # them. FYI: This section defines WHAT volumes exist, creating them. Then the
+  # Services section defines WHERE to mount these volumes. Both are necessary.
+  postgres-data:
+  redis-data:
+  mongodb-data:
+  minio-data:
 
 networks:
   dev-network:
+    # TODO(claude): What does this mean?
     driver: bridge
