@@ -3,7 +3,9 @@ version: "3.8"
 services:
   # Main development container (always available).
   devcontainer:
-    image: "mcr.microsoft.com/devcontainers/universal:3-noble"
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
     volumes:
       # Mount project workspace (one level up from .devcontainer/devcontainer.json location).
       - ..:/workspaces:cached
