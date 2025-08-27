@@ -1,87 +1,62 @@
 # AI Context - Dotfiles Project
 
-## 🚀 DevMagic - Current Setup (v1.0.0 - 2025-08-26)
+## 🚀 DevMagic - Current Setup (v2.0.0 - 2025-08-26)
 
-**Primary Approach**: Docker Compose-based development environment with profile-based services.
+**Primary Approach**: Git Submodule-based development environment. A one-line script adds the `devmagic` environment repository as a submodule to a project, allowing for easy updates and version pinning.
 
 ### Key Components
 
-- `docker-compose.yml` - Service definitions with profiles
-- `.devcontainer/devcontainer.json` - 🚀 DevMagic configuration (points to remote compose file)
-- `setup/devmagic.sh` - One-line setup script
-- `setup/devcontainer-setup.sh` - Cross-platform container initialization
-- `setup/host-setup-linux.sh` - Linux host editor configuration
-- `setup/host-setup-windows.ps1` - Windows host editor configuration
-- `shell/init.sh` - Consolidated shell configuration (Google Shell Style Guide compliant)
+- **`devmagic/` directory**: The contents of the submodule, intended to be its own repository.
+  - `docker-compose.yml`: Service definitions with profiles (`postgres`, `ollama`, etc.).
+  - `devcontainer.json`: The primary Dev Container configuration file.
+  - `Dockerfile.dev`: A simple Dockerfile used to work around a Podman/docker-compose bug by forcing a local image build.
+- `setup/devmagic.sh`: One-line setup script that automates `git submodule add`.
+- `setup/devcontainer-setup.sh`: Script for container initialization (installing tools, etc.).
 
 ### Service Profiles
 
-- `minimal` (default): Just development container
-- `ai`: + Ollama GPU (port 11434) | `ai-cpu`: + Ollama CPU (port 11435)
-- `postgres`, `redis`, `mongodb`, `minio`: Database and storage services
+- `minimal` (default): Just the development container.
+- `ai`: + Ollama GPU (port 11434) | `ai-cpu`: + Ollama CPU (port 11435).
+- `postgres`, `redis`, `mongodb`, `minio`: Database and storage services.
 
 ### Usage Pattern
 
 ```bash
-# One-line DevMagic setup.
+# One-line DevMagic setup in a new project's git repo.
 curl -fsSL https://raw.githubusercontent.com/marcelocra/dotfiles/main/setup/devmagic.sh | bash
 
-# Or manual setup.
-mkdir -p .devcontainer && curl -fsSL https://raw.githubusercontent.com/marcelocra/dotfiles/main/.devcontainer/devcontainer.json -o .devcontainer/devcontainer.json
+# The script adds the submodule and provides instructions to commit.
+git add .gitmodules .devcontainer
+git commit -m "feat: Add DevMagic environment"
 
-# Choose services.
-MCRA_COMPOSE_PROFILES=minimal,ai,postgres code myproject
+# To update the environment to the latest version:
+git submodule update --remote --merge
 ```
 
-### Technical Decisions
+### Technical Decisions & Workarounds
 
-- **Cross-platform paths**: `${HOME}${USERPROFILE}` for Windows/Linux compatibility
-- **Container networks**: Services communicate via service names (security + simplicity)
-- **Named volumes**: Data persistence across container rebuilds
-- **MCRA\_ prefix**: Consistent environment variable naming
-- **Remote compose**: Easy updates without copying files
+- **Git Submodule**: Chosen as the primary mechanism for sharing the dev environment across projects to allow for versioning and easy updates.
+- **`Dockerfile.dev` Workaround**: A `build` step was added to the `docker-compose.yml` to explicitly build the dev container image. This is necessary to work around a bug in some `docker-compose` client versions that incorrectly try to `pull` a locally-defined image when used with a Podman backend.
+- **Container Networks**: Services communicate via service names for security and simplicity.
+- **Named Volumes**: Ensure data persistence across container rebuilds.
 
 ### Architecture Benefits
 
-- **Service isolation**: Easier debugging, independent scaling
-- **Profile-based**: Only run needed services per project
-- **Cross-platform**: Works on Windows/Linux/WSL/containers
-- **Secure by default**: Container network isolation
-- **One-line setup**: Minimal friction for new projects
+- **Version Controlled Environment**: Projects can be pinned to specific versions of the dev environment.
+- **Easy Updates**: `git submodule update` provides a standard way to pull in new changes.
+- **Service Isolation**: Independent services in Docker Compose allow for easier debugging and scaling.
+- **One-line Setup**: Minimal friction for new projects despite the power of submodules.
 
-## Shell Configuration Summary
+## Podman / Client-side Issues
 
-- **Primary file**: `shell/init.sh` (replaces old scattered configs)
-- **Cross-shell**: Works with bash and zsh
-- **Multi-platform**: Ubuntu, Alpine, openSUSE, WSL detection
-- **Aliases**: 50+ git aliases, pnpm shortcuts, system navigation
-- **Functions**: tmux wrapper, timer functions, venv activation
+A lengthy debugging session revealed that some `docker-compose` client binaries (even when used with a `podman` alias and a correct Docker context) can fail to correctly issue a `build` command against a Podman socket.
 
-## Environment Variables
+**Symptoms:**
 
-```bash
-MCRA_COMPOSE_PROFILES="minimal,ai,postgres"  # Which services to start
-MCRA_DEV_DB_PASSWORD="YourSecurePassword!"   # Database password
-MCRA_DEVCONTAINER_USER="codespace"          # Container user
-MCRA_USE_MISE="true"                         # Enable mise tool manager
-```
+- `docker-compose build` fails silently with no errors.
+- VS Code dev container builds fail with errors about being unable to find a local image, often after an interactive prompt to select a remote registry.
 
-## Current Project Structure
+**Solution:**
 
-```
-dotfiles/
-├── .devcontainer/
-│   ├── devcontainer.json      # 🚀 DevMagic configuration
-│   └── README.md              # Setup instructions
-├── setup/
-│   ├── devmagic.sh            # One-line setup script
-│   ├── devcontainer-setup.sh  # Container initialization
-│   ├── host-setup-linux.sh    # Linux host editor setup
-│   └── host-setup-windows.ps1 # Windows host editor setup
-├── docker-compose.yml         # Service definitions
-├── shell/
-│   └── init.sh               # Primary shell configuration
-├── git/.gitconfig            # Git configuration
-├── vscode/                   # VS Code settings
-└── CHANGELOG.md              # Version history
-```
+- The most robust solution is to bypass the incompatible `docker-compose` client and install the native `podman-compose` tool (`pip install podman-compose`).
+- A system-level fix that may be required is ensuring the `DOCKER_HOST` environment variable is correctly pointing to the active Podman socket (e.g., `export DOCKER_HOST="unix:///run/user/$(id -u)/podman/podman.sock"`).
