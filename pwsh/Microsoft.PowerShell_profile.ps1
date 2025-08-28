@@ -42,18 +42,15 @@ function Invoke-TimestampArchiver {
 
     .DESCRIPTION
         - Skips existing .zip files in the source directory.
-        - Skips any items whose name starts with "Archived_".
+        - Skips any items whose name starts with "Archived_*".
         - Creates one .zip per file/folder with the same base name.
         - Outputs a table with original and compressed sizes.
         - Moves originals to a timestamped folder only after successful compression.
-        - Defaults to WhatIf mode for safety unless -WhatIf:$false is specified.
+        - Honors built‑in -WhatIf / -Confirm from SupportsShouldProcess.
+        - Fully safe for paths containing spaces.
 
     .PARAMETER SourcePath
         The directory containing the files/folders to process.
-
-    .EXAMPLE
-        Invoke-TimestampArchiver -SourcePath "C:\Data"
-        Invoke-TimestampArchiver -SourcePath "C:\Data" -WhatIf:$false
     #>
 
     [CmdletBinding(SupportsShouldProcess = $true)]
@@ -80,12 +77,11 @@ function Invoke-TimestampArchiver {
     }
 
     $timestamp     = Get-Date -Format "yyyyMMdd_HHmmss"
-    $archiveFolder = Join-Path -Path $SourcePath -ChildPath "Archived_$timestamp"
+    $archiveFolder = Join-Path -Path $SourcePath -ChildPath ("Archived_{0}" -f $timestamp)
     New-Item -Path $archiveFolder -ItemType Directory -Force | Out-Null
 
     # Prepare items: skip .zip files and anything with Archived_* name
-    $items = @()
-    $items += Get-ChildItem -Path $SourcePath -File |
+    $items  = Get-ChildItem -Path $SourcePath -File |
               Where-Object { $_.Extension -ne ".zip" -and $_.Name -notlike "Archived_*" }
     $items += Get-ChildItem -Path $SourcePath -Directory |
               Where-Object { $_.Name -notlike "Archived_*" }
@@ -93,8 +89,8 @@ function Invoke-TimestampArchiver {
     $results = @()
 
     foreach ($item in $items) {
-        # Safety: skip if path is or starts with our archive folder
-        if ($item.FullName -like "$archiveFolder*") { continue }
+        # Skip if already in the archive folder
+        if ($item.FullName -like (Join-Path $archiveFolder '*')) { continue }
 
         try {
             $originalSize = if ($item.PSIsContainer) {
@@ -106,34 +102,39 @@ function Invoke-TimestampArchiver {
 
             $zipPath = Join-Path -Path $SourcePath -ChildPath ("{0}.zip" -f $item.BaseName)
 
+            # FIX 1: Skip if zip already exists
             if (Test-Path $zipPath) {
-                Write-Warning "Skipping '$($item.Name)' because zip already exists."
+                Write-Warning ("Zip already exists for '{0}'. Skipping." -f $item.Name)
                 continue
             }
 
-            if ($item.PSIsContainer) {
-                [System.IO.Compression.ZipFile]::CreateFromDirectory($item.FullName, $zipPath, 'Optimal', $false)
-            } else {
-                $tempDir = Join-Path $env:TEMP ([guid]::NewGuid())
-                New-Item -Path $tempDir -ItemType Directory | Out-Null
-                Copy-Item -Path $item.FullName -Destination $tempDir
-                [System.IO.Compression.ZipFile]::CreateFromDirectory($tempDir, $zipPath, 'Optimal', $false)
-                Remove-Item $tempDir -Recurse -Force
+            # FIX 2: Wrap creation in ShouldProcess
+            if ($PSCmdlet.ShouldProcess($zipPath, "Create archive")) {
+                if ($item.PSIsContainer) {
+                    [System.IO.Compression.ZipFile]::CreateFromDirectory($item.FullName, $zipPath, 'Optimal', $false)
+                } else {
+                    $tempDir = Join-Path -Path $env:TEMP -ChildPath ([guid]::NewGuid())
+                    New-Item -Path $tempDir -ItemType Directory | Out-Null
+                    Copy-Item -Path $item.FullName -Destination $tempDir
+                    [System.IO.Compression.ZipFile]::CreateFromDirectory($tempDir, $zipPath, 'Optimal', $false)
+                    Remove-Item -Path $tempDir -Recurse -Force
+                }
             }
 
-            $compressedSize = (Get-Item $zipPath).Length
+            $compressedSize = if (Test-Path $zipPath) { (Get-Item $zipPath).Length } else { 0 }
 
             $results += [PSCustomObject]@{
                 Name         = $item.Name
                 OriginalSize = Get-ReadableSize $originalSize
-                ZippedSize   = Get-ReadableSize $compressedSize
+                ZippedSize   = if ($compressedSize) { Get-ReadableSize $compressedSize } else { "N/A" }
             }
 
-            if ($PSCmdlet.ShouldProcess($item.FullName, "Move to archive folder '$archiveFolder'")) {
+            if ($PSCmdlet.ShouldProcess($item.FullName, "Move to archive folder '{0}'" -f $archiveFolder)) {
                 Move-Item -Path $item.FullName -Destination $archiveFolder -Force
             }
+
         } catch {
-            Write-Error "Failed to process '$($item.Name)': $_"
+            Write-Error ("Failed to process '{0}': {1}" -f $item.Name, $_)
         }
     }
 
@@ -141,9 +142,5 @@ function Invoke-TimestampArchiver {
         $results | Format-Table -AutoSize
     } else {
         Write-Host "No items found to process." -ForegroundColor Yellow
-    }
-
-    if ($WhatIf) {
-        Write-Host "✅ Dry run complete. Use -WhatIf:`$false to perform actual moves." -ForegroundColor Green
     }
 }
