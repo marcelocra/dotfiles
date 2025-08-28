@@ -33,3 +33,99 @@ Set-PSReadLineKeyHandler -Key Ctrl+/ -Function Undo
 # Launch the "Universal" Linux image.
 # podman run -it --rm --name universal mcr.microsoft.com/devcontainers/universal:3-noble zsh
 
+function Invoke-TimestampArchiver {
+    <#
+    .SYNOPSIS
+        Compresses all files and folders (except .zip) in a given path into
+        individual zip archives, logs size details, and moves originals to
+        a timestamped folder.
+
+    .DESCRIPTION
+        - Skips existing .zip files in the source directory.
+        - Creates one .zip per file/folder with the same base name.
+        - Outputs a table with original and compressed sizes.
+        - Moves originals to a timestamped folder only after successful compression.
+
+    .PARAMETER SourcePath
+        The directory containing the files/folders to process.
+
+    .EXAMPLE
+        Invoke-TimestampArchiver -SourcePath "C:\Data"
+    #>
+
+    param (
+        [Parameter(Mandatory)]
+        [string]$SourcePath
+    )
+
+    if (-not (Test-Path -Path $SourcePath -PathType Container)) {
+        Write-Error "Source path '$SourcePath' does not exist or is not a directory."
+        return
+    }
+
+    Add-Type -AssemblyName System.IO.Compression.FileSystem
+
+    function Get-ReadableSize {
+        param ([long]$Bytes)
+        switch ($Bytes) {
+            {$_ -ge 1GB} { "{0:N2} GB" -f ($_ / 1GB); break }
+            {$_ -ge 1MB} { "{0:N2} MB" -f ($_ / 1MB); break }
+            {$_ -ge 1KB} { "{0:N2} KB" -f ($_ / 1KB); break }
+            default      { "$_ Bytes" }
+        }
+    }
+
+    $timestamp = Get-Date -Format "yyyyMMdd_HHmmss"
+    $archiveFolder = Join-Path -Path $SourcePath -ChildPath "Archived_$timestamp"
+    New-Item -Path $archiveFolder -ItemType Directory -Force | Out-Null
+
+    $items = @()
+    $items += Get-ChildItem -Path $SourcePath -File | Where-Object { $_.Extension -ne ".zip" }
+    $items += Get-ChildItem -Path $SourcePath -Directory
+
+    $results = @()
+
+    foreach ($item in $items) {
+        try {
+            $originalSize = if ($item.PSIsContainer) {
+                (Get-ChildItem -Path $item.FullName -Recurse -Force |
+                    Measure-Object -Property Length -Sum).Sum
+            } else {
+                $item.Length
+            }
+
+            $zipPath = Join-Path -Path $SourcePath -ChildPath ("{0}.zip" -f $item.BaseName)
+
+            if (Test-Path $zipPath) {
+                Write-Warning "Skipping '$($item.Name)' because zip already exists."
+                continue
+            }
+
+            if ($item.PSIsContainer) {
+                [System.IO.Compression.ZipFile]::CreateFromDirectory($item.FullName, $zipPath, 'Optimal', $false)
+            } else {
+                # Compress a single file by putting it into a temp folder
+                $tempDir = Join-Path $env:TEMP ([guid]::NewGuid())
+                New-Item -Path $tempDir -ItemType Directory | Out-Null
+                Copy-Item -Path $item.FullName -Destination $tempDir
+                [System.IO.Compression.ZipFile]::CreateFromDirectory($tempDir, $zipPath, 'Optimal', $false)
+                Remove-Item $tempDir -Recurse -Force
+            }
+
+            $compressedSize = (Get-Item $zipPath).Length
+
+            $results += [PSCustomObject]@{
+                Name         = $item.Name
+                OriginalSize = Get-ReadableSize $originalSize
+                ZippedSize   = Get-ReadableSize $compressedSize
+            }
+
+            Move-Item -Path $item.FullName -Destination $archiveFolder -Force
+
+        } catch {
+            Write-Error "Failed to process '$($item.Name)': $_"
+        }
+    }
+
+    $results | Format-Table -AutoSize
+}
