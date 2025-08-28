@@ -36,23 +36,27 @@ Set-PSReadLineKeyHandler -Key Ctrl+/ -Function Undo
 function Invoke-TimestampArchiver {
     <#
     .SYNOPSIS
-        Compresses all files and folders (except .zip) in a given path into
-        individual zip archives, logs size details, and moves originals to
+        Compresses all files and folders (except .zip and "Archived_*") in a given path
+        into individual zip archives, logs size details, and moves originals to
         a timestamped folder.
 
     .DESCRIPTION
         - Skips existing .zip files in the source directory.
+        - Skips any items whose name starts with "Archived_".
         - Creates one .zip per file/folder with the same base name.
         - Outputs a table with original and compressed sizes.
         - Moves originals to a timestamped folder only after successful compression.
+        - Defaults to WhatIf mode for safety unless -WhatIf:$false is specified.
 
     .PARAMETER SourcePath
         The directory containing the files/folders to process.
 
     .EXAMPLE
         Invoke-TimestampArchiver -SourcePath "C:\Data"
+        Invoke-TimestampArchiver -SourcePath "C:\Data" -WhatIf:$false
     #>
 
+    [CmdletBinding(SupportsShouldProcess = $true)]
     param (
         [Parameter(Mandatory)]
         [string]$SourcePath
@@ -75,20 +79,26 @@ function Invoke-TimestampArchiver {
         }
     }
 
-    $timestamp = Get-Date -Format "yyyyMMdd_HHmmss"
+    $timestamp     = Get-Date -Format "yyyyMMdd_HHmmss"
     $archiveFolder = Join-Path -Path $SourcePath -ChildPath "Archived_$timestamp"
     New-Item -Path $archiveFolder -ItemType Directory -Force | Out-Null
 
+    # Prepare items: skip .zip files and anything with Archived_* name
     $items = @()
-    $items += Get-ChildItem -Path $SourcePath -File | Where-Object { $_.Extension -ne ".zip" }
-    $items += Get-ChildItem -Path $SourcePath -Directory
+    $items += Get-ChildItem -Path $SourcePath -File |
+              Where-Object { $_.Extension -ne ".zip" -and $_.Name -notlike "Archived_*" }
+    $items += Get-ChildItem -Path $SourcePath -Directory |
+              Where-Object { $_.Name -notlike "Archived_*" }
 
     $results = @()
 
     foreach ($item in $items) {
+        # Safety: skip if path is or starts with our archive folder
+        if ($item.FullName -like "$archiveFolder*") { continue }
+
         try {
             $originalSize = if ($item.PSIsContainer) {
-                (Get-ChildItem -Path $item.FullName -Recurse -Force |
+                (Get-ChildItem -Path $item.FullName -Recurse -Force -ErrorAction SilentlyContinue |
                     Measure-Object -Property Length -Sum).Sum
             } else {
                 $item.Length
@@ -104,7 +114,6 @@ function Invoke-TimestampArchiver {
             if ($item.PSIsContainer) {
                 [System.IO.Compression.ZipFile]::CreateFromDirectory($item.FullName, $zipPath, 'Optimal', $false)
             } else {
-                # Compress a single file by putting it into a temp folder
                 $tempDir = Join-Path $env:TEMP ([guid]::NewGuid())
                 New-Item -Path $tempDir -ItemType Directory | Out-Null
                 Copy-Item -Path $item.FullName -Destination $tempDir
@@ -120,12 +129,21 @@ function Invoke-TimestampArchiver {
                 ZippedSize   = Get-ReadableSize $compressedSize
             }
 
-            Move-Item -Path $item.FullName -Destination $archiveFolder -Force
-
+            if ($PSCmdlet.ShouldProcess($item.FullName, "Move to archive folder '$archiveFolder'")) {
+                Move-Item -Path $item.FullName -Destination $archiveFolder -Force
+            }
         } catch {
             Write-Error "Failed to process '$($item.Name)': $_"
         }
     }
 
-    $results | Format-Table -AutoSize
+    if ($results) {
+        $results | Format-Table -AutoSize
+    } else {
+        Write-Host "No items found to process." -ForegroundColor Yellow
+    }
+
+    if ($WhatIf) {
+        Write-Host "✅ Dry run complete. Use -WhatIf:`$false to perform actual moves." -ForegroundColor Green
+    }
 }
