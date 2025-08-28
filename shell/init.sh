@@ -835,18 +835,49 @@ configure_bash() {
 }
 
 # =============================================================================
-# TODO SECTION - REVIEW NEEDED
+# MISE
 # =============================================================================
-# These functions/aliases might need review or could potentially be removed
 
-fonts_install_packages_to_improve_rendering() {
-    # TODO: Review if this is still needed - very Ubuntu specific
-    sudo apt install fonts-noto ttf-mscorefonts-installer
-    sudo apt install fontconfig fontconfig-config libfreetype6
+configure_mise() {
+    local mise_activated="/tmp/mise-activated"
+    if [ -n "${MCRA_USE_MISE:-}" ] && [ "${MCRA_USE_MISE}" = "true" ]; then
+        if [ -f "$mise_activated" ]; then
+            log_debug "Mise already installed and activated"
+            return 0
+        fi
+
+        # Previous install, before using the universal devcontainer image.
+        # curl https://mise.run | sh && \
+            # mise use --global node@22 python@3.13 uv clojure babashka deno && \
+            # mise exec -- corepack enable && \
+            # mise exec -- corepack prepare pnpm@latest --activate && \
+            # mise use --global uv clojure babashka deno && \
+            # mise exec -- npm install -g @google/gemini-cli @anthropic-ai/claude-code
+
+        curl https://mise.run | sh && \
+            mise use --global uv clojure babashka deno && \
+            mise exec -- npm install -g @google/gemini-cli @anthropic-ai/claude-code && \
+            touch "$mise_activated" && \
+            echo 'Mise installed successfully!' || \
+            { echo "Failed to install/configure mise or some packages"; return 1; }
+        
+        # Activate mise for version management.
+        command_exists mise && eval "$(mise activate zsh)"
+        export PATH="$HOME/.local/bin:$PATH"
+    else
+        log_debug "Mise configuration skipped (MCRA_USE_MISE not enabled)"
+    fi
 }
 
-# TODO: Review these utility functions - might be too specific
-# Docker images sorting function was commented out in original due to formatting issues
+# =============================================================================
+# FZF    
+# =============================================================================
+
+configure_fzf() {
+    # Enable fzf key bindings and completion
+    [ -f /usr/share/doc/fzf/examples/key-bindings.zsh ] && source /usr/share/doc/fzf/examples/key-bindings.zsh
+    [ -f /usr/share/doc/fzf/examples/completion.zsh ] && source /usr/share/doc/fzf/examples/completion.zsh
+}
 
 # =============================================================================
 # MAIN INITIALIZATION
@@ -865,6 +896,8 @@ main() {
     configure_git_aliases
     configure_docker_aliases
     configure_system_utility_aliases
+    configure_mise
+    configure_fzf
 
     log_debug "Dotfiles initialized for $DOTFILES_DISTRO"
     log_debug "Container: $DOTFILES_IN_CONTAINER, WSL: $DOTFILES_IN_WSL"
@@ -904,10 +937,3 @@ main "$@"
 #   - Use local for function variables: local var="value"
 #   - Always quote variable expansions: "$var"
 #   - Use ${var:-default} for default values
-
-# Activate mise for version management
-command_exists mise && eval "$(mise activate zsh)"
-
-# Enable fzf key bindings and completion
-[ -f /usr/share/doc/fzf/examples/key-bindings.zsh ] && source /usr/share/doc/fzf/examples/key-bindings.zsh
-[ -f /usr/share/doc/fzf/examples/completion.zsh ] && source /usr/share/doc/fzf/examples/completion.zsh

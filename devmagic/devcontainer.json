@@ -1,0 +1,93 @@
+{
+  "name": "🚀 DevMagic",
+
+  // This file is part of a submodule. See docker-compose.yml in the same directory.
+  "dockerComposeFile": "docker-compose.yml",
+  "service": "devcontainer",
+  "workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}",
+
+  // Features to add to the base container.
+  "features": {
+    // Pin feature versions for consistent builds.
+    "ghcr.io/devcontainers/features/common-utils:2": {
+      // Skip package updates to speed up builds.
+      "upgradePackages": "false",
+      // Set your preferred shell.
+      "configureZshAsDefaultShell": "true",
+      // Install additional utilities.
+      "installOhMyZsh": "true"
+    }
+  },
+
+  // Set the default user for the container.
+  "remoteUser": "codespace",
+
+  // Environment variables that control which services to start.
+  // Override with: MCRA_COMPOSE_PROFILES=minimal,ai,postgres code myproject
+  "containerEnv": {
+    "TZ": "America/Sao_Paulo",
+    "LC_ALL": "en_US.UTF-8",
+    "LANG": "en_US.UTF-8",
+    "COMPOSE_PROFILES": "${localEnv:MCRA_COMPOSE_PROFILES:-minimal}",
+    "MCRA_USE_MISE": "${localEnv:MCRA_USE_MISE:-true}"
+  },
+
+  // Port forwarding for development services.
+  // Services communicate via container networks, but these are for host access.
+  "forwardPorts": [
+    // Conditionally forwarded based on profiles:
+    // 11434, // Ollama API (ai profile).
+    // 5432,  // PostgreSQL (postgres profile).
+    // 6379,  // Redis (redis profile).
+    // 27017, // MongoDB (mongodb profile).
+    // 9000,  // MinIO API (minio profile).
+    // 9001   // MinIO Console (minio profile).
+  ],
+
+  // Run setup script for container initialization.
+  "postCreateCommand": "curl -fsSL https://raw.githubusercontent.com/marcelocra/dotfiles/main/setup/devcontainer-setup.sh | bash",
+
+  // Stop all services when devcontainer stops.
+  "shutdownAction": "stopCompose",
+
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        // Python development.
+        "charliermarsh.ruff",
+        "ms-python.python",
+
+        // JavaScript/TypeScript development.
+        "dbaeumer.vscode-eslint",
+        "denoland.vscode-deno",
+        "esbenp.prettier-vscode",
+
+        // Git and version control.
+        "eamodio.gitlens",
+
+        // Code formatting and standards.
+        "EditorConfig.EditorConfig",
+
+        // GitHub integration.
+        "GitHub.codespaces",
+        "GitHub.copilot-chat",
+        "GitHub.copilot",
+        "GitHub.github-vscode-theme",
+        "GitHub.vscode-pull-request-github",
+
+        // Container and Docker support.
+        "ms-azuretools.vscode-containers",
+        "ms-azuretools.vscode-docker",
+
+        // Remote development support.
+        "ms-vscode-remote.remote-containers",
+        "ms-vscode-remote.remote-ssh-edit",
+        "ms-vscode-remote.vscode-remote-extensionpack",
+
+        // Accessibility and language support.
+        "ms-vscode.vscode-speech-language-pack-pt-br",
+        "ms-vscode.vscode-speech"
+      ]
+    }
+  }
+}
