@@ -306,7 +306,7 @@
   "github.copilot.enable": {
     "*": true,
     "plaintext": false,
-    "markdown": false,
+    "markdown": true,
     "scminput": false,
     "shellscript": true
   },
@@ -334,10 +334,10 @@
   // ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()_+-
   // = <- -> <= => <=> <| |> fi Tl Fl != !== === /= ;:* :- --- ---- .: -. .- !?
   // < > www <> >= <-> [:] -~ ?? ->> -< >- .. '' "" >>> Fl Tl fi fj fl ft
-  "editor.fontFamily": "Azeret Mono",
-  "editor.fontSize": 15,
+  "editor.fontFamily": "Adwaita Mono",
+  "editor.fontSize": 19,
   "editor.fontWeight": "400",
-  "editor.fontLigatures": "'calt' 0, 'liga' 0, 'ss02' 1, 'ss03' 1, 'ss04' 1, 'ss05' 1, 'ss07' 1, 'ss08' 1, 'ss10' 1, 'ss11' 1, 'ss12' 1, 'ss14' 1, 'ss15' 1, 'calt' 1, 'liga' 1, 'zero' 1",
+  "editor.fontLigatures": "'zero'",
 
   "editor.tokenColorCustomizations": {
     "[*Light*]": {
@@ -404,10 +404,12 @@
   "editor.defaultFormatter": "esbenp.prettier-vscode",
 
   // Cursor.
-  "editor.cursorStyle": "line",
-  "editor.cursorWidth": 2,
+  "editor.cursorStyle": "line-thin",
+  "editor.cursorWidth": 1,
   "editor.cursorSmoothCaretAnimation": "on",
   "editor.cursorBlinking": "blink",
+  "editor.cursorSurroundingLines": 10,
+  "editor.cursorSurroundingLinesStyle": "all",
 
   "editor.rulers": [80, 120],
   "editor.formatOnSave": true,
@@ -421,7 +423,7 @@
   "editor.renderWhitespace": "none",
   "editor.acceptSuggestionOnCommitCharacter": false,
   "editor.hover.delay": 1000,
-  "editor.wordWrap": "off",
+  "editor.wordWrap": "bounded",
   "editor.wrappingIndent": "deepIndent",
   "editor.wordWrapColumn": 120,
   "editor.lineHeight": 1.8, // Interesting values: 1.6; 1.8; 2; 2.2
@@ -509,6 +511,7 @@
   // Setting both to false tells VS Code: "Don't try to manage git authentication - let git handle it with the configured credential helpers."
   "git.useIntegratedAskPass": true,
   "git.terminalAuthentication": false,
+  "scm.defaultViewMode": "tree",
 
   "gitlens.defaultDateLocale": "pt-BR",
   "gitlens.defaultDateStyle": "absolute",
@@ -552,17 +555,27 @@
   "terminal.integrated.fontFamily": "'MesloLGS Nerd Font Mono', 'MesloLGS NF', 'JetBrainsMono Nerd Font', 'Cascadia Code', Consolas, monospace",
 
   // For experiments.
-  "terminal.integrated.fontFamily": "JetBrainsMono Nerd Font",
-  "terminal.integrated.fontFamily": "Fragment Mono",
+  // "terminal.integrated.fontFamily": "JetBrainsMono Nerd Font",
+  // "terminal.integrated.fontFamily": "Fragment Mono",
   "terminal.integrated.fontFamily": "Geist Mono",
-  "terminal.integrated.fontFamily": "Maple Mono NF",
-  "terminal.integrated.fontFamily": "Cascadia Code",
+  // "terminal.integrated.fontFamily": "Maple Mono NF",
+
+  // "terminal.integrated.fontFamily": "Cascadia Code",
+  // "terminal.integrated.fontLigatures.featureSettings": "'calt' 1, 'ss01' 1, 'ss19' 1, 'ss20' 1",
+
+  // // Examples:   -> <-- <|   ligat.    dash 0    alt. g    alt. @    alt. a    alt. ~
+  // "terminal.integrated.fontFamily": "JuliaMono",
+  // "terminal.integrated.fontLigatures.featureSettings": "'zero' 1, 'ss06' 1, 'cv03' 1",
+
+  "terminal.integrated.fontFamily": "Adwaita Mono",
+  "terminal.integrated.fontLigatures.featureSettings": "'zero' 1",
+
+  "terminal.integrated.fontFamily.next": "//",
 
   // Remaining terminal settings.
   "terminal.integrated.fontSize": 15,
   "terminal.integrated.fontWeight": "400",
   "terminal.integrated.fontLigatures.enabled": true,
-  "terminal.integrated.fontLigatures.featureSettings": "'calt' 1, 'ss01' 1, 'ss19' 1, 'ss20' 1",
   "terminal.integrated.cursorWidth": 3, // For when it is a bar.
   "terminal.integrated.cursorStyle": "underline", // I want to use 'underline', but it is so thin that it disappears sometimes.
   "terminal.integrated.cursorStyleInactive": "outline",
@@ -591,7 +604,6 @@
     "tmux": { "path": "tmux", "icon": "terminal-tmux" },
     "pwsh": null
   },
-
   "terminal.integrated.defaultProfile.osx": "zsh",
   "terminal.integrated.profiles.osx": {
     "bash": { "path": "bash", "icon": "terminal-bash" },
@@ -610,8 +622,6 @@
     "pwsh-shell-integration": false,
     "lsp": true
   },
-
-  "terminal.integrated.mcraNext": null,
 
   "terminal.external.linuxExec": "kitty",
   "terminal.external.osxExec": "kitty.app",
@@ -734,6 +744,10 @@
   },
 
   "accessibility.voice.speechLanguage": "pt-BR",
+  "dotfiles.repository": "marcelocra/dotfiles",
+  "dotfiles.targetPath": "~/prj/dotfiles",
+  "dotfiles.installCommand": "devcontainer-setup.sh",
+
   "mcra next misc thing above this": "",
 
   // #endregion Misc. }}}
@@ -741,8 +755,10 @@
   // #region devcontainer. {{{
 
   "@azure.argTenant": "",
+
   "dev.containers.dockerPath": "podman",
   "dev.containers.dockerComposePath": "podman-compose",
+  "docker.dockerPath": "podman",
 
   // #endregion devcontainer. }}}
 
@@ -1523,8 +1539,8 @@
   "workbench.panel.defaultLocation": "bottom",
   "workbench.editor.pinnedTabsOnSeparateRow": false,
   "workbench.activityBar.location": "hidden",
-  "workbench.preferredDarkColorTheme": "Solarized Dark",
-  "workbench.preferredLightColorTheme": "Quiet Light",
+  "workbench.preferredDarkColorTheme": "GitHub Dark Dimmed",
+  "workbench.preferredLightColorTheme": "Default Light Modern",
   "workbench.editor.empty.hint": "hidden",
   "workbench.editorAssociations": {
     // Associate all files with the default editor, rendering as plain text and
@@ -1539,7 +1555,7 @@
   // Keep the color theme last, as I'm always changing it and this way we won't
   // have a problem with the comma.
 
-  "workbench.colorTheme": "Quiet Light"
+  "workbench.colorTheme": "GitHub Dark Dimmed"
 
   // #endregion workbench. }}}
 }
