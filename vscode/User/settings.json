@@ -408,8 +408,8 @@
   "editor.cursorWidth": 1,
   "editor.cursorSmoothCaretAnimation": "on",
   "editor.cursorBlinking": "blink",
-  "editor.cursorSurroundingLines": 10,
-  "editor.cursorSurroundingLinesStyle": "all",
+  // "editor.cursorSurroundingLines": 10,
+  // "editor.cursorSurroundingLinesStyle": "all",
 
   "editor.rulers": [80, 120],
   "editor.formatOnSave": true,
