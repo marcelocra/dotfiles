@@ -184,8 +184,16 @@
   { "keys": ["alt+z"], "command": "toggle_distraction_free" },
 
   // Create multiple cursors in the line above or below.
-  { "keys": ["ctrl+shift+up"], "command": "select_lines", "args": { "forward": false } },
-  { "keys": ["ctrl+shift+down"], "command": "select_lines", "args": { "forward": true } },
+  {
+    "keys": ["ctrl+shift+up"],
+    "command": "select_lines",
+    "args": { "forward": false }
+  },
+  {
+    "keys": ["ctrl+shift+down"],
+    "command": "select_lines",
+    "args": { "forward": true }
+  }
 
   // End. Next keybinding/keymap/mapping/shortcut above.
 ]

@@ -53,7 +53,7 @@ fi
 
 # Sublime Text configuration.
 if [ "$SETUP_SUBLIME" = "true" ]; then
-    SRC_DIR="$DOTFILES_APPS/sublime-text"
+    SRC_DIR="$DOTFILES_APPS/sublime-text/User"
     TARGET_DIR="$HOME/.config/sublime-text/Packages/User"
 
     if [ -d "$SRC_DIR" ]; then
@@ -61,10 +61,21 @@ if [ "$SETUP_SUBLIME" = "true" ]; then
         mkdir -p "$TARGET_DIR"
         
         # Only symlink specific Sublime config files.
-        [ -f "$SRC_DIR/Preferences.sublime-settings" ] && ln -sf "$SRC_DIR/Preferences.sublime-settings" "$TARGET_DIR/Preferences.sublime-settings"
-        [ -f "$SRC_DIR/Default.sublime-keymap" ] && ln -sf "$SRC_DIR/Default.sublime-keymap" "$TARGET_DIR/Default.sublime-keymap"
-        [ -f "$SRC_DIR/Package Control.sublime-settings" ] && ln -sf "$SRC_DIR/Package Control.sublime-settings" "$TARGET_DIR/Package Control.sublime-settings"
-        
+        TO_SYMLINK=(
+            "_mcra_main.sublime-snippet"
+            "_mcra_plugin_commands.py"
+            "Default.sublime-keymap"
+            "Default.sublime-mousemap"
+            "Distraction Free.sublime-settings"
+            "Preferences.sublime-settings"
+        )
+
+        for file in "${TO_SYMLINK[@]}"; do
+            if [ -f "$SRC_DIR/$file" ]; then
+                ln -sf "$SRC_DIR/$file" "$TARGET_DIR/$file"
+            fi
+        done
+
         # Symlink snippets if they exist.
         [ -d "$SRC_DIR/snippets" ] && ln -sf "$SRC_DIR/snippets" "$TARGET_DIR/snippets"
         
