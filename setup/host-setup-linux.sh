@@ -53,7 +53,7 @@ fi
 
 # Sublime Text configuration.
 if [ "$SETUP_SUBLIME" = "true" ]; then
-    SRC_DIR="$DOTFILES_APPS/sublime"
+    SRC_DIR="$DOTFILES_APPS/sublime-text"
     TARGET_DIR="$HOME/.config/sublime-text/Packages/User"
 
     if [ -d "$SRC_DIR" ]; then
