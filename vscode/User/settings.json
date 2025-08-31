@@ -337,7 +337,7 @@
   "editor.fontFamily": "Adwaita Mono",
   "editor.fontSize": 19,
   "editor.fontWeight": "400",
-  "editor.fontLigatures": "'zero'",
+  "editor.fontLigatures": "'zero' 1",
 
   "editor.tokenColorCustomizations": {
     "[*Light*]": {
@@ -1759,6 +1759,8 @@
 // "editor.fontWeight": "400",
 // "editor.fontSize": 13,
 // "editor.fontLigatures": "'ss02' 1",
+// - default is great
+// - 1(alt a),2(wide b),3(wide d, no leg),4(wider g),5(alt l),6(wider o),7(wider p),8(nao sei),9(wider q, no leg),10(cross t),11(no leg u),12(nao sei),13(i with base),14(nao sei),15(top leg no l),16(W sem curva),17(w meio mais alto),18(0 estranho). Pref: 1,2,4,6,7
 
 // // JuliaMono
 // // ---------
