@@ -77,6 +77,14 @@ configure_editor() {
 }
 
 # =============================================================================
+# EXPORTS
+# =============================================================================
+
+export PATH="$PATH:$HOME/bin"
+
+# Next export.
+
+# =============================================================================
 # PLATFORM-SPECIFIC CONFIGURATION
 # =============================================================================
 
@@ -937,3 +945,5 @@ main "$@"
 #   - Use local for function variables: local var="value"
 #   - Always quote variable expansions: "$var"
 #   - Use ${var:-default} for default values
+
+[[ "$TERM_PROGRAM" == "kiro" ]] && . "$(kiro --locate-shell-integration-path zsh)"
