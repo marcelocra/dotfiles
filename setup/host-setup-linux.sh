@@ -1,14 +1,14 @@
 #!/bin/bash
 # host-setup-linux.sh
-# Host machine setup script for Linux (Ubuntu, Fedora, openSUSE)
-# This script configures editors and host-specific tools that should NOT run in containers
+# Host machine setup script for Linux (Ubuntu, Fedora, openSUSE).
+# This script configures editors and host-specific tools that should NOT run in containers.
 
 set -e
 
-# Configuration from environment variables or defaults
+# Configuration from environment variables or defaults.
 GITHUB_HANDLE="${MCRA_GITHUB_HANDLE:-marcelocra}"
 CONFIG_DIR="${MCRA_CONFIG:-$HOME/.config/marcelocra}"
-DOTFILES_DIR="$CONFIG_DIR/dotfiles"
+DOTFILES_APPS="$CONFIG_DIR/dotfiles/apps"
 SETUP_VSCODE="${MCRA_SETUP_VSCODE:-true}"
 SETUP_SUBLIME="${MCRA_SETUP_SUBLIME:-true}"
 SETUP_ZED="${MCRA_SETUP_ZED:-true}"
@@ -17,30 +17,33 @@ echo "🚀 Starting Linux host setup"
 echo "👤 User: $(whoami)"
 echo "🏠 Home: $HOME"
 echo "📋 GitHub Handle: $GITHUB_HANDLE"
-echo "📦 Dotfiles Dir: $DOTFILES_DIR"
+echo "📦 Dotfiles Dir: $DOTFILES_APPS"
 
-# Function to log with timestamps
+# Function to log with timestamps.
 log() {
     echo "[$(date +'%Y-%m-%d %H:%M:%S')] $1"
 }
 
-# Check if dotfiles are available
-if [ ! -d "$DOTFILES_DIR" ]; then
-    log "❌ Dotfiles not found at $DOTFILES_DIR"
+# Check if dotfiles are available.
+if [ ! -d "$DOTFILES_APPS" ]; then
+    log "❌ Dotfiles not found at $DOTFILES_APPS"
     log "💡 Run devcontainer-setup.sh first or clone dotfiles manually"
     exit 1
 fi
 
-# VS Code configuration
+# VS Code configuration.
 if [ "$SETUP_VSCODE" = "true" ]; then
-    if command -v code >/dev/null 2>&1 && [ -d "$DOTFILES_DIR/vscode" ]; then
+    SRC_DIR="$DOTFILES_APPS/vscode"
+    TARGET_DIR="$HOME/.config/Code/User"
+
+    if command -v code >/dev/null 2>&1 && [ -d "$SRC_DIR" ]; then
         log "🔗 Setting up VS Code configuration..."
-        mkdir -p "$HOME/.config/Code/User"
+        mkdir -p "$TARGET_DIR"
         
-        # Only symlink specific VS Code config files, not the entire directory
-        [ -f "$DOTFILES_DIR/vscode/settings.json" ] && ln -sf "$DOTFILES_DIR/vscode/settings.json" "$HOME/.config/Code/User/settings.json"
-        [ -f "$DOTFILES_DIR/vscode/keybindings.json" ] && ln -sf "$DOTFILES_DIR/vscode/keybindings.json" "$HOME/.config/Code/User/keybindings.json"
-        [ -d "$DOTFILES_DIR/vscode/snippets" ] && ln -sf "$DOTFILES_DIR/vscode/snippets" "$HOME/.config/Code/User/snippets"
+        # Only symlink specific VS Code config files, not the entire directory.
+        [ -f "$SRC_DIR/settings.json" ] && ln -sf "$SRC_DIR/settings.json" "$TARGET_DIR/settings.json"
+        [ -f "$SRC_DIR/keybindings.json" ] && ln -sf "$SRC_DIR/keybindings.json" "$TARGET_DIR/keybindings.json"
+        [ -d "$SRC_DIR/snippets" ] && ln -sf "$SRC_DIR/snippets" "$TARGET_DIR/snippets"
         
         log "✅ VS Code configuration linked"
     else
@@ -48,19 +51,22 @@ if [ "$SETUP_VSCODE" = "true" ]; then
     fi
 fi
 
-# Sublime Text configuration
+# Sublime Text configuration.
 if [ "$SETUP_SUBLIME" = "true" ]; then
-    if [ -d "$DOTFILES_DIR/sublime" ]; then
+    SRC_DIR="$DOTFILES_APPS/sublime"
+    TARGET_DIR="$HOME/.config/sublime-text/Packages/User"
+
+    if [ -d "$SRC_DIR" ]; then
         log "🔗 Setting up Sublime Text configuration..."
-        mkdir -p "$HOME/.config/sublime-text-3/Packages/User"
+        mkdir -p "$TARGET_DIR"
         
-        # Only symlink specific Sublime config files
-        [ -f "$DOTFILES_DIR/sublime/Preferences.sublime-settings" ] && ln -sf "$DOTFILES_DIR/sublime/Preferences.sublime-settings" "$HOME/.config/sublime-text-3/Packages/User/Preferences.sublime-settings"
-        [ -f "$DOTFILES_DIR/sublime/Default.sublime-keymap" ] && ln -sf "$DOTFILES_DIR/sublime/Default.sublime-keymap" "$HOME/.config/sublime-text-3/Packages/User/Default.sublime-keymap"
-        [ -f "$DOTFILES_DIR/sublime/Package Control.sublime-settings" ] && ln -sf "$DOTFILES_DIR/sublime/Package Control.sublime-settings" "$HOME/.config/sublime-text-3/Packages/User/Package Control.sublime-settings"
+        # Only symlink specific Sublime config files.
+        [ -f "$SRC_DIR/Preferences.sublime-settings" ] && ln -sf "$SRC_DIR/Preferences.sublime-settings" "$TARGET_DIR/Preferences.sublime-settings"
+        [ -f "$SRC_DIR/Default.sublime-keymap" ] && ln -sf "$SRC_DIR/Default.sublime-keymap" "$TARGET_DIR/Default.sublime-keymap"
+        [ -f "$SRC_DIR/Package Control.sublime-settings" ] && ln -sf "$SRC_DIR/Package Control.sublime-settings" "$TARGET_DIR/Package Control.sublime-settings"
         
-        # Symlink snippets if they exist
-        [ -d "$DOTFILES_DIR/sublime/snippets" ] && ln -sf "$DOTFILES_DIR/sublime/snippets" "$HOME/.config/sublime-text-3/Packages/User/snippets"
+        # Symlink snippets if they exist.
+        [ -d "$SRC_DIR/snippets" ] && ln -sf "$SRC_DIR/snippets" "$TARGET_DIR/snippets"
         
         log "✅ Sublime Text configuration linked"
     else
@@ -68,16 +74,19 @@ if [ "$SETUP_SUBLIME" = "true" ]; then
     fi
 fi
 
-# Zed configuration
+# Zed configuration.
 if [ "$SETUP_ZED" = "true" ]; then
-    if [ -d "$DOTFILES_DIR/zed" ]; then
+    SRC_DIR="$DOTFILES_APPS/zed"
+    TARGET_DIR="$HOME/.config/zed"
+
+    if [ -d "$SRC_DIR" ]; then
         log "🔗 Setting up Zed configuration..."
-        mkdir -p "$HOME/.config/zed"
+        mkdir -p "$TARGET_DIR"
         
-        # Only symlink specific Zed config files
-        [ -f "$DOTFILES_DIR/zed/settings.json" ] && ln -sf "$DOTFILES_DIR/zed/settings.json" "$HOME/.config/zed/settings.json"
-        [ -f "$DOTFILES_DIR/zed/keymap.json" ] && ln -sf "$DOTFILES_DIR/zed/keymap.json" "$HOME/.config/zed/keymap.json"
-        [ -d "$DOTFILES_DIR/zed/themes" ] && ln -sf "$DOTFILES_DIR/zed/themes" "$HOME/.config/zed/themes"
+        # Only symlink specific Zed config files.
+        [ -f "$SRC_DIR/settings.json" ] && ln -sf "$SRC_DIR/settings.json" "$TARGET_DIR/settings.json"
+        [ -f "$SRC_DIR/keymap.json" ] && ln -sf "$SRC_DIR/keymap.json" "$TARGET_DIR/keymap.json"
+        [ -d "$SRC_DIR/themes" ] && ln -sf "$SRC_DIR/themes" "$TARGET_DIR/themes"
         
         log "✅ Zed configuration linked"
     else

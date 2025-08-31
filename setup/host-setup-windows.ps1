@@ -10,7 +10,7 @@ param(
     [switch]$SetupZed = ($env:MCRA_SETUP_ZED -ne "false")
 )
 
-$DotfilesDir = Join-Path $ConfigDir "dotfiles"
+$DotfilesDir = Join-Path $ConfigDir "dotfiles" "apps"
 
 Write-Host "🚀 Starting Windows host setup" -ForegroundColor Magenta
 Write-Host "👤 User: $env:USERNAME"
