@@ -41,10 +41,21 @@ if [ "$SETUP_VSCODE" = "true" ]; then
         mkdir -p "$TARGET_DIR"
         
         # Only symlink specific VS Code config files, not the entire directory.
-        [ -f "$SRC_DIR/settings.json" ] && ln -sf "$SRC_DIR/settings.json" "$TARGET_DIR/settings.json"
-        [ -f "$SRC_DIR/keybindings.json" ] && ln -sf "$SRC_DIR/keybindings.json" "$TARGET_DIR/keybindings.json"
-        [ -d "$SRC_DIR/snippets" ] && ln -sf "$SRC_DIR/snippets" "$TARGET_DIR/snippets"
-        
+
+        TO_SYMLINK=(
+            "settings.json"
+            "keybindings.json"
+            "snippets"
+        )
+
+        for file in "${TO_SYMLINK[@]}"; do
+            if [ -f "$SRC_DIR/$file" ]; then
+                ln -sf "$SRC_DIR/$file" "$TARGET_DIR/$file"
+            elif [ -d "$SRC_DIR/$file" ]; then
+                ln -sf "$SRC_DIR/$file" "$TARGET_DIR/$file"
+            fi
+        done
+
         log "✅ VS Code configuration linked"
     else
         log "ℹ️  Skipping VS Code (not installed or no config found)"
@@ -68,17 +79,17 @@ if [ "$SETUP_SUBLIME" = "true" ]; then
             "Default.sublime-mousemap"
             "Distraction Free.sublime-settings"
             "Preferences.sublime-settings"
+            "snippets"
         )
 
         for file in "${TO_SYMLINK[@]}"; do
             if [ -f "$SRC_DIR/$file" ]; then
                 ln -sf "$SRC_DIR/$file" "$TARGET_DIR/$file"
+            elif [ -d "$SRC_DIR/$file" ]; then
+                ln -sf "$SRC_DIR/$file" "$TARGET_DIR/$file"
             fi
         done
 
-        # Symlink snippets if they exist.
-        [ -d "$SRC_DIR/snippets" ] && ln -sf "$SRC_DIR/snippets" "$TARGET_DIR/snippets"
-        
         log "✅ Sublime Text configuration linked"
     else
         log "ℹ️  Skipping Sublime Text (no config found)"
@@ -95,9 +106,20 @@ if [ "$SETUP_ZED" = "true" ]; then
         mkdir -p "$TARGET_DIR"
         
         # Only symlink specific Zed config files.
-        [ -f "$SRC_DIR/settings.json" ] && ln -sf "$SRC_DIR/settings.json" "$TARGET_DIR/settings.json"
-        [ -f "$SRC_DIR/keymap.json" ] && ln -sf "$SRC_DIR/keymap.json" "$TARGET_DIR/keymap.json"
-        [ -d "$SRC_DIR/themes" ] && ln -sf "$SRC_DIR/themes" "$TARGET_DIR/themes"
+
+        TO_SYMLINK=(
+            "settings.json"
+            "keymap.json"
+            "themes"
+        )
+
+        for file in "${TO_SYMLINK[@]}"; do
+            if [ -f "$SRC_DIR/$file" ]; then
+                ln -sf "$SRC_DIR/$file" "$TARGET_DIR/$file"
+            elif [ -d "$SRC_DIR/$file" ]; then
+                ln -sf "$SRC_DIR/$file" "$TARGET_DIR/$file"
+            fi
+        done
         
         log "✅ Zed configuration linked"
     else
