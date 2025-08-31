@@ -1,0 +1,9 @@
+[Desktop Entry]
+Name=Kiro
+Comment=Kiro Application
+Exec=__HOME_PATH__/bin/kiro
+Icon=__HOME_PATH__/lib/kiro.svg
+Terminal=false
+Type=Application
+Categories=Utility;
+StartupNotify=true

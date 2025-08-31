@@ -1,0 +1,9 @@
+[Desktop Entry]
+Name=Taskade
+Comment=All-in-one collaboration platform for remote teams
+Exec=__HOME_PATH__/bin/taskade
+Icon=__HOME_PATH__/lib/taskade.svg
+Terminal=false
+Type=Application
+Categories=Office;Network;
+StartupNotify=true
