@@ -1,14 +1,34 @@
-version: "3.8"
+# Standalone Services for Development
+# Use independently of devcontainer: docker compose up <service-name>
+# Example: docker compose up ollama postgres
 
 services:
-  # Main development container (always available).
+  # DEPRECATED: Use simplified devcontainer.json instead
+  # Kept for reference only
   devcontainer:
     build:
       context: .
       dockerfile: Dockerfile.dev
+      args:
+        # Pass local user's UID and GID to the Dockerfile.
+        USER_UID: ${UID}
+        USER_GID: ${GID}
+        # Optional: You can also pass the username.
+        USERNAME: ${USER}
+    image: ${MCRA_DEVCONTAINER_IMAGE:-localhost/devcontainer:latest}
+    # image: mcr.microsoft.com/devcontainers/universal:3-noble
+
+    # Specify the user to use inside the container at runtime.
+    # This must be done here, as the user must exist in the image (from the Dockerfile)
+    # and match the UID/GID of the local user for permissions to work with the volume.
+    # To set UID/GID:
+    #   export UID=$(id -u)
+    #   export GID=$(id -g)
+    #   user: "${UID}:${GID}"
+    user: "1000:1000" # Default.
     volumes:
-      # Mount project workspace (one level up from .devcontainer/devcontainer.json location).
-      - ..:/workspaces:cached
+      # Mount project workspace.
+      - .:/workspace:cached
 
       # Cross-platform SSH mount (Windows uses USERPROFILE, Linux/macOS use HOME).
       # Using 'codespace', the default user in the universal image. For other
@@ -38,8 +58,6 @@ services:
       - dev-network
     hostname: automaton
     command: sleep infinity
-    profiles:
-      - minimal # Always included in minimal profile.
 
   # Ollama for local AI/LLM development.
   ollama:
@@ -88,7 +106,7 @@ services:
     image: docker.io/library/postgres:16-alpine
     environment:
       - POSTGRES_DB=devdb
-      - POSTGRI_USER=marcelo
+      - POSTGRI_USER=codespace
       - POSTGRES_PASSWORD=${MCRA_DEV_DB_PASSWORD:-DevTime2024!coding}
     ports:
       - "5432:5432"
@@ -117,7 +135,7 @@ services:
   mongodb:
     image: docker.io/library/mongo:7
     environment:
-      - MONGO_INITDB_ROOT_USERNAME=marcelo
+      - MONGO_INITDB_ROOT_USERNAME=codespace
       - MONGO_INITDB_ROOT_PASSWORD=${MCRA_DEV_DB_PASSWORD:-DevTime2024!coding}
     ports:
       - "27017:27017"
@@ -133,7 +151,7 @@ services:
     image: docker.io/minio/minio:latest
     command: server /data --console-address ":9001"
     environment:
-      - MINIO_ROOT_USER=marcelo
+      - MINIO_ROOT_USER=codespace
       - MINIO_ROOT_PASSWORD=${MCRA_DEV_DB_PASSWORD:-DevTime2024!coding}
     ports:
       - "9000:9000" # API.
