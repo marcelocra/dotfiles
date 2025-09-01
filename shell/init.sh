@@ -847,32 +847,15 @@ configure_bash() {
 # =============================================================================
 
 configure_mise() {
-    local mise_installed="/tmp/mise_installed"
-    if [ -n "${MCRA_USE_MISE:-}" ] && [ "${MCRA_USE_MISE}" = "true" ]; then
-        if [ -f "$mise_installed" ]; then
-            log_debug "Mise already installed. Activating..."
-            command_exists mise && eval "$(mise activate zsh)"
-            export PATH="$HOME/.local/bin:$PATH"
-            log_debug "Done!"
-            return 0
-        fi
-
-        # Previous install, before using the universal devcontainer image.
-        # curl https://mise.run | sh && \
-            # mise use --global node@22 python@3.13 uv clojure babashka deno && \
-            # mise exec -- corepack enable && \
-            # mise exec -- corepack prepare pnpm@latest --activate && \
-            # mise use --global uv clojure babashka deno && \
-            # mise exec -- npm install -g @google/gemini-cli @anthropic-ai/claude-code
-
-        curl https://mise.run | sh && \
-            mise use --global uv clojure babashka deno && \
-            mise exec -- npm install -g @google/gemini-cli @anthropic-ai/claude-code && \
-            touch "$mise_installed" && \
-            echo 'Mise installed successfully!' || \
-            { echo "Failed to install/configure mise or some packages"; return 1; }
+    # Only activate mise if it's enabled and installed.
+    # The installation should happen in the one-time setup script.
+    if [ "${MCRA_USE_MISE:-}" = "true" ] && command_exists mise; then
+        log_debug "Activating mise..."
+        eval "$(mise activate zsh)"
+        export PATH="$HOME/.local/bin:$PATH"
+        log_debug "Done!"
     else
-        log_debug "Mise configuration skipped (MCRA_USE_MISE not enabled)"
+        log_debug "Mise activation skipped (MCRA_USE_MISE not enabled or mise not found)"
     fi
 }
 

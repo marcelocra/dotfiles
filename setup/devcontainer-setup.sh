@@ -112,6 +112,19 @@ else
     log "⏭️  Skipping zsh plugins setup (MCRA_SETUP_ZSH_PLUGINS=false)"
 fi
 
+# Setup mise for environment management.
+if [ "${MCRA_USE_MISE:-true}" = "true" ] && ! command -v mise &> /dev/null; then
+    log "🔌 Installing mise for runtime version management..."
+    curl https://mise.run | sh
+    # Add mise to the current shell's PATH to use it immediately.
+    export PATH="$HOME/.local/bin:$PATH"
+    mise use --global uv clojure babashka deno
+    mise exec -- npm install -g @google/gemini-cli @anthropic-ai/claude-code
+    log "✅ mise installed and configured."
+else
+    log "ℹ️  Skipping mise installation (MCRA_USE_MISE is false or mise is already installed)."
+fi
+
 # Additional project-specific setup can go here.
 # This could be extended with project detection, language-specific tools, etc.
 
