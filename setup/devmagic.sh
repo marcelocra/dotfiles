@@ -6,8 +6,7 @@ set -e
 
 # --- Configuration ---
 # The URL of the repository containing your devcontainer.json and docker-compose.yml.
-# TODO: Replace this with your actual repository URL once created.
-DEVCONTAINER_REPO_URL="https://github.com/marcelocra/devmagic.git"
+DEVCONTAINER_REPO_URL="https://github.com/marcelocra/devmagic.run.git"
 
 # --- Colors for output ---
 RED='\033[0;31m'
