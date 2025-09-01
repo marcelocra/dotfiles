@@ -6,7 +6,7 @@
 
     // Examples: --- != === !== <> <= >= <-> [:] -~ ?? ->> -< >- .. ''"" <| |> >>> ...Fl Tl fi fj fl ft
     "font_face": "Google Sans Code",
-    "font_size": 15,
+    "font_size": 14,
     "font_options": [
         "ss01",
         "cv03",
