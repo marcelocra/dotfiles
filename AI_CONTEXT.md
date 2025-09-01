@@ -1,21 +1,24 @@
 # AI Context - Dotfiles Project
 
-## 🚀 DevMagic - Current Setup (v2.0.0 - 2025-08-26)
+This project contains a collection of configuration files and setup scripts for development environments. Its flagship feature is the **DevMagic** environment.
 
-**Primary Approach**: Git Submodule-based development environment. A one-line script adds the `devmagic` environment repository as a submodule to a project, allowing for easy updates and version pinning.
+## 🚀 Feature: DevMagic Environment (v3.0.0 - 2025-09-01)
+
+**Primary Approach**: A hybrid, Git Submodule-based development environment. The core development container is built directly from an image for speed and reliability, while optional auxiliary services (databases, AI models) are managed via `docker-compose` profiles.
 
 ### Key Components
 
-- **`devmagic/` directory**: The contents of the submodule, intended to be its own repository.
-  - `docker-compose.yml`: Service definitions with profiles (`postgres`, `ollama`, etc.).
-  - `devcontainer.json`: The primary Dev Container configuration file.
-  - `Dockerfile.dev`: A simple Dockerfile used to work around a Podman/docker-compose bug by forcing a local image build.
+- **`devmagic/` directory**: The contents of the submodule.
+  - `devcontainer.json`: The primary Dev Container configuration file. It defines the core environment by referencing a pre-built `image`.
+  - `docker-compose.yml`: Defines a suite of optional, on-demand services (`postgres`, `ollama`, etc.) using profiles. It is **not** used to build the main container.
+  - `README.md`: Instructions on how to use the auxiliary services.
 - `setup/devmagic.sh`: One-line setup script that automates `git submodule add`.
-- `setup/devcontainer-setup.sh`: Script for container initialization (installing tools, etc.).
+- `setup/devcontainer-setup.sh`: Script for container initialization (installing tools like `mise`, etc.), run via `postCreateCommand`.
 
 ### Service Profiles
 
-- `minimal` (default): Just the development container.
+Profiles are used exclusively for managing optional, sidecar services. The main development container always starts.
+
 - `ai`: + Ollama GPU (port 11434) | `ai-cpu`: + Ollama CPU (port 11435).
 - `postgres`, `redis`, `mongodb`, `minio`: Database and storage services.
 
@@ -25,26 +28,35 @@
 # One-line DevMagic setup in a new project's git repo.
 curl -fsSL https://raw.githubusercontent.com/marcelocra/dotfiles/main/setup/devmagic.sh | bash
 
-# The script adds the submodule and provides instructions to commit.
+# Commit the new environment
 git add .gitmodules .devcontainer
-git commit -m "feat: Add DevMagic environment"
+git commit -m "feat: Add DevMagic development environment"
 
 # To update the environment to the latest version:
 git submodule update --remote --merge
+
+# --- Using Auxiliary Services (from within the dev container) ---
+
+# Start the Ollama service
+docker compose --profile ai up -d
+
+# Stop the Ollama service
+docker compose --profile ai down
 ```
 
 ### Technical Decisions & Workarounds
 
 - **Git Submodule**: Chosen as the primary mechanism for sharing the dev environment across projects to allow for versioning and easy updates.
-- **`Dockerfile.dev` Workaround**: A `build` step was added to the `docker-compose.yml` to explicitly build the dev container image. This is necessary to work around a bug in some `docker-compose` client versions that incorrectly try to `pull` a locally-defined image when used with a Podman backend.
+- **Decoupled Architecture**: The core architectural decision is to **separate** the main container's definition from auxiliary services. The `devcontainer.json` uses a direct `image` for reliability, avoiding the fragile and complex `docker-compose` build process that fails within VS Code's orchestration when using Podman.
+- **On-Demand Services**: `docker-compose` is used for its primary strength: managing the lifecycle of optional, multi-container services. This avoids the toolchain integration bugs encountered previously.
 - **Container Networks**: Services communicate via service names for security and simplicity.
 - **Named Volumes**: Ensure data persistence across container rebuilds.
 
 ### Architecture Benefits
 
 - **Version Controlled Environment**: Projects can be pinned to specific versions of the dev environment.
-- **Easy Updates**: `git submodule update` provides a standard way to pull in new changes.
-- **Service Isolation**: Independent services in Docker Compose allow for easier debugging and scaling.
+- **Reliable & Fast Startup**: Using a pre-built image for the main container is significantly faster and more reliable than a compose build.
+- **Flexible & On-Demand**: Auxiliary services can be started and stopped as needed without rebuilding the main container.
 - **One-line Setup**: Minimal friction for new projects despite the power of submodules.
 
 ## Podman / Client-side Issues

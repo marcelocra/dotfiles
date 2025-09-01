@@ -61,12 +61,33 @@
 - **The Revelation:** The service is broken. It's listening on a socket that doesn't exist. This is likely due to a conflict with a recent Podman Desktop installation.
 - **The Real Fix:** We restart the `systemd` service (`systemctl --user restart podman.socket`), and the socket file finally appears.
 
-### Conclusion: The Real Culprit and Lessons Learned
+### Chapter 8: The Profile Trap
 
-- **The Final Diagnosis:** The silent failure of `docker-compose build` was the ultimate problem. Even after fixing the socket, the `docker-compose` binary itself was the issue—it was incompatible or buggy with a Podman backend.
-- **The Ultimate Solution:** Abandon the incompatible `docker-compose` client. Install the native `podman-compose` python package, which is designed to work flawlessly with Podman.
+- **A New Hope:** With the socket fixed, we try `podman compose build` again. It still fails silently.
+- **The Epiphany:** We realize the `docker-compose.yml` uses `profiles` for every service. When running `podman compose` from the command line without specifying a profile, it correctly finds _no services to build_.
+- **The Fix:** Running `COMPOSE_PROFILES=minimal podman compose build` works! The command-line build is finally solved.
+
+### Chapter 9: The Final Boss - VS Code's Environment
+
+- **The Problem:** Even with a working command-line build, VS Code's "Reopen in Container" still fails. It complains about `DOCKER_BUILDKIT` not being enabled, even when we export it in the shell.
+- **The Insight:** We realize VS Code's Dev Container extension spawns its own `docker-compose` subprocess. This subprocess does _not_ inherit the shell's environment. Launching `code` from a terminal where `DOCKER_BUILDKIT=1` is set is not enough.
+- **The Workaround:** We discover that we can build and run the container manually first (`podman compose build && podman compose up -d`), and then use VS Code to "Attach to Running Container". This works, but defeats the purpose of a one-click setup.
+
+### Conclusion: The Real Culprit and The Right Architecture
+
+- **The Final Diagnosis:** The root cause was a "perfect storm" of toolchain incompatibilities. Using `docker-compose` to build the main dev container with a Podman backend, all orchestrated by VS Code, is a fragile and leaky abstraction. The core issues are:
+
+  1.  **Poor Tooling Integration:** The `docker-compose` client binary has poor support for Podman, ignoring contexts and environment variables.
+  2.  **Leaky Abstractions:** VS Code's Dev Container extension does not reliably propagate necessary environment variables (`COMPOSE_PROFILES`, `DOCKER_BUILDKIT`) to the underlying `docker-compose` subprocess it spawns.
+  3.  **Silent Failures:** The combination of these issues leads to silent or misleading failures, making debugging a nightmare.
+
+- **The Ultimate Solution: Simplify the Architecture.** The winning move was to stop fighting the toolchain and simplify the design.
+
+  1.  **Decouple the Core Container:** The `devcontainer.json` was modified to build the main development environment directly from an `image`. This is the most robust method, bypassing `docker-compose` entirely for the primary container.
+  2.  **Repurpose Compose for Auxiliaries:** The `docker-compose.yml` file was kept, but its role was changed. It is now used only for managing optional, sidecar services (like `ollama`, `postgres`, etc.) via their profiles. The main `devcontainer` service within it is marked as deprecated.
+
 - **Lessons Learned:**
-  - When debugging, trust `ls` over `systemctl status`.
-  - Silent failures are the hardest bugs; use verbose flags early and often.
-  - Toolchain complexity (VS Code -> Podman -> docker-compose alias) creates many points of failure. Simplify the chain whenever possible.
-  - Don't underestimate the chaos a GUI tool like Podman Desktop can introduce into a command-line workflow.
+  - **Simplify Your Core:** A dev container's primary environment should be simple. A direct `image` or `Dockerfile` reference in `devcontainer.json` is far more reliable than a `docker-compose` build.
+  - **Compose is for Sidecars:** Use `docker-compose` for what it excels at: orchestrating external, auxiliary services, not for building the core environment that VS Code itself needs to manage.
+  - **Environment Variables are Deceiving:** What works in your shell will not necessarily work in an IDE's subprocess. Tooling abstractions can break environment variable inheritance.
+  - **The Submodule Idea Was Solid:** The initial goal of a version-controlled, submodule-based dev environment was correct. The _contents_ of that submodule were the problem. The new, simplified architecture is perfectly suited for this delivery mechanism.
