@@ -847,10 +847,13 @@ configure_bash() {
 # =============================================================================
 
 configure_mise() {
-    local mise_activated="/tmp/mise-activated"
+    local mise_installed="/tmp/mise_installed"
     if [ -n "${MCRA_USE_MISE:-}" ] && [ "${MCRA_USE_MISE}" = "true" ]; then
-        if [ -f "$mise_activated" ]; then
-            log_debug "Mise already installed and activated"
+        if [ -f "$mise_installed" ]; then
+            log_debug "Mise already installed. Activating..."
+            command_exists mise && eval "$(mise activate zsh)"
+            export PATH="$HOME/.local/bin:$PATH"
+            log_debug "Done!"
             return 0
         fi
 
@@ -865,13 +868,9 @@ configure_mise() {
         curl https://mise.run | sh && \
             mise use --global uv clojure babashka deno && \
             mise exec -- npm install -g @google/gemini-cli @anthropic-ai/claude-code && \
-            touch "$mise_activated" && \
+            touch "$mise_installed" && \
             echo 'Mise installed successfully!' || \
             { echo "Failed to install/configure mise or some packages"; return 1; }
-        
-        # Activate mise for version management.
-        command_exists mise && eval "$(mise activate zsh)"
-        export PATH="$HOME/.local/bin:$PATH"
     else
         log_debug "Mise configuration skipped (MCRA_USE_MISE not enabled)"
     fi
