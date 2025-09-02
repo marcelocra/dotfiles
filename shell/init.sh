@@ -64,7 +64,6 @@ configure_editor() {
         export MANPAGER='nvim +Man!'
     elif command_exists vim; then
         export EDITOR='vim'
-        export MANPAGER='vim +Man!'
     elif command_exists vi; then
         export EDITOR='vi'
     else
