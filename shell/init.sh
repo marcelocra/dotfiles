@@ -699,6 +699,75 @@ alias t30="sleep 30m && timer_notification"
 alias t60="sleep 1h && timer_notification"
 
 # =============================================================================
+# FUNCTIONS - AI HELPERS
+# =============================================================================
+
+ask() {
+    if [ -z "$1" ]; then
+        echo "Usage: ask \"your question here\""
+        echo "Example: ask \"optimize this JavaScript function\""
+        return 1
+    fi
+    
+    if command_exists claude; then
+        echo "🤖 Claude: Processing your request..."
+        claude chat --message "$*"
+    else
+        echo "❌ Claude CLI not installed. Install with: npm install -g @anthropic-ai/claude-code"
+        return 1
+    fi
+}
+
+gemini() {
+    if [ -z "$1" ]; then
+        echo "Usage: gemini \"your question here\""
+        echo "Example: gemini \"explain this code pattern\""
+        return 1
+    fi
+    
+    if command_exists gemini-cli; then
+        echo "✨ Gemini: Processing your request..."
+        gemini-cli "$*"
+    else
+        echo "❌ Gemini CLI not installed. Install with: npm install -g @google/gemini-cli"
+        return 1
+    fi
+}
+
+analyze() {
+    if [[ ! -d .git ]]; then
+        echo "❌ This function works best in git repositories"
+        return 1
+    fi
+    
+    echo "🔍 Project Analysis:"
+    echo "Files: $(find . -type f | wc -l)"
+    echo "Git tracked files: $(git ls-files | wc -l)"
+    echo "Languages: $(find . -name "*.js" -o -name "*.ts" -o -name "*.py" -o -name "*.html" -o -name "*.css" -o -name "*.go" -o -name "*.rs" -o -name "*.java" -o -name "*.c" -o -name "*.cpp" | sed 's/.*\.//' | sort | uniq -c)"
+    echo ""
+    
+    if command_exists claude; then
+        ask "analyze this project structure: $(ls -la)"
+    else
+        echo "💡 Install Claude CLI for AI-powered project analysis"
+    fi
+}
+
+codehelp() {
+    if [ -f "$1" ]; then
+        echo "📖 Getting help for: $1"
+        if command_exists claude; then
+            ask "explain and suggest improvements for this code: $(cat "$1")"
+        else
+            echo "❌ Claude CLI not installed. Install with: npm install -g @anthropic-ai/claude-code"
+        fi
+    else
+        echo "Usage: codehelp <filename>"
+        echo "Example: codehelp index.js"
+    fi
+}
+
+# =============================================================================
 # FUNCTIONS - MISC
 # =============================================================================
 

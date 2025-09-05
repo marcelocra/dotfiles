@@ -1,5 +1,32 @@
 # Changelog
 
+## [1.1.0] - 2025-09-03 - AI Development Scripts Creation
+
+### Added
+
+- 🤖 **AI Functions in Host Shell**: Added `ask`, `gemini`, `analyze`, and `codehelp` functions to `shell/init.sh`
+- **Unified Setup Script**: Created `ai-dev-setup.sh` consolidating all environment setup logic
+- **Shared History Configuration**: All AI dev environments now use persistent `~/.shell-history` with timestamps
+- **Enhanced Error Handling**: Improved error handling and command existence checking in setup scripts
+
+### Changed
+
+- **Improved**: Consolidated `setup-full.sh`, `setup-quick.sh`, and `setup-minimal.sh` (initially separated) into single `ai-dev-setup.sh`
+- **AI Dev Architecture**: Simplified from 5 files to 3 files (ai-dev.sh, ai-dev.ps1, ai-dev-setup.sh)
+- **Container Scripts**: Updated both Bash and PowerShell runners to use unified setup script
+- **Documentation**: Updated AI context and architecture descriptions
+
+### Removed
+
+- **Legacy Setup Files**: Removed redundant `setup-*.sh` files in favor of unified approach
+
+### Benefits
+
+- **No Code Duplication**: Setup logic exists only once for all modes
+- **Easier Maintenance**: Single script to update for environment changes
+- **Better Shell Integration**: AI functions now available on host systems
+- **Consistent History**: Shared shell history across all development environments
+
 ## [1.0.0] - 2025-08-26 - DevMagic Docker Compose Environment
 
 ### Added
