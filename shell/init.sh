@@ -337,7 +337,7 @@ configure_git_aliases() {
 
 configure_docker_aliases() {
     alias pod='podman'
-    alias docker='podman'
+    # alias docker='podman'
     alias dc="docker compose"
     alias docker-prune-month-old-images='docker image prune -a --filter "until=720h"'
     alias docker-prune-two-week-old-images='docker image prune -a --filter "until=336h"'
@@ -708,7 +708,7 @@ ask() {
         echo "Example: ask \"optimize this JavaScript function\""
         return 1
     fi
-    
+
     if command_exists claude; then
         echo "🤖 Claude: Processing your request..."
         claude chat --message "$*"
@@ -724,7 +724,7 @@ gemini() {
         echo "Example: gemini \"explain this code pattern\""
         return 1
     fi
-    
+
     if command_exists gemini-cli; then
         echo "✨ Gemini: Processing your request..."
         gemini-cli "$*"
@@ -739,13 +739,13 @@ analyze() {
         echo "❌ This function works best in git repositories"
         return 1
     fi
-    
+
     echo "🔍 Project Analysis:"
     echo "Files: $(find . -type f | wc -l)"
     echo "Git tracked files: $(git ls-files | wc -l)"
     echo "Languages: $(find . -name "*.js" -o -name "*.ts" -o -name "*.py" -o -name "*.html" -o -name "*.css" -o -name "*.go" -o -name "*.rs" -o -name "*.java" -o -name "*.c" -o -name "*.cpp" | sed 's/.*\.//' | sort | uniq -c)"
     echo ""
-    
+
     if command_exists claude; then
         ask "analyze this project structure: $(ls -la)"
     else
@@ -928,7 +928,7 @@ configure_mise() {
 }
 
 # =============================================================================
-# FZF    
+# FZF
 # =============================================================================
 
 configure_fzf() {
