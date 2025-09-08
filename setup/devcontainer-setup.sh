@@ -113,7 +113,7 @@ else
 fi
 
 # Setup mise for environment management.
-if [ "${MCRA_USE_MISE:-true}" = "true" ] && ! command -v mise &> /dev/null; then
+if [ "${MCRA_USE_MISE:-false}" = "true" ] && ! command -v mise &> /dev/null; then
     log "🔌 Installing mise for runtime version management..."
     curl https://mise.run | sh
     # Add mise to the current shell's PATH to use it immediately.
