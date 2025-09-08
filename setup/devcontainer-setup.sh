@@ -27,15 +27,15 @@ log() {
 }
 
 # User Management Decision: Using default 'codespace' user.
-# 
+#
 # Attempted custom 'marcelo' user but encountered UID/GID mismatch issues:
 # [1] Bind mounts break with permission conflicts (Claude Code settings fail).
 # [2] Changing ownership affects host system files with wrong UID (525288).
 # [3] Requires excessive sudo usage for basic operations.
-# 
+#
 # DevMagic v1.0.0 architecture: Stick with container defaults for better
 # cross-platform compatibility and fewer permission headaches.
-# 
+#
 # # Change ownership of the mounted workspace first.
 # sudo chown -R marcelo:marcelo /workspaces
 # # Fix permissions for the NVM directory.
@@ -119,7 +119,12 @@ if [ "${MCRA_USE_MISE:-true}" = "true" ] && ! command -v mise &> /dev/null; then
     # Add mise to the current shell's PATH to use it immediately.
     export PATH="$HOME/.local/bin:$PATH"
     mise use --global uv clojure babashka deno
-    mise exec -- npm install -g @google/gemini-cli @anthropic-ai/claude-code
+    # Check if npm is available globally, if not install node/npm via mise.
+    if ! command -v npm &> /dev/null; then
+        log "📦 Installing Node.js/npm via mise..."
+        mise use --global node@lts
+    fi
+    npm install -g @google/gemini-cli @anthropic-ai/claude-code
     log "✅ mise installed and configured."
 else
     log "ℹ️  Skipping mise installation (MCRA_USE_MISE is false or mise is already installed)."
