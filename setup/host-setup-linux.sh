@@ -33,7 +33,7 @@ fi
 
 # VS Code configuration.
 if [ "$SETUP_VSCODE" = "true" ]; then
-    SRC_DIR="$DOTFILES_APPS/vscode"
+    SRC_DIR="$DOTFILES_APPS/vscode/User"
     TARGET_DIR="$HOME/.config/Code/User"
 
     if command -v code >/dev/null 2>&1 && [ -d "$SRC_DIR" ]; then
