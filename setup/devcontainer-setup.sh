@@ -127,7 +127,11 @@ if [ "${MCRA_USE_MISE:-false}" = "true" ] && ! command -v mise &> /dev/null; the
     npm install -g @google/gemini-cli @anthropic-ai/claude-code
     log "✅ mise installed and configured."
 else
-    log "ℹ️  Skipping mise installation (MCRA_USE_MISE is false or mise is already installed)."
+    if command -v npm &> /dev/null; then
+        log "Installing gemini-cli & claude code..."
+        npm install -g @google/gemini-cli @anthropic-ai/claude-code
+    fi
+    log "ℹ️  Done. Skipping mise installation (MCRA_USE_MISE is false or mise is already installed)."
 fi
 
 # Additional project-specific setup can go here.
