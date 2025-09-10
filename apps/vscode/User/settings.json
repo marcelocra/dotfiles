@@ -647,6 +647,8 @@
     "pwsh-shell-integration": false,
     "lsp": true
   },
+  "terminal.integrated.copyOnSelection": true,
+  "terminal.integrated.mcra.next": "",
 
   "terminal.external.linuxExec": "kitty",
   "terminal.external.osxExec": "kitty.app",

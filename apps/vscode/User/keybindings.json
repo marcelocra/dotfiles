@@ -703,6 +703,19 @@
   },
 
   {
+    "key": "ctrl+c",
+    "command": "workbench.action.terminal.copySelection",
+    "when": "terminalFocus && terminalTextSelected"
+  },
+
+  {
+    // TODO(marcelo): To consider: do I ever use ctrl+v for something else in the terminal when not in nvim?
+    "key": "ctrl+v",
+    "command": "workbench.action.terminal.paste",
+    "when": "terminalFocus"
+  },
+
+  {
     "key": "NEXT KEYBINDING/KEYMAP/MAPPING - ADD MANUALLY 👆🏽"
   },
 
