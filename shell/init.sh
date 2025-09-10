@@ -702,10 +702,10 @@ alias t60="sleep 1h && timer_notification"
 # FUNCTIONS - AI HELPERS
 # =============================================================================
 
-ask() {
+ask_claude() {
     if [ -z "$1" ]; then
-        echo "Usage: ask \"your question here\""
-        echo "Example: ask \"optimize this JavaScript function\""
+        echo "Usage: ask_claude \"your question here\""
+        echo "Example: ask_claude \"optimize this JavaScript function\""
         return 1
     fi
 
@@ -718,16 +718,16 @@ ask() {
     fi
 }
 
-gemini() {
+ask_gemini() {
     if [ -z "$1" ]; then
-        echo "Usage: gemini \"your question here\""
-        echo "Example: gemini \"explain this code pattern\""
+        echo "Usage: ask_gemini \"your question here\""
+        echo "Example: ask_gemini \"explain this code pattern\""
         return 1
     fi
 
-    if command_exists gemini-cli; then
+    if command_exists gemini; then
         echo "✨ Gemini: Processing your request..."
-        gemini-cli "$*"
+        gemini "$*"
     else
         echo "❌ Gemini CLI not installed. Install with: npm install -g @google/gemini-cli"
         return 1
@@ -747,7 +747,7 @@ analyze() {
     echo ""
 
     if command_exists claude; then
-        ask "analyze this project structure: $(ls -la)"
+        ask_claude "analyze this project structure: $(ls -la)"
     else
         echo "💡 Install Claude CLI for AI-powered project analysis"
     fi
@@ -757,7 +757,7 @@ codehelp() {
     if [ -f "$1" ]; then
         echo "📖 Getting help for: $1"
         if command_exists claude; then
-            ask "explain and suggest improvements for this code: $(cat "$1")"
+            ask_claude "explain and suggest improvements for this code: $(cat "$1")"
         else
             echo "❌ Claude CLI not installed. Install with: npm install -g @anthropic-ai/claude-code"
         fi
