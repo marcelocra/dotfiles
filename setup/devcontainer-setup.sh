@@ -125,14 +125,12 @@ if [ "${MCRA_USE_MISE:-false}" = "true" ] && ! command -v mise &> /dev/null; the
         log "📦 Installing Node.js/npm via mise..."
         mise use --global node@lts
     fi
-    # TODO: Some images might require this to be run as sudo.
-    # npm install -g $NPM_INSTALL
+    npm install -g $NPM_INSTALL
     log "✅ mise installed and configured."
 else
     if command -v npm &> /dev/null; then
         log "Installing gemini-cli & claude code..."
-        # TODO: Some images might require this to be run as sudo.
-        # npm install -g $NPM_INSTALL
+        npm install -g $NPM_INSTALL
     fi
     log "ℹ️  Done. Skipping mise installation (MCRA_USE_MISE is false or mise is already installed)."
 fi
