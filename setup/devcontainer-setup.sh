@@ -12,6 +12,7 @@ PROJECTS_DIR="${MCRA_PROJECTS:-$HOME/prj}"
 DOTFILES_DIR="$CONFIG_DIR/dotfiles"
 SETUP_DOTFILES="${MCRA_SETUP_DOTFILES:-true}"
 SETUP_ZSH_PLUGINS="${MCRA_SETUP_ZSH_PLUGINS:-true}"
+NPM_INSTALL="${MCRA_NPM_INSTALL:-@google/gemini-cli @anthropic-ai/claude-code @openai/codex}"
 
 echo "🚀 Starting devcontainer setup"
 echo "👤 User: $(whoami)"
@@ -124,12 +125,12 @@ if [ "${MCRA_USE_MISE:-false}" = "true" ] && ! command -v mise &> /dev/null; the
         log "📦 Installing Node.js/npm via mise..."
         mise use --global node@lts
     fi
-    npm install -g @google/gemini-cli @anthropic-ai/claude-code
+    npm install -g $NPM_INSTALL
     log "✅ mise installed and configured."
 else
     if command -v npm &> /dev/null; then
         log "Installing gemini-cli & claude code..."
-        npm install -g @google/gemini-cli @anthropic-ai/claude-code
+        npm install -g $NPM_INSTALL
     fi
     log "ℹ️  Done. Skipping mise installation (MCRA_USE_MISE is false or mise is already installed)."
 fi
