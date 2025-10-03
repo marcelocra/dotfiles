@@ -12,7 +12,12 @@ PROJECTS_DIR="${MCRA_PROJECTS:-$HOME/prj}"
 DOTFILES_DIR="$CONFIG_DIR/dotfiles"
 SETUP_DOTFILES="${MCRA_SETUP_DOTFILES:-true}"
 SETUP_ZSH_PLUGINS="${MCRA_SETUP_ZSH_PLUGINS:-true}"
-NPM_INSTALL="${MCRA_NPM_INSTALL:-@google/gemini-cli @anthropic-ai/claude-code @openai/codex}"
+NPM_PACKAGES=(
+    "@google/gemini-cli"
+    "@anthropic-ai/claude-code"
+    "@openai/codex"
+)
+NPM_INSTALL="${MCRA_NPM_INSTALL:-${NPM_PACKAGES[*]}}"
 
 echo "🚀 Starting devcontainer setup"
 echo "👤 User: $(whoami)"
