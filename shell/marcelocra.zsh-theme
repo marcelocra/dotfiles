@@ -43,6 +43,18 @@
 #     export SEP_CHAR='─'  # examples: '━' '─' '-' '·'
 # - SEP_COLOR: prompt palette color for separator (works in light/dark)
 #     export SEP_COLOR=8   # examples: 7, 8, 242, 245
+# - USE_SEP_TOP: show separator above quote box (default: 1)
+#     export USE_SEP_TOP=0|1
+# - USE_SEP_BOTTOM: show separator below quote box (default: 1)
+#     export USE_SEP_BOTTOM=0|1
+# - QUOTE_MODE: how quotes rotate (default: "time")
+#     export QUOTE_MODE=random|sequential|time|fixed
+#     - random: different quote each prompt
+#     - sequential: changes every minute
+#     - time: changes by hour (default)
+#     - fixed: always first quote
+# - USE_TIME_PROMPT: use time-based symbols (🌅☀️🌆🌙) instead of ❯ (default: 0)
+#     export USE_TIME_PROMPT=1
 
 PROMPT_SYMBOL=''
 
@@ -62,6 +74,42 @@ ICON_OK="❯"
 ICON_ERR="✖"
 ICON_VENV="🐍"
 
+# Time-based prompt symbols (optional - set USE_TIME_PROMPT=1 to enable)
+: ${USE_TIME_PROMPT:=0}
+get_time_prompt_symbol() {
+  if [[ $USE_TIME_PROMPT == 1 ]]; then
+    local hour=$(date +%H)
+    if [[ $hour -ge 6 && $hour -lt 12 ]]; then
+      echo "🌅"  # Morning
+    elif [[ $hour -ge 12 && $hour -lt 18 ]]; then
+      echo "☀️"   # Afternoon
+    elif [[ $hour -ge 18 && $hour -lt 22 ]]; then
+      echo "🌆"   # Evening
+    else
+      echo "🌙"   # Night
+    fi
+  else
+    echo "$ICON_OK"
+  fi
+}
+
+# Box-drawing characters
+if [[ $USE_NERD_FONT == 1 ]]; then
+  BOX_TL='┌'
+  BOX_TR='┐'
+  BOX_BL='└'
+  BOX_BR='┘'
+  BOX_H='─'
+  BOX_V='│'
+else
+  BOX_TL='┌'
+  BOX_TR='┐'
+  BOX_BL='└'
+  BOX_BR='┘'
+  BOX_H='─'
+  BOX_V='│'
+fi
+
 # Separator character (overridable); uses heavier line with Nerd Font, light line otherwise
 : ${SEP_CHAR:=}
 if [[ -z $SEP_CHAR ]]; then
@@ -74,15 +122,59 @@ fi
 : ${SEP_COLOR:=8}
 SEP_COLOR_SEQ="%F{${SEP_COLOR}}"
 SEP_RESET_SEQ="%f"
+: ${USE_SEP_TOP:=1}
+: ${USE_SEP_BOTTOM:=1}
+
+# Faded separator character (overridable); defaults to dotted pattern
+: ${SEP_CHAR_FADED:=}
+if [[ -z $SEP_CHAR_FADED ]]; then
+  if [[ $USE_NERD_FONT == 1 ]]; then
+    SEP_CHAR_FADED='┄'
+  else
+    SEP_CHAR_FADED='·'
+  fi
+fi
 
 # Cached separator (updates on precmd when COLUMNS changes)
 _LAST_COLUMNS=-1
 PROMPT_SEPARATOR=''
+PROMPT_SEPARATOR_FADED=''
 autoload -Uz add-zsh-hook
 
 # Original implementation retained
 prompt_separator() {
     printf '%*s' "$COLUMNS" '' | tr ' ' -
+}
+
+# Create a box around text (centered, pure zsh)
+quote_in_box() {
+    local text="$1"
+    local padding=2
+    local text_len=${#text}
+    local box_width=$((text_len + padding * 2 + 2))  # +2 for borders
+    local indent=$(( (COLUMNS - box_width) / 2 ))
+    local indent_str border_line
+    
+    # Create indent
+    if [[ $indent -gt 0 ]]; then
+        printf -v indent_str '%*s' $indent ''
+    else
+        indent_str=''
+    fi
+    
+    # Create horizontal border line (pure zsh, no tr)
+    local border_len=$((box_width - 2))
+    printf -v border_line '%*s' $border_len ''
+    border_line=${border_line// /$BOX_H}
+    
+    # Top border
+    echo "${indent_str}${BOX_TL}${border_line}${BOX_TR}"
+    
+    # Text line
+    printf "${indent_str}${BOX_V} %-${text_len}s ${BOX_V}\n" "$text"
+    
+    # Bottom border
+    echo "${indent_str}${BOX_BL}${border_line}${BOX_BR}"
 }
 
 # Pure zsh implementation (no external processes); repeats SEP_CHAR to width
@@ -94,9 +186,19 @@ prompt_separator_pure() {
     print -r -- "$s"
 }
 
+# Pure zsh implementation for faded separator
+prompt_separator_faded_pure() {
+    local s chr
+    chr=${SEP_CHAR_FADED:-'·'}
+    printf -v s '%*s' "$COLUMNS" ''
+    s=${s// /$chr}
+    print -r -- "$s"
+}
+
 update_prompt_separator() {
   if [[ "$COLUMNS" != "$_LAST_COLUMNS" ]]; then
     PROMPT_SEPARATOR=$(prompt_separator_pure)
+    PROMPT_SEPARATOR_FADED=$(prompt_separator_faded_pure)
     _LAST_COLUMNS=$COLUMNS
   fi
 }
@@ -107,13 +209,77 @@ update_prompt_separator
 setopt prompt_subst
 # Stylish prompt: adds clarity, color, and alignment for readability and flair.
 
-# Separator line: subtle, visible on both light and dark backgrounds.
-PROMPT='${SEP_COLOR_SEQ}${PROMPT_SEPARATOR}${SEP_RESET_SEQ}
-'
+# Helper function to conditionally render separator with color
+# Usage: with_separator "$SEP_VAR" "USE_SEP_VAR_NAME"
+with_separator() {
+  local sep="$1"
+  local var_name="$2"
+  local enabled=${(P)var_name}
+  if [[ "${enabled:-1}" == "1" ]]; then
+    echo "${SEP_COLOR_SEQ}${sep}${SEP_RESET_SEQ}"
+  else
+    echo ""
+  fi
+}
 
-# Centered quote, dimmed and italic.
-PROMPT+="%{$fg_no_bold[white]%}%{$italics%}🪄  Any sufficiently advanced technology is indistinguishable from magic. 💎%{$reset_color%}
+# Quote collection (rotates or randomizes)
+QUOTES=(
+  "🪄  Any sufficiently advanced technology is indistinguishable from magic. 💎"
+  "⚡ Code is like humor. When you have to explain it, it's bad. 🎭"
+  "🚀 First, solve the problem. Then, write the code. 💡"
+  "🌙 The best code is no code at all. But when you must, make it beautiful. ✨"
+  "🎯 Programming isn't about what you know; it's about what you can figure out. 🧠"
+  "🔮 The computer is a moron. And you are a genius. 🎪"
+)
+# Short versions for narrow terminals
+QUOTES_SHORT=(
+  "🪄  Advanced tech = magic 💎"
+  "⚡ Code = humor 🎭"
+  "🚀 Solve → Code 💡"
+  "🌙 Less code, more beauty ✨"
+  "🎯 It's about figuring it out 🧠"
+  "🔮 You > Computer 🎪"
+)
+
+# Quote selection: random, sequential, or time-based
+# Set to: "random", "sequential", "time" (changes by hour), or "fixed"
+: ${QUOTE_MODE:=time}
+
+get_quote() {
+  local idx
+  case "$QUOTE_MODE" in
+    random)
+      idx=$((RANDOM % ${#QUOTES[@]}))
+      ;;
+    sequential)
+      idx=$((SECONDS / 60 % ${#QUOTES[@]}))  # Changes every minute
+      ;;
+    time)
+      idx=$((10#$(date +%H) % ${#QUOTES[@]}))  # Changes by hour
+      ;;
+    fixed)
+      idx=0
+      ;;
+    *)
+      idx=0
+      ;;
+  esac
+  
+  if [[ $COLUMNS -gt 70 ]]; then
+    echo "${QUOTES[$idx]}"
+  else
+    echo "${QUOTES_SHORT[$idx]}"
+  fi
+}
+
+# Centered quote (rotates based on QUOTE_MODE).
+PROMPT='$(with_separator "$PROMPT_SEPARATOR_FADED" "USE_SEP_TOP")
+'
+PROMPT+="%{$fg_no_bold[white]%}%{$italics%}\$(quote_text=\$(get_quote); printf '%*s' \$(( (\$COLUMNS - \${#quote_text}) / 2 )) ''; echo \"\$quote_text\")%{$reset_color%}
 "
+# Faded separator below quote (conditionally shown).
+PROMPT+='$(with_separator "$PROMPT_SEPARATOR_FADED" "USE_SEP_BOTTOM")
+'
 
 # Current working directory: bold blue folder icon.
 PROMPT+='%{$fg_bold[blue]%}'"$ICON_DIR"' %~%{$reset_color%} '
@@ -132,9 +298,9 @@ PROMPT+='%{$fg_no_bold[black]%}|%{$reset_color%}%{$fg_bold[cyan]%} '"$ICON_DATE"
 # Power/energy symbol.
 PROMPT+='%{$fg_no_bold[black]%}|%{$reset_color%}%{$fg_bold[yellow]%} '"$ICON_PWR"'%{$reset_color%} '
 
-# Newline and dynamic prompt symbol.
+# Newline and dynamic prompt symbol (with optional time-based icon).
 PROMPT+='
-%(?:%{$fg_bold[green]%}'"$ICON_OK"'%{$reset_color%} :%{$fg_bold[red]%}'"$ICON_ERR"'%{$reset_color%} ) '
+%(?:%{$fg_bold[green]%}$(get_time_prompt_symbol)%{$reset_color%} :%{$fg_bold[red]%}'"$ICON_ERR"'%{$reset_color%} )'
 
 # Right prompt: current git branch (subtle, dim on right)
 RPROMPT='$(git_info=$(git_prompt_info); [[ -n $git_info ]] && echo "%{$fg_no_bold[black]%}'"$ICON_GIT"' $git_info%{$reset_color%}")'
