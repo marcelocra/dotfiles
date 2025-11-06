@@ -122,6 +122,14 @@ fi
 : ${SEP_COLOR:=8}
 SEP_COLOR_SEQ="%F{${SEP_COLOR}}"
 SEP_RESET_SEQ="%f"
+# Modern color palette for futuristic look
+COLOR_ACCENT="%F{39}"      # Bright cyan
+COLOR_ACCENT_DIM="%F{45}"  # Softer cyan
+COLOR_TEXT="%F{252}"       # Almost white
+COLOR_TEXT_DIM="%F{244}"   # Soft gray
+COLOR_SUCCESS="%F{46}"     # Bright green
+COLOR_ERROR="%F{196}"      # Bright red
+COLOR_RESET="%f"
 : ${USE_SEP_TOP:=1}
 : ${USE_SEP_BOTTOM:=1}
 
@@ -272,41 +280,55 @@ get_quote() {
   fi
 }
 
-# Centered quote (rotates based on QUOTE_MODE).
-PROMPT='$(with_separator "$PROMPT_SEPARATOR_FADED" "USE_SEP_TOP")
+# Format date and time with dots separator (centered)
+format_datetime() {
+  local time_val=$(date +%H:%M:%S)
+  local date_val=$(date +%Y-%m-%d)
+  local time_len=${#time_val}
+  local date_len=${#date_val}
+  local total_len=$((time_len + date_len + 15))
+  local indent=$(( (COLUMNS - total_len) / 2 ))
+  
+  # local sep_datetime='∙∙∙'
+  # Power/energy symbol - subtle accent
+  local sep_datetime="${COLOR_ACCENT_DIM} ${ICON_PWR}${COLOR_RESET}"
+
+  printf "%*s" $indent ""
+  echo -n "${COLOR_ACCENT_DIM}${ICON_TIME}${COLOR_RESET} ${COLOR_TEXT}${time_val}${COLOR_RESET} ${COLOR_TEXT_DIM}${sep_datetime}${COLOR_RESET} "
+  echo "${COLOR_TEXT}${date_val}${COLOR_RESET} ${COLOR_ACCENT_DIM}${ICON_DATE}${COLOR_RESET}"
+}
+
+# Modern, futuristic prompt design
+# Subtle top separator
+PROMPT='${COLOR_TEXT_DIM}$(with_separator "$PROMPT_SEPARATOR_FADED" "USE_SEP_TOP")${COLOR_RESET}
 '
-PROMPT+="%{$fg_no_bold[white]%}%{$italics%}\$(quote_text=\$(get_quote); printf '%*s' \$(( (\$COLUMNS - \${#quote_text}) / 2 )) ''; echo \"\$quote_text\")%{$reset_color%}
-"
-# Faded separator below quote (conditionally shown).
-PROMPT+='$(with_separator "$PROMPT_SEPARATOR_FADED" "USE_SEP_BOTTOM")
+# Centered quote with elegant styling (rotates based on QUOTE_MODE)
+PROMPT+='${COLOR_TEXT_DIM}$(quote_text=$(get_quote); printf "%*s" $(( (COLUMNS - ${#quote_text}) / 2 )) ""; echo "$quote_text")${COLOR_RESET}
+'
+# Date and time below quote with fun dot separators (centered)
+PROMPT+='${COLOR_TEXT_DIM}$(format_datetime)${COLOR_RESET}
+'
+# Subtle bottom separator
+PROMPT+='${COLOR_TEXT_DIM}$(with_separator "$PROMPT_SEPARATOR_FADED" "USE_SEP_BOTTOM")${COLOR_RESET}
 '
 
-# Current working directory: bold blue folder icon.
-PROMPT+='%{$fg_bold[blue]%}'"$ICON_DIR"' %~%{$reset_color%} '
+# Main info line: directory, venv - clean and modern
+PROMPT+='${COLOR_ACCENT}'"$ICON_DIR"'${COLOR_RESET}  ${COLOR_TEXT}%~${COLOR_RESET} '
 # Conditional separator before venv (only if it exists)
-PROMPT+='$(vi=$(virtualenv_prompt_info); [[ -n $vi ]] && echo "%{$fg_no_bold[black]%}|%{$reset_color%} ")'
+PROMPT+='$(vi=$(virtualenv_prompt_info); [[ -n $vi ]] && echo "${COLOR_TEXT_DIM}▌${COLOR_RESET} ")'
 
-# Git info moved exclusively to RPROMPT
-
-# Python virtualenv: always consistent color, uses prompt config below.
+# Python virtualenv: modern styling
 PROMPT+='$(virtualenv_prompt_info)'
 
-# Time and date: visually separated and colored.
-PROMPT+='%{$fg_no_bold[black]%}|%{$reset_color%}%{$fg_bold[magenta]%} '"$ICON_TIME"' %*%{$reset_color%} '
-PROMPT+='%{$fg_no_bold[black]%}|%{$reset_color%}%{$fg_bold[cyan]%} '"$ICON_DATE"' %D{%Y-%m-%d}%{$reset_color%} '
-
-# Power/energy symbol.
-PROMPT+='%{$fg_no_bold[black]%}|%{$reset_color%}%{$fg_bold[yellow]%} '"$ICON_PWR"'%{$reset_color%} '
-
-# Newline and dynamic prompt symbol (with optional time-based icon).
+# Newline and futuristic prompt symbol
 PROMPT+='
-%(?:%{$fg_bold[green]%}$(get_time_prompt_symbol)%{$reset_color%} :%{$fg_bold[red]%}'"$ICON_ERR"'%{$reset_color%} )'
+%(?:${COLOR_SUCCESS}$(get_time_prompt_symbol)${COLOR_RESET} :${COLOR_ERROR}'"$ICON_ERR"'${COLOR_RESET} )'
 
-# Right prompt: current git branch (subtle, dim on right)
-RPROMPT='$(git_info=$(git_prompt_info); [[ -n $git_info ]] && echo "%{$fg_no_bold[black]%}'"$ICON_GIT"' $git_info%{$reset_color%}")'
+# Right prompt: git branch - subtle, professional
+RPROMPT='$(git_info=$(git_prompt_info); [[ -n $git_info ]] && echo "${COLOR_TEXT_DIM}'"$ICON_GIT"' ${COLOR_RESET}${COLOR_TEXT_DIM}$git_info${COLOR_RESET}")'
 
 VIRTUAL_ENV_DISABLE_PROMPT=0
-ZSH_THEME_VIRTUAL_ENV_PROMPT_PREFIX=" %{$fg_bold[green]%}""$ICON_VENV""["
-ZSH_THEME_VIRTUAL_ENV_PROMPT_SUFFIX="]%{$reset_color%}"
+ZSH_THEME_VIRTUAL_ENV_PROMPT_PREFIX=' ${COLOR_ACCENT_DIM}'"$ICON_VENV"'[${COLOR_RESET}'
+ZSH_THEME_VIRTUAL_ENV_PROMPT_SUFFIX='${COLOR_ACCENT_DIM}]${COLOR_RESET}'
 ZSH_THEME_VIRTUALENV_PREFIX=$ZSH_THEME_VIRTUAL_ENV_PROMPT_PREFIX
 ZSH_THEME_VIRTUALENV_SUFFIX=$ZSH_THEME_VIRTUAL_ENV_PROMPT_SUFFIX
