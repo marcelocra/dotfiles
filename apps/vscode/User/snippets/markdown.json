@@ -238,5 +238,52 @@
       "",
       "$0"
     ]
-  }
+  },
+  "h2 with current time": {
+    "prefix": [
+      "h2"
+    ],
+    "body": [
+      "## ${CURRENT_HOUR}h${CURRENT_MINUTE} - $0",
+      ""
+    ]
+  },
+  ". bullet for new task": {
+    "prefix": [
+      ".."
+    ],
+    "body": [
+      ". $1",
+      "..$0"
+    ]
+  },
+  "time now": {
+    "prefix": [
+      "now",
+      "time"
+    ],
+    "body": [
+      "${CURRENT_HOUR}h${CURRENT_MINUTE}$0"
+    ]
+  },
+  "today's date": {
+    "prefix": [
+      "date",
+      "today"
+    ],
+    "body": [
+      "${CURRENT_DATE}/${CURRENT_MONTH}/${CURRENT_YEAR}$0"
+    ]
+  },
+  "date and time now": {
+    "prefix": [
+      "datetime",
+    ],
+    "body": [
+      "${CURRENT_DATE}/${CURRENT_MONTH}/${CURRENT_YEAR}.${CURRENT_HOUR}h${CURRENT_MINUTE} - $0"
+    ]
+  },
+  ">>>>> NEXT snippet above. Ignore this, it is not a snippet.": {
+    "body": ""
+  },
 }
