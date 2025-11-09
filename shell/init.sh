@@ -337,11 +337,11 @@ configure_git_aliases() {
 # =============================================================================
 
 configure_docker_aliases() {
-    alias pod='podman'
+    # alias pod='podman'
     # alias docker='podman'
-    alias dc="docker compose"
-    alias docker-prune-month-old-images='docker image prune -a --filter "until=720h"'
-    alias docker-prune-two-week-old-images='docker image prune -a --filter "until=336h"'
+    # alias dc="docker compose"
+    # alias docker-prune-month-old-images='docker image prune -a --filter "until=720h"'
+    # alias docker-prune-two-week-old-images='docker image prune -a --filter "until=336h"'
 }
 
 # Next docker alias marker
