@@ -1,160 +1,107 @@
+/**
+ * @fileoverview Custom keybindings configuration for Visual Studio Code.
+ *
+ * This file defines a comprehensive set of keyboard shortcuts organized into
+ * three main categories:
+ *
+ *    1. Essential keybindings for core navigation and editor operations
+ *    2. Nice-to-have shortcuts for improved productivity
+ *    3. Experimental or pending keybindings to be reviewed
+ *
+ * Notes:
+ * - Some keybindings are context-aware using "when" clauses for better UX.
+ * - The file uses regions to organize keybindings logically.
+ *
+ * ┌─ Important ─────────────────────────────────────────────────────────────┐
+ * │ This configuration overrides several default VSCode shortcuts.          │
+ * │ Use at your own risk and adapt as needed.                               │
+ * └─────────────────────────────────────────────────────────────────────────┘
+ *
+ * Key Features:
+ * - Alt-based navigation between views (explorer, search, git, copilot, etc.)
+ * - Alt+J/K for switching between editors and panels
+ * - Ctrl+[/Alt+H/Alt+Left and Ctrl+]/Alt+L/Alt+Right for navigation history
+ * - CamelCase-aware cursor movement and selection with Ctrl+Alt+Arrow keys
+ * - Enhanced terminal integration Ctrl+Alt+`
+ *
+ * A non-exhaustive list of keybindings is provided below for quick reference.
+ *
+ * Essential Navigation:
+ * - Alt+B             - Toggle sidebar visibility
+ * - Alt+Shift+B       - Toggle auxiliary bar
+ * - Alt+R             - Open Explorer view
+ * - Alt+F             - Open Search view
+ * - Alt+G             - Open Source Control view
+ * - Alt+X             - Open Extensions view
+ * - Alt+O             - Focus Outline view
+ * - Alt+A             - AI chat view
+ *
+ * Editor Navigation:
+ * - Alt+J/K           - Previous/Next editor (when not in panel)
+ * - Alt+E             - Quick open recent editor
+ * - Shift+Alt+E       - Quick open least recently used editor
+ * - Ctrl+[/]          - Navigate backward/forward in history
+ * - Ctrl+Tab          - Next editor (overrides default recent editor behavior)
+ *
+ * Panel & Terminal:
+ * - Ctrl+J            - Toggle focus between panel and editor
+ * - Ctrl+Alt+`        - Toggle maximized panel
+ * - Alt+J/K           - Previous/Next panel view (when in panel)
+ * - Shift+Enter       - Line break in terminal
+ *
+ * Selection & Editing:
+ * - Alt+D             - Duplicate selection
+ * - Alt+Shift+Up/Down - Expand/Shrink smart selection
+ * - Alt+Left/Right    - Move by camelCase word parts
+ * - Ctrl+N/P          - Next/Previous find match (when text selected)
+ *
+ * AI & Copilot:
+ * - Ctrl+L            - Accept next word from inline suggestion
+ * - Ctrl+K Ctrl+C     - Toggle GitHub Copilot suggestions
+ * - Alt+A             - Open AI chat agent
+ *
+ * Settings & Configuration:
+ * - Ctrl+Alt+Shift+S  - Open Settings UI and JSON side-by-side
+ * - Ctrl+Alt+Shift+K  - Open Keybindings UI and JSON side-by-side
+ * - Ctrl+R            - Go to symbol in file (overrides default Ctrl+Shift+O)
+ *
+ * @see {@link https://code.visualstudio.com/docs/getstarted/keybindings VSCode Keybindings Documentation}
+ *
+ * Useful default keybindings:
+ * - Ctrl+K P          - Copy active file path to clipboard
+ * - Ctrl+K O          - Show active file in new window
+ * - Ctrl+K R          - Reveal active file in Explorer/Finder (not working)
+ * - Ctrl+K M          - Change file language mode
+ * - Ctrl+K Ctrl+T     - Change color theme
+ * - Ctrl+K Ctrl+S     - Save all files
+ * - Ctrl+K Ctrl+W     - Close all editors
+ * - Ctrl+K W          - Close all editors in group
+ * - Ctrl+K F          - Close folder/workspace
+ * - Ctrl+K Ctrl+S     - Show keyboard shortcuts
+ * - Ctrl+K V          - Open Markdown preview to the side
+ * - Ctrl+K Z          - Toggle Zen mode
+ * - Alt+Shift+H       - Show call hierarchy
+ * - Ctrl+K Ctrl+I     - Show hover information
+ * - F12               - Go to definition
+ * - Alt+F12           - Peek definition
+ * - Shift+F12         - Go to references
+ * - Ctrl+Shift+O      - Go to symbol in file (alias: Ctrl+R)
+ * - Ctrl+T            - Go to symbol in workspace
+ * - Ctrl+G            - Go to line
+ * - Ctrl+Shift+\      - Jump to matching bracket (alias: Ctrl+M)
+ * - Ctrl+Shift+L      - Select all occurrences of current word
+ * - Ctrl+Shift+J      - Toggle details in search (ex. include/exclude files)
+ * - Ctrl+K C          - Diff current file with clipboard content
+ *
+ * @author Marcelo Almeida
+ * @version 0.1.0
+ */
 [
-  // #region VSCode Neovim.
-
   {
-    "key": "VSCODE NEOVIM CONFIGURATION"
+    "key": ">>>>>>>>>> 👇🏽 ESSENTIAL"
   },
 
-  {
-    "key": "alt+v",
-    "command": "vscode-neovim.stop",
-    "when": "neovim.init"
-  },
-
-  {
-    "key": "alt+v",
-    "command": "vscode-neovim.restart",
-    "when": "!neovim.init"
-  },
-
-  {
-    // Enable default ctrl+w behavior to close current active editor (tab):
-    //  - Neovim: in all modes, except Insert
-    //  - in non-editor windows, e.g. the Settings UI
-    "key": "ctrl+w",
-    "command": "workbench.action.closeActiveEditor",
-    "when": "neovim.init && (neovim.mode != 'insert' || !editorTextFocus)"
-  },
-
-  // {
-  //   "key": "ctrl+d",
-  //   "command": "runCommands",
-  //   "args": {
-  //     "commands": [
-  //       // "editor.action.addSelectionToNextFindMatch",
-  //       {
-  //         "command": "type", // Type the Esc key
-  //         "args": {
-  //           "text": "\u001bi"
-  //         }
-  //       },
-  //       // {
-  //       //   "command": "type",
-  //       //   "args": {
-  //       //     "text": "i"
-  //       //   }
-  //       // },
-
-  //       // {
-  //       //   "command": "vscode-neovim.send",
-  //       //   "args": ""
-  //       // },
-  //       "editor.action.addSelectionToNextFindMatch"
-  //     ]
-  //   },
-  //   "when": "neovim.init && editorTextFocus"
-  // },
-
-  {
-    // Sends <C-d> to Neovim, trying to make it work like <C-d> works in
-    // VSCode by default (whatever is selected in visual mode will initiate
-    // a multi-cursor selection).
-    // I'm not sure how to make it work consistently, but I ended up
-    // preferring not to use it anyway.
-    "key": "ctrl+d",
-    "command": "vscode-neovim.send",
-    "args": "<C-d>",
-    "when": "neovim.init && (editorTextFocus && neovim.mode == 'visual')"
-  },
-
-  // {
-  //   // Better to do this in VSCode, as documented in vscode-neovim repo.
-  //   // Keeping this here because it might be useful for something else.
-  //   "key": "ctrl+d",
-  //   "command": "runCommands",
-  //   "args": {
-  //     "commands": [
-  //       {
-  //         "command": "type",
-  //         "args": {
-  //           "text": "A"
-  //         }
-  //       },
-  //       "editor.action.addSelectionToNextFindMatch"
-  //       // {
-  //       //   "command": "vscode-neovim.send",
-  //       //   "args": "i"
-  //       // },
-  //       // {
-  //       //   "command": "type", // Type the Esc key
-  //       //   "args": {
-  //       //     "text": "\u001b"
-  //       //   }
-  //       // }
-  //     ]
-  //   },
-  //   "when": "neovim.init && (editorTextFocus && editorHasSelection && neovim.mode == 'visual')"
-  // },
-
-  {
-    "key": "ctrl+s",
-    "command": "runCommands",
-    "args": {
-      "commands": ["workbench.action.files.save", "vscode-neovim.escape"]
-    },
-    "when": "neovim.init && (neovim.mode == 'insert')"
-  },
-
-  // {
-  //   "key": "ctrl+o",
-  //   "command": "workbench.action.navigateBack",
-  //   "when": "neovim.init && editorTextFocus"
-  // },
-  // {
-  //   "key": "ctrl+i",
-  //   "command": "workbench.action.navigateForward",
-  //   "when": "neovim.init && editorTextFocus"
-  // },
-
-  {
-    "key": "VSCODE NEOVIM END - PANEL SHORTCUT CONFIGURATION START"
-  },
-
-  // #endregion VSCode Neovim.
-
-  // #region VSCode Vim.
-
-  // {
-  //   "key": "alt+v",
-  //   "command": "toggleVim"
-  // },
-  //
-  // {
-  //   // VSCodeVim.
-  //   // Enable default ctrl+w behavior to close current active editor (tab):
-  //   //  - nvim: in all modes, except Insert
-  //   //  - in non-editor windows, e.g. the Settings UI
-  //   "key": "ctrl+w",
-  //   "command": "workbench.action.closeActiveEditor",
-  //   "when": "vim.mode != 'Insert' || !editorTextFocus"
-  // },
-  //
-  // {
-  //   // VSCodeVim.
-  //   "key": "ctrl+s",
-  //   "command": "runCommands",
-  //   "args": {
-  //     "commands": ["workbench.action.files.save", "extension.vim_escape"]
-  //   },
-  //   "when": "vim.mode == 'Insert'"
-  // },
-
-  // #endregion VSCode Vim.
-
-  {
-    "key": "alt+shift+r",
-    "command": "workbench.action.tasks.runTask"
-  },
+  // #region [Essential]
 
   {
     "key": "alt+b",
@@ -162,44 +109,25 @@
   },
 
   {
+    "key": "alt+shift+b",
+    "command": "workbench.action.toggleAuxiliaryBar"
+  },
+
+  {
     "key": "alt+x",
     "command": "workbench.view.extensions",
-    "when": "!sideBarFocus || activeViewlet != 'workbench.view.extensions'"
+    "when": "viewContainer.workbench.view.extensions.enabled"
   },
 
   {
-    "key": "alt+x",
-    "command": "workbench.action.focusLastEditorGroup",
-    "when": "sideBarFocus && activeViewlet == 'workbench.view.extensions'"
-  },
-
-  {
-    "key": "alt+shift+m",
+    "key": "alt+m",
     "command": "editor.action.toggleMinimap"
   },
 
   {
     "key": "alt+g",
     "command": "workbench.view.scm",
-    "when": "!sideBarFocus || activeViewlet != 'workbench.view.scm'"
-  },
-
-  {
-    "key": "alt+g",
-    "command": "workbench.action.focusLastEditorGroup",
-    "when": "sideBarFocus && activeViewlet == 'workbench.view.scm'"
-  },
-
-  {
-    "key": "alt+e",
-    "command": "workbench.view.explorer",
-    "when": "!sideBarFocus || activeViewlet != 'workbench.view.explorer'"
-  },
-
-  {
-    "key": "alt+e",
-    "command": "workbench.action.focusLastEditorGroup",
-    "when": "sideBarFocus && activeViewlet == 'workbench.view.explorer'"
+    "when": "workbench.scm.active"
   },
 
   {
@@ -218,52 +146,91 @@
   },
 
   {
-    "key": "alt+shift+f",
-    "command": "workbench.view.search",
-    "when": "!sideBarFocus || activeViewlet != 'workbench.view.search'"
-  },
-
-  {
-    "key": "alt+shift+f",
-    "command": "workbench.action.focusLastEditorGroup",
-    "when": "sideBarFocus && activeViewlet == 'workbench.view.search'"
-  },
-
-  {
     "key": "alt+f",
+    "command": "workbench.view.search"
+  },
+
+  {
+    "key": "ctrl+shift+f", // Same as the default, but with context awareness.
     "command": "workbench.action.findInFiles",
     "when": "!inSearchEditor"
   },
 
   {
-    "key": "alt+f",
+    "key": "ctrl+shift+f", // Do not open a new search when in a search editor.
     "command": "search.action.focusQueryEditorWidget",
     "when": "inSearchEditor"
   },
 
+  // #region [Explorer view: claim alt+r and replace existing bindings]
+
   {
-    "key": "alt+a",
-    "command": "workbench.action.toggleActivityBarVisibility"
+    "key": "alt+r",
+    "command": "workbench.view.explorer",
+    "when": "viewContainer.workbench.view.explorer.enabled"
   },
 
   {
-    "key": "alt+i",
-    "command": "ionide.projectExplorerInActivity.focus"
+    "key": "shift+alt+r",
+    "command": "toggleFindRegex",
+    "when": "editorFocus"
   },
 
   {
-    "key": "alt+shift+p",
-    "command": "issue.copyGithubPermalink"
+    "key": "alt+r",
+    "command": "-toggleFindRegex",
+    "when": "editorFocus"
   },
 
-  // NOTE: I'm trying to do this through the VSCode settings, also adding
-  // "alt+shift+l".
-  // {
-  //   // Open the previous recently used editor.
-  //   "key": "alt+l",
-  //   "command": "workbench.action.quickOpenPreviousRecentlyUsedEditor",
-  //   "when": "!terminalFocus"
-  // },
+  {
+    "key": "shift+alt+r",
+    "command": "-remote-wsl.revealInExplorer",
+    "when": "editorFocus && remoteName == 'wsl'"
+  },
+
+  {
+    "key": "shift+alt+r",
+    "command": "-revealFileInOS",
+    "when": "!editorFocus"
+  },
+
+  {
+    "key": "shift+alt+r",
+    "command": "toggleSearchEditorRegex",
+    "when": "inSearchEditor && searchInputBoxFocus"
+  },
+
+  {
+    "key": "alt+r",
+    "command": "-toggleSearchEditorRegex",
+    "when": "inSearchEditor && searchInputBoxFocus"
+  },
+
+  {
+    "key": "shift+alt+r",
+    "command": "workbench.action.terminal.toggleFindRegex",
+    "when": "terminalFindVisible && terminalHasBeenCreated || terminalFindVisible && terminalProcessSupported"
+  },
+
+  {
+    "key": "alt+r",
+    "command": "-workbench.action.terminal.toggleFindRegex",
+    "when": "terminalFindVisible && terminalHasBeenCreated || terminalFindVisible && terminalProcessSupported"
+  },
+
+  {
+    "key": "shift+alt+r",
+    "command": "toggleSearchRegex",
+    "when": "searchViewletFocus"
+  },
+
+  // #endregion [Explorer view: claim alt+r and replace existing bindings]
+
+  {
+    "key": "alt+r",
+    "command": "-toggleSearchRegex",
+    "when": "searchViewletFocus"
+  },
 
   {
     "key": "alt+k",
@@ -291,35 +258,306 @@
   },
 
   {
-    "key": "alt+shift+k",
-    "command": "workbench.action.moveEditorRightInGroup",
+    "key": "ctrl+[",
+    "command": "workbench.action.navigateBack",
+    "when": "canNavigateBack"
+  },
+
+  {
+    "key": "alt+h",
+    "command": "workbench.action.navigateBack",
+    "when": "canNavigateBack"
+  },
+
+  {
+    "key": "ctrl+]",
+    "command": "workbench.action.navigateForward",
+    "when": "canNavigateForward"
+  },
+
+  {
+    "key": "alt+l",
+    "command": "workbench.action.navigateForward",
+    "when": "canNavigateForward"
+  },
+
+  {
+    "key": "shift+alt+e",
+    "command": "workbench.action.quickOpenLeastRecentlyUsedEditorInGroup",
+    "when": "!activeEditorGroupEmpty"
+  },
+
+  {
+    "key": "shift+alt+e",
+    "command": "workbench.action.quickOpenNavigatePreviousInEditorPicker",
+    "when": "inEditorsPicker && inQuickOpen"
+  },
+
+  {
+    "key": "alt+e",
+    "command": "workbench.action.quickOpenPreviousRecentlyUsedEditorInGroup",
+    "when": "!activeEditorGroupEmpty"
+  },
+
+  {
+    "key": "alt+e",
+    "command": "workbench.action.quickOpenNavigateNextInEditorPicker",
+    "when": "inEditorsPicker && inQuickOpen"
+  },
+
+  {
+    // If the panel is active, but not maximized, maximize it.
+    "key": "ctrl+alt+`",
+    "command": "workbench.action.toggleMaximizedPanel",
+    "when": "panelFocus && terminalFocus"
+  },
+
+  {
+    // If the panel is not active, activate and maximize it.
+    "key": "ctrl+alt+`",
+    "command": "workbench.action.toggleMaximizedPanel",
+    "when": "!panelFocus || !terminalFocus"
+  },
+
+  {
+    // Toggle focus between panel and editor.
+    "key": "ctrl+j",
+    "command": "workbench.action.focusLastEditorGroup",
+    "when": "panelFocus"
+  },
+
+  {
+    // Toggle focus between panel and editor.
+    "key": "ctrl+j",
+    "command": "workbench.action.focusPanel",
+    "when": "!panelFocus"
+  },
+
+  {
+    // Override the default in terminal, as this is very useful there, and send
+    // the key sequence to it.
+    "key": "ctrl+p",
+    "command": "workbench.action.terminal.sendSequence",
+    "args": {
+      "text": "\u0010"
+    },
+    "when": "terminalFocus"
+  },
+
+  {
+    // Insert the next suggested word instead of the full suggestion.
+    "key": "ctrl+l",
+    "command": "editor.action.inlineSuggest.acceptNextWord",
+    "when": "editorTextFocus && inlineSuggestionVisible"
+  },
+
+  {
+    // Enable/disable GitHub Copilot suggestions.
+    "key": "ctrl+k ctrl+c",
+    "command": "github.copilot.completions.toggle",
     "when": "editorTextFocus"
   },
 
   {
-    "key": "alt+shift+j",
-    "command": "workbench.action.moveEditorLeftInGroup",
+    // Overriden. Use ctrl+/ instead, which is better anyway.
+    "key": "ctrl+k ctrl+c",
+    "command": "-editor.action.addCommentLine",
+    "when": "editorTextFocus && !editorReadonly"
+  },
+
+  {
+    // <C-n/p> to move to the next/previous find match.
+    "key": "ctrl+n",
+    "command": "editor.action.moveSelectionToNextFindMatch",
+    "when": "editorTextFocus && editorHasSelection && (!neovim.init || (neovim.init && neovim.mode == 'insert'))"
+  },
+
+  {
+    // <C-n/p> to move to the next/previous find match.
+    "key": "ctrl+p",
+    "command": "editor.action.moveSelectionToPreviousFindMatch",
+    "when": "editorTextFocus && editorHasSelection && (!neovim.init || (neovim.init && neovim.mode == 'insert'))"
+  },
+
+  // #region [Cursor movements by line, word and camelcase humps]
+
+  {
+    // 🐪⬅️
+    "key": "ctrl+alt+left",
+    "command": "cursorWordPartLeft",
+    "when": "editorTextFocus && !editorReadonly"
+  },
+
+  {
+    // Select 🐪⬅️
+    "key": "ctrl+alt+shift+left",
+    "command": "cursorWordPartLeftSelect",
+    "when": "editorTextFocus && !editorReadonly"
+  },
+
+  {
+    // 🐪➡️
+    "key": "ctrl+alt+right",
+    "command": "cursorWordPartRight",
+    "when": "editorTextFocus && !editorReadonly"
+  },
+
+  {
+    // Select 🐪➡️
+    "key": "ctrl+alt+shift+right",
+    "command": "cursorWordPartRightSelect",
+    "when": "editorTextFocus"
+  },
+
+  // #endregion [Cursor movements by line, word and camelcase humps]
+
+  {
+    // The default is to navigate to the most recent editor, but I prefer the
+    // usual next/previous editor/browser tab behavior.
+    "key": "ctrl+tab",
+    "command": "workbench.action.nextEditor"
+  },
+  {
+    // The default is to navigate to the most recent editor, but I prefer the
+    // usual next/previous editor/browser tab behavior.
+    "key": "ctrl+shift+tab",
+    "command": "workbench.action.previousEditor"
+  },
+
+  {
+    // Send a line break in the terminal. Claude Code supports this for multiple
+    // lines.
+    "key": "shift+enter",
+    "command": "workbench.action.terminal.sendSequence",
+    "args": {
+      "text": "\\\r\n"
+    },
+    "when": "terminalFocus"
+  },
+
+  {
+    // I use ctrl+backspace to delete entire words and end up always triggering
+    // this command by mistake.
+    "key": "ctrl+backspace",
+    "command": "-chatEditing.discardAllFiles",
+    "when": "hasUndecidedChatEditingResource && inChatInput && !chatInputHasText && !chatSessionRequestInProgress"
+  },
+  {
+    // I use ctrl+backspace to delete entire words and end up always triggering
+    // this command by mistake.
+    "key": "ctrl+backspace",
+    "command": "-inlineChat2.undo",
+    "when": "inlineChatHasEditsAgent && inlineChatVisible && !chatEdits.isRequestInProgress"
+  },
+
+  {
+    "key": "alt+d",
+    "command": "editor.action.duplicateSelection",
+    "when": "editorTextFocus && !editorReadonly"
+  },
+
+  {
+    // 📈 selection.
+    "key": "alt+shift+up",
+    "command": "editor.action.smartSelect.expand",
     "when": "editorTextFocus"
   },
 
   {
-    "key": "alt+c",
-    "command": "workbench.files.action.collapseExplorerFolders",
-    "when": "sideBarFocus && activeViewlet == 'workbench.view.explorer'"
+    // 📈 selection.
+    "key": "alt+shift+up",
+    "command": "-editor.action.copyLinesUpAction",
+    "when": "editorTextFocus && !editorReadonly"
   },
 
   {
-    "key": "alt+shift+b",
-    "command": "workbench.action.toggleAuxiliaryBar"
+    // 📈 selection.
+    "key": "alt+shift+up",
+    "command": "-notebook.cell.copyUp",
+    "when": "notebookEditorFocused && !inputFocus"
   },
 
   {
+    // 📉 selection.
+    "key": "alt+shift+down",
+    "command": "editor.action.smartSelect.shrink",
+    "when": "editorTextFocus"
+  },
+
+  {
+    // 📉 selection.
+    "key": "alt+shift+down",
+    "command": "-notebook.cell.copyDown",
+    "when": "notebookEditorFocused && !inputFocus"
+  },
+
+  {
+    // 📉 selection.
+    "key": "alt+shift+down",
+    "command": "-editor.action.copyLinesDownAction",
+    "when": "editorTextFocus && !editorReadonly"
+  },
+
+  {
+    "key": "alt+shift+w",
+    "command": "editor.action.toggleWordWrap"
+  },
+
+  {
+    // I use this WAY LESS than paste-as.
+    "key": "ctrl+shift+v",
+    "command": "-markdown.showPreview",
+    "when": "!notebookEditorFocused && editorLangId == 'markdown'"
+  },
+
+  {
+    // I use this WAY MORE than show preview.
+    "key": "ctrl+shift+v", // Default: none
+    "command": "editor.action.pasteAs",
+    "when": "!notebookEditorFocused && editorLangId == 'markdown'"
+  },
+
+  {
+    // Search through all symbols in a file. Amazing feature for productivity!
+    "key": "ctrl+r", // Default: ctrl+shift+o
+    "command": "workbench.action.gotoSymbol"
+  },
+
+  {
+    "key": "alt+a", // Default: ctrl+shift+i
+    "command": "workbench.action.chat.openAgent"
+    // "when": "config.chat.agent.enabled && !chatSetupDisabled && !chatSetupHidden"
+  },
+  {
+    "key": "alt+a", // Default: ctrl+alt+i
+    "command": "workbench.panel.chat"
+    // "when": "workbench.panel.chat.view.copilot.active"
+  },
+
+  {
+    "key": ">>>>>>>>>> 👆🏽 NEXT ESSENTIAL"
+  },
+
+  // #endregion [Essential]
+  // #region [Non-essential but nice to have]
+  {
+    "key": ">>>>>>>>>> 👇🏽 NICE TO HAVE"
+  },
+
+  {
+    // 🧘🏽 zen mode.
     "key": "alt+z",
     "command": "workbench.action.toggleZenMode"
   },
 
   {
-    "key": "shift+alt+d",
+    // 🧘🏽 zen mode.
+    "key": "alt+z",
+    "command": "-editor.action.toggleWordWrap"
+  },
+
+  {
+    "key": "alt+shift+d",
     "command": "workbench.action.toggleLightDarkThemes"
   },
 
@@ -354,66 +592,11 @@
   },
 
   {
-    // Search through all symbols in a file. Amazing feature for productivity!
-    "key": "ctrl+r",
-    "command": "workbench.action.gotoSymbol"
-  },
-
-  {
-    // Search through all symbols in the workspace.
-    "key": "ctrl+t",
-    "command": "workbench.action.showAllSymbols"
-  },
-
-  {
-    // If the panel is active, but not maximized, maximize it.
-    "key": "ctrl+alt+`",
-    "command": "workbench.action.toggleMaximizedPanel",
-    "when": "panelFocus && terminalFocus"
-  },
-
-  {
-    // If the panel is not active, activate and maximize it.
-    "key": "ctrl+alt+`",
-    "command": "workbench.action.toggleMaximizedPanel",
-    "when": "!panelFocus || !terminalFocus"
-  },
-
-  {
-    // Toggle focus between panel and editor.
-    "key": "alt+t",
-    "command": "workbench.action.focusLastEditorGroup",
-    "when": "panelFocus"
-  },
-  {
-    // Toggle focus between panel and editor.
-    "key": "alt+t",
-    "command": "workbench.action.focusPanel",
-    "when": "!panelFocus"
-  },
-
-  {
-    // Ctrl+p is very useful in the terminal, so we override the default and
-    // send the key sequence to the terminal.
-    "key": "ctrl+p",
-    "command": "workbench.action.terminal.sendSequence",
-    "args": {
-      "text": "\u0010"
-    },
-    "when": "terminalFocus"
-  },
-
-  {
-    // Annoying default keybinding.
-    "key": "ctrl+j",
-    "command": "-workbench.action.togglePanel"
-  },
-
-  {
     "key": "alt+p",
     "command": "workbench.action.pinEditor",
     "when": "!activeEditorIsPinned"
   },
+
   {
     "key": "alt+p",
     "command": "workbench.action.unpinEditor",
@@ -421,272 +604,8 @@
   },
 
   {
-    // Move the panel to a new position.
-    "key": "ctrl+; ctrl+l",
-    "command": "workbench.action.positionPanelRight",
-    "when": "terminalFocus && panelFocus && panelPosition == 'bottom'"
-  },
-
-  {
-    // Move the panel to a new position.
-    "key": "ctrl+; ctrl+j",
-    "command": "workbench.action.positionPanelBottom",
-    "when": "terminalFocus && panelFocus && panelPosition == 'right'"
-  },
-
-  {
-    // Resize panel.
-    "key": "ctrl+; ctrl+k",
-    "command": "workbench.action.terminal.resizePaneUp",
-    "when": "terminalFocus && panelFocus"
-  },
-
-  {
-    // Resize panel.
-    "key": "ctrl+; ctrl+j",
-    "command": "workbench.action.terminal.resizePaneDown",
-    "when": "terminalFocus && panelFocus && panelPosition == 'bottom'"
-  },
-
-  {
-    // Resize panel.
-    "key": "ctrl+; ctrl+h",
-    "command": "workbench.action.terminal.resizePaneLeft",
-    "when": "terminalFocus && panelFocus"
-  },
-
-  {
-    // Resize panel.
-    "key": "ctrl+; ctrl+l",
-    "command": "workbench.action.terminal.resizePaneRight",
-    "when": "terminalFocus && panelFocus && panelPosition == 'right'"
-  },
-
-  {
-    "key": "ctrl+enter",
-    "command": "-github.copilot.generate"
-  },
-
-  {
-    "key": "alt+shift+enter",
-    "command": "github.copilot.generate"
-  },
-
-  {
-    // Unnecessary default keybinding (ctrl+p is better).
-    "key": "ctrl+e",
-    "command": "-workbench.action.quickOpen"
-  },
-
-  {
-    // Insert the next suggested word instead of the full suggestion.
-    "key": "ctrl+l",
-    "command": "editor.action.inlineSuggest.acceptNextWord",
-    "when": "editorTextFocus && inlineSuggestionVisible"
-  },
-
-  {
-    "key": "ctrl+k ctrl+c",
-    "command": "github.copilot.completions.toggle",
-    "when": "editorTextFocus"
-  },
-
-  {
-    // <C-n/p> to move to the next/previous find match.
-    "key": "ctrl+n",
-    "command": "editor.action.moveSelectionToNextFindMatch",
-    // "when": "neovim.init && (editorTextFocus && editorHasSelection && neovim.mode == 'insert')"
-    "when": "editorTextFocus && editorHasSelection && (!neovim.init || (neovim.init && neovim.mode == 'insert'))"
-  },
-
-  {
-    // <C-n/p> to move to the next/previous find match.
-    "key": "ctrl+p",
-    "command": "editor.action.moveSelectionToPreviousFindMatch",
-    "when": "editorTextFocus && editorHasSelection && (!neovim.init || (neovim.init && neovim.mode == 'insert'))"
-  },
-
-  // #region Cursor movements by line, word and camelcase humps. {{{
-  {
-    "key": "CURSOR MOVEMENTS BY LINE, WORD AND CAMELCASE HUMPS - START"
-  },
-
-  // TODO: I don't think this makes sense. Consider removing. {{{
-  //
-  //    {
-  //      // Move cursor one word left.
-  //      "key": "ctrl+h",
-  //      "command": "cursorWordLeft"
-  //    },
-  //    {
-  //      // Select one word left.
-  //      "key": "ctrl+shift+h",
-  //      "command": "cursorWordLeftSelect"
-  //    },
-  //    {
-  //      // Move cursor one camelcase hump left.
-  //      "key": "alt+h",
-  //      "command": "cursorWordPartLeft"
-  //    },
-  //    {
-  //      // Select one camelcase hump left.
-  //      "key": "alt+shift+h",
-  //      "command": "cursorWordPartLeftSelect"
-  //    },
-  //    {
-  //      // Move cursor one word right.
-  //      "key": "ctrl+l",
-  //      "command": "cursorWordRight",
-  //      "when": "!(editorTextFocus && inlineSuggestionVisible)"
-  //    },
-  //    {
-  //      // Select one word right.
-  //      "key": "ctrl+shift+l",
-  //      "command": "cursorWordRightSelect"
-  //    },
-  //    {
-  //      // Move cursor one camelcase hump right.
-  //      "key": "alt+l",
-  //      "command": "cursorWordPartRight"
-  //    },
-  //    {
-  //      // Select one camelcase hump right.
-  //      "key": "alt+shift+l",
-  //      "command": "cursorWordPartRightSelect"
-  //    },
-  //    TODO: This doesn't make sense.
-  //    {
-  //      "key": "ctrl+; ctrl+d",
-  //      "command": "cursorPageDown"
-  //    },
-  //    {
-  //      "key": "ctrl+; ctrl+u",
-  //      "command": "cursorPageUp"
-  //    },
-  //
-  // }}}
-
-  {
-    // Move cursor one camelcase hump left.
-    "key": "alt+left",
-    "command": "cursorWordPartLeft",
-    "when": "editorTextFocus && !editorReadonly"
-  },
-  {
-    // Select one camelcase hump left.
-    "key": "alt+shift+left",
-    "command": "cursorWordPartLeftSelect",
-    "when": "editorTextFocus && !editorReadonly"
-  },
-  {
-    // Move cursor one camelcase hump right.
-    "key": "alt+right",
-    "command": "cursorWordPartRight"
-  },
-  {
-    // Select one camelcase hump right.
-    "key": "alt+shift+right",
-    "command": "cursorWordPartRightSelect"
-  },
-
-  {
-    "key": "CURSOR MOVEMENTS BY LINE, WORD AND CAMELCASE HUMPS - END"
-  },
-  // #endregion Improved cursor movements by line, word and camelcase humps. }}}
-
-  {
-    "key": "ctrl+o",
-    "command": "workbench.action.navigateBack"
-  },
-
-  {
-    "key": "ctrl+i",
-    "command": "workbench.action.navigateForward"
-  },
-
-  {
-    // Move the cursor to the bottom of the editor and create a new heading 2.
-    // I use this in my tasks markdown file to quickly add new tasks, always at
-    // the bottom of the file.
-    "key": "ctrl+enter",
-    "command": "runCommands",
-    "args": {
-      "commands": [
-        {
-          "command": "cursorBottom"
-        },
-        {
-          "command": "editor.action.insertLineAfter"
-        },
-        {
-          "command": "editor.action.insertSnippet",
-          "args": {
-            "snippet": "## ${CURRENT_HOUR}h${CURRENT_MINUTE} - ${1/(.*)/${1:/capitalize}/}\n\n"
-          }
-        }
-      ]
-    },
-    "when": "editorTextFocus && !editorReadonly && !notebookEditorFocused && editorLangId == 'markdown'"
-  },
-
-  {
-    // Add a new task to the bottom of the tasks.md file, assuming it is the
-    // first editor in the group.
-    // Steps:
-    //  - Go to the file in index 1 (should be the tasks.md file)
-    //  - Move the cursor to the bottom
-    //  - Create a new heading 2
-    "key": "ctrl+shift+enter",
-    "command": "runCommands",
-    "args": {
-      "commands": [
-        {
-          "command": "workbench.action.firstEditorInGroup"
-        },
-        {
-          "command": "cursorBottom"
-        },
-        {
-          "command": "editor.action.insertLineAfter"
-        },
-        {
-          "command": "editor.action.insertSnippet",
-          "args": {
-            "snippet": "## $0"
-          }
-        }
-      ]
-    },
-    "when": "editorTextFocus && !editorReadonly"
-  },
-
-  {
-    "key": "alt+enter",
-    "command": "workbench.action.tasks.runTask",
-    "args": "Mind Conductor: Quick Entry",
-    // I use ctrl+enter to commit, in the git panel, so I don't want this
-    // command to run when the git panel is visible and focused. But if it is
-    // visible but not focused, I want it to run.
-    "when": "!view.workbench.scm.visible || editorTextFocus"
-  },
-
-  {
-    "key": "ctrl+j",
-    "command": "workbench.action.tasks.runTask",
-    "args": "Mind Conductor: Daily Journal",
-    "when": "!terminalFocus"
-  },
-
-  {
-    "key": "ctrl+tab",
-    "command": "workbench.action.nextEditor"
-  },
-  {
-    "key": "ctrl+shift+tab",
-    "command": "workbench.action.previousEditor"
-  },
-
-  {
+    // Example of how to use snippets directly from a keybinding. Inserts a code
+    // block markdown snippet in the editor.
     "key": "ctrl+shift+c",
     "command": "runCommands",
     "args": {
@@ -694,7 +613,7 @@
         {
           "command": "editor.action.insertSnippet",
           "args": {
-            "snippet": "```$0\n```"
+            "snippet": "```\n$1\n```$0"
           }
         }
       ]
@@ -703,472 +622,74 @@
   },
 
   {
-    "key": "ctrl+c",
-    "command": "workbench.action.terminal.copySelection",
-    "when": "terminalFocus && terminalTextSelected"
+    // Add a new timestamp entry in markdown files.
+    "key": "alt+enter",
+    "command": "runCommands",
+    "args": {
+      "commands": [
+        // Go to the end of the file.
+        {
+          "command": "cursorBottom"
+        },
+        // Insert the snippet defined in snippets/markdown.json.
+        {
+          "command": "editor.action.insertSnippet",
+          "args": {
+            "name": "h2 with current time"
+          }
+        }
+      ]
+    },
+    "when": "editorTextFocus && editorLangId == 'markdown' && !editorReadonly && !terminalFocus"
   },
 
   {
-    // TODO(marcelo): To consider: do I ever use ctrl+v for something else in the terminal when not in nvim?
-    "key": "ctrl+v",
-    "command": "workbench.action.terminal.paste",
-    "when": "terminalFocus"
-  },
-
-  {
-    "key": "NEXT KEYBINDING/KEYMAP/MAPPING - ADD MANUALLY 👆🏽"
-  },
-
-  {
-    "key": "NEXT KEYBINDING/KEYMAP/MAPPING - ADD WITH KEYBINDINGS UI 👇🏽"
-  },
-
-  {
-    "key": "ctrl+shift+d",
-    "command": "editor.action.selectHighlights",
-    "when": "editorFocus"
+    "key": "ctrl+shift+c",
+    "command": "-workbench.action.terminal.openNativeConsole",
+    "when": "!terminalFocus"
   },
   {
     "key": "ctrl+shift+/",
     "command": "editor.action.blockComment",
     "when": "editorTextFocus && !editorReadonly"
   },
+
   {
-    "key": "ctrl+shift+s",
+    "key": "ctrl+alt+s",
     "command": "workbench.action.files.saveFiles"
   },
-  {
-    "key": "ctrl+shift+s",
-    "command": "-workbench.action.files.saveAs"
-  },
-  {
-    "key": "ctrl+enter",
-    "command": "python.execInREPL",
-    "when": "config.python.REPL.sendToNativeREPL && editorTextFocus && !isCompositeNotebook && !jupyter.ownsSelection && !notebookEditorFocused && editorLangId == 'python'"
-  },
-  {
-    "key": "ctrl+enter",
-    "command": "python.execSelectionInTerminal",
-    "when": "editorTextFocus && !findInputFocussed && !isCompositeNotebook && !jupyter.ownsSelection && !notebookEditorFocused && !replaceInputFocussed && editorLangId == 'python'"
-  },
-
-  {
-    // Sometimes I press it by mistake and it simply closes all of VSCode.
-    "key": "ctrl+q",
-    "command": "-workbench.action.quit"
-  },
-  {
-    // Sometimes I press it by mistake and it simply closes all of VSCode.
-    "key": "ctrl+shift+q",
-    "command": "-workbench.action.quit"
-  },
-  {
-    "key": "ctrl+alt+h",
-    "command": "editor.action.startFindReplaceAction",
-    "when": "editorFocus || editorIsOpen"
-  },
-  {
-    "key": "ctrl+h",
-    "command": "-editor.action.startFindReplaceAction",
-    "when": "editorFocus || editorIsOpen"
-  },
-  // #region Use `alt+l` to open the previous recently used editor.
-  // // Disabled because I normally use ctrl+tab for this.
-  // {
-  //   "key": "alt+l",
-  //   "command": "workbench.action.quickOpenPreviousRecentlyUsedEditorInGroup",
-  //   "when": "!activeEditorGroupEmpty"
-  // },
-  // {
-  //   "key": "alt+l",
-  //   "command": "workbench.action.quickOpenNavigateNextInEditorPicker",
-  //   "when": "inEditorsPicker && inQuickOpen"
-  // },
-  // {
-  //   "key": "shift+alt+l",
-  //   "command": "workbench.action.quickOpenLeastRecentlyUsedEditorInGroup",
-  //   "when": "!activeEditorGroupEmpty"
-  // },
-  // {
-  //   "key": "shift+alt+l",
-  //   "command": "workbench.action.quickOpenNavigatePreviousInEditorPicker",
-  //   "when": "inEditorsPicker && inQuickOpen"
-  // },
-  // #endregion
-
-  // #region Change default inline Copilot Chat from `ctrl+i` to `ctrl+; ctrl+i`. {{{
-  {
-    "key": "ctrl+; ctrl+i",
-    "command": "-testing.toggleInlineTestOutput"
-  },
-  {
-    "key": "ctrl+; ctrl+i",
-    "command": "inlineChat2.close",
-    "when": "inlineChatHasEditsAgent && inlineChatVisible && !chatEdits.isRequestInProgress && chatEdits.requestCount == '0' || inlineChatHasEditsAgent && inlineChatVisible && !chatEdits.hasEditorModifications && !chatEdits.isRequestInProgress && chatEdits.requestCount == '0'"
-  },
-  {
-    "key": "ctrl+i",
-    "command": "-inlineChat2.close",
-    "when": "inlineChatHasEditsAgent && inlineChatVisible && !chatEdits.isRequestInProgress && chatEdits.requestCount == '0' || inlineChatHasEditsAgent && inlineChatVisible && !chatEdits.hasEditorModifications && !chatEdits.isRequestInProgress && chatEdits.requestCount == '0'"
-  },
-  {
-    "key": "ctrl+; ctrl+i",
-    "command": "inlineChat.start",
-    "when": "editorFocus && inlineChatHasEditsAgent && inlineChatPossible && !editorReadonly && !editorSimpleInput || editorFocus && inlineChatHasProvider && inlineChatPossible && !editorReadonly && !editorSimpleInput"
-  },
-  {
-    "key": "ctrl+i",
-    "command": "-inlineChat.start",
-    "when": "editorFocus && inlineChatHasEditsAgent && inlineChatPossible && !editorReadonly && !editorSimpleInput || editorFocus && inlineChatHasProvider && inlineChatPossible && !editorReadonly && !editorSimpleInput"
-  },
-  {
-    "key": "ctrl+; ctrl+i",
-    "command": "workbench.action.terminal.chat.start",
-    "when": "chatIsEnabled && terminalChatAgentRegistered && terminalFocusInAny && terminalHasBeenCreated || chatIsEnabled && terminalChatAgentRegistered && terminalFocusInAny && terminalProcessSupported"
-  },
-  {
-    "key": "ctrl+i",
-    "command": "-workbench.action.terminal.chat.start",
-    "when": "chatIsEnabled && terminalChatAgentRegistered && terminalFocusInAny && terminalHasBeenCreated || chatIsEnabled && terminalChatAgentRegistered && terminalFocusInAny && terminalProcessSupported"
-  },
-  {
-    "key": "ctrl+; ctrl+i",
-    "command": "inlineChat2.reveal",
-    "when": "inlineChatHasEditsAgent && !chatEdits.isGlobalEditingSession && chatEdits.requestCount >= 1"
-  },
-  {
-    "key": "ctrl+i",
-    "command": "-inlineChat2.reveal",
-    "when": "inlineChatHasEditsAgent && !chatEdits.isGlobalEditingSession && chatEdits.requestCount >= 1"
-  },
-  {
-    "key": "ctrl+; ctrl+i",
-    "command": "inlineChat.startWithCurrentLine",
-    "when": "inlineChatHasProvider && inlineChatShowingHint && !editorReadonly && !inlineChatVisible"
-  },
-  {
-    "key": "ctrl+i",
-    "command": "-inlineChat.startWithCurrentLine",
-    "when": "inlineChatHasProvider && inlineChatShowingHint && !editorReadonly && !inlineChatVisible"
-  },
-  {
-    "key": "ctrl+; ctrl+i",
-    "command": "search.action.searchWithAI",
-    "when": "hasAIResultProviderKey && searchViewletFocus"
-  },
-  {
-    "key": "ctrl+i",
-    "command": "-search.action.searchWithAI",
-    "when": "hasAIResultProviderKey && searchViewletFocus"
-  },
-  {
-    "key": "ctrl+; ctrl+i",
-    "command": "focusSuggestion",
-    "when": "suggestWidgetVisible && textInputFocus && !suggestWidgetHasFocusedSuggestion"
-  },
-  {
-    "key": "ctrl+i",
-    "command": "-focusSuggestion",
-    "when": "suggestWidgetVisible && textInputFocus && !suggestWidgetHasFocusedSuggestion"
-  },
-  {
-    "key": "ctrl+i",
-    "command": "-inlineChat.holdForSpeech",
-    "when": "hasSpeechProvider && inlineChatVisible && textInputFocus"
-  },
-  {
-    "key": "ctrl+; ctrl+i",
-    "command": "notebook.cell.chat.start",
-    "when": "config.notebook.experimental.cellChat && notebookChatAgentRegistered && notebookEditable && notebookEditorFocused && !inputFocus || config.notebook.experimental.generate && notebookChatAgentRegistered && notebookEditable && notebookEditorFocused && !inputFocus"
-  },
-  {
-    "key": "ctrl+i",
-    "command": "-notebook.cell.chat.start",
-    "when": "config.notebook.experimental.cellChat && notebookChatAgentRegistered && notebookEditable && notebookEditorFocused && !inputFocus || config.notebook.experimental.generate && notebookChatAgentRegistered && notebookEditable && notebookEditorFocused && !inputFocus"
-  },
-  {
-    "key": "ctrl+; ctrl+i",
-    "command": "toggleSuggestionDetails",
-    "when": "suggestWidgetHasFocusedSuggestion && suggestWidgetVisible && textInputFocus"
-  },
-  {
-    "key": "ctrl+i",
-    "command": "-toggleSuggestionDetails",
-    "when": "suggestWidgetHasFocusedSuggestion && suggestWidgetVisible && textInputFocus"
-  },
-  {
-    "key": "ctrl+i",
-    "command": "-workbench.action.chat.holdToVoiceChatInChatView"
-  },
-  {
-    "key": "ctrl+; ctrl+i",
-    "command": "workbench.action.terminal.suggestToggleDetails",
-    "when": "simpleSuggestWidgetHasFocusedSuggestion && terminalFocus && terminalHasBeenCreated && terminalIsOpen && terminalSuggestWidgetVisible || simpleSuggestWidgetHasFocusedSuggestion && terminalFocus && terminalIsOpen && terminalProcessSupported && terminalSuggestWidgetVisible"
-  },
-  {
-    "key": "ctrl+i",
-    "command": "-workbench.action.terminal.suggestToggleDetails",
-    "when": "simpleSuggestWidgetHasFocusedSuggestion && terminalFocus && terminalHasBeenCreated && terminalIsOpen && terminalSuggestWidgetVisible || simpleSuggestWidgetHasFocusedSuggestion && terminalFocus && terminalIsOpen && terminalProcessSupported && terminalSuggestWidgetVisible"
-  },
-
-  // #endregion Change default inline Copilot Chat from `ctrl+i` to `ctrl+; ctrl+i`. }}}
-
-  {
-    "key": "ctrl+q",
-    "command": "-workbench.action.quickOpenView"
-  },
-  {
-    "key": "ctrl+q",
-    "command": "-workbench.action.quickOpenNavigateNextInViewPicker",
-    "when": "inQuickOpen && inViewsPicker"
-  },
-  {
-    "key": "ctrl+backspace",
-    "command": "-chatEditing.discardAllFiles",
-    "when": "hasUndecidedChatEditingResource && inChatInput && !chatInputHasText && !chatSessionRequestInProgress"
-  },
-  {
-    "key": "ctrl+backspace",
-    "command": "-inlineChat2.undo",
-    "when": "inlineChatHasEditsAgent && inlineChatVisible && !chatEdits.isRequestInProgress"
-  },
-
-  {
-    "key": "ctrl+shift+f",
-    "command": "workbench.action.terminal.focusFind",
-    "when": "terminalFindFocused && terminalHasBeenCreated || terminalFindFocused && terminalProcessSupported || terminalFocusInAny && terminalHasBeenCreated || terminalFocusInAny && terminalProcessSupported"
-  },
-  {
-    "key": "ctrl+f",
-    "command": "-workbench.action.terminal.focusFind",
-    "when": "terminalFindFocused && terminalHasBeenCreated || terminalFindFocused && terminalProcessSupported || terminalFocusInAny && terminalHasBeenCreated || terminalFocusInAny && terminalProcessSupported"
-  },
-  {
-    "key": "alt+a",
-    "command": "workbench.action.chat.openAgent",
-    "when": "config.chat.agent.enabled && !chatSetupDisabled && !chatSetupHidden"
-  },
-  {
-    "key": "alt+a",
-    "command": "workbench.panel.chat",
-    "when": "workbench.panel.chat.view.copilot.active"
-  },
-  {
-    "key": "THE END! 👆🏽"
-  },
-  {
-    "key": "ctrl+g h",
-    "command": "editor.action.showHover",
-    "when": "editorTextFocus"
-  },
-  // {
-  //   "key": "alt+`",
-  //   "command": "workbench.action.chat.voiceChatInChatView"
-  // },
-  // {
-  //   "key": "ctrl+u",
-  //   "command": "workbench.action.chat.startVoiceChat",
-  //   "when": "!voiceChatInProgress"
-  // },
-  // {
-  //   "key": "ctrl+u",
-  //   "command": "workbench.action.chat.stopListeningAndSubmit",
-  //   "when": "voiceChatInProgress"
-  // },
-  // {
-  //   "key": "alt+`",
-  //   "command": "workbench.action.editorDictation.start",
-  //   "when": "editorTextFocus && !editorDictation.inProgress"
-  // },
-  // {
-  //   "key": "alt+`",
-  //   "command": "workbench.action.editorDictation.stop",
-  //   "when": "editorTextFocus && editorDictation.inProgress"
-  // },
-  // {
-  //   "key": "alt+`",
-  //   "command": "-workbench.action.editorDictation.start",
-  //   "when": "hasSpeechProvider && !editorReadonly && !speechToTextInProgress"
-  // },
   {
     "key": "ctrl+alt+w",
     "command": "workbench.action.closeOtherEditors"
   },
+
   {
-    "key": "ctrl+g p",
-    "command": "editor.action.peekDefinition",
-    "when": "editorHasDefinitionProvider && editorTextFocus && !inReferenceSearchEditor && !isInEmbeddedEditor"
+    "key": ">>>>>>>>>> 👆🏽 NEXT NICE TO HAVE"
+  },
+  // #endregion [Non-essential but nice to have]
+
+  {
+    "key": ">>>>>>>>>> 👇🏽 ADDED FROM THE KEYBINDINGS UI — VERIFY AND MOVE ABOVE"
   },
   {
-    "key": "ctrl+g l",
-    "command": "workbench.action.gotoLine",
-    "when": "editorTextFocus"
+    "key": "shift+alt+j",
+    "command": "workbench.action.moveEditorLeftInGroup"
   },
   {
-    "key": "ctrl+g",
-    "command": "-workbench.action.gotoLine"
-  },
-  {
-    "key": "alt+left",
-    "command": "-workbench.action.navigateBack",
-    "when": "canNavigateBack"
-  },
-  {
-    "key": "alt+d",
-    "command": "workbench.action.search.toggleQueryDetails",
-    "when": "inSearchEditor || searchViewletFocus"
-  },
-  {
-    "key": "ctrl+g",
-    "command": "-workbench.action.terminal.goToRecentDirectory",
-    "when": "terminalFocus && terminalHasBeenCreated || terminalFocus && terminalProcessSupported"
-  },
-  {
-    "key": "alt+d",
-    "command": "editor.action.duplicateSelection",
-    "when": "editorTextFocus && !editorReadonly"
-  },
-  {
-    "key": "shift+alt+up",
-    "command": "editor.action.smartSelect.expand",
-    "when": "editorTextFocus"
-  },
-  {
-    "key": "shift+alt+right",
-    "command": "-editor.action.smartSelect.expand",
-    "when": "editorTextFocus"
-  },
-  {
-    "key": "shift+alt+down",
-    "command": "editor.action.smartSelect.shrink",
-    "when": "editorTextFocus"
-  },
-  {
-    "key": "shift+alt+left",
-    "command": "-editor.action.smartSelect.shrink",
-    "when": "editorTextFocus"
-  },
-  {
-    "key": "shift+alt+up",
-    "command": "-editor.action.copyLinesUpAction",
-    "when": "editorTextFocus && !editorReadonly"
-  },
-  {
-    "key": "shift+alt+up",
-    "command": "-notebook.cell.copyUp",
-    "when": "notebookEditorFocused && !inputFocus"
-  },
-  {
-    "key": "shift+alt+down",
-    "command": "-notebook.cell.copyDown",
-    "when": "notebookEditorFocused && !inputFocus"
-  },
-  {
-    "key": "shift+alt+down",
-    "command": "-editor.action.copyLinesDownAction",
-    "when": "editorTextFocus && !editorReadonly"
-  },
-  // {
-  //   "key": "ctrl+j",
-  //   "command": "editor.action.insertLineAfter",
-  //   "when": "editorTextFocus && !editorReadonly"
-  // },
-  {
-    "key": "ctrl+m",
-    "command": "editor.action.insertLineAfter",
-    "when": "editorTextFocus && !editorReadonly"
+    "key": "shift+alt+k",
+    "command": "workbench.action.moveEditorRightInGroup"
   },
   {
     "key": "ctrl+m",
     "command": "-editor.action.toggleTabFocusMode"
   },
   {
-    "key": "shift+alt+w",
-    "command": "editor.action.toggleWordWrap"
+    "key": "ctrl+m",
+    "command": "editor.action.jumpToBracket",
+    "when": "editorTextFocus"
   },
   {
-    "key": "ctrl+; ctrl+d",
-    "command": "editor.action.revealDefinition",
-    "when": "editorHasDefinitionProvider && editorTextFocus"
-  },
-  {
-    "key": "alt+9",
-    "command": "workbench.action.lastEditorInGroup"
-  },
-  {
-    "key": "alt+0",
-    "command": "-workbench.action.lastEditorInGroup"
-  },
-  {
-    "key": "alt+0",
-    "command": "workbench.action.firstEditorInGroup"
-  },
-  {
-    "key": "alt+q",
-    "command": "workbench.action.quickOpenPreviousRecentlyUsedEditorInGroup",
-    "when": "!activeEditorGroupEmpty"
-  },
-  {
-    "key": "alt+l",
-    "command": "workbench.action.quickOpenPreviousRecentlyUsedEditorInGroup",
-    "when": "!activeEditorGroupEmpty"
-  },
-  {
-    "key": "alt+q",
-    "command": "workbench.action.quickOpenNavigateNextInEditorPicker",
-    "when": "inEditorsPicker && inQuickOpen"
-  },
-  {
-    "key": "alt+l",
-    "command": "workbench.action.quickOpenNavigateNextInEditorPicker",
-    "when": "inEditorsPicker && inQuickOpen"
-  },
-  {
-    "key": "ctrl+k ctrl+p",
-    "command": "copyRelativeFilePath"
-  },
-  {
-    "key": "ctrl+k ctrl+v",
-    "command": "workbench.action.chat.quickVoiceChat"
-  },
-  // {
-  //   // TODO: Figure out a safer way of doing this. I just evaluated the string
-  //   // `functions -` unintentionally.
-  //   "key": "ctrl+enter",
-  //   "command": "workbench.action.terminal.runSelectedText",
-  //   "when": "terminalProcessSupported && editorLangId != 'markdown'"
-  // },
-  {
-    "key": "ctrl+k ctrl+d",
-    "command": "editor.action.revealDefinition",
-    "when": "editorHasDefinitionProvider && editorTextFocus"
-  },
-  {
-    "key": "ctrl+k ctrl+o",
-    "command": "workbench.action.terminal.copyLastCommandOutput"
-  },
-  {
-    "key": "ctrl+k ctrl+f",
-    "command": "workbench.action.terminal.copyLastCommandAndLastCommandOutput"
-  },
-  {
-    "key": "ctrl+k ctrl+o",
-    "command": "-workbench.action.files.openLocalFolder",
-    "when": "remoteFileDialogVisible"
-  },
-  {
-    "key": "ctrl+k ctrl+o",
-    "command": "-workbench.action.files.openFolder",
-    "when": "openFolderWorkspaceSupport"
-  },
-  {
-    "key": "ctrl+k ctrl+f",
-    "command": "-editor.action.formatSelection",
-    "when": "editorHasDocumentSelectionFormattingProvider && editorTextFocus && !editorReadonly"
-  },
-  {
-    "key": "ctrl+shift+c",
-    "command": "-workbench.action.terminal.openNativeConsole",
-    "when": "!terminalFocus"
+    "key": "ctrl+alt+m",
+    "command": "editor.action.selectToBracket"
   }
 ]
