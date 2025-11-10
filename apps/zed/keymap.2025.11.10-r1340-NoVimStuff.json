@@ -1,0 +1,232 @@
+// Zed keymap.
+//
+// For information on binding keys, see the Zed documentation:
+// https://zed.dev/docs/key-bindings
+//
+// To see the default key bindings run `zed: open default keymap` from the
+// command palette.
+[
+  {
+    "context": "EmptyPane || SharedScreen",
+    "bindings": {
+      // Put key bindings here (in addition to the context above) if you want them to
+      // work when no editor exists.
+      // "space f": "file_finder::Toggle"
+    }
+  },
+  {
+    "context": "Workspace || Editor",
+    "bindings": {
+      "alt-j": "pane::ActivatePreviousItem",
+      "alt-shift-j": "pane::SwapItemLeft",
+
+      "alt-k": "pane::ActivateNextItem",
+      "alt-shift-k": "pane::SwapItemRight",
+
+      "alt-e": "tab_switcher::Toggle",
+      "alt-f": "pane::DeploySearch",
+      "ctrl-k s": "zed::OpenSettings",
+      "ctrl-k k": "zed::OpenKeymap",
+      "ctrl-k d s": "zed::OpenDefaultSettings",
+      "ctrl-k d k z": "zed::OpenDefaultKeymap",
+      "ctrl-k d k v": "vim::OpenDefaultKeymap",
+      "ctrl-alt-`": "workspace::ToggleZoom",
+
+      "alt-r": "project_panel::ToggleFocus",
+      "alt-b": "workspace::ToggleLeftDock",
+      "alt-shift-b": "workspace::ToggleRightDock",
+      "alt-shift-p": "editor::CopyPermalinkToLine"
+    }
+  },
+  {
+    // Enables VSCode-like search behavior, otherwise it behaves like Vim search.
+    "context": "BufferSearchBar && !in_replace",
+    "bindings": {
+      "enter": "search::SelectNextMatch",
+      "shift-enter": "search::SelectPreviousMatch",
+      "alt-enter": "search::SelectAllMatches",
+      "escape": "buffer_search::Dismiss"
+    }
+  },
+  {
+    // Captures common keybindings in terminal, avoiding triggiering the editor.
+    "context": "Terminal",
+    "bindings": {
+      "ctrl-w": ["terminal::SendKeystroke", "ctrl-w"],
+      "ctrl-e": ["terminal::SendKeystroke", "ctrl-e"],
+      "ctrl-a": ["terminal::SendKeystroke", "ctrl-a"],
+      "ctrl-k": ["terminal::SendKeystroke", "ctrl-k"],
+      "ctrl-c": ["terminal::SendKeystroke", "ctrl-c"],
+      "ctrl-p": ["terminal::SendKeystroke", "ctrl-p"],
+      "ctrl-n": ["terminal::SendKeystroke", "ctrl-n"],
+      "ctrl-j": ["terminal::SendKeystroke", "ctrl-j"],
+      "ctrl-b": ["terminal::SendKeystroke", "ctrl-b"],
+
+      "alt-b": ["terminal::SendKeystroke", "alt-b"],
+      "alt-f": ["terminal::SendKeystroke", "alt-f"],
+      "alt-.": ["terminal::SendKeystroke", "alt-."],
+      "alt-d": ["workspace::SendKeystrokes", "alt-d"],
+
+      ", q": null
+    }
+  },
+  {
+    "context": "Editor && jupyter && !ContextEditor",
+    "bindings": {
+      "ctrl-enter": "repl::Run",
+      "alt-enter": "repl::RunInPlace"
+    }
+  },
+
+  //
+  //
+  // USE CTRL-J AND CTRL-K TO NAVIGATE MENUS
+  //
+
+  {
+    // Used for the menus displayed by:
+    // - ctrl-p
+    // - ctrl-shift-p
+    "context": "Picker > Editor",
+    // If for some reason this doesn't work, try the following. I disabled it
+    // because every time I saw it triggering, this one also triggered.
+    // "context": "FileFinder && !menu_open",
+    "bindings": {
+      "ctrl-k": "menu::SelectPrevious",
+      "ctrl-j": "menu::SelectNext"
+    }
+  },
+  {
+    // Used for the menus displayed by:
+    // - ctrl-f: buffer search
+    "context": "BufferSearchBar && !in_replace > Editor",
+    "bindings": {
+      "ctrl-k": "search::PreviousHistoryQuery",
+      "ctrl-j": "search::NextHistoryQuery",
+      "ctrl-p": "search::PreviousHistoryQuery",
+      "ctrl-n": "search::NextHistoryQuery"
+    }
+  },
+  {
+    // TODO: validate and document this one.
+    "context": "ProjectSearchBar > Editor",
+    "bindings": {
+      "ctrl-k": "search::PreviousHistoryQuery",
+      "ctrl-j": "search::NextHistoryQuery"
+    }
+  },
+  {
+    // Used for the menus displayed by:
+    // - ctrl-space: completions
+    // - ctrl-.: code actions
+    "context": "Editor && (showing_code_actions || showing_completions)",
+    "bindings": {
+      "ctrl-k": "editor::ContextMenuPrevious",
+      "ctrl-j": "editor::ContextMenuNext"
+    }
+  }
+]
+
+// //
+// // #region [Vim-mode stuff]
+// //
+
+// {
+//   "context": "Dock",
+//   "bindings": {
+//     "ctrl-w h": "workspace::ActivatePaneLeft",
+//     "ctrl-w l": "workspace::ActivatePaneRight",
+//     "ctrl-w k": "workspace::ActivatePaneUp",
+//     "ctrl-w j": "workspace::ActivatePaneDown"
+//     // ... or other keybindings
+//   }
+// },
+// {
+//   "context": "Editor && !menu",
+//   "bindings": {
+//     // "ctrl-c": "editor::Copy", // vim default: return to normal mode
+//     // "ctrl-x": "editor::Cut", // vim default: decrement
+//     // "ctrl-v": "editor::Paste", // vim default: visual block mode
+//     // "ctrl-y": "editor::Undo", // vim default: line up
+//     "ctrl-f": "buffer_search::Deploy" // vim default: page down
+//     // "ctrl-o": "workspace::Open", // vim default: go back
+//     // "ctrl-a": "editor::SelectAll" // vim default: increment
+//   }
+// },
+// {
+//   "context": "VimControl && !menu && vim_mode != operator",
+//   "bindings": {
+//     "W": "vim::NextSubwordStart",
+//     "B": "vim::PreviousSubwordStart",
+//     "E": "vim::NextSubwordEnd",
+//     "g E": "vim::PreviousSubwordEnd"
+//   }
+// },
+// {
+//   "context": "VimControl && !menu",
+//   "bindings": {
+//     // Put key bindings here if you want them to work in normal & visual mode.
+//   }
+// },
+// {
+//   "context": "Editor && VimControl && !menu && vim_mode == normal",
+//   "bindings": {
+//     "ctrl-h": "workspace::ActivatePaneLeft",
+//     "ctrl-l": "workspace::ActivatePaneRight",
+//     "ctrl-k": "workspace::ActivatePaneUp",
+//     "ctrl-j": "workspace::ActivatePaneDown",
+//     "ctrl-n": "buffer_search::Dismiss",
+//     "ctrl-b": "workspace::ToggleLeftDock",
+//     "ctrl-w": ["pane::CloseActiveItem", { "close_pinned": false }],
+
+//     "|": ["workspace::SendKeystrokes", "ctrl-w v ctrl-w shift-l"],
+//     "-": "pane::SplitHorizontal",
+
+//     ", s": "workspace::Save",
+//     ", w": "workspace::Save",
+//     "s": ["workspace::SendKeystrokes", "/"],
+
+//     "shift-y": ["workspace::SendKeystrokes", "y $"] // Use neovim's yank behavior: yank to end of line.
+//   }
+// },
+// {
+//   "context": "Editor && VimControl && !menu && vim_mode == visual",
+//   "bindings": {
+//     "ctrl-d": "editor::SelectNext",
+//     "ctrl-n": ["editor::SelectNext", { "replace_newest": true }],
+//     "ctrl-p": ["editor::SelectPrevious", { "replace_newest": true }],
+
+//     "ctrl-c": "editor::Copy", // vim default: return to normal mode
+//     "ctrl-x": "editor::Cut", // vim default: decrement
+//     "ctrl-a": "editor::SelectAll", // vim default: increment
+
+//     ", s": "workspace::Save",
+//     ", w": "workspace::Save",
+//     // ", s": ["workspace::SendKeystrokes", "escape ctrl-s"],
+
+//     "shift-s": ["vim::PushAddSurrounds", {}]
+//   }
+// },
+// {
+//   "context": "Editor && !menu && vim_mode == insert",
+//   "bindings": {
+//     "ctrl-c": "editor::Copy",
+//     "ctrl-x": "editor::Cut",
+//     "ctrl-v": "vim::Paste",
+
+//     "j f": "vim::NormalBefore", // In insert mode, make jk escape to normal mode.
+//     "f j": "vim::NormalBefore", // In insert mode, make jk escape to normal mode.
+
+//     ", s": ["workspace::SendKeystrokes", "ctrl-s escape escape"],
+//     ", w": ["workspace::SendKeystrokes", "ctrl-s escape escape"]
+//   }
+// },
+// // {
+// //   "context": "Terminal && screen != normal",
+// //   "bindings": {
+// //   }
+// // },
+
+// //
+// // #endregion [Vim-mode stuff]
+// //

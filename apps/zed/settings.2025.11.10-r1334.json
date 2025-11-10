@@ -1,0 +1,176 @@
+// Zed settings
+//
+// For information on how to configure Zed, see the Zed
+// documentation: https://zed.dev/docs/configuring-zed
+//
+// To see all of Zed's default settings without changing your
+// custom settings, run `zed: open default settings` from the
+// command palette (cmd-shift-p / ctrl-shift-p)
+// Zed settings.
+//
+// For information on how to configure Zed, see the Zed documentation:
+// https://zed.dev/docs/configuring-zed
+//
+// To see all of Zed's default settings without changing your custom settings,
+// run the `open default settings` command from the command palette or from
+// `Zed` application menu.
+{
+  "agent": {
+    "use_modifier_to_send": true,
+    "play_sound_when_agent_done": true,
+    "model_parameters": [],
+    "default_model": {
+      "provider": "copilot_chat",
+      "model": "claude-3-5-sonnet"
+    }
+  },
+
+  "terminal": {
+    "font_size": 12.0,
+    "font_family": "JetBrainsMono Nerd Font",
+    "font_weight": 400,
+    "font_fallbacks": [
+      "MesloLGS Nerd Font Mono",
+      "MesloLGS NF",
+      "JetBrainsMono Nerd Font",
+      "Cascadia Code",
+      "Consolas",
+      "monospace"
+    ],
+
+    // "font_family": "MesloLGM Nerd Font Mono",
+    // "font_weight": 600,
+    // "font_size": 15.0
+    "dock": "right",
+    "option_as_meta": true,
+    "cursor_shape": "underline",
+    "line_height": "standard",
+    "blinking": "on"
+  },
+
+  "base_keymap": "VSCode",
+  // "vim_mode": true,
+  // "vim": {},
+
+  "telemetry": {
+    "diagnostics": false,
+    "metrics": false
+  },
+
+  "project_panel": {
+    "hide_gitignore": false,
+    "auto_fold_dirs": false
+  },
+  "show_signature_help_after_edits": false,
+  "auto_signature_help": false,
+  "use_smartcase_search": true,
+  "gutter": {
+    "line_numbers": true,
+    "folds": true
+  },
+  "minimap": {
+    "show": "never",
+    "thumb": "always",
+    "max_width_columns": 80
+  },
+  "scrollbar": {
+    "axes": {
+      "horizontal": false,
+      "vertical": false
+    }
+  },
+  "hover_popover_delay": 1000,
+  "rounded_selection": false,
+  "current_line_highlight": "all",
+  "cursor_shape": "bar",
+  "cursor_blink": true,
+  "autosave": {
+    "after_delay": {
+      "milliseconds": 600000
+    }
+  },
+  "file_types": {
+    "markdown": ["*.mdx", "*.svx"],
+    "vimrc": ["vimrc"],
+    "asciidoc": ["*.adoc"],
+    "vue": ["*.vue"],
+    "erb": ["*.erb"],
+    "html": ["*.liquid", "*.svg"],
+    "css": ["*.css"],
+    "jsonc": ["json5"]
+  },
+  "completions": {
+    "words": "enabled"
+  },
+  "show_completions_on_input": true,
+  "show_whitespaces": "none",
+  "show_edit_predictions": true,
+  "indent_guides": {
+    "enabled": false
+  },
+  "wrap_guides": [80, 120],
+  "preferred_line_length": 120,
+  "soft_wrap": "bounded",
+  "hard_tabs": false,
+  "tab_size": 2,
+
+  "ui_font_family": "Geist", // Cascadia, Inter, etc.
+  "ui_font_size": 16,
+  "ui_font_weight": 400,
+  "ui_font_features": {
+    "ss01": true,
+    "ss19": true,
+    "ss20": true,
+    "calt": false
+  },
+
+  "buffer_font_family": "CaskaydiaCove Nerd Font", // CodeNewRoman Nerd Font Mono
+  "buffer_font_size": 14.0,
+  "buffer_font_weight": 300,
+  // "buffer_line_height": "standard",
+  "buffer_font_fallbacks": [
+    "MesloLGM Nerd Font Mono",
+    "CodeNewRoman Nerd Font Mono",
+    "JetBrains Mono",
+    "Liberation Mono"
+  ],
+  "buffer_font_features": {
+    "zero": true
+  },
+
+  "theme": {
+    "mode": "system",
+    "light": "One Light",
+    "dark": "One Dark"
+  },
+
+  "restore_on_startup": "none",
+
+  "jupyter": {
+    "enabled": true
+  },
+
+  // "cursor_blink": true,
+  "scroll_beyond_last_line": "one_page",
+
+  "lsp": {
+    "deno": {
+      "settings": {
+        "deno": {
+          "enable": true
+        }
+      }
+    }
+  },
+
+  "languages": {
+    "TypeScript": {
+      "language_servers": ["deno", "!typescript-language-server", "!vtsls", "!eslint"],
+      "formatter": "language_server"
+    },
+    "TSX": {
+      "language_servers": ["deno", "!typescript-language-server", "!vtsls", "!eslint"],
+      "formatter": "language_server"
+    }
+  }
+}
