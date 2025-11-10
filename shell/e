@@ -1,0 +1,53 @@
+#!/usr/bin/env bash
+# Smart editor wrapper that prefers GUI editors but falls back gracefully
+# Usage: e [file...]
+#
+# Priority order:
+# 1. GUI editors: code-insiders, code, subl
+# 2. $EDITOR environment variable (defaults to first terminal editor if unset)
+# 3. Terminal editors: nvim, vim, vi, nano
+#
+# Installation: Symlink to a directory in your PATH
+#   ln -s "$(pwd)/e" "$HOME/bin/e"
+
+set -euo pipefail
+
+# Function to check if a command exists and is executable
+command_exists() {
+    command -v "$1" >/dev/null 2>&1
+}
+
+# Function to find the best available editor
+find_editor() {
+    # Terminal editors in priority order
+    local terminal_editors=(nvim vim vi nano)
+    
+    # Try editors in priority order: GUI → $EDITOR → terminal
+    local editors=(code-insiders code subl "${EDITOR:-${terminal_editors[0]}}" "${terminal_editors[@]}")
+    
+    for editor in "${editors[@]}"; do
+        if command_exists "$editor"; then
+            echo "$editor"
+            return 0
+        fi
+    done
+
+    # No editor found
+    return 1
+}
+
+# Main execution
+main() {
+    local chosen_editor
+    
+    if ! chosen_editor=$(find_editor); then
+        echo "Error: No editor found in PATH" >&2
+        echo "Please install one of: code, vim, nano, or set \$EDITOR" >&2
+        exit 1
+    fi
+
+    # Execute the editor with all provided arguments
+    exec "$chosen_editor" "$@"
+}
+
+main "$@"

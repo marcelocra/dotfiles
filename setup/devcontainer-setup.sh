@@ -7,17 +7,24 @@ set -e
 
 # Configuration from environment variables or defaults.
 GITHUB_HANDLE="${MCRA_GITHUB_HANDLE:-marcelocra}"
-CONFIG_DIR="${MCRA_CONFIG:-$HOME/.config/marcelocra}"
 PROJECTS_DIR="${MCRA_PROJECTS:-$HOME/prj}"
-DOTFILES_DIR="$CONFIG_DIR/dotfiles"
+DOTFILES_DIR="$PROJECTS_DIR/dotfiles"
+
 SETUP_DOTFILES="${MCRA_SETUP_DOTFILES:-true}"
 SETUP_ZSH_PLUGINS="${MCRA_SETUP_ZSH_PLUGINS:-true}"
+SETUP_MISE="${MCRA_SETUP_MISE:-false}"
+
+NPM_PACKAGES=(
+    "@google/gemini-cli"
+    "@anthropic-ai/claude-code"
+    "@openai/codex"
+)
+NPM_INSTALL="${MCRA_NPM_INSTALL:-${NPM_PACKAGES[*]}}"
 
 echo "🚀 Starting devcontainer setup"
 echo "👤 User: $(whoami)"
 echo "🏠 Home: $HOME"
 echo "📋 GitHub Handle: $GITHUB_HANDLE"
-echo "📁 Config Dir: $CONFIG_DIR"
 echo "📁 Projects Dir: $PROJECTS_DIR"
 echo "📦 Dotfiles Dir: $DOTFILES_DIR"
 
@@ -56,7 +63,6 @@ fi
 
 # Create directory structure.
 log "📁 Creating directory structure..."
-mkdir -p "$CONFIG_DIR"
 mkdir -p "$PROJECTS_DIR"
 log "✅ Directories created"
 
@@ -113,7 +119,7 @@ else
 fi
 
 # Setup mise for environment management.
-if [ "${MCRA_USE_MISE:-false}" = "true" ] && ! command -v mise &> /dev/null; then
+if [ "$SETUP_MISE" = "true" ] && ! command -v mise &> /dev/null; then
     log "🔌 Installing mise for runtime version management..."
     curl https://mise.run | sh
     # Add mise to the current shell's PATH to use it immediately.
@@ -124,14 +130,14 @@ if [ "${MCRA_USE_MISE:-false}" = "true" ] && ! command -v mise &> /dev/null; the
         log "📦 Installing Node.js/npm via mise..."
         mise use --global node@lts
     fi
-    npm install -g @google/gemini-cli @anthropic-ai/claude-code
+    npm install -g $NPM_INSTALL
     log "✅ mise installed and configured."
 else
     if command -v npm &> /dev/null; then
         log "Installing gemini-cli & claude code..."
-        npm install -g @google/gemini-cli @anthropic-ai/claude-code
+        npm install -g $NPM_INSTALL
     fi
-    log "ℹ️  Done. Skipping mise installation (MCRA_USE_MISE is false or mise is already installed)."
+    log "ℹ️  Done. Skipping mise installation (MCRA_SETUP_MISE is false or mise is already installed)."
 fi
 
 # Additional project-specific setup can go here.

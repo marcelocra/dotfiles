@@ -18,7 +18,8 @@ detect_environment() {
         export DOTFILES_IN_CONTAINER="false"
     fi
 
-    if grep -q Microsoft /proc/version 2>/dev/null; then
+    if grep -q Microsoft /proc/version 2>/dev/null || \
+       grep -q WSL2 /proc/version 2>/dev/null; then
         export DOTFILES_IN_WSL="true"
     else
         export DOTFILES_IN_WSL="false"
@@ -336,11 +337,11 @@ configure_git_aliases() {
 # =============================================================================
 
 configure_docker_aliases() {
-    alias pod='podman'
+    # alias pod='podman'
     # alias docker='podman'
-    alias dc="docker compose"
-    alias docker-prune-month-old-images='docker image prune -a --filter "until=720h"'
-    alias docker-prune-two-week-old-images='docker image prune -a --filter "until=336h"'
+    # alias dc="docker compose"
+    # alias docker-prune-month-old-images='docker image prune -a --filter "until=720h"'
+    # alias docker-prune-two-week-old-images='docker image prune -a --filter "until=336h"'
 }
 
 # Next docker alias marker
@@ -798,7 +799,7 @@ configure_zsh() {
             export ZSH_CUSTOM="$ZSH/custom"
 
             # Use custom theme from dotfiles
-            local ZSH_THEME_PATH="$HOME/.config/marcelocra/dotfiles/shell/marcelocra.zsh-theme"
+            local ZSH_THEME_PATH="$HOME/prj/dotfiles/shell/marcelocra.zsh-theme"
             if [[ -f "$ZSH_THEME_PATH" ]]; then
                 # Symlink custom theme to oh-my-zsh themes directory
                 ln -sf "$ZSH_THEME_PATH" "$ZSH_CUSTOM/themes/"
@@ -995,5 +996,3 @@ main "$@"
 #   - Use local for function variables: local var="value"
 #   - Always quote variable expansions: "$var"
 #   - Use ${var:-default} for default values
-
-[[ "$TERM_PROGRAM" == "kiro" ]] && . "$(kiro --locate-shell-integration-path zsh)"
