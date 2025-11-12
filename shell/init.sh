@@ -851,6 +851,14 @@ configure_zsh() {
         setopt AUTO_CD              # cd by typing directory name if it's not a command
         setopt CORRECT              # command auto-correction
         setopt COMPLETE_ALIASES     # complete aliases
+
+        # Configure fzf if installed.
+        if command_exists fzf && fzf --zsh >/dev/null 2>&1; then
+            eval "$(fzf --zsh)"
+        else
+            [ -f /usr/share/doc/fzf/examples/key-bindings.zsh ] && source /usr/share/doc/fzf/examples/key-bindings.zsh
+            [ -f /usr/share/doc/fzf/examples/completion.zsh ] && source /usr/share/doc/fzf/examples/completion.zsh
+        fi
     fi
 }
 
@@ -908,6 +916,13 @@ configure_bash() {
             trap 'preexec' DEBUG
             PROMPT_COMMAND="${PROMPT_COMMAND:+$PROMPT_COMMAND; }precmd"
         fi
+
+        # Configure fzf if installed.
+        if command_exists fzf && fzf --bash >/dev/null 2>&1; then
+            eval "$(fzf --bash)"
+        else
+            [ -f /usr/share/doc/fzf/examples/key-bindings.bash ] && source /usr/share/doc/fzf/examples/key-bindings.bash
+        fi
     fi
 }
 
@@ -933,9 +948,7 @@ configure_mise() {
 # =============================================================================
 
 configure_fzf() {
-    # Enable fzf key bindings and completion
-    [ -f /usr/share/doc/fzf/examples/key-bindings.zsh ] && source /usr/share/doc/fzf/examples/key-bindings.zsh
-    [ -f /usr/share/doc/fzf/examples/completion.zsh ] && source /usr/share/doc/fzf/examples/completion.zsh
+    export FZF_DEFAULT_OPTS='--height 40% --layout=reverse --border --info=inline'
 }
 
 # =============================================================================
@@ -962,12 +975,10 @@ main() {
     log_debug "Container: $DOTFILES_IN_CONTAINER, WSL: $DOTFILES_IN_WSL"
 }
 
-# Only run main if script is sourced, not executed: the 'return' command only
-# succeeds when script is sourced. Works reliably in both bash and zsh.
-if ! (return 0 2>/dev/null); then
-    echo "Error: This script should be sourced, not executed directly."
-    echo "Usage: source $0"
-    echo "   or: . $0"
+# Only run main if script is sourced, not executed
+# Generic POSIX check works for both bash and zsh
+if [ "$0" = "${0##*/}" ]; then
+    echo "This script should be sourced, not executed directly."
     exit 1
 fi
 
