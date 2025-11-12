@@ -137,7 +137,7 @@ if [ "$SETUP_MISE" = "true" ] && ! command -v mise &> /dev/null; then
     log "✅ mise installed and configured."
 else
     if command -v npm &> /dev/null; then
-        log "Installing gemini-cli & claude code..."
+        log "Installing ${NPM_INSTALL[*]}..."
         npm install -g $NPM_INSTALL
     fi
     log "ℹ️  Done. Skipping mise installation (MCRA_SETUP_MISE is false or mise is already installed)."
