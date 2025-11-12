@@ -71,7 +71,7 @@ ICON_TIME="⏰"
 ICON_DATE="📅"
 ICON_PWR="⚡"
 ICON_OK="❯"
-ICON_ERR="✖"
+ICON_ERR="⨯"
 ICON_VENV="🐍"
 
 # Time-based prompt symbols (optional - set USE_TIME_PROMPT=1 to enable)
