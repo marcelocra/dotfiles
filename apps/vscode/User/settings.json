@@ -1,15 +1,15 @@
 {
+  // #region [These mostly don't change]
+
   "json.schemas": [
     {
-      // Chrome Extensions' Manifest. Point to extension files in a workspace if
-      // this is not working correctly.
-      "fileMatch": ["manifest.json"],
-      "url": "https://json.schemastore.org/chrome-manifest.json"
-    },
-    {
-      // TypeScript.
       "fileMatch": ["tsconfig.json"],
       "url": "https://json.schemastore.org/tsconfig.json"
+    },
+    // Point to extension files in a workspace if this is not working correctly.
+    {
+      "fileMatch": ["manifest.json"],
+      "url": "https://json.schemastore.org/chrome-manifest.json"
     }
   ],
 
@@ -21,12 +21,12 @@
   "typescript.preferences.importModuleSpecifier": "non-relative",
 
   "svelte.enable-ts-plugin": true,
-  "[svelte]": {
-    "editor.defaultFormatter": "svelte.svelte-vscode"
-  },
 
-  "[astro]": {
-    "editor.defaultFormatter": "astro-build.astro-vscode"
+  "[svelte]": { "editor.defaultFormatter": "svelte.svelte-vscode" },
+  "[astro]": { "editor.defaultFormatter": "astro-build.astro-vscode" },
+  "[jade]": { "editor.defaultFormatter": "esbenp.prettier-vscode" },
+  "[handlebars]": {
+    "editor.defaultFormatter": "vscode.html-language-features"
   },
 
   "eslint.enable": true,
@@ -47,14 +47,6 @@
     "typescript",
     "typescriptreact"
   ],
-
-  "[handlebars]": {
-    "editor.defaultFormatter": "vscode.html-language-features"
-  },
-
-  "[jade]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
-  },
 
   "tailwindCSS.emmetCompletions": false,
   "tailwindCSS.colorDecorators": true, // They are useful, though annoying.
@@ -144,22 +136,11 @@
     "svelte": "html"
   },
   "emmet.excludeLanguages": ["markdown"],
-
-  "[nim][nimble]": {
-    "editor.defaultFormatter": "NimLang.nimlang"
-  },
-
+  "[nim][nimble]": { "editor.defaultFormatter": "NimLang.nimlang" },
   "vue.server.hybridMode": "typeScriptPluginOnly",
   "lit-html.tags": ["html", "css", "vue"],
-
-  "[yaml]": {
-    "editor.defaultFormatter": "redhat.vscode-yaml"
-  },
-
-  "[elm]": {
-    "editor.defaultFormatter": "elmTooling.elm-ls-vscode"
-  },
-
+  "[yaml]": { "editor.defaultFormatter": "redhat.vscode-yaml" },
+  "[elm]": { "editor.defaultFormatter": "elmTooling.elm-ls-vscode" },
   "[clojure]": {
     // "editor.wordSeparators": "\t ()\"':,;~@#$%^&{}[]/-`.",
     "editor.autoClosingBrackets": "always",
@@ -171,10 +152,7 @@
     "editor.matchBrackets": "never",
     "editor.guides.indentation": false,
     "editor.parameterHints.enabled": false,
-    "editor.unicodeHighlight.allowedCharacters": {
-      " ": true,
-      "꞉": true
-    },
+    "editor.unicodeHighlight.allowedCharacters": { " ": true, "꞉": true },
     "editor.foldingStrategy": "indentation",
     "editor.defaultFormatter": "betterthantomorrow.calva"
   },
@@ -189,31 +167,23 @@
   },
 
   "dotnetAcquisitionExtension.enableTelemetry": false,
-
-  "dotnetAcquisitionExtension.sharedExistingDotnetPath": "/home/marcelocra/bin/dotnet",
+  "dotnetAcquisitionExtension.sharedExistingDotnetPath": "~/bin/dotnet",
   "dotnetAcquisitionExtension.existingDotnetPath": [
     {
       "extensionId": "ms-azuretools.vscode-azure-github-copilot",
-      // "path": "/home/marcelocra/bin/binaries/dotnet/dotnet-v9.0.102/dotnet"
-      "path": "/home/marcelocra/bin/binaries/dotnet/dotnet-v8.0.405/dotnet"
+      // "path": "~/bin/binaries/dotnet/dotnet-v9.0.102/dotnet"
+      "path": "~/bin/binaries/dotnet/dotnet-v8.0.405/dotnet"
     }
   ],
 
   "FSharp.smartIndent": true,
   "FSharp.inlayHints.parameterNames": false,
   "FSharp.inlayHints.typeAnnotations": false,
-  "[fsharp]": {
-    "editor.defaultFormatter": "Ionide.Ionide-fsharp"
-  },
+  "[fsharp]": { "editor.defaultFormatter": "Ionide.Ionide-fsharp" },
   "FSharp.addFsiWatcher": true,
   "FSharp.autoRevealInExplorer": "disabled",
-
-  "[csharp]": {
-    "editor.defaultFormatter": "ms-dotnettools.csharp"
-  },
-  "[aspnetcorerazor]": {
-    "editor.defaultFormatter": "ms-dotnettools.csharp"
-  },
+  "[csharp]": { "editor.defaultFormatter": "ms-dotnettools.csharp" },
+  "[aspnetcorerazor]": { "editor.defaultFormatter": "ms-dotnettools.csharp" },
   "csharp.suppressBuildAssetsNotification": true,
 
   "polyglot-notebook.defaultNotebookLanguage": "fsharp",
@@ -237,9 +207,7 @@
   "python.REPL.sendToNativeREPL": true,
   "ruff.nativeServer": "on",
 
-  "[python]": {
-    "editor.defaultFormatter": "charliermarsh.ruff"
-  },
+  "[python]": { "editor.defaultFormatter": "charliermarsh.ruff" },
   "python.terminal.activateEnvironment": true,
   "python.analysis.typeCheckingMode": "strict",
 
@@ -259,32 +227,10 @@
     "editor.defaultFormatter": "Dart-Code.dart-code"
   },
 
-  "C_Cpp.clang_format_fallbackStyle": "Google",
-  "C_Cpp.clang_format_sortIncludes": true,
-  "C_Cpp.clang_format_style": "Google",
-  "[cpp]": {
-    "editor.defaultFormatter": "ms-vscode.cpptools"
-  },
-
-  "haskell.manageHLS": "GHCup",
-
   "go.formatTool": "goimports",
   "[go][go.mod][go.sum][gotmpl][go.work]": {
     "editor.defaultFormatter": "golang.go"
   },
-
-  "[markdown]": {
-    // "editor.tabSize": 2,
-    // "editor.insertSpaces": true,
-    // "editor.autoClosingBrackets": "never"
-  },
-
-  "[asciidoc]": {
-    // "editor.rulers": [80, 100, 120]
-  },
-
-  "asciidoc.antora.enableAntoraSupport": false,
-
   "[shellscript]": {
     "editor.quickSuggestions": {
       "other": "on",
@@ -293,71 +239,32 @@
     }
   },
 
-  "[ocaml]": {
-    "editor.defaultFormatter": "ocamllabs.ocaml-platform"
-  },
-
-  "[snippets]": {
-    "editor.defaultFormatter": "vscode.json-language-features"
-  },
+  "[ocaml]": { "editor.defaultFormatter": "ocamllabs.ocaml-platform" },
+  "[snippets]": { "editor.defaultFormatter": "vscode.json-language-features" },
 
   "github.copilot.nextEditSuggestions.enabled": false,
   "github.copilot.chat.codesearch.enabled": true,
   "github.copilot.enable": {
     "*": true,
     "plaintext": false,
-    "markdown": false,
+    "markdown": true,
     "scminput": false,
     "shellscript": true
   },
   "github.copilot.chat.byok.ollamaEndpoint": "http://localhost:11434",
+  "chat.agent.thinkingStyle": "collapsedPreview",
+  "chat.agentSessionsViewLocation": "view",
+  "chat.editor.wordWrap": "on",
 
   "geminicodeassist.enableTelemetry": false,
   "geminicodeassist.inlineSuggestions.enableAuto": true,
 
-  // TODO: figure out from what extension this comes from. Perhaps the Dev
-  // Container one.
-  "remoteHub.commitDirectlyWarning": "off",
-
   // From Nx plugin.
   "nxConsole.enableTelemetry": false,
 
-  "[prisma]": {
-    "editor.defaultFormatter": "Prisma.prisma"
-  },
+  "[prisma]": { "editor.defaultFormatter": "Prisma.prisma" },
 
-  // #region editor. {{{
-
-  // Default. Keep it here and override below. Copy/pastes and fonts options at the bottom of this file.
-  "editor.fontFamily": "'MesloLGS Nerd Font', 'MesloLGS NF', Consolas, 'Courier New', monospace",
-
-  "editor.fontFamily": "Google Sans Code",
-  "editor.fontSize": 17,
-  "editor.fontWeight": "300",
-  "editor.fontLigatures": "'ss01' 1",
-
-  "editor.fontFamily": "JuliaMono",
-  "editor.fontSize": 17,
-  "editor.fontWeight": "300",
-  // Examples:   -> <-- <|   ligat.    dash 0    alt. g    alt. @    alt. a    alt. ~
-  "editor.fontLigatures": "'calt' 1, 'zero' 1, 'ss01' 1, 'ss02' 1, 'ss06' 1, 'cv03' 1",
-
-  "editor.fontFamily": "Reddit Mono",
-  "editor.fontSize": 15,
-  "editor.fontWeight": "300",
-  "editor.fontLigatures": "'ss02' 1, 'cv01' 1, 'cv02' 1, 'cv04' 1, 'cv06' 1, 'cv07' 1, 'cv10' 0, 'cv16' 1",
-  // - default is great
-  // - ss02: alternated 'a' and 'i'
-  // - cv: 1(alt a),2(wider b),3(wider d, no leg),4(wider g),5(alt l),6(wider o),7(wider p),8(nao sei),9(wider q, no leg),10(cross t),11(no leg u),12(nao sei),13(i with base),14(nao sei),15(top leg no l),16(W sem curva),17(w meio mais alto),18(0 estranho). Pref: 1,2,4,6,7
-
-  // ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()_+-
-  // = <- -> <= => <=> <| |> fi Tl Fl != !== === /= ;:* :- --- ---- .: -. .- !?
-  // < > www <> >= <-> [:] -~ ?? ->> -< >- .. '' "" >>> Fl Tl fi fj fl ft
-
-  "editor.fontFamily": "Input Mono",
-  "editor.fontSize": 14,
-  "editor.fontWeight": "300",
-  "editor.fontLigatures": "'ss01' 1, 'ss02' 1, 'ss09' 1, 'ss10' 1, 'zero' 1", // Input Mono.
+  // #region [editor.*] {{{
 
   "editor.tokenColorCustomizations": {
     "[*Light*]": {
@@ -396,9 +303,7 @@
       "textMateRules": [
         {
           "scope": ["comment", "keyword"],
-          "settings": {
-            "fontStyle": "italic"
-          }
+          "settings": { "fontStyle": "italic" }
         }
       ]
     }
@@ -424,10 +329,10 @@
   "editor.defaultFormatter": "esbenp.prettier-vscode",
 
   // Cursor.
-  "editor.cursorStyle": "line-thin",
-  "editor.cursorWidth": 1,
+  "editor.cursorStyle": "line",
+  // "editor.cursorWidth": 1,
   "editor.cursorSmoothCaretAnimation": "on",
-  "editor.cursorBlinking": "blink",
+  "editor.cursorBlinking": "expand",
   // "editor.cursorSurroundingLines": 10,
   // "editor.cursorSurroundingLinesStyle": "all",
 
@@ -474,6 +379,7 @@
   "editor.accessibilitySupport": "off",
   "editor.showFoldingControls": "always",
   "editor.foldingHighlight": true,
+  "editor.minimap.enabled": false,
   "editor.minimap.autohide": "none",
   "editor.minimap.renderCharacters": false,
   "editor.minimap.showSlider": "always",
@@ -486,30 +392,25 @@
   "editor.minimap.maxColumn": 80,
   "editor.minimap.side": "right",
   "editor.minimap.scale": 1,
-
-  // Performance related.
-  "extensions.experimental.affinity": {
-    // "vscodevim.vim": 1,
-    "asvetliakov.vscode-neovim": 1
-  },
-
-  // Next editor.
-
-  // #endregion editor. }}}
+  ">>> Next editor.*": "",
+  // #endregion [editor.*] }}}
 
   "explorer.openEditors.visible": 1,
   "explorer.confirmDragAndDrop": false,
   "explorer.excludeGitIgnore": false,
   "explorer.compactFolders": false,
-  // Next explorer.
+  ">>> Next explorer.*": "",
 
-  // Disabling this for now, as I didn't really like it.
-  // // Nest some files in the explorer.
-  // "explorer.fileNesting.enabled": true,
-  // "explorer.fileNesting.patterns": {
-  //   ".vscode.md": "eslint*, .eslint*, .eslintignore, prettier*, .prettier*, .prettierignore, tsconfig*, .editorconfig, .gitattributes, .gitignore, LICENSE*, .env*, README*",
-  //   "package.json": "package-lock.json, yarn.lock, pnpm-lock.yaml, bun.lockb, pnpm-workspace.yaml, deno.json, deno.lock"
-  // },
+  // Nest/Fold some files in the explorer.
+  "explorer.fileNesting.enabled": true,
+  "explorer.fileNesting.patterns": {
+    "[docs]": "*.md",
+
+    "[configs]": ".editorconfig, package.json, .gitignore",
+    ".editorconfig": ".env, .prettierrc",
+    "package.json": "package-lock.json, yarn.lock, pnpm-lock.yaml, bun.lockb, pnpm-workspace.yaml, deno.json, deno.lock, turbo.json",
+    ".gitignore": ".gitignore, .gitattributes, .gitmodules"
+  },
 
   // prettier-ignore
   "files.associations": {
@@ -520,8 +421,9 @@
     // Add above this line (avoid the comma problem).
     "vimrc": "vimrc"
   },
-
   "files.eol": "\n",
+  "files.autoSaveDelay": 600000,
+  "files.autoSave": "afterDelay",
 
   // #region Git and GitLens {{{
 
@@ -571,13 +473,15 @@
 
   // #region terminal. {{{
 
+  "terminal.integrated.fontSize": 12,
+
   // Best terminal fonts to be the default. DO NOT REMOVE, experiment with the lines below.
-  "terminal.integrated.fontFamily": "'MesloLGS Nerd Font Mono', 'MesloLGS NF', 'JetBrainsMono Nerd Font', 'Cascadia Code', Consolas, monospace",
+  "terminal.integrated.fontFamily": "'JetBrainsMono Nerd Font', 'MesloLGS Nerd Font Mono', 'MesloLGS NF', 'JetBrainsMono Nerd Font', 'Cascadia Code', Consolas, monospace",
 
   // For experiments.
   // "terminal.integrated.fontFamily": "JetBrainsMono Nerd Font",
   // "terminal.integrated.fontFamily": "Fragment Mono",
-  "terminal.integrated.fontFamily": "Geist Mono",
+  // "terminal.integrated.fontFamily": "Geist Mono",
 
   // "terminal.integrated.fontFamily": "Maple Mono NF",
   // "terminal.integrated.fontLigatures.featureSettings": "'calt' 1, 'cv02' 1, 'cv03' 1, 'cv08' 1, 'ss03' 1",
@@ -596,11 +500,9 @@
   // "terminal.integrated.fontLigatures.featureSettings": "'ss01' 1, 'ss02' 1, 'ss09' 1, 'ss10' 1, 'zero' 1",
 
   "terminal.integrated.fontFamily.next": "//",
-
-  // Remaining terminal settings.
-  "terminal.integrated.fontSize": 15,
-  "terminal.integrated.fontWeight": "300",
+  "terminal.integrated.fontWeight": "400",
   "terminal.integrated.fontLigatures.enabled": true,
+  "terminal.integrated.fontLigatures.featureSettings": "'zero' 1, 'ss01' 0, 'ss02' 0, 'ss19' 1, 'cv03' 1, 'ss20' 0",
   "terminal.integrated.cursorWidth": 3, // For when it is a bar.
   "terminal.integrated.cursorStyle": "underline", // I want to use 'underline', but it is so thin that it disappears sometimes.
   "terminal.integrated.cursorStyleInactive": "outline",
@@ -647,11 +549,9 @@
     "pwsh-shell-integration": false,
     "lsp": true
   },
-  "terminal.integrated.copyOnSelection": true,
-  "terminal.integrated.mcra.next": "",
 
-  "terminal.external.linuxExec": "kitty",
-  "terminal.external.osxExec": "kitty.app",
+  "terminal.external.linuxExec": "wezterm",
+  "terminal.external.osxExec": "wezterm.app",
   "terminal.external.windowsExec": "C:\\Windows\\System32\\kitty.exe",
 
   // #endregion terminal. }}}
@@ -662,37 +562,7 @@
   // #region window and search stuff. {{{
 
   "window.titleBarStyle": "custom",
-  // "window.title": "/ 📂 ${activeRepositoryName} / 🌿 ${activeRepositoryBranchName} / 📄 ${activeEditorMedium}",
-  // "window.title": "⚡${activeRepositoryName} 🌿 ${activeRepositoryBranchName} 📝 ${activeEditorMedium}",
-  // "window.title": "⚡${activeRepositoryName} 🔀 ${activeRepositoryBranchName} 📝 ${activeEditorMedium}",
-  // "window.title": "🧩 ${activeRepositoryName} / 🔀 ${activeRepositoryBranchName} / 📝 ${activeEditorMedium}",
-  // "window.title": "⚡${activeRepositoryName} 🔀 ${activeRepositoryBranchName} 📝 ${activeEditorMedium}",
-  // "window.title": "⦗⚡${activeRepositoryName} ⦘ ⦗🔀${activeRepositoryBranchName} ⦘ ⦗📝${activeEditorMedium} ⦘",
-  // "window.title": "【${activeRepositoryName}】◇【${activeRepositoryBranchName}】◇【${activeEditorMedium}】",
-  // "window.title": "⦗${activeRepositoryName}⦘ ⦗${activeRepositoryBranchName}⦘ ⦗${activeEditorMedium}⦘",
-  // "window.title": "[${activeRepositoryName}] [${activeRepositoryBranchName}] [${activeEditorMedium}] ",
-  // "window.title": "[${activeRepositoryName} | ${activeRepositoryBranchName}] ${activeEditorMedium} ",
-  // "window.title": "⚙︎ ${activeRepositoryName} 🌿 ${activeRepositoryBranchName} 📄 ${activeEditorMedium}",
-  // "window.title": "┣ ${activeRepositoryName} ━ ${activeRepositoryBranchName} ━ ${activeEditorMedium}",
-  // "window.title": "⦓${activeRepositoryName} ⌇ ${activeRepositoryBranchName}⦔ ${activeEditorMedium}",
-  // "window.title": "『${activeRepositoryName} ⫸${activeRepositoryBranchName}』 ${activeEditorMedium}",
-  // "window.title": "((${activeRepositoryName})) ∿ ${activeRepositoryBranchName} ∿ ${activeEditorMedium}",
-  // "window.title": "⦗${activeRepositoryName}⦘ ⧨ ${activeRepositoryBranchName} ⧨ ${activeEditorMedium}",
-  // "window.title": "⧫ ${activeRepositoryName} ⧫ ${activeRepositoryBranchName} ⧫ ${activeEditorMedium} ⧫",
-  // "window.title": "🔷${activeRepositoryName}🌿${activeRepositoryBranchName} ◈ ${activeEditorMedium}",
-  // "window.title": "⚡${activeRepositoryName} ∿ 🔀${activeRepositoryBranchName} ∿ 📄${activeEditorMedium}",
-  // "window.title": "🔥${activeRepositoryName}🌳${activeRepositoryBranchName}📋${activeEditorMedium}",
-  // "window.title": "🔮⟪${activeRepositoryName}⟫ ◈ ✨${activeRepositoryBranchName} ◈ ${activeEditorMedium}",
-  // "window.title": "💎⦗${activeRepositoryName}⦘ ∿ 🌿${activeRepositoryBranchName} ∿ ${activeEditorMedium}",
-  // "window.title": "🌳⟨${activeRepositoryName}⟩ ◈ 🌿${activeRepositoryBranchName} ◈ 🍃${activeEditorMedium}", // Nature theme.
-  // "window.title": "⚙️⦗${activeRepositoryName}⦘ ⧫ 🔀${activeRepositoryBranchName} ⧫ 💻${activeEditorMedium}", // Tech theme.
-  // "window.title": "🌌【${activeRepositoryName}】 ∿ ⭐${activeRepositoryBranchName} ∿ 🛸${activeEditorMedium}", // Space theme.
-  // "window.title": "💎⟬${activeRepositoryName}⟭ ◊ 🔹${activeRepositoryBranchName} ◊ 💠${activeEditorMedium}", // Crystal theme.
-  // "window.title": "💎⟬${activeRepositoryName}⟭ ◊ 🔹${activeRepositoryBranchName} ◊ 💠${activeEditorMedium}", // Crystal theme.
-  // // "window.title": "🌸${activeRepositoryName}🌿 ${activeRepositoryBranchName} ${activeEditorMedium}",
-  // "window.title": "⧸⚡${activeRepositoryName} ⧸🌿${activeRepositoryBranchName} ⧸ ${activeEditorMedium}",
-  // "window.title": "⧸ ${activeRepositoryName} ⧸ ${activeRepositoryBranchName} ⧸ ➜${activeEditorMedium}",
-  "window.title": "[${rootNameShort}/${activeRepositoryBranchName}] ${activeEditorMedium}",
+  "window.title": "[${rootNameShort}] ${activeEditorMedium}",
   "window.newWindowDimensions": "inherit",
   "window.restoreWindows": "all",
   "window.newWindowProfile": "Default",
@@ -730,10 +600,13 @@
 
   // #endregion window and search stuff. }}}
 
-  // #region Misc. {{{
-  //
-  // Random one-off settings that doesn't make sense to put in a separate
-  // category.
+  "markdown.copyFiles.destination": {
+    "**": "${documentWorkspaceFolder}/assets/images/pasted-from-clipboard/${documentBaseName}/${unixTime}-image.png"
+  },
+
+  "diffEditor.codeLens": true,
+  "diffEditor.ignoreTrimWhitespace": false,
+  "diffEditor.renderSideBySide": true,
 
   "html.suggest.html5": false,
   "outline.collapseItems": "alwaysExpand",
@@ -741,675 +614,24 @@
   "scm.compactFolders": false,
   "scm.diffDecorationsGutterWidth": 5,
   "telemetry.telemetryLevel": "off",
-  "postman.settings.dotenv-detection-notification-visibility": false,
-
-  "diffEditor.codeLens": true,
-  "diffEditor.ignoreTrimWhitespace": false,
-  "diffEditor.renderSideBySide": true,
-
-  // Detect remapped keys better (e.g. caps lock -> ctrl).
-  "keyboard.dispatch": "keyCode",
-
-  "markdown.copyFiles.destination": {
-    // Insert the copied file in the root assets/images folder of the workspace.
-    // Other possibilities:
-    //  - ${documentDirName} — Absolute parent directory path of the Markdown document, e.g. /Users/me/myProject/docs.
-    //  - ${documentRelativeDirName} — Relative parent directory path of the Markdown document, e.g. docs. This is the same as ${documentDirName} if the file is not part of a workspace.
-    //  - ${documentFileName} — The full filename of the Markdown document, e.g. README.md.
-    //  - ${documentBaseName} — The basename of the Markdown document, e.g. README.
-    //  - ${documentExtName} — The extension of the Markdown document, e.g. md.
-    //  - ${documentFilePath} — Absolute path of the Markdown document, e.g. /Users/me/myProject/docs/README.md.
-    //  - ${documentRelativeFilePath} — Relative path of the Markdown document, e.g. docs/README.md. This is the same as ${documentFilePath} if the file is not part of a workspace.
-    //  - ${documentWorkspaceFolder} — The workspace folder for the Markdown document, e.g. /Users/me/myProject. This is the same as ${documentDirName} if the file is not part of a workspace.
-    //  - ${fileName} — The file name of the dropped file, e.g. image.png.
-    //  - ${fileExtName} — The extension of the dropped file, e.g. png.
-    //  - ${unixTime} — The current Unix timestamp in milliseconds.
-    // "path": "${documentRelativeDirName}/images/${unixTime}image.png",
-    // IMPORTANT: This can be replicated in a workspace. If that's the case,
-    // changing it here will seem like it is not working. Check there first.
-    "**": "${documentWorkspaceFolder}/assets/images/pasted-from-clipboard/${documentBaseName}/${unixTime}-image.png"
-  },
-
   "accessibility.voice.speechLanguage": "pt-BR",
   "dotfiles.repository": "marcelocra/dotfiles",
   "dotfiles.targetPath": "~/prj/dotfiles",
   "dotfiles.installCommand": "devcontainer-setup.sh",
-
-  "mcra next misc thing above this": "",
-
-  // #endregion Misc. }}}
-
-  // #region devcontainer. {{{
-
   "@azure.argTenant": "",
-
   "dev.containers.dockerPath": "podman",
   "dev.containers.dockerComposePath": "podman-compose",
   "docker.dockerPath": "podman",
 
-  // #endregion devcontainer. }}}
-
-  //----------------------------------------------------------------------------
-  // #region VSCodeNeovim. {{{
-  //----------------------------------------------------------------------------
-
-  "vscode-neovim.compositeTimeout": 100,
-  "vscode-neovim.compositeKeys": {
-    "jf": {
-      // Easier way to leave insert mode.
-      "command": "vscode-neovim.escape"
-    },
-    "fj": {
-      // Easier way to leave insert mode.
-      "command": "vscode-neovim.escape"
-    },
-    ",w": {
-      // Easier way to leave insert mode and save the file.
-      "command": "vscode-neovim.lua",
-      "args": [
-        "vim.api.nvim_input('<Esc>') require('vscode').action('workbench.action.files.save')"
-      ]
-    },
-    ",s": {
-      // Easier way to leave insert mode and save the file.
-      "command": "vscode-neovim.lua",
-      "args": [
-        "vim.api.nvim_input('<Esc>') require('vscode').action('workbench.action.files.save')"
-      ]
-    }
-    // ",s": {
-    //   // Easier way to leave insert mode and save the file.
-    //   // TODO: figure out why this is not working.
-    //   "command": "vscode-neovim.lua",
-    //   "args": [
-    //     "local code = require('vscode')",
-    //     "code.action('vscode-neovim.escape')",
-    //     "code.action('workbench.action.files.save')"
-    //   ]
-    // }
-  },
-  "vscode-neovim.ctrlKeysForInsertMode": ["r", "u", "w"],
-  "vscode-neovim.ctrlKeysForNormalMode": [
-    "a",
-    // "b", -- I prefer half page (ctrl+u/d).
-    // "c",
-    "d",
-    "e",
-    // "h",
-    "i",
-    "j",
-    "k",
-    "l",
-    "n",
-    "m",
-    "o",
-    "r",
-    "t",
-    "u",
-    "v",
-    "w",
-    "x",
-    "y",
-    "z",
-    // "/", -- open terminal in a new tab. I don't want this.
-    "]",
-    "right",
-    "left",
-    "up",
-    "down",
-    "backspace",
-    "delete"
-  ],
-
-  // #endregion VSCodeNeovim. }}}
-  //----------------------------------------------------------------------------
-
-  //----------------------------------------------------------------------------
-  // #region VSCodeVim. {{{
-  //----------------------------------------------------------------------------
-
-  "vim.leader": " ",
-
-  "vim.easymotion": true,
-  "vim.sneak": false,
-  "vim.surround": true,
-
-  "vim.incsearch": true,
-  "vim.hlsearch": true,
-
-  "vim.useSystemClipboard": true,
-  "vim.camelCaseMotion.enable": true,
-
-  // "vim.smartRelativeLine": true,
-  // "vim.foldfix": true,
-
-  // I mostly use automated formatters for my code, but I prefer comments.
-  "vim.textwidth": 80,
-
-  // This integration is not working for me and it seems like it is not being
-  // maintained anymore: https://github.com/VSCodeVim/Vim/issues/1735
-  "vim.enableNeovim": false,
-
-  // // When using `useCtrlKeys = false`, this is my preferred configuration.
-  // "vim.useCtrlKeys": false,
-  // "vim.handleKeys": {
-  //   "<C-[>": true,
-  //   "<C-]>": true,
-  //   "<C-d>": true,
-  //   "<C-i>": true,
-  //   "<C-o>": true,
-  //   "<C-r>": true,
-  //   "<C-u>": true,
-  //   "<C-v>": true,
-  //   "<C-w>": true
-  // },
-
-  // This is VERY, PAINFULLY, UNUSABLY slow in Ubuntu 20.04. It uses gdbus, as
-  // shown in the following link. I also got the scripts (get-im and set-im)
-  // from there:
-  //
-  //    https://github.com/daipeihust/im-select?tab=readme-ov-file#gdbus
-  //
-  // "vim.autoSwitchInputMethod.enable": true,
-  // "vim.autoSwitchInputMethod.defaultIM": "1",
-  // "vim.autoSwitchInputMethod.obtainIMCmd": "/home/marcelocra/bin/get-im",
-  // "vim.autoSwitchInputMethod.switchIMCmd": "/home/marcelocra/bin/set-im {im}",
-
-  "vim.insertModeKeyBindings": [
-    {
-      // Leave insert mode.
-      "before": ["j", "f"],
-      "after": ["<esc>"]
-    },
-    {
-      // Leave insert mode.
-      "before": ["f", "j"],
-      "after": ["<esc>"]
-    },
-    {
-      // Copy.
-      "before": ["<C-c>"],
-      "commands": ["editor.action.clipboardCopyAction"]
-    },
-    {
-      // Paste.
-      "before": ["<C-v>"],
-      "commands": ["editor.action.clipboardPasteAction"]
-    },
-    {
-      // Cut.
-      "before": ["<C-x>"],
-      "commands": ["editor.action.clipboardCutAction"]
-    },
-    {
-      // Search (VSCode search).
-      "before": ["<C-f>"],
-      "commands": ["actions.find"]
-    },
-    {
-      // Select all.
-      "before": ["<C-a>"],
-      "commands": ["editor.action.selectAll"]
-    },
-    {
-      // Add next match to selection.
-      "before": ["<C-d>"],
-      "commands": ["editor.action.addSelectionToNextFindMatch"]
-    },
-    {
-      // Save and go to normal mode.
-      "before": [",", "w"],
-      "commands": ["workbench.action.files.save"],
-      "after": ["<Esc>"]
-    },
-    {
-      // Save and go to normal mode.
-      "before": [",", "s"],
-      "commands": ["workbench.action.files.save"],
-      "after": ["<Esc>"]
-    },
-    {
-      // Save and quit.
-      "before": [",", "x"],
-      "commands": [
-        "workbench.action.files.save",
-        "workbench.action.closeActiveEditor"
-      ]
-    },
-    {
-      // Try to quit without saving.
-      "before": [",", "q"],
-      "commands": ["workbench.action.closeActiveEditor"]
-    },
-    {
-      // Move using visual lines.
-      "before": ["<Up>"],
-      "commands": ["cursorUp"]
-    },
-    {
-      // Move using visual lines.
-      "before": ["<Down>"],
-      "commands": ["cursorDown"]
-    }
-
-    // Next insert keybinding above.
-  ],
-
-  "vim.normalModeKeyBindings": [
-    {
-      // Use `s` to trigger Easymotion's full search.
-      "before": ["s"],
-      "after": ["<Leader>", "<Leader>", "s"]
-    },
-    {
-      // Unimpaired: Insert a new line above the current line.
-      "before": ["[", "<Space>"],
-      "commands": ["editor.action.insertLineBefore", "cursorDown"]
-    },
-    {
-      // Unimpaired: Insert a new line below the current line.
-      "before": ["]", "<Space>"],
-      "commands": ["editor.action.insertLineAfter", "cursorUp"]
-    },
-    {
-      "before": ["<C-n>"],
-      "commands": [":nohl"]
-    },
-    {
-      "before": ["<C-l>"],
-      "after": ["<C-w>", "l"]
-    },
-    {
-      "before": ["<C-h>"],
-      "after": ["<C-w>", "h"]
-    },
-    {
-      "before": ["<C-j>"],
-      "after": ["<C-w>", "j"]
-    },
-    {
-      "before": ["<C-k>"],
-      "after": ["<C-w>", "k"]
-    },
-    {
-      "before": ["<Leader>", "<Leader>", "q"],
-      "after": ["@", "q"]
-    },
-    {
-      "before": ["u"],
-      "commands": ["undo"]
-    },
-    {
-      "before": ["<C-r>"],
-      "commands": ["redo"]
-    },
-
-    // #region Move using visual lines. {{{
-    {
-      "before": ["j"],
-      "commands": ["cursorDown"]
-    },
-    {
-      "before": ["k"],
-      "commands": ["cursorUp"]
-    },
-    {
-      "before": ["0"],
-      "after": ["g", "0"]
-    },
-    {
-      "before": ["$"],
-      "after": ["g", "$"]
-    },
-    {
-      "before": ["<Up>"],
-      "commands": ["cursorUp"]
-    },
-    {
-      "before": ["<Down>"],
-      "commands": ["cursorDown"]
-    },
-    // #endregion Move using visual lines. }}}
-
-    {
-      "before": ["<C-p>"],
-      "commands": ["workbench.action.quickOpen"]
-    },
-
-    //
-    // #region Conjure-like keybindings. {{{
-    //
-    // TODO: Move these to the keybindings file? I tried something similar with
-    // Python there, use it as reference.
-    //
-    // #region Use Conjure-like keybindings for Calva/Clojure. {{{
-    // {
-    //   // evaluates current form
-    //   // default: ctrl+enter
-    //   "before": [" ", "e", "e"],
-    //   "commands": ["calva.evaluateSelection"]
-    // },
-    // {
-    //   // evaluates current top level form
-    //   // default: alt+enter
-    //   "before": [" ", "e", "r"],
-    //   "commands": ["calva.evaluateCurrentTopLevelForm"]
-    // },
-    // {
-    //   "before": [" ", "e", "c", "e"],
-    //   "commands": ["calva.evaluateSelectionAsComment"]
-    // },
-    // {
-    //   "before": [" ", "e", "c", "r"],
-    //   "commands": ["calva.evaluateTopLevelFormAsComment"]
-    // },
-    // {
-    //   "before": [" ", "e", "b"],
-    //   "commands": ["calva.loadFile"]
-    // },
-    // {
-    //   "before": ["<a-i>"],
-    //   "commands": ["editor.action.showHover"]
-    // },
-    // {
-    //   "before": ["K"],
-    //   "commands": ["calva.printClojureDocsToOutputWindow"]
-    // },
-    // {
-    //   "before": [" ", "d", "$"],
-    //   "commands": ["paredit.killListForward"]
-    // },
-    // {
-    //   "before": [" ", "d", "e"],
-    //   "commands": ["paredit.killListForward"]
-    // },
-    // {
-    //   "before": [" ", "d", "0"],
-    //   "commands": ["paredit.killListBackward"]
-    // },
-    // {
-    //   "before": [" ", "d", "b"],
-    //   "commands": ["paredit.killListBackward"]
-    // },
-    // {
-    //   "before": [" ", "s", "e"],
-    //   "commands": ["paredit.spliceSexpKillForward"]
-    // },
-    // {
-    //   "before": [" ", "s", "b"],
-    //   "commands": ["paredit.spliceSexpKillBackward"]
-    // }
-    //
-    // #endregion Making Calva keybindings more like Conjure ones. }}}
-
-    // #region Use Conjure-like keybindings for FSharp. {{{
-    //
-    // {
-    //   "before": [" ", "e", "e"],
-    //   "commands": ["fsi.SendLine", "extension.vim_up"]
-    // },
-    // {
-    //   "before": [" ", "e", "r"],
-    //   "commands": ["fsi.SendSelection"],
-    //   "after": ["v", "i", "p"]
-    // },
-    // {
-    //   "before": [" ", "e", "w"],
-    //   "commands": ["fsi.SendSelection", "extension.vim_escape"],
-    //   "after": ["v", "i", "w"]
-    // },
-    // {
-    //   "before": [" ", "e", "f"],
-    //   "commands": ["fsi.SendFile"]
-    // },
-    // {
-    //   "before": [" ", "e", "b"],
-    //   "commands": ["fsi.SendFile"]
-    // },
-    //
-    // #endregion Use Conjure-like keybindings for FSharp. }}}
-
-    // #endregion Conjure-like keybindings. }}}
-    //
-
-    {
-      "before": ["|"],
-      "commands": ["workbench.action.splitEditor"]
-    },
-    {
-      "before": ["-"],
-      "commands": ["workbench.action.splitEditorDown"]
-    },
-    {
-      "before": ["g", "e"],
-      "commands": ["editor.action.marker.nextInFiles"]
-    },
-    {
-      "before": ["g", "E"],
-      "commands": ["editor.action.marker.prevInFiles"]
-    },
-    {
-      "before": ["Y"],
-      "after": ["y", "$"]
-    },
-    {
-      "before": [" ", "w", "s"],
-      "commands": ["workbench.action.quickTextSearch"]
-    },
-    {
-      "before": ["g", "w"],
-      "after": ["g", "q"]
-    },
-    {
-      "before": ["g", "w", "w"],
-      "after": ["g", "q", "q"]
-    },
-
-    {
-      // Copy.
-      "before": ["<C-c>"],
-      "commands": ["editor.action.clipboardCopyAction"]
-    },
-    {
-      // Search (VSCode search).
-      "before": ["<C-f>"],
-      "commands": ["actions.find"]
-    },
-
-    {
-      // Go back.
-      "before": ["<C-o>"],
-      "commands": ["workbench.action.navigateBack"]
-    },
-    {
-      // Go forward.
-      "before": ["<C-i>"],
-      "commands": ["workbench.action.navigateForward"]
-    }
-
-    // Next normal keybinding above.
-  ],
-
-  "vim.visualModeKeyBindings": [
-    {
-      // Add next match to selection.
-      "before": ["<C-d>"],
-      "commands": ["editor.action.addSelectionToNextFindMatch"]
-    },
-    {
-      // Move selection to next match.
-      "before": ["<C-n>"],
-      "commands": ["editor.action.moveSelectionToNextFindMatch"]
-    },
-    {
-      // Move selection to previous match.
-      "before": ["<C-p>"],
-      "commands": ["editor.action.moveSelectionToPreviousFindMatch"]
-    },
-
-    // #region Move using visual lines. {{{
-    {
-      "before": ["j"],
-      "after": ["g", "j"]
-    },
-    {
-      "before": ["k"],
-      "after": ["g", "k"]
-    },
-    {
-      "before": ["0"],
-      "after": ["g", "0"]
-    },
-    {
-      "before": ["$"],
-      "after": ["g", "$"]
-    },
-    {
-      "before": ["<Up>"],
-      "after": ["g", "<Up>"]
-    },
-    {
-      "before": ["<Down>"],
-      "after": ["g", "<Down>"]
-    },
-    // #endregion Move using visual lines. }}}
-
-    {
-      // Save and exit normal mode.
-      "before": [",", "w"],
-      "commands": ["workbench.action.files.save"],
-      "after": ["<Esc>"]
-    },
-    {
-      // Save and exit normal mode.
-      "before": [",", "s"],
-      "commands": ["workbench.action.files.save"],
-      "after": ["<Esc>"]
-    },
-    // {
-    //   // Paste without replacing clipboard. Better than the one below? This
-    //   // one replaces the clipboard content twice, so when using a clipboard
-    //   // manager it can be useful.
-    //   "before": ["p"],
-    //   "after": ["p", "g", "v", "y"]
-    // }
-    {
-      // Paste without replacing clipboard content.
-      "before": ["p"],
-      "after": ["\"", "_", "d", "P"]
-    },
-    {
-      // Search for all occurences of the selected text.
-      // TODO: Figure out how to escape '/' here. Doesn't work if there's any.
-      "before": ["/", "/"],
-      "after": ["y", "/", "<C-r>", "*", "<CR>"]
-    },
-    {
-      "before": [">"],
-      "commands": ["editor.action.indentLines"]
-    },
-    {
-      "before": ["<"],
-      "commands": ["editor.action.outdentLines"]
-    },
-
-    // {
-    //   // Use Conjure-like keybindings for Calva/Clojure.
-    //   "before": [" ", "E"],
-    //   "commands": ["calva.evaluateSelectionToSelectionEnd"]
-    // },
-    //   {
-    //     // Use Conjure-like keybindings for FSharp.
-    //     "before": [" ", "E"],
-    //     "commands": ["fsi.SendSelection"]
-    //   },
-
-    {
-      "before": ["<C-a>"],
-      "commands": ["editor.action.selectAll"]
-    },
-    {
-      // Use `s` to trigger easymotion full search.
-      "before": ["s"],
-      "after": ["<Leader>", "<Leader>", "s"]
-    }
-  ],
-
-  "vim.visualModeKeyBindingsNonRecursive": [
-    {
-      // I have a keybinding that makes 'p' paste over a selection without
-      // loosing clipboard content. If the selection content is desirable, this
-      // keybinding can be used instead, and it will copy the selection over the
-      // clipboard. to avoid loosing clipboard content.
-      "before": ["g", "p"],
-      "after": ["p"]
-    }
-  ],
-
-  "vim.operatorPendingModeKeyBindings": [
-    {
-      "before": ["L"],
-      "after": ["$"]
-    },
-    {
-      "before": ["H"],
-      "after": ["^"]
-    }
-  ],
-
-  "vim.operatorPendingModeKeyBindingsNonRecursive": [
-    {
-      "before": ["("],
-      "after": ["a", "("]
-    },
-    {
-      "before": ["["],
-      "after": ["a", "["]
-    },
-    {
-      "before": ["{"],
-      "after": ["a", "{"]
-    }
-  ],
-
-  // #endregion VSCodeVim. }}}
-  //----------------------------------------------------------------------------
+  ">>> Next misc thing above": "",
 
   // #region workbench {{{
 
   "workbench.colorCustomizations": {
-    // My colors:
-    // - most backgrounds: #33475C (dark blue gray)
-    // - focus and active tab borders: #A699FF (light purple)
-    // - most other borders: #4b6786 (blue gray)
-    // - active tab and sticky section backgrounds: #332c5f (dark purple)
-    // - most errors: # (red orange)
-    // - most warnings: #ffa70f (yellow orange)
-    //
-    // Other interesting ones (from v0.dev):
-    // --geist-cyan-lighter: #aaffec;
-    // --geist-cyan-light: #79ffe1;
-    // --geist-cyan: #50e3c2;
-    // --geist-cyan-dark: #29bc9b;
-    //
-    // Nice colors for the cursor:
-    // - purple: #cc00ff
-    // - orange red: #ff4500
-    // - violet: #8a2be2
-    // - magenta: #ff00ff
-    // - pink: #ff1493
-
     "editorCursor.foreground": "#ff4500",
     "editorCursor.background": "#000",
-
     "terminalCursor.foreground": "#ff4500",
     "terminalCursor.background": "#000",
-
-    // Testing some colors. Not great.
-    // "minimap.background": "#00000055",
-    // "minimapSlider.activeBackground": "#5533ff44",
-    // "minimapSlider.hoverBackground": "#44",
-    // "minimapSlider.background": "#22",
 
     "[Tokyo Night][Tokyo Night Storm]": {
       "menu.border": "#5588ff55",
@@ -1448,7 +670,7 @@
       "editorSuggestWidget.selectedForeground": "#fff",
       "editorSuggestWidget.highlightForeground": "#00ffffdd",
       "editorSuggestWidget.focusHighlightForeground": "#00ffffdd",
-      // // Text color.
+      // Text color.
       "editorSuggestWidget.foreground": "#fff",
 
       // // Element that is focused in the explorer.
@@ -1477,32 +699,23 @@
     "[Tokyo Night Light][Spiral Tattoo Ink Dark Dim][Night Owl Light]": {
       // File picker (ctrl+p) focused element background.
       "quickInputList.focusBackground": "#00ffff55",
-
       // Code actions (ctrl+.) focused element background.
       "editorActionList.focusBackground": "#00ffff55",
-
       // Border of the complete widget.
       "editorSuggestWidget.border": "#4b6786",
-
       // "editorSuggestWidget.selectedForeground": "#000",
-
       // // Background of the complete widget.
       // "editorSuggestWidget.background": "#e6e7ed",
-
       // Background of the focused item.
       "editorSuggestWidget.selectedBackground": "#00ffff55",
-
       // // Text color.
       // "editorSuggestWidget.foreground": "#000",
-
       // // Element that is focused in the explorer.
       // "list.focusBackground": "#55",
       // // Element that was focused in the explorer.
       // "list.inactiveFocusBackground": "#00000011",
-
       // // Not sure what this is.
       // "list.deemphasizedForeground": "#55",
-
       "editor.inactiveSelectionBackground": "#00ffff22",
       // "editor.selectionHighlightBorder": "#008800",
       // "editor.selectionHighlightBackground": "#ff008833",
@@ -1563,11 +776,9 @@
   "workbench.tree.renderIndentGuides": "always",
   "workbench.list.horizontalScrolling": true,
   "workbench.sideBar.location": "left",
-  "workbench.panel.defaultLocation": "bottom",
+  "workbench.panel.defaultLocation": "right",
   "workbench.editor.pinnedTabsOnSeparateRow": false,
-  "workbench.activityBar.location": "hidden",
-  "workbench.preferredDarkColorTheme": "GitHub Dark Dimmed",
-  "workbench.preferredLightColorTheme": "Default Light Modern",
+  "workbench.activityBar.location": "top",
   "workbench.editor.empty.hint": "hidden",
   "workbench.editorAssociations": {
     // Associate all files with the default editor, rendering as plain text and
@@ -1579,270 +790,124 @@
     // , "*.png": "imagePreview.previewEditor"
   },
 
-  // Keep the color theme last, as I'm always changing it and this way we won't
-  // have a problem with the comma.
-
-  "workbench.colorTheme": "Default Light Modern"
+  // Keep the color theme last, as I'm always changing it.
+  "workbench.preferredDarkColorTheme": "GitHub Dark Dimmed",
+  "workbench.preferredLightColorTheme": "Default Light Modern",
+  "workbench.colorTheme": "Default Light Modern",
 
   // #endregion workbench. }}}
+  // #endregion [These mostly don't change]
+
+  // #region [Fonts playground] ------------------------------------------------
+
+  // Default. Keep it here and override below. Copy/pastes and fonts options at the bottom of this file.
+  "editor.fontFamily": "'MesloLGS Nerd Font', 'MesloLGS NF', Consolas, 'Courier New', monospace",
+
+  // "editor.fontFamily": "Google Sans Code",
+  // "editor.fontLigatures": "'ss01' 1",
+
+  // "editor.fontFamily": "JuliaMono",
+  // // Examples:   -> <-- <|   ligat.    dash 0    alt. g    alt. @    alt. a    alt. ~
+  // "editor.fontLigatures": "'calt' 1, 'zero' 1, 'ss01' 1, 'ss02' 1, 'ss06' 1, 'cv03' 1",
+
+  // "editor.fontFamily": "Reddit Mono",
+  // "editor.fontLigatures": "'ss02' 1, 'cv01' 1, 'cv02' 1, 'cv04' 1, 'cv06' 1, 'cv07' 1, 'cv10' 0, 'cv16' 1",
+  // // - default is great
+  // // - ss02: alternated 'a' and 'i'
+  // // - cv: 1(alt a),2(wider b),3(wider d, no leg),4(wider g),5(alt l),6(wider o),7(wider p),8(nao sei),9(wider q, no leg),10(cross t),11(no leg u),12(nao sei),13(i with base),14(nao sei),15(top leg no l),16(W sem curva),17(w meio mais alto),18(0 estranho). Pref: 1,2,4,6,7
+
+  // "editor.fontFamily": "Input Mono",
+  // "editor.fontLigatures": "'ss01' 1, 'ss02' 1, 'ss03' 0, 'ss04' 0, 'ss05' 0, 'ss06' 0, 'ss07' 0, 'ss08' 0, 'ss09' 0, 'ss10' 0, 'zero' 1",
+
+  "editor.fontFamily": "CaskaydiaCove Nerd Font",
+  "editor.fontLigatures": "'ss01' 1, 'ss02' 1, 'ss03' 0, 'ss04' 0, 'ss05' 0, 'ss06' 0, 'ss07' 0, 'ss08' 0, 'ss09' 0, 'ss10' 0, 'zero' 1",
+
+  // "editor.fontFamily": "'Atkinson Hyperlegible Mono', 'Fragment Mono', 'Maple Mono', 'M Plus 1 Code'",
+
+  // ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()_+-
+  // = <- -> <= => <=> <| |> fi Tl Fl != !== === /= ;:* :- --- ---- .: -. .- !?
+  // < > www <> >= <-> [:] -~ ?? ->> -< >- .. '' "" >>> Fl Tl fi fj fl ft
+
+  // "editor.fontFamily": "IBM Plex Mono",
+  // "editor.fontFamily": "BlexMono Nerd Font",
+  // "editor.fontLigatures": "'ss01', 'ss02', 'zero'",
+
+  // "editor.fontFamily": "CodeNewRoman Nerd Font Mono",
+
+  // "editor.fontFamily": "DM Mono",
+  // "editor.fontLigatures": "'ss01', 'ss02', 'ss03', 'ss04'",
+
+  // "editor.fontFamily": "SourceCodeVF",
+  // "editor.letterSpacing": -0.4,
+  // "editor.fontLigatures": "'cv01' 1, 'cv02' 1, 'cv17' 1, 'zero' 1",
+
+  // "editor.fontFamily": "JetBrainsMono Nerd Font",
+  // "editor.fontLigatures": "'zero' 1, 'ss19' 1",
+  // Fira Code like.
+  // "editor.fontLigatures": "'ss01', 'ss19', 'ss20', 'zero', 'cv99'",
+  // Ubuntu Mono like.
+  // "editor.fontLigatures": "'ss02', 'ss19', 'ss20', 'zero', 'cv03', 'cv04', 'cv16', 'cv18', 'cv19', 'cv20', 'cv99'",
+
+  // "editor.fontFamily": "Geist Mono",
+  // "editor.fontLigatures": "'ss02', 'ss03', 'ss06', 'ss13', 'liga' 1",
+
+  // "editor.fontFamily": "Recursive",
+  // // Some customizations that I like (details below).
+  // "editor.fontLigatures": "'ss01', 'ss02', 'ss03', 'ss04', 'ss05', 'ss06', 'ss07', 'ss11', 'ss12', 'case', 'frac' 0",
+  // "editor.fontLigatures": "'ss04', 'ss05', 'ss12', 'case', 'frac' 0",
+
+  // "editor.fontFamily": "Iosevka Fixed Extended",
+  // // Source Code Pro, with changes to: 1, 4, 0, l (lowercase L).
+  // "editor.fontLigatures": "'ss09' 1, 'cv01' 3, 'cv04' 5, 'cv10' 4, 'cv47' 8",
+  // // Monaco.
+  // "editor.fontLigatures": "'ss17'",
+  // // Lucida, with changes to: 2, 4, 5, 0, *, ', #, $, %, ?.
+  // "editor.fontLigatures": "'ss13' 1, 'cv02' 4, 'cv04' 11, 'cv05' 8, 'cv10' 10, 'VSAB' 6, 'VSAF' 2, 'VSAJ' 4, 'VSAM' 1, 'VSAO' 1, 'VSAQ' 3",
+
+  // "editor.fontFamily": "Victor Mono",
+  // "editor.fontLigatures": "'calt' 1, 'ss01' 1, 'ss02' 1, 'ss06' 0, 'ss07' 1, 'ss08' 1",
+
+  // "editor.fontFamily": "Hack Nerd Font",
+
+  // "editor.fontFamily": "Monoid",
+  // "editor.fontLigatures": "'calt' 1, 'liga' 0, 'ss01' 0, 'ss02' 0, 'ss03' 0, 'ss04' 0, 'ss05' 1, 'ss06' 0, 'ss07' 1, 'ss08' 1, 'ss09' 1, 'ss10' 0, 'ss11' 0, 'ss12' 0, 'ss13' 0, 'ss14' 0, 'ss15' 0",
+
+  // // https://github.com/githubnext/monaspace#character-variants
+  // "editor.fontFamily": "Monaspace Neon Var",
+  // "editor.fontLigatures": "'calt' 1, 'liga' 0, 'ss01' 0, 'ss02' 0, 'ss03' 1, 'ss04' 0, 'ss05' 0, 'ss06' 0, 'ss07' 0, 'ss08' 0, 'ss09' 0, 'ss10' 0, 'cv01' 3, 'cv02' 0, 'cv10' 1, 'cv11' 0, 'cv30' 0, 'cv31' 0, 'cv62' 0",
+
+  // "editor.fontFamily": "Consolas",
+  // "editor.fontLigatures": "'ss04' 1, 'ss05' 1, 'ss12' 1, 'case' 1, 'frac' 0",
+
+  // // https://github.com/tonsky/FiraCode/wiki/How-to-enable-stylistic-sets
+  // "editor.fontFamily": "FiraCode Nerd Font Mono",
+  // "editor.fontLigatures": "'cv01' 1, 'cv02' 1, 'cv05' 0, 'cv06' 1, 'cv09' 0, 'cv12' 1, 'cv14' 1, 'cv16' 1, 'cv30' 1, 'cv31' 1, 'ss03' 1, 'ss05' 1, 'ss08' 1, 'ss10' 1",
+
+  // "editor.fontFamily": "Azeret Mono",
+  // "editor.fontLigatures": "'calt' 0, 'liga' 0, 'ss02' 1, 'ss03' 1, 'ss04' 1, 'ss05' 1, 'ss07' 1, 'ss08' 1, 'ss10' 1, 'ss11' 1, 'ss12' 1, 'ss14' 1, 'ss15' 1, 'calt' 1, 'liga' 1, 'zero' 1",
+
+  // "editor.fontFamily": "Intel One Mono",
+  // "editor.fontLigatures": "'ss01', 'ss02', 'ss03'",
+
+  // "editor.fontFamily": "Input Mono",
+  // "editor.fontLigatures": "'ss01' 1, 'ss02' 1, 'ss05' 0, 'ss06' 0, 'ss09' 1, 'ss10' 1, 'zero' 1",
+
+  // "editor.fontFamily": "Overpass Mono",
+  // "editor.fontLigatures": "'zero' 1, 'liga' 0, 'calt' 0",
+
+  // "editor.fontFamily": "Chivo Mono",
+  // "editor.fontLigatures": "'zero' 1",
+
+  // "editor.fontFamily": "Adwaita Mono",
+  // "editor.fontLigatures": "'zero' 1",
+
+  // "editor.fontFamily": "Maple Mono",
+  // "editor.fontLigatures": "'cv02' 1, 'cv03' 1, 'cv08' 1, 'ss03' 1",
+
+  // #endregion [Fonts playground] ---------------------------------------------
+
+  "editor.fontSize": 14,
+  "editor.fontWeight": "300",
+
+  ">>> Review below this: added through the Settings UI": ""
 }
-
-// #region Documentation. {{{
-
-//----------------------------------------------------------------------------
-// Programming fonts and their settings
-//----------------------------------------------------------------------------
-
-// Random
-// ------
-// "editor.fontFamily": "'Atkinson Hyperlegible Mono', 'Fragment Mono', 'Maple Mono', 'M Plus 1 Code'",
-
-// // IBM Plex Mono
-// // -------------
-// "editor.fontFamily": "IBM Plex Mono",
-// "editor.fontLigatures": "'zero'",
-
-// "editor.fontFamily": "BlexMono Nerd Font",
-// // "editor.fontLigatures": "'ss01', 'ss02', 'zero'",
-// "editor.fontLigatures": "'zero'",
-// Available stylistic sets:
-//    calt=0: no ligatures (particularly for `==` and `!=`, but also disable
-//    for ff fi il re tl ke), ss01: different 'a', ss02: different dashed zero
-//    (up to ss05), ss06: crossed '7', ss07: different '6' and  '9', ss08:
-//    more fish-like stuff (::<)
-
-// // CodeNewRoman
-// // ------------
-// "editor.fontFamily": "CodeNewRoman Nerd Font Mono",
-
-// // Cascadia Code
-// // -------------
-// "editor.fontFamily": "Cascadia Code NF",
-// 'calt' and 'cv01' 3 were here, don't know why... don't seem to do anything.
-// "editor.fontLigatures": "'ss01', 'ss19', 'ss20'",
-// Available stylistic sets:
-//    cursive italics: 'ss01', alternate not equal: 'ss02' ~= (appears as !=),
-//    serbian locl forms (italic only): 'ss03', slashed zero: 'ss19',
-//    graphical control characters: 'ss20'
-// To test:
-//    ! " # $ % & ' ( ) * + , - . / : ; < = > ? @ [ \ ] ^ _ ` { } ~ < > = + _
-//    ( ) * & ^ % $ # @ ! { } [ ] \ | / ? : ; , . ` ' " ´ ` ˜ => -> <> <= >=
-//    != !== === ~= |> <- --> || .- :- .= {..}
-
-// // DM Mono
-// // -------
-// "editor.fontFamily": "DM Mono",
-// "editor.fontLigatures": "'ss01','ss03','ss04'",
-// "editor.fontLigatures": "'ss01', 'ss02', 'ss03', 'ss04'",
-// Available stylistic sets:
-//    ss01: curved comma, ss02: curved a, ss03: curved g, ss04: less rounded
-//    numbers, ss05: remove rounded borders of f
-
-// // Source Code Pro
-// // ---------------
-// "editor.fontFamily": "SourceCodeVF",
-// "editor.letterSpacing": -0.4,
-// // "editor.fontLigatures": "'cv17', 'zero'",
-// "editor.fontLigatures": "'cv01', 'cv02', 'cv17', 'zero'",
-// Available stylistic sets:
-//    cv01 and cv02: clearer 'a' and 'g', cv08: alternate &, cv09: alternate @
-//    cv17: improved 1, zero: reverse dashed zero
-
-// JetBrains Mono
-// --------------
-// "editor.fontFamily": "JetBrainsMono Nerd Font",
-// "editor.fontLigatures": "'zero' 1, 'ss19' 1",
-// Minimal (Fira Code like):
-// "editor.fontLigatures": "'ss01', 'ss19', 'ss20', 'zero', 'cv99'",
-// Very different (Ubuntu Mono like):
-//    closed construction set (ss02), alternative ligatures for g (03), j
-//    (04), Q (16), 269 (18), 8 (19), 5 (20), and some inverted color
-//    ligatures (99).
-// "editor.fontLigatures": "'ss02', 'ss19', 'ss20', 'zero', 'cv03', 'cv04', 'cv16', 'cv18', 'cv19', 'cv20', 'cv99'",
-// Available stylistic sets:
-//    cv01,05: l, cv02: t, cv03: g, cv04: j, cv06: m , cv07: w, cv08: k,
-//    cv09,17: f, cv10: r, cv11: y, cv12: u, cv14: $¢, cv15: &, cv16: Q, cv18:
-//    269 , cv19: 8, cv20: 5, cv99: bg inverted color to differentiate some
-//    gliphs, ss01: classic construction, ss02: closed construction, ss19:
-//    broken equals ligatures (yay!), ss20: raised bar f, zero: slashed zero,
-//    frac: fractions
-
-// // Geist Mono
-// // ----------
-// // Available stylistic sets:
-// //    ss01: normal, ss02: circular a, ss03: non-1-like l, ss06: circular
-// //    uppercase G, ss08: compact (semi) colon, ss09: non slashed zero
-// "editor.fontFamily": "Geist Mono",
-// "editor.fontLigatures": "'ss02', 'ss03', 'ss06', 'ss13', 'liga' 1",
-
-// // Recursive Mono
-// // --------------
-// "editor.fontFamily": "Recursive",
-// Some customizations that I like (details below).
-// "editor.fontLigatures": "true",
-// "editor.fontLigatures": "'ss01', 'ss02', 'ss03', 'ss04', 'ss05', 'ss06', 'ss07', 'ss11', 'ss12', 'case', 'frac' 0",
-// "editor.fontLigatures": "'ss04', 'ss05', 'ss12', 'case', 'frac' 0",
-// Available stylistic sets:
-//    dlig: ligatures - => && === ff it ti (more below), ss01: a, ss02: g,
-//    ss03: f, ss04: i, ss05: l, ss06: r, ss07: simplified italic diagonals -
-//    kwxyz, ss08: no-serif on L and Z, ss09: less rounded six and nine - 6 9,
-//    ss10: dotted zero, ss11: 1 without the bottom line, ss12: simpler @,
-//    case: uppercase punctuation (put punctuation around mid-line), frac:
-//    contextual fractions - 1/2 3/4 9/74, afrc: alternative fractions, ordn:
-//    ordinals - 1.o 8.a, titl: Q leg to the right instead of down, sups,
-//    numr: superior/numerators - H0123456789, sinf, dnom:
-//    inferior/denominators
-
-// // Iosevka
-// // -------
-// "editor.fontFamily": "Iosevka Fixed Extended",
-// // Source Code Pro, with changes to: 1, 4, 0, l (lowercase L).
-// "editor.fontLigatures": "'ss09', 'cv01' 3, 'cv04' 5, 'cv10' 4, 'cv47' 8",
-// // Monaco.
-// "editor.fontLigatures": "'ss17'",
-// // Lucida, with changes to: 2, 4, 5, 0, *, ', #, $, %, ?.
-// "editor.fontLigatures": "'ss13', 'cv02' 4, 'cv04' 11, 'cv05' 8, 'cv10' 10, 'VSAB' 6, 'VSAF' 2, 'VSAJ' 4, 'VSAM' 1, 'VSAO' 1, 'VSAQ' 3",
-// Other:
-//    cv02: change 2, cv04: change 4, cv05: change 5, cv10: change 0, cv47:
-//    change l, VSAB: * position (top, middle, bottom), VSAF: ' (straight,
-//    curved), VSAJ: #, VSAM: $, VSAO: %, VSAQ: ?, ss01: Andale Mono, ss02:
-//    Anonymous Pro, ss03: Consolas, ss04: Menlo, ss05: Fira Mono, ss06:
-//    Liberation Mono, ss07: Monaco, ss08: Pragmata Pro, ss09: Source Code
-//    Pro, ss10: Envy Code R, ss11: X Window, ss12: Ubuntu Mono, ss13: Lucida,
-//    ss14: JetBrains Mono, ss15: IBM Plex Mono, ss16: PT Mono, ss17:
-//    Recursive Mono, ss18: Input Mono, ss20: Curly
-
-// // Victor Mono
-// // --------------
-// "editor.fontFamily": "Victor Mono",
-// "editor.fontLigatures": "'ss01', 'ss02', 'ss07', 'ss08'",
-// "editor.fontLigatures": "'calt' 0, 'ss01', 'ss02', 'ss06', 'ss07', 'ss08'",
-// Available stylistic sets:
-//    calt=0: no ligatures (particularly for `==` and `!=`, but also disable
-//    for ff fi il re tl ke), ss01: different 'a', ss02: different dashed zero
-//    (up to ss05), ss06: crossed '7', ss07: different '6' and  '9', ss08:
-//    more fish-like stuff (::<)
-
-// // Hack
-// // ----
-// "editor.fontFamily": "Hack Nerd Font",
-// Available stylistic sets:
-//    calt=0: no ligatures (particularly for `==` and `!=`, but also disable
-//    for ff fi il re tl ke), ss01: different 'a', ss02: different dashed zero
-//    (up to ss05), ss06: crossed '7', ss07: different '6' and  '9', ss08:
-//    more fish-like stuff (::<)
-
-// // Monoid
-// // ------
-// "editor.fontFamily": "Monoid",
-// "editor.fontSize": 12,
-// "editor.fontWeight": "normal",
-// "editor.fontLigatures": "'calt' 1, 'liga' 0, 'ss01' 0, 'ss02' 0, 'ss03' 0, 'ss04' 0, 'ss05' 1, 'ss06' 0, 'ss07' 1, 'ss08' 1, 'ss09' 1, 'ss10' 0, 'ss11' 0, 'ss12' 0, 'ss13' 0, 'ss14' 0, 'ss15' 0",
-
-// // Monaspace
-// // ---------
-// // Docs: https://github.com/githubnext/monaspace#character-variants
-// // ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()_+-
-// // = <- -> <= => <=> <| |> fi Tl Fl != !== === /= ;:* :- --- ---- .: -. .- !?
-// // < > www <> >= <-> [:] -~ ?? ->> -< >- .. '' "" >>> Fl Tl fi fj fl ft
-// "editor.fontFamily": "Monaspace Neon Var",
-// "editor.fontSize": 15,
-// "editor.fontWeight": "400",
-// "editor.fontLigatures": "'calt' 1, 'liga' 0, 'ss01' 0, 'ss02' 0, 'ss03' 1, 'ss04' 0, 'ss05' 0, 'ss06' 0, 'ss07' 0, 'ss08' 0, 'ss09' 0, 'ss10' 0, 'cv01' 3, 'cv02' 0, 'cv10' 1, 'cv11' 0, 'cv30' 0, 'cv31' 0, 'cv62' 0",
-
-// cv01-cv09: figure variants
-//  - cv01: 0 alternates: 1: plain 2: slash 3: reverse slash 4: cut-out slash
-//  - cv02: 1 alternate (no serif)
-// cv10-cv29: letter variants
-//  - cv10: l i alternates (Neon, Argon, Xenon, Radon)
-//  - cv11: j f r t alternates (Neon, Argon)
-// cv30-cv59: symbol variants
-//  - cv30: * vertically aligned closer to the top of the space
-//  - cv31: * 6-pointed asterisk
-//  - cv32: ≥ ≤ angled lower line
-// cv60-cv79: optional ligatures
-//  - cv60: forces the <= pair to render in a fashion that matches => instead
-//          of swapping for ≤.
-//  - cv61: enables the optional closed square ligature for []. This can be
-//          distracting
-//  - cv62: @_ ligature
-// cv80-cv99: reserved for future use
-
-// ss01: ligatures related to the equals glyph like != and ===.
-// ss02: ligatures for greater/less or equal (<=, >=).
-// ss03: ligatures related to arrows like -> and ~>.
-// ss04: ligatures related to markup, like </ and />.
-// ss05: ligatures related to the F# programming language, like |>.
-// ss06: ligatures related to repeated uses of ###, +++, and &&&.
-// ss07: ligatures related to colons like :: or =:=.
-// ss08: ligatures related to combinations of periods with other glyphs like ..= or .-.
-// ss09: ligatures related to combinations of the greater/less than and equals signs, like <=>,>>, and =<<.
-// ss10: other tags, like #[ and #(
-
-// // Consolas
-// // --------
-// // ss04: r, f (regular); r, f, i, l (italic)
-// // ss05: r, f, i, l (regular); r, f, i (italic)
-// //  - I like this version. Seems like Reddit Mono, but the 'f' seems broken.
-// // ss06: r, f, i, l (regular); r, f, l (italic)
-// // ss07: no dash or dot in zero
-// // ss08: dotted zero
-// //
-// "editor.fontFamily": "Consolas",
-
-// // Fira Code
-// // ---------
-// // https://github.com/tonsky/FiraCode/wiki/How-to-enable-stylistic-sets
-// "editor.fontFamily": "FiraCode Nerd Font Mono",
-// "editor.fontSize": 15,
-// "editor.fontWeight": "400",
-// "editor.fontLigatures": "'cv01' 1, 'cv02' 1, 'cv06' 1, 'cv12' 1, 'cv14' 1, 'cv16' 1, 'cv30' 1, 'cv31' 1, 'ss03' 1, 'ss05' 1, 'ss08' 1, 'ss10' 1",
-// "editor.fontLigatures": "'cv01' 1, 'cv02' 1, 'cv05' 1, 'cv09' 1, 'cv12' 1, 'cv14' 1,",
-
-// // Azeret Mono
-// // -----------
-// // ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()_+-
-// // = <- -> <= => <=> <| |> fi Tl Fl != !== === /= ;:* :- --- ---- .: -. .- !?
-// // < > www <> >= <-> [:] -~ ?? ->> -< >- .. '' "" >>> Fl Tl fi fj fl ft
-// "editor.fontFamily": "Azeret Mono",
-// "editor.fontSize": 13,
-// "editor.fontWeight": "400",
-// "editor.fontLigatures": "'calt' 0, 'liga' 0, 'ss02' 1, 'ss03' 1, 'ss04' 1, 'ss05' 1, 'ss07' 1, 'ss08' 1, 'ss10' 1, 'ss11' 1, 'ss12' 1, 'ss14' 1, 'ss15' 1, 'calt' 1, 'liga' 1, 'zero' 1",
-
-// // Intel One Mono
-// // --------------
-// // ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()_+-
-// // = <- -> <= => <=> <| |> fi Tl Fl != !== === /= ;:* :- --- ---- .: -. .- !?
-// // < > www <> >= <-> [:] -~ ?? ->> -< >- .. '' "" >>> Fl Tl fi fj fl ft
-// "editor.fontFamily": "Intel One Mono",
-// "editor.fontSize": 16,
-// "editor.fontWeight": "400",
-// "editor.fontLigatures": "'ss01', 'ss02', 'ss03'",
-
-// // Input Mono
-// // ----------
-// "editor.fontFamily": "Input Mono",
-// "editor.fontLigatures": "'ss01' 1, 'ss02' 1, 'ss05' 1, 'ss06' 1, 'zero' 1",
-// "editor.fontLigatures": "'ss01' 1, 'ss02' 1, 'ss09' 1, 'ss10' 1, 'zero' 1",
-
-// // Overpass Mono
-// // -------------
-// "editor.fontFamily": "Overpass Mono",
-// "editor.fontLigatures": "'zero' 1, 'liga' 0, 'calt' 0",
-
-// // Chivo Mono
-// // ----------
-// "editor.fontFamily": "Chivo Mono",
-// "editor.fontLigatures": "'zero' 1",
-
-// // Adwaita Mono
-// // ------------
-// "editor.fontFamily": "Adwaita Mono",
-// "editor.fontLigatures": "'zero' 1",
-
-// // Maple Mono
-// // ----------
-// "editor.fontFamily": "Maple Mono",
-// "editor.fontLigatures": "'cv02' 1, 'cv03' 1, 'cv08' 1, 'ss03' 1",
-
-// #endregion Documentation. }}}

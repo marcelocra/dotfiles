@@ -308,54 +308,54 @@ try {
 
     # Create notification balloon with using-like pattern for disposal
     $balloon = $null
-    try {
-        $balloon = New-Object System.Windows.Forms.NotifyIcon
-
-        # Get PowerShell executable path for the notification icon
-        $path = if ($PSVersionTable.PSEdition -eq 'Core') {
-            # PowerShell 7 path
-            (Get-Process -Id $PID).Path
-        } else {
-            # Fallback for Windows PowerShell 5.1
-            "$env:WINDIR\System32\WindowsPowerShell\v1.0\powershell.exe"
-        }
-
-        # Set up the balloon notification
-        $balloon.Icon = [System.Drawing.Icon]::ExtractAssociatedIcon($path)
-        $balloon.Visible = $true
-
-        # Choose notification based on result
-        switch ($result) {
-            1 {
-                # Microphone was unmuted, now it's muted
-                $balloon.BalloonTipTitle = "Microphone"
-                $balloon.BalloonTipText = "Microphone Muted"
-                $balloon.BalloonTipIcon = [System.Windows.Forms.ToolTipIcon]::Warning
-            }
-            0 {
-                # Microphone was muted, now it's unmuted
-                $balloon.BalloonTipTitle = "Microphone"
-                $balloon.BalloonTipText = "Microphone Unmuted"
-                $balloon.BalloonTipIcon = [System.Windows.Forms.ToolTipIcon]::Info
-            }
-            default {
-                # Something went wrong (result = -1)
-                $balloon.BalloonTipTitle = "Microphone"
-                $balloon.BalloonTipText = "Failed to toggle microphone"
-                $balloon.BalloonTipIcon = [System.Windows.Forms.ToolTipIcon]::Error
-            }
-        }
-
-        # Show the notification for 3 seconds
-        $balloon.ShowBalloonTip(3000)
-
-        # Brief pause to ensure notification appears
-        Start-Sleep -Milliseconds 500
-    }
-    catch {
-        # Even if notification fails, that's OK - the mute toggle might have worked
-        # We don't want notification errors to crash the main functionality
-    }
+    #try {
+    #    $balloon = New-Object System.Windows.Forms.NotifyIcon
+#
+    #    # Get PowerShell executable path for the notification icon
+    #    $path = if ($PSVersionTable.PSEdition -eq 'Core') {
+    #        # PowerShell 7 path
+    #        (Get-Process -Id $PID).Path
+    #    } else {
+    #        # Fallback for Windows PowerShell 5.1
+    #        "$env:WINDIR\System32\WindowsPowerShell\v1.0\powershell.exe"
+    #    }
+#
+    #    # Set up the balloon notification
+    #    $balloon.Icon = [System.Drawing.Icon]::ExtractAssociatedIcon($path)
+    #    $balloon.Visible = $true
+#
+    #    # Choose notification based on result
+    #    switch ($result) {
+    #        1 {
+    #            # Microphone was unmuted, now it's muted
+    #            $balloon.BalloonTipTitle = "Microphone"
+    #            $balloon.BalloonTipText = "Microphone Muted"
+    #            $balloon.BalloonTipIcon = [System.Windows.Forms.ToolTipIcon]::Warning
+    #        }
+    #        0 {
+    #            # Microphone was muted, now it's unmuted
+    #            $balloon.BalloonTipTitle = "Microphone"
+    #            $balloon.BalloonTipText = "Microphone Unmuted"
+    #            $balloon.BalloonTipIcon = [System.Windows.Forms.ToolTipIcon]::Info
+    #        }
+    #        default {
+    #            # Something went wrong (result = -1)
+    #            $balloon.BalloonTipTitle = "Microphone"
+    #            $balloon.BalloonTipText = "Failed to toggle microphone"
+    #            $balloon.BalloonTipIcon = [System.Windows.Forms.ToolTipIcon]::Error
+    #        }
+    #    }
+#
+    #    # Show the notification for 3 seconds
+    #    $balloon.ShowBalloonTip(3000)
+#
+    #    # Brief pause to ensure notification appears
+    #    Start-Sleep -Milliseconds 500
+    #}
+    #catch {
+    #    # Even if notification fails, that's OK - the mute toggle might have worked
+    #    # We don't want notification errors to crash the main functionality
+    #}
     finally {
         # Bulletproof disposal - always clean up the notification icon
         if ($balloon -ne $null) {

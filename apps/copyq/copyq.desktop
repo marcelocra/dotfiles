@@ -1,0 +1,24 @@
+[Desktop Entry]
+Name=CopyQ
+Exec=copyq --start-server show
+Icon=copyq
+GenericName=Clipboard Manager
+Comment=A cut & paste history utility
+
+# Workaround / fix for issue #1526 that prevents a proper autostart of the tray icon in GNOME
+X-GNOME-Autostart-Delay=3
+
+#
+# The rest is taken from Klipper application.
+#
+
+Type=Application
+Terminal=false
+X-KDE-autostart-after=panel
+X-KDE-StartupNotify=false
+X-KDE-UniqueApplet=true
+Categories=Qt;KDE;Utility;
+GenericName[en_GB]=Clipboard Tool
+Comment[en_GB]=A cut & paste history utility
+GenericName[pt_BR]=Ferramenta da área de transferência
+Comment[pt_BR]=Um utilitário com o histórico de recortar e colar
