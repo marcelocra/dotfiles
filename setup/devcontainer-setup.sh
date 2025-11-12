@@ -14,10 +14,13 @@ SETUP_DOTFILES="${MCRA_SETUP_DOTFILES:-true}"
 SETUP_ZSH_PLUGINS="${MCRA_SETUP_ZSH_PLUGINS:-true}"
 SETUP_MISE="${MCRA_SETUP_MISE:-false}"
 
+NPM_PACKAGES_UNUSED=(
+    "@openai/codex"
+)
 NPM_PACKAGES=(
     "@google/gemini-cli"
     "@anthropic-ai/claude-code"
-    "@openai/codex"
+    "@github/copilot"
 )
 NPM_INSTALL="${MCRA_NPM_INSTALL:-${NPM_PACKAGES[*]}}"
 
