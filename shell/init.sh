@@ -975,10 +975,11 @@ main() {
     log_debug "Container: $DOTFILES_IN_CONTAINER, WSL: $DOTFILES_IN_WSL"
 }
 
-# Only run main if script is sourced, not executed
-# Generic POSIX check works for both bash and zsh
-if [ "$0" = "${0##*/}" ]; then
+# Only run main if script is sourced, not executed.
+# Works for bash and zsh (not pure POSIX sh).
+if ! (return 0 2>/dev/null); then
     echo "This script should be sourced, not executed directly."
+    echo "Use: source $0"
     exit 1
 fi
 
