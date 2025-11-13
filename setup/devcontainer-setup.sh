@@ -36,6 +36,11 @@ log() {
     echo "[$(date +'%Y-%m-%d %H:%M:%S')] $1"
 }
 
+# Function to check if a command exists.
+command_exists() {
+    command -v "$1" &> /dev/null
+}
+
 # User Management Decision: Using default 'codespace' user.
 #
 # Attempted custom 'marcelo' user but encountered UID/GID mismatch issues:
@@ -124,20 +129,20 @@ else
 fi
 
 # Setup mise for environment management.
-if [ "$SETUP_MISE" = "true" ] && ! command -v mise &> /dev/null; then
+if [ "$SETUP_MISE" = "true" ] && ! command_exists mise; then
     log "🔌 Installing mise for runtime version management..."
     curl https://mise.run | sh
     # Add mise to the current shell's PATH to use it immediately.
     export PATH="$HOME/.local/bin:$PATH"
     mise use --global uv clojure babashka deno
     # Check if npm is available globally, if not install node/npm via mise.
-    if ! command -v npm &> /dev/null; then
+    if ! command_exists npm; then
         log "📦 Installing Node.js/npm via mise..."
         mise use --global node@lts
     fi
     log "✅ mise installed and configured."
 else
-    if command -v npm &> /dev/null; then
+    if command_exists npm; then
         log "Installing ${NPM_INSTALL[*]}..."
         npm install -g $NPM_INSTALL
     fi
@@ -145,7 +150,7 @@ else
 fi
 
 # Setup pnpm and install global packages.
-if ! command -v pnpm &> /dev/null; then
+if ! command_exists pnpm; then
     log "📦 Installing pnpm..."
     npm install -g pnpm
     log "✅ pnpm installed"
@@ -179,7 +184,7 @@ fi
 # Note: Assumes Debian/Ubuntu-based image (apt). If using different base images,
 # this section may need adjustment for different package managers.
 log "📦 Installing essential system packages..."
-if command -v apt-get &> /dev/null; then
+if command_exists apt-get; then
     # Update package list only if it's stale (older than 1 day).
     if [ ! -f /var/lib/apt/lists/lock ] || [ "$(find /var/lib/apt/lists -mtime +1 -print -quit)" ]; then
         sudo apt-get update
@@ -188,12 +193,12 @@ if command -v apt-get &> /dev/null; then
     # Install packages if not already present.
     PACKAGES_TO_INSTALL=()
     
-    if ! command -v tmux &> /dev/null; then
+    if ! command_exists tmux; then
         PACKAGES_TO_INSTALL+=(tmux)
     fi
     
     # git-lfs is typically handled by devcontainer feature, but check anyway.
-    if ! command -v git-lfs &> /dev/null; then
+    if ! command_exists git-lfs; then
         PACKAGES_TO_INSTALL+=(git-lfs)
     fi
     
@@ -206,7 +211,7 @@ if command -v apt-get &> /dev/null; then
     fi
     
     # Install fzf from GitHub (apt version is too old).
-    if ! command -v fzf &> /dev/null; then
+    if ! command_exists fzf; then
         log "📦 Installing fzf from GitHub..."
         git clone --depth 1 https://github.com/$GITHUB_HANDLE/fzf.git ~/.fzf
         ~/.fzf/install --bin
