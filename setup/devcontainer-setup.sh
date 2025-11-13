@@ -89,9 +89,11 @@ if [ "$SETUP_DOTFILES" = "true" ]; then
     # Create symlinks for shell configuration.
     log "🔗 Creating shell configuration symlinks..."
     ln -sf "$DOTFILES_DIR/shell/.tmux.conf" "$HOME/.tmux.conf"
-    ln -sf "$DOTFILES_DIR/shell/init.sh" "$HOME/.bashrc"
-    ln -sf "$DOTFILES_DIR/shell/init.sh" "$HOME/.zshrc"
     log "✅ Shell configuration symlinks created"
+    
+    # Source the shell initialization script.
+    echo '\n\nsource $MCRA_DOTFILES/shell/init.sh\n\n' >> $HOME/.bashrc
+    echo '\n\nsource $MCRA_DOTFILES/shell/init.sh\n\n' >> $HOME/.zshrc
 else
     log "⏭️  Skipping dotfiles setup (MCRA_SETUP_DOTFILES=false)"
 fi
@@ -133,7 +135,6 @@ if [ "$SETUP_MISE" = "true" ] && ! command -v mise &> /dev/null; then
         log "📦 Installing Node.js/npm via mise..."
         mise use --global node@lts
     fi
-    npm install -g $NPM_INSTALL
     log "✅ mise installed and configured."
 else
     if command -v npm &> /dev/null; then
@@ -141,6 +142,27 @@ else
         npm install -g $NPM_INSTALL
     fi
     log "ℹ️  Done. Skipping mise installation (MCRA_SETUP_MISE is false or mise is already installed)."
+fi
+
+# Setup pnpm and install global packages.
+if ! command -v pnpm &> /dev/null; then
+    log "📦 Installing pnpm..."
+    npm install -g pnpm
+    log "✅ pnpm installed"
+else
+    log "ℹ️  pnpm already installed"
+    log "⚙️  Configuring pnpm global store..."
+    export PNPM_HOME="/home/node/.local/share/pnpm"
+    mkdir -p "$PNPM_HOME"
+    case ":$PATH:" in
+        *":$PNPM_HOME:"*) ;;
+        *) export PATH="$PNPM_HOME:$PATH" ;;
+    esac
+
+    # install global packages with pnpm
+    log "📦 Installing global npm packages with pnpm..."
+    pnpm add -g $NPM_INSTALL
+    log "✅ Global npm packages installed with pnpm"
 fi
 
 # Additional project-specific setup can go here.
