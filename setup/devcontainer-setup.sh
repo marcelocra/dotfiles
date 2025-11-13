@@ -92,8 +92,8 @@ if [ "$SETUP_DOTFILES" = "true" ]; then
     log "✅ Shell configuration symlinks created"
     
     # Source the shell initialization script.
-    echo '\n\nsource $MCRA_DOTFILES/shell/init.sh\n\n' >> $HOME/.bashrc
-    echo '\n\nsource $MCRA_DOTFILES/shell/init.sh\n\n' >> $HOME/.zshrc
+    printf '\n\nsource $DOTFILES_DIR/shell/init.sh\n\n' >> $HOME/.bashrc
+    printf '\n\nsource $DOTFILES_DIR/shell/init.sh\n\n' >> $HOME/.zshrc
 else
     log "⏭️  Skipping dotfiles setup (MCRA_SETUP_DOTFILES=false)"
 fi
@@ -163,6 +163,16 @@ else
     log "📦 Installing global npm packages with pnpm..."
     pnpm add -g $NPM_INSTALL
     log "✅ Global npm packages installed with pnpm"
+fi
+
+# Setup the `e` editor launcher command.
+if [[ -f $DOTFILES_DIR/shell/e ]]; then
+    [[ ! -d "$HOME/bin" ]] && mkdir -p "$HOME/bin"
+    log "🔗 Setting up 'e' editor launcher command..."
+    ln -sf "$DOTFILES_DIR/shell/e" "$HOME/bin/e"
+    log "✅ 'e' editor launcher set up"
+else
+    log "⚠️ 'e' editor launcher script not found in dotfiles, skipping..."
 fi
 
 # Additional project-specific setup can go here.
