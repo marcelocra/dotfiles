@@ -175,6 +175,44 @@ else
     log "⚠️ 'e' editor launcher script not found in dotfiles, skipping..."
 fi
 
+# Install essential system packages.
+# Note: Assumes Debian/Ubuntu-based image (apt). If using different base images,
+# this section may need adjustment for different package managers.
+log "📦 Installing essential system packages..."
+if command -v apt-get &> /dev/null; then
+    # Update package list only if it's stale (older than 1 day).
+    if [ ! -f /var/lib/apt/lists/lock ] || [ "$(find /var/lib/apt/lists -mtime +1 -print -quit)" ]; then
+        sudo apt-get update
+    fi
+    
+    # Install packages if not already present.
+    PACKAGES_TO_INSTALL=()
+    
+    if ! command -v tmux &> /dev/null; then
+        PACKAGES_TO_INSTALL+=(tmux)
+    fi
+    
+    if ! command -v fzf &> /dev/null; then
+        PACKAGES_TO_INSTALL+=(fzf)
+    fi
+    
+    # git-lfs is typically handled by devcontainer feature, but check anyway.
+    if ! command -v git-lfs &> /dev/null; then
+        PACKAGES_TO_INSTALL+=(git-lfs)
+    fi
+    
+    if [ ${#PACKAGES_TO_INSTALL[@]} -gt 0 ]; then
+        log "📦 Installing: ${PACKAGES_TO_INSTALL[*]}"
+        sudo apt-get install -y "${PACKAGES_TO_INSTALL[@]}"
+        log "✅ System packages installed"
+    else
+        log "ℹ️  All essential packages already installed"
+    fi
+else
+    log "⚠️  apt-get not found. Skipping system package installation."
+    log "    If using non-Debian/Ubuntu image, install tmux, fzf manually."
+fi
+
 # Additional project-specific setup can go here.
 # This could be extended with project detection, language-specific tools, etc.
 
