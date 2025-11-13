@@ -852,6 +852,10 @@ configure_zsh() {
         setopt CORRECT              # command auto-correction
         setopt COMPLETE_ALIASES     # complete aliases
 
+        # Make Ctrl+U behave like bash (kill from cursor to beginning of line)
+        # Default zsh behavior kills the entire line
+        bindkey '^U' backward-kill-line
+
         # Configure fzf if installed.
         if command_exists fzf && fzf --zsh >/dev/null 2>&1; then
             eval "$(fzf --zsh)"
