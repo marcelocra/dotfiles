@@ -192,10 +192,6 @@ if command -v apt-get &> /dev/null; then
         PACKAGES_TO_INSTALL+=(tmux)
     fi
     
-    if ! command -v fzf &> /dev/null; then
-        PACKAGES_TO_INSTALL+=(fzf)
-    fi
-    
     # git-lfs is typically handled by devcontainer feature, but check anyway.
     if ! command -v git-lfs &> /dev/null; then
         PACKAGES_TO_INSTALL+=(git-lfs)
@@ -207,6 +203,19 @@ if command -v apt-get &> /dev/null; then
         log "✅ System packages installed"
     else
         log "ℹ️  All essential packages already installed"
+    fi
+    
+    # Install fzf from GitHub (apt version is too old).
+    if ! command -v fzf &> /dev/null; then
+        log "📦 Installing fzf from GitHub..."
+        git clone --depth 1 https://github.com/$GITHUB_HANDLE/fzf.git ~/.fzf
+        ~/.fzf/install --bin
+        # Move binary to user bin directory.
+        mkdir -p "$HOME/bin"
+        ln -sf ~/.fzf/bin/fzf "$HOME/bin/fzf"
+        log "✅ fzf installed"
+    else
+        log "ℹ️  fzf already installed"
     fi
 else
     log "⚠️  apt-get not found. Skipping system package installation."
