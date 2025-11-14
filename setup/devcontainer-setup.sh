@@ -13,6 +13,9 @@ DOTFILES_DIR="$PROJECTS_DIR/dotfiles"
 SETUP_DOTFILES="${MCRA_SETUP_DOTFILES:-true}"
 SETUP_ZSH_PLUGINS="${MCRA_SETUP_ZSH_PLUGINS:-true}"
 SETUP_MISE="${MCRA_SETUP_MISE:-false}"
+SETUP_EDITOR_LAUNCHER="${MCRA_SETUP_EDITOR_LAUNCHER:-true}"
+SETUP_SYSTEM_PACKAGES="${MCRA_SETUP_SYSTEM_PACKAGES:-true}"
+SETUP_PNPM="${MCRA_SETUP_PNPM:-true}"
 
 NPM_PACKAGES_UNUSED=(
     "@openai/codex"
@@ -41,41 +44,34 @@ command_exists() {
     command -v "$1" &> /dev/null
 }
 
-# User Management Decision: Using default 'codespace' user.
-#
-# Attempted custom 'marcelo' user but encountered UID/GID mismatch issues:
-# [1] Bind mounts break with permission conflicts (Claude Code settings fail).
-# [2] Changing ownership affects host system files with wrong UID (525288).
-# [3] Requires excessive sudo usage for basic operations.
-#
-# DevMagic v1.0.0 architecture: Stick with container defaults for better
-# cross-platform compatibility and fewer permission headaches.
-#
-# # Change ownership of the mounted workspace first.
-# sudo chown -R marcelo:marcelo /workspaces
-# # Fix permissions for the NVM directory.
-# sudo chown -R marcelo:marcelo /usr/local/share/nvm
-# It also require sudo in the `cp -r ~/.ssh-from-host/. ~/.ssh` command below
-# and in the command below it (chmod 700).
+# Setup SSH keys with proper permissions.
+setup_ssh_keys() {
+    [ ! -d "$HOME/.ssh-from-host" ] && {
+        log "ℹ️  No SSH keys to copy (no .ssh-from-host directory found)"
+        return 0
+    }
 
-# Copy SSH keys with proper permissions for cross-platform compatibility.
-if [ -d "$HOME/.ssh-from-host" ]; then
     log "🔑 Setting up SSH keys..."
     cp -r ~/.ssh-from-host/. ~/.ssh
     chmod 700 ~/.ssh
     find ~/.ssh -type f -exec chmod 600 {} \;
     log "✅ SSH keys configured"
-else
-    log "ℹ️  No SSH keys to copy (no .ssh-from-host directory found)"
-fi
+}
 
 # Create directory structure.
-log "📁 Creating directory structure..."
-mkdir -p "$PROJECTS_DIR"
-log "✅ Directories created"
+setup_directories() {
+    log "📁 Creating directory structure..."
+    mkdir -p "$PROJECTS_DIR"
+    log "✅ Directories created"
+}
 
-# Setup dotfiles.
-if [ "$SETUP_DOTFILES" = "true" ]; then
+# Setup dotfiles repository and configuration.
+setup_dotfiles() {
+    [ "$SETUP_DOTFILES" != "true" ] && {
+        log "⏭️  Skipping dotfiles setup (MCRA_SETUP_DOTFILES=false)"
+        return 0
+    }
+
     # Check if VS Code already cloned dotfiles.
     if [ -d "$HOME/dotfiles" ] && [ ! -d "$DOTFILES_DIR" ]; then
         log "🔗 Found VS Code dotfiles, creating symlink..."
@@ -99,12 +95,15 @@ if [ "$SETUP_DOTFILES" = "true" ]; then
     # Source the shell initialization script.
     printf "\n\nsource $DOTFILES_DIR/shell/init.sh\n\n" >> $HOME/.bashrc
     printf "\n\nsource $DOTFILES_DIR/shell/init.sh\n\n" >> $HOME/.zshrc
-else
-    log "⏭️  Skipping dotfiles setup (MCRA_SETUP_DOTFILES=false)"
-fi
+}
 
-# Setup zsh plugins.
-if [ "$SETUP_ZSH_PLUGINS" = "true" ]; then
+# Setup zsh plugins for enhanced shell experience.
+setup_zsh_plugins() {
+    [ "$SETUP_ZSH_PLUGINS" != "true" ] && {
+        log "⏭️  Skipping zsh plugins setup (MCRA_SETUP_ZSH_PLUGINS=false)"
+        return 0
+    }
+
     ZSH_CUSTOM_DIR="${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}"
 
     if [ ! -d "$ZSH_CUSTOM_DIR/plugins/zsh-autosuggestions" ]; then
@@ -124,42 +123,69 @@ if [ "$SETUP_ZSH_PLUGINS" = "true" ]; then
         log "ℹ️  zsh-syntax-highlighting already exists, updating..."
         (cd "$ZSH_CUSTOM_DIR/plugins/zsh-syntax-highlighting" && git pull)
     fi
-else
-    log "⏭️  Skipping zsh plugins setup (MCRA_SETUP_ZSH_PLUGINS=false)"
-fi
+}
 
-# Setup mise for environment management.
-if [ "$SETUP_MISE" = "true" ] && ! command_exists mise; then
+# Setup mise for runtime version management.
+setup_mise() {
+    [ "$SETUP_MISE" != "true" ] && {
+        log "⏭️  Skipping mise setup (MCRA_SETUP_MISE=false)"
+        return 0
+    }
+
+    command_exists mise && {
+        log "ℹ️  mise already installed"
+        return 0
+    }
+
     log "🔌 Installing mise for runtime version management..."
     curl https://mise.run | sh
     # Add mise to the current shell's PATH to use it immediately.
     export PATH="$HOME/.local/bin:$PATH"
     mise use --global uv clojure babashka deno
+    
     # Check if npm is available globally, if not install node/npm via mise.
     if ! command_exists npm; then
         log "📦 Installing Node.js/npm via mise..."
         mise use --global node@lts
     fi
-    log "✅ mise installed and configured."
-else
-    log "ℹ️  Done. Skipping mise installation (MCRA_SETUP_MISE is false or mise is already installed)."
-fi
+    log "✅ mise installed and configured"
+}
 
-# Setup the `e` editor launcher command.
-if [[ -f $DOTFILES_DIR/shell/e ]]; then
+# Setup editor launcher command.
+setup_editor_launcher() {
+    [ "$SETUP_EDITOR_LAUNCHER" != "true" ] && {
+        log "⏭️  Skipping editor launcher setup (MCRA_SETUP_EDITOR_LAUNCHER=false)"
+        return 0
+    }
+
+    [ ! -f "$DOTFILES_DIR/shell/e" ] && {
+        log "⚠️  'e' editor launcher script not found in dotfiles, skipping..."
+        return 0
+    }
+
     [[ ! -d "$HOME/bin" ]] && mkdir -p "$HOME/bin"
     log "🔗 Setting up 'e' editor launcher command..."
     ln -sf "$DOTFILES_DIR/shell/e" "$HOME/bin/e"
     log "✅ 'e' editor launcher set up"
-else
-    log "⚠️ 'e' editor launcher script not found in dotfiles, skipping..."
-fi
+}
 
 # Install essential system packages.
-# Note: Assumes Debian/Ubuntu-based image (apt). If using different base images,
-# this section may need adjustment for different package managers.
-log "📦 Installing essential system packages..."
-if command_exists apt-get; then
+setup_system_packages() {
+    [ "$SETUP_SYSTEM_PACKAGES" != "true" ] && {
+        log "⏭️  Skipping system packages setup (MCRA_SETUP_SYSTEM_PACKAGES=false)"
+        return 0
+    }
+
+    # Note: Assumes Debian/Ubuntu-based image (apt). If using different base images,
+    # this section may need adjustment for different package managers.
+    log "📦 Installing essential system packages..."
+    
+    ! command_exists apt-get && {
+        log "⚠️  apt-get not found. Skipping system package installation."
+        log "    If using non-Debian/Ubuntu image, install tmux, fzf manually."
+        return 0
+    }
+
     # Update package list only if it's stale (older than 1 day).
     if [ ! -f /var/lib/apt/lists/lock ] || [ "$(find /var/lib/apt/lists -mtime +1 -print -quit)" ]; then
         sudo apt-get update
@@ -168,14 +194,8 @@ if command_exists apt-get; then
     # Install packages if not already present.
     PACKAGES_TO_INSTALL=()
     
-    if ! command_exists tmux; then
-        PACKAGES_TO_INSTALL+=(tmux)
-    fi
-    
-    # git-lfs is typically handled by devcontainer feature, but check anyway.
-    if ! command_exists git-lfs; then
-        PACKAGES_TO_INSTALL+=(git-lfs)
-    fi
+    ! command_exists tmux && PACKAGES_TO_INSTALL+=(tmux)
+    ! command_exists git-lfs && PACKAGES_TO_INSTALL+=(git-lfs)
     
     if [ ${#PACKAGES_TO_INSTALL[@]} -gt 0 ]; then
         log "📦 Installing: ${PACKAGES_TO_INSTALL[*]}"
@@ -197,18 +217,23 @@ if command_exists apt-get; then
     else
         log "ℹ️  fzf already installed"
     fi
-else
-    log "⚠️  apt-get not found. Skipping system package installation."
-    log "    If using non-Debian/Ubuntu image, install tmux, fzf manually."
-fi
+}
 
-# Setup pnpm and install global packages.
-if ! command_exists pnpm; then
-    log "📦 Installing pnpm..."
-    npm install -g pnpm
-    log "✅ pnpm installed"
-else
-    log "ℹ️  pnpm already installed"
+# Setup pnpm and install global npm packages.
+setup_pnpm() {
+    [ "$SETUP_PNPM" != "true" ] && {
+        log "⏭️  Skipping pnpm setup (MCRA_SETUP_PNPM=false)"
+        return 0
+    }
+
+    if ! command_exists pnpm; then
+        log "📦 Installing pnpm..."
+        npm install -g pnpm
+        log "✅ pnpm installed"
+    else
+        log "ℹ️  pnpm already installed"
+    fi
+
     log "⚙️  Configuring pnpm global store..."
     export PNPM_HOME="/home/node/.local/share/pnpm"
     mkdir -p "$PNPM_HOME"
@@ -217,12 +242,44 @@ else
         *) export PATH="$PNPM_HOME:$PATH" ;;
     esac
 
-    # install global packages with pnpm
+    # Install global packages with pnpm.
     log "📦 Installing global npm packages with pnpm..."
     pnpm add -g $NPM_INSTALL
     log "✅ Global npm packages installed with pnpm"
-fi
+}
 
-log "🎉 Container setup complete! Welcome to your development environment."
-log "💡 Your dotfiles are linked and zsh plugins are ready to use."
-log "🔧 To customize this setup, edit: https://github.com/$GITHUB_HANDLE/dotfiles/blob/main/setup/devcontainer-setup.sh"
+# Main setup orchestration.
+main() {
+    setup_ssh_keys
+    setup_directories
+    setup_dotfiles
+    setup_zsh_plugins
+    setup_mise
+    setup_editor_launcher
+    setup_system_packages
+    setup_pnpm
+
+    log "🎉 Container setup complete! Welcome to your development environment."
+    log "💡 Your dotfiles are linked and zsh plugins are ready to use."
+    log "🔧 To customize this setup, edit: https://github.com/$GITHUB_HANDLE/dotfiles/blob/main/setup/devcontainer-setup.sh"
+}
+
+# User Management Decision: Using default 'codespace' user.
+#
+# Attempted custom 'marcelo' user but encountered UID/GID mismatch issues:
+# [1] Bind mounts break with permission conflicts (Claude Code settings fail).
+# [2] Changing ownership affects host system files with wrong UID (525288).
+# [3] Requires excessive sudo usage for basic operations.
+#
+# DevMagic v1.0.0 architecture: Stick with container defaults for better
+# cross-platform compatibility and fewer permission headaches.
+#
+# # Change ownership of the mounted workspace first.
+# sudo chown -R marcelo:marcelo /workspaces
+# # Fix permissions for the NVM directory.
+# sudo chown -R marcelo:marcelo /usr/local/share/nvm
+# It also require sudo in the `cp -r ~/.ssh-from-host/. ~/.ssh` command below
+# and in the command below it (chmod 700).
+
+# Execute main function.
+main "$@"
