@@ -91,17 +91,109 @@ configure_editor() {
 # =============================================================================
 
 configure_exports() {
+    # Privacy - disable telemetry for various tools.
+    export DO_NOT_TRACK=1
+    export DOTNET_CLI_TELEMETRY_OPTOUT=true
+    export DOTNET_INTERACTIVE_CLI_TELEMETRY_OPTOUT=true
+    export NEXT_TELEMETRY_DISABLED=1
+    export ASTRO_TELEMETRY_DISABLED=1
+    export TURBO_TELEMETRY_DISABLED=1
+    export STORYBOOK_DISABLE_TELEMETRY=1
+    export HOMEBREW_NO_ANALYTICS=1
+    export HOMEBREW_NO_AUTO_UPDATE=1
+    
     # User bin directories.
     add_to_path "$HOME/bin"
     add_to_path "$HOME/.local/bin"
     
-    # Pnpm global store (only if pnpm is installed or likely to be used).
+    # Pnpm global store.
     if command_exists pnpm || [[ -d "$HOME/.local/share/pnpm" ]]; then
         export PNPM_HOME="$HOME/.local/share/pnpm"
         add_to_path "$PNPM_HOME"
     fi
     
-    # Add more PATH entries here using: add_to_path "/path/to/dir"
+    # Homebrew (Linux).
+    if [[ -d /home/linuxbrew/.linuxbrew ]]; then
+        eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+    fi
+    
+    # Node Version Manager (nvm).
+    if [[ -d "$HOME/.nvm" ]]; then
+        export NVM_DIR="$HOME/.nvm"
+        [[ -s "$NVM_DIR/nvm.sh" ]] && \. "$NVM_DIR/nvm.sh"
+        [[ -s "$NVM_DIR/bash_completion" ]] && \. "$NVM_DIR/bash_completion"
+    fi
+    
+    # Bun JavaScript runtime.
+    if [[ -d "$HOME/.bun" ]]; then
+        export BUN_INSTALL="$HOME/.bun"
+        add_to_path "$BUN_INSTALL/bin"
+        [[ -s "$HOME/.bun/_bun" ]] && source "$HOME/.bun/_bun"
+    fi
+    
+    # Deno JavaScript runtime.
+    if [[ -d "$HOME/.deno" ]]; then
+        export DENO_INSTALL="$HOME/.deno"
+        add_to_path "$DENO_INSTALL/bin"
+    fi
+    
+    # Rust / Cargo.
+    add_to_path "$HOME/.cargo/bin"
+    
+    # Go language.
+    if [[ -d "$HOME/go/bin" ]]; then
+        export GOPATH="$HOME/go"
+        add_to_path "$GOPATH/bin"
+    fi
+    
+    # Ruby / rbenv.
+    if [[ -f "$HOME/.rbenv/bin/rbenv" ]]; then
+        export GEM_HOME="$HOME/bin/packages/ruby/gems"
+        [[ ! -d "$GEM_HOME" ]] && mkdir -p "$GEM_HOME"
+        add_to_path "$GEM_HOME/bin"
+        eval "$(~/.rbenv/bin/rbenv init - zsh)"
+    fi
+    
+    # Haskell / GHCup.
+    [[ -f "$HOME/.ghcup/env" ]] && source "$HOME/.ghcup/env"
+    
+    # OCaml / opam.
+    [[ -r "$HOME/.opam/opam-init/init.zsh" ]] && source "$HOME/.opam/opam-init/init.zsh" >/dev/null 2>/dev/null
+    
+    # .NET SDK.
+    if command_exists dotnet; then
+        export DOTNET_ROOT="$(dirname $(realpath $(command -v dotnet)))"
+        add_to_path "$DOTNET_ROOT"
+        add_to_path "$HOME/.dotnet/tools"
+        alias d='dotnet'
+        alias dp='dotnet paket'
+    fi
+    
+    # Flutter SDK.
+    if [[ -d "$HOME/bin/flutter" ]]; then
+        export FLUTTER_SDK="$HOME/bin/flutter"
+        export FLUTTER_ROOT="$FLUTTER_SDK/bin"
+        add_to_path "$FLUTTER_ROOT"
+    fi
+    
+    # Fly.io CLI.
+    if [[ -d "$HOME/.fly" ]]; then
+        export FLYCTL_INSTALL="$HOME/.fly"
+        add_to_path "$FLYCTL_INSTALL/bin"
+    fi
+    
+    # fzf keybindings and completions (shell-specific loading in configure_zsh/bash).
+    [[ -f "$HOME/.fzf.zsh" ]] && source "$HOME/.fzf.zsh"
+    
+    # GitHub Copilot CLI aliases.
+    if command_exists gh; then
+        eval "$(gh copilot alias -- zsh 2>/dev/null)"
+    fi
+    
+    # Angular CLI completions.
+    if command_exists ng; then
+        source <(ng completion script 2>/dev/null)
+    fi
 }
 
 # Next export marker.
