@@ -49,6 +49,16 @@ command_exists() {
     command -v "$1" >/dev/null 2>&1
 }
 
+# Add directory to PATH only if it exists and isn't already in PATH.
+add_to_path() {
+    local dir="$1"
+    [[ ! -d "$dir" ]] && return 1
+    case ":$PATH:" in
+        *":$dir:"*) return 0 ;;
+        *) export PATH="$dir:$PATH" ;;
+    esac
+}
+
 log_debug() {
     if [[ "${DOTFILES_DEBUG:-0}" == "1" ]]; then
         echo "🔍 $*" >&2
@@ -81,17 +91,17 @@ configure_editor() {
 # =============================================================================
 
 configure_exports() {
-    # User bin directory for custom scripts/binaries.
-    export PATH="$PATH:$HOME/bin"
+    # User bin directories.
+    add_to_path "$HOME/bin"
+    add_to_path "$HOME/.local/bin"
     
     # Pnpm global store (only if pnpm is installed or likely to be used).
     if command_exists pnpm || [[ -d "$HOME/.local/share/pnpm" ]]; then
         export PNPM_HOME="$HOME/.local/share/pnpm"
-        case ":$PATH:" in
-            *":$PNPM_HOME:"*) ;;
-            *) export PATH="$PNPM_HOME:$PATH" ;;
-        esac
+        add_to_path "$PNPM_HOME"
     fi
+    
+    # Add more PATH entries here using: add_to_path "/path/to/dir"
 }
 
 # Next export marker.
