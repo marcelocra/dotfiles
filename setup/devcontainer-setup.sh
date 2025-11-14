@@ -142,10 +142,6 @@ if [ "$SETUP_MISE" = "true" ] && ! command_exists mise; then
     fi
     log "✅ mise installed and configured."
 else
-    if command_exists npm; then
-        log "Installing ${NPM_INSTALL[*]}..."
-        npm install -g $NPM_INSTALL
-    fi
     log "ℹ️  Done. Skipping mise installation (MCRA_SETUP_MISE is false or mise is already installed)."
 fi
 
