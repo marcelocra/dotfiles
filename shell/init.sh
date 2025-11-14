@@ -107,33 +107,36 @@ configure_exports() {
     add_to_path "$HOME/.local/bin"
     
     # Pnpm global store.
-    if command_exists pnpm || [[ -d "$HOME/.local/share/pnpm" ]]; then
-        export PNPM_HOME="$HOME/.local/share/pnpm"
+    local pnpm_home="$HOME/.local/share/pnpm"
+    if command_exists pnpm || [[ -d "$pnpm_home" ]]; then
+        export PNPM_HOME="$pnpm_home"
         add_to_path "$PNPM_HOME"
     fi
     
     # Homebrew (Linux).
-    if [[ -d /home/linuxbrew/.linuxbrew ]]; then
-        eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
-    fi
+    local brew_path="/home/linuxbrew/.linuxbrew"
+    [[ -d "$brew_path" ]] && eval "$($brew_path/bin/brew shellenv)"
     
     # Node Version Manager (nvm).
-    if [[ -d "$HOME/.nvm" ]]; then
-        export NVM_DIR="$HOME/.nvm"
-        [[ -s "$NVM_DIR/nvm.sh" ]] && \. "$NVM_DIR/nvm.sh"
-        [[ -s "$NVM_DIR/bash_completion" ]] && \. "$NVM_DIR/bash_completion"
+    local nvm_dir="$HOME/.nvm"
+    if [[ -d "$nvm_dir" ]]; then
+        export NVM_DIR="$nvm_dir"
+        [[ -s "$NVM_DIR/nvm.sh" ]] && source "$NVM_DIR/nvm.sh"
+        [[ -s "$NVM_DIR/bash_completion" ]] && source "$NVM_DIR/bash_completion"
     fi
     
     # Bun JavaScript runtime.
-    if [[ -d "$HOME/.bun" ]]; then
-        export BUN_INSTALL="$HOME/.bun"
+    local bun_dir="$HOME/.bun"
+    if [[ -d "$bun_dir" ]]; then
+        export BUN_INSTALL="$bun_dir"
         add_to_path "$BUN_INSTALL/bin"
-        [[ -s "$HOME/.bun/_bun" ]] && source "$HOME/.bun/_bun"
+        [[ -s "$BUN_INSTALL/_bun" ]] && source "$BUN_INSTALL/_bun"
     fi
     
     # Deno JavaScript runtime.
-    if [[ -d "$HOME/.deno" ]]; then
-        export DENO_INSTALL="$HOME/.deno"
+    local deno_dir="$HOME/.deno"
+    if [[ -d "$deno_dir" ]]; then
+        export DENO_INSTALL="$deno_dir"
         add_to_path "$DENO_INSTALL/bin"
     fi
     
@@ -141,14 +144,17 @@ configure_exports() {
     add_to_path "$HOME/.cargo/bin"
     
     # Go language.
-    if [[ -d "$HOME/go/bin" ]]; then
-        export GOPATH="$HOME/go"
+    local go_path="$HOME/go"
+    if [[ -d "$go_path/bin" ]]; then
+        export GOPATH="$go_path"
         add_to_path "$GOPATH/bin"
     fi
     
     # Ruby / rbenv.
-    if [[ -f "$HOME/.rbenv/bin/rbenv" ]]; then
-        export GEM_HOME="$HOME/bin/packages/ruby/gems"
+    local rbenv_bin="$HOME/.rbenv/bin/rbenv"
+    if [[ -f "$rbenv_bin" ]]; then
+        local gem_home="$HOME/bin/packages/ruby/gems"
+        export GEM_HOME="$gem_home"
         [[ ! -d "$GEM_HOME" ]] && mkdir -p "$GEM_HOME"
         add_to_path "$GEM_HOME/bin"
         eval "$(~/.rbenv/bin/rbenv init - zsh)"
@@ -158,7 +164,8 @@ configure_exports() {
     [[ -f "$HOME/.ghcup/env" ]] && source "$HOME/.ghcup/env"
     
     # OCaml / opam.
-    [[ -r "$HOME/.opam/opam-init/init.zsh" ]] && source "$HOME/.opam/opam-init/init.zsh" >/dev/null 2>/dev/null
+    local opam_init="$HOME/.opam/opam-init/init.zsh"
+    [[ -r "$opam_init" ]] && source "$opam_init" >/dev/null 2>&1
     
     # .NET SDK.
     if command_exists dotnet; then
@@ -170,20 +177,19 @@ configure_exports() {
     fi
     
     # Flutter SDK.
-    if [[ -d "$HOME/bin/flutter" ]]; then
-        export FLUTTER_SDK="$HOME/bin/flutter"
+    local flutter_dir="$HOME/bin/flutter"
+    if [[ -d "$flutter_dir" ]]; then
+        export FLUTTER_SDK="$flutter_dir"
         export FLUTTER_ROOT="$FLUTTER_SDK/bin"
         add_to_path "$FLUTTER_ROOT"
     fi
     
     # Fly.io CLI.
-    if [[ -d "$HOME/.fly" ]]; then
-        export FLYCTL_INSTALL="$HOME/.fly"
+    local fly_dir="$HOME/.fly"
+    if [[ -d "$fly_dir" ]]; then
+        export FLYCTL_INSTALL="$fly_dir"
         add_to_path "$FLYCTL_INSTALL/bin"
     fi
-    
-    # fzf keybindings and completions (shell-specific loading in configure_zsh/bash).
-    [[ -f "$HOME/.fzf.zsh" ]] && source "$HOME/.fzf.zsh"
     
     # GitHub Copilot CLI aliases.
     if command_exists gh; then
@@ -1065,6 +1071,9 @@ configure_mise() {
 # FZF
 # =============================================================================
 
+# Note: fzf shell integration (keybindings & completions) is configured in
+# configure_zsh() and configure_bash() functions, as they differ per shell.
+# This function only sets general fzf options.
 configure_fzf() {
     export FZF_DEFAULT_OPTS='--height 40% --layout=reverse --border --info=inline'
 }
