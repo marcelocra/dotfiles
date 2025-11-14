@@ -1,7 +1,20 @@
 #!/bin/bash
 # devcontainer-setup.sh
 # Personal devcontainer setup script for development environment.
-# Usage: curl -fsSL https://raw.githubusercontent.com/marcelocra/dotfiles/main/setup/devcontainer-setup.sh | bash
+#
+# Usage examples:
+#
+#   # Full auto setup (default - installs everything)
+#   curl -fsSL https://raw.githubusercontent.com/marcelocra/dotfiles/main/setup/devcontainer-setup.sh | bash
+#
+#   # Quick setup - just dotfiles and editor launcher (skips heavy operations)
+#   curl -fsSL https://raw.githubusercontent.com/marcelocra/dotfiles/main/setup/devcontainer-setup.sh | MCRA_SETUP_QUICK=true bash
+#
+#   # Interactive setup - prompts before each major operation
+#   curl -fsSL https://raw.githubusercontent.com/marcelocra/dotfiles/main/setup/devcontainer-setup.sh | MCRA_SETUP_INTERACTIVE=true bash
+#
+#   # Custom setup - disable specific components
+#   curl -fsSL https://raw.githubusercontent.com/marcelocra/dotfiles/main/setup/devcontainer-setup.sh | MCRA_SETUP_PNPM=false MCRA_SETUP_MISE=true bash
 
 set -e
 
