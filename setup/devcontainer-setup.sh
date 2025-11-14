@@ -97,8 +97,8 @@ if [ "$SETUP_DOTFILES" = "true" ]; then
     log "✅ Shell configuration symlinks created"
     
     # Source the shell initialization script.
-    printf '\n\nsource $DOTFILES_DIR/shell/init.sh\n\n' >> $HOME/.bashrc
-    printf '\n\nsource $DOTFILES_DIR/shell/init.sh\n\n' >> $HOME/.zshrc
+    printf "\n\nsource $DOTFILES_DIR/shell/init.sh\n\n" >> $HOME/.bashrc
+    printf "\n\nsource $DOTFILES_DIR/shell/init.sh\n\n" >> $HOME/.zshrc
 else
     log "⏭️  Skipping dotfiles setup (MCRA_SETUP_DOTFILES=false)"
 fi
@@ -143,27 +143,6 @@ if [ "$SETUP_MISE" = "true" ] && ! command_exists mise; then
     log "✅ mise installed and configured."
 else
     log "ℹ️  Done. Skipping mise installation (MCRA_SETUP_MISE is false or mise is already installed)."
-fi
-
-# Setup pnpm and install global packages.
-if ! command_exists pnpm; then
-    log "📦 Installing pnpm..."
-    npm install -g pnpm
-    log "✅ pnpm installed"
-else
-    log "ℹ️  pnpm already installed"
-    log "⚙️  Configuring pnpm global store..."
-    export PNPM_HOME="/home/node/.local/share/pnpm"
-    mkdir -p "$PNPM_HOME"
-    case ":$PATH:" in
-        *":$PNPM_HOME:"*) ;;
-        *) export PATH="$PNPM_HOME:$PATH" ;;
-    esac
-
-    # install global packages with pnpm
-    log "📦 Installing global npm packages with pnpm..."
-    pnpm add -g $NPM_INSTALL
-    log "✅ Global npm packages installed with pnpm"
 fi
 
 # Setup the `e` editor launcher command.
@@ -223,8 +202,26 @@ else
     log "    If using non-Debian/Ubuntu image, install tmux, fzf manually."
 fi
 
-# Additional project-specific setup can go here.
-# This could be extended with project detection, language-specific tools, etc.
+# Setup pnpm and install global packages.
+if ! command_exists pnpm; then
+    log "📦 Installing pnpm..."
+    npm install -g pnpm
+    log "✅ pnpm installed"
+else
+    log "ℹ️  pnpm already installed"
+    log "⚙️  Configuring pnpm global store..."
+    export PNPM_HOME="/home/node/.local/share/pnpm"
+    mkdir -p "$PNPM_HOME"
+    case ":$PATH:" in
+        *":$PNPM_HOME:"*) ;;
+        *) export PATH="$PNPM_HOME:$PATH" ;;
+    esac
+
+    # install global packages with pnpm
+    log "📦 Installing global npm packages with pnpm..."
+    pnpm add -g $NPM_INSTALL
+    log "✅ Global npm packages installed with pnpm"
+fi
 
 log "🎉 Container setup complete! Welcome to your development environment."
 log "💡 Your dotfiles are linked and zsh plugins are ready to use."
