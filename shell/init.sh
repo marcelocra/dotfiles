@@ -80,9 +80,21 @@ configure_editor() {
 # EXPORTS
 # =============================================================================
 
-export PATH="$PATH:$HOME/bin"
+configure_exports() {
+    # User bin directory for custom scripts/binaries.
+    export PATH="$PATH:$HOME/bin"
+    
+    # Pnpm global store (only if pnpm is installed or likely to be used).
+    if command_exists pnpm || [[ -d "$HOME/.local/share/pnpm" ]]; then
+        export PNPM_HOME="$HOME/.local/share/pnpm"
+        case ":$PATH:" in
+            *":$PNPM_HOME:"*) ;;
+            *) export PATH="$PNPM_HOME:$PATH" ;;
+        esac
+    fi
+}
 
-# Next export.
+# Next export marker.
 
 # =============================================================================
 # PLATFORM-SPECIFIC CONFIGURATION
@@ -962,6 +974,7 @@ configure_fzf() {
 main() {
     detect_environment
     configure_editor
+    configure_exports
     configure_platform
     configure_zsh
     configure_bash
