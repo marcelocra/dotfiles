@@ -17,6 +17,10 @@ SETUP_EDITOR_LAUNCHER="${MCRA_SETUP_EDITOR_LAUNCHER:-true}"
 SETUP_SYSTEM_PACKAGES="${MCRA_SETUP_SYSTEM_PACKAGES:-true}"
 SETUP_PNPM="${MCRA_SETUP_PNPM:-true}"
 
+# Setup modes for controlling execution behavior.
+SETUP_QUICK="${MCRA_SETUP_QUICK:-false}"
+SETUP_INTERACTIVE="${MCRA_SETUP_INTERACTIVE:-false}"
+
 NPM_PACKAGES_UNUSED=(
     "@openai/codex"
 )
@@ -42,6 +46,17 @@ log() {
 # Function to check if a command exists.
 command_exists() {
     command -v "$1" &> /dev/null
+}
+
+# Helper for interactive prompts with timeout.
+prompt_continue() {
+    [ "$SETUP_INTERACTIVE" != "true" ] && return 0
+    
+    echo -n "  $1 Continue? [Y/n] (auto-continue in 10s) "
+    read -t 10 -n 1 response
+    echo
+    [[ "$response" =~ ^[Nn]$ ]] && return 1
+    return 0
 }
 
 # Setup SSH keys with proper permissions.
@@ -104,6 +119,16 @@ setup_zsh_plugins() {
         return 0
     }
 
+    [ "$SETUP_QUICK" = "true" ] && {
+        log "⚡ Quick mode: Skipping zsh plugins"
+        return 0
+    }
+
+    prompt_continue "🔌 About to install/update zsh plugins (autosuggestions, syntax-highlighting)." || {
+        log "⏭️  Skipping zsh plugins (user declined)"
+        return 0
+    }
+
     ZSH_CUSTOM_DIR="${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}"
 
     if [ ! -d "$ZSH_CUSTOM_DIR/plugins/zsh-autosuggestions" ]; then
@@ -132,8 +157,18 @@ setup_mise() {
         return 0
     }
 
+    [ "$SETUP_QUICK" = "true" ] && {
+        log "⚡ Quick mode: Skipping mise"
+        return 0
+    }
+
     command_exists mise && {
         log "ℹ️  mise already installed"
+        return 0
+    }
+
+    prompt_continue "🔌 About to install mise and runtimes (uv, clojure, babashka, deno, node)." || {
+        log "⏭️  Skipping mise (user declined)"
         return 0
     }
 
@@ -176,6 +211,11 @@ setup_system_packages() {
         return 0
     }
 
+    [ "$SETUP_QUICK" = "true" ] && {
+        log "⚡ Quick mode: Skipping system packages"
+        return 0
+    }
+
     # Note: Assumes Debian/Ubuntu-based image (apt). If using different base images,
     # this section may need adjustment for different package managers.
     log "📦 Installing essential system packages..."
@@ -183,6 +223,11 @@ setup_system_packages() {
     ! command_exists apt-get && {
         log "⚠️  apt-get not found. Skipping system package installation."
         log "    If using non-Debian/Ubuntu image, install tmux, fzf manually."
+        return 0
+    }
+
+    prompt_continue "📦 About to install system packages (tmux, fzf, git-lfs)." || {
+        log "⏭️  Skipping system packages (user declined)"
         return 0
     }
 
@@ -226,6 +271,11 @@ setup_pnpm() {
         return 0
     }
 
+    [ "$SETUP_QUICK" = "true" ] && {
+        log "⚡ Quick mode: Skipping pnpm and global packages"
+        return 0
+    }
+
     if ! command_exists pnpm; then
         log "📦 Installing pnpm..."
         npm install -g pnpm
@@ -242,6 +292,11 @@ setup_pnpm() {
         *) export PATH="$PNPM_HOME:$PATH" ;;
     esac
 
+    prompt_continue "📦 About to install global npm packages: $NPM_INSTALL" || {
+        log "⏭️  Skipping global packages (user declined)"
+        return 0
+    }
+
     # Install global packages with pnpm.
     log "📦 Installing global npm packages with pnpm..."
     pnpm add -g $NPM_INSTALL
@@ -250,6 +305,9 @@ setup_pnpm() {
 
 # Main setup orchestration.
 main() {
+    [ "$SETUP_QUICK" = "true" ] && log "⚡ Running in QUICK mode - skipping heavy operations"
+    [ "$SETUP_INTERACTIVE" = "true" ] && log "💬 Running in INTERACTIVE mode - will prompt before major operations"
+
     setup_ssh_keys
     setup_directories
     setup_dotfiles
