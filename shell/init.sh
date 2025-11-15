@@ -521,9 +521,6 @@ configure_system_utility_aliases() {
         alias lua='rlwrap lua'
     fi
 
-    # TODO: make this system specific.
-    alias i='sudo dnf install'
-
     # Next alias marker
 }
 
@@ -901,16 +898,65 @@ load_ssh() {
 # Next function marker
 
 # =============================================================================
+# HISTORY CONFIGURATION
+# =============================================================================
+
+configure_history() {
+    # Determine history directory based on environment
+    local history_base_dir=""
+    
+    # 1. Check for explicit MCRA_HISTORY_DIR (highest priority - can be set in .zshrc/.bashrc or devcontainer)
+    if [[ -n "${MCRA_HISTORY_DIR:-}" ]]; then
+        history_base_dir="$MCRA_HISTORY_DIR"
+    # 2. Check if we're in WSL with OneDrive (sync across machines)
+    elif [[ "$DOTFILES_IN_WSL" == "true" ]] && [[ -d "/mnt/c/Users" ]]; then
+        # Try to find OneDrive folder (could be OneDrive, OneDrive - Personal, etc.)
+        local win_user=$(cmd.exe /c "echo %USERNAME%" 2>/dev/null | tr -d '\r')
+        if [[ -d "/mnt/c/Users/$win_user/OneDrive" ]]; then
+            history_base_dir="/mnt/c/Users/$win_user/OneDrive/shell_histories"
+        elif [[ -d "/mnt/c/Users/$win_user/OneDrive - Personal" ]]; then
+            history_base_dir="/mnt/c/Users/$win_user/OneDrive - Personal/shell_histories"
+        fi
+    fi
+    
+    # 3. Fallback to local directory
+    if [[ -z "$history_base_dir" ]] || [[ ! -d "$(dirname "$history_base_dir")" ]]; then
+        history_base_dir="$HOME/.shell_histories"
+    fi
+    
+    mkdir -p "$history_base_dir"
+    
+    # Create unique identifier for this shell instance
+    # Use workspace name if available, otherwise hostname
+    local history_id="${HOSTNAME:-$(hostname)}"
+    if [[ -n "${WORKSPACE_FOLDER:-}" ]]; then
+        local workspace_name="$(basename "$WORKSPACE_FOLDER")"
+        history_id="${workspace_name}_${history_id}"
+    fi
+    
+    # Export for use by configure_zsh and configure_bash
+    export MCRA_HISTORY_BASE_DIR="$history_base_dir"
+    export MCRA_HISTORY_ID="$history_id"
+    
+    log_debug "History base dir: $MCRA_HISTORY_BASE_DIR"
+    log_debug "History ID: $MCRA_HISTORY_ID"
+}# =============================================================================
 # ZSH CONFIGURATION
 # =============================================================================
 
 configure_zsh() {
     # Only configure zsh-specific features if we're running in zsh
     if [[ -n "${ZSH_VERSION:-}" ]]; then
-        # Common configuration (applies to both oh-my-zsh and standalone)
-        export HISTFILE="$HOME/.zsh_history"
-        export HISTSIZE=10000
-        export SAVEHIST=10000
+        # History configuration
+        # Use shared history location if configured, otherwise default
+        if [[ -n "${MCRA_HISTORY_BASE_DIR:-}" ]] && [[ -n "${MCRA_HISTORY_ID:-}" ]]; then
+            export HISTFILE="$MCRA_HISTORY_BASE_DIR/.zsh_history_${MCRA_HISTORY_ID}"
+        else
+            export HISTFILE="$HOME/.zsh_history"
+        fi
+        # Unlimited history (or practically unlimited)
+        export HISTSIZE=1000000
+        export SAVEHIST=1000000
         export HIST_STAMPS="yyyy-mm-dd"
 
         if [[ -d "$HOME/.oh-my-zsh" ]]; then
@@ -942,11 +988,15 @@ configure_zsh() {
             # Standalone zsh setup (when oh-my-zsh not available)
 
             # History options
-            setopt HIST_IGNORE_DUPS
-            setopt HIST_IGNORE_ALL_DUPS
-            setopt HIST_SAVE_NO_DUPS
-            setopt SHARE_HISTORY
-            setopt APPEND_HISTORY
+            setopt SHARE_HISTORY          # Share history between all sessions
+            setopt INC_APPEND_HISTORY     # Write to history file immediately
+            setopt HIST_IGNORE_DUPS       # Don't record duplicates
+            setopt HIST_IGNORE_ALL_DUPS   # Delete old duplicate entries
+            setopt HIST_FIND_NO_DUPS      # Don't display duplicates when searching
+            setopt HIST_IGNORE_SPACE      # Don't record commands starting with space
+            setopt HIST_SAVE_NO_DUPS      # Don't write duplicates to history file
+            setopt HIST_REDUCE_BLANKS     # Remove superfluous blanks
+            setopt APPEND_HISTORY         # Append to history file
 
             # Enable completion system
             autoload -Uz compinit
@@ -994,8 +1044,13 @@ configure_bash() {
     # Only configure bash-specific features if we're running in bash
     if [[ -n "${BASH_VERSION:-}" ]]; then
         # History configuration
-        export HISTSIZE=10000
-        export HISTFILESIZE=10000
+        # Use shared history location if configured, otherwise default
+        if [[ -n "${MCRA_HISTORY_BASE_DIR:-}" ]] && [[ -n "${MCRA_HISTORY_ID:-}" ]]; then
+            export HISTFILE="$MCRA_HISTORY_BASE_DIR/.bash_history_${MCRA_HISTORY_ID}"
+        fi
+        # Unlimited history (or practically unlimited)
+        export HISTSIZE=1000000
+        export HISTFILESIZE=1000000
         export HISTCONTROL=ignoredups:erasedups
         export HISTTIMEFORMAT="%Y-%m-%d %H:%M:%S "
         shopt -s histappend
@@ -1087,6 +1142,7 @@ main() {
     configure_editor
     configure_exports
     configure_platform
+    configure_history
     configure_zsh
     configure_bash
     configure_system_aliases
