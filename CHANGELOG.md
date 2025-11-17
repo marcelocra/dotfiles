@@ -11,14 +11,14 @@
 
 ### Changed
 
-- **Improved**: Consolidated `setup-full.sh`, `setup-quick.sh`, and `setup-minimal.sh` (initially separated) into single `ai-dev-setup.sh`
+- **Improved**: Consolidated `setup-full.sh`, `setup-quick.sh`, and `setup-minimal.sh` (initially separated) into single `ai-dev-setup.sh` located in `cli/` directory.
 - **AI Dev Architecture**: Simplified from 5 files to 3 files (ai-dev.sh, ai-dev.ps1, ai-dev-setup.sh)
 - **Container Scripts**: Updated both Bash and PowerShell runners to use unified setup script
 - **Documentation**: Updated AI context and architecture descriptions
 
 ### Removed
 
-- **Legacy Setup Files**: Removed redundant `setup-*.sh` files in favor of unified approach
+- **Legacy Setup Files**: Removed redundant `setup-*.sh` files in favor of unified `ai-dev-setup.sh` in the `cli/` directory.
 
 ### Benefits
 
@@ -28,6 +28,8 @@
 - **Consistent History**: Shared shell history across all development environments
 
 ## [1.0.0] - 2025-08-26 - DevMagic Docker Compose Environment
+
+**Note**: DevMagic scripts (`devmagic.sh`, `devcontainer-setup.sh`) were later migrated to a separate repository.
 
 ### Added
 
