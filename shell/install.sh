@@ -392,19 +392,31 @@ link_vscode_configs() {
     log_info "📝 Linking VS Code configs to $vscode_dir"
 
     # Settings
-    if [[ -f "$DOTFILES_DIR/apps/vscode/settings.json" ]]; then
-        ln -sf "$DOTFILES_DIR/apps/vscode/settings.json" "$vscode_dir/settings.json"
+    local settings_file="$DOTFILES_DIR/apps/vscode/User/settings.json"
+    local keybindings_file="$DOTFILES_DIR/apps/vscode/User/keybindings.json"
+    if [[ -f "$settings_file" ]]; then
+        ln -sf "$settings_file" "$vscode_dir/settings.json"
         log_debug "Symlinked settings.json"
     else
-        log_warning "⚠️  settings.json not found at $DOTFILES_DIR/apps/vscode/settings.json"
+        log_warning "⚠️  settings.json not found at $settings_file"
     fi
 
     # Keybindings
-    if [[ -f "$DOTFILES_DIR/apps/vscode/keybindings.json" ]]; then
-        ln -sf "$DOTFILES_DIR/apps/vscode/keybindings.json" "$vscode_dir/keybindings.json"
+    if [[ -f "$keybindings_file" ]]; then
+        ln -sf "$keybindings_file" "$vscode_dir/keybindings.json"
         log_debug "Symlinked keybindings.json"
     else
-        log_warning "⚠️  keybindings.json not found at $DOTFILES_DIR/apps/vscode/keybindings.json"
+        log_warning "⚠️  keybindings.json not found at $keybindings_file"
+    fi
+
+    # Snippets
+    local snippets_dir="$DOTFILES_DIR/apps/vscode/User/snippets"
+    if [[ -d "$snippets_dir" ]]; then
+        mkdir -p "$vscode_dir/snippets"
+        ln -sf "$snippets_dir" "$vscode_dir/snippets"
+        log_debug "Symlinked snippets directory"
+    else
+        log_warning "⚠️  snippets directory not found at $snippets_dir"
     fi
 
     log_success "✅ VS Code configs symlinked"
