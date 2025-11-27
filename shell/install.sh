@@ -195,14 +195,16 @@ install_brew_packages() {
     log_info "📦 Installing packages via Homebrew..."
 
     local packages=(
-        "hugo"          # Static site generator
-        "babashka"      # Clojure scripting
-        "bat"           # Better cat
-        "ripgrep"       # Better grep
-        "fd"            # Better find
-        "eza"           # Better ls
-        "jq"            # JSON processor
-        "yq"            # YAML processor
+        "bat"                     # Better cat
+        "borkdude/brew/babashka"  # Clojure scripting
+        "fd"                      # Better find
+        "ripgrep"                 # Better grep
+        # ---------- Other tools that might be useful one day. -----------------
+        # "jq"   # JSON processor. Already present in the image I'm using.
+        # "hugo" # Static site generator. I usually prefer Astro or Next.
+        # "eza"  # Better ls. TODO: Compare with exa and decide which to use.
+        # "yq"   # YAML processor. I don't deal that much with yaml files.
+        
     )
 
     local to_install=()
