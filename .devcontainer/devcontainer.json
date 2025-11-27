@@ -1,0 +1,132 @@
+{
+  // ----------***----------***----------***----------***----------***----------
+  // IMPORTANT: Each image might have a different default user. Be sure to set
+  // `remoteUser` appropriately and to adjust any paths that depend on the user,
+  // such as many of the `mounts` below.
+  // ----------***----------***----------***----------***----------***----------
+  "name": "DevMagic",
+
+  // Universal, with lots of things (~10GB) on Ubuntu 24 (Noble):
+  // "image": "mcr.microsoft.com/devcontainers/universal:4-noble",
+  // Node.js with TypeScript (~2GB) on Debian 12 (Bookworm):
+  "image": "mcr.microsoft.com/devcontainers/typescript-node:24-bookworm",
+  // "remoteUser": "codespace", // When using the universal image.
+  "remoteUser": "node",
+
+  "containerEnv": {
+    // Essential locale and timezone settings. Without these, you WILL get
+    // really weird encoding issues and date/time problems.
+    "TZ": "${localEnv:TZ:America/Sao_Paulo}",
+    "LC_ALL": "${localEnv:LC_ALL:en_US.UTF-8}",
+    "LANG": "${localEnv:LANG:en_US.UTF-8}",
+    // Shell history directory. You must mount have a mounted ~/.shell_histories
+    // directory for the history to persist across containers and WSL sessions.
+    // Otherwise, history will be lost when the container is removed.
+    "MCRA_HISTORY_DIR": "/home/node/.shell_histories",
+    // Workspace folder for history file naming (auto-set by VS Code).
+    "WORKSPACE_FOLDER": "${containerWorkspaceFolder}",
+    // Ollama host URL for local LLM development.
+    "OLLAMA_HOST": "${localEnv:OLLAMA_HOST:http://host.docker.internal:11434}",
+    // Dotfiles configuration. Override via host environment variables.
+    // Set DEVMAGIC_DOTFILES_REPO in your ~/.bashrc or ~/.zshrc to use your own repo.
+    // Set to empty string to disable dotfiles: export DEVMAGIC_DOTFILES_REPO=""
+    "DEVMAGIC_DOTFILES_REPO": "${localEnv:DEVMAGIC_DOTFILES_REPO:https://github.com/marcelocra/dotfiles.git}",
+    "DEVMAGIC_DOTFILES_BRANCH": "${localEnv:DEVMAGIC_DOTFILES_BRANCH:main}"
+  },
+  "postCreateCommand": "curl -fsSL https://devmagic.run/setup | bash",
+  "features": {
+    "ghcr.io/devcontainers/features/common-utils:2": {
+      "configureZshAsDefaultShell": "true"
+    },
+    "ghcr.io/devcontainers/features/docker-in-docker:2": {},
+    "ghcr.io/devcontainers/features/git-lfs:1": {},
+    "ghcr.io/devcontainers/features/git:1": {},
+    "ghcr.io/devcontainers/features/github-cli:1": {}
+    // Other official features you might consider adding. Uncomment as needed.
+    // More details at https://github.com/devcontainers/features
+    // "ghcr.io/devcontainers/features/dotnet:2": {},
+    // "ghcr.io/devcontainers/features/go:1": {},
+    // "ghcr.io/devcontainers/features/java:1": {},
+    // "ghcr.io/devcontainers/features/node:1": {}  // Uncomment if base image doesn't have Node.js
+    // "ghcr.io/devcontainers/features/php:1": {},
+    // "ghcr.io/devcontainers/features/python:1": {}
+    // "ghcr.io/devcontainers/features/ruby:1": {},
+    // "ghcr.io/devcontainers/features/rust:1": {},
+  },
+  "mounts": [
+    // SSH credentials for Git operations and SSH-based authentication/signing.
+    // Mount as read-only to prevent accidental modification of host SSH keys.
+    "source=${localEnv:HOME}${localEnv:USERPROFILE}/.ssh,target=/home/node/.ssh-from-host,type=bind,readonly",
+
+    // GitHub CLI credentials for seamless GitHub integration.
+    "source=${localEnv:HOME}${localEnv:USERPROFILE}/.config/gh,target=/home/node/.config/gh,type=bind,consistency=cached",
+
+    // Gemini CLI credentials for AI assistance tools.
+    "source=${localEnv:HOME}${localEnv:USERPROFILE}/.gemini,target=/home/node/.gemini,type=bind,consistency=cached",
+
+    // Claude credentials and configuration for AI development tools.
+    "source=${localEnv:HOME}${localEnv:USERPROFILE}/.claude,target=/home/node/.claude,type=bind,consistency=cached",
+    "source=${localEnv:HOME}${localEnv:USERPROFILE}/.claude.json,target=/home/node/.claude.json,type=bind,consistency=cached",
+
+    // Share Ollama models with host.
+    "source=${localEnv:HOME}${localEnv:USERPROFILE}/.ollama,target=/home/node/.ollama,type=bind,consistency=cached",
+
+    // Shell history shared across all containers and WSL.
+    // In WSL: ln -s /mnt/c/Users/{username}/OneDrive/shell_histories ~/.shell_histories
+    // In Windows: mklink /J %USERPROFILE%\.shell_histories "%USERPROFILE%\OneDrive\shell_histories"
+    "source=${localEnv:HOME}${localEnv:USERPROFILE}/.shell_histories,target=/home/node/.shell_histories,type=bind,consistency=cached"
+  ],
+
+  // Port forwarding for development services.
+  // Ex.: 11434 - Ollama API server for local LLM development.
+  "forwardPorts": [],
+
+  // Set custom hostname for the container.
+  "runArgs": ["--hostname=automaton"],
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "anthropic.claude-code",
+        "bradlc.vscode-tailwindcss",
+        "charliermarsh.ruff",
+        "continue.continue",
+        "dbaeumer.vscode-eslint",
+        "denoland.vscode-deno",
+        "eamodio.gitlens",
+        "editorconfig.editorconfig",
+        "esbenp.prettier-vscode",
+        "github.codespaces",
+        "github.copilot-chat",
+        "github.copilot",
+        "github.github-vscode-theme",
+        "github.vscode-github-actions",
+        "github.vscode-pull-request-github",
+        "google.gemini-cli-vscode-ide-companion",
+        "marcelocra.vscode-improved",
+        "ms-azuretools.vscode-containers",
+        "ms-azuretools.vscode-docker",
+        "ms-playwright.playwright",
+        "ms-python.black-formatter",
+        "ms-python.debugpy",
+        "ms-python.python",
+        "ms-python.vscode-pylance",
+        "ms-python.vscode-python-envs",
+        "ms-vscode-remote.remote-containers",
+        "ms-vscode-remote.remote-ssh-edit",
+        "ms-vscode-remote.remote-ssh",
+        "ms-vscode-remote.remote-wsl",
+        "ms-vscode-remote.vscode-remote-extensionpack",
+        "ms-vscode.extension-test-runner",
+        "ms-vscode.powershell",
+        "ms-vscode.remote-explorer",
+        "ms-vscode.remote-server",
+        "ms-vscode.test-adapter-converter",
+        "ms-vscode.vscode-speech-language-pack-pt-br",
+        "ms-vscode.vscode-speech",
+        "openai.chatgpt",
+        "redhat.vscode-yaml",
+        "saoudrizwan.claude-dev"
+      ]
+    }
+  }
+}
