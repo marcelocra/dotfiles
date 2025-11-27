@@ -76,6 +76,33 @@ command_exists() {
     command -v "$1" >/dev/null 2>&1
 }
 
+# Timing helper - returns elapsed time in human-readable format
+format_duration() {
+    local seconds="$1"
+    if ((seconds < 60)); then
+        echo "${seconds}s"
+    else
+        echo "$((seconds / 60))m $((seconds % 60))s"
+    fi
+}
+
+# Run a function and report how long it took
+timed() {
+    local name="$1"
+    local func="$2"
+    local start_time=$SECONDS
+    
+    "$func"
+    local exit_code=$?
+    
+    local elapsed=$((SECONDS - start_time))
+    if ((elapsed > 0)); then
+        log_info "⏱️  $name took $(format_duration $elapsed)"
+    fi
+    
+    return $exit_code
+}
+
 # =============================================================================
 # ENVIRONMENT DETECTION
 # =============================================================================
@@ -442,14 +469,17 @@ main() {
     # Detect environment
     detect_environment
 
-    # Run installation steps
-    install_homebrew
-    install_cli_tools
-    install_zsh_plugins
-    link_shell_configs
-    link_vscode_configs
-
-    log_success "🎉 Dotfiles installation complete!"
+    # Run installation steps with timing
+    local total_start=$SECONDS
+    
+    timed "Homebrew" install_homebrew
+    timed "CLI tools" install_cli_tools
+    timed "Zsh plugins" install_zsh_plugins
+    timed "Shell configs" link_shell_configs
+    timed "VS Code configs" link_vscode_configs
+    
+    local total_elapsed=$((SECONDS - total_start))
+    log_success "🎉 Dotfiles installation complete! (total: $(format_duration $total_elapsed))"
     log_info ""
     log_info "ℹ️  Next steps:"
     log_info "   1. Restart your shell or run: source ~/.zshrc"
