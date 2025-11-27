@@ -116,6 +116,15 @@ configure_exports() {
     # Homebrew (Linux).
     local brew_path="/home/linuxbrew/.linuxbrew"
     [[ -d "$brew_path" ]] && eval "$($brew_path/bin/brew shellenv)"
+    # TODO: If the line above doesn't work, test the code below.
+    # if [[ -d "$brew_path" ]]; then
+    #     # Run brew shellenv to set all environment variables
+    #     eval "$($brew_path/bin/brew shellenv)"
+    #     # Ensure bin and sbin are in PATH (fallback if shellenv doesn't work)
+    #     add_to_path "$brew_path/bin"
+    #     add_to_path "$brew_path/sbin"
+    # fi
+
     
     # Node Version Manager (nvm).
     local nvm_dir="$HOME/.nvm"
