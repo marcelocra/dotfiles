@@ -235,50 +235,75 @@
   {
     "key": "alt+k",
     "command": "workbench.action.nextEditor",
-    "when": "!panelFocus"
+    "when": "!panelFocus && !sideBarFocus && !auxiliaryBarFocus"
   },
 
   {
     "key": "alt+j",
     "command": "workbench.action.previousEditor",
-    "when": "!panelFocus"
+    "when": "!panelFocus && !sideBarFocus && !auxiliaryBarFocus"
   },
 
   {
-    // Go to next panel (terminal, output, debug console, problems, etc.).
+    // Go to next panel view (terminal, output, debug console, problems, etc.).
     "key": "alt+k",
     "command": "workbench.action.nextPanelView",
     "when": "panelFocus"
   },
+
   {
-    // Go to previous panel (terminal, output, debug console, problems, etc.).
+    // Go to previous panel view (terminal, output, debug console, problems, etc.).
     "key": "alt+j",
     "command": "workbench.action.previousPanelView",
     "when": "panelFocus"
   },
 
   {
+    // Go to next sidebar view (explorer, search, source control, extensions, etc.).
+    "key": "alt+k",
+    "command": "workbench.action.nextSideBarView",
+    "when": "sideBarFocus"
+  },
+
+  {
+    // Go to previous sidebar view (explorer, search, source control, extensions, etc.).
+    "key": "alt+j",
+    "command": "workbench.action.previousSideBarView",
+    "when": "sideBarFocus"
+  },
+
+  {
+    // Go to next auxiliary bar view.
+    "key": "alt+k",
+    "command": "workbench.action.nextAuxiliaryBarView",
+    "when": "auxiliaryBarFocus"
+  },
+
+  {
+    // Go to previous auxiliary bar view.
+    "key": "alt+j",
+    "command": "workbench.action.previousAuxiliaryBarView",
+    "when": "auxiliaryBarFocus"
+  },
+
+  {
     "key": "ctrl+[",
-    "command": "workbench.action.navigateBack",
-    "when": "canNavigateBack"
+    "command": "workbench.action.navigateBack"
   },
 
   {
     "key": "alt+h",
-    "command": "workbench.action.navigateBack",
-    "when": "canNavigateBack"
+    "command": "workbench.action.navigateBack"
   },
 
   {
     "key": "ctrl+]",
-    "command": "workbench.action.navigateForward",
-    "when": "canNavigateForward"
+    "command": "workbench.action.navigateForward"
   },
 
   {
     "key": "alt+l",
-    "command": "workbench.action.navigateForward",
-    "when": "canNavigateForward"
+    "command": "workbench.action.navigateForward"
   },
 
   {
@@ -525,13 +550,24 @@
 
   {
     "key": "alt+a", // Default: ctrl+shift+i
-    "command": "workbench.action.chat.openAgent"
+    "command": "workbench.action.chat.openagent",
+    "when": "!chatInputHasFocus"
     // "when": "config.chat.agent.enabled && !chatSetupDisabled && !chatSetupHidden"
   },
   {
     "key": "alt+a", // Default: ctrl+alt+i
     "command": "workbench.panel.chat"
     // "when": "workbench.panel.chat.view.copilot.active"
+  },
+
+  {
+    // Surround selection with ** (bold) in markdown files.
+    "key": "ctrl+b",
+    "command": "editor.action.insertSnippet",
+    "args": {
+      "snippet": "**${TM_SELECTED_TEXT}**$0"
+    },
+    "when": "editorTextFocus && editorLangId == 'markdown' && editorHasSelection"
   },
 
   {
@@ -592,6 +628,22 @@
   },
 
   {
+    // Open the Settings JSON file. Settings UI: `ctrl+,`.
+    "key": "ctrl+alt+,",
+    "command": "workbench.action.openApplicationSettingsJson"
+  },
+
+  {
+    // Open just the Keybindings JSON file. Keybindings UI: `ctrl+k ctrl+s`.
+    "key": "ctrl+k ctrl+k",
+    "command": "workbench.action.openGlobalKeybindingsFile",
+    // ctrl+k ctrl+k is used by default to define keybindings when in this file,
+    // so here we are just using a NOT for the default keybinding 'when'
+    // expression.
+    "when": "!(resource == 'vscode-userdata:/c%3A/Users/marce/AppData/Roaming/Code%20-%20Insiders/User/keybindings.json')"
+  },
+
+  {
     "key": "alt+p",
     "command": "workbench.action.pinEditor",
     "when": "!activeEditorIsPinned"
@@ -620,22 +672,26 @@
     },
     "when": "!terminalFocus"
   },
+  {
+    "key": "ctrl+shift+c",
+    "command": "-workbench.action.terminal.openNativeConsole",
+    "when": "!terminalFocus"
+  },
 
   {
-    // Add a new timestamp entry in markdown files.
+    // Add a new timestamped (time) header entry in markdown files.
     "key": "alt+enter",
     "command": "runCommands",
     "args": {
       "commands": [
-        // Go to the end of the file.
-        {
-          "command": "cursorBottom"
-        },
+        // Put the next entry at the end of the file. Comment this to insert at
+        // the current cursor position.
+        { "command": "cursorBottom" },
         // Insert the snippet defined in snippets/markdown.json.
         {
           "command": "editor.action.insertSnippet",
           "args": {
-            "name": "h2 with current time"
+            "name": "alt+enter"
           }
         }
       ]
@@ -644,20 +700,57 @@
   },
 
   {
-    "key": "ctrl+shift+c",
-    "command": "-workbench.action.terminal.openNativeConsole",
-    "when": "!terminalFocus"
+    // Creates a new task at the end of the file.
+    "key": "ctrl+enter",
+    "command": "runCommands",
+    "args": {
+      "commands": [
+        // Put the next entry at the end of the file.
+        { "command": "cursorBottom" },
+
+        // Insert the snippet defined in snippets/markdown.json.
+        {
+          "command": "editor.action.insertSnippet",
+          "args": {
+            "name": "ctrl+enter"
+          }
+        }
+      ]
+    },
+    "when": "editorTextFocus && editorLangId == 'markdown' && !editorReadonly && !terminalFocus && !inChatInput"
   },
+
+  {
+    // Add a new topic near the top of markdown files.
+    "key": "alt+shift+enter",
+    "command": "runCommands",
+    "args": {
+      "commands": [
+        // Go to the beginning of the file and jump over the first 2 headings.
+        { "command": "cursorTop" },
+        { "command": "cursorDown" },
+        { "command": "cursorDown" },
+        { "command": "cursorDown" },
+        { "command": "cursorDown" },
+
+        // Insert the snippet defined in snippets/markdown.json.
+        {
+          "command": "editor.action.insertSnippet",
+          "args": {
+            "name": "alt+shift+enter"
+          }
+        }
+      ]
+    },
+    "when": "editorTextFocus && editorLangId == 'markdown' && !editorReadonly"
+  },
+
   {
     "key": "ctrl+shift+/",
     "command": "editor.action.blockComment",
     "when": "editorTextFocus && !editorReadonly"
   },
 
-  {
-    "key": "ctrl+alt+s",
-    "command": "workbench.action.files.saveFiles"
-  },
   {
     "key": "ctrl+alt+w",
     "command": "workbench.action.closeOtherEditors"
@@ -666,6 +759,7 @@
   {
     "key": ">>>>>>>>>> 👆🏽 NEXT NICE TO HAVE"
   },
+
   // #endregion [Non-essential but nice to have]
 
   {
@@ -693,9 +787,36 @@
     "command": "editor.action.selectToBracket"
   },
   {
-    "key": "ctrl+v",
-    "command": "workbench.action.terminal.paste",
-    "when": "terminalFocus && terminalHasBeenCreated || terminalFocus && terminalProcessSupported"
+    "key": "ctrl+k ctrl+shift+k",
+    "command": "workbench.action.openGlobalKeybindings"
+  },
+  {
+    "key": "ctrl+alt+u",
+    "command": "cursorRedo"
+  },
+  {
+    "key": "ctrl+shift+j",
+    "command": "json.sort",
+    "when": "editorTextFocus && (editorLangId == 'json' || editorLangId == 'jsonc')"
+  },
+  {
+    "key": "ctrl+shift+f",
+    "command": "workbench.action.terminal.focusFind",
+    "when": "terminalFindFocused && terminalHasBeenCreated || terminalFindFocused && terminalProcessSupported || terminalFocusInAny && terminalHasBeenCreated || terminalFocusInAny && terminalProcessSupported"
+  },
+  {
+    "key": "ctrl+f",
+    "command": "-workbench.action.terminal.focusFind",
+    "when": "terminalFindFocused && terminalHasBeenCreated || terminalFindFocused && terminalProcessSupported || terminalFocusInAny && terminalHasBeenCreated || terminalFocusInAny && terminalProcessSupported"
+  },
+  {
+    "key": "ctrl+q",
+    "command": "-workbench.action.quickOpenNavigateNextInViewPicker",
+    "when": "inQuickOpen && inViewsPicker"
+  },
+  {
+    "key": "ctrl+q",
+    "command": "-workbench.action.quickOpenView"
   },
   {
     "key": "ctrl+e",
@@ -705,5 +826,30 @@
   {
     "key": "ctrl+e",
     "command": "-workbench.action.quickOpen"
+  },
+  {
+    "key": "f12",
+    "command": "editor.action.openLink",
+    // Each internal parenthesis group (wrapped in extra parenthesis) is from
+    // a different f12 default 'when' clause. This one only activates when all
+    // others do not.
+    //  - hasSymbols: editor.gotoNextSymbolFromResult
+    //  - editorHasDefinitionProvider && editorTextFocus: editor.action.revealDefinition
+    //  - inReferenceSearchEditor || referenceSearchVisible: goToNextReference
+    "when": "!((hasSymbols) && (inReferenceSearchEditor || referenceSearchVisible) && (editorHasDefinitionProvider && editorTextFocus))"
+  },
+  {
+    "key": "ctrl+g",
+    "command": "-workbench.action.terminal.goToRecentDirectory",
+    "when": "terminalFocus && terminalHasBeenCreated || terminalFocus && terminalProcessSupported"
+  },
+  {
+    "key": "ctrl+c",
+    "command": "editor.action.inlineSuggest.hide",
+    "when": "inlineEditIsVisible || inlineSuggestionVisible"
+  },
+  {
+    "key": "ctrl+alt+s",
+    "command": "workbench.action.files.saveWithoutFormatting"
   }
 ]
