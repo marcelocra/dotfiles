@@ -1,34 +1,349 @@
 {
-  // #region [These mostly don't change]
-
-  "json.schemas": [
-    {
-      "fileMatch": ["tsconfig.json"],
-      "url": "https://json.schemastore.org/tsconfig.json"
-    },
-    // Point to extension files in a workspace if this is not working correctly.
-    {
-      "fileMatch": ["manifest.json"],
-      "url": "https://json.schemastore.org/chrome-manifest.json"
+  "[aspnetcorerazor]": {
+    "editor.defaultFormatter": "ms-dotnettools.csharp"
+  },
+  "[astro]": {
+    "editor.defaultFormatter": "astro-build.astro-vscode"
+  },
+  "[clojure]": {
+    // "editor.wordSeparators": "\t ()\"':,;~@#$%^&{}[]/-`.",
+    "editor.autoClosingBrackets": "always",
+    "editor.autoClosingOvertype": "always",
+    "editor.autoClosingQuotes": "always",
+    "editor.autoIndent": "full",
+    "editor.defaultFormatter": "betterthantomorrow.calva",
+    "editor.foldingStrategy": "indentation",
+    "editor.formatOnPaste": true,
+    "editor.formatOnType": true,
+    "editor.guides.indentation": false,
+    "editor.matchBrackets": "never",
+    "editor.parameterHints.enabled": false,
+    "editor.unicodeHighlight.allowedCharacters": {
+      " ": true,
+      "꞉": true
     }
-  ],
-
-  "js/ts.implicitProjectConfig.checkJs": true,
-  "javascript.preferences.importModuleSpecifierEnding": "js",
-
-  // // Causes deno extension to report import errors.
-  // "typescript.tsserver.experimental.enableProjectDiagnostics": true,
-  "typescript.preferences.importModuleSpecifier": "non-relative",
-
-  "svelte.enable-ts-plugin": true,
-
-  "[svelte]": { "editor.defaultFormatter": "svelte.svelte-vscode" },
-  "[astro]": { "editor.defaultFormatter": "astro-build.astro-vscode" },
-  "[jade]": { "editor.defaultFormatter": "esbenp.prettier-vscode" },
+  },
+  "[csharp]": {
+    "editor.defaultFormatter": "ms-dotnettools.csharp"
+  },
+  "[dart]": {
+    "editor.defaultFormatter": "Dart-Code.dart-code",
+    "editor.selectionHighlight": false,
+    "editor.suggest.snippetsPreventQuickSuggestions": false,
+    "editor.suggestSelection": "first",
+    "editor.tabCompletion": "onlySnippets",
+    "editor.wordBasedSuggestions": "off"
+  },
+  "[elm]": {
+    "editor.defaultFormatter": "elmTooling.elm-ls-vscode"
+  },
+  "[fsharp]": {
+    "editor.defaultFormatter": "Ionide.Ionide-fsharp"
+  },
+  "[go][go.mod][go.sum][gotmpl][go.work]": {
+    "editor.defaultFormatter": "golang.go"
+  },
   "[handlebars]": {
     "editor.defaultFormatter": "vscode.html-language-features"
   },
-
+  "[jade]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[markdown]": {
+    "diffEditor.ignoreTrimWhitespace": false,
+    "editor.dropIntoEditor.preferences": [
+      "markdown.link"
+    ], // prettier-ignore
+    "editor.pasteAs.preferences": [
+      "markdown.link"
+    ], // prettier-ignore
+    "editor.quickSuggestions": {
+      "comments": "off",
+      "other": "off",
+      "strings": "off"
+    },
+    "editor.unicodeHighlight.ambiguousCharacters": true,
+    "editor.unicodeHighlight.invisibleCharacters": true,
+    "editor.wordWrap": "bounded",
+    "editor.wordWrapColumn": 80
+  },
+  "[nim][nimble]": {
+    "editor.defaultFormatter": "NimLang.nimlang"
+  },
+  "[ocaml]": {
+    "editor.defaultFormatter": "ocamllabs.ocaml-platform"
+  },
+  "[polyglot-notebook]": {
+    // Doesn't work right now: https://github.com/dotnet/interactive/issues/3449
+    "editor.defaultFormatter": "Ionide.Ionide-fsharp"
+  },
+  "[prisma]": {
+    "editor.defaultFormatter": "Prisma.prisma"
+  },
+  "[python]": {
+    "editor.defaultFormatter": "charliermarsh.ruff"
+  },
+  "[shellscript]": {
+    "editor.quickSuggestions": {
+      "comments": "off",
+      "other": "on",
+      "strings": "on"
+    }
+  },
+  "[snippets]": {
+    "editor.defaultFormatter": "vscode.json-language-features"
+  },
+  "[svelte]": {
+    "editor.defaultFormatter": "svelte.svelte-vscode"
+  },
+  "[yaml]": {
+    "editor.defaultFormatter": "redhat.vscode-yaml"
+  },
+  "@azure.argTenant": "",
+  "accessibility.voice.speechLanguage": "pt-BR",
+  "calva.paredit.defaultKeyMap": "original",
+  "calva.prettyPrintingOptions": {
+    "enabled": true,
+    "printEngine": "pprint",
+    "width": 40
+  },
+  "calva.replConnectSequences": [],
+  "calva.showCalvaSaysOnStart": false,
+  "chat.agent.thinkingStyle": "collapsedPreview",
+  "chat.agentSessionsViewLocation": "view",
+  "chat.editor.fontFamily": "Atkinson Hyperlegible Mono",
+  "chat.editor.fontSize": 11,
+  // "chat.editor.fontWeight": "200",
+  "chat.editor.wordWrap": "on",
+  "chat.fontFamily": "Atkinson Hyperlegible Next",
+  "chat.fontSize": 13,
+  "chat.tools.terminal.autoApprove": {
+    "/^column\\b.*-c\\s+[0-9]{4,}/": false,
+    "/^Compare-[a-z0-9]/i": true,
+    "/^date\\b.*(-s|--set)\\b/": false,
+    "/^find\\b.*-(delete|exec|execdir|fprint|fprintf|fls|ok|okdir)\\b/": false,
+    "/^Format-[a-z0-9]/i": true,
+    "/^git branch\\b.*-(d|D|m|M|-delete|-force)\\b/": false,
+    "/^Measure-[a-z0-9]/i": true,
+    "/^Select-[a-z0-9]/i": true,
+    "/^Sort-[a-z0-9]/i": true,
+    "/^sort\\b.*-(o|S)\\b/": false,
+    "/^tree\\b.*-o\\b/": false,
+    "basename": true,
+    "cat": true,
+    "cd": true,
+    "chmod": false,
+    "chown": false,
+    "cmp": true,
+    "column": true,
+    "curl": false,
+    "cut": true,
+    "date": true,
+    "dd": false,
+    "del": false,
+    "df": true,
+    "dirname": true,
+    "du": true,
+    "echo": true,
+    "erase": false,
+    "eval": false,
+    "file": true,
+    "find": true,
+    "findstr": true,
+    "Get-ChildItem": true,
+    "Get-Content": true,
+    "Get-Date": true,
+    "Get-Location": true,
+    "Get-Random": true,
+    "git branch": true,
+    "git diff": true,
+    "git grep": true,
+    "git log": true,
+    "git show": true,
+    "git status": true,
+    "grep": true,
+    "head": true,
+    "iex": false,
+    "Invoke-Expression": false,
+    "Invoke-RestMethod": false,
+    "Invoke-WebRequest": false,
+    "irm": false,
+    "iwr": false,
+    "Join-Path": true,
+    "jq": false,
+    "kill": false,
+    "ls": true,
+    "ps": false,
+    "pwd": true,
+    "rd": false,
+    "readlink": true,
+    "realpath": true,
+    "Remove-Item": false,
+    "ri": false,
+    "rm": false,
+    "rmdir": false,
+    "Set-Acl": false,
+    "Set-ItemProperty": false,
+    "sleep": true,
+    "sort": true,
+    "sp": false,
+    "Split-Path": true,
+    "spps": false,
+    "Start-Sleep": true,
+    "stat": true,
+    "Stop-Process": false,
+    "tail": true,
+    "taskkill": false,
+    "taskkill.exe": false,
+    "top": false,
+    "tr": true,
+    "tree": true,
+    "wc": true,
+    "wget": false,
+    "Where-Object": true,
+    "which": true,
+    "Write-Host": true,
+    "Write-Output": true,
+    "xargs": false
+  },
+  "chatgpt.runCodexInWindowsSubsystemForLinux": true,
+  "csharp.suppressBuildAssetsNotification": true,
+  "dart.debugExternalPackageLibraries": false,
+  "dart.debugSdkLibraries": false,
+  "dart.openDevTools": "flutter",
+  "dev.containers.dockerComposePath": "podman-compose",
+  "dev.containers.dockerPath": "podman",
+  "diffEditor.codeLens": true,
+  "diffEditor.ignoreTrimWhitespace": false,
+  "diffEditor.renderSideBySide": true,
+  "docker.dockerPath": "podman",
+  "dotfiles.installCommand": "~/prj/dotfiles/shell/install.sh",
+  "dotfiles.repository": "marcelocra/dotfiles",
+  "dotnetAcquisitionExtension.enableTelemetry": false,
+  "dotnetAcquisitionExtension.existingDotnetPath": [
+    {
+      "extensionId": "ms-azuretools.vscode-azure-github-copilot",
+      // "path": "~/bin/binaries/dotnet/dotnet-v9.0.102/dotnet"
+      "path": "~/bin/binaries/dotnet/dotnet-v8.0.405/dotnet"
+    }
+  ],
+  "dotnetAcquisitionExtension.sharedExistingDotnetPath": "~/bin/dotnet",
+  "editor.acceptSuggestionOnCommitCharacter": false,
+  "editor.acceptSuggestionOnEnter": "on",
+  "editor.accessibilitySupport": "off",
+  "editor.autoIndent": "full",
+  "editor.bracketPairColorization.enabled": true,
+  "editor.codeActionsOnSave": {
+    "source.fixAll": "explicit",
+    "source.fixAll.eslint": "explicit",
+    "source.organizeImports.ruff": "explicit",
+    "source.organizeLinkDefinitions": "explicit"
+    //, "source.sort.json", // Conflicts with Prettier.
+  },
+  "editor.colorDecorators": true,
+  "editor.cursorBlinking": "solid",
+  "editor.cursorSmoothCaretAnimation": "off",
+  "editor.cursorStyle": "line",
+  "editor.cursorWidth": 1,
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.detectIndentation": true,
+  "editor.foldingHighlight": true,
+  // ---------------------------------------------------------------------------
+  // "editor.fontFamily": "Consolas, 'Courier New', monospace", // Default
+  // "editor.fontFamily": "CodeNewRoman Nerd Font Mono",
+  // "editor.fontFamily": "'MesloLGS Nerd Font', 'MesloLGS NF', Consolas, 'Courier New', monospace",
+  // ---------------------------------------------------------------------------
+  // "editor.fontFamily": "JetBrainsMono Nerd Font Mono",
+  // "editor.fontLigatures": "'zero' 1, 'ss19' 1",
+  // ---------------------------------------------------------------------------
+  // "editor.fontFamily": "Cascadia Code NF",
+  // "editor.fontLigatures": "'calt' 1, 'ss01' 1, 'ss02' 0, 'ss03' 0, 'ss19' 1, 'ss20' 1",
+  // ---------------------------------------------------------------------------
+  // "editor.fontFamily": "CommitMono",
+  // "editor.fontLigatures": "'ss01' 0, 'ss02' 0, 'ss03' 1, 'ss04' 1, 'ss05' 1, 'cv01' 1, 'cv01' 1, 'cv02' 1, 'cv05' 1, 'cv06' 1, 'cv08' 1",
+  // ---------------------------------------------------------------------------
+  // "editor.fontFamily": "Lilex",
+  // "editor.fontLigatures": "'calt' 1, 'cv01' 1, 'cv02' 1, 'cv06' 1, 'ss02' 1, 'ss03' 1, 'ss20' 1, 'zero' 1",
+  // ---------------------------------------------------------------------------
+  // "editor.fontFamily": "Atkinson Hyperlegible Mono",
+  // ---------------------------------------------------------------------------
+  // "editor.fontFamily": "0xProto Nerd Font Mono Thin",
+  // ---------------------------------------------------------------------------
+  // "editor.fontSize": 14,
+  "editor.fontWeight": "400",
+  "editor.formatOnSave": true,
+  "editor.glyphMargin": true, // Space between the explorer and the line number.
+  "editor.guides.bracketPairs": "active",
+  "editor.guides.highlightActiveIndentation": true,
+  "editor.guides.indentation": false,
+  "editor.hover.delay": 1000,
+  "editor.inlineSuggest.enabled": true,
+  // "editor.inlineSuggest.fontFamily": "'Cascadia Code NF', 'JetBrainsMono Nerd Font Mono', 'Consolas', 'Maple Mono', 'CodeNewRoman Nerd Font', monospace",
+  // "editor.inlineSuggest.fontLigatures": "'calt' 1, 'ss01' 1", // Enabling it already, for when they are supported.
+  "editor.insertSpaces": true,
+  // "editor.letterSpacing": -2, // [link1]
+  // "editor.lineHeight": 1.8, // Interesting values: 1.6; 1.8; 2; 2.2
+  "editor.lineNumbers": "on",
+  "editor.minimap.autohide": "none",
+  "editor.minimap.markSectionHeaderRegex": "\\bMARK:\\s*(?<separator>-?)\\s*(?<label>.*)$", // Default.
+  "editor.minimap.maxColumn": 80,
+  "editor.minimap.renderCharacters": false,
+  "editor.minimap.scale": 1,
+  "editor.minimap.sectionHeaderFontSize": 9,
+  "editor.minimap.sectionHeaderLetterSpacing": 1,
+  "editor.minimap.showMarkSectionHeaders": true,
+  "editor.minimap.showRegionSectionHeaders": true,
+  "editor.minimap.showSlider": "always",
+  "editor.minimap.side": "right",
+  "editor.minimap.size": "fit",
+  "editor.mouseWheelZoom": true,
+  "editor.parameterHints.enabled": false,
+  "editor.quickSuggestions": {
+    "comments": "off",
+    "other": "off",
+    "strings": "off"
+  },
+  "editor.renderFinalNewline": "on",
+  "editor.renderLineHighlight": "all",
+  "editor.renderWhitespace": "none",
+  "editor.roundedSelection": false,
+  // "editor.cursorSurroundingLines": 10,
+  // "editor.cursorSurroundingLinesStyle": "all",
+  // Avoid conflict with json sorting.
+  "editor.rulers": [
+    80,
+    120
+  ], // prettier-ignore
+  "editor.screenReaderAnnounceInlineSuggestion": false,
+  "editor.scrollbar.horizontal": "auto",
+  "editor.scrollbar.horizontalScrollbarSize": 3,
+  "editor.scrollbar.vertical": "auto",
+  "editor.scrollbar.verticalScrollbarSize": 3,
+  "editor.semanticHighlighting.enabled": true,
+  "editor.showFoldingControls": "always",
+  "editor.snippetSuggestions": "bottom",
+  "editor.suggest.matchOnWordStartOnly": false,
+  "editor.suggest.showSnippets": false, // Avoid clutter in suggestions. I know my snippets by heart.
+  "editor.suggest.showWords": true,
+  "editor.suggestOnTriggerCharacters": true,
+  "editor.suggestSelection": "recentlyUsedByPrefix",
+  "editor.tabCompletion": "onlySnippets",
+  "editor.tabSize": 2,
+  "editor.wordWrap": "bounded",
+  "editor.wordWrapColumn": 120,
+  "editor.wrappingIndent": "deepIndent",
+  "editor.z next": "",
+  "emmet.excludeLanguages": [
+    "markdown"
+  ], // prettier-ignore
+  "emmet.includeLanguages": {
+    "erb": "html",
+    "svelte": "html",
+    "vue-html": "html"
+  },
+  "emmet.showExpandedAbbreviation": "inMarkupAndStylesheetFilesOnly",
+  "emmet.showSuggestionsAsSnippets": true,
+  "emmet.triggerExpansionOnTab": true,
   "eslint.enable": true,
   "eslint.format.enable": true,
   "eslint.probe": [
@@ -47,9 +362,170 @@
     "typescript",
     "typescriptreact"
   ],
-
-  "tailwindCSS.emmetCompletions": false,
+  "explorer.compactFolders": false,
+  "explorer.confirmDragAndDrop": false,
+  "explorer.fileNesting.enabled": true,
+  "explorer.fileNesting.patterns": {
+    ".gitignore": ".gitmodules, .gitattributes",
+    "*.js": "${capture}.js.map, ${capture}.min.js, ${capture}.d.ts",
+    "*.jsx": "${capture}.js",
+    "*.ts": "${capture}.js",
+    "*.tsx": "${capture}.ts",
+    "package.json": "package-lock.json, yarn.lock, pnpm-lock.yaml, bun.lockb, bun.lock",
+    "README.md": "*.md",
+    "tsconfig.json": "tsconfig.*.json"
+  },
+  "explorer.openEditors.visible": 1,
+  "explorer.z next": "",
+  "files.associations": {
+    "*.adoc": "asciidoc",
+    "*.css": "css",
+    "*.erb": "erb",
+    "*.liquid": "html",
+    "*.mdx": "markdown",
+    "*.svg": "html",
+    "*.svx": "markdown",
+    "*.vue": "vue",
+    "json5": "jsonc",
+    "vimrc": "vimrc"
+  },
+  "files.autoSave": "afterDelay",
+  "files.autoSaveDelay": 10000,
+  "files.eol": "\n",
+  "FSharp.addFsiWatcher": true,
+  "FSharp.autoRevealInExplorer": "disabled",
+  "FSharp.inlayHints.parameterNames": false,
+  "FSharp.inlayHints.typeAnnotations": false,
+  "FSharp.smartIndent": true,
+  "geminicodeassist.enableTelemetry": false,
+  "geminicodeassist.inlineSuggestions.enableAuto": true,
+  "git.confirmSync": false,
+  "git.ignoreMissingGitWarning": true,
+  "git.openRepositoryInParentFolders": "never",
+  "git.terminalAuthentication": false,
+  "git.useIntegratedAskPass": true,
+  "github.copilot.chat.byok.ollamaEndpoint": "http://localhost:11434",
+  "github.copilot.chat.codesearch.enabled": true,
+  "github.copilot.enable": {
+    "*": true,
+    "markdown": true,
+    "plaintext": false,
+    "scminput": false,
+    "shellscript": true
+  },
+  "github.copilot.nextEditSuggestions.enabled": true,
+  "gitlens.ai.model": "vscode",
+  "gitlens.ai.vscode.model": "copilot:gpt-4.1",
+  "gitlens.codeLens.authors.enabled": false,
+  "gitlens.codeLens.recentChange.enabled": false,
+  "gitlens.currentLine.enabled": false,
+  "gitlens.currentLine.pullRequests.enabled": false,
+  "gitlens.defaultDateFormat": "DDMMMYY HH:mm",
+  "gitlens.defaultDateLocale": "pt-BR",
+  "gitlens.defaultDateShortFormat": "DDMMMYY",
+  "gitlens.defaultDateStyle": "absolute",
+  "gitlens.hovers.autolinks.enhanced": false,
+  "gitlens.hovers.enabled": false,
+  "gitlens.hovers.pullRequests.enabled": false,
+  "gitlens.statusBar.pullRequests.enabled": false,
+  "gitlens.telemetry.enabled": false,
+  "gitlens.views.branches.pullRequests.enabled": false,
+  "gitlens.views.branches.pullRequests.showForBranches": false,
+  "gitlens.views.branches.pullRequests.showForCommits": false,
+  "gitlens.views.commitDetails.files.layout": "list",
+  "gitlens.views.commits.pullRequests.enabled": false,
+  "gitlens.views.commits.pullRequests.showForBranches": false,
+  "gitlens.views.commits.pullRequests.showForCommits": false,
+  "gitlens.views.contributors.pullRequests.enabled": false,
+  "gitlens.views.contributors.pullRequests.showForCommits": false,
+  "gitlens.views.remotes.pullRequests.enabled": false,
+  "gitlens.views.remotes.pullRequests.showForBranches": false,
+  "gitlens.views.remotes.pullRequests.showForCommits": false,
+  "gitlens.views.repositories.pullRequests.enabled": false,
+  "gitlens.views.repositories.pullRequests.showForBranches": false,
+  "gitlens.views.repositories.pullRequests.showForCommits": false,
+  "gitlens.views.searchAndCompare.pullRequests.enabled": false,
+  "gitlens.views.searchAndCompare.pullRequests.showForCommits": false,
+  "gitlens.views.worktrees.pullRequests.enabled": false,
+  "gitlens.views.worktrees.pullRequests.showForBranches": false,
+  "gitlens.views.worktrees.pullRequests.showForCommits": false,
+  "go.formatTool": "goimports",
+  "html.suggest.html5": false,
+  "javascript.preferences.importModuleSpecifierEnding": "js",
+  "js/ts.implicitProjectConfig.checkJs": true,
+  "json.schemas": [
+    {
+      "fileMatch": [
+        "tsconfig.json"
+      ], // prettier-ignore
+      "url": "https://json.schemastore.org/tsconfig.json"
+    },
+    // Point to extension files in a workspace if this is not working correctly.
+    {
+      "fileMatch": [
+        "manifest.json"
+      ], // prettier-ignore
+      "url": "https://json.schemastore.org/chrome-manifest.json"
+    }
+  ],
+  "jupyter.disableJupyterAutoStart": true,
+  "lit-html.tags": [
+    "html",
+    "css",
+    "vue"
+  ], // prettier-ignore
+  "markdown.copyFiles.destination": {
+    "**": "${documentWorkspaceFolder}/assets/images/pasted-from-clipboard/${unixTime}-${documentBaseName}-image.png"
+  },
+  "notebook.lineNumbers": "on",
+  "notebook.output.scrolling": true,
+  "notebook.showFoldingControls": "always",
+  "nxConsole.enableTelemetry": false,
+  "outline.collapseItems": "alwaysExpand",
+  "polyglot-notebook.defaultNotebookExtension": ".ipynb",
+  "polyglot-notebook.defaultNotebookLanguage": "fsharp",
+  "problems.showCurrentInStatus": true,
+  "python.analysis.typeCheckingMode": "strict",
+  "python.REPL.enableREPLSmartSend": false,
+  "python.REPL.sendToNativeREPL": true,
+  "python.terminal.activateEnvInCurrentTerminal": false,
+  "python.terminal.activateEnvironment": true,
+  "python.terminal.executeInFileDir": false,
+  "python.terminal.shellIntegration.enabled": false,
+  "remote.autoForwardPortsSource": "hybrid",
+  "rubyLsp.rubyVersionManager": "asdf",
+  "ruff.nativeServer": "on",
+  "scm.compactFolders": false,
+  "scm.defaultViewMode": "tree",
+  "scm.diffDecorationsGutterWidth": 5,
+  "search.defaultViewMode": "tree",
+  "search.exclude": {
+    "**/.archives": true,
+    "**/.calva/": true,
+    "**/.clj-kondo/": true,
+    "**/.lsp/": true,
+    "**/.vscode": true,
+    "**/*.code-search": true,
+    "**/bower_components": true,
+    "**/dist/": true,
+    "**/node_modules": true,
+    "**/out/": true,
+    "**/target/": true,
+    "package-lock.json": true,
+    "pnpm-lock.yaml": true
+  },
+  "search.mode": "newEditor",
+  "search.searchEditor.defaultNumberOfContextLines": null,
+  "search.searchEditor.doubleClickBehaviour": "openLocationToSide",
+  "search.searchEditor.reusePriorSearchConfiguration": true,
+  "search.searchEditor.singleClickBehaviour": "default",
+  "search.searchOnTypeDebouncePeriod": 200,
+  "search.showLineNumbers": true,
+  "search.smartCase": true,
+  "search.useParentIgnoreFiles": true,
+  "svelte.enable-ts-plugin": true,
   "tailwindCSS.colorDecorators": true, // They are useful, though annoying.
+  "tailwindCSS.emmetCompletions": false,
   "tailwindCSS.experimental.classRegex": [
     // Always detect when wrapping strings with Tailwind-specific tagged
     // literals. You can define a simple identity function that receives a
@@ -78,10 +554,8 @@
     //
     "c`([^`]+)`",
     "tw`([^`]+)`",
-
     // Try to generalize.
     " [cC][lL][aA][sS][^\"'`]*[\"'`]([^\"'`]+)[\"'`]"
-
     // Old tries for this, kept here as a reference of what **might** work.
     //
     //
@@ -108,17 +582,6 @@
     // ":([^\"]*)[cC]lass\"([^\"]*)\"",
     // ":[\\w-.#>]+\\.([\\w-]*)",
   ],
-
-  "tailwindCSS.includeLanguages": {
-    "clojure": "html",
-    "vue": "html",
-    "aspnetcorerazor": "html",
-    "razor": "html",
-    "*.razor": "html",
-    "elm": "html",
-    "md": "html"
-  },
-
   "tailwindCSS.files.exclude": [
     "**/.git/**",
     "**/node_modules/**",
@@ -126,788 +589,180 @@
     "**/.svn/**",
     "**/*.md"
   ],
-
-  "emmet.triggerExpansionOnTab": true,
-  "emmet.showExpandedAbbreviation": "inMarkupAndStylesheetFilesOnly",
-  "emmet.showSuggestionsAsSnippets": true,
-  "emmet.includeLanguages": {
-    "erb": "html",
-    "vue-html": "html",
-    "svelte": "html"
+  "tailwindCSS.includeLanguages": {
+    "*.razor": "html",
+    "aspnetcorerazor": "html",
+    "clojure": "html",
+    "elm": "html",
+    "md": "html",
+    "razor": "html",
+    "vue": "html"
   },
-  "emmet.excludeLanguages": ["markdown"],
-  "[nim][nimble]": { "editor.defaultFormatter": "NimLang.nimlang" },
-  "vue.server.hybridMode": "typeScriptPluginOnly",
-  "lit-html.tags": ["html", "css", "vue"],
-  "[yaml]": { "editor.defaultFormatter": "redhat.vscode-yaml" },
-  "[elm]": { "editor.defaultFormatter": "elmTooling.elm-ls-vscode" },
-  "[clojure]": {
-    // "editor.wordSeparators": "\t ()\"':,;~@#$%^&{}[]/-`.",
-    "editor.autoClosingBrackets": "always",
-    "editor.autoClosingOvertype": "always",
-    "editor.autoClosingQuotes": "always",
-    "editor.formatOnType": true,
-    "editor.autoIndent": "full",
-    "editor.formatOnPaste": true,
-    "editor.matchBrackets": "never",
-    "editor.guides.indentation": false,
-    "editor.parameterHints.enabled": false,
-    "editor.unicodeHighlight.allowedCharacters": { " ": true, "꞉": true },
-    "editor.foldingStrategy": "indentation",
-    "editor.defaultFormatter": "betterthantomorrow.calva"
-  },
-
-  "calva.paredit.defaultKeyMap": "original",
-  "calva.replConnectSequences": [],
-  "calva.showCalvaSaysOnStart": false,
-  "calva.prettyPrintingOptions": {
-    "printEngine": "pprint",
-    "enabled": true,
-    "width": 40
-  },
-
-  "dotnetAcquisitionExtension.enableTelemetry": false,
-  "dotnetAcquisitionExtension.sharedExistingDotnetPath": "~/bin/dotnet",
-  "dotnetAcquisitionExtension.existingDotnetPath": [
-    {
-      "extensionId": "ms-azuretools.vscode-azure-github-copilot",
-      // "path": "~/bin/binaries/dotnet/dotnet-v9.0.102/dotnet"
-      "path": "~/bin/binaries/dotnet/dotnet-v8.0.405/dotnet"
-    }
-  ],
-
-  "FSharp.smartIndent": true,
-  "FSharp.inlayHints.parameterNames": false,
-  "FSharp.inlayHints.typeAnnotations": false,
-  "[fsharp]": { "editor.defaultFormatter": "Ionide.Ionide-fsharp" },
-  "FSharp.addFsiWatcher": true,
-  "FSharp.autoRevealInExplorer": "disabled",
-  "[csharp]": { "editor.defaultFormatter": "ms-dotnettools.csharp" },
-  "[aspnetcorerazor]": { "editor.defaultFormatter": "ms-dotnettools.csharp" },
-  "csharp.suppressBuildAssetsNotification": true,
-
-  "polyglot-notebook.defaultNotebookLanguage": "fsharp",
-  "polyglot-notebook.defaultNotebookExtension": ".ipynb",
-  "[polyglot-notebook]": {
-    // Doesn't work right now: https://github.com/dotnet/interactive/issues/3449
-    "editor.defaultFormatter": "Ionide.Ionide-fsharp"
-  },
-
-  "notebook.lineNumbers": "on",
-  "notebook.output.scrolling": true,
-  "notebook.formatOnSave.enabled": true,
-  "notebook.showFoldingControls": "always",
-
-  "jupyter.disableJupyterAutoStart": true,
-
-  "python.terminal.activateEnvInCurrentTerminal": false,
-  "python.terminal.executeInFileDir": false,
-  "python.terminal.shellIntegration.enabled": false,
-  "python.REPL.enableREPLSmartSend": false,
-  "python.REPL.sendToNativeREPL": true,
-  "ruff.nativeServer": "on",
-
-  "[python]": { "editor.defaultFormatter": "charliermarsh.ruff" },
-  "python.terminal.activateEnvironment": true,
-  "python.analysis.typeCheckingMode": "strict",
-
-  "rubyLsp.rubyVersionManager": "asdf",
-
-  "dart.openDevTools": "flutter",
-  "dart.debugExternalPackageLibraries": false,
-  "dart.debugSdkLibraries": false,
-  "[dart]": {
-    "editor.formatOnSave": true,
-    "editor.formatOnType": true,
-    "editor.selectionHighlight": false,
-    "editor.suggest.snippetsPreventQuickSuggestions": false,
-    "editor.suggestSelection": "first",
-    "editor.tabCompletion": "onlySnippets",
-    "editor.wordBasedSuggestions": "off",
-    "editor.defaultFormatter": "Dart-Code.dart-code"
-  },
-
-  "go.formatTool": "goimports",
-  "[go][go.mod][go.sum][gotmpl][go.work]": {
-    "editor.defaultFormatter": "golang.go"
-  },
-  "[shellscript]": {
-    "editor.quickSuggestions": {
-      "other": "on",
-      "comments": "on",
-      "strings": "on"
-    }
-  },
-
-  "[ocaml]": { "editor.defaultFormatter": "ocamllabs.ocaml-platform" },
-  "[snippets]": { "editor.defaultFormatter": "vscode.json-language-features" },
-
-  "github.copilot.nextEditSuggestions.enabled": false,
-  "github.copilot.chat.codesearch.enabled": true,
-  "github.copilot.enable": {
-    "*": true,
-    "plaintext": false,
-    "markdown": true,
-    "scminput": false,
-    "shellscript": true
-  },
-  "github.copilot.chat.byok.ollamaEndpoint": "http://localhost:11434",
-  "chat.agent.thinkingStyle": "collapsedPreview",
-  "chat.agentSessionsViewLocation": "view",
-  "chat.editor.wordWrap": "on",
-
-  "geminicodeassist.enableTelemetry": false,
-  "geminicodeassist.inlineSuggestions.enableAuto": true,
-
-  // From Nx plugin.
-  "nxConsole.enableTelemetry": false,
-
-  "[prisma]": { "editor.defaultFormatter": "Prisma.prisma" },
-
-  // #region [editor.*] {{{
-
-  "editor.tokenColorCustomizations": {
-    "[*Light*]": {
-      // Match all themes with "Light" in the name.
-      "textMateRules": [
-        {
-          // "scope": "ref.matchtext",  // Not sure what this is for.
-          "settings": {
-            "foreground": "#000"
-          }
-        }
-      ]
-    },
-    "[Spiral Tattoo Ink Dark Dim]": {
-      "textMateRules": [
-        // Test custom colors here, before moving to the theme.
-        //
-        // Example:
-        //
-        //    {
-        //      "scope": "support",
-        //      "settings": {
-        //        "fontStyle": ""
-        //      }
-        //    },
-        //    {
-        //      "scope": "comment",
-        //      "settings": {
-        //        "fontStyle": "italic"
-        //      }
-        //    }
-      ]
-    },
-    "[GitHub*]": {
-      // Use italics for comments.
-      "textMateRules": [
-        {
-          "scope": ["comment", "keyword"],
-          "settings": { "fontStyle": "italic" }
-        }
-      ]
-    }
-  },
-  "editor.codeActionsOnSave": {
-    "source.fixAll.eslint": "explicit",
-    "source.fixAll": "explicit",
-    "source.organizeImports.ruff": "explicit"
-    // "source.addMissingImports.ts": "always",
-    // "source.removeUnusedImports": "always"
-  },
-  "editor.lineNumbers": "on",
-  "zenMode.hideLineNumbers": true, // `editor.` related
-  "editor.parameterHints.enabled": false,
-  "editor.guides.bracketPairs": "active",
-  "editor.bracketPairColorization.enabled": true,
-  "editor.guides.indentation": false,
-  "editor.guides.highlightActiveIndentation": true,
-  "editor.semanticHighlighting.enabled": true,
-  "editor.tabSize": 2,
-  "editor.insertSpaces": true,
-  "editor.detectIndentation": true,
-  "editor.defaultFormatter": "esbenp.prettier-vscode",
-
-  // Cursor.
-  "editor.cursorStyle": "line",
-  // "editor.cursorWidth": 1,
-  "editor.cursorSmoothCaretAnimation": "on",
-  "editor.cursorBlinking": "expand",
-  // "editor.cursorSurroundingLines": 10,
-  // "editor.cursorSurroundingLinesStyle": "all",
-
-  "editor.rulers": [80, 120],
-  "editor.formatOnSave": true,
-  "editor.tabCompletion": "onlySnippets",
-  "editor.suggest.snippetsPreventQuickSuggestions": false,
-  "editor.quickSuggestions": {
-    "other": "off",
-    "comments": "off",
-    "strings": "off"
-  },
-  "editor.renderWhitespace": "none",
-  "editor.acceptSuggestionOnCommitCharacter": false,
-  "editor.hover.delay": 1000,
-  "editor.wordWrap": "bounded",
-  "editor.wrappingIndent": "deepIndent",
-  "editor.wordWrapColumn": 120,
-  "editor.lineHeight": 1.8, // Interesting values: 1.6; 1.8; 2; 2.2
-  // Doesn't make a lot of sense to change the letter spacing when using
-  // monospaced fonts, unless the font is too wide (like OpenDyslexicM Nerd Font).
-  // Therefore, keep the default value (comment `letterSpacing`), which is good
-  // for most fonts. (Exceptions: OpenDyslexicM = -2 is good.)
-  // "editor.letterSpacing": -2,
-  "editor.roundedSelection": false,
-  "editor.autoIndent": "full",
-  "editor.screenReaderAnnounceInlineSuggestion": false,
-  "editor.snippetSuggestions": "bottom",
-  "editor.suggest.showSnippets": false, // Avoid clutter in suggestions. I know my snippets by heart.
-  "editor.suggest.matchOnWordStartOnly": false,
-  "editor.suggest.showWords": true, // `words` means other words found in the file.
-  "editor.suggestOnTriggerCharacters": true,
-  "editor.acceptSuggestionOnEnter": "on",
-  "editor.suggestSelection": "recentlyUsedByPrefix",
-  "editor.renderLineHighlight": "all",
-  "editor.scrollbar.vertical": "hidden",
-  "editor.scrollbar.horizontal": "hidden",
-  "editor.renderFinalNewline": "on",
-  "editor.colorDecorators": true,
-  "editor.glyphMargin": true, // Space between the explorer and the line number.
-  "editor.mouseWheelZoom": true,
-  "editor.inlineSuggest.enabled": true,
-  // "editor.inlineSuggest.fontFamily": "'Maple Mono', 'CodeNewRoman Nerd Font', monospace",
-  "editor.accessibilitySupport": "off",
-  "editor.showFoldingControls": "always",
-  "editor.foldingHighlight": true,
-  "editor.minimap.enabled": false,
-  "editor.minimap.autohide": "none",
-  "editor.minimap.renderCharacters": false,
-  "editor.minimap.showSlider": "always",
-  "editor.minimap.sectionHeaderLetterSpacing": 1,
-  "editor.minimap.size": "proportional",
-  // "editor.minimap.markSectionHeaderRegex": "\\bMARK:\\s*(?<separator>-?)\\s*(?<label>.*)$",
-  "editor.minimap.sectionHeaderFontSize": 9,
-  "editor.minimap.showMarkSectionHeaders": true,
-  "editor.minimap.showRegionSectionHeaders": true,
-  "editor.minimap.maxColumn": 80,
-  "editor.minimap.side": "right",
-  "editor.minimap.scale": 1,
-  ">>> Next editor.*": "",
-  // #endregion [editor.*] }}}
-
-  "explorer.openEditors.visible": 1,
-  "explorer.confirmDragAndDrop": false,
-  "explorer.excludeGitIgnore": false,
-  "explorer.compactFolders": false,
-  ">>> Next explorer.*": "",
-
-  // Nest/Fold some files in the explorer.
-  "explorer.fileNesting.enabled": true,
-  "explorer.fileNesting.patterns": {
-    "[docs]": "*.md",
-
-    "[configs]": ".editorconfig, package.json, .gitignore",
-    ".editorconfig": ".env, .prettierrc",
-    "package.json": "package-lock.json, yarn.lock, pnpm-lock.yaml, bun.lockb, pnpm-workspace.yaml, deno.json, deno.lock, turbo.json",
-    ".gitignore": ".gitignore, .gitattributes, .gitmodules"
-  },
-
-  // prettier-ignore
-  "files.associations": {
-    "*.adoc": "asciidoc", "*.css": "css", "*.erb": "erb", "*.liquid": "html",
-    "*.mdx": "markdown", "*.svg": "html", "*.svx": "markdown", "*.vue": "vue",
-    "json5": "jsonc",
-
-    // Add above this line (avoid the comma problem).
-    "vimrc": "vimrc"
-  },
-  "files.eol": "\n",
-  "files.autoSaveDelay": 600000,
-  "files.autoSave": "afterDelay",
-
-  // #region Git and GitLens {{{
-
-  "git.ignoreMissingGitWarning": true,
-  "git.confirmSync": false,
-  "git.openRepositoryInParentFolders": "never",
-  // Setting both to false tells VS Code: "Don't try to manage git authentication - let git handle it with the configured credential helpers."
-  "git.useIntegratedAskPass": true,
-  "git.terminalAuthentication": false,
-  "scm.defaultViewMode": "tree",
-
-  "gitlens.defaultDateLocale": "pt-BR",
-  "gitlens.defaultDateStyle": "absolute",
-  "gitlens.defaultDateFormat": "DDMMMYY HH:mm",
-  "gitlens.defaultDateShortFormat": "DDMMMYY",
-  "gitlens.views.searchAndCompare.pullRequests.showForCommits": false,
-  "gitlens.views.searchAndCompare.pullRequests.enabled": false,
-  "gitlens.views.contributors.pullRequests.showForCommits": false,
-  "gitlens.views.contributors.pullRequests.enabled": false,
-  "gitlens.views.worktrees.pullRequests.showForCommits": false,
-  "gitlens.views.worktrees.pullRequests.showForBranches": false,
-  "gitlens.views.worktrees.pullRequests.enabled": false,
-  "gitlens.views.remotes.pullRequests.showForCommits": false,
-  "gitlens.views.remotes.pullRequests.showForBranches": false,
-  "gitlens.views.remotes.pullRequests.enabled": false,
-  "gitlens.views.branches.pullRequests.showForCommits": false,
-  "gitlens.views.branches.pullRequests.showForBranches": false,
-  "gitlens.views.branches.pullRequests.enabled": false,
-  "gitlens.views.repositories.pullRequests.showForCommits": false,
-  "gitlens.views.repositories.pullRequests.showForBranches": false,
-  "gitlens.views.repositories.pullRequests.enabled": false,
-  "gitlens.views.commits.pullRequests.showForBranches": false,
-  "gitlens.views.commits.pullRequests.enabled": false,
-  "gitlens.hovers.autolinks.enhanced": false,
-  "gitlens.hovers.pullRequests.enabled": false,
-  "gitlens.hovers.enabled": false,
-  "gitlens.statusBar.pullRequests.enabled": false,
-  "gitlens.currentLine.pullRequests.enabled": false,
-  "gitlens.currentLine.enabled": false,
-  "gitlens.views.commits.pullRequests.showForCommits": false,
-  "gitlens.codeLens.authors.enabled": false,
-  "gitlens.codeLens.recentChange.enabled": false,
-  "gitlens.telemetry.enabled": false,
-  "gitlens.views.commitDetails.files.layout": "list",
-
-  // #endregion Git and GitLens }}}
-
-  // #region terminal. {{{
-
-  "terminal.integrated.fontSize": 12,
-
-  // Best terminal fonts to be the default. DO NOT REMOVE, experiment with the lines below.
-  "terminal.integrated.fontFamily": "'JetBrainsMono Nerd Font', 'MesloLGS Nerd Font Mono', 'MesloLGS NF', 'JetBrainsMono Nerd Font', 'Cascadia Code', Consolas, monospace",
-
-  // For experiments.
-  // "terminal.integrated.fontFamily": "JetBrainsMono Nerd Font",
-  // "terminal.integrated.fontFamily": "Fragment Mono",
-  // "terminal.integrated.fontFamily": "Geist Mono",
-
-  // "terminal.integrated.fontFamily": "Maple Mono NF",
-  // "terminal.integrated.fontLigatures.featureSettings": "'calt' 1, 'cv02' 1, 'cv03' 1, 'cv08' 1, 'ss03' 1",
-
-  // "terminal.integrated.fontFamily": "Cascadia Code",
-  // "terminal.integrated.fontLigatures.featureSettings": "'calt' 1, 'ss01' 1, 'ss19' 1, 'ss20' 1",
-
-  // // Examples:   -> <-- <|   ligat.    dash 0    alt. g    alt. @    alt. a    alt. ~
-  // "terminal.integrated.fontFamily": "JuliaMono",
-  // "terminal.integrated.fontLigatures.featureSettings": "'zero' 1, 'ss06' 1, 'cv03' 1",
-
-  // "terminal.integrated.fontFamily": "Adwaita Mono",
-  // "terminal.integrated.fontLigatures.featureSettings": "'zero' 1",
-
-  // "terminal.integrated.fontFamily": "Input Mono",
-  // "terminal.integrated.fontLigatures.featureSettings": "'ss01' 1, 'ss02' 1, 'ss09' 1, 'ss10' 1, 'zero' 1",
-
-  "terminal.integrated.fontFamily.next": "//",
-  "terminal.integrated.fontWeight": "400",
-  "terminal.integrated.fontLigatures.enabled": true,
-  "terminal.integrated.fontLigatures.featureSettings": "'zero' 1, 'ss01' 0, 'ss02' 0, 'ss19' 1, 'cv03' 1, 'ss20' 0",
-  "terminal.integrated.cursorWidth": 3, // For when it is a bar.
-  "terminal.integrated.cursorStyle": "underline", // I want to use 'underline', but it is so thin that it disappears sometimes.
-  "terminal.integrated.cursorStyleInactive": "outline",
-  "terminal.integrated.macOptionClickForcesSelection": true,
-  "terminal.integrated.allowChords": false,
-  "terminal.integrated.shellIntegration.enabled": false,
-  "terminal.integrated.shellIntegration.decorationsEnabled": "both",
-  "terminal.integrated.enableVisualBell": true,
-  "terminal.integrated.bellDuration": 3000,
-  "terminal.integrated.cursorBlinking": true,
-  "terminal.integrated.mouseWheelZoom": true,
-  "terminal.integrated.enableFileLinks": "notRemote",
-  "terminal.integrated.gpuAcceleration": "on",
-  // prettier-ignore
-  "terminal.integrated.localEchoExcludePrograms": [ "vim", "vi", "nano", "tmux", "nvim" ],
-  "terminal.integrated.smoothScrolling": true,
-  "terminal.integrated.stickyScroll.enabled": false,
-  "terminal.integrated.suggest.enabled": true,
-  "terminal.integrated.tabs.defaultColor": "terminal.ansiGreen",
-  "terminal.integrated.enableMultiLinePasteWarning": "always",
-  "terminal.integrated.defaultProfile.linux": "zsh",
-  "terminal.integrated.profiles.linux": {
-    "bash": { "path": "bash", "icon": "terminal-bash" },
-    "zsh": { "path": "zsh" },
-    "fish": { "path": "fish" },
-    "tmux": { "path": "tmux", "icon": "terminal-tmux" },
-    "pwsh": null
-  },
-  "terminal.integrated.defaultProfile.osx": "zsh",
-  "terminal.integrated.profiles.osx": {
-    "bash": { "path": "bash", "icon": "terminal-bash" },
-    "zsh": { "path": "zsh" },
-    "fish": { "path": "fish" },
-    "tmux": { "path": "tmux", "icon": "terminal-tmux" },
-    "pwsh": null
-  },
-  "terminal.integrated.defaultProfile.windows": "pwsh",
-  "terminal.integrated.profiles.windows": { "pwsh": null },
-  "terminal.integrated.customGlyphs": true,
-  "terminal.integrated.suggest.inlineSuggestion": "alwaysOnTopExceptExactMatch",
-  // Most recent try:
-  "terminal.integrated.suggest.providers": {
-    "terminal-suggest": true,
-    "pwsh-shell-integration": false,
-    "lsp": true
-  },
-
+  "telemetry.telemetryLevel": "off",
   "terminal.external.linuxExec": "wezterm",
   "terminal.external.osxExec": "wezterm.app",
   "terminal.external.windowsExec": "C:\\Windows\\System32\\kitty.exe",
-
-  // #endregion terminal. }}}
-
-  // "debug.console.fontFamily": "'Liberation Mono', 'DejaVu Sans Mono', monospace",
-  // "debug.console.fontSize": 11,
-
-  // #region window and search stuff. {{{
-
-  "window.titleBarStyle": "custom",
-  "window.title": "[${rootNameShort}] ${activeEditorMedium}",
-  "window.newWindowDimensions": "inherit",
-  "window.restoreWindows": "all",
-  "window.newWindowProfile": "Default",
-  "window.menuBarVisibility": "hidden",
+  "terminal.integrated.allowChords": false,
+  "terminal.integrated.bellDuration": 3000,
+  "terminal.integrated.cursorBlinking": true,
+  "terminal.integrated.cursorStyle": "line", // I want to use 'underline', but it is so thin that it disappears sometimes.
+  "terminal.integrated.cursorStyleInactive": "outline",
+  "terminal.integrated.cursorWidth": 3, // For when it is a bar.
+  "terminal.integrated.customGlyphs": true,
+  "terminal.integrated.defaultProfile.linux": "zsh",
+  "terminal.integrated.defaultProfile.osx": "zsh",
+  "terminal.integrated.defaultProfile.windows": "pwsh",
+  "terminal.integrated.enableFileLinks": "notRemote",
+  "terminal.integrated.enableMultiLinePasteWarning": "always",
+  "terminal.integrated.enableVisualBell": true,
+  // ---------------------------------------------------------------------------
+  "terminal.integrated.fontFamily": "Cascadia Code NF",
+  "terminal.integrated.fontLigatures.enabled": true,
+  "terminal.integrated.fontLigatures.featureSettings": "'calt' 1, 'ss01' 1, 'ss19' 1, 'ss20' 0",
+  // ---------------------------------------------------------------------------
+  // "terminal.integrated.fontFamily": "Hack Nerd Font Mono",
+  // ---------------------------------------------------------------------------
+  // "terminal.integrated.fontFamily": "MesloLGS Nerd Font Mono",
+  // ---------------------------------------------------------------------------
+  // "terminal.integrated.fontFamily": "CommitMono",
+  // "terminal.integrated.fontLigatures.enabled": true,
+  // "terminal.integrated.fontLigatures.featureSettings": "'calt' 1, 'ss01' 1, 'ss19' 1, 'ss20' 0",
+  // ---------------------------------------------------------------------------
+  // "terminal.integrated.fontSize": 12,
+  "terminal.integrated.fontWeight": "400",
+  "terminal.integrated.gpuAcceleration": "on",
+  // "terminal.integrated.lineHeight": 1,
+  "terminal.integrated.localEchoExcludePrograms": [
+    "vim",
+    "vi",
+    "nano",
+    "tmux",
+    "nvim"
+  ],
+  "terminal.integrated.macOptionClickForcesSelection": true,
+  "terminal.integrated.mouseWheelZoom": true,
+  "terminal.integrated.profiles.linux": {
+    "bash": {
+      "icon": "terminal-bash",
+      "path": "bash"
+    },
+    "fish": {
+      "path": "fish"
+    },
+    "pwsh": null,
+    "tmux": {
+      "icon": "terminal-tmux",
+      "path": "tmux"
+    },
+    "zsh": {
+      "path": "zsh"
+    }
+  },
+  "terminal.integrated.profiles.osx": {
+    "bash": {
+      "icon": "terminal-bash",
+      "path": "bash"
+    },
+    "fish": {
+      "path": "fish"
+    },
+    "pwsh": null,
+    "tmux": {
+      "icon": "terminal-tmux",
+      "path": "tmux"
+    },
+    "zsh": {
+      "path": "zsh"
+    }
+  },
+  "terminal.integrated.profiles.windows": {
+    "pwsh": null
+  },
+  "terminal.integrated.shellIntegration.decorationsEnabled": "both",
+  "terminal.integrated.shellIntegration.enabled": true,
+  "terminal.integrated.smoothScrolling": true,
+  "terminal.integrated.stickyScroll.enabled": false,
+  "terminal.integrated.suggest.inlineSuggestion": "alwaysOnTopExceptExactMatch",
+  "terminal.integrated.suggest.insertTrailingSpace": true,
+  // Most recent try:
+  "terminal.integrated.suggest.providers": {
+    "lsp": true,
+    "pwsh-shell-integration": false,
+    "terminal-suggest": true
+  },
+  "terminal.integrated.suggest.quickSuggestions": {
+    "arguments": "off",
+    "commands": "off",
+    "unknown": "off"
+  },
+  "terminal.integrated.suggest.selectionMode": "never",
+  "terminal.integrated.tabs.defaultColor": "terminal.ansiGreen",
+  "turbo.useLocalTurbo": true,
+  // // Causes deno extension to report import errors.
+  // "typescript.tsserver.experimental.enableProjectDiagnostics": true,
+  "typescript.preferences.importModuleSpecifier": "non-relative",
+  "vue.server.hybridMode": "typeScriptPluginOnly",
   "window.customMenuBarAltFocus": false,
   "window.customTitleBarVisibility": "auto",
-
-  "search.exclude": {
-    "**/.archives": true,
-    "**/.calva/": true,
-    "**/.clj-kondo/": true,
-    "**/.lsp/": true,
-    "**/.vscode": true,
-    "**/*.code-search": true,
-    "**/bower_components": true,
-    "**/dist/": true,
-    "**/node_modules": true,
-    "**/out/": true,
-    "**/target/": true,
-    "package-lock.json": true,
-    "pnpm-lock.yaml": true
-  },
-  "search.defaultViewMode": "tree",
-  "search.mode": "newEditor",
-  "search.searchOnTypeDebouncePeriod": 200,
-  "search.showLineNumbers": true,
-  "search.smartCase": true,
-  // No context lines by default. Works great for md tasks, but not so much for
-  // code. I'm testing the `reusePriorSearchConfiguration` setting instead.
-  "search.searchEditor.defaultNumberOfContextLines": null,
-  "search.searchEditor.reusePriorSearchConfiguration": true,
-  "search.searchEditor.singleClickBehaviour": "default",
-  "search.searchEditor.doubleClickBehaviour": "openLocationToSide",
-  // "search.searchEditor.focusResultsOnSearch": true,  // Terrible, with short debounce. Or in general.
-
-  // #endregion window and search stuff. }}}
-
-  "markdown.copyFiles.destination": {
-    "**": "${documentWorkspaceFolder}/assets/images/pasted-from-clipboard/${documentBaseName}/${unixTime}-image.png"
-  },
-
-  "diffEditor.codeLens": true,
-  "diffEditor.ignoreTrimWhitespace": false,
-  "diffEditor.renderSideBySide": true,
-
-  "html.suggest.html5": false,
-  "outline.collapseItems": "alwaysExpand",
-  "problems.showCurrentInStatus": true,
-  "scm.compactFolders": false,
-  "scm.diffDecorationsGutterWidth": 5,
-  "telemetry.telemetryLevel": "off",
-  "accessibility.voice.speechLanguage": "pt-BR",
-  "dotfiles.repository": "marcelocra/dotfiles",
-  "dotfiles.targetPath": "~/prj/dotfiles",
-  "dotfiles.installCommand": "devcontainer-setup.sh",
-  "@azure.argTenant": "",
-  "dev.containers.dockerPath": "podman",
-  "dev.containers.dockerComposePath": "podman-compose",
-  "docker.dockerPath": "podman",
-
-  ">>> Next misc thing above": "",
-
-  // #region workbench {{{
-
-  "workbench.colorCustomizations": {
-    "editorCursor.foreground": "#ff4500",
-    "editorCursor.background": "#000",
-    "terminalCursor.foreground": "#ff4500",
-    "terminalCursor.background": "#000",
-
-    "[Tokyo Night][Tokyo Night Storm]": {
-      "menu.border": "#5588ff55",
-      "focusBorder": "#5588ff55",
-      "editorWidget.border": "#5588ff55",
-
-      // "tab.border": "#5588ff55",
-      "tab.activeBorder": "default",
-      "tab.activeBorderTop": "default",
-      "tab.activeBackground": "#332c5f",
-      "tab.lastPinnedBorder": "#5588ff55",
-
-      "titleBar.border": "#5588ff55",
-      // Like terminal.
-      "panel.border": "#5588ff55",
-      "sideBar.border": "#5588ff55",
-      "editorGroup.border": "#5588ff55",
-
-      // File picker (ctrl+p) focused element background.
-      "quickInputList.focusBackground": "#5533ffaa",
-      "quickInputList.focusForeground": "#fff",
-      "quickInputList.focusIconForeground": "#fff",
-      // Works for quickInputList too.
-      "widget.border": "#5588ff55",
-
-      // Code actions (ctrl+.) focused element background.
-      "editorActionList.focusBackground": "#5533ff",
-
-      // Border of the complete widget.
-      "editorSuggestWidget.border": "#5588ff55",
-      // "editorSuggestWidget.selectedForeground": "#000",
-      // // Background of the complete widget.
-      // "editorSuggestWidget.background": "#e6e7ed",
-      // Background of the focused item.
-      "editorSuggestWidget.selectedBackground": "#5588ff55",
-      "editorSuggestWidget.selectedForeground": "#fff",
-      "editorSuggestWidget.highlightForeground": "#00ffffdd",
-      "editorSuggestWidget.focusHighlightForeground": "#00ffffdd",
-      // Text color.
-      "editorSuggestWidget.foreground": "#fff",
-
-      // // Element that is focused in the explorer.
-      // "list.focusBackground": "#5588ff",
-      // "list.focusForeground": "#000",
-
-      // // Element that was focused in the explorer.
-      // "list.inactiveFocusBackground": "#5588ff33",
-
-      // // Not sure what this is.
-      // "list.deemphasizedForeground": "#55",
-
-      "editor.inactiveSelectionBackground": "#5533ff22",
-      // "editor.selectionHighlightBorder": "#008800",
-      // "editor.selectionHighlightBackground": "#ff008833",
-      "editor.lineHighlightBorder": "#5533ff33",
-      // "editor.wordHighlightBorder": "#171f2c",
-      "editor.rangeHighlightBackground": "#5533ff55",
-      "editor.selectionBackground": "#5533ff55"
-    },
-
-    "[Tokyo Night Light]": {
-      "tab.activeBackground": "#00ffff55"
-    },
-
-    "[Tokyo Night Light][Spiral Tattoo Ink Dark Dim][Night Owl Light]": {
-      // File picker (ctrl+p) focused element background.
-      "quickInputList.focusBackground": "#00ffff55",
-      // Code actions (ctrl+.) focused element background.
-      "editorActionList.focusBackground": "#00ffff55",
-      // Border of the complete widget.
-      "editorSuggestWidget.border": "#4b6786",
-      // "editorSuggestWidget.selectedForeground": "#000",
-      // // Background of the complete widget.
-      // "editorSuggestWidget.background": "#e6e7ed",
-      // Background of the focused item.
-      "editorSuggestWidget.selectedBackground": "#00ffff55",
-      // // Text color.
-      // "editorSuggestWidget.foreground": "#000",
-      // // Element that is focused in the explorer.
-      // "list.focusBackground": "#55",
-      // // Element that was focused in the explorer.
-      // "list.inactiveFocusBackground": "#00000011",
-      // // Not sure what this is.
-      // "list.deemphasizedForeground": "#55",
-      "editor.inactiveSelectionBackground": "#00ffff22",
-      // "editor.selectionHighlightBorder": "#008800",
-      // "editor.selectionHighlightBackground": "#ff008833",
-      "editor.lineHighlightBorder": "#00ffff33",
-      // "editor.wordHighlightBorder": "#171f2c",
-      "editor.rangeHighlightBackground": "#00ffff55",
-      "editor.selectionBackground": "#00ffff55"
-    },
-
-    "[Spiral Tattoo Ink Dark Dim]": {
-      // Test custom colors here, before moving to the theme. Example above (but in here they will only apply to this
-      // theme).
-      "textPreformat.foreground": "#fff",
-      "textPreformat.background": "#332c5f",
-
-      "editorStickyScroll.background": "#1b2733",
-      "editorStickyScroll.border": "#4b6786",
-      "editorStickyScroll.shadow": "#222",
-
-      "symbolIcon.packageForeground": "#ffff00",
-
-      "symbolIcon.constructorForeground": "#00ffff",
-      "symbolIcon.functionForeground": "#00ffff",
-
-      "symbolIcon.fieldForeground": "#ff00f7",
-      "symbolIcon.variableForeground": "#ff00f7",
-
-      "symbolIcon.booleanForeground": "#ff00aa",
-      "symbolIcon.nullForeground": "#ff00aa",
-      "symbolIcon.operatorForeground": "#ff00aa",
-      "symbolIcon.numberForeground": "#ff00aa",
-      "symbolIcon.referenceForeground": "#ff00aa"
-    },
-
-    "[Andromeda][Andromeda Bordered][Andromeda Colorizer][Andromeda Italic Bordered][Andromeda Italic]": {
-      // "editorCursor.background": "#f00",
-      // "selection.background": "#f00",
-      "editor.selectionBackground": "#ff00ff55",
-      // "editor.selectionForeground": "#000",
-      "editor.wordHighlightBackground": "#ff00ff17"
-    },
-
-    "[Solarized Light]": {
-      // "editor.foreground": "#171f2c",
-      "editor.foreground": "#000",
-      "editor.selectionBackground": "#00ffff55",
-      "editor.wordHighlightBackground": "#00ffff22",
-      "editor.wordHighlightTextBackground": "#00ff0022",
-      "editor.wordHighlightStrongBackground": "#ff000022",
-      "editor.findMatchBackground": "#00ff0055",
-      "editor.findMatchHighlightBackground": "#0000ff44"
-    }
-
-    // Next theme colorscheme customization.
-  },
-  "workbench.startupEditor": "newUntitledFile",
-  "workbench.tree.indent": 20,
-  "workbench.tree.renderIndentGuides": "always",
-  "workbench.list.horizontalScrolling": true,
-  "workbench.sideBar.location": "left",
-  "workbench.panel.defaultLocation": "right",
-  "workbench.editor.pinnedTabsOnSeparateRow": false,
+  "window.menuBarVisibility": "toggle",
+  "window.newWindowDimensions": "inherit",
+  "window.newWindowProfile": "Default",
+  "window.restoreWindows": "all",
+  "window.title": "[${rootNameShort}] ${activeEditorMedium}",
+  "window.titleBarStyle": "custom",
   "workbench.activityBar.location": "top",
+  "workbench.colorTheme": "Quiet Light",
   "workbench.editor.empty.hint": "hidden",
+  "workbench.editor.pinnedTabsOnSeparateRow": false,
   "workbench.editorAssociations": {
+    // To override a specific file type, add it below, with the desired editor.
+    // "*.md": "vscode.markdown.preview.editor",
+    "*.png": "imagePreview.previewEditor",
     // Associate all files with the default editor, rendering as plain text and
     // not executing anything (e.g. JavaScript in a browser).
     "**": "default"
-
-    // To override a specific file type, add it below, with the desired editor.
-    // "*.md": "vscode.markdown.preview.editor",
-    // , "*.png": "imagePreview.previewEditor"
   },
-
-  // Keep the color theme last, as I'm always changing it.
-  "workbench.preferredDarkColorTheme": "GitHub Dark Dimmed",
-  "workbench.preferredLightColorTheme": "Default Light Modern",
-  "workbench.colorTheme": "Default Light Modern",
-
-  // #endregion workbench. }}}
-  // #endregion [These mostly don't change]
-
-  // #region [Fonts playground] ------------------------------------------------
-
-  // Default. Keep it here and override below. Copy/pastes and fonts options at the bottom of this file.
-  "editor.fontFamily": "'MesloLGS Nerd Font', 'MesloLGS NF', Consolas, 'Courier New', monospace",
-
-  // "editor.fontFamily": "Google Sans Code",
-  // "editor.fontLigatures": "'ss01' 1",
-
-  // "editor.fontFamily": "JuliaMono",
-  // // Examples:   -> <-- <|   ligat.    dash 0    alt. g    alt. @    alt. a    alt. ~
-  // "editor.fontLigatures": "'calt' 1, 'zero' 1, 'ss01' 1, 'ss02' 1, 'ss06' 1, 'cv03' 1",
-
-  // "editor.fontFamily": "Reddit Mono",
-  // "editor.fontLigatures": "'ss02' 1, 'cv01' 1, 'cv02' 1, 'cv04' 1, 'cv06' 1, 'cv07' 1, 'cv10' 0, 'cv16' 1",
-  // // - default is great
-  // // - ss02: alternated 'a' and 'i'
-  // // - cv: 1(alt a),2(wider b),3(wider d, no leg),4(wider g),5(alt l),6(wider o),7(wider p),8(nao sei),9(wider q, no leg),10(cross t),11(no leg u),12(nao sei),13(i with base),14(nao sei),15(top leg no l),16(W sem curva),17(w meio mais alto),18(0 estranho). Pref: 1,2,4,6,7
-
-  // "editor.fontFamily": "Input Mono",
-  // "editor.fontLigatures": "'ss01' 1, 'ss02' 1, 'ss03' 0, 'ss04' 0, 'ss05' 0, 'ss06' 0, 'ss07' 0, 'ss08' 0, 'ss09' 0, 'ss10' 0, 'zero' 1",
-
-  "editor.fontFamily": "CaskaydiaCove Nerd Font",
-  "editor.fontLigatures": "'ss01' 1, 'ss02' 1, 'ss03' 0, 'ss04' 0, 'ss05' 0, 'ss06' 0, 'ss07' 0, 'ss08' 0, 'ss09' 0, 'ss10' 0, 'zero' 1",
-
-  // "editor.fontFamily": "'Atkinson Hyperlegible Mono', 'Fragment Mono', 'Maple Mono', 'M Plus 1 Code'",
-
-  // ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()_+-
-  // = <- -> <= => <=> <| |> fi Tl Fl != !== === /= ;:* :- --- ---- .: -. .- !?
-  // < > www <> >= <-> [:] -~ ?? ->> -< >- .. '' "" >>> Fl Tl fi fj fl ft
-
-  // "editor.fontFamily": "IBM Plex Mono",
-  // "editor.fontFamily": "BlexMono Nerd Font",
-  // "editor.fontLigatures": "'ss01', 'ss02', 'zero'",
-
-  // "editor.fontFamily": "CodeNewRoman Nerd Font Mono",
-
-  // "editor.fontFamily": "DM Mono",
-  // "editor.fontLigatures": "'ss01', 'ss02', 'ss03', 'ss04'",
-
-  // "editor.fontFamily": "SourceCodeVF",
-  // "editor.letterSpacing": -0.4,
-  // "editor.fontLigatures": "'cv01' 1, 'cv02' 1, 'cv17' 1, 'zero' 1",
-
-  // "editor.fontFamily": "JetBrainsMono Nerd Font",
-  // "editor.fontLigatures": "'zero' 1, 'ss19' 1",
-  // Fira Code like.
-  // "editor.fontLigatures": "'ss01', 'ss19', 'ss20', 'zero', 'cv99'",
-  // Ubuntu Mono like.
-  // "editor.fontLigatures": "'ss02', 'ss19', 'ss20', 'zero', 'cv03', 'cv04', 'cv16', 'cv18', 'cv19', 'cv20', 'cv99'",
-
-  // "editor.fontFamily": "Geist Mono",
-  // "editor.fontLigatures": "'ss02', 'ss03', 'ss06', 'ss13', 'liga' 1",
-
-  // "editor.fontFamily": "Recursive",
-  // // Some customizations that I like (details below).
-  // "editor.fontLigatures": "'ss01', 'ss02', 'ss03', 'ss04', 'ss05', 'ss06', 'ss07', 'ss11', 'ss12', 'case', 'frac' 0",
-  // "editor.fontLigatures": "'ss04', 'ss05', 'ss12', 'case', 'frac' 0",
-
-  // "editor.fontFamily": "Iosevka Fixed Extended",
-  // // Source Code Pro, with changes to: 1, 4, 0, l (lowercase L).
-  // "editor.fontLigatures": "'ss09' 1, 'cv01' 3, 'cv04' 5, 'cv10' 4, 'cv47' 8",
-  // // Monaco.
-  // "editor.fontLigatures": "'ss17'",
-  // // Lucida, with changes to: 2, 4, 5, 0, *, ', #, $, %, ?.
-  // "editor.fontLigatures": "'ss13' 1, 'cv02' 4, 'cv04' 11, 'cv05' 8, 'cv10' 10, 'VSAB' 6, 'VSAF' 2, 'VSAJ' 4, 'VSAM' 1, 'VSAO' 1, 'VSAQ' 3",
-
-  // "editor.fontFamily": "Victor Mono",
-  // "editor.fontLigatures": "'calt' 1, 'ss01' 1, 'ss02' 1, 'ss06' 0, 'ss07' 1, 'ss08' 1",
-
-  // "editor.fontFamily": "Hack Nerd Font",
-
-  // "editor.fontFamily": "Monoid",
-  // "editor.fontLigatures": "'calt' 1, 'liga' 0, 'ss01' 0, 'ss02' 0, 'ss03' 0, 'ss04' 0, 'ss05' 1, 'ss06' 0, 'ss07' 1, 'ss08' 1, 'ss09' 1, 'ss10' 0, 'ss11' 0, 'ss12' 0, 'ss13' 0, 'ss14' 0, 'ss15' 0",
-
-  // // https://github.com/githubnext/monaspace#character-variants
-  // "editor.fontFamily": "Monaspace Neon Var",
-  // "editor.fontLigatures": "'calt' 1, 'liga' 0, 'ss01' 0, 'ss02' 0, 'ss03' 1, 'ss04' 0, 'ss05' 0, 'ss06' 0, 'ss07' 0, 'ss08' 0, 'ss09' 0, 'ss10' 0, 'cv01' 3, 'cv02' 0, 'cv10' 1, 'cv11' 0, 'cv30' 0, 'cv31' 0, 'cv62' 0",
-
-  // "editor.fontFamily": "Consolas",
-  // "editor.fontLigatures": "'ss04' 1, 'ss05' 1, 'ss12' 1, 'case' 1, 'frac' 0",
-
-  // // https://github.com/tonsky/FiraCode/wiki/How-to-enable-stylistic-sets
-  // "editor.fontFamily": "FiraCode Nerd Font Mono",
-  // "editor.fontLigatures": "'cv01' 1, 'cv02' 1, 'cv05' 0, 'cv06' 1, 'cv09' 0, 'cv12' 1, 'cv14' 1, 'cv16' 1, 'cv30' 1, 'cv31' 1, 'ss03' 1, 'ss05' 1, 'ss08' 1, 'ss10' 1",
-
-  // "editor.fontFamily": "Azeret Mono",
-  // "editor.fontLigatures": "'calt' 0, 'liga' 0, 'ss02' 1, 'ss03' 1, 'ss04' 1, 'ss05' 1, 'ss07' 1, 'ss08' 1, 'ss10' 1, 'ss11' 1, 'ss12' 1, 'ss14' 1, 'ss15' 1, 'calt' 1, 'liga' 1, 'zero' 1",
-
-  // "editor.fontFamily": "Intel One Mono",
-  // "editor.fontLigatures": "'ss01', 'ss02', 'ss03'",
-
-  // "editor.fontFamily": "Input Mono",
-  // "editor.fontLigatures": "'ss01' 1, 'ss02' 1, 'ss05' 0, 'ss06' 0, 'ss09' 1, 'ss10' 1, 'zero' 1",
-
-  // "editor.fontFamily": "Overpass Mono",
-  // "editor.fontLigatures": "'zero' 1, 'liga' 0, 'calt' 0",
-
-  // "editor.fontFamily": "Chivo Mono",
-  // "editor.fontLigatures": "'zero' 1",
-
-  // "editor.fontFamily": "Adwaita Mono",
-  // "editor.fontLigatures": "'zero' 1",
-
-  // "editor.fontFamily": "Maple Mono",
-  // "editor.fontLigatures": "'cv02' 1, 'cv03' 1, 'cv08' 1, 'ss03' 1",
-
-  // #endregion [Fonts playground] ---------------------------------------------
-
-  "editor.fontSize": 14,
-  "editor.fontWeight": "300",
-
-  ">>> Review below this: added through the Settings UI": ""
+  "workbench.list.horizontalScrolling": true,
+  "workbench.panel.defaultLocation": "bottom",
+  "workbench.preferredDarkColorTheme": "Night Owl", // GitHub Dark Dimmed, Tokyo Night Storm
+  "workbench.preferredLightColorTheme": "Night Owl Light", // Default Light Modern, Tokyo Night Light
+  "workbench.settings.useSplitJSON": false,
+  "workbench.sideBar.location": "left",
+  "workbench.startupEditor": "newUntitledFile",
+  "workbench.tree.indent": 20,
+  "workbench.tree.renderIndentGuides": "always",
+  "zenMode.centerLayout": true,
+  "zenMode.fullScreen": true,
+  "zenMode.hideActivityBar": true,
+  "zenMode.hideLineNumbers": true,
+  "zenMode.hideStatusBar": false,
+  "zenMode.restore": false,
+  "zenMode.showTabs": "none",
+  "zenMode.silentNotifications": true
 }
+/**
+ * Footnotes *******************************************************************
+
+[link1]: Doesn't make a lot of sense to change the letter spacing when using
+  monospaced fonts, unless the font is too wide (like OpenDyslexicM Nerd Font).
+  Therefore, keep the default value (comment `letterSpacing`), which is good for
+  most fonts. (Exceptions: OpenDyslexicM = -2 is good.)
+
+[link2]: Some colors that I like or want to try:
+  Suggested by Google:
+  - #800080: basic HTML/CSS color name for Purple.
+  - #990099: web-safe version of the basic purple #800080.
+  - #FF00FF: Fuchsia (or Magenta): very bright, vivid pinkish-purple.
+  - #660066: darker shade of purple.
+  - #330066: Deep Violet.
+  - #CCCCFF: Periwinkle, lighter shade of violet.
+  Suggested by Copilot:
+  - #9900ff (violet)
+  - #800080 (purple)
+  - #7f00ff (violet)
+  - #00ffaa (cyan)
+  - #ff4500 (orange red)
+  - #00dd99 (medium aquamarine)
+
+ *******************************************************************************
+ */
