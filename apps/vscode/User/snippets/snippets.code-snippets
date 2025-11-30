@@ -699,4 +699,106 @@
   "javascriptreact,typescriptreact - end": {
     "body": []
   },
+  "time now": {
+    "prefix": [
+      "now",
+      "time",
+      "t",
+    ],
+    "body": [
+      "${CURRENT_HOUR}h${CURRENT_MINUTE} $0"
+    ]
+  },
+  "date today": {
+    "prefix": [
+      "date",
+      "today",
+      "d",
+    ],
+    "body": [
+      "${CURRENT_YEAR}-${CURRENT_MONTH}-${CURRENT_DATE} $0"
+    ]
+  },
+  "date today br": {
+    "prefix": [
+      "datebr",
+      "todaybr",
+      "dbr",
+    ],
+    "body": [
+      "${CURRENT_DATE}/${CURRENT_MONTH}/${CURRENT_YEAR} $0"
+    ]
+  },
+  "date and time now": {
+    "prefix": [
+      "datetime",
+      "dt",
+    ],
+    "body": [
+      "${CURRENT_YEAR}-${CURRENT_MONTH}-${CURRENT_DATE} ${CURRENT_HOUR}h${CURRENT_MINUTE} - $0"
+    ]
+  },
+  "prompt en": {
+    "prefix": [
+      "p",
+      "prompt"
+    ],
+    "body": [
+      "\\ Definitions",
+      "",
+      "- \"prompt\" refers to the input given to the AI by the user",
+      "- \"I\" / \"me\" refers to the user making the request (prompt)",
+      "- \"you\" refers to the AI that will answer the prompt",
+      "- apply RFCs 2119 and 8174 to the key words in the prompt",
+      "",
+      "\\ Persona",
+      "",
+      "$1",
+      "",
+      "\\ Context",
+      "",
+      "$2",
+      "",
+      "\\ Task",
+      "",
+      "$3",
+      "",
+      "\\ Rules",
+      "",
+      "$4",
+      "",
+    ]
+  },
+  "prompt br": {
+    "prefix": [
+      "pb",
+      "promptbr"
+    ],
+    "body": [
+      "\\ Definições",
+      "",
+      "- \"prompt\" refere-se à entrada fornecida à IA pelo usuário",
+      "- \"eu\" / \"me\" refere-se ao usuário fazendo o prompt",
+      "- \"você\" refere-se à AI que responderá ao prompt",
+      "- aplique as RFCs 2119 e 8174 às palavras-chave no prompt",
+      "",
+      "\\ Persona",
+      "",
+      "$1",
+      "",
+      "\\ Contexto",
+      "",
+      "$2",
+      "",
+      "\\ Tarefas",
+      "",
+      "$3",
+      "",
+      "\\ Regras",
+      "",
+      "$4",
+      "",
+    ]
+  },
+  ">>> Next snippet above 👆🏽": {},
 }

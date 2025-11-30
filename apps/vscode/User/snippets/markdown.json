@@ -25,18 +25,32 @@
   },
   "md checkbox": {
     "prefix": [
+      "x",
+      "c",
       "--"
     ],
     "body": [
       "- [ ] "
     ]
   },
-  "md numbered checkbox": {
+  "md checkbox with newline": {
     "prefix": [
-      "k"
+      "xn",
+      "cn",
+      "--n"
     ],
     "body": [
-      "1. [ ] "
+      "",
+      "- [ ] $0"
+    ]
+  },
+  "md link": {
+    "prefix": [
+      "k",
+      "l"
+    ],
+    "body": [
+      "[$1]($2) $0"
     ]
   },
   "create an obsidian link": {
@@ -103,7 +117,7 @@
       "### Changed",
       "",
       "### Removed",
-      "",
+      ""
     ]
   },
   "chrome web store": {
@@ -239,14 +253,52 @@
       "$0"
     ]
   },
-  "h2 with current time": {
+  // Creates a new heading with current date and time.
+  "alt+enter": {
     "prefix": [
-      "h2"
+      "ht",
+      "h"
     ],
     "body": [
-      "## ${CURRENT_HOUR}h${CURRENT_MINUTE} - $0",
+      "",
+      "",
+      "# [${CURRENT_YEAR}-${CURRENT_MONTH}-${CURRENT_DATE} ${CURRENT_HOUR}:${CURRENT_MINUTE}] $0",
       ""
     ]
+  },
+  // Creates a new header for task with current date and time.
+  "ctrl+enter": {
+    "prefix": [
+      "task",
+      "t",
+    ],
+    "body": [
+      "",
+      "",
+      "# [${CURRENT_YEAR}-${CURRENT_MONTH}-${CURRENT_DATE} ${CURRENT_HOUR}:${CURRENT_MINUTE}] [${1:todo}] [${2:p2}] $0",
+      "",
+    ]
+  },
+  // Creates a new topic, with current date and time.
+  "alt+shift+enter": {
+    "prefix": [
+      "topic",
+      "to",
+    ],
+    "body": [
+      "## [TOPIC] $0",
+      "",
+      "_Added: ${CURRENT_YEAR}-${CURRENT_MONTH}-${CURRENT_DATE} ${CURRENT_HOUR}:${CURRENT_MINUTE}_",
+      ""
+    ]
+  },
+  "new day separator": {
+    "prefix": [
+      "nd",
+      "sep"
+    ],
+    // Make it really long, so it disappears in the symbols view.
+    "body": "# ------------------------------------------------------------------------------------------------------------------------------------------ new day!"
   },
   ". bullet for new task": {
     "prefix": [
@@ -257,33 +309,7 @@
       "..$0"
     ]
   },
-  "time now": {
-    "prefix": [
-      "now",
-      "time"
-    ],
-    "body": [
-      "${CURRENT_HOUR}h${CURRENT_MINUTE}$0"
-    ]
-  },
-  "today's date": {
-    "prefix": [
-      "date",
-      "today"
-    ],
-    "body": [
-      "${CURRENT_DATE}/${CURRENT_MONTH}/${CURRENT_YEAR}$0"
-    ]
-  },
-  "date and time now": {
-    "prefix": [
-      "datetime",
-    ],
-    "body": [
-      "${CURRENT_DATE}/${CURRENT_MONTH}/${CURRENT_YEAR}.${CURRENT_HOUR}h${CURRENT_MINUTE} - $0"
-    ]
-  },
   ">>>>> NEXT snippet above. Ignore this, it is not a snippet.": {
-    "body": ""
-  },
+    "body": "",
+  }
 }
