@@ -1,6 +1,15 @@
-# VSCode Config Installers
+# VSCode-based Editor Config Installers
 
-Symlinks VSCode settings from this dotfiles repo to the VSCode User directory.
+Symlinks settings from this dotfiles repo to the editor's User directory.
+
+## Supported Editors
+
+| Editor          | Linux/macOS                      | Windows                          |
+| --------------- | -------------------------------- | -------------------------------- |
+| VSCode          | `~/.config/Code/User`            | `%APPDATA%\Code\User`            |
+| VSCode Insiders | `~/.config/Code - Insiders/User` | `%APPDATA%\Code - Insiders\User` |
+| Cursor          | `~/.config/Cursor/User`          | `%APPDATA%\Cursor\User`          |
+| Kiro            | `~/.config/Kiro/User`            | `%APPDATA%\Kiro\User`            |
 
 ## What gets linked
 
@@ -15,27 +24,28 @@ Symlinks VSCode settings from this dotfiles repo to the VSCode User directory.
 ### Linux / macOS
 
 ```bash
-# VSCode
-./install.sh
-
-# VSCode Insiders
-./install.sh --insiders
+./install.sh              # VSCode (default)
+./install.sh --insiders   # VSCode Insiders
+./install.sh --cursor     # Cursor
+./install.sh --kiro       # Kiro
 
 # Custom dotfiles path
-./install.sh --dotfiles-path /path/to/dotfiles/apps/vscode/User
+./install.sh --cursor --dotfiles-path /path/to/dotfiles/apps/vscode/User
 ```
 
 ### Windows (PowerShell as Administrator)
 
 ```powershell
-# VSCode
-.\install.ps1
+.\install.ps1                  # VSCode (default)
+.\install.ps1 -Insiders        # VSCode Insiders
+.\install.ps1 -Cursor          # Cursor
+.\install.ps1 -Kiro            # Kiro
 
-# VSCode Insiders
-.\install.ps1 -Insiders
+# Or use -Editor parameter
+.\install.ps1 -Editor cursor
 
 # Custom dotfiles path
-.\install.ps1 -DotfilesPath "C:\path\to\dotfiles\apps\vscode\User"
+.\install.ps1 -Cursor -DotfilesPath "C:\path\to\dotfiles\apps\vscode\User"
 ```
 
 > **Note**: Windows requires Administrator privileges to create symlinks.
@@ -44,5 +54,5 @@ Symlinks VSCode settings from this dotfiles repo to the VSCode User directory.
 
 - ✅ Backs up existing files with timestamp before replacing
 - ✅ Skips if already symlinked
-- ✅ Supports both VSCode and VSCode Insiders
+- ✅ Supports VSCode, VSCode Insiders, Cursor, and Kiro
 - ✅ Continues if a file is missing from source

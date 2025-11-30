@@ -1,10 +1,14 @@
 #!/usr/bin/env pwsh
-# Symlinks VSCode settings from dotfiles to the VSCode User directory.
-# Supports both VSCode and VSCode Insiders. Backs up existing files.
+# Symlinks VSCode settings from dotfiles to the editor's User directory.
+# Supports VSCode, VSCode Insiders, Cursor, and Kiro. Backs up existing files.
 # Requires Administrator privileges on Windows for symlinks.
 
 param(
-    [switch]$Insiders = $false,
+    [ValidateSet("code", "insiders", "cursor", "kiro")]
+    [string]$Editor = "code",
+    [switch]$Insiders = $false,  # Legacy support
+    [switch]$Cursor = $false,    # Legacy support
+    [switch]$Kiro = $false,      # Legacy support
     [string]$DotfilesPath = "$HOME\prj\dotfiles\apps\vscode\User",
     [switch]$Help = $false
 )
@@ -14,37 +18,51 @@ if ($Help) {
 Usage: .\install.ps1 [OPTIONS]
 
 Options:
-  -Insiders        Setup for VSCode Insiders
+  -Editor <name>   Editor to configure: code, insiders, cursor, kiro (default: code)
+  -Insiders        Shortcut for -Editor insiders
+  -Cursor          Shortcut for -Editor cursor
+  -Kiro            Shortcut for -Editor kiro
   -DotfilesPath    Path to dotfiles User directory (default: $HOME\prj\dotfiles\apps\vscode\User)
   -Help            Show this help
 "@
     exit 0
 }
 
-# Determine VSCode User directory
-$vscodeUserPath = if ($Insiders) {
-    "$env:APPDATA\Code - Insiders\User"
-} else {
-    "$env:APPDATA\Code\User"
+# Handle legacy switch parameters
+if ($Insiders) { $Editor = "insiders" }
+if ($Cursor) { $Editor = "cursor" }
+if ($Kiro) { $Editor = "kiro" }
+
+# Determine User directory based on editor
+$userPath = switch ($Editor) {
+    "code"     { "$env:APPDATA\Code\User" }
+    "insiders" { "$env:APPDATA\Code - Insiders\User" }
+    "cursor"   { "$env:APPDATA\Cursor\User" }
+    "kiro"     { "$env:APPDATA\Kiro\User" }
 }
-$edition = if ($Insiders) { "VSCode Insiders" } else { "VSCode" }
+$edition = switch ($Editor) {
+    "code"     { "VSCode" }
+    "insiders" { "VSCode Insiders" }
+    "cursor"   { "Cursor" }
+    "kiro"     { "Kiro" }
+}
 
 Write-Host "Setting up $edition configurations..." -ForegroundColor Cyan
 Write-Host "Source: $DotfilesPath" -ForegroundColor Gray
-Write-Host "Target: $vscodeUserPath`n" -ForegroundColor Gray
+Write-Host "Target: $userPath`n" -ForegroundColor Gray
 
 # Files and folders to symlink
 $items = @("settings.json", "keybindings.json", "tasks.json", "mcp.json", "snippets")
 $timestamp = Get-Date -Format "yyyyMMddHHmmss"
 
 # Ensure target directory exists
-if (-not (Test-Path $vscodeUserPath)) {
-    New-Item -ItemType Directory -Path $vscodeUserPath -Force | Out-Null
+if (-not (Test-Path $userPath)) {
+    New-Item -ItemType Directory -Path $userPath -Force | Out-Null
 }
 
 foreach ($item in $items) {
     $source = Join-Path $DotfilesPath $item
-    $target = Join-Path $vscodeUserPath $item
+    $target = Join-Path $userPath $item
 
     if (-not (Test-Path $source)) {
         Write-Host "⚠ Skip: $item (source not found)" -ForegroundColor Yellow
