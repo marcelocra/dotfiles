@@ -10,6 +10,17 @@
 # ENVIRONMENT DETECTION
 # =============================================================================
 
+# Detects the current execution environment and sets global environment variables.
+# 
+# Exports:
+#   DOTFILES_IN_CONTAINER - "true" if running in a container (Docker/Podman), "false" otherwise
+#   DOTFILES_IN_WSL       - "true" if running in WSL/WSL2, "false" otherwise
+#   DOTFILES_DISTRO       - Distribution name: "alpine", "ubuntu", "opensuse", "linux", or "unknown"
+#
+# Detection methods:
+#   - Container: Checks for /.dockerenv, CONTAINER env var, or /run/.containerenv
+#   - WSL: Searches for "Microsoft" or "WSL2" in /proc/version
+#   - Distro: Reads /etc/alpine-release and /etc/os-release
 detect_environment() {
     # Container detection (works for both Docker and Podman)
     if [[ -f /.dockerenv ]] || [[ -n "${CONTAINER:-}" ]] || [[ -f /run/.containerenv ]]; then
@@ -45,11 +56,30 @@ detect_environment() {
 # UTILITY FUNCTIONS
 # =============================================================================
 
+# Checks if a command exists in the current PATH.
+#
+# Returns:
+#   0 if command exists, non-zero otherwise
+#
+# Example:
+#   if command_exists nvim; then
+#     echo "Neovim is installed"
+#   fi
 command_exists() {
     command -v "$1" >/dev/null 2>&1
 }
 
-# Add directory to PATH only if it exists and isn't already in PATH.
+# Adds a directory to PATH if it exists and isn't already present.
+# Prepends the directory to ensure it takes precedence over existing entries.
+#
+# Arguments:
+#   $1 - Directory path to add to PATH
+#
+# Returns:
+#   1 if directory doesn't exist, 0 otherwise
+#
+# Example:
+#   add_to_path "$HOME/.local/bin"
 add_to_path() {
     local dir="$1"
     [[ ! -d "$dir" ]] && return 1
@@ -59,6 +89,14 @@ add_to_path() {
     esac
 }
 
+# Outputs debug messages to stderr when DOTFILES_DEBUG is set to 1.
+#
+# Arguments:
+#   $* - Message to log
+#
+# Example:
+#   DOTFILES_DEBUG=1 source init.sh  # Enable debug mode
+#   log_debug "Initializing configuration"
 log_debug() {
     if [[ "${DOTFILES_DEBUG:-0}" == "1" ]]; then
         echo "🔍 $*" >&2
@@ -69,6 +107,15 @@ log_debug() {
 # EDITOR CONFIGURATION
 # =============================================================================
 
+# Configures the default editor based on available tools.
+# Preference order: nvim > vim > vi > nano
+#
+# Exports:
+#   EDITOR    - Path to preferred editor
+#   MANPAGER  - Sets nvim as man page viewer if nvim is available
+#
+# Aliases:
+#   n - Shortcut to the configured editor
 configure_editor() {
     if command_exists nvim; then
         export EDITOR='nvim'
@@ -90,6 +137,18 @@ configure_editor() {
 # EXPORTS
 # =============================================================================
 
+# Configures environment variables and PATH for various development tools.
+# Handles telemetry opt-outs, language runtimes, package managers, and SDK paths.
+#
+# Configured tools (when available):
+#   - Privacy: Disables telemetry for .NET, Next.js, Astro, Turbo, Storybook, Homebrew
+#   - Package managers: pnpm, Homebrew
+#   - Runtimes: nvm (Node), Bun, Deno, Rust/Cargo, Go, Ruby/rbenv
+#   - Languages: Haskell/GHCup, OCaml/opam, .NET SDK
+#   - Frameworks: Flutter SDK
+#   - CLIs: Fly.io, GitHub Copilot, Angular
+#
+# Also adds $HOME/bin and $HOME/.local/bin to PATH.
 configure_exports() {
     # Privacy - disable telemetry for various tools.
     export DO_NOT_TRACK=1
@@ -217,6 +276,16 @@ configure_exports() {
 # PLATFORM-SPECIFIC CONFIGURATION
 # =============================================================================
 
+# Applies platform-specific configurations based on detected environment.
+#
+# Configurations:
+#   - Ubuntu/openSUSE: Sets XKB_DEFAULT_OPTIONS to swap Caps Lock with Ctrl (X11 only)
+#   - Alpine: Creates sudo alias for doas if sudo is not available
+#   - Containers: Sets DEBIAN_FRONTEND=noninteractive, unsets XKB options
+#
+# Uses:
+#   DOTFILES_DISTRO       - Set by detect_environment()
+#   DOTFILES_IN_CONTAINER - Set by detect_environment()
 configure_platform() {
     case "$DOTFILES_DISTRO" in
         "ubuntu"|"opensuse")
@@ -244,6 +313,7 @@ configure_platform() {
 # ALIASES - SYSTEM & NAVIGATION
 # =============================================================================
 
+# Sets up system-level aliases for navigation, file operations, and search.
 configure_system_aliases() {
     # Navigation
     alias b="popd"
@@ -286,6 +356,7 @@ configure_system_aliases() {
     esac
 
     # Package management shortcuts
+    # TODO: check if ubuntu.
     if command_exists batcat; then
         alias bat='batcat'  # Ubuntu's naming
     fi
@@ -295,6 +366,7 @@ configure_system_aliases() {
 # ALIASES - DEVELOPMENT
 # =============================================================================
 
+# Sets up development-related aliases for package managers, editors, and tools.
 configure_dev_aliases() {
     # Package managers
     alias p="pnpm"
@@ -313,11 +385,11 @@ configure_dev_aliases() {
     alias initpy='uv init && uv venv && uv add pip && venv_activate'
 
     # System info
-    alias colines='echo "Columns: $COLUMNS, Lines: $LINES"'
-    alias path_print='echo $PATH | tr ":" "\n"'
-    alias ppath='path_print'
-    alias path_print_unique='path_print | sort | uniq'
-    alias ppathu='path_print_unique'
+    alias x-colines='echo "Columns: $COLUMNS, Lines: $LINES"'
+    alias x-path-print='echo $PATH | tr ":" "\n"'
+    alias x-ppath='x-path-print'
+    alias x-path-print-unique='x-path-print | sort | uniq'
+    alias x-ppathu='x-path-print-unique'
 
     # Tree shortcuts
     alias t1="tree -L 1"
@@ -337,9 +409,9 @@ configure_dev_aliases() {
     # Neovim
     if [[ "$EDITOR" == "nvim" ]]; then
         alias vimdiff="nvim -d"
-        alias nvim_none='nvim -u NONE'
-        alias nvim_norc='nvim -u NORC'
-        alias nvim_noplugin='nvim --noplugin'
+        alias x-nvim-none='nvim -u NONE'
+        alias x-nvim-norc='nvim -u NORC'
+        alias x-nvim-noplugin='nvim --noplugin'
     fi
 
     # Better command defaults
@@ -347,45 +419,51 @@ configure_dev_aliases() {
 }
 
 # =============================================================================
-# ALIASES - PNPM UTILITIES
-# =============================================================================
-
-configure_pnpm_aliases() {
-    # Frontend frameworks and utilities
-    alias pnpm_add_tailwind="pnpm add -D @tailwindcss/typography daisyui@latest tailwindcss postcss autoprefixer tailwind-merge react-markdown && npx tailwindcss init -p"
-    alias pnpm_add_tailwind_utils="pnpm add -D tailwind-merge @popperjs/core @tailwindcss/typography daisyui@latest tailwind-merge react-markdown"
-    alias pnpm_add_flowbite_svelte="pnpm add -D flowbite-svelte flowbite flowbite-svelte-icons"
-    alias pnpm_add_mui='pnpm add @mui/material @emotion/react @emotion/styled @mui/icons-material'
-    alias pnpm_add_mui2='echo "Add this to your index.html:\n\n\n<link rel=\"preconnect\" href=\"https://fonts.googleapis.com\" />
-<link rel=\"preconnect\" href=\"https://fonts.gstatic.com\" crossorigin />
-<link
-  rel=\"stylesheet\"
-  href=\"https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap\"
-/>"'
-
-    # Utility libraries
-    alias pnpm_add_lodash="pnpm add -D lodash @types/lodash"
-    alias pnpm_add_immer="pnpm add immer use-immer"
-
-    # Package management
-    alias pnpm_clean="rm ./pnpm-lock.yaml && rm -rf ./node_modules && pnpm install"
-}
-
-# =============================================================================
 # ALIASES - FONTS
 # =============================================================================
 
+# Sets up aliases for font management on Linux systems.
 configure_font_aliases() {
-    alias fonts_update_cache="fc-cache -fv"
-    alias fonts_rebuild_cache="sudo fc-cache -r -v"
-    alias fonts_list="ll ~/.local/share/fonts"
-    alias list_mono_fonts='fc-list : family spacing outline scalable | grep -e spacing=100 -e spacing=90 | grep -e outline=True | grep -e scalable=True'
+    alias x-fonts-update-cache="fc-cache -fv"
+    alias x-fonts-rebuild-cache="sudo fc-cache -r -v"
+    alias x-fonts-list="ll ~/.local/share/fonts"
+    alias x-fonts-mono='fc-list : family spacing outline scalable | grep -e spacing=100 -e spacing=90 | grep -e outline=True | grep -e scalable=True'
 }
 
 # =============================================================================
 # ALIASES - GIT
 # =============================================================================
 
+# Creates comprehensive Git workflow aliases.
+#
+# Status & info:
+#   gs, gss, gsb - Various git status formats
+#
+# Adding & committing:
+#   ga, gaa      - git add
+#   gc, gcm      - git commit
+#   gac, gacm    - add all + commit (with/without message)
+#
+# Branching:
+#   gb, gbd      - branch operations
+#   gco, gco-    - checkout (gco- returns to previous branch)
+#
+# Viewing:
+#   gd, gdk      - git diff shortcuts
+#   gl, gla, glg - various git log formats
+#   gls, glsa    - simple log formats
+#   glm          - log messages only (for changelogs)
+#
+# Remote operations:
+#   gpl, gps, gpss, gpd - pull, push variants
+#
+# Other:
+#   grs, grss    - git restore
+#   gst*         - git stash operations
+#   gt*          - git tag operations
+#   gr*          - git remote operations
+#   gcct         - Shows conventional commit types
+#   glfs*        - Git LFS operations
 configure_git_aliases() {
     # Status and info
     alias gs='git status'
@@ -465,12 +543,13 @@ configure_git_aliases() {
 # ALIASES - DOCKER/PODMAN
 # =============================================================================
 
+# Placeholder for Docker/Podman aliases.
 configure_docker_aliases() {
-    # alias pod='podman'
-    # alias docker='podman'
-    # alias dc="docker compose"
-    # alias docker-prune-month-old-images='docker image prune -a --filter "until=720h"'
-    # alias docker-prune-two-week-old-images='docker image prune -a --filter "until=336h"'
+    alias pod='podman'
+    alias docker='podman'
+    alias dc="docker compose"
+    alias x-docker-prune-month-old-images='docker image prune -a --filter "until=720h"'
+    alias x-docker-prune-two-week-old-images='docker image prune -a --filter "until=336h"'
 }
 
 # Next docker alias marker
@@ -479,54 +558,44 @@ configure_docker_aliases() {
 # ALIASES - SYSTEM UTILITIES
 # =============================================================================
 
+# Sets up various system utility aliases and tool wrappers.
 configure_system_utility_aliases() {
     # Text to speech (Portuguese)
-    alias say="spd-say -w -l pt-BR -p 100 -r -30 -R 100 -m all"
-    alias fala="spd-say -w -l pt-BR -p 100 -r -30 -R 100 -m all"
-    alias falar="spd-say -w -l pt-BR -p 100 -r -30 -R 100 -m all"
+    alias x-say="spd-say -w -l pt-BR -p 100 -r -30 -R 100 -m all"
+    alias x-fala="spd-say -w -l pt-BR -p 100 -r -30 -R 100 -m all"
+    alias x-falar="spd-say -w -l pt-BR -p 100 -r -30 -R 100 -m all"
 
     # Process and port monitoring
-    alias list_process_to_port_all="netstat -lnp"
-    alias list_process_to_port_tcp="netstat -lnpt"
-    alias list_process_by_mem='ps -eo pid,comm,rss --sort=-rss \
+    alias x-list-process-to-port-all="netstat -lnp"
+    alias x-list-process-to-port-tcp="netstat -lnpt"
+    alias x-list-process-by-mem='ps -eo pid,comm,rss --sort=-rss \
         | awk '\''NR == 1 { printf "%-10s %-20s %-10s\n", $1, $2, $3 } \
                   NR  > 1 { printf "%-10s %-20s %-10s\n", $1, $2, $3/1024 }'\'' \
         | column -t'
-    alias mem='list_process_by_mem | less'
+    alias mem='x-list-process-by-mem | less'
 
     # System information
-    alias monitor_show_dpi="xdpyinfo | grep dots"
-    alias last_login="last -10"
-    alias system_info='cat /etc/os-release && lsb_release -a && hostnamectl && uname -r'
-    alias list_installed_packages='dpkg --get-selections | grep -v deinstall'
-    alias list_devices='lsblk -o NAME,SIZE,FSTYPE,MODEL'
+    alias x-monitor-show-dpi="xdpyinfo | grep dots"
+    alias x-logins-last-10="last -10"
+    alias x-system-info='cat /etc/os-release && lsb_release -a && hostnamectl && uname -r'
+    alias x-list-installed-packages='dpkg --get-selections | grep -v deinstall'
+    alias x-list-devices='lsblk -o NAME,SIZE,FSTYPE,MODEL'
 
     # File operations
-    alias files_cwd_size_in_mb='ls -la | awk '\''{sum += $5} END {print sum/1024/1024 " MB"}'\'''
-    alias files_size_in_mb='awk '\''{sum += $5} END {print sum/1024/1024 " MB"}'\'''
-    alias folder_diff='diff --brief --recursive --new-file'
-    alias change_owners='sudo chown -R $USER:$USER'
+    alias x-files-cwd-size-in-mb='ls -la | awk '\''{sum += $5} END {print sum/1024/1024 " MB"}'\'''
+    alias x-files-size-in-mb='awk '\''{sum += $5} END {print sum/1024/1024 " MB"}'\'''
+    alias x-folder-diff='diff --brief --recursive --new-file'
+    alias x-change-owners='sudo chown -R $USER:$USER'
 
     # Utilities
-    alias chrome_br='LANGUAGE=pt_BR google-chrome-stable'
-    alias grub_update='sudo update-grub'
-    alias time_ago="date -d '10 hours ago' +%s%3N"
-    alias shasum_easy='echo "b87366b62eddfbecb60e681ba83299c61884a0d97569abe797695c8861f5dea4 *ubuntu-25.04-desktop-amd64.iso" | shasum -a 256 --check'
-    alias path_clean='env -i sh -c '\''echo $PATH'\'''
-
-    # Better command tools
-    if command_exists kitten; then
-        alias d='kitten diff'
-    fi
-
-    # GitHub Copilot CLI
-    if command_exists ghcs; then
-        alias copilot="ghcs"
-        alias cpl="copilot"
-    fi
+    alias x-chrome-br='LANGUAGE=pt_BR google-chrome-stable'
+    alias x-grub-update='sudo update-grub'
+    alias x-time-ago="date -d '10 hours ago' +%s%3N"
+    alias x-shasum-easy='echo "b87366b62eddfbecb60e681ba83299c61884a0d97569abe797695c8861f5dea4 *ubuntu-25.04-desktop-amd64.iso" | shasum -a 256 --check'
+    alias x-path-clean='env -i sh -c '\''echo $PATH'\'''
 
     # Lua with readline wrapper
-    if command_exists rlwrap; then
+    if command_exists rlwrap && command_exists lua; then
         alias lua='rlwrap lua'
     fi
 
@@ -537,6 +606,11 @@ configure_system_utility_aliases() {
 # FUNCTIONS - TMUX
 # =============================================================================
 
+# Creates a new tmux session or attaches to an existing one.
+#
+# Example:
+#   tmx work      # Create or attach to "work" session
+#   t             # Create or attach to "default" session
 tmx() {
     local session_name="${1:-default}"
 
@@ -558,49 +632,40 @@ alias t='tmx'
 # FUNCTIONS - DATE/TIME
 # =============================================================================
 
+# Prints today's date in YYYY-MM-DD format.
+#
+# Example:
+#   today  # Output: 2025-12-02
 today() {
     date +%F
 }
 
+# Prints current time in HHhMM format.
+#
+# Example:
+#   time_format  # Output: 14h30
 time_format() {
     date +%Hh%M
-}
-
-# =============================================================================
-# FUNCTIONS - ARCHIVE OPERATIONS
-# =============================================================================
-
-zip_dir() {
-    local folder_to_zip="$1"
-    local zip_name="${2:-$(basename "$folder_to_zip")}"
-
-    if [[ -z "$folder_to_zip" ]]; then
-        echo "Usage: zip_dir <folder-to-zip> [zip-name]"
-        echo "Error: The first argument is required."
-        return 1
-    fi
-
-    if [[ ! -d "$folder_to_zip" ]]; then
-        echo "Usage: zip_dir <folder-to-zip> [zip-name]"
-        echo "Error: '$folder_to_zip' is not a directory."
-        return 1
-    fi
-
-    if ! command_exists zip; then
-        echo 'zip is not installed or not in the path'
-        return 1
-    fi
-
-    (
-        cd "$(dirname "$folder_to_zip")" || exit 1
-        zip -r "$zip_name" "$(basename "$folder_to_zip")"
-    )
 }
 
 # =============================================================================
 # FUNCTIONS - FILE OPERATIONS
 # =============================================================================
 
+# Searches for files matching a regex pattern using extended regex syntax.
+#
+# Arguments:
+#   $1 - Directory to search
+#   $2 - Extended regex pattern
+#
+# Returns:
+#   1 if directory is invalid, 0 otherwise
+#
+# Alias: rfind
+#
+# Example:
+#   regexfind . '.*\.(js|ts)$'  # Find all .js and .ts files
+#   rfind ~/code '.*/test/.*'   # Find files in test directories
 regexfind() {
     local dir="$1"
     local regex="$2"
@@ -615,6 +680,15 @@ regexfind() {
 
 alias rfind='regexfind'
 
+# Finds and lists all broken symbolic links in a directory.
+# A broken symlink is one that points to a non-existent target.
+#
+# Arguments:
+#   $1 - Directory to search (default: current directory)
+#
+# Example:
+#   broken_symlinks              # Search current directory
+#   broken_symlinks ~/projects   # Search specific directory
 broken_symlinks() {
     find "${1:-.}" -type l ! -exec test -e {} \; -exec ls -lah --color {} \;
 }
@@ -623,7 +697,22 @@ broken_symlinks() {
 # FUNCTIONS - CODE ANALYSIS
 # =============================================================================
 
-count_lines_of_code() {
+# Counts lines of code in git-tracked files matching specified patterns.
+# Only counts files tracked by git, excluding specified patterns.
+#
+# Arguments:
+#   --count, -c <pattern>    - File extensions to count (regex, default: js/ts/elm/sh)
+#   --ignore, -i <pattern>   - Patterns to ignore (regex, default: compiled/vendored/etc)
+#   --md-wrap, -w <lang>     - Wrap output in markdown code block (default: sh)
+#   --no-md-wrap, -no-w      - Don't wrap output in markdown
+#
+# Alias: loc
+#
+# Example:
+#   x-count-lines-of-code
+#   loc --count '(py|rb)$' --ignore 'test'
+#   loc -c 'rs$' -i 'target' --no-md-wrap
+x-count-lines-of-code() {
     local to_count='(js|cjs|mjs|jsx|ts|cts|mts|tsx|elm|sh)$'
     local to_ignore='(compiled|vendored|cypress|e2e|bundle|config|example|[Ii]cons)'
     local md_wrap='sh'
@@ -674,47 +763,28 @@ count_lines_of_code() {
     fi
 }
 
-alias loc='count_lines_of_code'
-
-# =============================================================================
-# FUNCTIONS - PROJECT AUTOMATION
-# =============================================================================
-
-x() {
-    # Execute stuff depending on what is in the folder
-    local nx_json='nx.json'
-    local package_json='package.json'
-
-    if [[ -f "$nx_json" ]]; then
-        if [[ $# -eq 0 ]]; then
-            echo "No arguments given. Listing all 'nx' tasks."
-            echo
-            pnpx nx show projects | sort
-        else
-            echo "Running 'nx' with the given arguments."
-            echo
-            pnpx nx "$@"
-        fi
-    elif [[ -f "$package_json" ]]; then
-        if [[ $# -eq 0 ]]; then
-            echo "No arguments given. Listing all 'pnpm' scripts."
-            echo
-            cat package.json | jq -r '.scripts|to_entries[]| .key + " -> " + .value'
-        else
-            echo "Running 'pnpm run' with the given arguments."
-            echo
-            pnpm run "$@"
-        fi
-    else
-        echo "No 'nx.json' or 'package.json' found in the current directory. Exiting."
-        return 1
-    fi
-}
-
 # =============================================================================
 # FUNCTIONS - MEDIA PROCESSING
 # =============================================================================
 
+# Compresses a video file using H.265 (HEVC) codec for better compression.
+# Requires ffmpeg to be installed.
+#
+# Arguments:
+#   $1 - Input video file (default: input.mp4)
+#   $2 - Output video file (default: output.mp4)
+#
+# Returns:
+#   1 if ffmpeg is not installed, 0 otherwise
+#
+# Example:
+#   video_compress movie.mp4 movie_compressed.mp4
+#   video_compress large_file.mp4  # Creates output.mp4
+# TODO: there are many functions in this file that aren't really used
+# frequently. I usually save them here because it is easy to lookup later, but
+# maybe I could have a custom command that would just give me info on those 
+# functions? And I wouldn't need to have them all the time in my shell
+# environment? Maybe call it x-archive? aliases x-docs, x-help, x-funcold?
 video_compress() {
     local input="${1:-input.mp4}"
     local output="${2:-output.mp4}"
@@ -727,6 +797,19 @@ video_compress() {
     ffmpeg -i "$input" -vcodec libx265 -crf 28 "$output"
 }
 
+# Extracts audio from MP4 video and saves as MP3.
+# Requires ffmpeg to be installed.
+#
+# Arguments:
+#   $1 - Input MP4 file (default: input.mp4)
+#   $2 - Output MP3 file (default: output.mp3)
+#
+# Returns:
+#   1 if ffmpeg is not installed, 0 otherwise
+#
+# Example:
+#   mp3_from_mp4 video.mp4 audio.mp3
+#   mp3_from_mp4 lecture.mp4  # Creates output.mp3
 mp3_from_mp4() {
     local input="${1:-input.mp4}"
     local output="${2:-output.mp3}"
@@ -743,6 +826,20 @@ mp3_from_mp4() {
 # FUNCTIONS - PYTHON ENVIRONMENT
 # =============================================================================
 
+# Activates Python virtual environment.
+# Tries local .venv first, then falls back to global venv.
+#
+# Search order:
+#   1. ./.venv/bin/activate (local project venv)
+#   2. ~/.python-global-venv/.venv/bin/activate (global venv)
+#
+# Returns:
+#   0 if venv found and activated, 1 otherwise
+#
+# Alias: va
+#
+# Example:
+#   venv_activate  # or just: va
 venv_activate() {
     local the_venv="./.venv/bin/activate"
 
@@ -767,6 +864,18 @@ alias va='venv_activate'
 # FUNCTIONS - NEOVIM UTILITIES
 # =============================================================================
 
+# Backs up Neovim state directories with timestamp.
+# Useful before major configuration changes or plugin updates.
+#
+# Backs up:
+#   - ~/.local/share/nvim (data, plugins)
+#   - ~/.local/state/nvim (state files)
+#   - ~/.cache/nvim (cache files)
+#
+# Backup naming: original_name.YYYY-MM-DD_HH-MM-SS.bak
+#
+# Example:
+#   nvim_backup_state  # Creates timestamped backups
 nvim_backup_state() {
     local now
     now=$(date +%F_%T | sed -e 's/:/-/g')
@@ -775,6 +884,21 @@ nvim_backup_state() {
     mv ~/.cache/nvim{,."$now".bak}
 }
 
+# Backs up Neovim state to a temporary directory.
+# Similar to nvim_backup_state but uses system temp directory.
+#
+# Backs up:
+#   - ~/.local/share/nvim -> local-share-nvim
+#   - ~/.local/state/nvim -> local-state-nvim
+#   - ~/.cache/nvim -> cache-nvim
+#   - ~/.config/nvim/lazy-lock.json -> lazy-lock.json
+#
+# Creates temp directory: /tmp/nvim_YYYY-MM-DD_HH-MM-SS_XXXXXX
+# Prints the temp directory path after backup.
+#
+# Example:
+#   nvim_backup_to_tmp
+# TODO: merge this one with the previous one.
 nvim_backup_to_tmp() {
     # Make a tmp folder with the current date
     local tmp_dir
@@ -792,6 +916,17 @@ nvim_backup_to_tmp() {
 # FUNCTIONS - NOTIFICATION & TIMER
 # =============================================================================
 
+# Sends a desktop notification (if notify-send available) or prints to console.
+# Used by timer functions to alert when time is up.
+#
+# Arguments:
+#   $1 - Summary/title (default: "TEMPO ACABOU!", uppercased if provided)
+#   $2 - Body/content (default: Portuguese message)
+#
+# Example:
+#   timer_notification "Break time" "Take a 5 minute break"
+#   timer_notification  # Uses default messages
+# TODO: move to x-archive
 timer_notification() {
     local summary="${1:-TEMPO ACABOU!}"
     local content="${2:-Pronto! Hora de ir para a próxima tarefa!}"
@@ -808,6 +943,21 @@ timer_notification() {
     fi
 }
 
+# Countdown timer that sends notification when complete.
+# Supports various time formats: 30s, 5m, 2h, 1h30m.
+#
+# Arguments:
+#   $1 - Time duration (default: 30m)
+#        Formats: Xs (seconds), Xm (minutes), Xh (hours), XhYm (combined)
+#
+# Convenience aliases:
+#   t5, t15, t30, t60 - 5, 15, 30, 60 minute timers
+#
+# Example:
+#   timer 25m       # Pomodoro timer
+#   timer 1h30m     # 90 minute timer
+#   t15             # Quick 15 minute timer
+# TODO: move to x-archive
 timer() {
     local time="${1:-30m}"
 
@@ -829,6 +979,22 @@ alias t60="sleep 1h && timer_notification"
 # FUNCTIONS - AI HELPERS
 # =============================================================================
 
+# Sends a question to Claude AI via CLI.
+# Requires @anthropic-ai/claude-code npm package.
+#
+# Arguments:
+#   $* - Question or prompt for Claude
+#
+# Returns:
+#   1 if Claude CLI not installed, 0 otherwise
+#
+# Installation:
+#   npm install -g @anthropic-ai/claude-code
+#
+# Example:
+#   ask_claude "optimize this JavaScript function"
+#   ask_claude "explain git rebase"
+# TODO: move to x-archive
 ask_claude() {
     if [ -z "$1" ]; then
         echo "Usage: ask_claude \"your question here\""
@@ -845,6 +1011,22 @@ ask_claude() {
     fi
 }
 
+# Sends a question to Google Gemini AI via CLI.
+# Requires @google/gemini-cli npm package.
+#
+# Arguments:
+#   $* - Question or prompt for Gemini
+#
+# Returns:
+#   1 if Gemini CLI not installed, 0 otherwise
+#
+# Installation:
+#   npm install -g @google/gemini-cli
+#
+# Example:
+#   ask_gemini "explain this code pattern"
+#   ask_gemini "best practices for React hooks"
+# TODO: move to x-archive
 ask_gemini() {
     if [ -z "$1" ]; then
         echo "Usage: ask_gemini \"your question here\""
@@ -861,6 +1043,22 @@ ask_gemini() {
     fi
 }
 
+# Analyzes current project structure and provides statistics.
+# Works best in git repositories. Optionally uses Claude AI for deeper analysis.
+#
+# Displays:
+#   - Total file count
+#   - Git tracked files count
+#   - Programming languages detected (by extension)
+#   - AI-powered analysis (if Claude CLI available)
+#
+# Returns:
+#   1 if not in a git repository, 0 otherwise
+#
+# Example:
+#   cd my_project
+#   analyze  # Shows project statistics and AI insights
+# TODO: move to x-archive
 analyze() {
     if [[ ! -d .git ]]; then
         echo "❌ This function works best in git repositories"
@@ -880,6 +1078,16 @@ analyze() {
     fi
 }
 
+# Gets AI-powered explanation and improvement suggestions for a code file.
+# Requires Claude CLI to be installed.
+#
+# Arguments:
+#   $1 - File path to analyze
+#
+# Example:
+#   codehelp index.js
+#   codehelp src/components/Button.tsx
+# TODO: move to x-archive
 codehelp() {
     if [ -f "$1" ]; then
         echo "📖 Getting help for: $1"
@@ -898,7 +1106,14 @@ codehelp() {
 # FUNCTIONS - MISC
 # =============================================================================
 
-# Load SSH agent and add key.
+# Starts SSH agent and adds the default Ed25519 key.
+# Useful for establishing SSH connections after system restart.
+#
+# Expects key at: ~/.ssh/id_ed25519
+#
+# Example:
+#   load_ssh  # Start agent and load key
+# TODO: allow providing a custom key path?
 load_ssh() {
     eval "$(ssh-agent -s)"
     ssh-add ~/.ssh/id_ed25519
@@ -910,6 +1125,18 @@ load_ssh() {
 # HISTORY CONFIGURATION
 # =============================================================================
 
+# Configures shell history location with support for sync across machines.
+# Sets up history directory based on environment priority:
+#   1. MCRA_HISTORY_DIR (explicit override)
+#   2. OneDrive folder in WSL (for cross-machine sync)
+#   3. ~/.shell_histories (local fallback)
+#
+# Exports:
+#   MCRA_HISTORY_BASE_DIR - Base directory for history files
+#   MCRA_HISTORY_ID       - Unique identifier for this shell instance
+#                          (includes workspace name if in devcontainer)
+#
+# Used by configure_zsh() and configure_bash() to set HISTFILE.
 configure_history() {
     # Determine history directory based on environment
     local history_base_dir=""
@@ -955,6 +1182,22 @@ configure_history() {
 # ZSH CONFIGURATION
 # =============================================================================
 
+# Configures zsh-specific features including oh-my-zsh integration.
+# Only runs when executed in zsh shell.
+#
+# Sets up:
+#   - History file location (uses MCRA_HISTORY_BASE_DIR if configured)
+#   - History size (1 million entries)
+#   - Oh-my-zsh with custom theme and plugins (if available)
+#   - Standalone zsh configuration (if oh-my-zsh not available)
+#   - fzf integration for fuzzy finding
+#   - Key bindings (Ctrl+U for backward kill line)
+#
+# Plugins (when oh-my-zsh available):
+#   - zsh-autosuggestions
+#   - zsh-syntax-highlighting
+#
+# Custom theme: marcelocra.zsh-theme (from dotfiles repo)
 configure_zsh() {
     # Only configure zsh-specific features if we're running in zsh
     if [[ -n "${ZSH_VERSION:-}" ]]; then
@@ -1051,6 +1294,24 @@ configure_zsh() {
 # BASH CONFIGURATION
 # =============================================================================
 
+# Configures bash-specific features including history and prompt.
+# Only runs when executed in bash shell.
+#
+# Sets up:
+#   - History file location (uses MCRA_HISTORY_BASE_DIR if configured)
+#   - History size (1 million entries)
+#   - History control (no duplicates, timestamps)
+#   - Custom prompt with git branch and timestamp
+#   - Terminal title updates (for xterm)
+#   - fzf integration for fuzzy finding
+#
+# Prompt features:
+#   - Username (or GITHUB_USER if set)
+#   - Exit status indicator (red arrow on error)
+#   - Current directory
+#   - Git branch (if in repo)
+#   - Dirty working tree indicator (if enabled)
+#   - Timestamp
 configure_bash() {
     # Only configure bash-specific features if we're running in bash
     if [[ -n "${BASH_VERSION:-}" ]]; then
@@ -1120,6 +1381,16 @@ configure_bash() {
 # MISE
 # =============================================================================
 
+# Activates mise (development environment manager) if enabled.
+# Mise manages tool versions per-project (Node, Python, Ruby, etc.).
+#
+# Requirements:
+#   - MCRA_USE_MISE environment variable set to "true"
+#   - mise binary available in PATH
+#
+# Installation should be done via setup script, not here.
+#
+# See: https://mise.jdx.dev/
 configure_mise() {
     # Only activate mise if it's enabled and installed.
     # The installation should happen in the one-time setup script.
@@ -1137,9 +1408,21 @@ configure_mise() {
 # FZF
 # =============================================================================
 
-# Note: fzf shell integration (keybindings & completions) is configured in
-# configure_zsh() and configure_bash() functions, as they differ per shell.
-# This function only sets general fzf options.
+# Configures fzf (fuzzy finder) default options.
+# Shell-specific keybindings are configured in configure_zsh() and configure_bash().
+#
+# Default options:
+#   - 40% screen height
+#   - Reverse layout (input at top)
+#   - Border around interface
+#   - Inline info display
+#
+# Common keybindings (set by shell integration):
+#   Ctrl+R - Search command history
+#   Ctrl+T - Search files
+#   Alt+C  - cd into directory
+#
+# See: https://github.com/junegunn/fzf
 configure_fzf() {
     export FZF_DEFAULT_OPTS='--height 40% --layout=reverse --border --info=inline'
 }
@@ -1148,6 +1431,22 @@ configure_fzf() {
 # MAIN INITIALIZATION
 # =============================================================================
 
+# Main initialization function that orchestrates all configuration steps.
+# Called automatically when script is sourced (not executed).
+#
+# Initialization order:
+#   1. detect_environment       - Detect OS, distro, container, WSL
+#   2. configure_editor         - Set default editor
+#   3. configure_exports        - Set environment variables and PATH
+#   4. configure_platform       - Platform-specific settings
+#   5. configure_history        - History file location
+#   6. configure_zsh            - Zsh-specific config
+#   7. configure_bash           - Bash-specific config
+#   8. configure_*_aliases      - All alias groups
+#   9. configure_mise           - Mise activation
+#   10. configure_fzf           - Fuzzy finder options
+#
+# Debug mode: Set DOTFILES_DEBUG=1 to see initialization messages
 main() {
     detect_environment
     configure_editor
@@ -1158,13 +1457,31 @@ main() {
     configure_bash
     configure_system_aliases
     configure_dev_aliases
-    configure_pnpm_aliases
     configure_font_aliases
     configure_git_aliases
     configure_docker_aliases
     configure_system_utility_aliases
     configure_mise
     configure_fzf
+
+    # Load extra functions from the ./x-functions.sh file if it exists.
+    # It should be in the same directory as this script.
+    # Get the directory where this script is located.
+    # Works in both bash and zsh.
+    local script_dir
+    if [[ -n "${BASH_SOURCE[0]:-}" ]]; then
+        script_dir="$(dirname "${BASH_SOURCE[0]}")"
+    elif [[ -n "${ZSH_VERSION:-}" ]]; then
+        script_dir="$(dirname "${(%):-%x}")"
+    else
+        script_dir="$(dirname "$0")"
+    fi
+    
+    local extra_functions_file="$script_dir/x-functions.sh"
+    if [[ -f "$extra_functions_file" ]]; then
+        source "$extra_functions_file"
+        log_debug "Loaded extra functions from x-functions.sh"
+    fi
 
     log_debug "Dotfiles initialized for $DOTFILES_DISTRO"
     log_debug "Container: $DOTFILES_IN_CONTAINER, WSL: $DOTFILES_IN_WSL"
