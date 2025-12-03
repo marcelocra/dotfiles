@@ -249,6 +249,9 @@
   "editor.detectIndentation": true,
   "editor.foldingHighlight": true,
   // ---------------------------------------------------------------------------
+  // Base, default font, before all others, to be overridden.
+  "editor.fontFamily": "Consolas",
+  // ---------------------------------------------------------------------------
   // "editor.fontFamily": "Consolas, 'Courier New', monospace", // Default
   // "editor.fontFamily": "CodeNewRoman Nerd Font Mono",
   // "editor.fontFamily": "'MesloLGS Nerd Font', 'MesloLGS NF', Consolas, 'Courier New', monospace",
@@ -256,8 +259,8 @@
   // "editor.fontFamily": "JetBrainsMono Nerd Font Mono",
   // "editor.fontLigatures": "'zero' 1, 'ss19' 1",
   // ---------------------------------------------------------------------------
-  // "editor.fontFamily": "Cascadia Code NF",
-  // "editor.fontLigatures": "'calt' 1, 'ss01' 1, 'ss02' 0, 'ss03' 0, 'ss19' 1, 'ss20' 1",
+  "editor.fontFamily": "Cascadia Code NF",
+  "editor.fontLigatures": "'calt' 1, 'ss01' 1, 'ss02' 0, 'ss03' 0, 'ss19' 1, 'ss20' 1",
   // ---------------------------------------------------------------------------
   // "editor.fontFamily": "CommitMono",
   // "editor.fontLigatures": "'ss01' 0, 'ss02' 0, 'ss03' 1, 'ss04' 1, 'ss05' 1, 'cv01' 1, 'cv01' 1, 'cv02' 1, 'cv05' 1, 'cv06' 1, 'cv08' 1",
@@ -266,8 +269,6 @@
   // "editor.fontLigatures": "'calt' 1, 'cv01' 1, 'cv02' 1, 'cv06' 1, 'ss02' 1, 'ss03' 1, 'ss20' 1, 'zero' 1",
   // ---------------------------------------------------------------------------
   // "editor.fontFamily": "Atkinson Hyperlegible Mono",
-  // ---------------------------------------------------------------------------
-  // "editor.fontFamily": "0xProto Nerd Font Mono Thin",
   // ---------------------------------------------------------------------------
   // "editor.fontSize": 14,
   "editor.fontWeight": "400",
@@ -364,7 +365,7 @@
   ],
   "explorer.compactFolders": false,
   "explorer.confirmDragAndDrop": false,
-  "explorer.fileNesting.enabled": true,
+  "explorer.fileNesting.enabled": false,
   "explorer.fileNesting.patterns": {
     ".gitignore": ".gitmodules, .gitattributes",
     "*.js": "${capture}.js.map, ${capture}.min.js, ${capture}.d.ts",
@@ -408,8 +409,8 @@
   "github.copilot.chat.codesearch.enabled": true,
   "github.copilot.enable": {
     "*": true,
-    "markdown": true,
     "plaintext": false,
+    "markdown": false,
     "scminput": false,
     "shellscript": true
   },
@@ -711,7 +712,7 @@
   "window.title": "[${rootNameShort}] ${activeEditorMedium}",
   "window.titleBarStyle": "custom",
   "workbench.activityBar.location": "top",
-  "workbench.colorTheme": "Quiet Light",
+  "workbench.colorTheme": "Night Owl Light",
   "workbench.editor.empty.hint": "hidden",
   "workbench.editor.pinnedTabsOnSeparateRow": false,
   "workbench.editorAssociations": {
