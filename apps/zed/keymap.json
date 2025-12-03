@@ -5,7 +5,13 @@
 //
 // To see the default key bindings run `zed: open default keymap` from the
 // command palette.
+//
+// This keymap is configured to match VSCode keybindings as closely as possible.
 [
+  // ============================================================================
+  // GLOBAL / WORKSPACE BINDINGS (VSCode-compatible)
+  // ============================================================================
+
   // EmptyPane || SharedScreen
   {
     "context": "EmptyPane || SharedScreen",
@@ -20,28 +26,140 @@
   {
     "context": "Workspace || Editor",
     "bindings": {
+      // === Editor Navigation (VSCode: alt+j/k) ===
       "alt-j": "pane::ActivatePreviousItem",
       "alt-shift-j": "pane::SwapItemLeft",
-
       "alt-k": "pane::ActivateNextItem",
       "alt-shift-k": "pane::SwapItemRight",
 
+      // === Quick Open / Tab Switcher ===
       "alt-e": "tab_switcher::Toggle",
+      "ctrl-e": "file_finder::Toggle", // VSCode: ctrl+e for quick open
+
+      // === Search ===
       "alt-f": "pane::DeploySearch",
-      // "ctrl-t": "outline::Toggle",
-      "ctrl-k s": "zed::OpenSettings",
-      "ctrl-k k": "zed::OpenKeymap",
+      "ctrl-shift-f": "pane::DeploySearch", // VSCode default
+
+      // === Settings & Keymap ===
+      "ctrl-,": "zed::OpenSettings", // VSCode default
+      "ctrl-alt-,": "zed::OpenSettingsFile", // VSCode: open settings JSON
+      "ctrl-k ctrl-s": "zed::OpenKeymap",
+      "ctrl-k ctrl-k": "zed::OpenKeymapFile",
       "ctrl-k d s": "zed::OpenDefaultSettings",
       "ctrl-k d k z": "zed::OpenDefaultKeymap",
       "ctrl-k d k v": "vim::OpenDefaultKeymap",
-      "ctrl-alt-`": "workspace::ToggleZoom",
 
-      "alt-r": "project_panel::ToggleFocus",
-      "alt-b": "workspace::ToggleLeftDock",
-      "alt-shift-b": "workspace::ToggleRightDock",
-      "alt-shift-p": "editor::CopyPermalinkToLine"
+      // === Panel & Dock Toggles (VSCode: alt+b, alt+shift+b) ===
+      "ctrl-alt-`": "workspace::ToggleZoom", // VSCode: ctrl+alt+` maximize panel
+      "alt-b": "workspace::ToggleLeftDock", // VSCode: alt+b toggle sidebar
+      "alt-shift-b": "workspace::ToggleRightDock", // VSCode: alt+shift+b toggle auxiliary bar
+
+      // === View Focus (VSCode-style) ===
+      "alt-r": "project_panel::ToggleFocus", // VSCode: alt+r explorer
+      "alt-g": "git_panel::ToggleFocus", // VSCode: alt+g source control
+      "alt-o": "outline_panel::ToggleFocus", // VSCode: alt+o outline
+      "alt-a": "agent::ToggleFocus", // VSCode: alt+a AI chat
+
+      // === Navigation History (VSCode: ctrl+[/], alt+h/l) ===
+      "ctrl-[": "pane::GoBack", // VSCode: ctrl+[ navigate back
+      "ctrl-]": "pane::GoForward", // VSCode: ctrl+] navigate forward
+      "alt-h": "pane::GoBack", // VSCode: alt+h navigate back
+      // Note: alt-l conflicts with vim pane navigation, added in non-vim context below
+
+      // === Tab Navigation (VSCode: ctrl+tab) ===
+      "ctrl-tab": "pane::ActivateNextItem", // VSCode: next tab
+      "ctrl-shift-tab": "pane::ActivatePreviousItem", // VSCode: previous tab
+
+      // === Minimap ===
+      "alt-m": "editor::ToggleMinimap", // VSCode: alt+m toggle minimap
+
+      // === Other ===
+      "alt-shift-p": "editor::CopyPermalinkToLine",
+      "alt-z": "workspace::ToggleCenteredLayout", // VSCode: alt+z zen mode (closest equivalent)
+      "ctrl-alt-w": "pane::CloseOtherItems" // VSCode: ctrl+alt+w close other editors
     }
   },
+
+  // Workspace (non-editor, non-vim context for alt-l)
+  {
+    "context": "Workspace && !VimControl",
+    "bindings": {
+      "alt-l": "pane::GoForward" // VSCode: alt+l navigate forward
+    }
+  },
+
+  // ============================================================================
+  // AI / ASSISTANT BINDINGS (VSCode Copilot-compatible)
+  // ============================================================================
+
+  // Editor context for AI
+  {
+    "context": "Editor",
+    "bindings": {
+      "ctrl-i": "assistant::InlineAssist", // VSCode: ctrl+i inline AI assist
+      "ctrl-shift-i": "agent::ToggleFocus", // VSCode: ctrl+shift+i open AI chat
+      "ctrl-l": "editor::AcceptPartialEditPrediction" // VSCode: ctrl+l accept next word from suggestion
+    }
+  },
+
+  // ============================================================================
+  // EDITOR BINDINGS (VSCode-compatible)
+  // ============================================================================
+
+  // Editor (general)
+  {
+    "context": "Editor && !VimControl",
+    "bindings": {
+      // === Selection ===
+      "ctrl-d": "editor::SelectNext", // VSCode: ctrl+d add selection to next match
+      "ctrl-shift-l": "editor::SelectAllMatches", // VSCode: ctrl+shift+l select all occurrences
+      "alt-shift-up": "editor::SelectLargerSyntaxNode", // VSCode: alt+shift+up expand selection
+      "alt-shift-down": "editor::SelectSmallerSyntaxNode", // VSCode: alt+shift+down shrink selection
+
+      // === Move Selection to Next/Previous Match (VSCode: ctrl+n/p with selection) ===
+      "ctrl-n": ["editor::SelectNext", { "replace_newest": true }],
+      "ctrl-p": ["editor::SelectPrevious", { "replace_newest": true }],
+
+      // === Line Operations ===
+      "alt-up": "editor::MoveLineUp", // VSCode: alt+up move line up
+      "alt-down": "editor::MoveLineDown", // VSCode: alt+down move line down
+      "alt-d": "editor::DuplicateSelection", // VSCode: alt+d duplicate selection
+      "ctrl-shift-k": "editor::DeleteLine", // VSCode: ctrl+shift+k delete line
+
+      // === Comments ===
+      "ctrl-/": "editor::ToggleComments", // VSCode: ctrl+/ toggle line comment
+      "ctrl-shift-/": "editor::ToggleComments", // VSCode: ctrl+shift+/ block comment (Zed uses same action)
+
+      // === Subword/CamelCase Navigation (VSCode: ctrl+alt+arrows) ===
+      "ctrl-alt-left": "editor::MoveToPreviousSubwordStart",
+      "ctrl-alt-right": "editor::MoveToNextSubwordEnd",
+      "ctrl-alt-shift-left": "editor::SelectToPreviousSubwordStart",
+      "ctrl-alt-shift-right": "editor::SelectToNextSubwordEnd",
+
+      // === Go To ===
+      "ctrl-r": "outline::Toggle", // VSCode: ctrl+r go to symbol in file
+      "ctrl-shift-o": "outline::Toggle", // VSCode default: go to symbol
+      "ctrl-t": "project_symbols::Toggle", // VSCode: ctrl+t go to symbol in workspace
+      "ctrl-g": "go_to_line::Toggle", // VSCode: ctrl+g go to line
+      "ctrl-m": "editor::MoveToEnclosingBracket", // VSCode: ctrl+m jump to bracket
+      "f12": "editor::GoToDefinition", // VSCode: f12 go to definition
+      "alt-f12": "editor::GoToDefinitionSplit", // VSCode: alt+f12 peek definition
+      "shift-f12": "editor::FindAllReferences", // VSCode: shift+f12 go to references
+      "f2": "editor::Rename", // VSCode: f2 rename symbol
+
+      // === Code Actions & Completions ===
+      "ctrl-.": "editor::ToggleCodeActions", // VSCode: ctrl+. quick fix
+      "ctrl-space": "editor::ShowCompletions", // VSCode: ctrl+space trigger suggestions
+      "ctrl-shift-space": "editor::ShowSignatureHelp", // VSCode: ctrl+shift+space parameter hints
+
+      // === Word Wrap ===
+      "alt-shift-w": "editor::ToggleSoftWrap" // VSCode: alt+shift+w toggle word wrap
+    }
+  },
+
+  // ============================================================================
+  // SEARCH BAR BINDINGS
+  // ============================================================================
 
   // BufferSearchBar && !in_replace
   {
@@ -55,9 +173,13 @@
     }
   },
 
-  // Terminal.
+  // ============================================================================
+  // TERMINAL BINDINGS
+  // ============================================================================
+
+  // Terminal
   {
-    // Captures common keybindings in terminal, avoiding triggiering the editor.
+    // Captures common keybindings in terminal, avoiding triggering the editor.
     "context": "Terminal",
     "bindings": {
       "ctrl-w": ["terminal::SendKeystroke", "ctrl-w"],
@@ -65,7 +187,7 @@
       "ctrl-a": ["terminal::SendKeystroke", "ctrl-a"],
       "ctrl-k": ["terminal::SendKeystroke", "ctrl-k"],
       "ctrl-c": ["terminal::SendKeystroke", "ctrl-c"],
-      "ctrl-p": ["terminal::SendKeystroke", "ctrl-p"],
+      "ctrl-p": ["terminal::SendKeystroke", "ctrl-p"], // VSCode: sends ctrl+p to terminal
       "ctrl-n": ["terminal::SendKeystroke", "ctrl-n"],
       "ctrl-j": ["terminal::SendKeystroke", "ctrl-j"],
       "ctrl-b": ["terminal::SendKeystroke", "ctrl-b"],
@@ -75,9 +197,15 @@
       "alt-.": ["terminal::SendKeystroke", "alt-."],
       "alt-d": ["workspace::SendKeystrokes", "alt-d"],
 
+      "shift-enter": ["terminal::SendText", "\\\r\n"], // VSCode: shift+enter line break in terminal
+
       ", q": null
     }
   },
+
+  // ============================================================================
+  // JUPYTER/REPL BINDINGS
+  // ============================================================================
 
   // Editor && jupyter && !ContextEditor
   {
@@ -88,10 +216,9 @@
     }
   },
 
-  //
-  //
-  // USE CTRL-J AND CTRL-K TO NAVIGATE MENUS
-  //
+  // ============================================================================
+  // MENU NAVIGATION (ctrl+j/k to navigate menus)
+  // ============================================================================
 
   // Picker > Editor
   {
@@ -99,9 +226,6 @@
     // - ctrl-p
     // - ctrl-shift-p
     "context": "Picker > Editor",
-    // If for some reason this doesn't work, try the following. I disabled it
-    // because every time I saw it triggering, this one also triggered.
-    // "context": "FileFinder && !menu_open",
     "bindings": {
       "ctrl-k": "menu::SelectPrevious",
       "ctrl-j": "menu::SelectNext"
@@ -123,7 +247,6 @@
 
   // ProjectSearchBar > Editor
   {
-    // TODO: validate and document this one.
     "context": "ProjectSearchBar > Editor",
     "bindings": {
       "ctrl-k": "search::PreviousHistoryQuery",
@@ -143,9 +266,9 @@
     }
   },
 
-  // //
-  // // #region [Vim-mode stuff]
-  // //
+  // ============================================================================
+  // VIM-MODE BINDINGS
+  // ============================================================================
 
   // Dock
   {
@@ -155,7 +278,6 @@
       "ctrl-w l": "workspace::ActivatePaneRight",
       "ctrl-w k": "workspace::ActivatePaneUp",
       "ctrl-w j": "workspace::ActivatePaneDown"
-      // ... or other keybindings
     }
   },
 
@@ -163,6 +285,7 @@
   {
     "context": "Editor && !menu",
     "bindings": {
+      // Uncomment these if you want standard shortcuts in all editor contexts:
       // "ctrl-c": "editor::Copy", // vim default: return to normal mode
       // "ctrl-x": "editor::Cut", // vim default: decrement
       // "ctrl-v": "editor::Paste", // vim default: visual block mode
@@ -201,7 +324,6 @@
       "ctrl-k": "workspace::ActivatePaneUp",
       "ctrl-j": "workspace::ActivatePaneDown",
       "ctrl-n": "buffer_search::Dismiss",
-      // "ctrl-b": "workspace::ToggleLeftDock",
       "ctrl-w": ["pane::CloseActiveItem", { "close_pinned": false }],
 
       "|": ["workspace::SendKeystrokes", "ctrl-w v ctrl-w shift-l"],
@@ -220,8 +342,8 @@
     "context": "Editor && VimControl && !menu && vim_mode == visual",
     "bindings": {
       "ctrl-d": "editor::SelectNext",
-      "ctrl-n": ["editor::SelectNext", { "replace_newest": true }],
-      "ctrl-p": ["editor::SelectPrevious", { "replace_newest": true }],
+      "ctrl-n": ["editor::SelectNext", { "replace_newest": true }], // VSCode: ctrl+n next match
+      "ctrl-p": ["editor::SelectPrevious", { "replace_newest": true }], // VSCode: ctrl+p previous match
 
       "ctrl-c": "editor::Copy", // vim default: return to normal mode
       "ctrl-x": "editor::Cut", // vim default: decrement
@@ -229,18 +351,15 @@
 
       ", s": "workspace::Save",
       ", w": "workspace::Save",
-      // ", s": ["workspace::SendKeystrokes", "escape ctrl-s"],
 
       "shift-s": "vim::PushAddSurrounds" // Supports `ys` operator mode.
     }
   },
 
-  // Editor && VimControl && !menu && vim_mode == visual
+  // Editor && !menu && vim_mode == insert
   {
     "context": "Editor && !menu && vim_mode == insert",
     "bindings": {
-      // "ctrl-c": "editor::Copy", // In insert mode, return to normal mode (Vim default).
-      // "ctrl-x": "editor::Cut", // Vim default: decrement
       "ctrl-v": "editor::Paste", // Vim default in ctrl-k ctrl-v.
       "ctrl-k ctrl-v": "vim::PushLiteral", // Vim default for ctrl-v.
 
@@ -253,14 +372,4 @@
       ", w": ["workspace::SendKeystrokes", "ctrl-s escape escape"]
     }
   }
-
-  // // {
-  // //   "context": "Terminal && screen != normal",
-  // //   "bindings": {
-  // //   }
-  // // },
-
-  // //
-  // // #endregion [Vim-mode stuff]
-  // //
 ]
