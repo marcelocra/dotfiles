@@ -111,6 +111,7 @@
   "calva.showCalvaSaysOnStart": false,
   "chat.agent.thinkingStyle": "collapsedPreview",
   "chat.agentSessionsViewLocation": "view",
+  "chat.commandCenter.enabled": false,
   "chat.editor.fontFamily": "Atkinson Hyperlegible Mono",
   "chat.editor.fontSize": 11,
   // "chat.editor.fontWeight": "200",
@@ -241,8 +242,8 @@
     //, "source.sort.json", // Conflicts with Prettier.
   },
   "editor.colorDecorators": true,
-  "editor.cursorBlinking": "solid",
-  "editor.cursorSmoothCaretAnimation": "off",
+  "editor.cursorBlinking": "smooth",
+  "editor.cursorSmoothCaretAnimation": "on",
   "editor.cursorStyle": "line",
   "editor.cursorWidth": 1,
   "editor.defaultFormatter": "esbenp.prettier-vscode",
@@ -283,9 +284,10 @@
   // "editor.inlineSuggest.fontLigatures": "'calt' 1, 'ss01' 1", // Enabling it already, for when they are supported.
   "editor.insertSpaces": true,
   // "editor.letterSpacing": -2, // [link1]
-  // "editor.lineHeight": 1.8, // Interesting values: 1.6; 1.8; 2; 2.2
+  "editor.lineHeight": 1.8, // Interesting values: 1.6; 1.8; 2; 2.2
   "editor.lineNumbers": "on",
   "editor.minimap.autohide": "none",
+  "editor.minimap.enabled": false,
   "editor.minimap.markSectionHeaderRegex": "\\bMARK:\\s*(?<separator>-?)\\s*(?<label>.*)$", // Default.
   "editor.minimap.maxColumn": 80,
   "editor.minimap.renderCharacters": false,
@@ -409,8 +411,8 @@
   "github.copilot.chat.codesearch.enabled": true,
   "github.copilot.enable": {
     "*": true,
-    "plaintext": false,
     "markdown": false,
+    "plaintext": false,
     "scminput": false,
     "shellscript": true
   },
@@ -494,6 +496,8 @@
   "python.terminal.executeInFileDir": false,
   "python.terminal.shellIntegration.enabled": false,
   "remote.autoForwardPortsSource": "hybrid",
+  "roo-cline.allowedCommands": ["git log", "git diff", "git show"],
+  "roo-cline.deniedCommands": [],
   "rubyLsp.rubyVersionManager": "asdf",
   "ruff.nativeServer": "on",
   "scm.compactFolders": false,
@@ -703,6 +707,7 @@
   // "typescript.tsserver.experimental.enableProjectDiagnostics": true,
   "typescript.preferences.importModuleSpecifier": "non-relative",
   "vue.server.hybridMode": "typeScriptPluginOnly",
+  "window.commandCenter": false,
   "window.customMenuBarAltFocus": false,
   "window.customTitleBarVisibility": "auto",
   "window.menuBarVisibility": "toggle",
@@ -711,7 +716,7 @@
   "window.restoreWindows": "all",
   "window.title": "[${rootNameShort}] ${activeEditorMedium}",
   "window.titleBarStyle": "custom",
-  "workbench.activityBar.location": "top",
+  "workbench.activityBar.location": "bottom",
   "workbench.colorTheme": "Night Owl Light",
   "workbench.editor.empty.hint": "hidden",
   "workbench.editor.pinnedTabsOnSeparateRow": false,
@@ -730,6 +735,7 @@
   "workbench.settings.useSplitJSON": false,
   "workbench.sideBar.location": "left",
   "workbench.startupEditor": "newUntitledFile",
+  "workbench.statusBar.visible": true,
   "workbench.tree.indent": 20,
   "workbench.tree.renderIndentGuides": "always",
   "zenMode.centerLayout": true,
