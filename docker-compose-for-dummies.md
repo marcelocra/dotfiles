@@ -231,7 +231,7 @@ COMPOSE_PROFILES=minimal,ai,postgres,redis code myproject
 
 **Good news: Everything works the same!**
 
-- **Alias approach**: `alias docker=podman` in shell/init.sh makes commands identical
+- **Alias approach**: `alias docker=podman` in shell/init.bash makes commands identical
 - **Docker Compose**: Works perfectly with Podman Compose
 - **Volume handling**: Named volumes work identically
 - **Network isolation**: Same security benefits

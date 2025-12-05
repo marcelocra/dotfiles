@@ -15,7 +15,7 @@ For setting up dotfiles directly on your host machine:
 2. **Source shell configuration:**
    ```sh
    # Add to your .bashrc or .zshrc
-   source ~/.config/marcelocra/dotfiles/shell/init.sh
+   source ~/.config/marcelocra/dotfiles/shell/init.bash
    ```
 
 ## Features
@@ -29,24 +29,24 @@ Containerized development environments with AI assistants:
 - **Cross-platform**: Bash (Linux/macOS/WSL) + PowerShell (Windows)
 - **Shared History**: Persistent shell history across environments
 
-**Note:** The `cli` folder and its scripts (`ai-dev.sh`, `ai-dev.ps1`, `ai-dev-setup.sh`) are still maintained in this repository and have not been migrated elsewhere.
+**Note:** The `cli` folder and its scripts (`ai-dev`, `ai-dev.ps1`, `ai-dev-setup.bash`) are still maintained in this repository and have not been migrated elsewhere.
 
 Usage:
 
 ```bash
 # Quick AI-enabled development environment
-./cli/ai-dev.sh
+./cli/ai-dev
 
 # Full development environment with all tools
-./cli/ai-dev.sh full
+./cli/ai-dev full
 
 # Minimal Alpine-based environment
-./cli/ai-dev.sh minimal
+./cli/ai-dev minimal
 ```
 
 ### 🐚 Shell Configuration
 
-Consolidated `shell/init.sh` with:
+Consolidated `shell/init.bash` with:
 
 - **AI Helper Functions**: `ask`, `gemini`, `analyze`, `codehelp` (when CLI tools installed)
 - **Multi-platform**: Ubuntu, Alpine, openSUSE support

@@ -24,13 +24,13 @@ Symlinks settings from this dotfiles repo to the editor's User directory.
 ### Linux / macOS
 
 ```bash
-./install.sh              # VSCode (default)
-./install.sh --insiders   # VSCode Insiders
-./install.sh --cursor     # Cursor
-./install.sh --kiro       # Kiro
+./install.bash              # VSCode (default)
+./install.bash --insiders   # VSCode Insiders
+./install.bash --cursor     # Cursor
+./install.bash --kiro       # Kiro
 
 # Custom dotfiles path
-./install.sh --cursor --dotfiles-path /path/to/dotfiles/apps/vscode/User
+./install.bash --cursor --dotfiles-path /path/to/dotfiles/apps/vscode/User
 ```
 
 ### Windows (PowerShell as Administrator)

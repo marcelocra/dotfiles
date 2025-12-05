@@ -8,13 +8,13 @@ The AI development container scripts have been refactored to eliminate code dupl
 
 ```
 Main Scripts (Container Runners)     Setup Script (Unified Installation Logic)
-├── ai-dev.sh [MULTI-MODE]      ──→  ai-dev-setup.sh --mode=full|quick|minimal
+├── ai-dev [MULTI-MODE]      ──→  ai-dev-setup.bash --mode=full|quick|minimal
 └── ai-dev.ps1 [MULTI-MODE]     ──→
 ```
 
 ## Unified Setup Script
 
-### `ai-dev-setup.sh` - Unified Environment Setup
+### `ai-dev-setup.bash` - Unified Environment Setup
 
 **Single script handling all three modes with shared components:**
 
@@ -57,16 +57,16 @@ Main Scripts (Container Runners)     Setup Script (Unified Installation Logic)
 ### Bash Script
 
 ```bash
-# ai-dev.sh - Multi-mode script
+# ai-dev - Multi-mode script
 case "$MODE" in
     minimal)
-        SETUP_CMD="bash /workspace/ai-dev-setup.sh --mode=minimal; exec sh"
+        SETUP_CMD="bash /workspace/ai-dev-setup.bash --mode=minimal; exec sh"
         ;;
     quick)
-        SETUP_CMD="bash /workspace/ai-dev-setup.sh --mode=quick; exec bash"
+        SETUP_CMD="bash /workspace/ai-dev-setup.bash --mode=quick; exec bash"
         ;;
     full)
-        SETUP_CMD="bash /workspace/ai-dev-setup.sh --mode=full; exec bash"
+        SETUP_CMD="bash /workspace/ai-dev-setup.bash --mode=full; exec bash"
         ;;
 esac
 ```
@@ -76,9 +76,9 @@ esac
 ```powershell
 # ai-dev.ps1 - Multi-mode script
 $SetupCommands = @{
-    "minimal" = "bash /workspace/ai-dev-setup.sh --mode=minimal; exec sh"
-    "quick"   = "bash /workspace/ai-dev-setup.sh --mode=quick; exec bash"
-    "full"    = "bash /workspace/ai-dev-setup.sh --mode=full; exec bash"
+    "minimal" = "bash /workspace/ai-dev-setup.bash --mode=minimal; exec sh"
+    "quick"   = "bash /workspace/ai-dev-setup.bash --mode=quick; exec bash"
+    "full"    = "bash /workspace/ai-dev-setup.bash --mode=full; exec bash"
 }
 ```
 
@@ -96,10 +96,10 @@ $SetupCommands = @{
 
 ```bash
 # Multi-mode bash script
-./ai-dev.sh              # quick mode (default)
-./ai-dev.sh quick        # quick mode (explicit)
-./ai-dev.sh full         # full development environment
-./ai-dev.sh minimal      # minimal Alpine environment
+./ai-dev              # quick mode (default)
+./ai-dev quick        # quick mode (explicit)
+./ai-dev full         # full development environment
+./ai-dev minimal      # minimal Alpine environment
 
 # Multi-mode PowerShell script
 .\ai-dev.ps1              # quick mode (default)
@@ -112,16 +112,16 @@ $SetupCommands = @{
 
 ```
 cli/
-├── ai-dev.sh               # Multi-mode bash runner
+├── ai-dev               # Multi-mode bash runner
 ├── ai-dev.ps1              # Multi-mode PowerShell runner  
-├── ai-dev-setup.sh         # Unified installation logic (NEW)
+├── ai-dev-setup.bash         # Unified installation logic (NEW)
 ├── README-AI-SCRIPTS.md    # User documentation
 └── SETUP-SCRIPTS.md        # Architecture documentation
 ```
 
 **Migration Summary:**
 - ❌ Removed: `setup-full.sh`, `setup-quick.sh`, `setup-minimal.sh` (3 files)
-- ✅ Added: `ai-dev-setup.sh` (1 file)  
+- ✅ Added: `ai-dev-setup.bash` (1 file)  
 - **Net change**: -2 files, significantly reduced complexity
 
 All scripts now follow the DRY principle with a single, well-tested setup script handling all environment configurations.

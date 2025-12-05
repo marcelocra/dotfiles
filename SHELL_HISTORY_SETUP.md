@@ -5,7 +5,7 @@ This setup shares shell history across Windows, WSL, and all devcontainers using
 ## How It Works
 
 1. **OneDrive/Google Drive** syncs the history folder across devices
-2. **init.sh** automatically detects and uses the synced folder
+2. **init.bash** automatically detects and uses the synced folder
 3. **Each environment** gets its own history file (prevents corruption)
 4. **Files are named by workspace + hostname** (e.g., `dotfiles_automaton`)
 5. **All histories** are in one place for easy searching
@@ -43,7 +43,7 @@ If you're using Google Drive instead of OneDrive, update `.devcontainer/devconta
 "source=${localEnv:HOME}${localEnv:USERPROFILE}/Google Drive/shell_histories,target=/home/node/.shell_histories,type=bind,consistency=cached"
 ```
 
-No changes needed to `init.sh` - it will automatically use the mounted directory.
+No changes needed to `init.bash` - it will automatically use the mounted directory.
 
 ### 3. Configure WSL (Optional but Recommended)
 
