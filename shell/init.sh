@@ -175,15 +175,6 @@ configure_exports() {
     # Homebrew (Linux).
     local brew_path="/home/linuxbrew/.linuxbrew"
     [[ -d "$brew_path" ]] && eval "$($brew_path/bin/brew shellenv)"
-    # TODO: If the line above doesn't work, test the code below.
-    # if [[ -d "$brew_path" ]]; then
-    #     # Run brew shellenv to set all environment variables
-    #     eval "$($brew_path/bin/brew shellenv)"
-    #     # Ensure bin and sbin are in PATH (fallback if shellenv doesn't work)
-    #     add_to_path "$brew_path/bin"
-    #     add_to_path "$brew_path/sbin"
-    # fi
-
     
     # Node Version Manager (nvm).
     local nvm_dir="$HOME/.nvm"
@@ -356,7 +347,6 @@ configure_system_aliases() {
     esac
 
     # Package management shortcuts
-    # TODO: check if ubuntu.
     if command_exists batcat; then
         alias bat='batcat'  # Ubuntu's naming
     fi
@@ -382,7 +372,7 @@ configure_dev_aliases() {
     alias tsx='pnpx tsx'
 
     # Python
-    alias initpy='uv init && uv venv && uv add pip && venv_activate'
+    alias initpy='uv init && uv venv && uv add pip && x-venv-activate'
 
     # System info
     alias x-colines='echo "Columns: $COLUMNS, Lines: $LINES"'
@@ -635,17 +625,27 @@ alias t='tmx'
 # Prints today's date in YYYY-MM-DD format.
 #
 # Example:
-#   today  # Output: 2025-12-02
-today() {
+#   x-today  # Output: 2025-12-02
+x-today() {
     date +%F
 }
 
 # Prints current time in HHhMM format.
 #
 # Example:
-#   time_format  # Output: 14h30
-time_format() {
+#   x-time-for-text  # Output: 14h30
+x-time-for-text() {
     date +%Hh%M
+}
+
+# Print the current date/time in a format suitable for filenames (no seconds).
+x-datetime-for-filename() {
+    date +'%Y%m%d-%H%M'
+}
+
+# Print the current date/time in a format suitable for filenames with seconds.
+x-datetime-for-filename-with-seconds() {
+    date +'%Y%m%d-%H%M%S'
 }
 
 # =============================================================================
@@ -661,12 +661,10 @@ time_format() {
 # Returns:
 #   1 if directory is invalid, 0 otherwise
 #
-# Alias: rfind
-#
 # Example:
-#   regexfind . '.*\.(js|ts)$'  # Find all .js and .ts files
-#   rfind ~/code '.*/test/.*'   # Find files in test directories
-regexfind() {
+#   x-regex-find . '.*\.(js|ts)$'      # Find all .js and .ts files
+#   x-regex-find ~/code '.*/test/.*'   # Find files in test directories
+x-regex-find() {
     local dir="$1"
     local regex="$2"
 
@@ -678,8 +676,6 @@ regexfind() {
     find "$dir" -regextype egrep -regex "$regex"
 }
 
-alias rfind='regexfind'
-
 # Finds and lists all broken symbolic links in a directory.
 # A broken symlink is one that points to a non-existent target.
 #
@@ -687,139 +683,10 @@ alias rfind='regexfind'
 #   $1 - Directory to search (default: current directory)
 #
 # Example:
-#   broken_symlinks              # Search current directory
-#   broken_symlinks ~/projects   # Search specific directory
-broken_symlinks() {
+#   x-broken-symlinks              # Search current directory
+#   x-broken-symlinks ~/projects   # Search specific directory
+x-broken-symlinks() {
     find "${1:-.}" -type l ! -exec test -e {} \; -exec ls -lah --color {} \;
-}
-
-# =============================================================================
-# FUNCTIONS - CODE ANALYSIS
-# =============================================================================
-
-# Counts lines of code in git-tracked files matching specified patterns.
-# Only counts files tracked by git, excluding specified patterns.
-#
-# Arguments:
-#   --count, -c <pattern>    - File extensions to count (regex, default: js/ts/elm/sh)
-#   --ignore, -i <pattern>   - Patterns to ignore (regex, default: compiled/vendored/etc)
-#   --md-wrap, -w <lang>     - Wrap output in markdown code block (default: sh)
-#   --no-md-wrap, -no-w      - Don't wrap output in markdown
-#
-# Alias: loc
-#
-# Example:
-#   x-count-lines-of-code
-#   loc --count '(py|rb)$' --ignore 'test'
-#   loc -c 'rs$' -i 'target' --no-md-wrap
-x-count-lines-of-code() {
-    local to_count='(js|cjs|mjs|jsx|ts|cts|mts|tsx|elm|sh)$'
-    local to_ignore='(compiled|vendored|cypress|e2e|bundle|config|example|[Ii]cons)'
-    local md_wrap='sh'
-
-    while [[ $# -gt 0 ]]; do
-        case "$1" in
-        --count | -c)
-            to_count="$2"
-            shift 2
-            ;;
-        --ignore | -i)
-            to_ignore="$2"
-            shift 2
-            ;;
-        --md-wrap | -w)
-            md_wrap="$2"
-            shift 2
-            ;;
-        --no-md-wrap | -no-w)
-            md_wrap=''
-            shift
-            ;;
-        *)
-            break
-            ;;
-        esac
-    done
-
-    # Only look at files tracked by git
-    local cmd="git ls-files \
-        | egrep \"$to_count\" \
-        | egrep -v \"$to_ignore\" \
-        | xargs wc -l"
-
-    if [[ -n "$md_wrap" ]]; then
-        echo '```'"$md_wrap"
-    fi
-
-    echo "looking at: $to_count"
-    echo "ignoring: $to_ignore"
-    echo -e "running command:\n  $cmd" | sed -E -e 's/\s{9}/\n    /g'
-    echo "result:"
-
-    bash -c "$cmd"
-
-    if [[ -n "$md_wrap" ]]; then
-        echo '```'
-    fi
-}
-
-# =============================================================================
-# FUNCTIONS - MEDIA PROCESSING
-# =============================================================================
-
-# Compresses a video file using H.265 (HEVC) codec for better compression.
-# Requires ffmpeg to be installed.
-#
-# Arguments:
-#   $1 - Input video file (default: input.mp4)
-#   $2 - Output video file (default: output.mp4)
-#
-# Returns:
-#   1 if ffmpeg is not installed, 0 otherwise
-#
-# Example:
-#   video_compress movie.mp4 movie_compressed.mp4
-#   video_compress large_file.mp4  # Creates output.mp4
-# TODO: there are many functions in this file that aren't really used
-# frequently. I usually save them here because it is easy to lookup later, but
-# maybe I could have a custom command that would just give me info on those 
-# functions? And I wouldn't need to have them all the time in my shell
-# environment? Maybe call it x-archive? aliases x-docs, x-help, x-funcold?
-video_compress() {
-    local input="${1:-input.mp4}"
-    local output="${2:-output.mp4}"
-
-    if ! command_exists ffmpeg; then
-        echo "ERROR: ffmpeg is not installed"
-        return 1
-    fi
-
-    ffmpeg -i "$input" -vcodec libx265 -crf 28 "$output"
-}
-
-# Extracts audio from MP4 video and saves as MP3.
-# Requires ffmpeg to be installed.
-#
-# Arguments:
-#   $1 - Input MP4 file (default: input.mp4)
-#   $2 - Output MP3 file (default: output.mp3)
-#
-# Returns:
-#   1 if ffmpeg is not installed, 0 otherwise
-#
-# Example:
-#   mp3_from_mp4 video.mp4 audio.mp3
-#   mp3_from_mp4 lecture.mp4  # Creates output.mp3
-mp3_from_mp4() {
-    local input="${1:-input.mp4}"
-    local output="${2:-output.mp3}"
-
-    if ! command_exists ffmpeg; then
-        echo "ERROR: ffmpeg is not installed"
-        return 1
-    fi
-
-    ffmpeg -i "$input" "$output"
 }
 
 # =============================================================================
@@ -839,8 +706,8 @@ mp3_from_mp4() {
 # Alias: va
 #
 # Example:
-#   venv_activate  # or just: va
-venv_activate() {
+#   x-venv-activate  # or just: va
+x-venv-activate() {
     local the_venv="./.venv/bin/activate"
 
     if [[ -f "$the_venv" ]]; then
@@ -858,249 +725,8 @@ venv_activate() {
     return 1
 }
 
-alias va='venv_activate'
-
-# =============================================================================
-# FUNCTIONS - NEOVIM UTILITIES
-# =============================================================================
-
-# Backs up Neovim state directories with timestamp.
-# Useful before major configuration changes or plugin updates.
-#
-# Backs up:
-#   - ~/.local/share/nvim (data, plugins)
-#   - ~/.local/state/nvim (state files)
-#   - ~/.cache/nvim (cache files)
-#
-# Backup naming: original_name.YYYY-MM-DD_HH-MM-SS.bak
-#
-# Example:
-#   nvim_backup_state  # Creates timestamped backups
-nvim_backup_state() {
-    local now
-    now=$(date +%F_%T | sed -e 's/:/-/g')
-    mv ~/.local/share/nvim{,."$now".bak}
-    mv ~/.local/state/nvim{,."$now".bak}
-    mv ~/.cache/nvim{,."$now".bak}
-}
-
-# Backs up Neovim state to a temporary directory.
-# Similar to nvim_backup_state but uses system temp directory.
-#
-# Backs up:
-#   - ~/.local/share/nvim -> local-share-nvim
-#   - ~/.local/state/nvim -> local-state-nvim
-#   - ~/.cache/nvim -> cache-nvim
-#   - ~/.config/nvim/lazy-lock.json -> lazy-lock.json
-#
-# Creates temp directory: /tmp/nvim_YYYY-MM-DD_HH-MM-SS_XXXXXX
-# Prints the temp directory path after backup.
-#
-# Example:
-#   nvim_backup_to_tmp
-# TODO: merge this one with the previous one.
-nvim_backup_to_tmp() {
-    # Make a tmp folder with the current date
-    local tmp_dir
-    tmp_dir=$(mktemp -d -t "nvim_$(date +%F_%T | sed -e 's/:/-/g')_XXXXXX")
-
-    mv ~/.local/share/nvim "$tmp_dir/local-share-nvim"
-    mv ~/.local/state/nvim "$tmp_dir/local-state-nvim"
-    mv ~/.cache/nvim "$tmp_dir/cache-nvim"
-    mv ~/.config/nvim/lazy-lock.json "$tmp_dir"
-
-    echo "Neovim state backed up to: $tmp_dir"
-}
-
-# =============================================================================
-# FUNCTIONS - NOTIFICATION & TIMER
-# =============================================================================
-
-# Sends a desktop notification (if notify-send available) or prints to console.
-# Used by timer functions to alert when time is up.
-#
-# Arguments:
-#   $1 - Summary/title (default: "TEMPO ACABOU!", uppercased if provided)
-#   $2 - Body/content (default: Portuguese message)
-#
-# Example:
-#   timer_notification "Break time" "Take a 5 minute break"
-#   timer_notification  # Uses default messages
-# TODO: move to x-archive
-timer_notification() {
-    local summary="${1:-TEMPO ACABOU!}"
-    local content="${2:-Pronto! Hora de ir para a próxima tarefa!}"
-
-    if [[ -n "$1" ]]; then
-        summary="$(echo "$summary" | tr '[:lower:]' '[:upper:]') - TEMPO ACABOU!"
-    fi
-
-    if command_exists notify-send; then
-        notify-send -u critical "$summary" "$content"
-    else
-        echo "TIMER: $summary"
-        echo "$content"
-    fi
-}
-
-# Countdown timer that sends notification when complete.
-# Supports various time formats: 30s, 5m, 2h, 1h30m.
-#
-# Arguments:
-#   $1 - Time duration (default: 30m)
-#        Formats: Xs (seconds), Xm (minutes), Xh (hours), XhYm (combined)
-#
-# Convenience aliases:
-#   t5, t15, t30, t60 - 5, 15, 30, 60 minute timers
-#
-# Example:
-#   timer 25m       # Pomodoro timer
-#   timer 1h30m     # 90 minute timer
-#   t15             # Quick 15 minute timer
-# TODO: move to x-archive
-timer() {
-    local time="${1:-30m}"
-
-    if [[ -z "$1" ]]; then
-        echo "No time provided, using default ($time)."
-        echo "Format: 1s, 20m, 2h, 1h20m or use templates: t5, t15, t30, t60 (minutes)"
-    fi
-
-    sleep "$time" && timer_notification
-}
-
-# Timer aliases
-alias t5="sleep 5m && timer_notification"
-alias t15="sleep 15m && timer_notification"
-alias t30="sleep 30m && timer_notification"
-alias t60="sleep 1h && timer_notification"
-
-# =============================================================================
-# FUNCTIONS - AI HELPERS
-# =============================================================================
-
-# Sends a question to Claude AI via CLI.
-# Requires @anthropic-ai/claude-code npm package.
-#
-# Arguments:
-#   $* - Question or prompt for Claude
-#
-# Returns:
-#   1 if Claude CLI not installed, 0 otherwise
-#
-# Installation:
-#   npm install -g @anthropic-ai/claude-code
-#
-# Example:
-#   ask_claude "optimize this JavaScript function"
-#   ask_claude "explain git rebase"
-# TODO: move to x-archive
-ask_claude() {
-    if [ -z "$1" ]; then
-        echo "Usage: ask_claude \"your question here\""
-        echo "Example: ask_claude \"optimize this JavaScript function\""
-        return 1
-    fi
-
-    if command_exists claude; then
-        echo "🤖 Claude: Processing your request..."
-        claude chat --message "$*"
-    else
-        echo "❌ Claude CLI not installed. Install with: npm install -g @anthropic-ai/claude-code"
-        return 1
-    fi
-}
-
-# Sends a question to Google Gemini AI via CLI.
-# Requires @google/gemini-cli npm package.
-#
-# Arguments:
-#   $* - Question or prompt for Gemini
-#
-# Returns:
-#   1 if Gemini CLI not installed, 0 otherwise
-#
-# Installation:
-#   npm install -g @google/gemini-cli
-#
-# Example:
-#   ask_gemini "explain this code pattern"
-#   ask_gemini "best practices for React hooks"
-# TODO: move to x-archive
-ask_gemini() {
-    if [ -z "$1" ]; then
-        echo "Usage: ask_gemini \"your question here\""
-        echo "Example: ask_gemini \"explain this code pattern\""
-        return 1
-    fi
-
-    if command_exists gemini; then
-        echo "✨ Gemini: Processing your request..."
-        gemini "$*"
-    else
-        echo "❌ Gemini CLI not installed. Install with: npm install -g @google/gemini-cli"
-        return 1
-    fi
-}
-
-# Analyzes current project structure and provides statistics.
-# Works best in git repositories. Optionally uses Claude AI for deeper analysis.
-#
-# Displays:
-#   - Total file count
-#   - Git tracked files count
-#   - Programming languages detected (by extension)
-#   - AI-powered analysis (if Claude CLI available)
-#
-# Returns:
-#   1 if not in a git repository, 0 otherwise
-#
-# Example:
-#   cd my_project
-#   analyze  # Shows project statistics and AI insights
-# TODO: move to x-archive
-analyze() {
-    if [[ ! -d .git ]]; then
-        echo "❌ This function works best in git repositories"
-        return 1
-    fi
-
-    echo "🔍 Project Analysis:"
-    echo "Files: $(find . -type f | wc -l)"
-    echo "Git tracked files: $(git ls-files | wc -l)"
-    echo "Languages: $(find . -name "*.js" -o -name "*.ts" -o -name "*.py" -o -name "*.html" -o -name "*.css" -o -name "*.go" -o -name "*.rs" -o -name "*.java" -o -name "*.c" -o -name "*.cpp" | sed 's/.*\.//' | sort | uniq -c)"
-    echo ""
-
-    if command_exists claude; then
-        ask_claude "analyze this project structure: $(ls -la)"
-    else
-        echo "💡 Install Claude CLI for AI-powered project analysis"
-    fi
-}
-
-# Gets AI-powered explanation and improvement suggestions for a code file.
-# Requires Claude CLI to be installed.
-#
-# Arguments:
-#   $1 - File path to analyze
-#
-# Example:
-#   codehelp index.js
-#   codehelp src/components/Button.tsx
-# TODO: move to x-archive
-codehelp() {
-    if [ -f "$1" ]; then
-        echo "📖 Getting help for: $1"
-        if command_exists claude; then
-            ask_claude "explain and suggest improvements for this code: $(cat "$1")"
-        else
-            echo "❌ Claude CLI not installed. Install with: npm install -g @anthropic-ai/claude-code"
-        fi
-    else
-        echo "Usage: codehelp <filename>"
-        echo "Example: codehelp index.js"
-    fi
-}
+alias venv='x-venv-activate'
+alias ve='x-venv-activate'
 
 # =============================================================================
 # FUNCTIONS - MISC
@@ -1117,6 +743,11 @@ codehelp() {
 load_ssh() {
     eval "$(ssh-agent -s)"
     ssh-add ~/.ssh/id_ed25519
+}
+
+x-help() {
+    # TODO: Create this helper command like x-help <function|name|anything> that
+    # greps documentation from the ./x-archives.bash file.
 }
 
 # Next function marker
