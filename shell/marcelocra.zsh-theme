@@ -1,334 +1,237 @@
 # vim:ft=zsh ts=2 sw=2 sts=2
-#
-# Marcelo's ZSH theme, with some customizations over the following themes:
-# amuse, robbyrussell.
+# Marcelo's ZSH theme - Modern, fast, adaptive (light/dark)
+# Inspired by: Starship, Powerlevel10k, pure
 
-# ------------------------------------------------------------------------------
-# Working version.
-# ------------------------------------------------------------------------------
+# ==============================================================================
+# Configuration (export these before sourcing to customize)
+# ==============================================================================
+# USE_NERD_FONT=1       # 1=Nerd Font icons, 0=Unicode/Emoji fallback
+# USE_TIME_PROMPT=0     # 1=time-based symbols (🌅☀️🌆🌙), 0=standard ❯
+# SHOW_DATE=1           # Show date in prompt
+# SHOW_TIME=1           # Show time in prompt
 
-# # Must use Powerline/Nerd font, for \uE0A0 to render.
-# ZSH_THEME_GIT_PROMPT_PREFIX="on %{$fg[magenta]%}\uE0A0 "
-# ZSH_THEME_GIT_PROMPT_SUFFIX="%{$reset_color%}"
-# ZSH_THEME_GIT_PROMPT_DIRTY="%{$fg[red]%}!"
-# ZSH_THEME_GIT_PROMPT_UNTRACKED="%{$fg[green]%}?"
-# ZSH_THEME_GIT_PROMPT_CLEAN=""
+# ==============================================================================
+# Adaptive Colors (work on both light and dark backgrounds)
+# ==============================================================================
+C_DIR="%F{blue}"
+C_GIT="%F{magenta}"
+C_GIT_DIRTY="%F{yellow}"
+C_GIT_CLEAN="%F{green}"
+C_TIME="%F{cyan}"
+C_DATE="%F{cyan}"
+C_OK="%F{green}"
+C_ERR="%F{red}"
+C_VENV="%F{yellow}"
+C_NODE="%F{green}"
+C_RUST="%F{red}"
+C_GO="%F{cyan}"
+C_SEP="%F{8}"
+C_DIM="%F{8}"
+C_RESET="%f"
 
-# PROMPT='%{$fg_bold[green]%}%~%{$reset_color%} '
-# PROMPT+='‹$(git_prompt_info)›'
-# PROMPT+='$(virtualenv_prompt_info) '
-# PROMPT+='⌚%{$fg_bold[red]%} %*%{$reset_color%} '
-# PROMPT+='📅%{$fg_bold[blue]%} %D{%Y-%m-%d}%{$reset_color%}'
-# PROMPT+='
-# %(?:%{$fg_bold[green]%}%1{➜%} :%{$fg_bold[red]%}%1{➜%} )%{$reset_color%} '
-
-# # TODO: Is it possible to add this to the right of the first line above?
-# # RPROMPT='⌚%{$fg_bold[red]%} %*%{$reset_color%} '
-# # RPROMPT+='📅%{$fg_bold[blue]%} %D{%Y-%m-%d}%{$reset_color%}'
-
-# VIRTUAL_ENV_DISABLE_PROMPT=0
-# ZSH_THEME_VIRTUAL_ENV_PROMPT_PREFIX=" %{$fg[green]%}🐍 "
-# ZSH_THEME_VIRTUAL_ENV_PROMPT_SUFFIX="%{$reset_color%}"
-# ZSH_THEME_VIRTUALENV_PREFIX=$ZSH_THEME_VIRTUAL_ENV_PROMPT_PREFIX
-# ZSH_THEME_VIRTUALENV_SUFFIX=$ZSH_THEME_VIRTUAL_ENV_PROMPT_SUFFIX
-
-# ------------------------------------------------------------------------------
-# Testing version.
-# ------------------------------------------------------------------------------
-
-# Toggles/config:
-# - USE_NERD_FONT: 1 uses Nerd glyphs; 0 uses Emoji/Unicode fallbacks
-#     export USE_NERD_FONT=0|1
-# - SEP_CHAR: separator line character (defaults to heavy/light box draw)
-#     export SEP_CHAR='─'  # examples: '━' '─' '-' '·'
-# - SEP_COLOR: prompt palette color for separator (works in light/dark)
-#     export SEP_COLOR=8   # examples: 7, 8, 242, 245
-# - USE_SEP_TOP: show separator above quote box (default: 1)
-#     export USE_SEP_TOP=0|1
-# - USE_SEP_BOTTOM: show separator below quote box (default: 1)
-#     export USE_SEP_BOTTOM=0|1
-# - QUOTE_MODE: how quotes rotate (default: "time")
-#     export QUOTE_MODE=random|sequential|time|fixed
-#     - random: different quote each prompt
-#     - sequential: changes every minute
-#     - time: changes by hour (default)
-#     - fixed: always first quote
-# - USE_TIME_PROMPT: use time-based symbols (🌅☀️🌆🌙) instead of ❯ (default: 0)
-#     export USE_TIME_PROMPT=1
-
-PROMPT_SYMBOL=''
-
-# Icon set switch (Nerd Font vs Emoji/Unicode)
+# ==============================================================================
+# Icons (Nerd Font vs Unicode fallback)
+# ==============================================================================
 : ${USE_NERD_FONT:=1}
 if [[ $USE_NERD_FONT == 1 ]]; then
+  # TODO: figure out why these icons were removed (I added back).
   ICON_DIR=""
   ICON_GIT=""
+  ICON_DIRTY="⨯"
+  ICON_CLEAN="✓"
+  ICON_VENV=""
+  ICON_NODE=""
+  ICON_RUST=""
+  ICON_GO=""
+  ICON_TIME=""
+  ICON_DATE=""
 else
   ICON_DIR="📁"
-  ICON_GIT="🌿"
+  ICON_GIT="⎇"
+  ICON_DIRTY="⨯"
+  ICON_CLEAN="✓"
+  ICON_VENV="🐍"
+  ICON_NODE="⬢"
+  ICON_RUST="🦀"
+  ICON_GO="🐹"
+  ICON_TIME="⏰"
+  ICON_DATE="📅"
 fi
-ICON_TIME="⏰"
-ICON_DATE="📅"
-ICON_PWR="⚡"
+
 ICON_OK="❯"
 ICON_ERR="⨯"
-ICON_VENV="🐍"
 
-# Time-based prompt symbols (optional - set USE_TIME_PROMPT=1 to enable)
-: ${USE_TIME_PROMPT:=0}
-get_time_prompt_symbol() {
-  if [[ $USE_TIME_PROMPT == 1 ]]; then
-    local hour=$(date +%H)
-    if [[ $hour -ge 6 && $hour -lt 12 ]]; then
-      echo "🌅"  # Morning
-    elif [[ $hour -ge 12 && $hour -lt 18 ]]; then
-      echo "☀️"   # Afternoon
-    elif [[ $hour -ge 18 && $hour -lt 22 ]]; then
-      echo "🌆"   # Evening
+# Section separators (between dir, time, date, envs)
+# Nerd Font options: , , , , , , , 
+# Emoji options: ⚡, ✦, ◆, •, ›, », /, ~
+if [[ $USE_NERD_FONT == 1 ]]; then
+  ICON_SEP="⚡"      # Nerd Font arrow (or try: , , )
+else
+  ICON_SEP=">"       # Simple arrow fallback
+fi
+
+# Line fill character (easy to change if font doesn't render)
+# Options: ─ (box drawing), - (hyphen), ━ (heavy), ╌ (dashed), · (dot)
+: ${SEP_CHAR:=-}
+
+: ${SHOW_DATE:=1}
+: ${SHOW_TIME:=1}
+: ${USE_TIME_PROMPT:=1}
+
+# ==============================================================================
+# Environment Detection (venvs, node, rust, go)
+# ==============================================================================
+_python_env() {
+  local env_name=""
+  if [[ -n "$VIRTUAL_ENV" ]]; then
+    env_name="${VIRTUAL_ENV:t}"
+  elif [[ -n "$CONDA_DEFAULT_ENV" ]]; then
+    env_name="$CONDA_DEFAULT_ENV"
+  fi
+  [[ -n "$env_name" ]] && echo "${C_VENV}${ICON_VENV} ${env_name}${C_RESET}"
+}
+
+_node_env() {
+  [[ -f package.json || -f .nvmrc || -f .node-version ]] || return
+  local v=""
+  if (( $+commands[node] )); then
+    v=$(node -v 2>/dev/null)
+    v=${v#v}
+  fi
+  [[ -n "$v" ]] && echo "${C_NODE}${ICON_NODE} ${v}${C_RESET}"
+}
+
+_rust_env() {
+  [[ -f Cargo.toml ]] || return
+  local v=""
+  if (( $+commands[rustc] )); then
+    v=$(rustc --version 2>/dev/null | cut -d' ' -f2)
+  fi
+  [[ -n "$v" ]] && echo "${C_RUST}${ICON_RUST} ${v}${C_RESET}"
+}
+
+_go_env() {
+  [[ -f go.mod ]] || return
+  local v=""
+  if (( $+commands[go] )); then
+    v=$(go version 2>/dev/null | cut -d' ' -f3)
+    v=${v#go}
+  fi
+  [[ -n "$v" ]] && echo "${C_GO}${ICON_GO} ${v}${C_RESET}"
+}
+
+# Cache environments per directory
+_LAST_ENV_DIR=""
+_CACHED_ENVS=""
+_get_envs() {
+  if [[ "$PWD" != "$_LAST_ENV_DIR" ]]; then
+    local envs=()
+    local py=$(_python_env)
+    local nd=$(_node_env)
+    local rs=$(_rust_env)
+    local go=$(_go_env)
+    [[ -n "$py" ]] && envs+=("$py ")
+    [[ -n "$nd" ]] && envs+=("$nd ")
+    [[ -n "$rs" ]] && envs+=("$rs ")
+    [[ -n "$go" ]] && envs+=("$go ")
+    if (( ${#envs[@]} > 0 )); then
+      _CACHED_ENVS=" ${C_DIM}${ICON_SEP}${C_RESET}${(j: :)envs}"
     else
-      echo "🌙"   # Night
+      _CACHED_ENVS=""
     fi
-  else
-    echo "$ICON_OK"
+    _LAST_ENV_DIR="$PWD"
+  fi
+  echo "$_CACHED_ENVS"
+}
+
+# ==============================================================================
+# Git prompt
+# ==============================================================================
+ZSH_THEME_GIT_PROMPT_PREFIX="${C_GIT}${ICON_GIT} "
+ZSH_THEME_GIT_PROMPT_SUFFIX="${C_RESET}"
+ZSH_THEME_GIT_PROMPT_DIRTY=" ${C_GIT_DIRTY}${ICON_DIRTY}${C_RESET}"
+ZSH_THEME_GIT_PROMPT_CLEAN=" ${C_GIT_CLEAN}${ICON_CLEAN}${C_RESET}"
+
+# ==============================================================================
+# Time-based prompt symbol
+# ==============================================================================
+_get_prompt_symbol() {
+  local prompt="$ICON_OK"
+
+  if [[ $USE_TIME_PROMPT == 1 ]]; then
+    local h=$(date +%H)
+    if   (( h >= 6  && h < 12 )); then prompt="🌅"
+    elif (( h >= 12 && h < 18 )); then prompt="☀️ "
+    elif (( h >= 18 && h < 22 )); then prompt="🌆"
+    else prompt="🌙"
+    fi
+  fi
+  
+  echo "$prompt $ICON_OK"
+}
+
+# ==============================================================================
+# Dynamic separator line (fills to end of terminal)
+# ==============================================================================
+_fill_line() {
+  local dir_expanded=${(%):-%~}
+  
+  # Count visible characters (icons = 2 width each in Nerd Fonts)
+  # Format: "icon  dir │ icon  time │ icon  date │ envs"
+  local len=0
+  
+  # Separator width (Nerd Font icons are typically 1-2 chars wide)
+  local sep_width=1
+  [[ $USE_NERD_FONT == 1 ]] && sep_width=2
+  
+  # Dir: icon(2) + 2 spaces + dir
+  len=$(( len + 2 + 2 + ${#dir_expanded} ))
+  
+  # Time: " "(1) + sep + " "(1) + icon(2) + 2 spaces + HH:MM:SS(8)
+  if [[ $SHOW_TIME == 1 ]]; then
+    len=$(( len + 1 + sep_width + 1 + 2 + 2 + 8 ))
+  fi
+  
+  # Date: " "(1) + sep + " "(1) + icon(2) + 2 spaces + YYYY-MM-DD(10)
+  if [[ $SHOW_DATE == 1 ]]; then
+    len=$(( len + 1 + sep_width + 1 + 2 + 2 + 10 ))
+  fi
+  
+  # Envs: " "(1) + sep + " "(1) + content (only if present)
+  if [[ -n "$_CACHED_ENVS" ]]; then
+    local envs_plain=${_CACHED_ENVS//\%F\{[^}]#\}/}
+    envs_plain=${envs_plain//\%f/}
+    len=$(( len + ${#envs_plain} + sep_width ))
+  fi
+  
+  # Fill remaining space
+  local remaining=$(( COLUMNS - len - 1 ))
+  
+  if (( remaining > 0 )); then
+    printf '  %*s' "$remaining" '' | tr ' ' "$SEP_CHAR"
   fi
 }
 
-# Box-drawing characters
-if [[ $USE_NERD_FONT == 1 ]]; then
-  BOX_TL='┌'
-  BOX_TR='┐'
-  BOX_BL='└'
-  BOX_BR='┘'
-  BOX_H='─'
-  BOX_V='│'
-else
-  BOX_TL='┌'
-  BOX_TR='┐'
-  BOX_BL='└'
-  BOX_BR='┘'
-  BOX_H='─'
-  BOX_V='│'
-fi
-
-# Separator character (overridable); uses heavier line with Nerd Font, light line otherwise
-: ${SEP_CHAR:=}
-if [[ -z $SEP_CHAR ]]; then
-  if [[ $USE_NERD_FONT == 1 ]]; then
-    SEP_CHAR='━'
-  else
-    SEP_CHAR='─'
-  fi
-fi
-: ${SEP_COLOR:=8}
-SEP_COLOR_SEQ="%F{${SEP_COLOR}}"
-SEP_RESET_SEQ="%f"
-# Modern color palette for futuristic look
-COLOR_ACCENT="%F{39}"      # Bright cyan
-COLOR_ACCENT_DIM="%F{45}"  # Softer cyan
-COLOR_TEXT="%F{252}"       # Almost white
-COLOR_TEXT_DIM="%F{244}"   # Soft gray
-COLOR_SUCCESS="%F{46}"     # Bright green
-COLOR_ERROR="%F{196}"      # Bright red
-COLOR_RESET="%f"
-: ${USE_SEP_TOP:=1}
-: ${USE_SEP_BOTTOM:=1}
-
-# Faded separator character (overridable); defaults to dotted pattern
-: ${SEP_CHAR_FADED:=}
-if [[ -z $SEP_CHAR_FADED ]]; then
-  if [[ $USE_NERD_FONT == 1 ]]; then
-    SEP_CHAR_FADED='┄'
-  else
-    SEP_CHAR_FADED='·'
-  fi
-fi
-
-# Cached separator (updates on precmd when COLUMNS changes)
-_LAST_COLUMNS=-1
-PROMPT_SEPARATOR=''
-PROMPT_SEPARATOR_FADED=''
+# ==============================================================================
+# Build the prompt
+# ==============================================================================
+setopt prompt_subst
 autoload -Uz add-zsh-hook
 
-# Original implementation retained
-prompt_separator() {
-    printf '%*s' "$COLUMNS" '' | tr ' ' -
-}
-
-# Create a box around text (centered, pure zsh)
-quote_in_box() {
-    local text="$1"
-    local padding=2
-    local text_len=${#text}
-    local box_width=$((text_len + padding * 2 + 2))  # +2 for borders
-    local indent=$(( (COLUMNS - box_width) / 2 ))
-    local indent_str border_line
-    
-    # Create indent
-    if [[ $indent -gt 0 ]]; then
-        printf -v indent_str '%*s' $indent ''
-    else
-        indent_str=''
-    fi
-    
-    # Create horizontal border line (pure zsh, no tr)
-    local border_len=$((box_width - 2))
-    printf -v border_line '%*s' $border_len ''
-    border_line=${border_line// /$BOX_H}
-    
-    # Top border
-    echo "${indent_str}${BOX_TL}${border_line}${BOX_TR}"
-    
-    # Text line
-    printf "${indent_str}${BOX_V} %-${text_len}s ${BOX_V}\n" "$text"
-    
-    # Bottom border
-    echo "${indent_str}${BOX_BL}${border_line}${BOX_BR}"
-}
-
-# Pure zsh implementation (no external processes); repeats SEP_CHAR to width
-prompt_separator_pure() {
-    local s chr
-    chr=${SEP_CHAR:-'-'}
-    printf -v s '%*s' "$COLUMNS" ''
-    s=${s// /$chr}
-    print -r -- "$s"
-}
-
-# Pure zsh implementation for faded separator
-prompt_separator_faded_pure() {
-    local s chr
-    chr=${SEP_CHAR_FADED:-'·'}
-    printf -v s '%*s' "$COLUMNS" ''
-    s=${s// /$chr}
-    print -r -- "$s"
-}
-
-update_prompt_separator() {
-  if [[ "$COLUMNS" != "$_LAST_COLUMNS" ]]; then
-    PROMPT_SEPARATOR=$(prompt_separator_pure)
-    PROMPT_SEPARATOR_FADED=$(prompt_separator_faded_pure)
-    _LAST_COLUMNS=$COLUMNS
-  fi
-}
-add-zsh-hook precmd update_prompt_separator
-# Initialize immediately so first prompt shows the line
-update_prompt_separator
-
-setopt prompt_subst
-# Stylish prompt: adds clarity, color, and alignment for readability and flair.
-
-# Helper function to conditionally render separator with color
-# Usage: with_separator "$SEP_VAR" "USE_SEP_VAR_NAME"
-with_separator() {
-  local sep="$1"
-  local var_name="$2"
-  local enabled=${(P)var_name}
-  if [[ "${enabled:-1}" == "1" ]]; then
-    echo "${SEP_COLOR_SEQ}${sep}${SEP_RESET_SEQ}"
-  else
-    echo ""
-  fi
-}
-
-# Quote collection (rotates or randomizes)
-QUOTES=(
-  "🪄  Any sufficiently advanced technology is indistinguishable from magic. 💎"
-  "⚡ Code is like humor. When you have to explain it, it's bad. 🎭"
-  "🚀 First, solve the problem. Then, write the code. 💡"
-  "🌙 The best code is no code at all. But when you must, make it beautiful. ✨"
-  "🎯 Programming isn't about what you know; it's about what you can figure out. 🧠"
-  "🔮 The computer is a moron. And you are a genius. 🎪"
-)
-# Short versions for narrow terminals
-QUOTES_SHORT=(
-  "🪄  Advanced tech = magic 💎"
-  "⚡ Code = humor 🎭"
-  "🚀 Solve → Code 💡"
-  "🌙 Less code, more beauty ✨"
-  "🎯 It's about figuring it out 🧠"
-  "🔮 You > Computer 🎪"
-)
-
-# Quote selection: random, sequential, or time-based
-# Set to: "random", "sequential", "time" (changes by hour), or "fixed"
-: ${QUOTE_MODE:=time}
-
-get_quote() {
-  local idx
-  case "$QUOTE_MODE" in
-    random)
-      idx=$((RANDOM % ${#QUOTES[@]}))
-      ;;
-    sequential)
-      idx=$((SECONDS / 60 % ${#QUOTES[@]}))  # Changes every minute
-      ;;
-    time)
-      idx=$((10#$(date +%H) % ${#QUOTES[@]}))  # Changes by hour
-      ;;
-    fixed)
-      idx=0
-      ;;
-    *)
-      idx=0
-      ;;
-  esac
-  
-  if [[ $COLUMNS -gt 70 ]]; then
-    echo "${QUOTES[$idx]}"
-  else
-    echo "${QUOTES_SHORT[$idx]}"
-  fi
-}
-
-# Format date and time with dots separator (centered)
-format_datetime() {
-  local time_val=$(date +%H:%M:%S)
-  local date_val=$(date +%Y-%m-%d)
-  local time_len=${#time_val}
-  local date_len=${#date_val}
-  local total_len=$((time_len + date_len + 15))
-  local indent=$(( (COLUMNS - total_len) / 2 ))
-  
-  # local sep_datetime='∙∙∙'
-  # Power/energy symbol - subtle accent
-  local sep_datetime="${COLOR_ACCENT_DIM} ${ICON_PWR}${COLOR_RESET}"
-
-  printf "%*s" $indent ""
-  echo -n "${COLOR_ACCENT_DIM}${ICON_TIME}${COLOR_RESET} ${COLOR_TEXT}${time_val}${COLOR_RESET} ${COLOR_TEXT_DIM}${sep_datetime}${COLOR_RESET} "
-  echo "${COLOR_TEXT}${date_val}${COLOR_RESET} ${COLOR_ACCENT_DIM}${ICON_DATE}${COLOR_RESET}"
-}
-
-# Modern, futuristic prompt design
-# Subtle top separator
-PROMPT='${COLOR_TEXT_DIM}$(with_separator "$PROMPT_SEPARATOR_FADED" "USE_SEP_TOP")${COLOR_RESET}
-'
-# Centered quote with elegant styling (rotates based on QUOTE_MODE)
-PROMPT+='${COLOR_TEXT_DIM}$(quote_text=$(get_quote); printf "%*s" $(( (COLUMNS - ${#quote_text}) / 2 )) ""; echo "$quote_text")${COLOR_RESET}
-'
-# Date and time below quote with fun dot separators (centered)
-PROMPT+='${COLOR_TEXT_DIM}$(format_datetime)${COLOR_RESET}
-'
-# Subtle bottom separator
-PROMPT+='${COLOR_TEXT_DIM}$(with_separator "$PROMPT_SEPARATOR_FADED" "USE_SEP_BOTTOM")${COLOR_RESET}
-'
-
-# Main info line: directory, venv - clean and modern
-PROMPT+='${COLOR_ACCENT}'"$ICON_DIR"'${COLOR_RESET}  ${COLOR_TEXT}%~${COLOR_RESET} '
-# Conditional separator before venv (only if it exists)
-PROMPT+='$(vi=$(virtualenv_prompt_info); [[ -n $vi ]] && echo "${COLOR_TEXT_DIM}▌${COLOR_RESET} ")'
-
-# Python virtualenv: modern styling
-PROMPT+='$(virtualenv_prompt_info)'
-
-# Newline and futuristic prompt symbol
+# Line 1: dir › time › date › envs ─────────────────
+PROMPT='${C_DIR}${ICON_DIR}  %~${C_RESET}'
+PROMPT+='$(if [[ $SHOW_TIME == 1 ]]; then echo " ${C_DIM}${ICON_SEP}${C_RESET} ${C_TIME}${ICON_TIME}  %*${C_RESET}"; fi)'
+PROMPT+='$(if [[ $SHOW_DATE == 1 ]]; then echo " ${C_DIM}${ICON_SEP}${C_RESET} ${C_DATE}${ICON_DATE}  %D{%Y-%m-%d}${C_RESET}"; fi)'
+PROMPT+='$(_get_envs)'
+PROMPT+='${C_SEP}$(_fill_line)${C_RESET}'
+# Line 2: prompt symbol
 PROMPT+='
-%(?:${COLOR_SUCCESS}$(get_time_prompt_symbol)${COLOR_RESET} :${COLOR_ERROR}'"$ICON_ERR"'${COLOR_RESET} )'
+%(?:${C_OK}$(_get_prompt_symbol)${C_RESET}:${C_ERR}${ICON_ERR}${C_RESET}) '
 
-# Right prompt: git branch - subtle, professional
-RPROMPT='$(git_info=$(git_prompt_info); [[ -n $git_info ]] && echo "${COLOR_TEXT_DIM}'"$ICON_GIT"' ${COLOR_RESET}${COLOR_TEXT_DIM}$git_info${COLOR_RESET}")'
+# Git on the right
+RPROMPT='$(git_prompt_info)'
 
-VIRTUAL_ENV_DISABLE_PROMPT=0
-ZSH_THEME_VIRTUAL_ENV_PROMPT_PREFIX=' ${COLOR_ACCENT_DIM}'"$ICON_VENV"'[${COLOR_RESET}'
-ZSH_THEME_VIRTUAL_ENV_PROMPT_SUFFIX='${COLOR_ACCENT_DIM}]${COLOR_RESET}'
-ZSH_THEME_VIRTUALENV_PREFIX=$ZSH_THEME_VIRTUAL_ENV_PROMPT_PREFIX
-ZSH_THEME_VIRTUALENV_SUFFIX=$ZSH_THEME_VIRTUAL_ENV_PROMPT_SUFFIX
+# ==============================================================================
+# Virtualenv (disable default prompt, we handle it)
+# ==============================================================================
+VIRTUAL_ENV_DISABLE_PROMPT=1
