@@ -27,6 +27,7 @@
     "prefix": [
       "x",
       "c",
+      "k",
       "--"
     ],
     "body": [
@@ -46,7 +47,6 @@
   },
   "md link": {
     "prefix": [
-      "k",
       "l"
     ],
     "body": [
@@ -300,13 +300,21 @@
     // Make it really long, so it disappears in the symbols view.
     "body": "# ------------------------------------------------------------------------------------------------------------------------------------------ new day!"
   },
-  ". bullet for new task": {
+  "use bullets for creating tasks easily": {
     "prefix": [
       ".."
     ],
     "body": [
-      ". $1",
+      "- [ ] $1",
       "..$0"
+    ]
+  },
+  "create an anchor element with id, for cross-referencing": {
+    "prefix": [
+      "id"
+    ],
+    "body": [
+      "<a id=\"${1:identifier}\" />$0"
     ]
   },
   ">>>>> NEXT snippet above. Ignore this, it is not a snippet.": {
