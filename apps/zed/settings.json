@@ -25,7 +25,7 @@
     },
 
     // "font_size": 12.0,
-    "font_family": "Cascadia Code NF",
+    // "font_family": "Cascadia Code NF",
     "font_weight": 350,
     // "font_fallbacks": [
     //   "MesloLGS Nerd Font Mono",
@@ -135,10 +135,15 @@
     "zero": true
   },
 
+  // "theme": {
+  //   "mode": "system",
+  //   "light": "One Light",
+  //   "dark": "One Dark"
+  // },
   "theme": {
     "mode": "system",
     "light": "One Light",
-    "dark": "One Dark"
+    "dark": "Andromeda"
   },
 
   "restore_on_startup": "none",
@@ -162,21 +167,11 @@
 
   "languages": {
     "TypeScript": {
-      "language_servers": [
-        "deno",
-        "!typescript-language-server",
-        "!vtsls",
-        "!eslint"
-      ],
+      "language_servers": ["deno", "!typescript-language-server", "!vtsls", "!eslint"],
       "formatter": "language_server"
     },
     "TSX": {
-      "language_servers": [
-        "deno",
-        "!typescript-language-server",
-        "!vtsls",
-        "!eslint"
-      ],
+      "language_servers": ["deno", "!typescript-language-server", "!vtsls", "!eslint"],
       "formatter": "language_server"
     }
   }
