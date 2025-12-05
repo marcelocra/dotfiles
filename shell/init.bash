@@ -95,7 +95,7 @@ add_to_path() {
 #   $* - Message to log
 #
 # Example:
-#   DOTFILES_DEBUG=1 source init.sh  # Enable debug mode
+#   DOTFILES_DEBUG=1 source init.bash  # Enable debug mode
 #   log_debug "Initializing configuration"
 log_debug() {
     if [[ "${DOTFILES_DEBUG:-0}" == "1" ]]; then
@@ -748,6 +748,7 @@ load_ssh() {
 x-help() {
     # TODO: Create this helper command like x-help <function|name|anything> that
     # greps documentation from the ./x-archives.bash file.
+    :  # Placeholder - function not yet implemented
 }
 
 # Next function marker

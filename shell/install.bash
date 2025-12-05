@@ -11,7 +11,7 @@
 #   - VS Code settings/keybindings symlinks (if VS Code detected)
 #
 # Usage:
-#   ~/prj/dotfiles/shell/install.sh
+#   ~/prj/dotfiles/shell/install.bash
 #
 # Environment variables:
 #   DOTFILES_SKIP_HOMEBREW=true    - Skip Homebrew installation
@@ -208,7 +208,7 @@ install_fzf() {
         git clone --depth 1 "$FORK_FZF_REPO" "$fzf_dir"
     fi
 
-    # Install binary only (skip shell integration - that's in init.sh)
+    # Install binary only (skip shell integration - that's in init.bash)
     "$fzf_dir/install" --bin
 
     # Create symlink in ~/bin
@@ -308,39 +308,39 @@ install_zsh_plugin() {
 link_shell_configs() {
     log_info "🔗 Creating shell configuration symlinks..."
 
-    # .zshrc - source init.sh
+    # .zshrc - source init.bash
     local zshrc="$HOME/.zshrc"
-    local init_source="source $DOTFILES_DIR/shell/init.sh"
+    local init_source="source $DOTFILES_DIR/shell/init.bash"
 
     if [[ -f "$zshrc" ]]; then
-        if ! grep -q "source.*shell/init.sh" "$zshrc"; then
-            log_debug "Adding init.sh source to .zshrc..."
+        if ! grep -q "source.*shell/init.bash" "$zshrc"; then
+            log_debug "Adding init.bash source to .zshrc..."
             echo "" >> "$zshrc"
             echo "# Dotfiles initialization" >> "$zshrc"
             echo "$init_source" >> "$zshrc"
         else
-            log_debug ".zshrc already sources init.sh"
+            log_debug ".zshrc already sources init.bash"
         fi
     else
-        log_debug "Creating .zshrc with init.sh source..."
+        log_debug "Creating .zshrc with init.bash source..."
         echo "# Dotfiles initialization" > "$zshrc"
         echo "$init_source" >> "$zshrc"
     fi
 
-    # .bashrc - source init.sh
+    # .bashrc - source init.bash
     local bashrc="$HOME/.bashrc"
 
     if [[ -f "$bashrc" ]]; then
-        if ! grep -q "source.*shell/init.sh" "$bashrc"; then
-            log_debug "Adding init.sh source to .bashrc..."
+        if ! grep -q "source.*shell/init.bash" "$bashrc"; then
+            log_debug "Adding init.bash source to .bashrc..."
             echo "" >> "$bashrc"
             echo "# Dotfiles initialization" >> "$bashrc"
             echo "$init_source" >> "$bashrc"
         else
-            log_debug ".bashrc already sources init.sh"
+            log_debug ".bashrc already sources init.bash"
         fi
     else
-        log_debug "Creating .bashrc with init.sh source..."
+        log_debug "Creating .bashrc with init.bash source..."
         echo "# Dotfiles initialization" > "$bashrc"
         echo "$init_source" >> "$bashrc"
     fi
@@ -487,7 +487,7 @@ main() {
     log_info ""
     log_info "💡 To customize this installation:"
     log_info "   - Set environment variables (DOTFILES_SKIP_* flags)"
-    log_info "   - Edit $DOTFILES_DIR/shell/install.sh"
+    log_info "   - Edit $DOTFILES_DIR/shell/install.bash"
 }
 
 # Execute main function

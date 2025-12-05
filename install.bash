@@ -41,7 +41,7 @@ main() {
     if [[ -f "$zshrc" ]]; then
         echo "File exists: ${zshrc}. Ignoring... Remove/backup and run again."
     else
-        ln -s ${DOTFILES_DIR}/shell/init.sh $zshrc
+        ln -s ${DOTFILES_DIR}/shell/init.bash $zshrc
     fi
 
     # Tmux.

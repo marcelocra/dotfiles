@@ -1,5 +1,5 @@
 #!/bin/bash
-# host-setup-linux.sh
+# host-setup-linux.bash
 # Host machine setup script for Linux (Ubuntu, Fedora, openSUSE).
 # This script configures editors and host-specific tools that should NOT run in containers.
 
@@ -129,4 +129,4 @@ fi
 
 log "🎉 Linux host setup complete!"
 log "💡 Editor configurations are now linked from your dotfiles"
-log "🔧 To customize this setup, edit: https://github.com/$GITHUB_HANDLE/dotfiles/blob/main/host-setup-linux.sh"
+log "🔧 To customize this setup, edit: https://github.com/$GITHUB_HANDLE/dotfiles/blob/main/setup/host-setup-linux.bash"

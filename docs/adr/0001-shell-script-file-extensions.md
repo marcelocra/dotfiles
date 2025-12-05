@@ -71,14 +71,45 @@ An additional distinction applies based on how the file is used:
 
 ### Examples from this repository
 
-| File                        | Type                  | Current               | Should be                          |
-| --------------------------- | --------------------- | --------------------- | ---------------------------------- |
-| `cli/ai-dev.sh`             | Command (in PATH)     | `ai-dev.sh`           | `ai-dev`                           |
-| `shell/init.sh`             | Sourced (as `.zshrc`) | `init.sh`             | `init.bash`                        |
-| `shell/x-archives.sh`       | Sourced               | `x-archives.sh`       | `x-archives.bash`                  |
-| `install.sh`                | Standalone script     | `install.sh`          | `install.bash`                     |
-| `setup/host-setup-linux.sh` | Standalone script     | `host-setup-linux.sh` | `host-setup-linux.bash`            |
-| `apps/*/install.sh`         | Standalone scripts    | `install.sh`          | `install.bash` (if using bashisms) |
+### Core Scripts
+
+| File | Type | Uses Bashisms | Action |
+| --- | --- | --- | --- |
+| `cli/ai-dev.sh` | Command (PATH) | Yes | → `cli/ai-dev` |
+| `cli/ai-dev-setup.sh` | Sourced by container | Yes | → `cli/ai-dev-setup.bash` |
+| `shell/init.sh` | Sourced (as `.zshrc`) | Yes | → `shell/init.bash` |
+| `shell/install.sh` | Standalone | Yes | → `shell/install.bash` |
+| `shell/x-archives.bash` | Sourced | Yes | ✅ Already correct |
+| `shell/e` | Command (PATH) | Yes | ✅ Already correct |
+| `install.sh` | Standalone | Yes | → `install.bash` |
+| `setup/host-setup-linux.sh` | Standalone | Yes | → `setup/host-setup-linux.bash` |
+
+### App Scripts
+
+| File | Type | Uses Bashisms | Action |
+| --- | --- | --- | --- |
+| `apps/vscode/installers/install.sh` | Standalone | Yes | → `install.bash` |
+| `apps/zed/installers/install.sh` | Standalone | No | Keep as `.sh` (POSIX) |
+| `apps/kiro/install.sh` | Standalone | No | Keep as `.sh` (POSIX) |
+| `apps/taskade/install.sh` | Standalone | No | Keep as `.sh` (POSIX) |
+| `apps/kitty/scripts/less-tempfile.sh` | Standalone | No | Keep as `.sh` (POSIX) |
+| `apps/kitty/scripts/vim-tempfile.sh` | Standalone | No | Keep as `.sh` (POSIX) |
+| `apps/clickup/clickup.desktop_install.sh` | Standalone | No | Keep as `.sh` (POSIX) |
+| `apps/obsidian/obsidian.desktop_install.sh` | Standalone | No | Keep as `.sh` (POSIX) |
+| `apps/portacle/portacle.desktop_install.sh` | Standalone | No | Keep as `.sh` (POSIX) |
+| `apps/telegram/telegram.desktop_install.sh` | Standalone | No | Keep as `.sh` (POSIX) |
+| `apps/todoist/todoist.desktop_install.sh` | Standalone | No | Keep as `.sh` (POSIX) |
+| `apps/todoist/todoist.sh` | Standalone | No | Keep as `.sh` (POSIX) |
+
+### Git Hooks
+
+| File | Type | Action |
+| --- | --- | --- |
+| `git/hooks/pre-commit` | Hook (no extension) | ✅ Already correct |
+
+### Deprecated (no action needed)
+
+Files in `deprecated/` directory are excluded from migration.
 
 ## Consequences
 
@@ -122,7 +153,21 @@ An additional distinction applies based on how the file is used:
 4. Update any references (scripts, documentation, symlinks)
 5. Apply convention to new scripts going forward
 
-**Tracking:** See [GitHub Issue #TBD] for migration progress checklist.
+### Migration Checklist
+
+- [x] `cli/ai-dev.sh` → `cli/ai-dev` (command)
+- [x] `cli/ai-dev-setup.sh` → `cli/ai-dev-setup.bash` (sourced)
+- [x] `shell/init.sh` → `shell/init.bash` (sourced)
+- [x] `shell/install.sh` → `shell/install.bash` (standalone)
+- [x] `install.sh` → `install.bash` (standalone)
+- [x] `setup/host-setup-linux.sh` → `setup/host-setup-linux.bash` (standalone)
+- [x] `apps/vscode/installers/install.sh` → `apps/vscode/installers/install.bash` (standalone)
+- [x] Update references in `cli/ai-dev` to point to `ai-dev-setup.bash`
+- [x] Update references in `shell/install.bash` to point to `init.bash`
+- [x] Update any documentation mentioning renamed files
+- [x] Verify all scripts work after migration
+
+**Tracking:** See [GitHub Issue #4](https://github.com/marcelocra/dotfiles/issues/4) for migration progress.
 
 **References:**
 

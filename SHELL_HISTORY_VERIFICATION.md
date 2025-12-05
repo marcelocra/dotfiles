@@ -22,7 +22,7 @@ mounts: [
 - Sets environment variables for the init script to use
 - Workspace folder is automatically set by VS Code
 
-### 2. **Shell Initializes** (init.sh sourced from .zshrc/.bashrc)
+### 2. **Shell Initializes** (init.bash sourced from .zshrc/.bashrc)
 
 ```bash
 main() calls:
@@ -34,7 +34,7 @@ main() calls:
 
 **What happens:**
 
-- Shell sources `init.sh` on startup
+- Shell sources `init.bash` on startup
 - Functions run in order to set up the environment
 - History is configured before shell-specific settings
 

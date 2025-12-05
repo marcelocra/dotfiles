@@ -34,9 +34,9 @@ try {
 
 # Define setup commands based on mode (now using unified external script).
 $SetupCommands = @{
-    "minimal" = "bash /workspace/ai-dev-setup.sh --mode=minimal; exec sh"
-    "quick"   = "bash /workspace/ai-dev-setup.sh --mode=quick; exec bash"  
-    "full"    = "bash /workspace/ai-dev-setup.sh --mode=full; exec bash"
+    "minimal" = "bash /workspace/ai-dev-setup.bash --mode=minimal; exec sh"
+    "quick"   = "bash /workspace/ai-dev-setup.bash --mode=quick; exec bash"  
+    "full"    = "bash /workspace/ai-dev-setup.bash --mode=full; exec bash"
 }
 
 # Select image and setup based on mode.

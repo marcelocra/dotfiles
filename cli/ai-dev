@@ -1,7 +1,7 @@
 #!/bin/bash
 
-# ai-dev.sh - Multi-mode AI development container for Bash.
-# Usage: ./ai-dev.sh [full|quick|minimal]
+# ai-dev - Multi-mode AI development container for Bash.
+# Usage: ./ai-dev [full|quick|minimal]
 
 set -e
 
@@ -49,15 +49,15 @@ fi
 case "$MODE" in
     minimal)
         IMAGE="node:20-alpine"
-        SETUP_CMD="bash /workspace/ai-dev-setup.sh --mode=minimal; exec sh"
+        SETUP_CMD="bash /workspace/ai-dev-setup.bash --mode=minimal; exec sh"
         ;;
     quick)
         IMAGE="mcr.microsoft.com/devcontainers/javascript-node:1-20-bullseye"
-        SETUP_CMD="bash /workspace/ai-dev-setup.sh --mode=quick; exec bash"
+        SETUP_CMD="bash /workspace/ai-dev-setup.bash --mode=quick; exec bash"
         ;;
     full)
         IMAGE="mcr.microsoft.com/devcontainers/javascript-node:1-20-bullseye"
-        SETUP_CMD="bash /workspace/ai-dev-setup.sh --mode=full; exec bash"
+        SETUP_CMD="bash /workspace/ai-dev-setup.bash --mode=full; exec bash"
         ;;
 esac
 

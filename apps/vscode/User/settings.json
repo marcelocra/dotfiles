@@ -218,7 +218,7 @@
   "diffEditor.ignoreTrimWhitespace": false,
   "diffEditor.renderSideBySide": true,
   "docker.dockerPath": "podman",
-  "dotfiles.installCommand": "~/prj/dotfiles/shell/install.sh",
+  "dotfiles.installCommand": "~/prj/dotfiles/shell/install.bash",
   "dotfiles.repository": "marcelocra/dotfiles",
   "dotnetAcquisitionExtension.enableTelemetry": false,
   "dotnetAcquisitionExtension.existingDotnetPath": [

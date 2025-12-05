@@ -11,7 +11,7 @@ This project contains a collection of configuration files and setup scripts for 
 
 Scripts for configuring host machines (not containers):
 
-- **`host-setup-linux.sh`**: Configures VS Code, Sublime Text, and Zed on Linux hosts
+- **`host-setup-linux.bash`**: Configures VS Code, Sublime Text, and Zed on Linux hosts
 - **`host-setup-windows.ps1`**: Configures editors on Windows hosts
 
 These scripts symlink editor configurations from the `apps/` directory to the appropriate locations on the host machine.
@@ -36,15 +36,15 @@ A lengthy debugging session revealed that some `docker-compose` client binaries 
 
 ### Key Components
 
-- **`ai-dev.sh`**: Multi-mode Bash script for Linux/macOS/WSL
+- **`ai-dev`**: Multi-mode Bash script for Linux/macOS/WSL
 - **`ai-dev.ps1`**: Multi-mode PowerShell script for Windows/cross-platform
-- **`ai-dev-setup.sh`**: Unified setup script handling all environment configurations
+- **`ai-dev-setup.bash`**: Unified setup script handling all environment configurations
 
 ### Architecture (v2.0.0 - DRY Refactoring)
 
 ```
 Container Runners          Setup Script (Unified Logic)
-├── ai-dev.sh         ──→  ai-dev-setup.sh --mode=full|quick|minimal
+├── ai-dev         ──→  ai-dev-setup.bash --mode=full|quick|minimal
 └── ai-dev.ps1        ──→
 ```
 
@@ -59,9 +59,9 @@ Container Runners          Setup Script (Unified Logic)
 
 ```bash
 # Bash (Linux/macOS/WSL)
-./ai-dev.sh              # quick mode (default)
-./ai-dev.sh full         # full development environment
-./ai-dev.sh minimal      # minimal Alpine environment
+./ai-dev              # quick mode (default)
+./ai-dev full         # full development environment
+./ai-dev minimal      # minimal Alpine environment
 
 # PowerShell (Windows/cross-platform)
 .\ai-dev.ps1              # quick mode (default)

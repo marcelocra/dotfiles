@@ -10,7 +10,7 @@
 
 ### Architecture Decisions
 
-- **Centralized Configuration**: `shell/init.sh` as the single entry point
+- **Centralized Configuration**: `shell/init.bash` as the single entry point
 - **Selective Symlinking**: Only track what you actually configure
 - **Cross-Platform Support**: Ubuntu, Alpine, openSUSE, WSL detection
 - **Environment Detection**: Container vs host, distribution-specific handling
