@@ -27,23 +27,25 @@ C_RUST="%F{208}"           # Bright orange (DarkOrange)
 C_GO="%F{73}"              # Bright cyan (CadetBlue)
 C_DIM="%F{245}"            # Gray (Grey54)
 C_RESET="%f"
+STYLE_NOBOLD="%{[22m%}"  # Reset bold so glyphs render regular weight
 
 # ==============================================================================
 # Icons
 # ==============================================================================
 : ${USE_NERD_FONT:=1}
 if [[ $USE_NERD_FONT == 1 ]]; then
-  ICON_DIR=$'\uf07b'           #  nf-fa-folder
-  ICON_GIT=$'\uf126'           #  nf-fa-code_fork
-  ICON_DIRTY=$'\u2a2f'         # ⨯ cross product
-  ICON_CLEAN=$'\uf00c'         #  nf-fa-check
-  ICON_VENV=$'\ue73c'          #  nf-dev-python
-  ICON_NODE=$'\ue718'          #  nf-dev-nodejs_small
-  ICON_RUST=$'\ue7a8'          #  nf-dev-rust
-  ICON_GO=$'\ue626'            #  nf-seti-go
-  ICON_TIME=$'\uf252'          #  nf-fa-hourglass_half
-  ICON_DATE=$'\uf073'          #  nf-fa-calendar
-  ICON_SEP=$'\ue0b1'           #  nf-pl-left_soft_divider
+  ICON_DIR=$'\uf07b'           #  (nf-fa-folder)
+  ICON_GIT=$'\uf126'           #   (nf-fa-code_fork)
+  ICON_DIRTY=$'\u2a2f'         # ⨯ (cross product)
+  ICON_CLEAN=$'\uf00c'         #   (nf-fa-check)
+  ICON_VENV=$'\ue73c'          #   (nf-dev-python)
+  ICON_NODE=$'\ue718'          #   (nf-dev-nodejs_small)
+  ICON_RUST=$'\ue7a8'          #   (nf-dev-rust)
+  ICON_GO=$'\ue626'            #   (nf-seti-go)
+  ICON_TIME=$'\uf252'          #   (nf-fa-hourglass_half)
+  ICON_DATE=$'\uf073'          #   (nf-fa-calendar)
+  # ICON_SEP=$'\ue0b1'           #  (nf-pl-left_soft_divider)
+  ICON_SEP='›'                 # › (ASCII divider preferred)
 else
   ICON_DIR="📁"
   ICON_GIT="⎇"
@@ -75,31 +77,28 @@ _python_env() {
   elif [[ -n "$CONDA_DEFAULT_ENV" ]]; then
     env_name="$CONDA_DEFAULT_ENV"
   fi
-  [[ -n "$env_name" ]] && echo "${C_VENV}${ICON_VENV} ${env_name}${C_RESET}"
+  [[ -n "$env_name" ]] && echo "${STYLE_NOBOLD}${C_VENV}${ICON_VENV} ${env_name}${C_RESET}"
 }
 
 _node_env() {
   [[ -f package.json || -f .nvmrc || -f .node-version ]] || return
-  if (( $+commands[node] )); then
-    local v=$(node -v 2>/dev/null)
-    [[ -n "$v" ]] && echo "${C_NODE}${ICON_NODE} ${v#v}${C_RESET}"
-  fi
+  command -v node >/dev/null 2>&1 || return
+  local v=$(node -v 2>/dev/null)
+  [[ -n "$v" ]] && echo "${STYLE_NOBOLD}${C_NODE}${ICON_NODE} ${v#v}${C_RESET}"
 }
 
 _rust_env() {
   [[ -f Cargo.toml ]] || return
-  if (( $+commands[rustc] )); then
-    local v=$(rustc --version 2>/dev/null | cut -d' ' -f2)
-    [[ -n "$v" ]] && echo "${C_RUST}${ICON_RUST} ${v}${C_RESET}"
-  fi
+  command -v rustc >/dev/null 2>&1 || return
+  local v=$(rustc --version 2>/dev/null | cut -d' ' -f2)
+  [[ -n "$v" ]] && echo "${STYLE_NOBOLD}${C_RUST}${ICON_RUST} ${v}${C_RESET}"
 }
 
 _go_env() {
   [[ -f go.mod ]] || return
-  if (( $+commands[go] )); then
-    local v=$(go version 2>/dev/null | cut -d' ' -f3)
-    [[ -n "$v" ]] && echo "${C_GO}${ICON_GO} ${v#go}${C_RESET}"
-  fi
+  command -v go >/dev/null 2>&1 || return
+  local v=$(go version 2>/dev/null | cut -d' ' -f3)
+  [[ -n "$v" ]] && echo "${STYLE_NOBOLD}${C_GO}${ICON_GO} ${v#go}${C_RESET}"
 }
 
 _LAST_ENV_DIR=""
