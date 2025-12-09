@@ -6,20 +6,20 @@ Multi-mode scripts to run AI-enabled development containers with Claude and Gemi
 
 ### Bash Script (Linux/macOS/WSL)
 
-#### `./ai-dev.sh` - Multi-mode Development Environment
+#### `./ai-dev` - Multi-mode Development Environment
 ```bash
 # Quick mode (default) - Essential development tools
-./ai-dev.sh
-./ai-dev.sh quick
+./ai-dev
+./ai-dev quick
 
 # Full mode - Complete development environment  
-./ai-dev.sh full
+./ai-dev full
 
 # Minimal mode - Alpine-based minimal footprint
-./ai-dev.sh minimal
+./ai-dev minimal
 
 # Help
-./ai-dev.sh help
+./ai-dev help
 ```
 
 **Environment Details:**
@@ -111,10 +111,10 @@ find        # fd (faster find) [full mode only]
 
 ```bash
 # Start quick environment (most common)
-./ai-dev.sh
+./ai-dev
 
 # Start full development environment
-./ai-dev.sh full
+./ai-dev full
 
 # Inside container - ask about current project  
 ask "analyze this HTML structure and suggest improvements"
@@ -138,7 +138,7 @@ The scripts use a unified architecture with consolidated setup logic:
 
 ```
 Container Runners          Setup Script (Unified Logic)
-├── ai-dev.sh         ──→  ai-dev-setup.sh --mode=full|quick|minimal
+├── ai-dev         ──→  ai-dev-setup.bash --mode=full|quick|minimal
 └── ai-dev.ps1        ──→
 ```
 
@@ -155,13 +155,13 @@ Container Runners          Setup Script (Unified Logic)
 
 ## Customization
 
-Edit the `ai-dev-setup.sh` script to:
+Edit the `ai-dev-setup.bash` script to:
 - Add/remove development tools
 - Modify AI CLI installation methods  
 - Change aliases and helper functions
 - Adjust package installation logic for different modes
 
-The container runner scripts (`ai-dev.sh`, `ai-dev.ps1`) handle:
+The container runner scripts (`ai-dev`, `ai-dev.ps1`) handle:
 - Container configuration
 - Volume mounts  
 - Environment variables

@@ -20,7 +20,7 @@ The user requested:
 
 - Created 3 individual bash scripts:
   - `dev-ai.sh` - Full development environment
-  - `ai-dev.sh` - Quick development environment
+  - `ai-dev` - Quick development environment
   - `quick-ai` - Minimal Alpine-based environment
 - Each script had inline installation logic
 - Mixed Portuguese and English comments
@@ -37,7 +37,7 @@ The user requested:
 
 - Renamed scripts to follow `ai-*.sh` pattern:
   - `dev-ai.sh` → `ai-full.sh`
-  - `ai-dev.sh` → `ai-quick.sh`
+  - `ai-dev` → `ai-quick.sh`
   - `quick-ai` → `ai-minimal.sh`
 - Added PowerShell version (`ai-dev.ps1`) with multi-mode support
 
@@ -65,12 +65,12 @@ SETUP_CMD='bash /workspace/setup-full.sh'
 
 **Final optimization**: Created multi-mode scripts that replaced individual ones:
 
-- `ai-dev.sh` (Bash multi-mode):
+- `ai-dev` (Bash multi-mode):
 
   ```bash
-  ./ai-dev.sh          # quick mode (default)
-  ./ai-dev.sh full     # full mode
-  ./ai-dev.sh minimal  # minimal mode
+  ./ai-dev          # quick mode (default)
+  ./ai-dev full     # full mode
+  ./ai-dev minimal  # minimal mode
   ```
 
 - `ai-dev.ps1` (PowerShell multi-mode):
@@ -86,7 +86,7 @@ SETUP_CMD='bash /workspace/setup-full.sh'
 
 ```
 Container Runners          Setup Scripts (Shared Logic)
-├── ai-dev.sh         ──→  setup-full.sh
+├── ai-dev         ──→  setup-full.sh
 └── ai-dev.ps1        ──→  setup-quick.sh
                       ──→  setup-minimal.sh
 ```
@@ -146,7 +146,7 @@ Container Runners          Setup Scripts (Shared Logic)
 
 ```
 acerto.ai/
-├── ai-dev.sh            # Multi-mode bash runner
+├── ai-dev            # Multi-mode bash runner
 ├── ai-dev.ps1           # Multi-mode PowerShell runner
 ├── setup-full.sh        # Complete installation logic
 ├── setup-quick.sh       # Quick installation logic

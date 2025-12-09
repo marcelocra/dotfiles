@@ -1,9 +1,9 @@
 #!/bin/bash
 
-# ai-dev-setup.sh - Unified AI development environment setup script.
-# This script is called by container runners (ai-dev.sh, ai-dev.ps1).
+# ai-dev-setup.bash - Unified AI development environment setup script.
+# This script is called by container runners (ai-dev, ai-dev.ps1).
 #
-# Usage: ai-dev-setup.sh --mode=full|quick|minimal
+# Usage: ai-dev-setup.bash --mode=full|quick|minimal
 
 set -e
 
