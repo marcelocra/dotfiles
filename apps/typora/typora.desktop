@@ -1,0 +1,11 @@
+[Desktop Entry]
+Name=Typora
+Comment=Editor Markdown Minimalista
+GenericName=Editor Markdown
+Exec=/opt/typora/Typora %U
+Icon=/opt/typora/resources/app/asserts/icon/icon_256x256.png
+Type=Application
+StartupNotify=true
+Categories=Office;WordProcessor;Development;
+MimeType=text/markdown;text/x-markdown;
+Terminal=false
