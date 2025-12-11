@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # Symlinks VSCode settings from dotfiles to the editor's User directory.
-# Supports VSCode, VSCode Insiders, Cursor, and Kiro. Backs up existing files.
+# Supports VSCode, VSCode Insiders, Cursor, Kiro, and Antigravity. Backs up existing files.
 
 set -euo pipefail
 
@@ -18,6 +18,7 @@ usage() {
     echo "  --insiders         Setup for VSCode Insiders"
     echo "  --cursor           Setup for Cursor"
     echo "  --kiro             Setup for Kiro"
+    echo "  --antigravity      Setup for Antigravity"
     echo "  --dotfiles-path    Path to dotfiles User directory (default: \$DOTFILES_PATH or $DOTFILES_PATH)"
     echo "  -h, --help         Show this help"
 }
@@ -28,6 +29,7 @@ while [[ $# -gt 0 ]]; do
         --insiders) EDITOR_TYPE="insiders"; shift ;;
         --cursor) EDITOR_TYPE="cursor"; shift ;;
         --kiro) EDITOR_TYPE="kiro"; shift ;;
+        --antigravity) EDITOR_TYPE="antigravity"; shift ;;
         --dotfiles-path) DOTFILES_PATH="$2"; shift 2 ;;
         -h|--help) usage; exit 0 ;;
         *) echo "Unknown option: $1"; usage; exit 1 ;;
@@ -51,6 +53,10 @@ case $EDITOR_TYPE in
     kiro)
         USER_PATH="$HOME/.config/Kiro/User"
         EDITION="Kiro"
+        ;;
+    antigravity)
+        USER_PATH="$HOME/.config/Antigravity/User"
+        EDITION="Antigravity"
         ;;
 esac
 
