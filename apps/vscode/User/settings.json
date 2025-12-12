@@ -118,6 +118,10 @@
   "chat.editor.wordWrap": "on",
   "chat.fontFamily": "Atkinson Hyperlegible Next",
   "chat.fontSize": 13,
+  "chat.instructionsFilesLocations": {
+    ".github/instructions": true,
+    "~/.aitk/instructions/": true
+  },
   "chat.tools.terminal.autoApprove": {
     "/^column\\b.*-c\\s+[0-9]{4,}/": false,
     "/^Compare-[a-z0-9]/i": true,
@@ -272,7 +276,7 @@
   // ---------------------------------------------------------------------------
   // "editor.fontFamily": "Atkinson Hyperlegible Mono",
   // ---------------------------------------------------------------------------
-  "editor.formatOnSave": true,
+  "editor.formatOnSave": true, // FYI: file will only be formatted when saved explicitly (not on auto-save).
   "editor.glyphMargin": true, // Space between the explorer and the line number.
   "editor.guides.bracketPairs": "active",
   "editor.guides.highlightActiveIndentation": true,
@@ -286,7 +290,6 @@
   "editor.lineHeight": 1.8, // Interesting values: 1.6; 1.8; 2; 2.2
   "editor.lineNumbers": "on",
   "editor.minimap.autohide": "none",
-  "editor.minimap.enabled": false,
   "editor.minimap.markSectionHeaderRegex": "\\bMARK:\\s*(?<separator>-?)\\s*(?<label>.*)$", // Default.
   "editor.minimap.maxColumn": 80,
   "editor.minimap.renderCharacters": false,
@@ -392,7 +395,7 @@
     "vimrc": "vimrc"
   },
   "files.autoSave": "afterDelay",
-  "files.autoSaveDelay": 10000,
+  "files.autoSaveDelay": 1000,
   "files.eol": "\n",
   "FSharp.addFsiWatcher": true,
   "FSharp.autoRevealInExplorer": "disabled",
@@ -410,7 +413,7 @@
   "github.copilot.chat.codesearch.enabled": true,
   "github.copilot.enable": {
     "*": true,
-    "markdown": false,
+    "markdown": true,
     "plaintext": false,
     "scminput": false,
     "shellscript": true
@@ -623,6 +626,8 @@
   "terminal.integrated.fontFamily": "Cascadia Code NF",
   "terminal.integrated.fontLigatures.enabled": true,
   "terminal.integrated.fontLigatures.featureSettings": "'calt' 1, 'ss01' 1, 'ss19' 1, 'ss20' 0",
+  "terminal.integrated.fontSize": 15,
+  "terminal.integrated.fontWeight": "400",
   // ---------------------------------------------------------------------------
   // "terminal.integrated.fontFamily": "Hack Nerd Font Mono",
   // ---------------------------------------------------------------------------
@@ -633,7 +638,6 @@
   // "terminal.integrated.fontLigatures.featureSettings": "'calt' 1, 'ss01' 1, 'ss19' 1, 'ss20' 0",
   // ---------------------------------------------------------------------------
   // "terminal.integrated.fontSize": 12,
-  "terminal.integrated.fontWeight": "400",
   "terminal.integrated.gpuAcceleration": "on",
   // "terminal.integrated.lineHeight": 1,
   "terminal.integrated.localEchoExcludePrograms": [
@@ -716,7 +720,7 @@
   "window.title": "[${rootNameShort}] ${activeEditorMedium}",
   "window.titleBarStyle": "custom",
   "workbench.activityBar.location": "bottom",
-  "workbench.colorTheme": "Night Owl Light",
+  "workbench.colorTheme": "Quiet Light",
   "workbench.editor.empty.hint": "hidden",
   "workbench.editor.pinnedTabsOnSeparateRow": false,
   "workbench.editorAssociations": {
@@ -741,7 +745,7 @@
   "zenMode.fullScreen": true,
   "zenMode.hideActivityBar": true,
   "zenMode.hideLineNumbers": true,
-  "zenMode.hideStatusBar": false,
+  "zenMode.hideStatusBar": true,
   "zenMode.restore": false,
   "zenMode.showTabs": "none",
   "zenMode.silentNotifications": true
