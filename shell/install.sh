@@ -35,7 +35,7 @@ set -euo pipefail
 DOTFILES_DIR="${DOTFILES_DIR:-$HOME/prj/dotfiles}"
 
 # Feature flags (can be disabled via environment variables)
-SKIP_HOMEBREW="${DOTFILES_SKIP_HOMEBREW:-false}"
+SKIP_HOMEBREW="${DOTFILES_SKIP_HOMEBREW:-true}"
 SKIP_CLI_TOOLS="${DOTFILES_SKIP_CLI_TOOLS:-false}"
 SKIP_ZSH_PLUGINS="${DOTFILES_SKIP_ZSH_PLUGINS:-false}"
 SKIP_VSCODE="${DOTFILES_SKIP_VSCODE:-false}"
