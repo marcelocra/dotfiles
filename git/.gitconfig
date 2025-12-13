@@ -26,6 +26,11 @@
 [gpg]
     format = ssh
 
+[gpg "ssh"]
+    # Uses the op-signer shim created by shell/install.sh
+    # This works across all platforms (Linux, macOS, WSL, Windows)
+    program = op-signer
+
 [init]
     defaultBranch = main
 
@@ -206,25 +211,9 @@
 # Extra configs to include.
 # ------------------------------------------------------------------------------
 # Load in this order, so that the next one can override the previous.
-# If it any of them don't exist, they are ignored.
+# If any of them don't exist, they are ignored.
 [include]
-    # OS-specific
-    # -----------
-
-    # This file should only exist in Windows systems.
-    path = .gitconfig.windows.gitconfig
-    path = .gitconfig.wsl2.gitconfig
-
-    # This file should only exist in Unix systems (Mac, Debian, Ubuntu, etc).
-    path = .gitconfig.unix.gitconfig
-
-    # This file should only exist in Linux systems (but not in a Mac).
-    path = .gitconfig.linux.gitconfig
-
-    # Installation-specific
-    # ---------------------
-
-    # Local overrides.
+    # Local machine overrides.
     path = .gitconfig.local.gitconfig
 
     # Examples of how to include extra configs conditionally, based on the current

@@ -9,16 +9,22 @@
 #   - Zsh plugins from custom forks
 #   - Shell configuration symlinks
 #   - VS Code settings/keybindings symlinks (if VS Code detected)
+#   - Editor launcher 'e' command symlink
+#   - Git shims for 1Password SSH signing (cross-platform)
+#   - SSH config for 1Password (native Linux/macOS only)
 #
 # Usage:
 #   ~/prj/dotfiles/shell/install.sh
 #
 # Environment variables:
-#   DOTFILES_SKIP_HOMEBREW=true    - Skip Homebrew installation
-#   DOTFILES_SKIP_CLI_TOOLS=true   - Skip CLI tools installation
-#   DOTFILES_SKIP_ZSH_PLUGINS=true - Skip zsh plugins installation
-#   DOTFILES_SKIP_VSCODE=true      - Skip VS Code config symlinking
-#   DOTFILES_DEBUG=1               - Enable debug logging
+#   DOTFILES_SKIP_HOMEBREW=true         - Skip Homebrew installation
+#   DOTFILES_SKIP_CLI_TOOLS=true        - Skip CLI tools installation
+#   DOTFILES_SKIP_ZSH_PLUGINS=true      - Skip zsh plugins installation
+#   DOTFILES_SKIP_VSCODE=true           - Skip VS Code config symlinking
+#   DOTFILES_SKIP_EDITOR_LAUNCHER=true  - Skip 'e' editor launcher setup
+#   DOTFILES_SKIP_GIT_SHIMS=true        - Skip git shims for 1Password
+#   DOTFILES_SKIP_SSH_CONFIG=true       - Skip SSH config for 1Password
+#   DOTFILES_DEBUG=1                    - Enable debug logging
 
 set -euo pipefail
 
@@ -27,13 +33,15 @@ set -euo pipefail
 # =============================================================================
 
 DOTFILES_DIR="${DOTFILES_DIR:-$HOME/prj/dotfiles}"
-SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
 # Feature flags (can be disabled via environment variables)
 SKIP_HOMEBREW="${DOTFILES_SKIP_HOMEBREW:-false}"
 SKIP_CLI_TOOLS="${DOTFILES_SKIP_CLI_TOOLS:-false}"
 SKIP_ZSH_PLUGINS="${DOTFILES_SKIP_ZSH_PLUGINS:-false}"
 SKIP_VSCODE="${DOTFILES_SKIP_VSCODE:-false}"
+SKIP_EDITOR_LAUNCHER="${DOTFILES_SKIP_EDITOR_LAUNCHER:-false}"
+SKIP_GIT_SHIMS="${DOTFILES_SKIP_GIT_SHIMS:-false}"
+SKIP_SSH_CONFIG="${DOTFILES_SKIP_SSH_CONFIG:-false}"
 DEBUG="${DOTFILES_DEBUG:-0}"
 
 # Custom fork repositories (for security - you control the source)
@@ -44,11 +52,6 @@ FORK_ZSH_SYNTAX_HIGHLIGHTING="${FORK_ZSH_SYNTAX_HIGHLIGHTING:-https://github.com
 # =============================================================================
 # UTILITY FUNCTIONS
 # =============================================================================
-
-# Logging functions with timestamps and colors
-log() {
-    echo "[$(date +'%Y-%m-%d %H:%M:%S')] $*"
-}
 
 log_info() {
     printf '\033[0;34m[dotfiles]\033[0m %s\n' "$*"
@@ -452,6 +455,245 @@ link_vscode_configs() {
 }
 
 # =============================================================================
+# EDITOR LAUNCHER SETUP
+# =============================================================================
+
+setup_editor_launcher() {
+    if [[ "$SKIP_EDITOR_LAUNCHER" == "true" ]]; then
+        log_info "⏭️  Skipping editor launcher setup (DOTFILES_SKIP_EDITOR_LAUNCHER=true)"
+        return 0
+    fi
+
+    local source_file="$DOTFILES_DIR/shell/e"
+    local target_dir="$HOME/bin"
+    local target_file="$target_dir/e"
+
+    if [[ ! -f "$source_file" ]]; then
+        log_warning "⚠️  'e' editor launcher script not found at $source_file, skipping..."
+        return 0
+    fi
+
+    log_info "🔗 Setting up 'e' editor launcher command..."
+
+    # Ensure ~/bin directory exists
+    mkdir -p "$target_dir"
+
+    # Backup existing file if present (not a symlink pointing to the right place)
+    if [[ -e "$target_file" ]]; then
+        if [[ -L "$target_file" ]] && [[ "$(readlink "$target_file")" == "$source_file" ]]; then
+            log_info "✅ 'e' editor launcher already set up correctly"
+            return 0
+        fi
+        local timestamp
+        timestamp=$(date +"%Y%m%d_%H%M%S")
+        local backup_path="${target_file}.bak.${timestamp}"
+        log_info "📦 Backing up existing file to: $backup_path"
+        mv "$target_file" "$backup_path"
+    fi
+
+    ln -s "$source_file" "$target_file"
+    log_success "✅ 'e' editor launcher set up: $target_file -> $source_file"
+}
+
+# =============================================================================
+# GIT SHIMS SETUP (1Password SSH Signing)
+# =============================================================================
+
+detect_platform() {
+    local kernel
+    kernel=$(uname -s)
+
+    case "$kernel" in
+        Linux*)
+            if grep -qi microsoft /proc/version 2>/dev/null; then
+                echo "wsl"
+            else
+                echo "linux"
+            fi
+            ;;
+        Darwin*)
+            echo "macos"
+            ;;
+        MINGW*|MSYS*|CYGWIN*)
+            echo "windows"
+            ;;
+        *)
+            echo "unknown"
+            ;;
+    esac
+}
+
+# Returns the path to 1Password SSH signer binary if it exists, or fails
+resolve_op_signer_binary() {
+    local platform="$1"
+    local binary_path=""
+
+    case "$platform" in
+        wsl)
+            log_debug "Environment: WSL2 detected. Resolving Windows user..."
+            
+            if ! command_exists cmd.exe; then
+                log_warning "cmd.exe not found. Is this a valid WSL environment?"
+                return 1
+            fi
+            
+            local win_user
+            win_user=$(cmd.exe /c "echo %USERNAME%" 2>/dev/null | tr -d '\r')
+
+            if [[ -z "$win_user" ]]; then
+                log_warning "Failed to detect Windows username."
+                return 1
+            fi
+
+            binary_path="/mnt/c/Users/${win_user}/AppData/Local/Microsoft/WindowsApps/op-ssh-sign-wsl.exe"
+            ;;
+
+        linux)
+            log_debug "Environment: Native Linux detected."
+            binary_path="/opt/1Password/op-ssh-sign"
+            ;;
+
+        macos)
+            log_debug "Environment: macOS detected."
+            binary_path="/Applications/1Password.app/Contents/MacOS/op-ssh-sign"
+            ;;
+
+        windows)
+            log_debug "Environment: Windows (Git Bash/Cygwin) detected."
+            binary_path="${USERPROFILE:-}/AppData/Local/Microsoft/WindowsApps/op-ssh-sign.exe"
+            ;;
+            
+        *)
+            log_warning "Unsupported platform for git shims: $platform"
+            return 1
+            ;;
+    esac
+
+    # Validate the binary exists before returning
+    if [[ ! -f "$binary_path" ]]; then
+        log_warning "1Password signer binary not found at: $binary_path"
+        log_info "ℹ️  Please ensure 1Password is installed and SSH signing is enabled"
+        return 1
+    fi
+
+    echo "$binary_path"
+}
+
+setup_git_shims() {
+    if [[ "$SKIP_GIT_SHIMS" == "true" ]]; then
+        log_info "⏭️  Skipping git shims setup (DOTFILES_SKIP_GIT_SHIMS=true)"
+        return 0
+    fi
+
+    # Skip in containers - 1Password isn't typically available
+    if [[ "$DOTFILES_IN_CONTAINER" == "true" ]]; then
+        log_info "⏭️  Skipping git shims setup (running in container)"
+        return 0
+    fi
+
+    local shim_dir="$HOME/bin"
+    local shim_name="op-signer"
+    local shim_path="$shim_dir/$shim_name"
+
+    log_info "🔗 Setting up git shims for 1Password SSH signing..."
+
+    local platform
+    platform=$(detect_platform)
+    
+    local source_binary
+    if ! source_binary=$(resolve_op_signer_binary "$platform"); then
+        # Warning already logged in resolve_op_signer_binary
+        return 0
+    fi
+
+    # Ensure shim directory exists
+    mkdir -p "$shim_dir"
+
+    # Backup existing file if present (not a symlink pointing to the right place)
+    if [[ -e "$shim_path" ]]; then
+        if [[ -L "$shim_path" ]] && [[ "$(readlink "$shim_path")" == "$source_binary" ]]; then
+            log_info "✅ Git shim already exists and is correct"
+            return 0
+        fi
+        local timestamp
+        timestamp=$(date +"%Y%m%d_%H%M%S")
+        local backup_path="${shim_path}.bak.${timestamp}"
+        log_info "📦 Backing up existing shim to: $backup_path"
+        mv "$shim_path" "$backup_path"
+    fi
+
+    # Create symlink
+    ln -s "$source_binary" "$shim_path"
+    log_success "✅ Git shim created: $shim_path -> $source_binary"
+
+    # Check if shim directory is in PATH
+    if [[ ":$PATH:" != *":$shim_dir:"* ]]; then
+        log_warning "⚠️  $shim_dir is not in your PATH"
+        log_info "ℹ️  Add to your shell profile: export PATH=\"\$HOME/bin:\$PATH\""
+    fi
+}
+
+# =============================================================================
+# SSH CONFIG FOR 1PASSWORD
+# =============================================================================
+
+setup_ssh_config() {
+    if [[ "$SKIP_SSH_CONFIG" == "true" ]]; then
+        log_info "⏭️  Skipping SSH config setup (DOTFILES_SKIP_SSH_CONFIG=true)"
+        return 0
+    fi
+
+    # Only run on native Linux/macOS (not WSL, not containers)
+    if [[ "$DOTFILES_IN_CONTAINER" == "true" ]]; then
+        log_info "⏭️  Skipping SSH config setup (running in container)"
+        return 0
+    fi
+    if [[ "$DOTFILES_IN_WSL" == "true" ]]; then
+        log_info "⏭️  Skipping SSH config setup (WSL uses Windows 1Password agent)"
+        return 0
+    fi
+
+    log_info "🔗 Setting up SSH config for 1Password..."
+
+    local agent_sock="$HOME/.1password/agent.sock"
+    local source_file="$DOTFILES_DIR/shell/ssh-1password.config"
+    local target_file="$HOME/.ssh/config"
+    
+    # Check if 1Password SSH agent socket exists
+    if [[ ! -S "$agent_sock" ]]; then
+        log_warning "⚠️  1Password SSH agent socket not found at $agent_sock"
+        log_info "ℹ️  Please ensure 1Password is installed and SSH agent is enabled"
+        return 0
+    fi
+
+    # Check if source config exists
+    if [[ ! -f "$source_file" ]]; then
+        log_warning "⚠️  SSH config source not found at $source_file"
+        return 0
+    fi
+
+    # Ensure .ssh directory exists
+    mkdir -p "$HOME/.ssh"
+
+    # Backup existing file if present (not a symlink pointing to the right place)
+    if [[ -e "$target_file" ]]; then
+        if [[ -L "$target_file" ]] && [[ "$(readlink "$target_file")" == "$source_file" ]]; then
+            log_info "✅ SSH config already symlinked correctly"
+            return 0
+        fi
+        local timestamp
+        timestamp=$(date +"%Y%m%d_%H%M%S")
+        local backup_file="${target_file}.bak.${timestamp}"
+        log_info "📦 Backing up existing SSH config to: $backup_file"
+        mv "$target_file" "$backup_file"
+    fi
+
+    # Create symlink
+    ln -s "$source_file" "$target_file"
+    log_success "✅ SSH config symlinked: $target_file -> $source_file"
+}
+
+# =============================================================================
 # MAIN INSTALLATION ORCHESTRATION
 # =============================================================================
 
@@ -477,6 +719,9 @@ main() {
     timed "Zsh plugins" install_zsh_plugins
     timed "Shell configs" link_shell_configs
     timed "VS Code configs" link_vscode_configs
+    timed "Editor launcher" setup_editor_launcher
+    timed "Git shims" setup_git_shims
+    timed "SSH config" setup_ssh_config
     
     local total_elapsed=$((SECONDS - total_start))
     log_success "🎉 Dotfiles installation complete! (total: $(format_duration $total_elapsed))"
@@ -484,10 +729,20 @@ main() {
     log_info "ℹ️  Next steps:"
     log_info "   1. Restart your shell or run: source ~/.zshrc"
     log_info "   2. Reload VS Code window to apply settings (if using VS Code)"
+    log_info "   3. Ensure ~/bin is in your PATH"
     log_info ""
     log_info "💡 To customize this installation:"
     log_info "   - Set environment variables (DOTFILES_SKIP_* flags)"
     log_info "   - Edit $DOTFILES_DIR/shell/install.sh"
+    log_info ""
+    log_info "📋 Available skip flags:"
+    log_info "   DOTFILES_SKIP_HOMEBREW=true"
+    log_info "   DOTFILES_SKIP_CLI_TOOLS=true"
+    log_info "   DOTFILES_SKIP_ZSH_PLUGINS=true"
+    log_info "   DOTFILES_SKIP_VSCODE=true"
+    log_info "   DOTFILES_SKIP_EDITOR_LAUNCHER=true"
+    log_info "   DOTFILES_SKIP_GIT_SHIMS=true"
+    log_info "   DOTFILES_SKIP_SSH_CONFIG=true"
 }
 
 # Execute main function
