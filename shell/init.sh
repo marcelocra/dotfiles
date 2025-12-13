@@ -160,22 +160,22 @@ configure_exports() {
     export STORYBOOK_DISABLE_TELEMETRY=1
     export HOMEBREW_NO_ANALYTICS=1
     export HOMEBREW_NO_AUTO_UPDATE=1
-    
+
     # User bin directories.
     add_to_path "$HOME/bin"
     add_to_path "$HOME/.local/bin"
-    
+
     # Pnpm global store.
     local pnpm_home="$HOME/.local/share/pnpm"
     if command_exists pnpm || [[ -d "$pnpm_home" ]]; then
         export PNPM_HOME="$pnpm_home"
         add_to_path "$PNPM_HOME"
     fi
-    
+
     # Homebrew (Linux).
     local brew_path="/home/linuxbrew/.linuxbrew"
     [[ -d "$brew_path" ]] && eval "$($brew_path/bin/brew shellenv)"
-    
+
     # Node Version Manager (nvm).
     local nvm_dir="$HOME/.nvm"
     if [[ -d "$nvm_dir" ]]; then
@@ -183,7 +183,7 @@ configure_exports() {
         [[ -s "$NVM_DIR/nvm.sh" ]] && source "$NVM_DIR/nvm.sh"
         [[ -s "$NVM_DIR/bash_completion" ]] && source "$NVM_DIR/bash_completion"
     fi
-    
+
     # Bun JavaScript runtime.
     local bun_dir="$HOME/.bun"
     if [[ -d "$bun_dir" ]]; then
@@ -191,24 +191,24 @@ configure_exports() {
         add_to_path "$BUN_INSTALL/bin"
         [[ -s "$BUN_INSTALL/_bun" ]] && source "$BUN_INSTALL/_bun"
     fi
-    
+
     # Deno JavaScript runtime.
     local deno_dir="$HOME/.deno"
     if [[ -d "$deno_dir" ]]; then
         export DENO_INSTALL="$deno_dir"
         add_to_path "$DENO_INSTALL/bin"
     fi
-    
+
     # Rust / Cargo.
     add_to_path "$HOME/.cargo/bin"
-    
+
     # Go language.
     local go_path="$HOME/go"
     if [[ -d "$go_path/bin" ]]; then
         export GOPATH="$go_path"
         add_to_path "$GOPATH/bin"
     fi
-    
+
     # Ruby / rbenv.
     local rbenv_bin="$HOME/.rbenv/bin/rbenv"
     if [[ -f "$rbenv_bin" ]]; then
@@ -218,14 +218,14 @@ configure_exports() {
         add_to_path "$GEM_HOME/bin"
         eval "$(~/.rbenv/bin/rbenv init - zsh)"
     fi
-    
+
     # Haskell / GHCup.
     [[ -f "$HOME/.ghcup/env" ]] && source "$HOME/.ghcup/env"
-    
+
     # OCaml / opam.
     local opam_init="$HOME/.opam/opam-init/init.zsh"
     [[ -r "$opam_init" ]] && source "$opam_init" >/dev/null 2>&1
-    
+
     # .NET SDK.
     if command_exists dotnet; then
         export DOTNET_ROOT="$(dirname $(realpath $(command -v dotnet)))"
@@ -234,7 +234,7 @@ configure_exports() {
         alias d='dotnet'
         alias dp='dotnet paket'
     fi
-    
+
     # Flutter SDK.
     local flutter_dir="$HOME/bin/flutter"
     if [[ -d "$flutter_dir" ]]; then
@@ -242,19 +242,19 @@ configure_exports() {
         export FLUTTER_ROOT="$FLUTTER_SDK/bin"
         add_to_path "$FLUTTER_ROOT"
     fi
-    
+
     # Fly.io CLI.
     local fly_dir="$HOME/.fly"
     if [[ -d "$fly_dir" ]]; then
         export FLYCTL_INSTALL="$fly_dir"
         add_to_path "$FLYCTL_INSTALL/bin"
     fi
-    
+
     # GitHub Copilot CLI aliases.
     if command_exists gh; then
         eval "$(gh copilot alias -- zsh 2>/dev/null)"
     fi
-    
+
     # Angular CLI completions.
     if command_exists ng; then
         source <(ng completion script 2>/dev/null)
@@ -738,9 +738,9 @@ alias ve='x-venv-activate'
 # Expects key at: ~/.ssh/id_ed25519
 #
 # Example:
-#   load_ssh  # Start agent and load key
+#   load-ssh  # Start agent and load key
 # TODO: allow providing a custom key path?
-load_ssh() {
+load-ssh() {
     eval "$(ssh-agent -s)"
     ssh-add ~/.ssh/id_ed25519
 }
@@ -771,7 +771,7 @@ x-help() {
 configure_history() {
     # Determine history directory based on environment
     local history_base_dir=""
-    
+
     # 1. Check for explicit MCRA_HISTORY_DIR (highest priority - can be set in .zshrc/.bashrc or devcontainer)
     if [[ -n "${MCRA_HISTORY_DIR:-}" ]]; then
         history_base_dir="$MCRA_HISTORY_DIR"
@@ -785,14 +785,14 @@ configure_history() {
             history_base_dir="/mnt/c/Users/$win_user/OneDrive - Personal/shell_histories"
         fi
     fi
-    
+
     # 3. Fallback to local directory
     if [[ -z "$history_base_dir" ]] || [[ ! -d "$(dirname "$history_base_dir")" ]]; then
         history_base_dir="$HOME/.shell_histories"
     fi
-    
+
     mkdir -p "$history_base_dir"
-    
+
     # Create unique identifier for this shell instance
     # Use workspace name if available, otherwise hostname
     local history_id="${HOSTNAME:-$(hostname)}"
@@ -800,11 +800,11 @@ configure_history() {
         local workspace_name="$(basename "$WORKSPACE_FOLDER")"
         history_id="${workspace_name}_${history_id}"
     fi
-    
+
     # Export for use by configure_zsh and configure_bash
     export MCRA_HISTORY_BASE_DIR="$history_base_dir"
     export MCRA_HISTORY_ID="$history_id"
-    
+
     log_debug "History base dir: $MCRA_HISTORY_BASE_DIR"
     log_debug "History ID: $MCRA_HISTORY_ID"
 }
@@ -1107,7 +1107,7 @@ main() {
     else
         script_dir="$(dirname "$0")"
     fi
-    
+
     local extra_functions_file="$script_dir/x-functions.sh"
     if [[ -f "$extra_functions_file" ]]; then
         source "$extra_functions_file"
