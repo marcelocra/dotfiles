@@ -106,6 +106,43 @@ timed() {
     return $exit_code
 }
 
+# Creates a symlink, backing up any existing file with a timestamp.
+# Returns 0 if symlink was created or already correct, 1 if source doesn't exist.
+# Usage: safe_symlink <source> <target>
+safe_symlink() {
+    local source="$1"
+    local target="$2"
+
+    # Check if source exists
+    if [[ ! -e "$source" ]]; then
+        log_warning "⚠️  Source not found: $source"
+        return 1
+    fi
+
+    # Ensure target directory exists
+    mkdir -p "$(dirname "$target")"
+
+    # Check if target already exists
+    if [[ -e "$target" ]]; then
+        # If it's already a correct symlink, we're done
+        if [[ -L "$target" ]] && [[ "$(readlink "$target")" == "$source" ]]; then
+            log_debug "Symlink already correct: $target -> $source"
+            return 0
+        fi
+        # Back up existing file with timestamp
+        local timestamp
+        timestamp=$(date +"%Y%m%d_%H%M%S")
+        local backup="${target}.bak.${timestamp}"
+        log_info "📦 Backing up existing file to: $backup"
+        mv "$target" "$backup"
+    fi
+
+    # Create the symlink
+    ln -s "$source" "$target"
+    log_debug "Created symlink: $target -> $source"
+    return 0
+}
+
 # =============================================================================
 # ENVIRONMENT DETECTION
 # =============================================================================
@@ -465,34 +502,13 @@ setup_editor_launcher() {
     fi
 
     local source_file="$DOTFILES_DIR/shell/e"
-    local target_dir="$HOME/bin"
-    local target_file="$target_dir/e"
-
-    if [[ ! -f "$source_file" ]]; then
-        log_warning "⚠️  'e' editor launcher script not found at $source_file, skipping..."
-        return 0
-    fi
+    local target_file="$HOME/bin/e"
 
     log_info "🔗 Setting up 'e' editor launcher command..."
 
-    # Ensure ~/bin directory exists
-    mkdir -p "$target_dir"
-
-    # Backup existing file if present (not a symlink pointing to the right place)
-    if [[ -e "$target_file" ]]; then
-        if [[ -L "$target_file" ]] && [[ "$(readlink "$target_file")" == "$source_file" ]]; then
-            log_info "✅ 'e' editor launcher already set up correctly"
-            return 0
-        fi
-        local timestamp
-        timestamp=$(date +"%Y%m%d_%H%M%S")
-        local backup_path="${target_file}.bak.${timestamp}"
-        log_info "📦 Backing up existing file to: $backup_path"
-        mv "$target_file" "$backup_path"
+    if safe_symlink "$source_file" "$target_file"; then
+        log_success "✅ 'e' editor launcher set up"
     fi
-
-    ln -s "$source_file" "$target_file"
-    log_success "✅ 'e' editor launcher set up: $target_file -> $source_file"
 }
 
 # =============================================================================
@@ -591,9 +607,7 @@ setup_git_shims() {
         return 0
     fi
 
-    local shim_dir="$HOME/bin"
-    local shim_name="op-signer"
-    local shim_path="$shim_dir/$shim_name"
+    local shim_path="$HOME/bin/op-signer"
 
     log_info "🔗 Setting up git shims for 1Password SSH signing..."
 
@@ -606,29 +620,13 @@ setup_git_shims() {
         return 0
     fi
 
-    # Ensure shim directory exists
-    mkdir -p "$shim_dir"
-
-    # Backup existing file if present (not a symlink pointing to the right place)
-    if [[ -e "$shim_path" ]]; then
-        if [[ -L "$shim_path" ]] && [[ "$(readlink "$shim_path")" == "$source_binary" ]]; then
-            log_info "✅ Git shim already exists and is correct"
-            return 0
-        fi
-        local timestamp
-        timestamp=$(date +"%Y%m%d_%H%M%S")
-        local backup_path="${shim_path}.bak.${timestamp}"
-        log_info "📦 Backing up existing shim to: $backup_path"
-        mv "$shim_path" "$backup_path"
+    if safe_symlink "$source_binary" "$shim_path"; then
+        log_success "✅ Git shim created: op-signer -> $source_binary"
     fi
 
-    # Create symlink
-    ln -s "$source_binary" "$shim_path"
-    log_success "✅ Git shim created: $shim_path -> $source_binary"
-
     # Check if shim directory is in PATH
-    if [[ ":$PATH:" != *":$shim_dir:"* ]]; then
-        log_warning "⚠️  $shim_dir is not in your PATH"
+    if [[ ":$PATH:" != *":$HOME/bin:"* ]]; then
+        log_warning "⚠️  ~/bin is not in your PATH"
         log_info "ℹ️  Add to your shell profile: export PATH=\"\$HOME/bin:\$PATH\""
     fi
 }
@@ -666,31 +664,9 @@ setup_ssh_config() {
         return 0
     fi
 
-    # Check if source config exists
-    if [[ ! -f "$source_file" ]]; then
-        log_warning "⚠️  SSH config source not found at $source_file"
-        return 0
+    if safe_symlink "$source_file" "$target_file"; then
+        log_success "✅ SSH config symlinked"
     fi
-
-    # Ensure .ssh directory exists
-    mkdir -p "$HOME/.ssh"
-
-    # Backup existing file if present (not a symlink pointing to the right place)
-    if [[ -e "$target_file" ]]; then
-        if [[ -L "$target_file" ]] && [[ "$(readlink "$target_file")" == "$source_file" ]]; then
-            log_info "✅ SSH config already symlinked correctly"
-            return 0
-        fi
-        local timestamp
-        timestamp=$(date +"%Y%m%d_%H%M%S")
-        local backup_file="${target_file}.bak.${timestamp}"
-        log_info "📦 Backing up existing SSH config to: $backup_file"
-        mv "$target_file" "$backup_file"
-    fi
-
-    # Create symlink
-    ln -s "$source_file" "$target_file"
-    log_success "✅ SSH config symlinked: $target_file -> $source_file"
 }
 
 # =============================================================================
