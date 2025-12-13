@@ -264,7 +264,7 @@
   // "editor.fontFamily": "JetBrainsMono Nerd Font Mono",
   // "editor.fontLigatures": "'zero' 1, 'ss19' 1",
   // ---------------------------------------------------------------------------
-  "editor.fontFamily": "Cascadia Code NF",
+  "editor.fontFamily": "Cascadia Mono NF",
   "editor.fontLigatures": "'calt' 1, 'ss01' 1, 'ss02' 0, 'ss03' 0, 'ss19' 1, 'ss20' 1",
   "editor.fontWeight": "350", // Light.
   // ---------------------------------------------------------------------------
@@ -392,7 +392,8 @@
     "*.svx": "markdown",
     "*.vue": "vue",
     "json5": "jsonc",
-    "vimrc": "vimrc"
+    "vimrc": "vimrc",
+    "justfile": "makefile"
   },
   "files.autoSave": "afterDelay",
   "files.autoSaveDelay": 1000,

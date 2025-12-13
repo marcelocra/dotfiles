@@ -18,7 +18,7 @@
 [user]
     name = Marcelo Almeida
     email = 2532492+marcelocra@users.noreply.github.com
-    signingkey = ~/.ssh/id_ed25519.pub
+    signingkey = ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAID6d8g8UxJjq29iMNyYyzvvHVmVyN+MCY5XKvI0XJWOv
 
 [commit]
     gpgsign = true
@@ -213,6 +213,7 @@
 
     # This file should only exist in Windows systems.
     path = .gitconfig.windows.gitconfig
+    path = .gitconfig.wsl2.gitconfig
 
     # This file should only exist in Unix systems (Mac, Debian, Ubuntu, etc).
     path = .gitconfig.unix.gitconfig
