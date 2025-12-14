@@ -118,10 +118,6 @@
   "chat.editor.wordWrap": "on",
   "chat.fontFamily": "Atkinson Hyperlegible Next",
   "chat.fontSize": 13,
-  "chat.instructionsFilesLocations": {
-    ".github/instructions": true,
-    "~/.aitk/instructions/": true
-  },
   "chat.tools.terminal.autoApprove": {
     "/^column\\b.*-c\\s+[0-9]{4,}/": false,
     "/^Compare-[a-z0-9]/i": true,
@@ -393,7 +389,8 @@
     "*.vue": "vue",
     "json5": "jsonc",
     "vimrc": "vimrc",
-    "justfile": "makefile"
+    "justfile": "makefile",
+    "ssh*.config": "ssh_config"
   },
   "files.autoSave": "afterDelay",
   "files.autoSaveDelay": 1000,
