@@ -496,27 +496,27 @@ setup_editor_launcher() {
 # =============================================================================
 
 detect_platform() {
-    local kernel
-    kernel=$(uname -s)
+    # Ensure environment flags are available
+    detect_environment
 
-    case "$kernel" in
-        Linux*)
-            if grep -qi microsoft /proc/version 2>/dev/null; then
-                echo "wsl"
-            else
-                echo "linux"
-            fi
-            ;;
-        Darwin*)
-            echo "macos"
-            ;;
-        MINGW*|MSYS*|CYGWIN*)
-            echo "windows"
-            ;;
-        *)
-            echo "unknown"
-            ;;
-    esac
+    # IMPORTANT: This check MUST be before WSL detection, because WSL is also
+    # Linux and we don't want to consider WSL and container the same.
+    # When running in remote VS Code or containers, still treat as linux.
+    if [[ "${DOTFILES_IN_CONTAINER:-false}" == "true" ]]; then
+        echo "linux"
+        return 0
+    fi
+
+    # Determine platform using only DOTFILES_* environment flags
+    if [[ "${DOTFILES_IN_WSL:-false}" == "true" ]]; then
+        echo "wsl"
+        return 0
+    fi
+
+    # If not WSL and not container, default to linux for native Linux usage
+    # Note: macOS/windows detection isn't available via DOTFILES_* flags here,
+    # but we preserve the set of possible outputs by falling back to linux.
+    echo "linux"
 }
 
 # Returns the path to 1Password SSH signer binary if it exists, or fails
@@ -579,6 +579,8 @@ setup_git_ssh_shim() {
     local platform
     platform=$(detect_platform)
     
+    log_debug "🔗 Setting up git-ssh shim for platform: $platform"
+
     # Determine which SSH command to use based on platform
     local ssh_cmd
     case "$platform" in
@@ -594,6 +596,8 @@ setup_git_ssh_shim() {
     local ssh_binary
     ssh_binary=$(command -v "$ssh_cmd" 2>/dev/null)
     
+    log_debug "Using SSH command: $ssh_cmd -> $ssh_binary"
+    
     if [[ ! "$ssh_binary" ]]; then
         log_warning "⚠️  $ssh_cmd not found in PATH, skipping git-ssh shim"
         return 1
@@ -604,6 +608,7 @@ setup_git_ssh_shim() {
         return 0
     fi
     
+    log_info "ℹ️  Could not create git-ssh shim"
     return 1
 }
 
@@ -617,17 +622,24 @@ setup_op_signer_shim() {
     local platform
     platform=$(detect_platform)
     
+    log_debug "🔗 Setting up op-signer shim for platform: $platform"
+
     local source_binary
+    # Check if any of the required platform binaries exist.
     if ! source_binary=$(resolve_op_signer_binary "$platform"); then
-        # Warning already logged in resolve_op_signer_binary
+        # Warning already logged in resolve_op_signer_binary.
         return 1
     fi
+
+    log_debug "Using op-signer binary: $source_binary"
     
     if safe_symlink "$source_binary" "$HOME/bin/op-signer"; then
         log_success "✅ Op-signer shim created: op-signer -> $source_binary"
         return 0
     fi
     
+    # Binary not available and couldn't create symlink.
+    log_info "ℹ️  Could not create op-signer shim"
     return 1
 }
 
