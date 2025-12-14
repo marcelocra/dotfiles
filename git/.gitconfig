@@ -14,6 +14,9 @@
     preloadindex = true
     # Use multiple threads when available
     fscache = true
+    # Uses the git-ssh shim created by shell/install.sh
+    # Points to ssh.exe on WSL/Windows, ssh on Linux/macOS
+    sshCommand = git-ssh
 
 [user]
     name = Marcelo Almeida

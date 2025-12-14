@@ -575,34 +575,72 @@ resolve_op_signer_binary() {
     echo "$binary_path"
 }
 
-setup_git_shims() {
-    if [[ "$SKIP_GIT_SHIMS" == "true" ]]; then
-        log_info "⏭️  Skipping git shims setup (DOTFILES_SKIP_GIT_SHIMS=true)"
+setup_git_ssh_shim() {
+    local platform
+    platform=$(detect_platform)
+    
+    # Determine which SSH command to use based on platform
+    local ssh_cmd
+    case "$platform" in
+        wsl|windows)
+            ssh_cmd="ssh.exe"
+            ;;
+        *)
+            ssh_cmd="ssh"
+            ;;
+    esac
+    
+    # Find the SSH binary in PATH
+    local ssh_binary
+    ssh_binary=$(command -v "$ssh_cmd" 2>/dev/null)
+    
+    if [[ ! "$ssh_binary" ]]; then
+        log_warning "⚠️  $ssh_cmd not found in PATH, skipping git-ssh shim"
+        return 1
+    fi
+    
+    if safe_symlink "$ssh_binary" "$HOME/bin/git-ssh"; then
+        log_success "✅ Git SSH shim created: git-ssh -> $ssh_binary"
         return 0
     fi
+    
+    return 1
+}
 
+setup_op_signer_shim() {
     # Skip in containers - 1Password isn't typically available
     if [[ "$DOTFILES_IN_CONTAINER" == "true" ]]; then
-        log_info "⏭️  Skipping git shims setup (running in container)"
+        log_debug "Skipping op-signer shim (running in container)"
         return 0
     fi
-
-    local shim_path="$HOME/bin/op-signer"
-
-    log_info "🔗 Setting up git shims for 1Password SSH signing..."
-
+    
     local platform
     platform=$(detect_platform)
     
     local source_binary
     if ! source_binary=$(resolve_op_signer_binary "$platform"); then
         # Warning already logged in resolve_op_signer_binary
+        return 1
+    fi
+    
+    if safe_symlink "$source_binary" "$HOME/bin/op-signer"; then
+        log_success "✅ Op-signer shim created: op-signer -> $source_binary"
+        return 0
+    fi
+    
+    return 1
+}
+
+setup_git_shims() {
+    if [[ "$SKIP_GIT_SHIMS" == "true" ]]; then
+        log_info "⏭️  Skipping git shims setup (DOTFILES_SKIP_GIT_SHIMS=true)"
         return 0
     fi
 
-    if safe_symlink "$source_binary" "$shim_path"; then
-        log_success "✅ Git shim created: op-signer -> $source_binary"
-    fi
+    log_info "🔗 Setting up git shims..."
+
+    setup_git_ssh_shim
+    setup_op_signer_shim
 
     # Check if shim directory is in PATH
     if [[ ":$PATH:" != *":$HOME/bin:"* ]]; then
