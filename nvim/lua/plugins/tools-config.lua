@@ -1,11 +1,14 @@
 return {
   {
-    "williamboman/mason.nvim",
+    "mason-org/mason.nvim",
     opts = {
       ensure_installed = {
         -- Tools installed by default (I think?).
         "stylua",
         "shfmt",
+
+        -- TODO: Before using, check the origin. Seems like a defunct project.
+        -- "shellcheck",
 
         -- -- Static Type Checker for Python, by Microsoft.
         -- -- https://github.com/microsoft/pyright
