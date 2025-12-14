@@ -1,14 +1,15 @@
 #!/usr/bin/env pwsh
 # Symlinks VSCode settings from dotfiles to the editor's User directory.
-# Supports VSCode, VSCode Insiders, Cursor, and Kiro. Backs up existing files.
+# Supports VSCode, VSCode Insiders, Cursor, Kiro, and Antigravity. Backs up existing files.
 # Requires Administrator privileges on Windows for symlinks.
 
 param(
-    [ValidateSet("code", "insiders", "cursor", "kiro")]
+    [ValidateSet("code", "insiders", "cursor", "kiro", "antigravity")]
     [string]$Editor = "code",
     [switch]$Insiders = $false,  # Legacy support
     [switch]$Cursor = $false,    # Legacy support
     [switch]$Kiro = $false,      # Legacy support
+    [switch]$Antigravity = $false,  # Legacy support
     [string]$DotfilesPath = "$HOME\prj\dotfiles\apps\vscode\User",
     [switch]$Help = $false
 )
@@ -18,10 +19,11 @@ if ($Help) {
 Usage: .\install.ps1 [OPTIONS]
 
 Options:
-  -Editor <name>   Editor to configure: code, insiders, cursor, kiro (default: code)
+  -Editor <name>   Editor to configure: code, insiders, cursor, kiro, antigravity (default: code)
   -Insiders        Shortcut for -Editor insiders
   -Cursor          Shortcut for -Editor cursor
   -Kiro            Shortcut for -Editor kiro
+  -Antigravity     Shortcut for -Editor antigravity
   -DotfilesPath    Path to dotfiles User directory (default: $HOME\prj\dotfiles\apps\vscode\User)
   -Help            Show this help
 "@
@@ -32,6 +34,7 @@ Options:
 if ($Insiders) { $Editor = "insiders" }
 if ($Cursor) { $Editor = "cursor" }
 if ($Kiro) { $Editor = "kiro" }
+if ($Antigravity) { $Editor = "antigravity" }
 
 # Determine User directory based on editor
 $userPath = switch ($Editor) {
@@ -39,12 +42,14 @@ $userPath = switch ($Editor) {
     "insiders" { "$env:APPDATA\Code - Insiders\User" }
     "cursor"   { "$env:APPDATA\Cursor\User" }
     "kiro"     { "$env:APPDATA\Kiro\User" }
+    "antigravity" { "$env:APPDATA\Antigravity\User" }
 }
 $edition = switch ($Editor) {
     "code"     { "VSCode" }
     "insiders" { "VSCode Insiders" }
     "cursor"   { "Cursor" }
     "kiro"     { "Kiro" }
+    "antigravity" { "Antigravity" }
 }
 
 Write-Host "Setting up $edition configurations..." -ForegroundColor Cyan
