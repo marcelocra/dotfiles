@@ -385,11 +385,9 @@ link_shell_configs() {
         echo "$init_source" >> "$bashrc"
     fi
 
-    # TODO: Apply the safe_symlink function? Review all symlinks in this file.
     # .tmux.conf - symlink if exists in dotfiles
     if [[ -f "$DOTFILES_DIR/shell/.tmux.conf" ]]; then
-        ln -sf "$DOTFILES_DIR/shell/.tmux.conf" "$HOME/.tmux.conf"
-        log_debug "Symlinked .tmux.conf"
+        safe_symlink "$DOTFILES_DIR/shell/.tmux.conf" "$HOME/.tmux.conf"
     fi
 
     log_success "✅ Shell configuration symlinks created"
@@ -462,32 +460,13 @@ link_vscode_configs() {
     log_info "📝 Linking VS Code configs to $vscode_dir"
 
     # Settings
-    local settings_file="$DOTFILES_DIR/apps/vscode/User/settings.json"
-    local keybindings_file="$DOTFILES_DIR/apps/vscode/User/keybindings.json"
-    if [[ -f "$settings_file" ]]; then
-        ln -sf "$settings_file" "$vscode_dir/settings.json"
-        log_debug "Symlinked settings.json"
-    else
-        log_warning "⚠️  settings.json not found at $settings_file"
-    fi
+    safe_symlink "$DOTFILES_DIR/apps/vscode/User/settings.json" "$vscode_dir/settings.json"
 
     # Keybindings
-    if [[ -f "$keybindings_file" ]]; then
-        ln -sf "$keybindings_file" "$vscode_dir/keybindings.json"
-        log_debug "Symlinked keybindings.json"
-    else
-        log_warning "⚠️  keybindings.json not found at $keybindings_file"
-    fi
+    safe_symlink "$DOTFILES_DIR/apps/vscode/User/keybindings.json" "$vscode_dir/keybindings.json"
 
     # Snippets
-    local snippets_dir="$DOTFILES_DIR/apps/vscode/User/snippets"
-    if [[ -d "$snippets_dir" ]]; then
-        mkdir -p "$vscode_dir/snippets"
-        ln -sf "$snippets_dir" "$vscode_dir/snippets"
-        log_debug "Symlinked snippets directory"
-    else
-        log_warning "⚠️  snippets directory not found at $snippets_dir"
-    fi
+    safe_symlink "$DOTFILES_DIR/apps/vscode/User/snippets" "$vscode_dir/snippets"
 
     log_success "✅ VS Code configs symlinked"
 }
