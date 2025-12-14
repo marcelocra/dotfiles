@@ -385,6 +385,7 @@ link_shell_configs() {
         echo "$init_source" >> "$bashrc"
     fi
 
+    # TODO: Apply the safe_symlink function? Review all symlinks in this file.
     # .tmux.conf - symlink if exists in dotfiles
     if [[ -f "$DOTFILES_DIR/shell/.tmux.conf" ]]; then
         ln -sf "$DOTFILES_DIR/shell/.tmux.conf" "$HOME/.tmux.conf"
