@@ -11,7 +11,7 @@
 # =============================================================================
 
 # Detects the current execution environment and sets global environment variables.
-# 
+#
 # Exports:
 #   DOTFILES_IN_CONTAINER - "true" if running in a container (Docker/Podman), "false" otherwise
 #   DOTFILES_IN_WSL       - "true" if running in WSL/WSL2, "false" otherwise
@@ -748,6 +748,18 @@ load-ssh() {
 x-help() {
     # TODO: Create this helper command like x-help <function|name|anything> that
     # greps documentation from the ./x-archives.bash file.
+}
+
+x-backup-vscode-folders() {
+    local vscode_archives="$HOME/.vscode-archives"
+    if [[ ! -d "$vscode_archives" ]]; then
+        mkdir -p "$vscode_archives"
+    fi
+
+    mv ~/.vscode-remote-containers* \
+        "$vscode_archives/.vscode-remote-containers.bak.$(x-datetime-for-filename)"
+    mv ~/.vscode-server* \
+        "$vscode_archives/.vscode-server.bak.$(x-datetime-for-filename)"
 }
 
 # Next function marker
