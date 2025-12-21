@@ -150,6 +150,14 @@ safe_symlink() {
 detect_environment() {
     log_debug "Detecting environment..."
 
+    # Check for Bunker env var (passed by setup-golden.bash).
+    if [[ "${DOTFILES_IN_BUNKER:-false}" == "true" ]]; then
+        export DOTFILES_IN_BUNKER="true"
+        log_debug "Environment: DevBunker detected."
+    else
+        export DOTFILES_IN_BUNKER="false"
+    fi
+
     # Container detection
     if [[ -f /.dockerenv ]] || [[ -n "${CONTAINER:-}" ]] || [[ -f /run/.containerenv ]]; then
         export DOTFILES_IN_CONTAINER="true"
@@ -499,10 +507,12 @@ detect_platform() {
     # Ensure environment flags are available
     detect_environment
 
+    # PRIORITY 1: Container OR Bunker
+    # In both cases, we want pure Linux behavior, no Windows interop. 
     # IMPORTANT: This check MUST be before WSL detection, because WSL is also
     # Linux and we don't want to consider WSL and container the same.
     # When running in remote VS Code or containers, still treat as linux.
-    if [[ "${DOTFILES_IN_CONTAINER:-false}" == "true" ]]; then
+    if [[ "${DOTFILES_IN_CONTAINER:-false}" == "true" ]] || [[ "${DOTFILES_IN_BUNKER:-false}" == "true" ]]; then
         echo "linux"
         return 0
     fi
@@ -523,6 +533,26 @@ detect_platform() {
 resolve_op_signer_binary() {
     local platform="$1"
     local binary_path=""
+
+    # BUNKER STRATEGY: 
+    # Since we cannot reach Windows 1Password, we mock the signer.
+    # We point 'op-signer' to 'ssh-keygen'. 
+    # Git calls 'op-signer -Y sign ...', which maps to 'ssh-keygen -Y sign ...'
+    # This works perfectly with standard SSH keys generated inside the Bunker.
+    if [[ "${DOTFILES_IN_BUNKER:-false}" == "true" ]]; then
+        log_debug "Bunker detected: Mocking 1Password signer with native ssh-keygen."
+        
+        local ssh_keygen_path
+        ssh_keygen_path=$(command -v ssh-keygen)
+        
+        if [[ -x "$ssh_keygen_path" ]]; then
+            echo "$ssh_keygen_path"
+            return 0
+        else
+            log_error "ssh-keygen not found! Cannot shim op-signer."
+            return 1
+        fi
+    fi
 
     case "$platform" in
         wsl)
