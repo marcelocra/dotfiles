@@ -1,0 +1,30 @@
+root = true
+
+[*]
+indent_style = space
+indent_size = 2
+insert_final_newline = true
+trim_trailing_whitespace = true
+end_of_line = lf
+charset = utf-8
+spelling_languages = en-US,en,pt-BR,pt
+max_line_length = 120
+
+[*.{lua,toml,yaml,yml,json,jsonc,json5}]
+max_line_length = 80
+
+[*.{fs,fsi,fsx}]
+indent_size = 4
+# Simplifies reordering and adding new items. Details:
+# https://learn.microsoft.com/en-us/dotnet/fsharp/style-guide/formatting#multiline-bracket-formatting-style
+fsharp_multiline_bracket_style = stroustrup
+
+[*.{py,sh,zsh,bash,gitconfig,tmux.conf}]
+indent_size = 4
+max_line_length = 80
+
+[*.{md,markdown,mdx}]
+indent_size = 4
+max_line_length = unset           # Not wrapping lines reduces diffs.
+trim_trailing_whitespace = false  # Double trailing spaces can be used to break lines.
+
