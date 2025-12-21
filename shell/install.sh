@@ -269,17 +269,20 @@ install_fzf() {
 install_brew_packages() {
     log_info "📦 Installing packages via Homebrew..."
 
+    # bat: better cat
+    # babashka: clojure scripting
+    # fd: better find
+    # ripgrep: better grep
+    # ---------- Other tools that might be useful one day. -----------------
+    # "jq"   # JSON processor. Already present in the image I'm using.
+    # "hugo" # Static site generator. I usually prefer Astro or Next.
+    # "eza"  # Better ls. TODO: Compare with exa and decide which to use.
+    # "yq"   # YAML processor. I don't deal that much with yaml files.
     local packages=(
-        "bat"                     # Better cat
-        "borkdude/brew/babashka"  # Clojure scripting
-        "fd"                      # Better find
-        "ripgrep"                 # Better grep
-        # ---------- Other tools that might be useful one day. -----------------
-        # "jq"   # JSON processor. Already present in the image I'm using.
-        # "hugo" # Static site generator. I usually prefer Astro or Next.
-        # "eza"  # Better ls. TODO: Compare with exa and decide which to use.
-        # "yq"   # YAML processor. I don't deal that much with yaml files.
-        
+        "bat"
+        "borkdude/brew/babashka"
+        "fd"
+        "ripgrep"
     )
 
     local to_install=()
