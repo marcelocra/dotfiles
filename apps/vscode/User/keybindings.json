@@ -836,7 +836,7 @@
     //  - hasSymbols: editor.gotoNextSymbolFromResult
     //  - editorHasDefinitionProvider && editorTextFocus: editor.action.revealDefinition
     //  - inReferenceSearchEditor || referenceSearchVisible: goToNextReference
-    "when": "!((hasSymbols) && (inReferenceSearchEditor || referenceSearchVisible) && (editorHasDefinitionProvider && editorTextFocus))"
+    "when": "!((hasSymbols) || (inReferenceSearchEditor || referenceSearchVisible) || (editorHasDefinitionProvider && editorTextFocus))"
   },
   {
     "key": "ctrl+g",
@@ -851,5 +851,39 @@
   {
     "key": "ctrl+alt+s",
     "command": "workbench.action.files.saveWithoutFormatting"
+  },
+  {
+    "key": "ctrl+alt+a",
+    "command": "roo-cline.toggleAutoApprove",
+    "when": "roo-cline.SidebarProvider.active && view.roo-cline.SidebarProvider.visible && roo-cline.SidebarProvider.visible"
+  },
+  {
+    "key": "ctrl+alt+a",
+    "command": "-roo-cline.toggleAutoApprove"
+  },
+  {
+    "key": "alt+i",
+    "command": "amp.agent.toggleVisibility",
+    "when": "amp.primaryShortcuts"
+  },
+  {
+    "key": "ctrl+i",
+    "command": "-amp.agent.toggleVisibility",
+    "when": "amp.primaryShortcuts"
+  },
+  {
+    "key": "ctrl+l",
+    "command": "amp.agent.newThread",
+    "when": "amp.activated"
+  },
+  {
+    "key": "ctrl+l",
+    "command": "-amp.agent.newThread",
+    "when": "amp.primaryShortcuts"
+  },
+  {
+    "key": "ctrl+shift+a",
+    "command": "expandLineSelection",
+    "when": "textInputFocus"
   }
 ]

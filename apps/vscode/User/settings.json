@@ -63,9 +63,7 @@
       "strings": "off"
     },
     "editor.unicodeHighlight.ambiguousCharacters": true,
-    "editor.unicodeHighlight.invisibleCharacters": true,
-    "editor.wordWrap": "bounded",
-    "editor.wordWrapColumn": 80
+    "editor.unicodeHighlight.invisibleCharacters": true
   },
   "[nim][nimble]": {
     "editor.defaultFormatter": "NimLang.nimlang"
@@ -100,7 +98,7 @@
     "editor.defaultFormatter": "redhat.vscode-yaml"
   },
   "@azure.argTenant": "",
-  "accessibility.voice.speechLanguage": "pt-BR",
+  // "accessibility.voice.speechLanguage": "pt-BR",
   "calva.paredit.defaultKeyMap": "original",
   "calva.prettyPrintingOptions": {
     "enabled": true,
@@ -207,6 +205,7 @@
     "Write-Output": true,
     "xargs": false
   },
+  "chat.viewSessions.enabled": false,
   "chatgpt.runCodexInWindowsSubsystemForLinux": true,
   "csharp.suppressBuildAssetsNotification": true,
   "dart.debugExternalPackageLibraries": false,
@@ -218,6 +217,7 @@
   "diffEditor.ignoreTrimWhitespace": false,
   "diffEditor.renderSideBySide": true,
   "docker.dockerPath": "podman",
+  "docker.extension.enableComposeLanguageServer": false,
   "dotfiles.installCommand": "~/prj/dotfiles/shell/install.sh",
   "dotfiles.repository": "marcelocra/dotfiles",
   "dotnetAcquisitionExtension.enableTelemetry": false,
@@ -262,7 +262,8 @@
   // ---------------------------------------------------------------------------
   "editor.fontFamily": "Cascadia Mono NF",
   "editor.fontLigatures": "'calt' 1, 'ss01' 1, 'ss02' 0, 'ss03' 0, 'ss19' 1, 'ss20' 1",
-  "editor.fontWeight": "350", // Light.
+  "editor.fontSize": 13,
+  "editor.fontWeight": "400", // {light: 350, dark: 400}
   // ---------------------------------------------------------------------------
   // "editor.fontFamily": "CommitMono",
   // "editor.fontLigatures": "'ss01' 0, 'ss02' 0, 'ss03' 1, 'ss04' 1, 'ss05' 1, 'cv01' 1, 'cv02' 1, 'cv03' 0, 'cv04' 0, 'cv05' 1, 'cv06' 1, 'cv07' 0, 'cv08' 1, 'cv09' 0, 'cv10' 0, 'cv11' 0",
@@ -330,10 +331,9 @@
   "editor.suggestSelection": "recentlyUsedByPrefix",
   "editor.tabCompletion": "onlySnippets",
   "editor.tabSize": 2,
-  "editor.wordWrap": "bounded",
+  "editor.wordWrap": "off",
   "editor.wordWrapColumn": 120,
   "editor.wrappingIndent": "deepIndent",
-  "editor.z next": "",
   "emmet.excludeLanguages": [
     "markdown"
   ], // prettier-ignore
@@ -388,9 +388,9 @@
     "*.svx": "markdown",
     "*.vue": "vue",
     "json5": "jsonc",
-    "vimrc": "vimrc",
     "justfile": "makefile",
-    "ssh*.config": "ssh_config"
+    "ssh*.config": "ssh_config",
+    "vimrc": "vimrc"
   },
   "files.autoSave": "afterDelay",
   "files.autoSaveDelay": 1000,
@@ -496,7 +496,11 @@
   "python.terminal.executeInFileDir": false,
   "python.terminal.shellIntegration.enabled": false,
   "remote.autoForwardPortsSource": "hybrid",
-  "roo-cline.allowedCommands": ["git log", "git diff", "git show"],
+  "roo-cline.allowedCommands": [
+    "git log",
+    "git diff",
+    "git show"
+  ],
   "roo-cline.deniedCommands": [],
   "rubyLsp.rubyVersionManager": "asdf",
   "ruff.nativeServer": "on",
@@ -624,7 +628,6 @@
   "terminal.integrated.fontFamily": "Cascadia Code NF",
   "terminal.integrated.fontLigatures.enabled": true,
   "terminal.integrated.fontLigatures.featureSettings": "'calt' 1, 'ss01' 1, 'ss19' 1, 'ss20' 0",
-  "terminal.integrated.fontSize": 15,
   "terminal.integrated.fontWeight": "400",
   // ---------------------------------------------------------------------------
   // "terminal.integrated.fontFamily": "Hack Nerd Font Mono",
@@ -718,7 +721,7 @@
   "window.title": "[${rootNameShort}] ${activeEditorMedium}",
   "window.titleBarStyle": "custom",
   "workbench.activityBar.location": "bottom",
-  "workbench.colorTheme": "Quiet Light",
+  "workbench.colorTheme": "Night Owl",
   "workbench.editor.empty.hint": "hidden",
   "workbench.editor.pinnedTabsOnSeparateRow": false,
   "workbench.editorAssociations": {
