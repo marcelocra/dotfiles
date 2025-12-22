@@ -202,7 +202,7 @@ install_homebrew() {
 
     # Install Homebrew using official script
     # Note: For even more security, you could fork the install script and use your fork
-    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+    curl --proto '=https' --tlsv1.2 -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh | bash
 
     # Add brew to current shell session
     if [[ -d "/home/linuxbrew/.linuxbrew" ]]; then
@@ -235,6 +235,13 @@ install_cli_tools() {
     else
         log_warning "⚠️  Homebrew not available, skipping brew package installation"
     fi
+}
+
+install_just() {
+    log_info "📦 Installing just..."
+
+    mkdir -p $HOME/bin
+    curl --proto '=https' --tlsv1.2 -sSf https://just.systems/install.sh | bash -s -- --to $HOME/bin
 }
 
 install_fzf() {
