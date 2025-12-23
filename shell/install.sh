@@ -38,8 +38,8 @@ DOTFILES_DIR="${DOTFILES_DIR:-$HOME/prj/dotfiles}"
 SKIP_HOMEBREW="${DOTFILES_SKIP_HOMEBREW:-true}"
 SKIP_CLI_TOOLS="${DOTFILES_SKIP_CLI_TOOLS:-false}"
 SKIP_ZSH_PLUGINS="${DOTFILES_SKIP_ZSH_PLUGINS:-false}"
-SKIP_VSCODE="${DOTFILES_SKIP_VSCODE:-false}"
-SKIP_EDITOR_LAUNCHER="${DOTFILES_SKIP_EDITOR_LAUNCHER:-false}"
+SKIP_VSCODE="${DOTFILES_SKIP_VSCODE:-true}"
+SKIP_EDITOR_LAUNCHER="${DOTFILES_SKIP_EDITOR_LAUNCHER:-true}"
 SKIP_GIT_SHIMS="${DOTFILES_SKIP_GIT_SHIMS:-false}"
 SKIP_SSH_CONFIG="${DOTFILES_SKIP_SSH_CONFIG:-false}"
 DEBUG="${DOTFILES_DEBUG:-0}"
@@ -202,7 +202,7 @@ install_homebrew() {
 
     # Install Homebrew using official script
     # Note: For even more security, you could fork the install script and use your fork
-    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+    curl --proto '=https' --tlsv1.2 -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh | bash
 
     # Add brew to current shell session
     if [[ -d "/home/linuxbrew/.linuxbrew" ]]; then
@@ -235,6 +235,13 @@ install_cli_tools() {
     else
         log_warning "⚠️  Homebrew not available, skipping brew package installation"
     fi
+}
+
+install_just() {
+    log_info "📦 Installing just..."
+
+    mkdir -p $HOME/bin
+    curl --proto '=https' --tlsv1.2 -sSf https://just.systems/install.sh | bash -s -- --to $HOME/bin
 }
 
 install_fzf() {
