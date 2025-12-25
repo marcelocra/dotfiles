@@ -540,6 +540,9 @@ configure_docker_aliases() {
     alias dc="docker compose"
     alias x-docker-prune-month-old-images='docker image prune -a --filter "until=720h"'
     alias x-docker-prune-two-week-old-images='docker image prune -a --filter "until=336h"'
+
+    alias x-podman-universal-devcontainer='podman run -it --rm -v "$(pwd):/workspace:Z" -w /workspace mcr.microsoft.com/devcontainers/universal:2-linux zsh'
+    alias x-podman-ts-node-devcontainer='podman run -it --rm -v "$(pwd):/workspace:Z" -w /workspace mcr.microsoft.com/devcontainers/typescript-node:24-bookworm zsh'
 }
 
 # Next docker alias marker
