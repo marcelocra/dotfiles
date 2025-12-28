@@ -53,6 +53,9 @@ FORK_FZF_REPO="${FORK_FZF_REPO:-https://github.com/marcelocra/fzf.git}"
 FORK_ZSH_AUTOSUGGESTIONS="${FORK_ZSH_AUTOSUGGESTIONS:-https://github.com/marcelocra/zsh-autosuggestions.git}"
 FORK_ZSH_SYNTAX_HIGHLIGHTING="${FORK_ZSH_SYNTAX_HIGHLIGHTING:-https://github.com/marcelocra/zsh-syntax-highlighting.git}"
 
+# Custom CURL command.
+CURL_CUSTOM="${CURL_CUSTOM:-curl --proto '=https' --tlsv1.2 -fsSL -o-}"
+
 # =============================================================================
 # UTILITY FUNCTIONS
 # =============================================================================
@@ -307,7 +310,7 @@ install_homebrew() {
 
     # Install Homebrew using official script
     # Note: For even more security, you could fork the install script and use your fork
-    curl --proto '=https' --tlsv1.2 -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh | bash
+    ${CURL_CUSTOM} https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh | bash
 
     # Add brew to current shell session
     if [[ -d "/home/linuxbrew/.linuxbrew" ]]; then
@@ -331,8 +334,10 @@ install_cli_tools() {
 
     log_info "🔧 Installing CLI tools..."
 
-    # Install fzf from custom fork for security
+    install_nvm
     install_fzf
+    install_just
+    install_oh_my_zsh
 
     # Install other tools via Homebrew (if available)
     if command_exists brew; then
@@ -342,13 +347,44 @@ install_cli_tools() {
     fi
 }
 
+install_nvm() {
+    if command_exists nvm; then
+        log_info "✅ nvm already installed"
+        return 0
+    fi
+
+    log_info "📦 Installing nvm (Node Version Manager)..."
+
+    # Install nvm using official script. No need to load to current shell as my
+    # shell init.sh already does it.
+    ${CURL_CUSTOM} https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.3/install.sh | bash
+
+    log_success "✅ nvm installed successfully"
+}
+
+install_oh_my_zsh() {
+    if [[ -d "$HOME/.oh-my-zsh" ]]; then
+        log_info "✅ oh-my-zsh already installed"
+        return 0
+    fi
+
+    log_info "📦 Installing oh-my-zsh..."
+
+    # Install oh-my-zsh using official script
+    # Note: For more security, you could fork the install script and use your fork
+    ${CURL_CUSTOM} https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh | sh -s -- --unattended
+
+    log_success "✅ oh-my-zsh installed successfully"
+}
+
 install_just() {
     log_info "📦 Installing just..."
 
     mkdir -p $HOME/bin
-    curl --proto '=https' --tlsv1.2 -sSf https://just.systems/install.sh | bash -s -- --to $HOME/bin
+    ${CURL_CUSTOM}  https://just.systems/install.sh | bash -s -- --to $HOME/bin
 }
 
+# Install fzf from custom fork for security
 install_fzf() {
     local fzf_dir="$HOME/.fzf"
     local fzf_bin="$HOME/bin/fzf"
