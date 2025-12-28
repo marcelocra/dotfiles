@@ -14,9 +14,11 @@
 #   - SSH config for 1Password (native Linux/macOS only)
 #
 # Usage:
-#   ~/prj/dotfiles/shell/install.sh
+#   $DOTFILES_DIR/shell/install.sh
 #
 # Environment variables:
+#   DOTFILES_SKIP_SYSTEM_PACKAGES=true  - Skip apt system packages installation (Ubuntu/Debian)
+#   DOTFILES_SKIP_DEV_PACKAGES=true     - Skip extended dev packages when installing system packages
 #   DOTFILES_SKIP_HOMEBREW=true         - Skip Homebrew installation
 #   DOTFILES_SKIP_CLI_TOOLS=true        - Skip CLI tools installation
 #   DOTFILES_SKIP_ZSH_PLUGINS=true      - Skip zsh plugins installation
@@ -32,9 +34,11 @@ set -euo pipefail
 # CONFIGURATION
 # =============================================================================
 
-DOTFILES_DIR="${DOTFILES_DIR:-$HOME/prj/dotfiles}"
+DOTFILES_DIR="${DOTFILES_DIR:-$HOME/x/dotfiles}"
 
 # Feature flags (can be disabled via environment variables)
+SKIP_SYSTEM_PACKAGES="${DOTFILES_SKIP_SYSTEM_PACKAGES:-false}"
+SKIP_DEV_PACKAGES="${DOTFILES_SKIP_DEV_PACKAGES:-true}"
 SKIP_HOMEBREW="${DOTFILES_SKIP_HOMEBREW:-true}"
 SKIP_CLI_TOOLS="${DOTFILES_SKIP_CLI_TOOLS:-false}"
 SKIP_ZSH_PLUGINS="${DOTFILES_SKIP_ZSH_PLUGINS:-false}"
@@ -94,15 +98,15 @@ timed() {
     local name="$1"
     local func="$2"
     local start_time=$SECONDS
-    
+
     "$func"
     local exit_code=$?
-    
+
     local elapsed=$((SECONDS - start_time))
     if ((elapsed > 0)); then
         log_info "⏱️  $name took $(format_duration $elapsed)"
     fi
-    
+
     return $exit_code
 }
 
@@ -180,7 +184,108 @@ detect_environment() {
         export DOTFILES_IN_REMOTE_VSCODE="false"
     fi
 
-    log_debug "Container: $DOTFILES_IN_CONTAINER, WSL: $DOTFILES_IN_WSL, Remote VS Code: $DOTFILES_IN_REMOTE_VSCODE"
+    # SSH session detection (remote connection without local 1Password)
+    if [[ -n "${SSH_CONNECTION:-}" ]] || [[ -n "${SSH_CLIENT:-}" ]]; then
+        export DOTFILES_IN_SSH="true"
+    else
+        export DOTFILES_IN_SSH="false"
+    fi
+
+    # Derived: Remote environment (no local 1Password access)
+    # Includes: containers, SSH sessions, DevBunker
+    # These environments use forwarded SSH agent and need ssh-keygen shim
+    if [[ "${DOTFILES_IN_CONTAINER:-false}" == "true" ]] || \
+       [[ "${DOTFILES_IN_SSH:-false}" == "true" ]] || \
+       [[ "${DOTFILES_IN_BUNKER:-false}" == "true" ]]; then
+        export DOTFILES_REMOTE_ENV="true"
+    else
+        export DOTFILES_REMOTE_ENV="false"
+    fi
+
+    log_debug "Container: $DOTFILES_IN_CONTAINER, WSL: $DOTFILES_IN_WSL, SSH: $DOTFILES_IN_SSH, Remote: $DOTFILES_REMOTE_ENV"
+}
+
+# Install essential system packages on Debian/Ubuntu systems (idempotent)
+install_system_packages() {
+    if [[ "$SKIP_SYSTEM_PACKAGES" == "true" ]]; then
+        log_info "⏭️  Skipping system packages installation (DOTFILES_SKIP_SYSTEM_PACKAGES=true)"
+        return 0
+    fi
+
+    if ! command_exists apt-get; then
+        log_info "ℹ️  apt-get not found; skipping system packages installation"
+        return 0
+    fi
+
+    log_info "📦 Installing essential system packages via apt (requires sudo)"
+
+    # Use sudo when not running as root
+    local sudo_cmd=""
+    if [[ $EUID -ne 0 ]]; then
+        if command_exists sudo; then
+            sudo_cmd="sudo"
+        else
+            log_warning "sudo not available and not running as root; attempting apt-get directly"
+        fi
+    fi
+
+    # Non-interactive install
+    export DEBIAN_FRONTEND=noninteractive
+
+
+    # Update package index
+    ${sudo_cmd} apt-get update -y
+
+    # Minimal packages required on a fresh Ubuntu install to compile/build and fetch tooling
+    local minimal_packages=(
+        apt-transport-https
+        build-essential
+        ca-certificates
+        curl
+        gcc
+        git
+        git-lfs
+        gnupg
+        jq
+        lsb-release
+        make
+        software-properties-common
+        wget
+    )
+
+    # Extended development packages (opt-in)
+    local dev_packages=(
+        cmake
+        g++
+        libbz2-dev
+        libreadline-dev
+        libsqlite3-dev
+        libssl-dev
+        pkg-config
+        python3-dev
+        python3-pip
+        python3-venv
+        unzip
+        zip
+        zlib1g-dev
+    )
+
+    local packages=("${minimal_packages[@]}")
+    if [[ "${SKIP_DEV_PACKAGES}" == "true" ]]; then
+        log_info "ℹ️  Skipping extended dev packages (DOTFILES_SKIP_DEV_PACKAGES=true)"
+    else
+        log_info "ℹ️  Including extended dev packages (not skipped)"
+        packages+=("${dev_packages[@]}")
+    fi
+
+    # Install packages in one call; tolerate failure but warn
+    if ! ${sudo_cmd} apt-get install -y "${packages[@]}"; then
+        log_warning "Some apt packages failed to install"
+    else
+        log_success "✅ System packages installed"
+    fi
+
+    return 0
 }
 
 # =============================================================================
@@ -369,7 +474,6 @@ link_shell_configs() {
     # .zshrc - source init.sh
     local zshrc="$HOME/.zshrc"
     local init_source="source $DOTFILES_DIR/shell/init.sh"
-
     if [[ -f "$zshrc" ]]; then
         if ! grep -q "source.*shell/init.sh" "$zshrc"; then
             log_debug "Adding init.sh source to .zshrc..."
@@ -387,7 +491,6 @@ link_shell_configs() {
 
     # .bashrc - source init.sh
     local bashrc="$HOME/.bashrc"
-
     if [[ -f "$bashrc" ]]; then
         if ! grep -q "source.*shell/init.sh" "$bashrc"; then
             log_debug "Adding init.sh source to .bashrc..."
@@ -406,6 +509,11 @@ link_shell_configs() {
     # .tmux.conf - symlink if exists in dotfiles
     if [[ -f "$DOTFILES_DIR/shell/.tmux.conf" ]]; then
         safe_symlink "$DOTFILES_DIR/shell/.tmux.conf" "$HOME/.tmux.conf"
+    fi
+
+    # .gitconfig - symlink if exists in dotfiles
+    if [[ -f "$DOTFILES_DIR/git/.gitconfig" ]]; then
+        safe_symlink "$DOTFILES_DIR/git/.gitconfig" "$HOME/.gitconfig"
     fi
 
     log_success "✅ Shell configuration symlinks created"
@@ -517,12 +625,10 @@ detect_platform() {
     # Ensure environment flags are available
     detect_environment
 
-    # PRIORITY 1: Container OR Bunker
-    # In both cases, we want pure Linux behavior, no Windows interop. 
-    # IMPORTANT: This check MUST be before WSL detection, because WSL is also
-    # Linux and we don't want to consider WSL and container the same.
-    # When running in remote VS Code or containers, still treat as linux.
-    if [[ "${DOTFILES_IN_CONTAINER:-false}" == "true" ]] || [[ "${DOTFILES_IN_BUNKER:-false}" == "true" ]]; then
+    # PRIORITY 1: Remote environments (Container, Bunker, SSH)
+    # Use forwarded auth, no local 1Password binary.
+    # IMPORTANT: This check MUST be before WSL detection.
+    if [[ "${DOTFILES_REMOTE_ENV:-false}" == "true" ]]; then
         echo "linux"
         return 0
     fi
@@ -544,17 +650,17 @@ resolve_op_signer_binary() {
     local platform="$1"
     local binary_path=""
 
-    # BUNKER STRATEGY: 
-    # Since we cannot reach Windows 1Password, we mock the signer.
-    # We point 'op-signer' to 'ssh-keygen'. 
+    # REMOTE ENVIRONMENT STRATEGY:
+    # Since we cannot reach local 1Password, we mock the signer.
+    # We point 'op-signer' to 'ssh-keygen'.
     # Git calls 'op-signer -Y sign ...', which maps to 'ssh-keygen -Y sign ...'
-    # This works perfectly with standard SSH keys generated inside the Bunker.
-    if [[ "${DOTFILES_IN_BUNKER:-false}" == "true" ]]; then
-        log_debug "Bunker detected: Mocking 1Password signer with native ssh-keygen."
-        
+    # This works perfectly with standard SSH keys or forwarded agent keys.
+    if [[ "${DOTFILES_REMOTE_ENV:-false}" == "true" ]]; then
+        log_debug "Remote env detected: Mocking 1Password signer with native ssh-keygen."
+
         local ssh_keygen_path
         ssh_keygen_path=$(command -v ssh-keygen)
-        
+
         if [[ -x "$ssh_keygen_path" ]]; then
             echo "$ssh_keygen_path"
             return 0
@@ -567,12 +673,12 @@ resolve_op_signer_binary() {
     case "$platform" in
         wsl)
             log_debug "Environment: WSL2 detected. Resolving Windows user..."
-            
+
             if ! command_exists cmd.exe; then
                 log_warning "cmd.exe not found. Is this a valid WSL environment?"
                 return 1
             fi
-            
+
             local win_user
             win_user=$(cmd.exe /c "echo %USERNAME%" 2>/dev/null | tr -d '\r')
 
@@ -598,7 +704,7 @@ resolve_op_signer_binary() {
             log_debug "Environment: Windows (Git Bash/Cygwin) detected."
             binary_path="${USERPROFILE:-}/AppData/Local/Microsoft/WindowsApps/op-ssh-sign.exe"
             ;;
-            
+
         *)
             log_warning "Unsupported platform for git shims: $platform"
             return 1
@@ -618,7 +724,7 @@ resolve_op_signer_binary() {
 setup_git_ssh_shim() {
     local platform
     platform=$(detect_platform)
-    
+
     log_debug "🔗 Setting up git-ssh shim for platform: $platform"
 
     # Determine which SSH command to use based on platform
@@ -631,37 +737,33 @@ setup_git_ssh_shim() {
             ssh_cmd="ssh"
             ;;
     esac
-    
+
     # Find the SSH binary in PATH
     local ssh_binary
     ssh_binary=$(command -v "$ssh_cmd" 2>/dev/null)
-    
+
     log_debug "Using SSH command: $ssh_cmd -> $ssh_binary"
-    
+
     if [[ ! "$ssh_binary" ]]; then
         log_warning "⚠️  $ssh_cmd not found in PATH, skipping git-ssh shim"
         return 1
     fi
-    
+
     if safe_symlink "$ssh_binary" "$HOME/bin/git-ssh"; then
         log_success "✅ Git SSH shim created: git-ssh -> $ssh_binary"
         return 0
     fi
-    
+
     log_info "ℹ️  Could not create git-ssh shim"
     return 1
 }
 
 setup_op_signer_shim() {
-    # Skip in containers - 1Password isn't typically available
-    if [[ "$DOTFILES_IN_CONTAINER" == "true" ]]; then
-        log_debug "Skipping op-signer shim (running in container)"
-        return 0
-    fi
-    
+    # Remote environments are handled in resolve_op_signer_binary (uses ssh-keygen)
+
     local platform
     platform=$(detect_platform)
-    
+
     log_debug "🔗 Setting up op-signer shim for platform: $platform"
 
     local source_binary
@@ -672,12 +774,12 @@ setup_op_signer_shim() {
     fi
 
     log_debug "Using op-signer binary: $source_binary"
-    
+
     if safe_symlink "$source_binary" "$HOME/bin/op-signer"; then
         log_success "✅ Op-signer shim created: op-signer -> $source_binary"
         return 0
     fi
-    
+
     # Binary not available and couldn't create symlink.
     log_info "ℹ️  Could not create op-signer shim"
     return 1
@@ -711,9 +813,9 @@ setup_ssh_config() {
         return 0
     fi
 
-    # Only run on native Linux/macOS (not WSL, not containers)
-    if [[ "$DOTFILES_IN_CONTAINER" == "true" ]]; then
-        log_info "⏭️  Skipping SSH config setup (running in container)"
+    # Only run on local Linux/macOS (not WSL, not remote environments)
+    if [[ "$DOTFILES_REMOTE_ENV" == "true" ]]; then
+        log_info "⏭️  Skipping SSH config setup (remote env uses forwarded agent)"
         return 0
     fi
     if [[ "$DOTFILES_IN_WSL" == "true" ]]; then
@@ -726,7 +828,7 @@ setup_ssh_config() {
     local agent_sock="$HOME/.1password/agent.sock"
     local source_file="$DOTFILES_DIR/shell/ssh-1password.config"
     local target_file="$HOME/.ssh/config"
-    
+
     # Check if 1Password SSH agent socket exists
     if [[ ! -S "$agent_sock" ]]; then
         log_warning "⚠️  1Password SSH agent socket not found at $agent_sock"
@@ -759,7 +861,9 @@ main() {
 
     # Run installation steps with timing
     local total_start=$SECONDS
-    
+
+    timed "System packages" install_system_packages
+
     timed "Homebrew" install_homebrew
     timed "CLI tools" install_cli_tools
     timed "Zsh plugins" install_zsh_plugins
@@ -768,7 +872,7 @@ main() {
     timed "Editor launcher" setup_editor_launcher
     timed "Git shims" setup_git_shims
     timed "SSH config" setup_ssh_config
-    
+
     local total_elapsed=$((SECONDS - total_start))
     log_success "🎉 Dotfiles installation complete! (total: $(format_duration $total_elapsed))"
     log_info ""
@@ -782,6 +886,8 @@ main() {
     log_info "   - Edit $DOTFILES_DIR/shell/install.sh"
     log_info ""
     log_info "📋 Available skip flags:"
+    log_info "   DOTFILES_SKIP_SYSTEM_PACKAGES=true"
+    log_info "   DOTFILES_SKIP_DEV_PACKAGES=true"
     log_info "   DOTFILES_SKIP_HOMEBREW=true"
     log_info "   DOTFILES_SKIP_CLI_TOOLS=true"
     log_info "   DOTFILES_SKIP_ZSH_PLUGINS=true"
