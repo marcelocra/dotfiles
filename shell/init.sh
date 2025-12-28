@@ -865,7 +865,7 @@ configure_zsh() {
             export ZSH_CUSTOM="$ZSH/custom"
 
             # Use custom theme from dotfiles
-            local ZSH_THEME_PATH="$HOME/prj/dotfiles/shell/marcelocra.zsh-theme"
+            local ZSH_THEME_PATH="${DOTFILES_DIR:-$HOME/x/dotfiles}/shell/marcelocra.zsh-theme"
             if [[ -f "$ZSH_THEME_PATH" ]]; then
                 # Symlink custom theme to oh-my-zsh themes directory
                 ln -sf "$ZSH_THEME_PATH" "$ZSH_CUSTOM/themes/"
