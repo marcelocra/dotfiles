@@ -867,20 +867,22 @@ configure_zsh() {
             # Use custom theme from dotfiles
             local ZSH_THEME_PATH="${DOTFILES_DIR:-$HOME/x/dotfiles}/shell/marcelocra.zsh-theme"
             if [[ -f "$ZSH_THEME_PATH" ]]; then
-                # Symlink custom theme to oh-my-zsh themes directory
-                ln -sf "$ZSH_THEME_PATH" "$ZSH_CUSTOM/themes/"
+                # Ensure themes directory exists then symlink custom theme
+                mkdir -p "$ZSH_CUSTOM/themes"
+                ln -sf "$ZSH_THEME_PATH" "$ZSH_CUSTOM/themes/marcelocra.zsh-theme"
                 ZSH_THEME="marcelocra"
             else
                 # Fallback to a safe default theme
                 ZSH_THEME="robbyrussell"
             fi
 
-            # Enable oh-my-zsh plugins (keep minimal for security)
-            if [[ -d "$ZSH_CUSTOM/plugins/zsh-autosuggestions" ]] && [[ -d "$ZSH_CUSTOM/plugins/zsh-syntax-highlighting" ]]; then
-                plugins=(zsh-autosuggestions zsh-syntax-highlighting)
-            else
-                plugins=()
-            fi
+            # Enable my oh-my-zsh plugins if present in $ZSH_CUSTOM/plugins
+            plugins=()
+            [[ -d "$ZSH_CUSTOM/plugins/zsh-autosuggestions" ]] && plugins+=(zsh-autosuggestions)
+            [[ -d "$ZSH_CUSTOM/plugins/zsh-syntax-highlighting" ]] && plugins+=(zsh-syntax-highlighting)
+
+            log_debug "oh-my-zsh plugins: ${plugins[*]}"
+            log_debug "ZSH_THEME set to $ZSH_THEME (path: $ZSH_THEME_PATH)"
 
             # Source oh-my-zsh
             source "$ZSH/oh-my-zsh.sh"

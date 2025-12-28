@@ -122,16 +122,37 @@ _get_envs() {
 }
 
 # ==============================================================================
-# Git prompt
+# Git prompt (lightweight, no oh-my-zsh dependency)
 # ==============================================================================
-ZSH_THEME_GIT_PROMPT_PREFIX="${C_GIT}${ICON_GIT} "
-ZSH_THEME_GIT_PROMPT_SUFFIX="${C_RESET}"
-ZSH_THEME_GIT_PROMPT_DIRTY=" ${C_GIT_DIRTY}${ICON_DIRTY}${C_RESET}"
-ZSH_THEME_GIT_PROMPT_CLEAN=" ${C_GIT_CLEAN}${ICON_CLEAN}${C_RESET}"
-
 _git_info() {
-  local gi=$(git_prompt_info 2>/dev/null)
-  [[ -n "$gi" ]] && echo " ${C_DIM}${ICON_SEP}${C_RESET} $gi"
+  # Check git is available
+  if ! command -v git >/dev/null 2>&1; then
+    [[ "${DOTFILES_DEBUG:-0}" == "1" ]] && echo "🔍 git: not installed" >&2
+    return
+  fi
+
+  # Check we're inside a git repo
+  if ! git rev-parse --is-inside-work-tree >/dev/null 2>&1; then
+    [[ "${DOTFILES_DEBUG:-0}" == "1" ]] && echo "🔍 git: not a repo" >&2
+    return
+  fi
+
+  # Get branch name (or short SHA if detached HEAD)
+  local branch
+  branch=$(git --no-optional-locks symbolic-ref --quiet --short HEAD 2>/dev/null || \
+           git --no-optional-locks rev-parse --short HEAD 2>/dev/null)
+  [[ -z "$branch" ]] && return
+
+  # Check dirty/clean status
+  local status_icon
+  if git --no-optional-locks status --porcelain 2>/dev/null | grep -q .; then
+    status_icon=" ${C_GIT_DIRTY}${ICON_DIRTY}${C_RESET}"
+  else
+    status_icon=" ${C_GIT_CLEAN}${ICON_CLEAN}${C_RESET}"
+  fi
+
+  echo " ${C_DIM}${ICON_SEP}${C_RESET} ${C_GIT}${ICON_GIT} ${branch}${status_icon}"
+  [[ "${DOTFILES_DEBUG:-0}" == "1" ]] && echo "🔍 git: $branch" >&2
 }
 
 # ==============================================================================
