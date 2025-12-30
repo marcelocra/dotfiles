@@ -46,6 +46,8 @@ SKIP_VSCODE="${DOTFILES_SKIP_VSCODE:-true}"
 SKIP_EDITOR_LAUNCHER="${DOTFILES_SKIP_EDITOR_LAUNCHER:-true}"
 SKIP_GIT_SHIMS="${DOTFILES_SKIP_GIT_SHIMS:-false}"
 SKIP_SSH_CONFIG="${DOTFILES_SKIP_SSH_CONFIG:-false}"
+SKIP_NODE_LTS="${DOTFILES_SKIP_NODE_LTS:-false}"
+SKIP_NPM_PACKAGES="${DOTFILES_SKIP_NPM_PACKAGES:-false}"
 DEBUG="${DOTFILES_DEBUG:-0}"
 
 # Custom fork repositories (for security - you control the source)
@@ -337,6 +339,8 @@ install_cli_tools() {
     log_info "🔧 Installing CLI tools..."
 
     install_nvm
+    install_node_lts
+    install_global_npm_packages
     install_fzf
     install_just
     install_oh_my_zsh
@@ -361,6 +365,92 @@ install_nvm() {
     curl_cmd https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.3/install.sh | bash
 
     log_success "✅ nvm installed successfully"
+}
+
+install_node_lts() {
+    if [[ "$SKIP_NODE_LTS" == "true" ]]; then
+        log_info "⏭️  Skipping Node.js LTS installation (DOTFILES_SKIP_NODE_LTS=true)"
+        return 0
+    fi
+
+    local nvm_dir="${NVM_DIR:-$HOME/.nvm}"
+
+    # Load nvm if not loaded
+    if ! command_exists nvm; then
+        if [[ -s "$nvm_dir/nvm.sh" ]]; then
+            export NVM_DIR="$nvm_dir"
+            # shellcheck source=/dev/null
+            source "$nvm_dir/nvm.sh"
+        else
+            log_warning "⚠️  nvm not found, skipping Node.js LTS installation"
+            return 0
+        fi
+    fi
+
+    # Check if any Node version is installed
+    if nvm ls --no-colors 2>/dev/null | grep -q 'v[0-9]'; then
+        log_info "✅ Node.js already installed"
+        return 0
+    fi
+
+    log_info "📦 Installing Node.js LTS..."
+    nvm install --lts
+    nvm alias default 'lts/*'
+    log_success "✅ Node.js LTS installed and set as default"
+}
+
+install_global_npm_packages() {
+    if [[ "$SKIP_NPM_PACKAGES" == "true" ]]; then
+        log_info "⏭️  Skipping global npm packages (DOTFILES_SKIP_NPM_PACKAGES=true)"
+        return 0
+    fi
+
+    # Packages to install globally (AI CLI tools)
+    local packages=(
+        "@anthropic-ai/claude-code"
+        "@google/gemini-cli"
+        "@github/copilot"
+    )
+
+    log_info "📦 Installing global npm packages..."
+
+    # Prefer pnpm, fall back to npm
+    local pkg_manager=""
+    if command_exists pnpm; then
+        pkg_manager="pnpm"
+    elif command_exists npm; then
+        pkg_manager="npm"
+    else
+        log_warning "⚠️  Neither pnpm nor npm found, skipping global packages"
+        return 0
+    fi
+
+    # Configure pnpm global store if using pnpm
+    if [[ "$pkg_manager" == "pnpm" ]]; then
+        export PNPM_HOME="${PNPM_HOME:-$HOME/.local/share/pnpm}"
+        mkdir -p "$PNPM_HOME"
+        case ":$PATH:" in
+            *":$PNPM_HOME:"*) ;;
+            *) export PATH="$PNPM_HOME:$PATH" ;;
+        esac
+    fi
+
+    for package in "${packages[@]}"; do
+        # Check if already installed
+        local pkg_name="${package##*/}"  # Get last part after /
+        if $pkg_manager list -g 2>/dev/null | grep -q "$pkg_name"; then
+            log_debug "$package already installed"
+            continue
+        fi
+
+        log_info "   Installing $package..."
+        if ! $pkg_manager add -g "$package" 2>/dev/null && \
+           ! $pkg_manager install -g "$package" 2>/dev/null; then
+            log_warning "   ⚠️  Failed to install $package"
+        fi
+    done
+
+    log_success "✅ Global npm packages installed"
 }
 
 install_oh_my_zsh() {
@@ -922,7 +1012,6 @@ main() {
     log_info ""
     log_info "ℹ️  Next steps:"
     log_info "   1. Restart your shell: source ~/.zshrc (or ~/.bashrc)"
-    log_info "   2. (Optional) Install Node.js: nvm install --lts"
     log_info ""
     log_info "💡 To customize this installation:"
     log_info "   - Set environment variables (DOTFILES_SKIP_* flags)"
@@ -933,6 +1022,8 @@ main() {
     log_info "   DOTFILES_SKIP_DEV_PACKAGES=true"
     log_info "   DOTFILES_SKIP_HOMEBREW=true"
     log_info "   DOTFILES_SKIP_CLI_TOOLS=true"
+    log_info "   DOTFILES_SKIP_NODE_LTS=true"
+    log_info "   DOTFILES_SKIP_NPM_PACKAGES=true"
     log_info "   DOTFILES_SKIP_ZSH_PLUGINS=true"
     log_info "   DOTFILES_SKIP_VSCODE=true"
     log_info "   DOTFILES_SKIP_EDITOR_LAUNCHER=true"
