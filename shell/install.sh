@@ -380,10 +380,17 @@ install_oh_my_zsh() {
 }
 
 install_just() {
+    if command_exists just; then
+        log_info "✅ just already installed"
+        return 0
+    fi
+
     log_info "📦 Installing just..."
 
     mkdir -p $HOME/bin
     curl_cmd https://just.systems/install.sh | bash -s -- --to $HOME/bin
+
+    log_success "✅ just installed successfully"
 }
 
 # Install fzf from custom fork for security
