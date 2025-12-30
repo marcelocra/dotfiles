@@ -397,15 +397,15 @@ install_node_lts() {
     log_success "✅ Node.js LTS installed and set as default"
 }
 
-install_global_npm_packages() {
-    if [[ "$SKIP_NPM_PACKAGES" == "true" ]]; then
-        log_info "⏭️  Skipping global npm packages (DOTFILES_SKIP_NPM_PACKAGES=true)"
+install_pnpm() {
+    if command_exists pnpm; then
+        log_info "✅ pnpm already installed"
         return 0
     fi
 
-    log_info "📦 Installing global npm packages..."
+    log_info "📦 Installing pnpm..."
 
-    # Configure pnpm home for usage here (init.sh already adds this to PATH).
+    # Configure pnpm home (init.sh already adds this to PATH).
     export PNPM_HOME="${PNPM_HOME:-$HOME/.local/share/pnpm}"
     mkdir -p "$PNPM_HOME"
     case ":$PATH:" in
@@ -413,14 +413,26 @@ install_global_npm_packages() {
         *) export PATH="$PNPM_HOME:$PATH" ;;
     esac
 
-    # Install pnpm if not available (using official installer, PNPM_HOME skips shell config)
-    if ! command_exists pnpm; then
-        log_info "   Installing pnpm..."
-        curl_cmd https://get.pnpm.io/install.sh | sh - || {
-            log_warning "⚠️  Failed to install pnpm, skipping global packages"
-            return 0
-        }
+    # Install using official installer (PNPM_HOME set skips shell config modification)
+    curl_cmd https://get.pnpm.io/install.sh | sh -
+
+    log_success "✅ pnpm installed successfully"
+}
+
+install_global_npm_packages() {
+    if [[ "$SKIP_NPM_PACKAGES" == "true" ]]; then
+        log_info "⏭️  Skipping global npm packages (DOTFILES_SKIP_NPM_PACKAGES=true)"
+        return 0
     fi
+
+    # Ensure pnpm is available
+    install_pnpm
+    if ! command_exists pnpm; then
+        log_warning "⚠️  pnpm not available, skipping global npm packages"
+        return 0
+    fi
+
+    log_info "📦 Installing global npm packages..."
 
     # Packages to install globally (AI CLI tools, etc.)
     local packages=(
