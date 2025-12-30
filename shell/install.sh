@@ -375,17 +375,15 @@ install_node_lts() {
 
     local nvm_dir="${NVM_DIR:-$HOME/.nvm}"
 
-    # Load nvm if not loaded
-    if ! command_exists nvm; then
-        if [[ -s "$nvm_dir/nvm.sh" ]]; then
-            export NVM_DIR="$nvm_dir"
-            # shellcheck source=/dev/null
-            source "$nvm_dir/nvm.sh"
-        else
-            log_warning "⚠️  nvm not found, skipping Node.js LTS installation"
-            return 0
-        fi
+    # Load nvm if not loaded (early return if unavailable)
+    if ! command_exists nvm && [[ ! -s "$nvm_dir/nvm.sh" ]]; then
+        log_warning "⚠️  nvm not found, skipping Node.js LTS installation"
+        return 0
     fi
+
+    export NVM_DIR="$nvm_dir"
+    # shellcheck source=/dev/null
+    source "$nvm_dir/nvm.sh"
 
     # Check if any Node version is installed
     if nvm ls --no-colors 2>/dev/null | grep -q 'v[0-9]'; then
@@ -405,50 +403,36 @@ install_global_npm_packages() {
         return 0
     fi
 
-    # Packages to install globally (AI CLI tools)
+    log_info "📦 Installing global npm packages..."
+
+    # Configure pnpm home for usage here (init.sh already adds this to PATH).
+    export PNPM_HOME="${PNPM_HOME:-$HOME/.local/share/pnpm}"
+    mkdir -p "$PNPM_HOME"
+    case ":$PATH:" in
+        *":$PNPM_HOME:"*) ;;
+        *) export PATH="$PNPM_HOME:$PATH" ;;
+    esac
+
+    # Install pnpm if not available (using official installer, PNPM_HOME skips shell config)
+    if ! command_exists pnpm; then
+        log_info "   Installing pnpm..."
+        curl_cmd https://get.pnpm.io/install.sh | sh - || {
+            log_warning "⚠️  Failed to install pnpm, skipping global packages"
+            return 0
+        }
+    fi
+
+    # Packages to install globally (AI CLI tools, etc.)
     local packages=(
         "@anthropic-ai/claude-code"
         "@google/gemini-cli"
         "@github/copilot"
+        "@google/jules"
+        "@openai/codex"
     )
 
-    log_info "📦 Installing global npm packages..."
-
-    # Prefer pnpm, fall back to npm
-    local pkg_manager=""
-    if command_exists pnpm; then
-        pkg_manager="pnpm"
-    elif command_exists npm; then
-        pkg_manager="npm"
-    else
-        log_warning "⚠️  Neither pnpm nor npm found, skipping global packages"
-        return 0
-    fi
-
-    # Configure pnpm global store if using pnpm
-    if [[ "$pkg_manager" == "pnpm" ]]; then
-        export PNPM_HOME="${PNPM_HOME:-$HOME/.local/share/pnpm}"
-        mkdir -p "$PNPM_HOME"
-        case ":$PATH:" in
-            *":$PNPM_HOME:"*) ;;
-            *) export PATH="$PNPM_HOME:$PATH" ;;
-        esac
-    fi
-
-    for package in "${packages[@]}"; do
-        # Check if already installed
-        local pkg_name="${package##*/}"  # Get last part after /
-        if $pkg_manager list -g 2>/dev/null | grep -q "$pkg_name"; then
-            log_debug "$package already installed"
-            continue
-        fi
-
-        log_info "   Installing $package..."
-        if ! $pkg_manager add -g "$package" 2>/dev/null && \
-           ! $pkg_manager install -g "$package" 2>/dev/null; then
-            log_warning "   ⚠️  Failed to install $package"
-        fi
-    done
+    log_info "   Installing: ${packages[*]}"
+    pnpm add -g "${packages[@]}"
 
     log_success "✅ Global npm packages installed"
 }
