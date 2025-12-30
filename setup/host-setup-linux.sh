@@ -3,6 +3,13 @@
 # Host machine setup script for Linux (Ubuntu, Fedora, openSUSE).
 # This script configures editors and host-specific tools that should NOT run in containers.
 
+echo 'INFO: Most likely this is outdated.'
+echo 'INFO: Remember, every time you are installing a new system you create one'
+echo 'INFO: of these. But you never really use them, as most of the things'
+echo 'INFO: become outdated really quickly, and you never use them again. Let'
+echo 'INFO: us keep this one as a reminder, so you know NOT to try it again.'
+exit 1
+
 set -e
 
 # Configuration from environment variables or defaults.
