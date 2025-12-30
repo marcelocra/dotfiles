@@ -357,8 +357,7 @@ install_nvm() {
 
     log_info "📦 Installing nvm (Node Version Manager)..."
 
-    # Install nvm using official script. No need to load to current shell as my
-    # shell init.sh already does it.
+    # Install nvm using official script. Shell init.sh already loads nvm on new shells.
     curl_cmd https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.3/install.sh | bash
 
     log_success "✅ nvm installed successfully"
@@ -922,9 +921,8 @@ main() {
     log_success "🎉 Dotfiles installation complete! (total: $(format_duration $total_elapsed))"
     log_info ""
     log_info "ℹ️  Next steps:"
-    log_info "   1. Restart your shell or run: source ~/.zshrc"
-    log_info "   2. Reload VS Code window to apply settings (if using VS Code)"
-    log_info "   3. Ensure ~/bin is in your PATH"
+    log_info "   1. Restart your shell: source ~/.zshrc (or ~/.bashrc)"
+    log_info "   2. (Optional) Install Node.js: nvm install --lts"
     log_info ""
     log_info "💡 To customize this installation:"
     log_info "   - Set environment variables (DOTFILES_SKIP_* flags)"
