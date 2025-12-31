@@ -561,6 +561,11 @@ install_fzf() {
 }
 
 install_brew_packages() {
+    if ! command_exists brew; then
+        log_warning "⚠️  Homebrew not available, skipping brew package installation"
+        return 0
+    fi
+
     log_info "📦 Installing packages via Homebrew..."
 
     # Core dev tools: bat (better cat), fd (better find), ripgrep (better grep)
@@ -584,6 +589,35 @@ install_brew_packages() {
     fi
 }
 
+install_gh() {
+    if command_exists gh; then
+        log_info "✅ GitHub CLI already installed"
+        return 0
+    fi
+
+    log_info "📦 Installing GitHub CLI..."
+    local sudo_cmd=""
+    [[ $EUID -ne 0 ]] && command_exists sudo && sudo_cmd="sudo"
+    run_cmd ${sudo_cmd} mkdir -p /etc/apt/keyrings
+    run_cmd curl_cmd https://cli.github.com/packages/githubcli-archive-keyring.gpg | run_cmd ${sudo_cmd} tee /etc/apt/keyrings/githubcli-archive-keyring.gpg > /dev/null
+    run_cmd ${sudo_cmd} chmod go+r /etc/apt/keyrings/githubcli-archive-keyring.gpg
+    echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" | run_cmd ${sudo_cmd} tee /etc/apt/sources.list.d/github-cli.list > /dev/null
+    run_cmd ${sudo_cmd} apt-get update -y
+    run_cmd ${sudo_cmd} apt-get install -y gh
+    log_success "✅ GitHub CLI installed"
+}
+
+install_kiro() {
+    if command_exists kiro; then
+        log_info "✅ Kiro CLI already installed"
+        return 0
+    fi
+
+    log_info "📦 Installing Kiro CLI..."
+    run_cmd curl_cmd https://cli.kiro.dev/install | run_cmd bash
+    log_success "✅ Kiro CLI installed"
+}
+
 install_cli_tools() {
     if [[ "$SKIP_CLI_TOOLS" == "true" ]]; then
         log_info "⏭️  Skipping CLI tools installation (DOTFILES_SKIP_CLI_TOOLS=true)"
@@ -591,43 +625,23 @@ install_cli_tools() {
     fi
 
     log_info "🔧 Installing CLI tools..."
+
+    # Package managers & runtimes
     install_nvm
     install_node_lts
     install_global_npm_packages
+
+    # Official installers (curl | bash or git clone)
     install_fzf
     install_just
     install_oh_my_zsh
+    install_kiro
 
-    if command_exists brew; then
-        install_brew_packages
-    else
-        log_warning "⚠️  Homebrew not available, skipping brew package installation"
-    fi
+    # Homebrew packages (checks internally if brew exists)
+    install_brew_packages
 
-    # GitHub CLI
-    if ! command_exists gh; then
-        log_info "📦 Installing GitHub CLI..."
-        local sudo_cmd=""
-        [[ $EUID -ne 0 ]] && command_exists sudo && sudo_cmd="sudo"
-        run_cmd ${sudo_cmd} mkdir -p /etc/apt/keyrings
-        run_cmd curl_cmd https://cli.github.com/packages/githubcli-archive-keyring.gpg | run_cmd ${sudo_cmd} tee /etc/apt/keyrings/githubcli-archive-keyring.gpg > /dev/null
-        run_cmd ${sudo_cmd} chmod go+r /etc/apt/keyrings/githubcli-archive-keyring.gpg
-        echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" | run_cmd ${sudo_cmd} tee /etc/apt/sources.list.d/github-cli.list > /dev/null
-        run_cmd ${sudo_cmd} apt-get update -y
-        run_cmd ${sudo_cmd} apt-get install -y gh
-        log_success "✅ GitHub CLI installed"
-    else
-        log_info "✅ GitHub CLI already installed"
-    fi
-
-    # Kiro CLI (AWS AI coding assistant)
-    if ! command_exists kiro; then
-        log_info "📦 Installing Kiro CLI..."
-        run_cmd curl_cmd https://cli.kiro.dev/install | run_cmd bash
-        log_success "✅ Kiro CLI installed"
-    else
-        log_info "✅ Kiro CLI already installed"
-    fi
+    # APT packages (requires repo setup)
+    install_gh
 }
 
 install_zsh_plugins() {
