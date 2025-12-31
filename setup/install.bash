@@ -25,10 +25,15 @@
 #   --dry-run       Print commands without executing
 #   --help          Show help
 #
-# Environment variables (Legacy support):
-#   DOTFILES_SKIP_SYSTEM_PACKAGES=true
-#   DOTFILES_SKIP_HOMEBREW=true
-#   ... (all original flags supported)
+# Environment variables:
+#   For detailed control, you can use environment variables to enable/disable
+#   specific installation steps. See the source code for the full list.
+#
+# Note: This script uses `sudo` directly for privileged operations.
+# If running as root (e.g., in containers), create this override at the top:
+#
+#   sudo() { "$@"; }  # No-op sudo for root environments
+#
 
 set -euo pipefail
 
@@ -81,7 +86,6 @@ LC_TIME_VAR="en_GB.UTF-8"
 FORK_FZF_REPO="${FORK_FZF_REPO:-https://github.com/marcelocra/fzf.git}"
 FORK_ZSH_AUTOSUGGESTIONS="${FORK_ZSH_AUTOSUGGESTIONS:-https://github.com/marcelocra/zsh-autosuggestions.git}"
 FORK_ZSH_SYNTAX_HIGHLIGHTING="${FORK_ZSH_SYNTAX_HIGHLIGHTING:-https://github.com/marcelocra/zsh-syntax-highlighting.git}"
-
 
 # =============================================================================
 # ARGUMENT PARSING
@@ -282,13 +286,10 @@ detect_platform() {
 
 configure_locale() {
     log_info "🌐 Configuring locale ($LANG_VAR) and timezone ($TZ_VAR)..."
-    
-    local sudo_cmd=""
-    [[ $EUID -ne 0 ]] && command_exists sudo && sudo_cmd="sudo"
 
     # Set system timezone (affects logs, cron, systemd services)
     if command_exists timedatectl; then
-        run_cmd ${sudo_cmd} timedatectl set-timezone "$TZ_VAR" || log_warning "Failed to set timezone to $TZ_VAR"
+        run_cmd sudo timedatectl set-timezone "$TZ_VAR" || log_warning "Failed to set timezone to $TZ_VAR"
     fi
 
     # Generate required locales
@@ -299,14 +300,14 @@ configure_locale() {
         for locale in "${locales_to_generate[@]}"; do
             if ! grep -q "^${locale}" /etc/locale.gen 2>/dev/null; then
                 log_info "Enabling locale $locale..."
-                run_cmd ${sudo_cmd} sed -i "s/^# *${locale}/${locale}/" /etc/locale.gen 2>/dev/null || true
+                run_cmd sudo sed -i "s/^# *${locale}/${locale}/" /etc/locale.gen 2>/dev/null || true
                 needs_regen=true
             fi
         done
 
         if [[ "$needs_regen" == "true" ]]; then
             log_info "Generating locales..."
-            run_cmd ${sudo_cmd} locale-gen
+            run_cmd sudo locale-gen
         else
             log_debug "Required locales already configured"
         fi
@@ -332,19 +333,10 @@ install_system_packages() {
 
     log_info "📦 Installing essential system packages via apt (requires sudo)"
 
-    local sudo_cmd=""
-    if [[ $EUID -ne 0 ]]; then
-        if command_exists sudo; then
-            sudo_cmd="sudo"
-        else
-            log_warning "sudo not available and not running as root; attempting apt-get directly"
-        fi
-    fi
-
     export DEBIAN_FRONTEND=noninteractive
 
     # Update package index
-    run_cmd ${sudo_cmd} apt-get update -y
+    run_cmd sudo apt-get update -y
 
     local minimal_packages=(
         apt-transport-https build-essential ca-certificates curl gcc git git-lfs gnupg
@@ -364,7 +356,7 @@ install_system_packages() {
         packages+=("${dev_packages[@]}")
     fi
 
-    if ! run_cmd ${sudo_cmd} apt-get install -y "${packages[@]}"; then
+    if ! run_cmd sudo apt-get install -y "${packages[@]}"; then
         log_warning "Some apt packages failed to install"
     else
         log_success "✅ System packages installed"
@@ -589,6 +581,7 @@ install_brew_packages() {
     fi
 }
 
+# TODO: Use copy/paste directly from official instructions. Do they work with run_cmd?
 install_gh() {
     if command_exists gh; then
         log_info "✅ GitHub CLI already installed"
@@ -596,14 +589,12 @@ install_gh() {
     fi
 
     log_info "📦 Installing GitHub CLI..."
-    local sudo_cmd=""
-    [[ $EUID -ne 0 ]] && command_exists sudo && sudo_cmd="sudo"
-    run_cmd ${sudo_cmd} mkdir -p /etc/apt/keyrings
-    run_cmd curl_cmd https://cli.github.com/packages/githubcli-archive-keyring.gpg | run_cmd ${sudo_cmd} tee /etc/apt/keyrings/githubcli-archive-keyring.gpg > /dev/null
-    run_cmd ${sudo_cmd} chmod go+r /etc/apt/keyrings/githubcli-archive-keyring.gpg
-    echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" | run_cmd ${sudo_cmd} tee /etc/apt/sources.list.d/github-cli.list > /dev/null
-    run_cmd ${sudo_cmd} apt-get update -y
-    run_cmd ${sudo_cmd} apt-get install -y gh
+    run_cmd sudo mkdir -p /etc/apt/keyrings
+    run_cmd curl_cmd https://cli.github.com/packages/githubcli-archive-keyring.gpg | run_cmd sudo tee /etc/apt/keyrings/githubcli-archive-keyring.gpg > /dev/null
+    run_cmd sudo chmod go+r /etc/apt/keyrings/githubcli-archive-keyring.gpg
+    echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" | run_cmd sudo tee /etc/apt/sources.list.d/github-cli.list > /dev/null
+    run_cmd sudo apt-get update -y
+    run_cmd sudo apt-get install -y gh
     log_success "✅ GitHub CLI installed"
 }
 
@@ -660,7 +651,7 @@ install_zsh_plugins() {
 
     install_zsh_plugin "zsh-autosuggestions" "$FORK_ZSH_AUTOSUGGESTIONS" "$zsh_custom/plugins/zsh-autosuggestions"
     install_zsh_plugin "zsh-syntax-highlighting" "$FORK_ZSH_SYNTAX_HIGHLIGHTING" "$zsh_custom/plugins/zsh-syntax-highlighting"
-    
+
     log_success "✅ Zsh plugins installed"
 }
 
@@ -682,7 +673,7 @@ link_shell_configs() {
     log_info "🔗 Creating shell configuration symlinks..."
 
     local init_source="source $DOTFILES_DIR/shell/init.sh"
-    
+
     for rc in "$HOME/.zshrc" "$HOME/.bashrc"; do
         if [[ -f "$rc" ]]; then
             if ! grep -q "source.*shell/init.sh" "$rc"; then
@@ -716,7 +707,7 @@ detect_vscode_config_dir() {
         if [[ -d "$HOME/.vscode-server-insiders/data/User" ]]; then echo "$HOME/.vscode-server-insiders/data/User"; return 0; fi
         if [[ -d "$HOME/.vscode-server/data/User" ]]; then echo "$HOME/.vscode-server/data/User"; return 0; fi
         if [[ -d "$HOME/.vscode-remote/data/User" ]]; then echo "$HOME/.vscode-remote/data/User"; return 0; fi
-        
+
         local default_dir="$HOME/.vscode-server/data/User"
         run_cmd mkdir -p "$default_dir"
         echo "$default_dir"
@@ -764,7 +755,7 @@ setup_editor_launcher() {
 
 resolve_op_signer_binary() {
     local platform="$1"
-    
+
     if [[ "${DOTFILES_REMOTE_ENV:-false}" == "true" ]]; then
         local ssh_keygen_path
         ssh_keygen_path=$(command -v ssh-keygen)
@@ -802,7 +793,7 @@ setup_git_shims() {
 
     local ssh_cmd="ssh"
     [[ "$platform" == "wsl" ]] && ssh_cmd="ssh.exe"
-    
+
     local ssh_binary
     ssh_binary=$(command -v "$ssh_cmd" 2>/dev/null)
 
@@ -895,6 +886,7 @@ install_extra_tools() {
 # CLOUD TOOLS INSTALLATION (opt-in via --with-cloud-tools)
 # =============================================================================
 
+# TODO: Split installation functions for each tool, like for cli tools.
 install_cloud_tools() {
     if [[ "$SKIP_CLOUD_TOOLS" == "true" ]]; then
         log_info "⏭️  Skipping cloud tools (use --with-cloud-tools to install kubectl, terraform, etc.)"
@@ -903,16 +895,13 @@ install_cloud_tools() {
 
     log_info "☁️  Installing cloud tools..."
 
-    local sudo_cmd=""
-    [[ $EUID -ne 0 ]] && command_exists sudo && sudo_cmd="sudo"
-
     # kubectl
     if ! command_exists kubectl; then
         log_info "📦 Installing kubectl..."
         local kubectl_version
         kubectl_version=$(curl_cmd "https://dl.k8s.io/release/stable.txt")
         run_cmd curl_safer -o "kubectl" "https://dl.k8s.io/release/${kubectl_version}/bin/linux/amd64/kubectl"
-        run_cmd ${sudo_cmd} install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
+        run_cmd sudo install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
         rm -f kubectl
         log_success "✅ kubectl installed"
     else
@@ -922,12 +911,12 @@ install_cloud_tools() {
     # terraform
     if ! command_exists terraform; then
         log_info "📦 Installing terraform..."
-        run_cmd ${sudo_cmd} apt-get update -y
-        run_cmd ${sudo_cmd} apt-get install -y gnupg software-properties-common
-        run_cmd curl_cmd https://apt.releases.hashicorp.com/gpg | run_cmd ${sudo_cmd} gpg --dearmor -o /usr/share/keyrings/hashicorp-archive-keyring.gpg
-        echo "deb [signed-by=/usr/share/keyrings/hashicorp-archive-keyring.gpg] https://apt.releases.hashicorp.com $(lsb_release -cs) main" | run_cmd ${sudo_cmd} tee /etc/apt/sources.list.d/hashicorp.list
-        run_cmd ${sudo_cmd} apt-get update -y
-        run_cmd ${sudo_cmd} apt-get install -y terraform
+        run_cmd sudo apt-get update -y
+        run_cmd sudo apt-get install -y gnupg software-properties-common
+        run_cmd curl_cmd https://apt.releases.hashicorp.com/gpg | run_cmd sudo gpg --dearmor -o /usr/share/keyrings/hashicorp-archive-keyring.gpg
+        echo "deb [signed-by=/usr/share/keyrings/hashicorp-archive-keyring.gpg] https://apt.releases.hashicorp.com $(lsb_release -cs) main" | run_cmd sudo tee /etc/apt/sources.list.d/hashicorp.list
+        run_cmd sudo apt-get update -y
+        run_cmd sudo apt-get install -y terraform
         log_success "✅ terraform installed"
     else
         log_info "✅ terraform already installed"
@@ -938,7 +927,7 @@ install_cloud_tools() {
         log_info "📦 Installing AWS CLI..."
         run_cmd curl_safer -o "/tmp/awscliv2.zip" "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip"
         run_cmd unzip -q /tmp/awscliv2.zip -d /tmp
-        run_cmd ${sudo_cmd} /tmp/aws/install
+        run_cmd sudo /tmp/aws/install
         rm -rf /tmp/awscliv2.zip /tmp/aws
         log_success "✅ AWS CLI installed"
     else
@@ -961,6 +950,7 @@ main() {
     log_info "🚀 Starting dotfiles installation..."
     log_info "📁 Dotfiles directory: $DOTFILES_DIR"
 
+    # TODO: Add y/n prompt to automatically clone the repo if not found, with a `-y` flag to auto-confirm.
     if [[ ! -d "$DOTFILES_DIR" ]]; then
         log_error "❌ Dotfiles directory not found: $DOTFILES_DIR"
         return 1
@@ -985,6 +975,7 @@ main() {
     timed "Git shims" setup_git_shims
     timed "SSH config" setup_ssh_config
 
+    # TODO: Review if there's any next steps that are missing from here.
     local total_elapsed=$((SECONDS - total_start))
     log_success "🎉 Dotfiles installation complete! (total: $(format_duration $total_elapsed))"
     log_info ""
