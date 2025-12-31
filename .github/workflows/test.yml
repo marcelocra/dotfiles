@@ -1,0 +1,24 @@
+name: Tests
+
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - 'setup/**'
+      - 'shell/**'
+      - 'tests/**'
+  pull_request:
+    branches: [ main ]
+    paths:
+      - 'setup/**'
+      - 'shell/**'
+      - 'tests/**'
+
+jobs:
+  test-install:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Run Installation Test
+        run: ./tests/docker-test.sh setup/install.bash
