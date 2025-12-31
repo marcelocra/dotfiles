@@ -43,7 +43,7 @@ A development machine requires various CLI tools. We need to decide:
 | tldr | Man pages are 500 lines. `tldr tar` gives you the 5 commands you actually need | Nice-to-have |
 | htop | See what's eating your RAM. Kill it with one keypress | Not always needed |
 
-### Cloud Tools (`--cloud-tools`)
+### Cloud Tools (`--cloud-tools` -> Removed 2025-12-31)
 
 | Tool | Purpose |
 |------|---------|
@@ -52,6 +52,8 @@ A development machine requires various CLI tools. We need to decide:
 | aws-cli | AWS CLI |
 | gcloud | Google Cloud CLI |
 | azure-cli | Azure CLI |
+
+**Why removed:** These tools are rarely used in personal development workflows. When needed, they can be installed manually via official installers. Keeping them in the script added ~60 lines of code for no actual benefit.
 
 ### Security Criteria
 

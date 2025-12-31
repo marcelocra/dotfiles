@@ -70,7 +70,6 @@ SKIP_TAILSCALE="${DOTFILES_SKIP_TAILSCALE:-false}"
 
 # Optional tool bundles (opt-in via CLI flags)
 SKIP_EXTRA_TOOLS="${DOTFILES_SKIP_EXTRA_TOOLS:-true}"   # zoxide, eza, delta, lazygit, tldr, htop
-SKIP_CLOUD_TOOLS="${DOTFILES_SKIP_CLOUD_TOOLS:-true}"   # kubectl, terraform, aws-cli, gcloud, azure-cli
 
 # Script behavior
 DEBUG="${DOTFILES_DEBUG:-0}"
@@ -99,7 +98,6 @@ Options:
   --no-docker       Skip Docker installation
   --no-tailscale    Skip Tailscale installation
   --with-extras     Install extra tools (zoxide, eza, delta, lazygit, tldr, htop)
-  --with-cloud-tools Install cloud CLIs (kubectl, terraform, aws, gcloud, azure)
   --debug           Enable debug logging
   --help, -h        Show this help
 
@@ -118,7 +116,6 @@ while [[ $# -gt 0 ]]; do
             SKIP_TAILSCALE="true"
             SKIP_DEV_PACKAGES="true"
             SKIP_EXTRA_TOOLS="true"
-            SKIP_CLOUD_TOOLS="true"
             ;;
         --no-docker)
             SKIP_DOCKER="true"
@@ -128,9 +125,6 @@ while [[ $# -gt 0 ]]; do
             ;;
         --with-extras)
             SKIP_EXTRA_TOOLS="false"
-            ;;
-        --with-cloud-tools)
-            SKIP_CLOUD_TOOLS="false"
             ;;
         --debug)
             DEBUG="1"
@@ -877,66 +871,6 @@ install_extra_tools() {
 }
 
 # =============================================================================
-# CLOUD TOOLS INSTALLATION (opt-in via --with-cloud-tools)
-# =============================================================================
-
-# TODO: Split installation functions for each tool, like for cli tools.
-install_cloud_tools() {
-    if [[ "$SKIP_CLOUD_TOOLS" == "true" ]]; then
-        log_info "⏭️  Skipping cloud tools (use --with-cloud-tools to install kubectl, terraform, etc.)"
-        return 0
-    fi
-
-    log_info "☁️  Installing cloud tools..."
-
-    # kubectl
-    if ! command_exists kubectl; then
-        log_info "📦 Installing kubectl..."
-        local kubectl_version
-        kubectl_version=$(curl_cmd "https://dl.k8s.io/release/stable.txt")
-        curl_safer -o "kubectl" "https://dl.k8s.io/release/${kubectl_version}/bin/linux/amd64/kubectl"
-        sudo install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
-        rm -f kubectl
-        log_success "✅ kubectl installed"
-    else
-        log_info "✅ kubectl already installed"
-    fi
-
-    # terraform
-    if ! command_exists terraform; then
-        log_info "📦 Installing terraform..."
-        sudo apt-get update -y
-        sudo apt-get install -y gnupg software-properties-common
-        curl_cmd https://apt.releases.hashicorp.com/gpg | sudo gpg --dearmor -o /usr/share/keyrings/hashicorp-archive-keyring.gpg
-        echo "deb [signed-by=/usr/share/keyrings/hashicorp-archive-keyring.gpg] https://apt.releases.hashicorp.com $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/hashicorp.list
-        sudo apt-get update -y
-        sudo apt-get install -y terraform
-        log_success "✅ terraform installed"
-    else
-        log_info "✅ terraform already installed"
-    fi
-
-    # AWS CLI
-    if ! command_exists aws; then
-        log_info "📦 Installing AWS CLI..."
-        curl_safer -o "/tmp/awscliv2.zip" "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip"
-        unzip -q /tmp/awscliv2.zip -d /tmp
-        sudo /tmp/aws/install
-        rm -rf /tmp/awscliv2.zip /tmp/aws
-        log_success "✅ AWS CLI installed"
-    else
-        log_info "✅ AWS CLI already installed"
-    fi
-
-    # gcloud (Google Cloud CLI) - skip if not needed, large install
-    log_info "ℹ️  gcloud and azure-cli are large installs. Install manually if needed:"
-    log_info "   gcloud: https://cloud.google.com/sdk/docs/install"
-    log_info "   azure-cli: curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash"
-
-    log_success "✅ Cloud tools installed"
-}
-
-# =============================================================================
 # MAIN
 # =============================================================================
 
@@ -961,7 +895,6 @@ main() {
     timed "Homebrew" install_homebrew
     timed "CLI tools" install_cli_tools
     timed "Extra tools" install_extra_tools
-    timed "Cloud tools" install_cloud_tools
     timed "Zsh plugins" install_zsh_plugins
     timed "Shell configs" link_shell_configs
     timed "VS Code configs" link_vscode_configs

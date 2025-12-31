@@ -15,7 +15,7 @@ Make the dotfiles installation "world-class" with reliability, testing, and code
 - [x] Add locale exports (`TZ`, `LANG`, `LC_ALL`, `LC_TIME`)
 - [x] Add gh CLI installation
 - [x] Add extra tools (zoxide, eza, delta, lazygit, tldr, htop) via `--with-extras`
-- [x] Add cloud tools (kubectl, terraform, aws) via `--with-cloud-tools`
+- [x] ~~Add cloud tools~~ (removed - install manually if needed)
 - [x] Add shellcheck/shfmt to brew packages
 - [x] Consolidate `AGENTS.md` (deleted `AI_CONTEXT.md`)
 - [x] Rename test scripts to `.bash`
