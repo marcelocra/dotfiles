@@ -1,6 +1,197 @@
 #!/usr/bin/env bash
 
 # =============================================================================
+# BASH/ZSH SCRIPTING CHEAT SHEET
+# =============================================================================
+#
+# VARIABLES & PARAMETERS
+#   $0                  - Script name
+#   $1, $2, $3...       - Positional arguments
+#   $#                  - Number of arguments
+#   $@                  - All arguments as separate words (use "$@" with quotes)
+#   $*                  - All arguments as single word
+#   $?                  - Exit status of last command
+#   $$                  - Current process ID
+#   $!                  - PID of last background process
+#   ${var:-default}     - Use default if var unset/null
+#   ${var:=default}     - Assign default if var unset/null
+#   ${var:?error}       - Error if var unset/null
+#   ${var:+value}       - Use value if var is set
+#   ${#var}             - Length of string
+#   ${var#pattern}      - Remove shortest match from start
+#   ${var##pattern}     - Remove longest match from start
+#   ${var%pattern}      - Remove shortest match from end
+#   ${var%%pattern}     - Remove longest match from end
+#   ${var/pat/rep}      - Replace first match
+#   ${var//pat/rep}     - Replace all matches
+#
+# CONDITIONALS
+#   [[ ]] for bash      - Preferred (supports &&, ||, <, >, ==, !=, =~)
+#   [ ] for POSIX       - Portable (requires -a, -o, escaped operators)
+#   Always quote: [[ "$var" == "value" ]]
+#
+#   File tests:      -e exists, -f file, -d dir, -L symlink, -r readable
+#                    -w writable, -x executable, -s non-empty
+#   String tests:    -z empty, -n non-empty, == equal, != not equal
+#   Numeric tests:   -eq, -ne, -lt, -le, -gt, -ge
+#   Regex match:     [[ "$str" =~ ^[0-9]+$ ]]
+#   Pattern match:   [[ "$str" == *.txt ]]
+#
+# LOOPS
+#   for i in {1..10}; do echo $i; done
+#   for file in *.txt; do echo "$file"; done
+#   for ((i=0; i<10; i++)); do echo $i; done
+#   while read line; do echo "$line"; done < file.txt
+#   while [[ condition ]]; do ...; done
+#   until [[ condition ]]; do ...; done
+#
+# FUNCTIONS
+#   func() { local var="$1"; echo "$var"; }
+#   func() { local var="$1"; return 0; }  # return 0-255
+#   Always use 'local' for function variables
+#
+# REDIRECTIONS & PIPES
+#   cmd > file            - Redirect stdout (overwrite)
+#   cmd >> file           - Redirect stdout (append)
+#   cmd 2> file           - Redirect stderr
+#   cmd &> file           - Redirect both (bash only)
+#   cmd > /dev/null 2>&1  - Discard all output (portable)
+#   cmd1 | cmd2           - Pipe stdout to next command
+#   cmd1 |& cmd2          - Pipe stdout and stderr (bash 4+)
+#   cmd < file            - Read stdin from file
+#   cmd <<< "text"        - Here string
+#   cmd << EOF            - Here document
+#
+# COMMAND EXECUTION
+#   $(cmd)                - Command substitution (preferred)
+#   `cmd`                 - Command substitution (old style)
+#   cmd1 && cmd2          - Run cmd2 only if cmd1 succeeds
+#   cmd1 || cmd2          - Run cmd2 only if cmd1 fails
+#   cmd1; cmd2            - Run sequentially
+#   cmd &                 - Run in background
+#   (cmd)                 - Run in subshell
+#   { cmd; }              - Run in current shell (note spaces and semicolon)
+#
+# STRING MANIPULATION
+#   "${arr[@]}"           - Expand array elements
+#   "${!arr[@]}"          - Array indices/keys
+#   str="hello world"
+#   echo "${str^^}"       - HELLO WORLD (uppercase)
+#   echo "${str,,}"       - hello world (lowercase)
+#   echo "${str:0:5}"     - hello (substring)
+#
+# ARRAYS (bash/zsh)
+#   arr=(one two three)
+#   echo "${arr[0]}"      - First element
+#   echo "${arr[@]}"      - All elements
+#   echo "${#arr[@]}"     - Array length
+#   arr+=(four)           - Append element
+#
+# ERROR HANDLING
+#   set -e                 - Exit on error
+#   set -u                 - Exit on undefined variable
+#   set -o pipefail        - Exit if any pipe command fails
+#   set -x                 - Print commands before executing (debug)
+#   trap 'cleanup' EXIT    - Run cleanup on exit
+#   trap 'handler' ERR     - Run handler on error
+#
+# USEFUL PATTERNS
+#   command -v cmd >/dev/null 2>&1   - Check if command exists
+#   [[ -n "${VAR:-}" ]]              - Safely check if var is set
+#   cd "${0%/*}" || exit             - cd to script directory
+#   readonly VAR="value"             - Make variable immutable
+#   export VAR="value"               - Make available to child processes
+#
+# ARITHMETIC
+#   $((expression))        - Arithmetic expansion
+#   ((i++))                - Arithmetic command
+#   let "i = i + 1"        - Let command
+#   Example: sum=$((5 + 3))  # sum=8
+#
+# =============================================================================
+# ZSH VS BASH: KEY DIFFERENCES
+# =============================================================================
+#
+# ZSH-ONLY FEATURES (won't work in bash):
+# ---------------------------------------
+#
+# 1. OPTION SYSTEM
+#    setopt OPTION_NAME    - Enable option (bash uses 'shopt' or 'set')
+#    unsetopt OPTION_NAME  - Disable option
+#    Examples: setopt AUTO_CD, setopt CORRECT, setopt HIST_IGNORE_DUPS
+#
+# 2. AUTOLOADING
+#    autoload -Uz func     - Load function on first use
+#    Example: autoload -Uz compinit; compinit
+#
+# 3. ZSTYLE (configuration system)
+#    zstyle ':completion:*' matcher-list 'm:{a-z}-{A-Z}'
+#    Used for completions, prompts, and module configuration
+#
+# 4. PROMPT EXPANSION (different syntax)
+#    %F{color}...%f        - Color text (bash uses \[\033[...m\])
+#    %n                    - Username (bash: \u)
+#    %m                    - Hostname (bash: \h)
+#    %~                    - Current dir with ~ (bash: \w)
+#    %#                    - # for root, % for user (bash: \$)
+#
+# 5. ARRAY INDEXING
+#    Arrays start at 1 in zsh, 0 in bash!
+#    zsh:  arr-(a b c); echo $arr[1]    # prints "a"
+#    bash: arr-(a b c); echo ${arr[0]}  # prints "a"
+#
+# 6. PARAMETER EXPANSION FLAGS
+#    ${(U)var}             - Uppercase (bash: ${var^^})
+#    ${(L)var}             - Lowercase (bash: ${var,,})
+#    ${(j:,:)arr}          - Join array with delimiter
+#
+# 7. EXTENDED GLOBBING (more powerful than bash)
+#    **/*.txt              - Recursive glob (bash needs: shopt -s globstar)
+#    *(.)                  - Only files
+#    *(/)                  - Only directories
+#    *(om)                 - Order by modification time
+#    *(L0)                 - Empty files
+#
+# 8. HISTORY SHARING
+#    setopt SHARE_HISTORY  - Share history between all shells immediately
+#    (bash shares only on exit/startup)
+#
+# 9. SPELLING CORRECTION
+#    setopt CORRECT        - Suggests corrections for commands
+#    setopt CORRECT_ALL    - Suggests corrections for all arguments
+#
+# 10. COMPLETION SYSTEM
+#     compinit             - Initialize zsh completions
+#     (bash uses 'complete' command with different syntax)
+#
+# BASH-ONLY FEATURES (won't work in zsh):
+# ---------------------------------------
+#
+# 1. shopt                - Bash shell options (zsh uses setopt)
+#    Example: shopt -s histappend
+#
+# 2. HISTCONTROL          - Bash history control variable
+#    (zsh uses setopt HIST_IGNORE_DUPS, etc.)
+#
+# 3. PROMPT_COMMAND       - Executed before each prompt (bash only)
+#    (zsh uses precmd() function)
+#
+# 4. declare/typeset      - Different behavior between shells
+#
+# PORTABLE CODE TIPS:
+# -------------------
+#
+#   - Check shell: [[ -n "${ZSH_VERSION:-}" ]] or [[ -n "${BASH_VERSION:-}" ]]
+#   - Avoid array indexing differences - use loops instead
+#   - Use [[ ]] for conditionals (works in both modern versions)
+#   - Stick to common parameter expansion: ${var:-default}
+#   - Test scripts in both shells if portability matters
+
+# =============================================================================
+# =============================== ARCHIVED CODE ===============================
+# =============================================================================
+
+# =============================================================================
 # FUNCTIONS - MEDIA PROCESSING
 # =============================================================================
 
@@ -360,189 +551,14 @@ x-codehelp() {
     fi
 }
 
-# =============================================================================
-# BASH/ZSH SCRIPTING CHEAT SHEET
-# =============================================================================
-#
-# VARIABLES & PARAMETERS
-#   $0                  - Script name
-#   $1, $2, $3...       - Positional arguments
-#   $#                  - Number of arguments
-#   $@                  - All arguments as separate words (use "$@" with quotes)
-#   $*                  - All arguments as single word
-#   $?                  - Exit status of last command
-#   $$                  - Current process ID
-#   $!                  - PID of last background process
-#   ${var:-default}     - Use default if var unset/null
-#   ${var:=default}     - Assign default if var unset/null
-#   ${var:?error}       - Error if var unset/null
-#   ${var:+value}       - Use value if var is set
-#   ${#var}             - Length of string
-#   ${var#pattern}      - Remove shortest match from start
-#   ${var##pattern}     - Remove longest match from start
-#   ${var%pattern}      - Remove shortest match from end
-#   ${var%%pattern}     - Remove longest match from end
-#   ${var/pat/rep}      - Replace first match
-#   ${var//pat/rep}     - Replace all matches
-#
-# CONDITIONALS
-#   [[ ]] for bash      - Preferred (supports &&, ||, <, >, ==, !=, =~)
-#   [ ] for POSIX       - Portable (requires -a, -o, escaped operators)
-#   Always quote: [[ "$var" == "value" ]]
-#
-#   File tests:      -e exists, -f file, -d dir, -L symlink, -r readable
-#                    -w writable, -x executable, -s non-empty
-#   String tests:    -z empty, -n non-empty, == equal, != not equal
-#   Numeric tests:   -eq, -ne, -lt, -le, -gt, -ge
-#   Regex match:     [[ "$str" =~ ^[0-9]+$ ]]
-#   Pattern match:   [[ "$str" == *.txt ]]
-#
-# LOOPS
-#   for i in {1..10}; do echo $i; done
-#   for file in *.txt; do echo "$file"; done
-#   for ((i=0; i<10; i++)); do echo $i; done
-#   while read line; do echo "$line"; done < file.txt
-#   while [[ condition ]]; do ...; done
-#   until [[ condition ]]; do ...; done
-#
-# FUNCTIONS
-#   func() { local var="$1"; echo "$var"; }
-#   func() { local var="$1"; return 0; }  # return 0-255
-#   Always use 'local' for function variables
-#
-# REDIRECTIONS & PIPES
-#   cmd > file            - Redirect stdout (overwrite)
-#   cmd >> file           - Redirect stdout (append)
-#   cmd 2> file           - Redirect stderr
-#   cmd &> file           - Redirect both (bash only)
-#   cmd > /dev/null 2>&1  - Discard all output (portable)
-#   cmd1 | cmd2           - Pipe stdout to next command
-#   cmd1 |& cmd2          - Pipe stdout and stderr (bash 4+)
-#   cmd < file            - Read stdin from file
-#   cmd <<< "text"        - Here string
-#   cmd << EOF            - Here document
-#
-# COMMAND EXECUTION
-#   $(cmd)                - Command substitution (preferred)
-#   `cmd`                 - Command substitution (old style)
-#   cmd1 && cmd2          - Run cmd2 only if cmd1 succeeds
-#   cmd1 || cmd2          - Run cmd2 only if cmd1 fails
-#   cmd1; cmd2            - Run sequentially
-#   cmd &                 - Run in background
-#   (cmd)                 - Run in subshell
-#   { cmd; }              - Run in current shell (note spaces and semicolon)
-#
-# STRING MANIPULATION
-#   "${arr[@]}"           - Expand array elements
-#   "${!arr[@]}"          - Array indices/keys
-#   str="hello world"
-#   echo "${str^^}"       - HELLO WORLD (uppercase)
-#   echo "${str,,}"       - hello world (lowercase)
-#   echo "${str:0:5}"     - hello (substring)
-#
-# ARRAYS (bash/zsh)
-#   arr=(one two three)
-#   echo "${arr[0]}"      - First element
-#   echo "${arr[@]}"      - All elements
-#   echo "${#arr[@]}"     - Array length
-#   arr+=(four)           - Append element
-#
-# ERROR HANDLING
-#   set -e                 - Exit on error
-#   set -u                 - Exit on undefined variable
-#   set -o pipefail        - Exit if any pipe command fails
-#   set -x                 - Print commands before executing (debug)
-#   trap 'cleanup' EXIT    - Run cleanup on exit
-#   trap 'handler' ERR     - Run handler on error
-#
-# USEFUL PATTERNS
-#   command -v cmd >/dev/null 2>&1   - Check if command exists
-#   [[ -n "${VAR:-}" ]]              - Safely check if var is set
-#   cd "${0%/*}" || exit             - cd to script directory
-#   readonly VAR="value"             - Make variable immutable
-#   export VAR="value"               - Make available to child processes
-#
-# ARITHMETIC
-#   $((expression))        - Arithmetic expansion
-#   ((i++))                - Arithmetic command
-#   let "i = i + 1"        - Let command
-#   Example: sum=$((5 + 3))  # sum=8
-#
-# =============================================================================
-# ZSH VS BASH: KEY DIFFERENCES
-# =============================================================================
-#
-# ZSH-ONLY FEATURES (won't work in bash):
-# ---------------------------------------
-#
-# 1. OPTION SYSTEM
-#    setopt OPTION_NAME    - Enable option (bash uses 'shopt' or 'set')
-#    unsetopt OPTION_NAME  - Disable option
-#    Examples: setopt AUTO_CD, setopt CORRECT, setopt HIST_IGNORE_DUPS
-#
-# 2. AUTOLOADING
-#    autoload -Uz func     - Load function on first use
-#    Example: autoload -Uz compinit; compinit
-#
-# 3. ZSTYLE (configuration system)
-#    zstyle ':completion:*' matcher-list 'm:{a-z}-{A-Z}'
-#    Used for completions, prompts, and module configuration
-#
-# 4. PROMPT EXPANSION (different syntax)
-#    %F{color}...%f        - Color text (bash uses \[\033[...m\])
-#    %n                    - Username (bash: \u)
-#    %m                    - Hostname (bash: \h)
-#    %~                    - Current dir with ~ (bash: \w)
-#    %#                    - # for root, % for user (bash: \$)
-#
-# 5. ARRAY INDEXING
-#    Arrays start at 1 in zsh, 0 in bash!
-#    zsh:  arr-(a b c); echo $arr[1]    # prints "a"
-#    bash: arr-(a b c); echo ${arr[0]}  # prints "a"
-#
-# 6. PARAMETER EXPANSION FLAGS
-#    ${(U)var}             - Uppercase (bash: ${var^^})
-#    ${(L)var}             - Lowercase (bash: ${var,,})
-#    ${(j:,:)arr}          - Join array with delimiter
-#
-# 7. EXTENDED GLOBBING (more powerful than bash)
-#    **/*.txt              - Recursive glob (bash needs: shopt -s globstar)
-#    *(.)                  - Only files
-#    *(/)                  - Only directories
-#    *(om)                 - Order by modification time
-#    *(L0)                 - Empty files
-#
-# 8. HISTORY SHARING
-#    setopt SHARE_HISTORY  - Share history between all shells immediately
-#    (bash shares only on exit/startup)
-#
-# 9. SPELLING CORRECTION
-#    setopt CORRECT        - Suggests corrections for commands
-#    setopt CORRECT_ALL    - Suggests corrections for all arguments
-#
-# 10. COMPLETION SYSTEM
-#     compinit             - Initialize zsh completions
-#     (bash uses 'complete' command with different syntax)
-#
-# BASH-ONLY FEATURES (won't work in zsh):
-# ---------------------------------------
-#
-# 1. shopt                - Bash shell options (zsh uses setopt)
-#    Example: shopt -s histappend
-#
-# 2. HISTCONTROL          - Bash history control variable
-#    (zsh uses setopt HIST_IGNORE_DUPS, etc.)
-#
-# 3. PROMPT_COMMAND       - Executed before each prompt (bash only)
-#    (zsh uses precmd() function)
-#
-# 4. declare/typeset      - Different behavior between shells
-#
-# PORTABLE CODE TIPS:
-# -------------------
-#
-#   - Check shell: [[ -n "${ZSH_VERSION:-}" ]] or [[ -n "${BASH_VERSION:-}" ]]
-#   - Avoid array indexing differences - use loops instead
-#   - Use [[ ]] for conditionals (works in both modern versions)
-#   - Stick to common parameter expansion: ${var:-default}
-#   - Test scripts in both shells if portability matters
+# Prints instructions on how to deal with WSL distributions on Windows.
+x-wsl-help() {
+    echo '
+INFO: Set default distro: wsl.exe --set-default <DistroName>
+INFO: Run distro: wsl.exe --distribution <DistroName>
+INFO: Install distro: wsl.exe --install [Distro] --name <Name> --no-launch
+'
+}
+
+# Next archive above - keep this comment at the bottom.
+
