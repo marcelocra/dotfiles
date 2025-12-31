@@ -73,7 +73,6 @@ SKIP_EXTRA_TOOLS="${DOTFILES_SKIP_EXTRA_TOOLS:-true}"   # zoxide, eza, delta, la
 SKIP_CLOUD_TOOLS="${DOTFILES_SKIP_CLOUD_TOOLS:-true}"   # kubectl, terraform, aws-cli, gcloud, azure-cli
 
 # Script behavior
-DRY_RUN="${DOTFILES_DRY_RUN:-false}"
 DEBUG="${DOTFILES_DEBUG:-0}"
 
 # Locale and timezone configuration
@@ -101,7 +100,6 @@ Options:
   --no-tailscale    Skip Tailscale installation
   --with-extras     Install extra tools (zoxide, eza, delta, lazygit, tldr, htop)
   --with-cloud-tools Install cloud CLIs (kubectl, terraform, aws, gcloud, azure)
-  --dry-run         Print commands without executing
   --debug           Enable debug logging
   --help, -h        Show this help
 
@@ -133,9 +131,6 @@ while [[ $# -gt 0 ]]; do
             ;;
         --with-cloud-tools)
             SKIP_CLOUD_TOOLS="false"
-            ;;
-        --dry-run)
-            DRY_RUN="true"
             ;;
         --debug)
             DEBUG="1"
@@ -180,15 +175,6 @@ command_exists() {
     command -v "$1" >/dev/null 2>&1
 }
 
-# Run a command, respecting DRY_RUN
-run_cmd() {
-    if [[ "$DRY_RUN" == "true" ]]; then
-        log_info "[DRY-RUN] $*"
-    else
-        "$@"
-    fi
-}
-
 format_duration() {
     local seconds="$1"
     if ((seconds < 60)); then echo "${seconds}s"; else echo "$((seconds / 60))m $((seconds % 60))s"; fi
@@ -214,7 +200,7 @@ safe_symlink() {
         return 1
     fi
 
-    run_cmd mkdir -p "$(dirname "$target")"
+    mkdir -p "$(dirname "$target")"
 
     if [[ -e "$target" ]]; then
         if [[ -L "$target" ]] && [[ "$(readlink "$target")" == "$source" ]]; then
@@ -225,10 +211,10 @@ safe_symlink() {
         timestamp=$(date +"%Y%m%d_%H%M%S")
         local backup="${target}.bak.${timestamp}"
         log_info "📦 Backing up existing file to: $backup"
-        run_cmd mv "$target" "$backup"
+        mv "$target" "$backup"
     fi
 
-    run_cmd ln -s "$source" "$target"
+    ln -s "$source" "$target"
     log_debug "Created symlink: $target -> $source"
     return 0
 }
@@ -289,7 +275,7 @@ configure_locale() {
 
     # Set system timezone (affects logs, cron, systemd services)
     if command_exists timedatectl; then
-        run_cmd sudo timedatectl set-timezone "$TZ_VAR" || log_warning "Failed to set timezone to $TZ_VAR"
+        sudo timedatectl set-timezone "$TZ_VAR" || log_warning "Failed to set timezone to $TZ_VAR"
     fi
 
     # Generate required locales
@@ -300,14 +286,14 @@ configure_locale() {
         for locale in "${locales_to_generate[@]}"; do
             if ! grep -q "^${locale}" /etc/locale.gen 2>/dev/null; then
                 log_info "Enabling locale $locale..."
-                run_cmd sudo sed -i "s/^# *${locale}/${locale}/" /etc/locale.gen 2>/dev/null || true
+                sudo sed -i "s/^# *${locale}/${locale}/" /etc/locale.gen 2>/dev/null || true
                 needs_regen=true
             fi
         done
 
         if [[ "$needs_regen" == "true" ]]; then
             log_info "Generating locales..."
-            run_cmd sudo locale-gen
+            sudo locale-gen
         else
             log_debug "Required locales already configured"
         fi
@@ -336,7 +322,7 @@ install_system_packages() {
     export DEBIAN_FRONTEND=noninteractive
 
     # Update package index
-    run_cmd sudo apt-get update -y
+    sudo apt-get update -y
 
     local minimal_packages=(
         apt-transport-https build-essential ca-certificates curl gcc git git-lfs gnupg
@@ -356,7 +342,7 @@ install_system_packages() {
         packages+=("${dev_packages[@]}")
     fi
 
-    if ! run_cmd sudo apt-get install -y "${packages[@]}"; then
+    if ! sudo apt-get install -y "${packages[@]}"; then
         log_warning "Some apt packages failed to install"
     else
         log_success "✅ System packages installed"
@@ -377,11 +363,11 @@ install_docker() {
     fi
 
     log_info "🐳 Installing Docker..."
-    run_cmd curl_cmd https://get.docker.com | run_cmd sudo sh
+    curl_cmd https://get.docker.com | sudo sh
 
     if getent group docker >/dev/null; then
         log_info "🐳 Adding $USER to docker group..."
-        run_cmd sudo usermod -aG docker "$USER" || true
+        sudo usermod -aG docker "$USER" || true
     fi
     log_success "✅ Docker installed"
 }
@@ -400,7 +386,7 @@ install_tailscale() {
     fi
 
     log_info "🔌 Installing Tailscale..."
-    run_cmd curl_cmd https://tailscale.com/install.sh | run_cmd sudo sh
+    curl_cmd https://tailscale.com/install.sh | sudo sh
     log_success "✅ Tailscale installed"
 }
 
@@ -416,7 +402,7 @@ install_homebrew() {
     fi
 
     log_info "📦 Installing Homebrew (Linuxbrew)..."
-    run_cmd curl_cmd https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh | run_cmd bash
+    curl_cmd https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh | bash
 
     if [[ -d "/home/linuxbrew/.linuxbrew" ]]; then
         eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
@@ -434,7 +420,7 @@ install_nvm() {
     fi
 
     log_info "📦 Installing nvm (Node Version Manager)..."
-    run_cmd curl_cmd https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.3/install.sh | run_cmd bash
+    curl_cmd https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.3/install.sh | bash
     log_success "✅ nvm installed successfully"
 }
 
@@ -473,8 +459,8 @@ install_pnpm() {
 
     log_info "📦 Installing pnpm..."
     export PNPM_HOME="${PNPM_HOME:-$HOME/.local/share/pnpm}"
-    run_cmd mkdir -p "$PNPM_HOME"
-    run_cmd curl_cmd https://get.pnpm.io/install.sh | run_cmd sh -
+    mkdir -p "$PNPM_HOME"
+    curl_cmd https://get.pnpm.io/install.sh | sh -
     log_success "✅ pnpm installed successfully"
 }
 
@@ -500,7 +486,7 @@ install_global_npm_packages() {
     )
 
     log_info "   Installing: ${packages[*]}"
-    run_cmd pnpm add -g "${packages[@]}"
+    pnpm add -g "${packages[@]}"
     log_success "✅ Global npm packages installed"
 }
 
@@ -511,7 +497,7 @@ install_oh_my_zsh() {
     fi
 
     log_info "📦 Installing oh-my-zsh..."
-    run_cmd curl_cmd https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh | run_cmd sh -s -- --unattended
+    curl_cmd https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh | sh -s -- --unattended
     log_success "✅ oh-my-zsh installed successfully"
 }
 
@@ -522,8 +508,8 @@ install_just() {
     fi
 
     log_info "📦 Installing just..."
-    run_cmd mkdir -p "$HOME/bin"
-    run_cmd curl_cmd https://just.systems/install.sh | run_cmd bash -s -- --to "$HOME/bin"
+    mkdir -p "$HOME/bin"
+    curl_cmd https://just.systems/install.sh | bash -s -- --to "$HOME/bin"
     log_success "✅ just installed successfully"
 }
 
@@ -540,15 +526,15 @@ install_fzf() {
 
     if [[ -d "$fzf_dir" ]]; then
         log_debug "Updating existing fzf installation..."
-        (cd "$fzf_dir" && run_cmd git pull) || log_warning "Failed to update fzf"
+        (cd "$fzf_dir" && git pull) || log_warning "Failed to update fzf"
     else
         log_debug "Cloning fzf from $FORK_FZF_REPO..."
-        run_cmd git clone --depth 1 "$FORK_FZF_REPO" "$fzf_dir"
+        git clone --depth 1 "$FORK_FZF_REPO" "$fzf_dir"
     fi
 
-    run_cmd "$fzf_dir/install" --bin
-    run_cmd mkdir -p "$HOME/bin"
-    run_cmd ln -sf "$fzf_dir/bin/fzf" "$fzf_bin"
+    "$fzf_dir/install" --bin
+    mkdir -p "$HOME/bin"
+    ln -sf "$fzf_dir/bin/fzf" "$fzf_bin"
     log_success "✅ fzf installed from custom fork"
 }
 
@@ -574,7 +560,7 @@ install_brew_packages() {
 
     if [[ ${#to_install[@]} -gt 0 ]]; then
         log_info "Installing: ${to_install[*]}"
-        run_cmd brew install "${to_install[@]}" || log_warning "Some brew packages failed to install"
+        brew install "${to_install[@]}" || log_warning "Some brew packages failed to install"
         log_success "✅ Brew packages installed"
     else
         log_info "✅ All brew packages already installed"
@@ -602,7 +588,7 @@ install_gh() {
     fi
 
     log_info "📦 Installing GitHub CLI..."
-    run_cmd __install_gh
+    __install_gh
     log_success "✅ GitHub CLI installed"
 }
 
@@ -613,7 +599,7 @@ install_kiro() {
     fi
 
     log_info "📦 Installing Kiro CLI..."
-    run_cmd curl_cmd https://cli.kiro.dev/install | run_cmd bash
+    curl_cmd https://cli.kiro.dev/install | bash
     log_success "✅ Kiro CLI installed"
 }
 
@@ -670,10 +656,10 @@ install_zsh_plugin() {
 
     if [[ -d "$dest" ]]; then
         log_debug "Updating $name..."
-        (cd "$dest" && run_cmd git pull) || log_warning "Failed to update $name"
+        (cd "$dest" && git pull) || log_warning "Failed to update $name"
     else
         log_debug "Cloning $name from $repo..."
-        run_cmd git clone --depth 1 "$repo" "$dest"
+        git clone --depth 1 "$repo" "$dest"
     fi
 }
 
@@ -717,7 +703,7 @@ detect_vscode_config_dir() {
         if [[ -d "$HOME/.vscode-remote/data/User" ]]; then echo "$HOME/.vscode-remote/data/User"; return 0; fi
 
         local default_dir="$HOME/.vscode-server/data/User"
-        run_cmd mkdir -p "$default_dir"
+        mkdir -p "$default_dir"
         echo "$default_dir"
         return 0
     fi
@@ -856,7 +842,7 @@ install_extra_tools() {
     # zoxide - smart cd replacement (learns from usage)
     if ! command_exists zoxide; then
         log_info "📦 Installing zoxide..."
-        run_cmd curl_cmd https://raw.githubusercontent.com/ajeetdsouza/zoxide/main/install.sh | run_cmd bash
+        curl_cmd https://raw.githubusercontent.com/ajeetdsouza/zoxide/main/install.sh | bash
         log_success "✅ zoxide installed"
     else
         log_info "✅ zoxide already installed"
@@ -881,7 +867,7 @@ install_extra_tools() {
 
         if [[ ${#to_install[@]} -gt 0 ]]; then
             log_info "📦 Installing via Homebrew: ${to_install[*]}"
-            run_cmd brew install "${to_install[@]}" || log_warning "Some extra tools failed to install"
+            brew install "${to_install[@]}" || log_warning "Some extra tools failed to install"
         fi
     else
         log_warning "⚠️  Homebrew not available, some extra tools will be skipped"
@@ -908,8 +894,8 @@ install_cloud_tools() {
         log_info "📦 Installing kubectl..."
         local kubectl_version
         kubectl_version=$(curl_cmd "https://dl.k8s.io/release/stable.txt")
-        run_cmd curl_safer -o "kubectl" "https://dl.k8s.io/release/${kubectl_version}/bin/linux/amd64/kubectl"
-        run_cmd sudo install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
+        curl_safer -o "kubectl" "https://dl.k8s.io/release/${kubectl_version}/bin/linux/amd64/kubectl"
+        sudo install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
         rm -f kubectl
         log_success "✅ kubectl installed"
     else
@@ -919,12 +905,12 @@ install_cloud_tools() {
     # terraform
     if ! command_exists terraform; then
         log_info "📦 Installing terraform..."
-        run_cmd sudo apt-get update -y
-        run_cmd sudo apt-get install -y gnupg software-properties-common
-        run_cmd curl_cmd https://apt.releases.hashicorp.com/gpg | run_cmd sudo gpg --dearmor -o /usr/share/keyrings/hashicorp-archive-keyring.gpg
-        echo "deb [signed-by=/usr/share/keyrings/hashicorp-archive-keyring.gpg] https://apt.releases.hashicorp.com $(lsb_release -cs) main" | run_cmd sudo tee /etc/apt/sources.list.d/hashicorp.list
-        run_cmd sudo apt-get update -y
-        run_cmd sudo apt-get install -y terraform
+        sudo apt-get update -y
+        sudo apt-get install -y gnupg software-properties-common
+        curl_cmd https://apt.releases.hashicorp.com/gpg | sudo gpg --dearmor -o /usr/share/keyrings/hashicorp-archive-keyring.gpg
+        echo "deb [signed-by=/usr/share/keyrings/hashicorp-archive-keyring.gpg] https://apt.releases.hashicorp.com $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/hashicorp.list
+        sudo apt-get update -y
+        sudo apt-get install -y terraform
         log_success "✅ terraform installed"
     else
         log_info "✅ terraform already installed"
@@ -933,9 +919,9 @@ install_cloud_tools() {
     # AWS CLI
     if ! command_exists aws; then
         log_info "📦 Installing AWS CLI..."
-        run_cmd curl_safer -o "/tmp/awscliv2.zip" "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip"
-        run_cmd unzip -q /tmp/awscliv2.zip -d /tmp
-        run_cmd sudo /tmp/aws/install
+        curl_safer -o "/tmp/awscliv2.zip" "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip"
+        unzip -q /tmp/awscliv2.zip -d /tmp
+        sudo /tmp/aws/install
         rm -rf /tmp/awscliv2.zip /tmp/aws
         log_success "✅ AWS CLI installed"
     else
