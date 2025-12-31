@@ -164,43 +164,61 @@ curl_safer() {
     curl --proto '=https' --tlsv1.2 -fsSL "$@"
 }
 
-
 command_exists() {
     command -v "$1" >/dev/null 2>&1
 }
 
+# Timing helper - returns elapsed time in human-readable format
 format_duration() {
     local seconds="$1"
-    if ((seconds < 60)); then echo "${seconds}s"; else echo "$((seconds / 60))m $((seconds % 60))s"; fi
+    if ((seconds < 60)); then
+        echo "${seconds}s"
+    else
+        echo "$((seconds / 60))m $((seconds % 60))s"
+    fi
 }
 
+# Run a function and report how long it took
 timed() {
     local name="$1"
     local func="$2"
     local start_time=$SECONDS
+
     "$func"
     local exit_code=$?
+
     local elapsed=$((SECONDS - start_time))
-    [[ $elapsed -gt 0 ]] && log_info "⏱️  $name took $(format_duration $elapsed)"
+    if ((elapsed > 0)); then
+        log_info "⏱️  $name took $(format_duration $elapsed)"
+    fi
+
     return $exit_code
 }
 
+# Creates a symlink, backing up any existing file with a timestamp.
+# Returns 0 if symlink was created or already correct, 1 if source doesn't exist.
+# Usage: safe_symlink <source> <target>
 safe_symlink() {
     local source="$1"
     local target="$2"
 
+    # Check if source exists
     if [[ ! -e "$source" ]]; then
         log_warning "⚠️  Source not found: $source"
         return 1
     fi
 
+    # Ensure target directory exists
     mkdir -p "$(dirname "$target")"
 
+    # Check if target already exists
     if [[ -e "$target" ]]; then
+        # If it's already a correct symlink, we're done
         if [[ -L "$target" ]] && [[ "$(readlink "$target")" == "$source" ]]; then
             log_debug "Symlink already correct: $target -> $source"
             return 0
         fi
+        # Back up existing file with timestamp
         local timestamp
         timestamp=$(date +"%Y%m%d_%H%M%S")
         local backup="${target}.bak.${timestamp}"
@@ -208,6 +226,7 @@ safe_symlink() {
         mv "$target" "$backup"
     fi
 
+    # Create the symlink
     ln -s "$source" "$target"
     log_debug "Created symlink: $target -> $source"
     return 0
@@ -231,18 +250,24 @@ detect_environment() {
         export DOTFILES_IN_CONTAINER="true"
     fi
 
+    # WSL detection
     if grep -q Microsoft /proc/version 2>/dev/null || grep -q WSL2 /proc/version 2>/dev/null; then
         export DOTFILES_IN_WSL="true"
     fi
 
+    # Remote VS Code detection
     if [[ -n "${REMOTE_CONTAINERS:-}" ]] || [[ -n "${CODESPACES:-}" ]]; then
         export DOTFILES_IN_REMOTE_VSCODE="true"
     fi
 
+    # SSH session detection (remote connection without local 1Password)
     if [[ -n "${SSH_CONNECTION:-}" ]] || [[ -n "${SSH_CLIENT:-}" ]]; then
         export DOTFILES_IN_SSH="true"
     fi
 
+    # Derived: Remote environment (no local 1Password access)
+    # Includes: containers, SSH sessions, DevBunker
+    # These environments use forwarded SSH agent and need ssh-keygen shim
     if [[ "${DOTFILES_IN_CONTAINER}" == "true" ]] || \
        [[ "${DOTFILES_IN_SSH}" == "true" ]] || \
        [[ "${DOTFILES_IN_BUNKER}" == "true" ]]; then
@@ -313,19 +338,44 @@ install_system_packages() {
 
     log_info "📦 Installing essential system packages via apt (requires sudo)"
 
+    # Non-interactive install
     export DEBIAN_FRONTEND=noninteractive
 
     # Update package index
     sudo apt-get update -y
 
+    # Minimal packages required on a fresh Ubuntu install to compile/build and fetch tooling
     local minimal_packages=(
-        apt-transport-https build-essential ca-certificates curl gcc git git-lfs gnupg
-        jq lsb-release make software-properties-common wget
+        apt-transport-https
+        build-essential
+        ca-certificates
+        curl
+        gcc
+        git
+        git-lfs
+        gnupg
+        jq
+        lsb-release
+        make
+        software-properties-common
+        wget
     )
 
+    # Extended development packages (opt-in)
     local dev_packages=(
-        cmake g++ libbz2-dev libreadline-dev libsqlite3-dev libssl-dev pkg-config
-        python3-dev python3-pip python3-venv unzip zip zlib1g-dev
+        cmake
+        g++
+        libbz2-dev
+        libreadline-dev
+        libsqlite3-dev
+        libssl-dev
+        pkg-config
+        python3-dev
+        python3-pip
+        python3-venv
+        unzip
+        zip
+        zlib1g-dev
     )
 
     local packages=("${minimal_packages[@]}")
@@ -336,11 +386,14 @@ install_system_packages() {
         packages+=("${dev_packages[@]}")
     fi
 
+    # Install packages in one call; tolerate failure but warn
     if ! sudo apt-get install -y "${packages[@]}"; then
         log_warning "Some apt packages failed to install"
     else
         log_success "✅ System packages installed"
     fi
+
+    return 0
 }
 
 # Docker Installation
@@ -380,9 +433,13 @@ install_tailscale() {
     fi
 
     log_info "🔌 Installing Tailscale..."
-    curl_cmd https://tailscale.com/install.sh | sudo sh
+    curl_cmd https://tailscale.com/install.sh | sh
     log_success "✅ Tailscale installed"
 }
+
+# =============================================================================
+# HOMEBREW INSTALLATION
+# =============================================================================
 
 install_homebrew() {
     if [[ "$SKIP_HOMEBREW" == "true" ]]; then
@@ -396,8 +453,12 @@ install_homebrew() {
     fi
 
     log_info "📦 Installing Homebrew (Linuxbrew)..."
+
+    # Install Homebrew using official script
+    # Note: For even more security, you could fork the install script and use your fork
     curl_cmd https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh | bash
 
+    # Add brew to current shell session
     if [[ -d "/home/linuxbrew/.linuxbrew" ]]; then
         eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
         log_success "✅ Homebrew installed successfully"
@@ -414,7 +475,10 @@ install_nvm() {
     fi
 
     log_info "📦 Installing nvm (Node Version Manager)..."
+
+    # Install nvm using official script. Shell init.sh already loads nvm on new shells.
     curl_cmd https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.3/install.sh | bash
+
     log_success "✅ nvm installed successfully"
 }
 
@@ -425,6 +489,8 @@ install_node_lts() {
     fi
 
     local nvm_dir="${NVM_DIR:-$HOME/.nvm}"
+
+    # Load nvm if not loaded (early return if unavailable)
     if ! command_exists nvm && [[ ! -s "$nvm_dir/nvm.sh" ]]; then
         log_warning "⚠️  nvm not found, skipping Node.js LTS installation"
         return 0
@@ -432,8 +498,9 @@ install_node_lts() {
 
     export NVM_DIR="$nvm_dir"
     # shellcheck source=/dev/null
-    [[ -s "$nvm_dir/nvm.sh" ]] && source "$nvm_dir/nvm.sh"
+    source "$nvm_dir/nvm.sh"
 
+    # Check if any Node version is installed
     if nvm ls --no-colors 2>/dev/null | grep -q 'v[0-9]'; then
         log_info "✅ Node.js already installed"
         return 0
@@ -452,9 +519,13 @@ install_pnpm() {
     fi
 
     log_info "📦 Installing pnpm..."
+
+    # Configure pnpm home (init.sh already adds this to PATH).
     export PNPM_HOME="${PNPM_HOME:-$HOME/.local/share/pnpm}"
     mkdir -p "$PNPM_HOME"
+    # Install using official installer (PNPM_HOME set skips shell config modification)
     curl_cmd https://get.pnpm.io/install.sh | sh -
+
     log_success "✅ pnpm installed successfully"
 }
 
@@ -464,6 +535,7 @@ install_global_npm_packages() {
         return 0
     fi
 
+    # Ensure pnpm is available
     install_pnpm
     if ! command_exists pnpm; then
         log_warning "⚠️  pnpm not available, skipping global npm packages"
@@ -471,6 +543,8 @@ install_global_npm_packages() {
     fi
 
     log_info "📦 Installing global npm packages..."
+
+    # Packages to install globally (AI CLI tools, etc.)
     local packages=(
         "@anthropic-ai/claude-code"
         "@google/gemini-cli"
@@ -481,6 +555,7 @@ install_global_npm_packages() {
 
     log_info "   Installing: ${packages[*]}"
     pnpm add -g "${packages[@]}"
+
     log_success "✅ Global npm packages installed"
 }
 
@@ -491,7 +566,11 @@ install_oh_my_zsh() {
     fi
 
     log_info "📦 Installing oh-my-zsh..."
+
+    # Install oh-my-zsh using official script
+    # Note: For more security, you could fork the install script and use your fork
     curl_cmd https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh | sh -s -- --unattended
+
     log_success "✅ oh-my-zsh installed successfully"
 }
 
@@ -507,6 +586,7 @@ install_just() {
     log_success "✅ just installed successfully"
 }
 
+# Install fzf from custom fork for security
 install_fzf() {
     local fzf_dir="$HOME/.fzf"
     local fzf_bin="$HOME/bin/fzf"
@@ -526,9 +606,13 @@ install_fzf() {
         git clone --depth 1 "$FORK_FZF_REPO" "$fzf_dir"
     fi
 
+    # Install binary only (skip shell integration - that's in init.sh)
     "$fzf_dir/install" --bin
+
+    # Create symlink in ~/bin
     mkdir -p "$HOME/bin"
     ln -sf "$fzf_dir/bin/fzf" "$fzf_bin"
+
     log_success "✅ fzf installed from custom fork"
 }
 
@@ -540,12 +624,18 @@ install_brew_packages() {
 
     log_info "📦 Installing packages via Homebrew..."
 
-    # Core dev tools: bat (better cat), fd (better find), ripgrep (better grep)
-    # Code quality: shellcheck, shfmt
-    # Clojure: babashka
-    local packages=("bat" "borkdude/brew/babashka" "fd" "ripgrep" "shellcheck" "shfmt")
+    local packages=(
+        "bat"                     # Better cat
+        "borkdude/brew/babashka"  # Clojure
+        "fd"                      # Better find
+        "ripgrep"                 # Better grep
+        "shellcheck"              # Shell code quality
+        "shfmt"                   # Shell code quality
+    )
+
     local to_install=()
 
+    # Check which packages need to be installed
     for pkg in "${packages[@]}"; do
         if ! brew list "$pkg" &>/dev/null; then
             to_install+=("$pkg")
@@ -597,6 +687,10 @@ install_kiro() {
     log_success "✅ Kiro CLI installed"
 }
 
+# =============================================================================
+# CLI TOOLS INSTALLATION
+# =============================================================================
+
 install_cli_tools() {
     if [[ "$SKIP_CLI_TOOLS" == "true" ]]; then
         log_info "⏭️  Skipping CLI tools installation (DOTFILES_SKIP_CLI_TOOLS=true)"
@@ -623,6 +717,10 @@ install_cli_tools() {
     install_gh
 }
 
+# =============================================================================
+# ZSH PLUGINS INSTALLATION
+# =============================================================================
+
 install_zsh_plugins() {
     if [[ "$SKIP_ZSH_PLUGINS" == "true" ]]; then
         log_info "⏭️  Skipping zsh plugins installation (DOTFILES_SKIP_ZSH_PLUGINS=true)"
@@ -631,14 +729,25 @@ install_zsh_plugins() {
 
     if [[ ! -d "$HOME/.oh-my-zsh" ]]; then
         log_warning "⚠️  oh-my-zsh not found, skipping plugin installation"
+        log_info "ℹ️  Install oh-my-zsh first or use a devcontainer with common-utils feature"
         return 0
     fi
 
     log_info "🔌 Installing zsh plugins from custom forks..."
+
     local zsh_custom="${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}"
 
-    install_zsh_plugin "zsh-autosuggestions" "$FORK_ZSH_AUTOSUGGESTIONS" "$zsh_custom/plugins/zsh-autosuggestions"
-    install_zsh_plugin "zsh-syntax-highlighting" "$FORK_ZSH_SYNTAX_HIGHLIGHTING" "$zsh_custom/plugins/zsh-syntax-highlighting"
+    # Install zsh-autosuggestions from custom fork
+    install_zsh_plugin \
+        "zsh-autosuggestions" \
+        "$FORK_ZSH_AUTOSUGGESTIONS" \
+        "$zsh_custom/plugins/zsh-autosuggestions"
+
+    # Install zsh-syntax-highlighting from custom fork
+    install_zsh_plugin \
+        "zsh-syntax-highlighting" \
+        "$FORK_ZSH_SYNTAX_HIGHLIGHTING" \
+        "$zsh_custom/plugins/zsh-syntax-highlighting"
 
     log_success "✅ Zsh plugins installed"
 }
@@ -656,6 +765,10 @@ install_zsh_plugin() {
         git clone --depth 1 "$repo" "$dest"
     fi
 }
+
+# =============================================================================
+# SHELL CONFIGURATION SYMLINKS
+# =============================================================================
 
 link_shell_configs() {
     log_info "🔗 Creating shell configuration symlinks..."
@@ -677,10 +790,12 @@ link_shell_configs() {
         fi
     done
 
+    # .tmux.conf - symlink if exists in dotfiles
     if [[ -f "$DOTFILES_DIR/shell/.tmux.conf" ]]; then
         safe_symlink "$DOTFILES_DIR/shell/.tmux.conf" "$HOME/.tmux.conf"
     fi
 
+    # .gitconfig - symlink if exists in dotfiles
     if [[ -f "$DOTFILES_DIR/git/.gitconfig" ]]; then
         safe_symlink "$DOTFILES_DIR/git/.gitconfig" "$HOME/.gitconfig"
     fi
@@ -688,10 +803,16 @@ link_shell_configs() {
     log_success "✅ Shell configuration symlinks created"
 }
 
+# =============================================================================
+# VS CODE CONFIGURATION
+# =============================================================================
+
 detect_vscode_config_dir() {
     log_debug "Detecting VS Code config directory..."
 
+    # Remote container (most common in DevMagic)
     if [[ "$DOTFILES_IN_REMOTE_VSCODE" == "true" ]]; then
+        # Try different remote paths in order of preference
         if [[ -d "$HOME/.vscode-server-insiders/data/User" ]]; then echo "$HOME/.vscode-server-insiders/data/User"; return 0; fi
         if [[ -d "$HOME/.vscode-server/data/User" ]]; then echo "$HOME/.vscode-server/data/User"; return 0; fi
         if [[ -d "$HOME/.vscode-remote/data/User" ]]; then echo "$HOME/.vscode-remote/data/User"; return 0; fi
@@ -702,8 +823,13 @@ detect_vscode_config_dir() {
         return 0
     fi
 
+    # Native VS Code on Linux
     if [[ -d "$HOME/.config/Code/User" ]]; then echo "$HOME/.config/Code/User"; return 0; fi
+
+    # Native VS Code on macOS
     if [[ -d "$HOME/Library/Application Support/Code/User" ]]; then echo "$HOME/Library/Application Support/Code/User"; return 0; fi
+
+    # VS Code Insiders on Linux
     if [[ -d "$HOME/.config/Code - Insiders/User" ]]; then echo "$HOME/.config/Code - Insiders/User"; return 0; fi
 
     log_debug "VS Code config directory not found"
@@ -717,6 +843,7 @@ link_vscode_configs() {
     fi
 
     log_info "🔗 Detecting VS Code configuration directory..."
+
     local vscode_dir
     vscode_dir=$(detect_vscode_config_dir) || {
         log_info "ℹ️  VS Code not detected, skipping config symlinks"
@@ -724,11 +851,22 @@ link_vscode_configs() {
     }
 
     log_info "📝 Linking VS Code configs to $vscode_dir"
+
+    # Settings
     safe_symlink "$DOTFILES_DIR/apps/vscode/User/settings.json" "$vscode_dir/settings.json"
+
+    # Keybindings
     safe_symlink "$DOTFILES_DIR/apps/vscode/User/keybindings.json" "$vscode_dir/keybindings.json"
+
+    # Snippets
     safe_symlink "$DOTFILES_DIR/apps/vscode/User/snippets" "$vscode_dir/snippets"
+
     log_success "✅ VS Code configs symlinked"
 }
+
+# =============================================================================
+# EDITOR LAUNCHER SETUP
+# =============================================================================
 
 setup_editor_launcher() {
     if [[ "$SKIP_EDITOR_LAUNCHER" == "true" ]]; then
@@ -741,13 +879,28 @@ setup_editor_launcher() {
     log_success "✅ 'e' editor launcher set up"
 }
 
+# =============================================================================
+# GIT SHIMS SETUP (1Password SSH Signing)
+# =============================================================================
+
 resolve_op_signer_binary() {
     local platform="$1"
 
+    # REMOTE ENVIRONMENT STRATEGY:
+    # Since we cannot reach local 1Password, we mock the signer.
+    # We point 'op-signer' to 'ssh-keygen'.
+    # Git calls 'op-signer -Y sign ...', which maps to 'ssh-keygen -Y sign ...'
+    # This works perfectly with standard SSH keys or forwarded agent keys.
     if [[ "${DOTFILES_REMOTE_ENV:-false}" == "true" ]]; then
+        log_debug "Remote env detected: Mocking 1Password signer with native ssh-keygen."
+
         local ssh_keygen_path
         ssh_keygen_path=$(command -v ssh-keygen)
-        if [[ -x "$ssh_keygen_path" ]]; then echo "$ssh_keygen_path"; return 0; fi
+        if [[ -x "$ssh_keygen_path" ]]; then
+            echo "$ssh_keygen_path"
+            return 0
+        fi
+
         log_error "ssh-keygen not found! Cannot shim op-signer."
         return 1
     fi
@@ -755,18 +908,43 @@ resolve_op_signer_binary() {
     local binary_path=""
     case "$platform" in
         wsl)
+            log_debug "Environment: WSL2 detected. Resolving Windows user..."
+
+            if ! command_exists cmd.exe; then
+                log_warning "cmd.exe not found. Is this a valid WSL environment?"
+                return 1
+            fi
+
             local win_user
             win_user=$(cmd.exe /c "echo %USERNAME%" 2>/dev/null | tr -d '\r')
-            [[ -n "$win_user" ]] && binary_path="/mnt/c/Users/${win_user}/AppData/Local/Microsoft/WindowsApps/op-ssh-sign-wsl.exe"
+
+            if [[ -z "$win_user" ]]; then
+                log_warning "Failed to detect Windows username."
+                return 1
+            fi
+
+            binary_path="/mnt/c/Users/${win_user}/AppData/Local/Microsoft/WindowsApps/op-ssh-sign-wsl.exe"
             ;;
-        linux) binary_path="/opt/1Password/op-ssh-sign" ;;
-        macos) binary_path="/Applications/1Password.app/Contents/MacOS/op-ssh-sign" ;;
-        *) return 1 ;;
+
+        linux)
+            log_debug "Environment: Native Linux detected."
+            binary_path="/opt/1Password/op-ssh-sign"
+            ;;
+
+        *)
+            log_warning "Unsupported platform for git shims: $platform"
+            return 1
+            ;;
     esac
 
-    if [[ -f "$binary_path" ]]; then echo "$binary_path"; return 0; fi
-    log_warning "1Password signer binary not found at: $binary_path"
-    return 1
+    # Validate the binary exists before returning
+    if [[ ! -f "$binary_path" ]]; then
+        log_warning "1Password signer binary not found at: $binary_path"
+        log_info "ℹ️  Please ensure 1Password is installed and SSH signing is enabled"
+        return 1
+    fi
+
+    echo "$binary_path"
 }
 
 setup_git_shims() {
@@ -779,27 +957,43 @@ setup_git_shims() {
     local platform
     platform=$(detect_platform)
 
+    log_debug "🔗 Setting up git-ssh shim for platform: $platform"
+
+    # Determine which SSH command to use based on platform
     local ssh_cmd="ssh"
     [[ "$platform" == "wsl" ]] && ssh_cmd="ssh.exe"
 
+    # Find the SSH binary in PATH
     local ssh_binary
     ssh_binary=$(command -v "$ssh_cmd" 2>/dev/null)
 
+    log_debug "Using SSH command: $ssh_cmd -> $ssh_binary"
+
     if [[ -n "$ssh_binary" ]]; then
         safe_symlink "$ssh_binary" "$HOME/bin/git-ssh"
-        log_success "✅ Git SSH shim created"
+        log_success "✅ Git SSH shim created: git-ssh -> $ssh_binary"
     fi
+
+    # Remote environments are handled in resolve_op_signer_binary (uses ssh-keygen)
 
     local op_binary
     if op_binary=$(resolve_op_signer_binary "$platform"); then
+        log_debug "Using op-signer binary: $op_binary"
+
         safe_symlink "$op_binary" "$HOME/bin/op-signer"
-        log_success "✅ Op-signer shim created"
+        log_success "✅ Op-signer shim created: op-signer -> $op_binary"
     fi
 
+    # Check if shim directory is in PATH
     if [[ ":$PATH:" != *":$HOME/bin:"* ]]; then
-        log_info "ℹ️  Note: Ensure ~/bin is in your PATH"
+        log_warning "⚠️  ~/bin is not in your PATH"
+        log_info "ℹ️  Add to your shell profile: export PATH=\"\$HOME/bin:\$PATH\""
     fi
 }
+
+# =============================================================================
+# SSH CONFIG FOR 1PASSWORD
+# =============================================================================
 
 setup_ssh_config() {
     if [[ "$SKIP_SSH_CONFIG" == "true" ]]; then
@@ -852,17 +1046,8 @@ install_extra_tools() {
             "htop"      # Interactive process viewer
         )
 
-        local to_install=()
-        for pkg in "${extra_brew_packages[@]}"; do
-            if ! brew list "$pkg" &>/dev/null; then
-                to_install+=("$pkg")
-            fi
-        done
-
-        if [[ ${#to_install[@]} -gt 0 ]]; then
-            log_info "📦 Installing via Homebrew: ${to_install[*]}"
-            brew install "${to_install[@]}" || log_warning "Some extra tools failed to install"
-        fi
+        log_info "📦 Installing via Homebrew: ${extra_brew_packages[*]}"
+        brew install "${extra_brew_packages[@]}" || log_warning "Some extra tools failed to install"
     else
         log_warning "⚠️  Homebrew not available, some extra tools will be skipped"
     fi
@@ -871,7 +1056,7 @@ install_extra_tools() {
 }
 
 # =============================================================================
-# MAIN
+# MAIN INSTALLATION ORCHESTRATION
 # =============================================================================
 
 main() {
@@ -913,4 +1098,3 @@ main() {
 }
 
 main "$@"
-
