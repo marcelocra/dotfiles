@@ -581,7 +581,20 @@ install_brew_packages() {
     fi
 }
 
-# TODO: Use copy/paste directly from official instructions. Do they work with run_cmd?
+# Uses official installation instructions for GitHub CLI, copy/pasted from:
+#   https://github.com/cli/cli/blob/trunk/docs/install_linux.md
+__install_gh() {
+    (type -p wget >/dev/null || (sudo apt update && sudo apt install wget -y)) \
+	&& sudo mkdir -p -m 755 /etc/apt/keyrings \
+	&& out=$(mktemp) && wget -nv -O$out https://cli.github.com/packages/githubcli-archive-keyring.gpg \
+	&& cat $out | sudo tee /etc/apt/keyrings/githubcli-archive-keyring.gpg > /dev/null \
+	&& sudo chmod go+r /etc/apt/keyrings/githubcli-archive-keyring.gpg \
+	&& sudo mkdir -p -m 755 /etc/apt/sources.list.d \
+	&& echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" | sudo tee /etc/apt/sources.list.d/github-cli.list > /dev/null \
+	&& sudo apt update \
+	&& sudo apt install gh -y
+}
+
 install_gh() {
     if command_exists gh; then
         log_info "✅ GitHub CLI already installed"
@@ -589,12 +602,7 @@ install_gh() {
     fi
 
     log_info "📦 Installing GitHub CLI..."
-    run_cmd sudo mkdir -p /etc/apt/keyrings
-    run_cmd curl_cmd https://cli.github.com/packages/githubcli-archive-keyring.gpg | run_cmd sudo tee /etc/apt/keyrings/githubcli-archive-keyring.gpg > /dev/null
-    run_cmd sudo chmod go+r /etc/apt/keyrings/githubcli-archive-keyring.gpg
-    echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" | run_cmd sudo tee /etc/apt/sources.list.d/github-cli.list > /dev/null
-    run_cmd sudo apt-get update -y
-    run_cmd sudo apt-get install -y gh
+    run_cmd __install_gh
     log_success "✅ GitHub CLI installed"
 }
 
