@@ -150,6 +150,15 @@ configure_editor() {
 #
 # Also adds $HOME/bin and $HOME/.local/bin to PATH.
 configure_exports() {
+    # Locale and timezone configuration.
+    # Use C.UTF-8 for predictable scripting behavior (byte-wise sorting, POSIX regex).
+    # Use en_GB for LC_TIME to get day/month/year and 24-hour time format.
+    # See: docs/adr/0003-locale-and-timezone-configuration.md
+    export TZ="${TZ:-America/Sao_Paulo}"
+    export LANG="${LANG:-C.UTF-8}"
+    export LC_ALL="${LC_ALL:-C.UTF-8}"
+    export LC_TIME="${LC_TIME:-en_GB.UTF-8}"
+
     # Privacy - disable telemetry for various tools.
     export DO_NOT_TRACK=1
     export DOTNET_CLI_TELEMETRY_OPTOUT=true

@@ -38,58 +38,103 @@ set -euo pipefail
 
 DOTFILES_DIR="${DOTFILES_DIR:-$HOME/x/dotfiles}"
 
-# Default Flags (controlled by arguments or env vars)
+# -----------------------------------------------------------------------------
+# Feature flags (all use SKIP_* pattern for consistency)
+# Set via environment variables (DOTFILES_SKIP_*) or CLI arguments
+# See: docs/adr/0005-development-tool-selection.md
+# -----------------------------------------------------------------------------
+
+# Core installation steps
 SKIP_SYSTEM_PACKAGES="${DOTFILES_SKIP_SYSTEM_PACKAGES:-false}"
 SKIP_DEV_PACKAGES="${DOTFILES_SKIP_DEV_PACKAGES:-true}"
 SKIP_HOMEBREW="${DOTFILES_SKIP_HOMEBREW:-true}"
 SKIP_CLI_TOOLS="${DOTFILES_SKIP_CLI_TOOLS:-false}"
 SKIP_ZSH_PLUGINS="${DOTFILES_SKIP_ZSH_PLUGINS:-false}"
+SKIP_NODE_LTS="${DOTFILES_SKIP_NODE_LTS:-false}"
+SKIP_NPM_PACKAGES="${DOTFILES_SKIP_NPM_PACKAGES:-false}"
+
+# Shell and editor configuration
 SKIP_VSCODE="${DOTFILES_SKIP_VSCODE:-true}"
 SKIP_EDITOR_LAUNCHER="${DOTFILES_SKIP_EDITOR_LAUNCHER:-true}"
 SKIP_GIT_SHIMS="${DOTFILES_SKIP_GIT_SHIMS:-false}"
 SKIP_SSH_CONFIG="${DOTFILES_SKIP_SSH_CONFIG:-false}"
-SKIP_NODE_LTS="${DOTFILES_SKIP_NODE_LTS:-false}"
-SKIP_NPM_PACKAGES="${DOTFILES_SKIP_NPM_PACKAGES:-false}"
 
-# New Flags
-INSTALL_DOCKER="true"
-INSTALL_TAILSCALE="true"
-DRY_RUN="false"
+# Infrastructure tools (skip by default in containers, install on VMs)
+SKIP_DOCKER="${DOTFILES_SKIP_DOCKER:-false}"
+SKIP_TAILSCALE="${DOTFILES_SKIP_TAILSCALE:-false}"
 
+# Optional tool bundles (opt-in via CLI flags)
+SKIP_EXTRA_TOOLS="${DOTFILES_SKIP_EXTRA_TOOLS:-true}"   # zoxide, eza, delta, lazygit, tldr, htop
+SKIP_CLOUD_TOOLS="${DOTFILES_SKIP_CLOUD_TOOLS:-true}"   # kubectl, terraform, aws-cli, gcloud, azure-cli
+
+# Script behavior
+DRY_RUN="${DOTFILES_DRY_RUN:-false}"
 DEBUG="${DOTFILES_DEBUG:-0}"
 
-# Localization
+# Locale and timezone configuration
+# See: docs/adr/0003-locale-and-timezone-configuration.md
 TZ_VAR="America/Sao_Paulo"
-LOCALE_VAR="en_US.UTF-8"
+LANG_VAR="C.UTF-8"
+LC_TIME_VAR="en_GB.UTF-8"
 
-# Custom fork repositories
+# Custom fork repositories (for security - you control the source)
 FORK_FZF_REPO="${FORK_FZF_REPO:-https://github.com/marcelocra/fzf.git}"
 FORK_ZSH_AUTOSUGGESTIONS="${FORK_ZSH_AUTOSUGGESTIONS:-https://github.com/marcelocra/zsh-autosuggestions.git}"
 FORK_ZSH_SYNTAX_HIGHLIGHTING="${FORK_ZSH_SYNTAX_HIGHLIGHTING:-https://github.com/marcelocra/zsh-syntax-highlighting.git}"
+
 
 # =============================================================================
 # ARGUMENT PARSING
 # =============================================================================
 
 usage() {
-    grep "^#   " "$0" | sed 's/#   //'
+    cat <<EOF
+Usage: ./setup/install.bash [options]
+
+Options:
+  --minimal         Skip Docker, Tailscale, and dev packages (container-friendly)
+  --no-docker       Skip Docker installation
+  --no-tailscale    Skip Tailscale installation
+  --with-extras     Install extra tools (zoxide, eza, delta, lazygit, tldr, htop)
+  --with-cloud-tools Install cloud CLIs (kubectl, terraform, aws, gcloud, azure)
+  --dry-run         Print commands without executing
+  --debug           Enable debug logging
+  --help, -h        Show this help
+
+Environment variables:
+  DOTFILES_SKIP_SYSTEM_PACKAGES=true  Skip apt package installation
+  DOTFILES_SKIP_HOMEBREW=true         Skip Homebrew installation
+  DOTFILES_SKIP_DOCKER=true           Skip Docker installation
+  (see source for full list)
+EOF
 }
 
 while [[ $# -gt 0 ]]; do
     case "$1" in
         --minimal)
-            INSTALL_DOCKER="false"
-            INSTALL_TAILSCALE="false"
+            SKIP_DOCKER="true"
+            SKIP_TAILSCALE="true"
             SKIP_DEV_PACKAGES="true"
+            SKIP_EXTRA_TOOLS="true"
+            SKIP_CLOUD_TOOLS="true"
             ;;
         --no-docker)
-            INSTALL_DOCKER="false"
+            SKIP_DOCKER="true"
             ;;
         --no-tailscale)
-            INSTALL_TAILSCALE="false"
+            SKIP_TAILSCALE="true"
+            ;;
+        --with-extras)
+            SKIP_EXTRA_TOOLS="false"
+            ;;
+        --with-cloud-tools)
+            SKIP_CLOUD_TOOLS="false"
             ;;
         --dry-run)
             DRY_RUN="true"
+            ;;
+        --debug)
+            DEBUG="1"
             ;;
         --help|-h)
             usage
@@ -114,9 +159,18 @@ log_warning() { printf '\033[1;33m[dotfiles]\033[0m %s\n' "$*"; }
 log_error() { printf '\033[0;31m[dotfiles]\033[0m %s\n' "$*" >&2; }
 log_debug() { [[ "${DEBUG}" == "1" ]] && printf '\033[0;90m[dotfiles:debug]\033[0m %s\n' "$*" >&2; }
 
+# Secure curl for piping to shell (e.g., | bash)
+# Forces HTTPS, TLS 1.2+, outputs to stdout
 curl_cmd() {
     curl --proto '=https' --tlsv1.2 -fsSL -o- "$@"
 }
+
+# Secure curl for general downloads (with custom flags)
+# Forces HTTPS, TLS 1.2+ but allows other flags like -o, -O
+curl_safer() {
+    curl --proto '=https' --tlsv1.2 -fsSL "$@"
+}
+
 
 command_exists() {
     command -v "$1" >/dev/null 2>&1
@@ -222,25 +276,43 @@ detect_platform() {
 }
 
 # =============================================================================
-# NEW: LOCALE CONFIGURATION
+# LOCALE CONFIGURATION
+# See: docs/adr/0003-locale-and-timezone-configuration.md
 # =============================================================================
 
 configure_locale() {
-    log_info "🌐 Configuring locale ($LOCALE_VAR) and timezone ($TZ_VAR)..."
+    log_info "🌐 Configuring locale ($LANG_VAR) and timezone ($TZ_VAR)..."
     
+    local sudo_cmd=""
+    [[ $EUID -ne 0 ]] && command_exists sudo && sudo_cmd="sudo"
+
+    # Set system timezone (affects logs, cron, systemd services)
     if command_exists timedatectl; then
-        run_cmd sudo timedatectl set-timezone "$TZ_VAR" || log_warning "Failed to set timezone to $TZ_VAR"
+        run_cmd ${sudo_cmd} timedatectl set-timezone "$TZ_VAR" || log_warning "Failed to set timezone to $TZ_VAR"
     fi
 
+    # Generate required locales
     if [[ -f /etc/locale.gen ]] && command_exists locale-gen; then
-        if ! grep -q "^${LOCALE_VAR//./\.}" /etc/locale.gen; then
-            log_info "Generating locale $LOCALE_VAR..."
-            run_cmd sudo sed -i "s/^# *${LOCALE_VAR//./\.}/${LOCALE_VAR//./\.}/" /etc/locale.gen
-            run_cmd sudo locale-gen
+        local locales_to_generate=("$LANG_VAR" "$LC_TIME_VAR")
+        local needs_regen=false
+
+        for locale in "${locales_to_generate[@]}"; do
+            if ! grep -q "^${locale}" /etc/locale.gen 2>/dev/null; then
+                log_info "Enabling locale $locale..."
+                run_cmd ${sudo_cmd} sed -i "s/^# *${locale}/${locale}/" /etc/locale.gen 2>/dev/null || true
+                needs_regen=true
+            fi
+        done
+
+        if [[ "$needs_regen" == "true" ]]; then
+            log_info "Generating locales..."
+            run_cmd ${sudo_cmd} locale-gen
         else
-            log_debug "Locale $LOCALE_VAR already configured in /etc/locale.gen"
+            log_debug "Required locales already configured"
         fi
     fi
+
+    log_success "✅ Locale and timezone configured"
 }
 
 # =============================================================================
@@ -299,10 +371,11 @@ install_system_packages() {
     fi
 }
 
-# NEW: Docker Installation
+# Docker Installation
+# See: docs/adr/0008-stability-over-latest.md (Docker chosen for stability)
 install_docker() {
-    if [[ "$INSTALL_DOCKER" == "false" ]]; then
-        log_info "⏭️  Skipping Docker installation (--no-docker or --minimal)"
+    if [[ "$SKIP_DOCKER" == "true" ]]; then
+        log_info "⏭️  Skipping Docker installation (DOTFILES_SKIP_DOCKER=true)"
         return 0
     fi
 
@@ -321,10 +394,11 @@ install_docker() {
     log_success "✅ Docker installed"
 }
 
-# NEW: Tailscale Installation
+# Tailscale Installation
+# See: docs/adr/0006-network-security-tailscale.md
 install_tailscale() {
-    if [[ "$INSTALL_TAILSCALE" == "false" ]]; then
-        log_info "⏭️  Skipping Tailscale installation (--no-tailscale or --minimal)"
+    if [[ "$SKIP_TAILSCALE" == "true" ]]; then
+        log_info "⏭️  Skipping Tailscale installation (DOTFILES_SKIP_TAILSCALE=true)"
         return 0
     fi
 
@@ -489,7 +563,10 @@ install_fzf() {
 install_brew_packages() {
     log_info "📦 Installing packages via Homebrew..."
 
-    local packages=("bat" "borkdude/brew/babashka" "fd" "ripgrep")
+    # Core dev tools: bat (better cat), fd (better find), ripgrep (better grep)
+    # Code quality: shellcheck, shfmt
+    # Clojure: babashka
+    local packages=("bat" "borkdude/brew/babashka" "fd" "ripgrep" "shellcheck" "shfmt")
     local to_install=()
 
     for pkg in "${packages[@]}"; do
@@ -525,6 +602,31 @@ install_cli_tools() {
         install_brew_packages
     else
         log_warning "⚠️  Homebrew not available, skipping brew package installation"
+    fi
+
+    # GitHub CLI
+    if ! command_exists gh; then
+        log_info "📦 Installing GitHub CLI..."
+        local sudo_cmd=""
+        [[ $EUID -ne 0 ]] && command_exists sudo && sudo_cmd="sudo"
+        run_cmd ${sudo_cmd} mkdir -p /etc/apt/keyrings
+        run_cmd curl_cmd https://cli.github.com/packages/githubcli-archive-keyring.gpg | run_cmd ${sudo_cmd} tee /etc/apt/keyrings/githubcli-archive-keyring.gpg > /dev/null
+        run_cmd ${sudo_cmd} chmod go+r /etc/apt/keyrings/githubcli-archive-keyring.gpg
+        echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" | run_cmd ${sudo_cmd} tee /etc/apt/sources.list.d/github-cli.list > /dev/null
+        run_cmd ${sudo_cmd} apt-get update -y
+        run_cmd ${sudo_cmd} apt-get install -y gh
+        log_success "✅ GitHub CLI installed"
+    else
+        log_info "✅ GitHub CLI already installed"
+    fi
+
+    # Kiro CLI (AWS AI coding assistant)
+    if ! command_exists kiro; then
+        log_info "📦 Installing Kiro CLI..."
+        run_cmd curl_cmd https://cli.kiro.dev/install | run_cmd bash
+        log_success "✅ Kiro CLI installed"
+    else
+        log_info "✅ Kiro CLI already installed"
     fi
 }
 
@@ -727,6 +829,117 @@ setup_ssh_config() {
 }
 
 # =============================================================================
+# EXTRA TOOLS INSTALLATION (opt-in via --with-extras)
+# =============================================================================
+
+install_extra_tools() {
+    if [[ "$SKIP_EXTRA_TOOLS" == "true" ]]; then
+        log_info "⏭️  Skipping extra tools (use --with-extras to install zoxide, eza, delta, etc.)"
+        return 0
+    fi
+
+    log_info "🔧 Installing extra tools..."
+
+    # zoxide - smart cd replacement (learns from usage)
+    if ! command_exists zoxide; then
+        log_info "📦 Installing zoxide..."
+        run_cmd curl_cmd https://raw.githubusercontent.com/ajeetdsouza/zoxide/main/install.sh | run_cmd bash
+        log_success "✅ zoxide installed"
+    else
+        log_info "✅ zoxide already installed"
+    fi
+
+    # Install brew-based tools if available
+    if command_exists brew; then
+        local extra_brew_packages=(
+            "eza"       # Better ls with colors and icons
+            "git-delta" # Better git diff viewer
+            "lazygit"   # Terminal UI for git
+            "tealdeer"  # tldr - simplified man pages (Rust implementation)
+            "htop"      # Interactive process viewer
+        )
+
+        local to_install=()
+        for pkg in "${extra_brew_packages[@]}"; do
+            if ! brew list "$pkg" &>/dev/null; then
+                to_install+=("$pkg")
+            fi
+        done
+
+        if [[ ${#to_install[@]} -gt 0 ]]; then
+            log_info "📦 Installing via Homebrew: ${to_install[*]}"
+            run_cmd brew install "${to_install[@]}" || log_warning "Some extra tools failed to install"
+        fi
+    else
+        log_warning "⚠️  Homebrew not available, some extra tools will be skipped"
+    fi
+
+    log_success "✅ Extra tools installed"
+}
+
+# =============================================================================
+# CLOUD TOOLS INSTALLATION (opt-in via --with-cloud-tools)
+# =============================================================================
+
+install_cloud_tools() {
+    if [[ "$SKIP_CLOUD_TOOLS" == "true" ]]; then
+        log_info "⏭️  Skipping cloud tools (use --with-cloud-tools to install kubectl, terraform, etc.)"
+        return 0
+    fi
+
+    log_info "☁️  Installing cloud tools..."
+
+    local sudo_cmd=""
+    [[ $EUID -ne 0 ]] && command_exists sudo && sudo_cmd="sudo"
+
+    # kubectl
+    if ! command_exists kubectl; then
+        log_info "📦 Installing kubectl..."
+        local kubectl_version
+        kubectl_version=$(curl_cmd "https://dl.k8s.io/release/stable.txt")
+        run_cmd curl_safer -o "kubectl" "https://dl.k8s.io/release/${kubectl_version}/bin/linux/amd64/kubectl"
+        run_cmd ${sudo_cmd} install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
+        rm -f kubectl
+        log_success "✅ kubectl installed"
+    else
+        log_info "✅ kubectl already installed"
+    fi
+
+    # terraform
+    if ! command_exists terraform; then
+        log_info "📦 Installing terraform..."
+        run_cmd ${sudo_cmd} apt-get update -y
+        run_cmd ${sudo_cmd} apt-get install -y gnupg software-properties-common
+        run_cmd curl_cmd https://apt.releases.hashicorp.com/gpg | run_cmd ${sudo_cmd} gpg --dearmor -o /usr/share/keyrings/hashicorp-archive-keyring.gpg
+        echo "deb [signed-by=/usr/share/keyrings/hashicorp-archive-keyring.gpg] https://apt.releases.hashicorp.com $(lsb_release -cs) main" | run_cmd ${sudo_cmd} tee /etc/apt/sources.list.d/hashicorp.list
+        run_cmd ${sudo_cmd} apt-get update -y
+        run_cmd ${sudo_cmd} apt-get install -y terraform
+        log_success "✅ terraform installed"
+    else
+        log_info "✅ terraform already installed"
+    fi
+
+    # AWS CLI
+    if ! command_exists aws; then
+        log_info "📦 Installing AWS CLI..."
+        run_cmd curl_safer -o "/tmp/awscliv2.zip" "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip"
+        run_cmd unzip -q /tmp/awscliv2.zip -d /tmp
+        run_cmd ${sudo_cmd} /tmp/aws/install
+        rm -rf /tmp/awscliv2.zip /tmp/aws
+        log_success "✅ AWS CLI installed"
+    else
+        log_info "✅ AWS CLI already installed"
+    fi
+
+    # gcloud (Google Cloud CLI) - skip if not needed, large install
+    log_info "ℹ️  gcloud and azure-cli are large installs. Install manually if needed:"
+    log_info "   gcloud: https://cloud.google.com/sdk/docs/install"
+    log_info "   azure-cli: curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash"
+
+    log_success "✅ Cloud tools installed"
+}
+
+# =============================================================================
 # MAIN
 # =============================================================================
 
@@ -749,6 +962,8 @@ main() {
     timed "Tailscale" install_tailscale
     timed "Homebrew" install_homebrew
     timed "CLI tools" install_cli_tools
+    timed "Extra tools" install_extra_tools
+    timed "Cloud tools" install_cloud_tools
     timed "Zsh plugins" install_zsh_plugins
     timed "Shell configs" link_shell_configs
     timed "VS Code configs" link_vscode_configs
@@ -760,7 +975,10 @@ main() {
     log_success "🎉 Dotfiles installation complete! (total: $(format_duration $total_elapsed))"
     log_info ""
     log_info "ℹ️  Next steps:"
-    log_info "   1. Restart your shell: source ~/.zshrc "
+    log_info "   1. Restart your shell: source ~/.zshrc"
+    log_info "   2. For Tailscale: sudo tailscale up"
+    log_info "   3. For GitHub CLI: gh auth login"
 }
 
 main "$@"
+
