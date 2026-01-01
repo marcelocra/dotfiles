@@ -396,6 +396,56 @@ install_system_packages() {
     return 0
 }
 
+# Uses official installation instructions copy/pasted from:
+# https://docs.docker.com/engine/install/ubuntu/#install-using-the-repository
+__install_docker() {
+    # 1// Remove conflicting packages.
+    sudo apt remove $(dpkg --get-selections docker.io docker-compose docker-compose-v2 docker-doc podman-docker containerd runc | cut -f1)
+
+    # 2// Configure apt.
+    # Add Docker's official GPG key:
+    sudo apt update
+    sudo apt install ca-certificates curl
+    sudo install -m 0755 -d /etc/apt/keyrings
+    sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc
+    sudo chmod a+r /etc/apt/keyrings/docker.asc
+
+    # Add the repository to Apt sources:
+    sudo tee /etc/apt/sources.list.d/docker.sources <<EOF
+Types: deb
+URIs: https://download.docker.com/linux/ubuntu
+Suites: $(. /etc/os-release && echo "${UBUNTU_CODENAME:-$VERSION_CODENAME}")
+Components: stable
+Signed-By: /etc/apt/keyrings/docker.asc
+EOF
+
+    sudo apt update
+
+    # 3// Install the latest version.
+    sudo apt install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+
+    # 4// Add docker group (if it doesn't exist) and add user to it.
+    if ! getent group docker > /dev/null; then
+      sudo groupadd docker
+    fi
+    sudo usermod -aG docker "$USER"
+
+    # 5// (Optional) To update or install specific versions, do the following:
+    #
+    #   a. Find which version you want to install
+    #
+    #       $ apt list --all-versions docker-ce
+    #       docker-ce/noble 5:29.1.3-1~ubuntu.24.04~noble <arch>
+    #       docker-ce/noble 5:29.1.2-1~ubuntu.24.04~noble <arch>
+    #       ...
+    #
+    #   b. Select the desired version and install:
+    #
+    #       $ VERSION_STRING=5:29.1.3-1~ubuntu.24.04~noble
+    #       $ sudo apt install docker-ce=$VERSION_STRING docker-ce-cli=$VERSION_STRING containerd.io docker-buildx-plugin docker-compose-plugin
+
+}
+
 # Docker Installation
 # See: docs/adr/0008-stability-over-latest.md (Docker chosen for stability)
 install_docker() {
@@ -410,12 +460,7 @@ install_docker() {
     fi
 
     log_info "🐳 Installing Docker..."
-    curl_cmd https://get.docker.com | sudo sh
-
-    if getent group docker >/dev/null; then
-        log_info "🐳 Adding $USER to docker group..."
-        sudo usermod -aG docker "$USER" || true
-    fi
+    __install_docker
     log_success "✅ Docker installed"
 }
 
