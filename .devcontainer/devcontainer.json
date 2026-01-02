@@ -6,9 +6,9 @@
   // ----------***----------***----------***----------***----------***----------
   "name": "DevMagic",
 
-  // Universal, with lots of things (~10GB) on Ubuntu 24 (Noble):
+  // Universal, with lots of things (~10 GB) on Ubuntu 24 (Noble):
   // "image": "mcr.microsoft.com/devcontainers/universal:4-noble",
-  // Node.js with TypeScript (~2GB) on Debian 12 (Bookworm):
+  // Node.js with TypeScript (~2 GB) on Debian 12 (Bookworm):
   "image": "mcr.microsoft.com/devcontainers/typescript-node:24-bookworm",
   // "remoteUser": "codespace", // When using the universal image.
   "remoteUser": "node",
@@ -19,14 +19,18 @@
     "TZ": "${localEnv:TZ:America/Sao_Paulo}",
     "LC_ALL": "${localEnv:LC_ALL:en_US.UTF-8}",
     "LANG": "${localEnv:LANG:en_US.UTF-8}",
+
     // Shell history directory. You must mount have a mounted ~/.shell_histories
     // directory for the history to persist across containers and WSL sessions.
     // Otherwise, history will be lost when the container is removed.
     "MCRA_HISTORY_DIR": "/home/node/.shell_histories",
+
     // Workspace folder for history file naming (auto-set by VS Code).
     "WORKSPACE_FOLDER": "${containerWorkspaceFolder}",
+
     // Ollama host URL for local LLM development.
-    "OLLAMA_HOST": "${localEnv:OLLAMA_HOST:http://host.docker.internal:11434}",
+    // "OLLAMA_HOST": "${localEnv:OLLAMA_HOST:http://host.docker.internal:11434}",
+
     // Dotfiles configuration. Override via host environment variables.
     // Set DEVMAGIC_DOTFILES_REPO in your ~/.bashrc or ~/.zshrc to use your own repo.
     // Set to empty string to disable dotfiles: export DEVMAGIC_DOTFILES_REPO=""
@@ -36,28 +40,67 @@
     "DEVMAGIC_DOTFILES_BRANCH": "${localEnv:DEVMAGIC_DOTFILES_BRANCH}"
   },
   "postCreateCommand": "curl -fsSL https://devmagic.run/setup | bash",
+
+  // All the commented out features are from the official repository. More options at:
+  // https://github.com/devcontainers/features/tree/main/src
+  // If you don't care to choose and just want EVERYTHING, use the `universal`
+  // base image, but be aware that it has ~10 GB.
   "features": {
+    // Debian/Ubuntu, RedHat Enterprise Linux, Fedora, RockyLinux, and Alpine Linux.
     "ghcr.io/devcontainers/features/common-utils:2": {
       "configureZshAsDefaultShell": "true"
     },
-    "ghcr.io/devcontainers/features/docker-in-docker:2": {},
-    "ghcr.io/devcontainers/features/git-lfs:1": {},
+
+    // Debian/Ubuntu-based distributions with the apt package manager installed.    
+    // "ghcr.io/devcontainers/features/docker-in-docker:2": {},
+
+    // Debian/Ubuntu-based distributions with the apt package manager installed.    
+    "ghcr.io/devcontainers/features/git-lfs:1": {
+      // If you don't have git lfs in your regular workflow and in your .gitconfig,
+      // turn this to true or remove it, but BEWARE: this might NOT work properly
+      // if you are using pre/post commit hooks.
+      "autoPull": false
+    },
+    
+    // Alpine, Debian/Ubuntu, RedHat Enterprise Linux, Fedora, Alma, and RockyLinux distributions with the apk, apt, yum, dnf, or microdnf package manager installed.
     "ghcr.io/devcontainers/features/git:1": {},
+    
+    // Debian/Ubuntu-based distributions with the apt package manager installed.    
     "ghcr.io/devcontainers/features/github-cli:1": {}
-    // Other official features you might consider adding. Uncomment as needed.
-    // More details at https://github.com/devcontainers/features
+    
+    // Debian/Ubuntu-based distributions with the apt package manager installed.    
     // "ghcr.io/devcontainers/features/dotnet:2": {},
+
+    // Debian/Ubuntu, RedHat Enterprise Linux, Fedora, Alma, and RockyLinux distributions with the apt, yum, dnf, or microdnf package manager installed.
     // "ghcr.io/devcontainers/features/go:1": {},
+
+    // Debian/Ubuntu, RedHat Enterprise Linux, Fedora, Alma, and RockyLinux distributions with the apt, yum, dnf, or microdnf package manager installed.
     // "ghcr.io/devcontainers/features/java:1": {},
+
+    // Debian/Ubuntu, RedHat Enterprise Linux, Fedora, Alma, and Rocky Linux distributions with the apt, yum, dnf, or microdnf package manager installed.
+    // Note: RedHat 7 Family (RedHat, CentOS, etc.) must use Node versions less than 18 due to its system libraries and long-term support (LTS) policies.
     // "ghcr.io/devcontainers/features/node:1": {}  // Uncomment if base image doesn't have Node.js
+
+    // Debian/Ubuntu-based distributions with the apt package manager installed.
     // "ghcr.io/devcontainers/features/php:1": {},
+
+    // Debian/Ubuntu, RedHat Enterprise Linux, Fedora, Alma, and RockyLinux distributions with the apt, yum, dnf, or microdnf package manager installed.
     // "ghcr.io/devcontainers/features/python:1": {}
+
+    // This Feature should work on recent versions of Debian/Ubuntu-based distributions with the apt package manager installed.
     // "ghcr.io/devcontainers/features/ruby:1": {},
+
+    // Debian/Ubuntu, RedHat Enterprise Linux, Fedora, Alma, RockyLinux and Mariner distributions with the apt, yum, dnf, microdnf and tdnf package manager installed.
+    // Note: Alpine is not supported because the rustup-init binary requires glibc to run, but Alpine Linux does not include glibc by default. Instead, it uses musl libc, which is not binary-compatible with glibc.
     // "ghcr.io/devcontainers/features/rust:1": {},
   },
   "mounts": [
+    // Cross platform home directory path:
+    // - Windows: USERPROFILE (HOME is empty)
+    // - Linux/macOS: HOME (USERPROFILE is empty)
+
     // Share Ollama models with host.
-    "source=${localEnv:HOME}${localEnv:USERPROFILE}/.ollama,target=/home/node/.ollama,type=bind,consistency=cached",
+    // "source=${localEnv:HOME}${localEnv:USERPROFILE}/.ollama,target=/home/node/.ollama,type=bind,consistency=cached",
 
     // Shell history shared across all containers and WSL.
     // In WSL: ln -s /mnt/c/Users/{username}/OneDrive/shell_histories ~/.shell_histories
@@ -70,19 +113,27 @@
   "forwardPorts": [],
 
   // Set custom hostname for the container.
-  "runArgs": ["--hostname=automaton"],
+  // tmpfs for /tmp: Creates an isolated, writable /tmp in the container to avoid
+  // Podman rootless SELinux restrictions. This is standard and doesn't reduce security—
+  // tmpfs is ephemeral (cleared on container stop) and isolated from the host.
+  // mode=1777 explicitly sets world-writable + sticky bit (standard /tmp permissions).
+  "runArgs": [
+    "--hostname=automaton",
+    "--tmpfs",
+    "/tmp:rw,exec,nosuid,nodev,mode=1777"
+  ],
   "customizations": {
     "vscode": {
       "extensions": [
          // AI Assistants
         "anthropic.claude-code",
+        "continue.continue",
         "github.copilot-chat",
         "github.copilot",
         "google.gemini-cli-vscode-ide-companion",
         "openai.chatgpt",
-        // TODO: figure out how to use GitHub Copilot as a provider.
-        // "continue.continue",
-        // "saoudrizwan.claude-dev",
+        "rooveterinaryinc.roo-cline",
+        "saoudrizwan.claude-dev",
 
         // Git & GitHub
         "eamodio.gitlens",
@@ -100,16 +151,17 @@
         "ms-vscode.remote-server",
 
         // Containers & Docker
+        "docker.docker",
         "ms-azuretools.vscode-containers",
         "ms-azuretools.vscode-docker",
 
         // Python
-        "charliermarsh.ruff",
-        "ms-python.black-formatter",
-        "ms-python.debugpy",
-        "ms-python.python",
-        "ms-python.vscode-pylance",
-        "ms-python.vscode-python-envs",
+        // "charliermarsh.ruff",
+        // "ms-python.black-formatter",
+        // "ms-python.debugpy",
+        // "ms-python.python",
+        // "ms-python.vscode-pylance",
+        // "ms-python.vscode-python-envs",
 
         // JavaScript/TypeScript & Web
         "bradlc.vscode-tailwindcss",
@@ -119,8 +171,8 @@
 
         // Testing
         "ms-playwright.playwright",
-        "ms-vscode.extension-test-runner",
-        "ms-vscode.test-adapter-converter",
+        // "ms-vscode.extension-test-runner",
+        // "ms-vscode.test-adapter-converter",
 
         // Editor Enhancements
         "editorconfig.editorconfig",
@@ -128,10 +180,11 @@
         "marcelocra.vscode-improved",
         "ms-vscode.vscode-speech-language-pack-pt-br",
         "ms-vscode.vscode-speech",
-        "redhat.vscode-yaml",
 
         // Other
-        "ms-vscode.powershell"
+        "redhat.vscode-yaml",
+        "ms-vscode.makefile-tools",
+        // "ms-vscode.powershell"
       ]
     }
   }
