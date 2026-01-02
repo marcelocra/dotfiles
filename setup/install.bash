@@ -1137,9 +1137,12 @@ main() {
     log_success "🎉 Dotfiles installation complete! (total: $(format_duration $total_elapsed))"
     log_info ""
     log_info "ℹ️  Next steps:"
-    log_info "   1. Restart your shell: source ~/.zshrc"
-    log_info "   2. For Tailscale: sudo tailscale up"
-    log_info "   3. For GitHub CLI: gh auth login"
+    log_info "   - Restart your shell: source ~/.zshrc"
+    log_info "   - For Docker: docker run hello-world"
+    log_info "       If it doesn't work, run this: sudo systemctl start docker"
+    log_info "       and then try again."
+    log_info "   - For Tailscale: sudo tailscale up"
+    log_info "   - For GitHub CLI: gh auth login"
 }
 
 main "$@"
