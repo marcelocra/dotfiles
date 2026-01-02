@@ -57,6 +57,9 @@ check_command fzf
 check_command node
 check_command npm
 check_command gh
+check_command aider
+# opencode might not be in path immediately or depends on install method, but let's check if we can
+# check_command opencode
 
 # Config files (symlinks)
 check_file "$HOME/.gitconfig"
