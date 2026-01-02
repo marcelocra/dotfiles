@@ -722,15 +722,36 @@ install_gh() {
     log_success "✅ GitHub CLI installed"
 }
 
-install_kiro() {
-    if command_exists kiro; then
-        log_info "✅ Kiro CLI already installed"
+install_aider() {
+    if command_exists aider; then
+        log_info "✅ Aider already installed"
         return 0
     fi
 
-    log_info "📦 Installing Kiro CLI..."
-    curl_cmd https://cli.kiro.dev/install | bash
-    log_success "✅ Kiro CLI installed"
+    log_info "📦 Installing Aider (AI Pair Programmer)..."
+    # Ensure pip is up to date and install aider-chat
+    # pip should be installed via system packages
+    if command_exists pip3; then
+        pip3 install --upgrade pip
+        pip3 install aider-chat
+        log_success "✅ Aider installed"
+    else
+        log_warning "⚠️  pip3 not found, skipping Aider installation"
+    fi
+}
+
+
+
+install_opencode() {
+    if command_exists opencode; then
+        log_info "✅ OpenCode already installed"
+        return 0
+    fi
+
+    log_info "📦 Installing OpenCode..."
+    # OpenCode install script (curl | bash)
+    curl_safer https://opencode.ai/install.sh | bash
+    log_success "✅ OpenCode installed"
 }
 
 # =============================================================================
@@ -754,7 +775,13 @@ install_cli_tools() {
     install_fzf
     install_just
     install_oh_my_zsh
-    install_kiro
+    
+    # AI Agents "Team"
+    install_aider
+    install_opencode
+
+    # Homebrew packages (checks internally if brew exists)
+    install_brew_packages
 
     # Homebrew packages (checks internally if brew exists)
     install_brew_packages
