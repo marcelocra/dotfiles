@@ -596,6 +596,7 @@ install_global_npm_packages() {
         "@github/copilot"
         "@google/jules"
         "@openai/codex"
+        "@continuedev/cli"
     )
 
     log_info "   Installing: ${packages[*]}"
