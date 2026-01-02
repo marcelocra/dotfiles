@@ -783,9 +783,6 @@ install_cli_tools() {
     # Homebrew packages (checks internally if brew exists)
     install_brew_packages
 
-    # Homebrew packages (checks internally if brew exists)
-    install_brew_packages
-
     # APT packages (requires repo setup)
     install_gh
 }
