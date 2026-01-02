@@ -775,7 +775,7 @@ install_cli_tools() {
     install_fzf
     install_just
     install_oh_my_zsh
-    
+
     # AI Agents "Team"
     install_aider
     install_opencode
@@ -935,6 +935,65 @@ link_vscode_configs() {
     safe_symlink "$DOTFILES_DIR/apps/vscode/User/snippets" "$vscode_dir/snippets"
 
     log_success "✅ VS Code configs symlinked"
+}
+
+# Install VS Code extensions via CLI
+# Works best when running inside VS Code Integrated Terminal or where 'code' is in PATH
+install_vscode_extensions() {
+    if [[ "$SKIP_VSCODE" == "true" ]]; then
+        log_info "⏭️  Skipping VS Code extensions (DOTFILES_SKIP_VSCODE=true)"
+        return 0
+    fi
+
+    if ! command_exists code; then
+        log_info "ℹ️  VS Code 'code' command not found. If you are in a remote SSH session,"
+        log_info "    try running this script from the VS Code Integrated Terminal."
+        return 0
+    fi
+
+    log_info "🧩 Installing VS Code extensions..."
+
+    local extensions=()
+
+    # 1. Read extensions from .devcontainer/devcontainer.json
+    local devcontainer_json="$DOTFILES_DIR/.devcontainer/devcontainer.json"
+    if [[ -f "$devcontainer_json" ]]; then
+        log_debug "Reading extensions from $devcontainer_json..."
+        # Extract extension IDs:
+        # 1. Strip comments (// ...)
+        # 2. Extract string patterns "publisher.extension"
+        # 3. Filter out "extensions" key itself if matched
+        local extracted_extensions
+        extracted_extensions=$(sed 's|//.*||g' "$devcontainer_json" | \
+            sed -n 's/.*"\([a-z0-9\.-]\+\.[a-z0-9\.-]\+\)".*/\1/p' | \
+            grep -v "extensions")
+
+        # Read into array
+        mapfile -t extensions <<< "$extracted_extensions"
+    else
+        log_warning "devcontainer.json not found at $devcontainer_json"
+    fi
+
+
+    # 3. Install Unique Extensions
+    # Remove duplicates via sort -u
+    local unique_extensions=($(printf "%s\n" "${extensions[@]}" | sort -u | tr -d '\r'))
+
+    if [[ ${#unique_extensions[@]} -eq 0 ]]; then
+        log_warning "No extensions found to install."
+        return 0
+    fi
+
+    log_info "Installing ${#unique_extensions[@]} extensions..."
+
+    for ext in "${unique_extensions[@]}"; do
+        if [[ -n "$ext" ]]; then
+            log_debug "Installing extension: $ext"
+            code --install-extension "$ext" --force || log_warning "Failed to install $ext"
+        fi
+    done
+
+    log_success "✅ VS Code extensions installed"
 }
 
 # =============================================================================
@@ -1156,6 +1215,7 @@ main() {
     timed "Zsh plugins" install_zsh_plugins
     timed "Shell configs" link_shell_configs
     timed "VS Code configs" link_vscode_configs
+    timed "VS Code extensions" install_vscode_extensions
     timed "Editor launcher" setup_editor_launcher
     timed "Git shims" setup_git_shims
     timed "SSH config" setup_ssh_config
