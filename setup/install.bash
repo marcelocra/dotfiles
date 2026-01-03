@@ -396,6 +396,56 @@ install_system_packages() {
     return 0
 }
 
+# Uses official installation instructions copy/pasted from:
+# https://docs.docker.com/engine/install/ubuntu/#install-using-the-repository
+__install_docker() {
+    # 1// Remove conflicting packages.
+    sudo apt remove $(dpkg --get-selections docker.io docker-compose docker-compose-v2 docker-doc podman-docker containerd runc | cut -f1)
+
+    # 2// Configure apt.
+    # Add Docker's official GPG key:
+    sudo apt update
+    sudo apt install ca-certificates curl
+    sudo install -m 0755 -d /etc/apt/keyrings
+    sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc
+    sudo chmod a+r /etc/apt/keyrings/docker.asc
+
+    # Add the repository to Apt sources:
+    sudo tee /etc/apt/sources.list.d/docker.sources <<EOF
+Types: deb
+URIs: https://download.docker.com/linux/ubuntu
+Suites: $(. /etc/os-release && echo "${UBUNTU_CODENAME:-$VERSION_CODENAME}")
+Components: stable
+Signed-By: /etc/apt/keyrings/docker.asc
+EOF
+
+    sudo apt update
+
+    # 3// Install the latest version.
+    sudo apt install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+
+    # 4// Add docker group (if it doesn't exist) and add user to it.
+    if ! getent group docker > /dev/null; then
+      sudo groupadd docker
+    fi
+    sudo usermod -aG docker "$USER"
+
+    # 5// (Optional) To update or install specific versions, do the following:
+    #
+    #   a. Find which version you want to install
+    #
+    #       $ apt list --all-versions docker-ce
+    #       docker-ce/noble 5:29.1.3-1~ubuntu.24.04~noble <arch>
+    #       docker-ce/noble 5:29.1.2-1~ubuntu.24.04~noble <arch>
+    #       ...
+    #
+    #   b. Select the desired version and install:
+    #
+    #       $ VERSION_STRING=5:29.1.3-1~ubuntu.24.04~noble
+    #       $ sudo apt install docker-ce=$VERSION_STRING docker-ce-cli=$VERSION_STRING containerd.io docker-buildx-plugin docker-compose-plugin
+
+}
+
 # Docker Installation
 # See: docs/adr/0008-stability-over-latest.md (Docker chosen for stability)
 install_docker() {
@@ -410,12 +460,7 @@ install_docker() {
     fi
 
     log_info "🐳 Installing Docker..."
-    curl_cmd https://get.docker.com | sudo sh
-
-    if getent group docker >/dev/null; then
-        log_info "🐳 Adding $USER to docker group..."
-        sudo usermod -aG docker "$USER" || true
-    fi
+    __install_docker
     log_success "✅ Docker installed"
 }
 
@@ -551,6 +596,7 @@ install_global_npm_packages() {
         "@github/copilot"
         "@google/jules"
         "@openai/codex"
+        "@continuedev/cli"
     )
 
     log_info "   Installing: ${packages[*]}"
@@ -676,15 +722,36 @@ install_gh() {
     log_success "✅ GitHub CLI installed"
 }
 
-install_kiro() {
-    if command_exists kiro; then
-        log_info "✅ Kiro CLI already installed"
+install_aider() {
+    if command_exists aider; then
+        log_info "✅ Aider already installed"
         return 0
     fi
 
-    log_info "📦 Installing Kiro CLI..."
-    curl_cmd https://cli.kiro.dev/install | bash
-    log_success "✅ Kiro CLI installed"
+    log_info "📦 Installing Aider (AI Pair Programmer)..."
+    # Ensure pip is up to date and install aider-chat
+    # pip should be installed via system packages
+    if command_exists pip3; then
+        pip3 install --upgrade pip
+        pip3 install aider-chat
+        log_success "✅ Aider installed"
+    else
+        log_warning "⚠️  pip3 not found, skipping Aider installation"
+    fi
+}
+
+
+
+install_opencode() {
+    if command_exists opencode; then
+        log_info "✅ OpenCode already installed"
+        return 0
+    fi
+
+    log_info "📦 Installing OpenCode..."
+    # OpenCode install script (curl | bash)
+    curl_safer https://opencode.ai/install.sh | bash
+    log_success "✅ OpenCode installed"
 }
 
 # =============================================================================
@@ -708,7 +775,10 @@ install_cli_tools() {
     install_fzf
     install_just
     install_oh_my_zsh
-    install_kiro
+
+    # AI Agents "Team"
+    install_aider
+    install_opencode
 
     # Homebrew packages (checks internally if brew exists)
     install_brew_packages
@@ -862,6 +932,65 @@ link_vscode_configs() {
     safe_symlink "$DOTFILES_DIR/apps/vscode/User/snippets" "$vscode_dir/snippets"
 
     log_success "✅ VS Code configs symlinked"
+}
+
+# Install VS Code extensions via CLI
+# Works best when running inside VS Code Integrated Terminal or where 'code' is in PATH
+install_vscode_extensions() {
+    if [[ "$SKIP_VSCODE" == "true" ]]; then
+        log_info "⏭️  Skipping VS Code extensions (DOTFILES_SKIP_VSCODE=true)"
+        return 0
+    fi
+
+    if ! command_exists code; then
+        log_info "ℹ️  VS Code 'code' command not found. If you are in a remote SSH session,"
+        log_info "    try running this script from the VS Code Integrated Terminal."
+        return 0
+    fi
+
+    log_info "🧩 Installing VS Code extensions..."
+
+    local extensions=()
+
+    # 1. Read extensions from .devcontainer/devcontainer.json
+    local devcontainer_json="$DOTFILES_DIR/.devcontainer/devcontainer.json"
+    if [[ -f "$devcontainer_json" ]]; then
+        log_debug "Reading extensions from $devcontainer_json..."
+        # Extract extension IDs:
+        # 1. Strip comments (// ...)
+        # 2. Extract string patterns "publisher.extension"
+        # 3. Filter out "extensions" key itself if matched
+        local extracted_extensions
+        extracted_extensions=$(sed 's|//.*||g' "$devcontainer_json" | \
+            sed -n 's/.*"\([a-z0-9\.-]\+\.[a-z0-9\.-]\+\)".*/\1/p' | \
+            grep -v "extensions")
+
+        # Read into array
+        mapfile -t extensions <<< "$extracted_extensions"
+    else
+        log_warning "devcontainer.json not found at $devcontainer_json"
+    fi
+
+
+    # 3. Install Unique Extensions
+    # Remove duplicates via sort -u
+    local unique_extensions=($(printf "%s\n" "${extensions[@]}" | sort -u | tr -d '\r'))
+
+    if [[ ${#unique_extensions[@]} -eq 0 ]]; then
+        log_warning "No extensions found to install."
+        return 0
+    fi
+
+    log_info "Installing ${#unique_extensions[@]} extensions..."
+
+    for ext in "${unique_extensions[@]}"; do
+        if [[ -n "$ext" ]]; then
+            log_debug "Installing extension: $ext"
+            code --install-extension "$ext" --force || log_warning "Failed to install $ext"
+        fi
+    done
+
+    log_success "✅ VS Code extensions installed"
 }
 
 # =============================================================================
@@ -1083,6 +1212,7 @@ main() {
     timed "Zsh plugins" install_zsh_plugins
     timed "Shell configs" link_shell_configs
     timed "VS Code configs" link_vscode_configs
+    timed "VS Code extensions" install_vscode_extensions
     timed "Editor launcher" setup_editor_launcher
     timed "Git shims" setup_git_shims
     timed "SSH config" setup_ssh_config
@@ -1092,9 +1222,12 @@ main() {
     log_success "🎉 Dotfiles installation complete! (total: $(format_duration $total_elapsed))"
     log_info ""
     log_info "ℹ️  Next steps:"
-    log_info "   1. Restart your shell: source ~/.zshrc"
-    log_info "   2. For Tailscale: sudo tailscale up"
-    log_info "   3. For GitHub CLI: gh auth login"
+    log_info "   - Restart your shell: source ~/.zshrc"
+    log_info "   - For Docker: docker run hello-world"
+    log_info "       If it doesn't work, run this: sudo systemctl start docker"
+    log_info "       and then try again."
+    log_info "   - For Tailscale: sudo tailscale up"
+    log_info "   - For GitHub CLI: gh auth login"
 }
 
 main "$@"
