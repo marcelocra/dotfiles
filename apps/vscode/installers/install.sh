@@ -6,7 +6,8 @@ set -euo pipefail
 
 # Defaults
 EDITOR_TYPE="code"
-DOTFILES_PATH="${DOTFILES_PATH:-$HOME/prj/dotfiles/apps/vscode/User}"
+DOTFILES_DIR="${DOTFILES_DIR:-$HOME/x/dotfiles}"
+DOTFILES_PATH="${DOTFILES_PATH:-${DOTFILES_DIR}/apps/vscode/User}"
 
 # Colors
 RED='\033[31m' GREEN='\033[32m' YELLOW='\033[33m' CYAN='\033[36m' GRAY='\033[90m' NC='\033[0m'
