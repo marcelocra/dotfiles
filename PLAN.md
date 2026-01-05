@@ -4,7 +4,7 @@
 
 Make the dotfiles installation "world-class" with reliability, testing, and code quality.
 
-## Current Status: Phase 1 Complete ✅
+## Current Status: Phase 1 & 4 Complete ✅
 
 ## Roadmap
 
@@ -28,9 +28,10 @@ Make the dotfiles installation "world-class" with reliability, testing, and code
 ### Phase 3: ADR Clarifications
 - [ ] Update ADR-0001 with `x-[command]` naming convention
 
-### Phase 4: Cutover
-- [ ] Update root `install.bash` to call `setup/install.bash`
-- [ ] Convert `shell/install.sh` to warning stub
+### Phase 4: Cutover ✅
+- [x] Update root `install.bash` to call `setup/install.bash`
+- [x] Convert `shell/install.sh` to warning stub
+- [x] Update `setup/devcontainer-setup.sh` to reference new path
 
 ### Phase 5: Cleanup
 - [ ] Rename `.sh` → `.bash` for Bash-specific scripts

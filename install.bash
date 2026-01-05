@@ -17,4 +17,4 @@ export DOTFILES_SKIP_NPM_PACKAGES="false"
 export DOTFILES_DIR="$HOME/x/dotfiles"
 export DOTFILES_DEBUG="1"
 
-./shell/install.sh
+./setup/install.bash

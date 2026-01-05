@@ -4,7 +4,7 @@
 # This runs once when the container is created (postCreateCommand)
 #
 # All tooling installation (AI CLI tools, Node.js, etc.) is handled by
-# dotfiles/shell/install.sh for consistency across all environments.
+# dotfiles/setup/install.bash for consistency across all environments.
 
 
 
@@ -74,7 +74,7 @@ setup_dotfiles() {
     fi
 
     # Run dotfiles installation script if available
-    local dotfiles_install="$dotfiles_dir/shell/install.sh"
+    local dotfiles_install="$dotfiles_dir/setup/install.bash"
     if [ -f "$dotfiles_install" ]; then
         log "🧩 Running dotfiles install script..."
         # Use bash to run the script for consistency and error handling.
@@ -103,7 +103,7 @@ main() {
     echo
 
     log_success "✅ DevMagic container setup complete!"
-    log "ℹ️  All tools installed via dotfiles/shell/install.sh"
+    log "ℹ️  All tools installed via dotfiles/setup/install.bash"
 }
 
 # Run main function
