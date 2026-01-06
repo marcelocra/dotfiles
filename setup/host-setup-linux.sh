@@ -40,28 +40,32 @@ fi
 
 # VS Code configuration.
 if [ "$SETUP_VSCODE" = "true" ]; then
-    SRC_DIR="$DOTFILES_APPS/vscode/User"
+    VSCODE_LIKE_DIR="$DOTFILES_APPS/vscode-like"
     TARGET_DIR="$HOME/.config/Code/User"
 
-    if command -v code >/dev/null 2>&1 && [ -d "$SRC_DIR" ]; then
+    if command -v code >/dev/null 2>&1 && [ -d "$VSCODE_LIKE_DIR" ]; then
         log "🔗 Setting up VS Code configuration..."
         mkdir -p "$TARGET_DIR"
         
-        # Only symlink specific VS Code config files, not the entire directory.
-
-        TO_SYMLINK=(
-            "settings.json"
-            "keybindings.json"
-            "snippets"
-        )
-
-        for file in "${TO_SYMLINK[@]}"; do
-            if [ -f "$SRC_DIR/$file" ]; then
-                ln -sf "$SRC_DIR/$file" "$TARGET_DIR/$file"
-            elif [ -d "$SRC_DIR/$file" ]; then
-                ln -sf "$SRC_DIR/$file" "$TARGET_DIR/$file"
-            fi
-        done
+        # Use the new vscode-like structure
+        # Editor-specific files
+        if [ -f "$VSCODE_LIKE_DIR/vscode/settings.json" ]; then
+            ln -sf "$VSCODE_LIKE_DIR/vscode/settings.json" "$TARGET_DIR/settings.json"
+        fi
+        if [ -f "$VSCODE_LIKE_DIR/vscode/keybindings.json" ]; then
+            ln -sf "$VSCODE_LIKE_DIR/vscode/keybindings.json" "$TARGET_DIR/keybindings.json"
+        fi
+        
+        # Shared files
+        if [ -d "$VSCODE_LIKE_DIR/shared/snippets" ]; then
+            ln -sf "$VSCODE_LIKE_DIR/shared/snippets" "$TARGET_DIR/snippets"
+        fi
+        if [ -f "$VSCODE_LIKE_DIR/shared/tasks.json" ]; then
+            ln -sf "$VSCODE_LIKE_DIR/shared/tasks.json" "$TARGET_DIR/tasks.json"
+        fi
+        if [ -f "$VSCODE_LIKE_DIR/shared/mcp.json" ]; then
+            ln -sf "$VSCODE_LIKE_DIR/shared/mcp.json" "$TARGET_DIR/mcp.json"
+        fi
 
         log "✅ VS Code configuration linked"
     else

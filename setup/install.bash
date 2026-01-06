@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # Dotfiles installation script
-# One-time setup for development tools, shell plugins, and editor configurations.
+# One-time setup for development tools, shell plugins, and system configuration.
 #
 # This script is idempotent and can be run multiple times safely.
 # It handles:
@@ -10,10 +10,12 @@
 #   - CLI tools (fzf, hugo, babashka, etc.) from custom forks for security
 #   - Zsh plugins from custom forks
 #   - Shell configuration symlinks
-#   - VS Code settings/keybindings symlinks (if VS Code detected)
 #   - Editor launcher 'e' command symlink
 #   - Git shims for 1Password SSH signing (cross-platform)
 #   - SSH config for 1Password (native Linux/macOS only)
+#
+# Note: For editor configurations (VS Code, Cursor, etc.), use:
+#   ./apps/vscode-like/install.bash [--code|--cursor|--insiders|...]
 #
 # Usage:
 #   ./setup/install.bash [options]
@@ -58,8 +60,7 @@ SKIP_ZSH_PLUGINS="${DOTFILES_SKIP_ZSH_PLUGINS:-false}"
 SKIP_NODE_LTS="${DOTFILES_SKIP_NODE_LTS:-false}"
 SKIP_NPM_PACKAGES="${DOTFILES_SKIP_NPM_PACKAGES:-false}"
 
-# Shell and editor configuration
-SKIP_VSCODE="${DOTFILES_SKIP_VSCODE:-true}"
+# Shell configuration
 SKIP_EDITOR_LAUNCHER="${DOTFILES_SKIP_EDITOR_LAUNCHER:-true}"
 SKIP_GIT_SHIMS="${DOTFILES_SKIP_GIT_SHIMS:-false}"
 SKIP_SSH_CONFIG="${DOTFILES_SKIP_SSH_CONFIG:-false}"
@@ -873,125 +874,6 @@ link_shell_configs() {
     log_success "✅ Shell configuration symlinks created"
 }
 
-# =============================================================================
-# VS CODE CONFIGURATION
-# =============================================================================
-
-detect_vscode_config_dir() {
-    log_debug "Detecting VS Code config directory..."
-
-    # Remote container (most common in DevMagic)
-    if [[ "$DOTFILES_IN_REMOTE_VSCODE" == "true" ]]; then
-        # Try different remote paths in order of preference
-        if [[ -d "$HOME/.vscode-server-insiders/data/User" ]]; then echo "$HOME/.vscode-server-insiders/data/User"; return 0; fi
-        if [[ -d "$HOME/.vscode-server/data/User" ]]; then echo "$HOME/.vscode-server/data/User"; return 0; fi
-        if [[ -d "$HOME/.vscode-remote/data/User" ]]; then echo "$HOME/.vscode-remote/data/User"; return 0; fi
-
-        local default_dir="$HOME/.vscode-server/data/User"
-        mkdir -p "$default_dir"
-        echo "$default_dir"
-        return 0
-    fi
-
-    # Native VS Code on Linux
-    if [[ -d "$HOME/.config/Code/User" ]]; then echo "$HOME/.config/Code/User"; return 0; fi
-
-    # Native VS Code on macOS
-    if [[ -d "$HOME/Library/Application Support/Code/User" ]]; then echo "$HOME/Library/Application Support/Code/User"; return 0; fi
-
-    # VS Code Insiders on Linux
-    if [[ -d "$HOME/.config/Code - Insiders/User" ]]; then echo "$HOME/.config/Code - Insiders/User"; return 0; fi
-
-    log_debug "VS Code config directory not found"
-    return 1
-}
-
-link_vscode_configs() {
-    if [[ "$SKIP_VSCODE" == "true" ]]; then
-        log_info "⏭️  Skipping VS Code config symlinking (DOTFILES_SKIP_VSCODE=true)"
-        return 0
-    fi
-
-    log_info "🔗 Detecting VS Code configuration directory..."
-
-    local vscode_dir
-    vscode_dir=$(detect_vscode_config_dir) || {
-        log_info "ℹ️  VS Code not detected, skipping config symlinks"
-        return 0
-    }
-
-    log_info "📝 Linking VS Code configs to $vscode_dir"
-
-    # Settings
-    safe_symlink "$DOTFILES_DIR/apps/vscode/User/settings.json" "$vscode_dir/settings.json"
-
-    # Keybindings
-    safe_symlink "$DOTFILES_DIR/apps/vscode/User/keybindings.json" "$vscode_dir/keybindings.json"
-
-    # Snippets
-    safe_symlink "$DOTFILES_DIR/apps/vscode/User/snippets" "$vscode_dir/snippets"
-
-    log_success "✅ VS Code configs symlinked"
-}
-
-# Install VS Code extensions via CLI
-# Works best when running inside VS Code Integrated Terminal or where 'code' is in PATH
-install_vscode_extensions() {
-    if [[ "$SKIP_VSCODE" == "true" ]]; then
-        log_info "⏭️  Skipping VS Code extensions (DOTFILES_SKIP_VSCODE=true)"
-        return 0
-    fi
-
-    if ! command_exists code; then
-        log_info "ℹ️  VS Code 'code' command not found. If you are in a remote SSH session,"
-        log_info "    try running this script from the VS Code Integrated Terminal."
-        return 0
-    fi
-
-    log_info "🧩 Installing VS Code extensions..."
-
-    local extensions=()
-
-    # 1. Read extensions from .devcontainer/devcontainer.json
-    local devcontainer_json="$DOTFILES_DIR/.devcontainer/devcontainer.json"
-    if [[ -f "$devcontainer_json" ]]; then
-        log_debug "Reading extensions from $devcontainer_json..."
-        # Extract extension IDs:
-        # 1. Strip comments (// ...)
-        # 2. Extract string patterns "publisher.extension"
-        # 3. Filter out "extensions" key itself if matched
-        local extracted_extensions
-        extracted_extensions=$(sed 's|//.*||g' "$devcontainer_json" | \
-            sed -n 's/.*"\([a-z0-9\.-]\+\.[a-z0-9\.-]\+\)".*/\1/p' | \
-            grep -v "extensions")
-
-        # Read into array
-        mapfile -t extensions <<< "$extracted_extensions"
-    else
-        log_warning "devcontainer.json not found at $devcontainer_json"
-    fi
-
-
-    # 3. Install Unique Extensions
-    # Remove duplicates via sort -u
-    local unique_extensions=($(printf "%s\n" "${extensions[@]}" | sort -u | tr -d '\r'))
-
-    if [[ ${#unique_extensions[@]} -eq 0 ]]; then
-        log_warning "No extensions found to install."
-        return 0
-    fi
-
-    log_info "Installing ${#unique_extensions[@]} extensions..."
-
-    for ext in "${unique_extensions[@]}"; do
-        if [[ -n "$ext" ]]; then
-            log_debug "Installing extension: $ext"
-            code --install-extension "$ext" --force || log_warning "Failed to install $ext"
-        fi
-    done
-
-    log_success "✅ VS Code extensions installed"
-}
 
 # =============================================================================
 # EDITOR LAUNCHER SETUP
@@ -1211,8 +1093,6 @@ main() {
     timed "Extra tools" install_extra_tools
     timed "Zsh plugins" install_zsh_plugins
     timed "Shell configs" link_shell_configs
-    timed "VS Code configs" link_vscode_configs
-    timed "VS Code extensions" install_vscode_extensions
     timed "Editor launcher" setup_editor_launcher
     timed "Git shims" setup_git_shims
     timed "SSH config" setup_ssh_config
@@ -1228,6 +1108,7 @@ main() {
     log_info "       and then try again."
     log_info "   - For Tailscale: sudo tailscale up"
     log_info "   - For GitHub CLI: gh auth login"
+    log_info "   - For editor configs: ./apps/vscode-like/install.bash [--code|--cursor|...]"
 }
 
 main "$@"

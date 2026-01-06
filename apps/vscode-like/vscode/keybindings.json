@@ -15,6 +15,8 @@
  * ┌─ Important ─────────────────────────────────────────────────────────────┐
  * │ This configuration overrides several default VSCode shortcuts.          │
  * │ Use at your own risk and adapt as needed.                               │
+ * │                                                                          │
+ * │ For Cursor-specific keybindings, see keybindings-cursor.json           │
  * └─────────────────────────────────────────────────────────────────────────┘
  *
  * Key Features:
@@ -371,9 +373,10 @@
 
   {
     // Insert the next suggested word instead of the full suggestion.
+    // This takes priority when inline suggestions are visible.
     "key": "ctrl+l",
     "command": "editor.action.inlineSuggest.acceptNextWord",
-    "when": "editorTextFocus && inlineSuggestionVisible"
+    "when": "editorTextFocus && inlineSuggestionVisible && !terminalFocus"
   },
 
   {
@@ -862,21 +865,31 @@
     "command": "-roo-cline.toggleAutoApprove"
   },
   {
+    // Toggle AI agent visibility. [VS Code - amp extension]
     "key": "alt+i",
     "command": "amp.agent.toggleVisibility",
-    "when": "amp.primaryShortcuts"
+    "when": "amp.primaryShortcuts && !terminalFocus"
   },
   {
+    // Disable default amp.agent.toggleVisibility. [VS Code - amp extension]
     "key": "ctrl+i",
     "command": "-amp.agent.toggleVisibility",
     "when": "amp.primaryShortcuts"
   },
   {
-    "key": "ctrl+l",
-    "command": "amp.agent.newThread",
-    "when": "amp.activated"
+    // Open composer mode. [VS Code - amp extension]
+    "key": "ctrl+i",
+    "command": "composerMode.agent",
+    "when": "amp.primaryShortcuts && !terminalFocus"
   },
   {
+    // New AI agent thread. [VS Code - amp extension]
+    "key": "ctrl+l",
+    "command": "amp.agent.newThread",
+    "when": "amp.activated && !terminalFocus && !inlineSuggestionVisible"
+  },
+  {
+    // Disable default amp.agent.newThread. [VS Code - amp extension]
     "key": "ctrl+l",
     "command": "-amp.agent.newThread",
     "when": "amp.primaryShortcuts"
