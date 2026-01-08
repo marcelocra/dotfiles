@@ -1,0 +1,64 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "theme": "opencode",
+  "model": "openrouter/qwen/qwen3-coder-32b-instruct",
+  "small_model": "openrouter/qwen/qwen3-8b-instruct",
+  "autoupdate": true,
+  "share": "disabled",
+  "compaction": {
+    "auto": true,
+    "prune": true
+  },
+  "tui": {
+    "scroll_speed": 3,
+    "scroll_acceleration": {
+      "enabled": true
+    },
+    "diff_style": "auto"
+  },
+  "server": {
+    "port": 4096,
+    "hostname": "0.0.0.0",
+    "mdns": true,
+    "cors": ["http://localhost:5173"]
+  },
+  "tools": {
+    "read": true,
+    "write": true,
+    "edit": true,
+    "bash": true,
+    "glob": true,
+    "grep": true,
+    "webfetch": true,
+    "websearch": true,
+    "codesearch": true,
+    "task": true,
+    "todowrite": true,
+    "todoread": true,
+    "skill": true
+  },
+  "watcher": {
+    "ignore": ["node_modules/**", "dist/**", ".git/**", "*.log"]
+  },
+  "formatter": {
+    "prettier": {
+      "command": ["npx", "prettier", "--write", "$FILE"],
+      "extensions": [
+        ".js",
+        ".ts",
+        ".jsx",
+        ".tsx",
+        ".json",
+        ".md",
+        ".css",
+        ".scss"
+      ]
+    },
+    "shfmt": {
+      "command": ["shfmt", "-w", "$FILE"],
+      "extensions": [".sh", ".bash"]
+    }
+  },
+  "instructions": ["AGENTS.md"],
+  "default_agent": "build"
+}
