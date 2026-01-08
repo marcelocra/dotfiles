@@ -9,19 +9,37 @@
 {
   "agent": {
     "message_editor_min_lines": 8,
-    "always_allow_tool_actions": true,
+    "always_allow_tool_actions": false,
     "use_modifier_to_send": false,
     "play_sound_when_agent_done": true,
-    "model_parameters": [],
+    "model_parameters": [
+      { "provider": "openrouter", "model": "qwen/qwen3-coder", "temperature": 0.7 },
+      { "provider": "openrouter", "model": "google/gemini-2.5-flash-lite", "temperature": 0.3 },
+      { "provider": "openrouter", "model": "deepseek/deepseek-v3.2", "temperature": 0.2 },
+      { "provider": "openrouter", "model": "x-ai/grok-code-fast-1", "temperature": 0.5 },
+      { "provider": "openrouter", "model": "anthropic/claude-sonnet-4.5", "temperature": 0.3 },
+    ],
     "default_model": {
-      "provider": "zed.dev",
-      "model": "claude-opus-4-5-thinking"
-    }
+      "provider": "openrouter",
+      "model": "qwen/qwen3-coder",
+    },
+    "inline_assistant_model": {
+      "provider": "openrouter",
+      "model": "x-ai/grok-code-fast-1",
+    },
+    "thread_summary_model": {
+      "provider": "openrouter",
+      "model": "deepseek/deepseek-v3.2",
+    },
+    "commit_message_model": {
+      "provider": "openrouter",
+      "model": "deepseek/deepseek-v3.2",
+    },
   },
 
   "terminal": {
     "font_features": {
-      "zero": true
+      "zero": true,
     },
 
     // "font_size": 12.0,
@@ -39,7 +57,7 @@
     "option_as_meta": true,
     "cursor_shape": "underline",
     "line_height": "standard",
-    "blinking": "on"
+    "blinking": "on",
   },
 
   "base_keymap": "VSCode",
@@ -50,35 +68,35 @@
 
   "telemetry": {
     "diagnostics": false,
-    "metrics": false
+    "metrics": false,
   },
 
   "project_panel": {
     "hide_gitignore": false,
-    "auto_fold_dirs": false
+    "auto_fold_dirs": false,
   },
   "show_signature_help_after_edits": false,
   "auto_signature_help": false,
   "use_smartcase_search": true,
   "gutter": {
     "line_numbers": true,
-    "folds": true
+    "folds": true,
   },
   "minimap": {
     "show": "auto",
-    "thumb": "always"
+    "thumb": "always",
     // "max_width_columns": 20
   },
   "scrollbar": {
     "show": "auto", // "always", "never", or "auto" (shows on scroll/hover)
     "axes": {
       "horizontal": false,
-      "vertical": true
+      "vertical": true,
     },
     "cursors": true, // Show cursor positions in scrollbar
     "git_diff": true, // Show git diff indicators
     "search_results": true, // Show search match indicators
-    "diagnostics": "all" // Show error/warning indicators
+    "diagnostics": "all", // Show error/warning indicators
   },
   "hover_popover_delay": 1000,
   "rounded_selection": false,
@@ -87,8 +105,8 @@
   "cursor_blink": true,
   "autosave": {
     "after_delay": {
-      "milliseconds": 600000
-    }
+      "milliseconds": 600000,
+    },
   },
   "file_types": {
     "markdown": ["*.mdx", "*.svx"],
@@ -98,16 +116,22 @@
     "erb": ["*.erb"],
     "html": ["*.liquid", "*.svg"],
     "css": ["*.css"],
-    "jsonc": ["json5"]
+    "jsonc": ["json5"],
   },
   "completions": {
-    "words": "enabled"
+    "words": "enabled",
   },
   "show_completions_on_input": true,
   "show_whitespaces": "none",
   "show_edit_predictions": true,
+  "edit_predictions": {
+    "mode": "eager",
+  },
+  "features": {
+    "edit_prediction_provider": "zed",
+  },
   "indent_guides": {
-    "enabled": false
+    "enabled": false,
   },
   "wrap_guides": [80, 120],
   "preferred_line_length": 120,
@@ -132,7 +156,7 @@
   "buffer_line_height": "comfortable",
   "buffer_font_fallbacks": ["MesloLGM Nerd Font Mono"],
   "buffer_font_features": {
-    "zero": true
+    "zero": true,
   },
 
   // "theme": {
@@ -143,13 +167,13 @@
   "theme": {
     "mode": "system",
     "light": "One Light",
-    "dark": "Andromeda"
+    "dark": "Andromeda",
   },
 
   "restore_on_startup": "none",
 
   "jupyter": {
-    "enabled": true
+    "enabled": true,
   },
 
   // "cursor_blink": true,
@@ -159,20 +183,20 @@
     "deno": {
       "settings": {
         "deno": {
-          "enable": true
-        }
-      }
-    }
+          "enable": true,
+        },
+      },
+    },
   },
 
   "languages": {
     "TypeScript": {
       "language_servers": ["deno", "!typescript-language-server", "!vtsls", "!eslint"],
-      "formatter": "language_server"
+      "formatter": "language_server",
     },
     "TSX": {
       "language_servers": ["deno", "!typescript-language-server", "!vtsls", "!eslint"],
-      "formatter": "language_server"
-    }
-  }
+      "formatter": "language_server",
+    },
+  },
 }
