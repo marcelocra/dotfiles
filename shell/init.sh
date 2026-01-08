@@ -782,26 +782,27 @@ x-backup-vscode-folders() {
 # Display man page for a command, or --help if man page doesn't exist
 x-man() {
     local cmd="$1"
-
+    
     if [[ -z "$cmd" ]]; then
         echo "Usage: x-man <command>"
         return 1
     fi
-
-    # Try man first
-    if man "$cmd" 2>/dev/null; then
-        return 0
+    
+    # Check if man page exists
+    if man -w "$cmd" >/dev/null 2>&1; then
+        man "$cmd"
+        return
     fi
-
-    # If man failed, try --help
+    
+    # If no man page, try --help
     if command_exists "$cmd"; then
+        echo "ℹ️  No manual entry for '$cmd', showing --help..." >&2
         "$cmd" --help 2>&1 | less
     else
         echo "Command '$cmd' not found"
         return 1
     fi
 }
-
 # Next function marker
 
 # =============================================================================
