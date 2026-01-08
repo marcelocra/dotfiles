@@ -17,6 +17,21 @@ vim.opt.showmode = false  -- Mode already in statusline
 vim.schedule(function()  -- After UiEnter because it can increase startup-time
   vim.opt.clipboard = "unnamedplus"  -- Sync with OS.
 end)
+
+-- TODO: Review if this is really necessary.
+-- -- Use OSC 52 for clipboard (works over SSH).
+-- vim.g.clipboard = {
+--   name = "OSC 52",
+--   copy = {
+--     ["+"] = require("vim.ui.clipboard.osc52").copy("+"),
+--     ["*"] = require("vim.ui.clipboard.osc52").copy("*"),
+--   },
+--   paste = {
+--     ["+"] = require("vim.ui.clipboard.osc52").paste("+"),
+--     ["*"] = require("vim.ui.clipboard.osc52").paste("*"),
+--   },
+-- }
+
 vim.opt.breakindent = true
 vim.opt.breakindentopt = { shift = 2, minlines = 1 }
 vim.opt.undofile = true  -- Undo even after closing a file
