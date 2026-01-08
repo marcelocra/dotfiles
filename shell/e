@@ -23,7 +23,7 @@ command_exists() {
 preferred_editor() {
     if [[ -f "$CONFIG_FILE" ]]; then
         local preferred
-    preferred=$(cat "$CONFIG_FILE" 2>/dev/null | head -n1 | tr -d '\n\r')
+        preferred=$(cat "$CONFIG_FILE" 2>/dev/null | head -n1 | tr -d '\n\r')
         if [[ -n "$preferred" ]] && command_exists "$preferred"; then
             echo "$preferred"
             return 0
