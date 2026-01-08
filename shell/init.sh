@@ -760,6 +760,7 @@ load-ssh() {
 x-help() {
     # TODO: Create this helper command like x-help <function|name|anything> that
     # greps documentation from the ./x-archives.bash file.
+    :  # no-op placeholder, necessary to avoid errors on bash shells
 }
 
 x-backup-vscode-folders() {
