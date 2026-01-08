@@ -398,6 +398,7 @@ install_system_packages() {
         pipx
         software-properties-common
         wget
+        xclip
         zsh
     )
 
@@ -822,19 +823,20 @@ install_neovim() {
 
     # Determine version (try to get latest tag using GitHub API)
     local version="latest"
-    
+
     # Try to fetch release info
     local release_info
     release_info=$(curl_safer https://api.github.com/repos/neovim/neovim/releases/latest || echo "")
-    
+
     local extracted_version=""
-    
+
     if [[ -n "$release_info" ]]; then
         if command_exists jq; then
             extracted_version=$(echo "$release_info" | jq -r .tag_name 2>/dev/null) || true
         else
-            # Fallback: simple grep/sed parsing for "tag_name": "v0.10.0"
-            extracted_version=$(echo "$release_info" | grep -o '"tag_name": *"[^"]*"' | sed 's/"tag_name": *"//;s/"//') || true
+            # Fallback: parse "tag_name": "v0.10.0" using sed with robust regex
+            # Matches "tag_name" : "VALUE" and captures VALUE
+            extracted_version=$(echo "$release_info" | sed -nE 's/.*"tag_name"[[:space:]]*:[[:space:]]*"([^"]+)".*/\1/p') || true
         fi
     fi
 
@@ -857,6 +859,9 @@ install_neovim() {
         if [[ "$version" != "latest" ]]; then
             download_url="https://github.com/neovim/neovim/releases/download/$version/nvim-linux64.tar.gz"
         fi
+        
+        log_debug "Neovim version detected: $version"
+        log_debug "Download URL: $download_url"
 
         # Download and extract
         if (cd "$tmp_dir" && curl_safer -O "$download_url" && tar -xzf nvim-linux64.tar.gz); then
