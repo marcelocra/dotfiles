@@ -222,10 +222,10 @@ aiderignore: $HOME/.aiderignore
 subtree-only: true
 
 ## Enable/disable auto commit of LLM changes (default: True)
-auto-commits: true
+auto-commits: false
 
 ## Enable/disable commits when repo is found dirty (default: True)
-dirty-commits: true
+dirty-commits: false
 
 ## Attribute aider code changes in the git author name (default: True). If explicitly set to True, overrides --attribute-co-authored-by precedence.
 #attribute-author: xxx
