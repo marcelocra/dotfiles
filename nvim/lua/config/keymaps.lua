@@ -184,8 +184,9 @@ do
   vim.keymap.set({ "n" }, "<C-p>", LazyVim.pick.open, { desc = "Fuzzy search for files in current folder" })
   vim.keymap.set({ "n" }, "<C-f>", Snacks.picker.lines, { desc = "Fuzzy search for text in the current buffer" })
 
-  local symbol = require("fn").partial(Snacks.picker.lsp_symbols, { filter = LazyVim.config.kind_filter })
-  vim.keymap.set({ "n" }, "<C-t>", symbol, { desc = "Fuzzy search for symbols in the current file (buffer)" })
+  vim.keymap.set({ "n" }, "<C-t>", function()
+    Snacks.picker.lsp_symbols({ filter = LazyVim.config.kind_filter })
+  end, { desc = "Fuzzy search for symbols in the current file (buffer)" })
 
   vim.keymap.set({ "n" }, "<F2>", "<Leader>cr", { desc = "Rename variable", remap = true })
 end
@@ -193,7 +194,7 @@ end
 -- Simplify editing Neovim config files.
 do
   local keymap = vim.keymap.set
-  local vimrc_folder = require("fn").vimrc_folder
+  local vimrc_folder = vim.fn.fnamemodify(vim.env.MYVIMRC, ":h")
 
   ---
   --- Use the given `cmd` to open the file `name`, changing the local working directory to the Neovim config folder.
@@ -234,8 +235,12 @@ vim.keymap.set({ "n" }, "|", ":vsplit<CR>", { desc = "Easy horizontal split", si
 
 do
   local desc = "Open explorer in root directory"
-  vim.keymap.set({ "n" }, "<M-b>", require("fn").partial(Snacks.explorer, { cwd = LazyVim.root() }), { desc = desc })
-  vim.keymap.set({ "n" }, "<M-e>", require("fn").partial(Snacks.explorer, { cwd = LazyVim.root() }), { desc = desc })
+  vim.keymap.set({ "n" }, "<M-b>", function()
+    Snacks.explorer({ cwd = LazyVim.root() })
+  end, { desc = desc })
+  vim.keymap.set({ "n" }, "<M-e>", function()
+    Snacks.explorer({ cwd = LazyVim.root() })
+  end, { desc = desc })
 end
 
 -- Exit terminal mode in the builtin terminal.
