@@ -222,10 +222,10 @@ llm-history-file: $HOME/.aider.llm.history
 #subtree-only: false
 
 ## Enable/disable auto commit of LLM changes (default: True)
-#auto-commits: true
+auto-commits: true
 
 ## Enable/disable commits when repo is found dirty (default: True)
-#dirty-commits: true
+dirty-commits: true
 
 ## Attribute aider code changes in the git author name (default: True). If explicitly set to True, overrides --attribute-co-authored-by precedence.
 #attribute-author: xxx
@@ -249,7 +249,7 @@ llm-history-file: $HOME/.aider.llm.history
 #commit: false
 
 ## Specify a custom prompt for generating commit messages
-commit-prompt: Use conventional commits
+commit-prompt: Write concise commit messages following conventional commit format (feat, fix, chore, docs, style, refactor, perf, test). Use present tense, imperative mood. Keep subject line under 50 characters. Only include body if necessary to explain what changed and why.
 
 ## Perform a dry run without modifying files (default: False)
 #dry-run: false
