@@ -1,31 +1,101 @@
 #!/usr/bin/env bash
-# Smart editor wrapper that prefers GUI editors but falls back gracefully
-# Usage: e [file...]
-#
-# Priority order:
-# 1. GUI editors: code-insiders, code, subl
-# 2. $EDITOR environment variable (defaults to first terminal editor if unset)
-# 3. Terminal editors: nvim, vim, vi, nano
+# Smart editor wrapper with explicit preference management
+# Usage:
+#   e set <editor>    - Set preferred editor (e.g., 'e set cursor', 'e set code')
+#   e get             - Show current preferred editor
+#   e [file...]       - Open file(s) with preferred editor (or auto-detect if not set)
 #
 # Installation: Symlink to a directory in your PATH
 #   ln -s "$(pwd)/e" "$HOME/bin/e"
 
 set -euo pipefail
 
+# Config file to store user preference
+# Uses standard XDG config directory: ~/.config/dotfiles/
+CONFIG_FILE="${HOME}/.config/dotfiles/editor-preference"
+
 # Function to check if a command exists and is executable
 command_exists() {
     command -v "$1" >/dev/null 2>&1
 }
 
-# Function to find the best available editor
-find_editor() {
-    # Terminal editors in priority order
+# Get preferred editor from config file
+preferred_editor() {
+    if [[ -f "$CONFIG_FILE" ]]; then
+        local preferred
+        preferred=$(cat "$CONFIG_FILE" 2>/dev/null | head -n1 | tr -d '\n\r')
+        if [[ -n "$preferred" ]] && command_exists "$preferred"; then
+            echo "$preferred"
+            return 0
+        fi
+    fi
+    return 1
+}
+
+# Save preferred editor to config file
+save_preferred_editor() {
+    local editor="$1"
+    mkdir -p "$(dirname "$CONFIG_FILE")"
+    echo "$editor" > "$CONFIG_FILE"
+}
+
+# Validate that an editor command exists
+validate_editor() {
+    local editor="$1"
+    if ! command_exists "$editor"; then
+        echo "Error: Editor '$editor' not found in PATH" >&2
+        return 1
+    fi
+    return 0
+}
+
+# List available editors
+list_available_editors() {
+    local available=()
+    local gui_editors=(cursor code-insiders code subl)
     local terminal_editors=(nvim vim vi nano)
-    
-    # Try editors in priority order: GUI → $EDITOR → terminal
-    local editors=(code-insiders code subl "${EDITOR:-${terminal_editors[0]}}" "${terminal_editors[@]}")
-    
-    for editor in "${editors[@]}"; do
+
+    for editor in "${gui_editors[@]}" "${terminal_editors[@]}"; do
+        if command_exists "$editor"; then
+            available+=("$editor")
+        fi
+    done
+
+    # Also check $EDITOR if set
+    if [[ -n "${EDITOR:-}" ]] && command_exists "$EDITOR"; then
+        available+=("$EDITOR")
+    fi
+
+    printf '%s\n' "${available[@]}"
+}
+
+# Find the best available editor (auto-detect fallback)
+find_editor_auto() {
+    # 1. Try saved preference first
+    local chosen_editor
+    if chosen_editor=$(preferred_editor); then
+        echo "$chosen_editor"
+        return 0
+    fi
+
+    # 2. Try GUI editors in priority order
+    local gui_editors=(cursor code-insiders code subl)
+    for editor in "${gui_editors[@]}"; do
+        if command_exists "$editor"; then
+            echo "$editor"
+            return 0
+        fi
+    done
+
+    # 3. Use $EDITOR environment variable
+    if [[ -n "${EDITOR:-}" ]] && command_exists "$EDITOR"; then
+        echo "$EDITOR"
+        return 0
+    fi
+
+    # 4. Fall back to terminal editors
+    local terminal_editors=(nvim vim vi nano)
+    for editor in "${terminal_editors[@]}"; do
         if command_exists "$editor"; then
             echo "$editor"
             return 0
@@ -36,18 +106,106 @@ find_editor() {
     return 1
 }
 
-# Main execution
-main() {
-    local chosen_editor
-    
-    if ! chosen_editor=$(find_editor); then
-        echo "Error: No editor found in PATH" >&2
-        echo "Please install one of: code, vim, nano, or set \$EDITOR" >&2
-        exit 1
+# Handle 'set' command
+cmd_set() {
+    local editor="$1"
+
+    if [[ -z "$editor" ]]; then
+        echo "Usage: e set <editor>" >&2
+        echo "" >&2
+        echo "Available editors:" >&2
+        list_available_editors | sed 's/^/  /' >&2
+        return 1
     fi
 
-    # Execute the editor with all provided arguments
-    exec "$chosen_editor" "$@"
+    if ! validate_editor "$editor"; then
+        echo "" >&2
+        echo "Available editors:" >&2
+        list_available_editors | sed 's/^/  /' >&2
+        return 1
+    fi
+
+    save_preferred_editor "$editor"
+    echo "✅ Preferred editor set to: $editor"
+}
+
+# Handle 'get' command
+cmd_get() {
+    local preferred
+    if preferred=$(preferred_editor); then
+        echo "$preferred"
+        return 0
+    else
+        echo "No preferred editor set" >&2
+        echo "Use 'e set <editor>' to set one, or 'e <file>' to auto-detect" >&2
+        return 1
+    fi
+}
+
+# Show usage/help
+show_usage() {
+    cat <<EOF
+Usage: e [command] [args...]
+
+Commands:
+  set <editor>    Set preferred editor (e.g., 'e set cursor', 'e set code')
+  get             Show current preferred editor
+  [file...]       Open file(s) with preferred editor
+
+Examples:
+  e set cursor              # Set Cursor as preferred editor
+  e set code               # Set VS Code as preferred editor
+  e get                    # Show current preference
+  e file.txt               # Open file with preferred editor
+  e file1.txt file2.txt   # Open multiple files
+
+Available editors: $(list_available_editors | tr '\n' ' ' | sed 's/ $//')
+EOF
+}
+
+# Main execution
+main() {
+    # Handle commands
+    case "${1:-}" in
+        set)
+            if [[ $# -lt 2 ]]; then
+                cmd_set ""
+                exit 1
+            fi
+            cmd_set "$2"
+            exit $?
+            ;;
+        get)
+            cmd_get
+            exit $?
+            ;;
+        help|--help|-h)
+            show_usage
+            exit 0
+            ;;
+        "")
+            # No arguments - show usage
+            show_usage
+            exit 0
+            ;;
+        *)
+            # Treat as file(s) to open - find editor and execute
+            local chosen_editor
+
+            # Try to get preferred editor, fall back to auto-detect
+            if ! chosen_editor=$(preferred_editor); then
+                if ! chosen_editor=$(find_editor_auto); then
+                    echo "Error: No editor found in PATH" >&2
+                    echo "Please install one of: cursor, code, vim, nano, or set \$EDITOR" >&2
+                    echo "Or use 'e set <editor>' to set a preference" >&2
+                    exit 1
+                fi
+            fi
+
+            # Execute the editor with all provided arguments
+            exec "$chosen_editor" "$@"
+            ;;
+    esac
 }
 
 main "$@"

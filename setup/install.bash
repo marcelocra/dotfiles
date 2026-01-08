@@ -3,35 +3,19 @@
 # One-time setup for development tools, shell plugins, and system configuration.
 #
 # This script is idempotent and can be run multiple times safely.
-# It handles:
-#   - System packages (apt)
-#   - Docker & Tailscale (New)
-#   - Homebrew installation (Linux)
-#   - CLI tools (fzf, hugo, babashka, etc.) from custom forks for security
-#   - Zsh plugins from custom forks
-#   - Shell configuration symlinks
-#   - Editor launcher 'e' command symlink
-#   - Git shims for 1Password SSH signing (cross-platform)
-#   - SSH config for 1Password (native Linux/macOS only)
-#
-# Note: For editor configurations (VS Code, Cursor, etc.), use:
-#   ./apps/vscode-like/install.bash [--code|--cursor|--insiders|...]
 #
 # Usage:
 #   ./setup/install.bash [options]
+#   ./setup/install.bash --help    # Show all options
 #
-# Options:
-#   --minimal       Skip optional tools (Docker, Tailscale, Extras)
-#   --no-docker     Skip Docker installation
-#   --no-tailscale  Skip Tailscale installation
-#   --dry-run       Print commands without executing
-#   --help          Show help
+# Common profiles:
+#   ./setup/install.bash --vm       # Full VM setup
+#   ./setup/install.bash --minimal  # Container-friendly (skip Docker, Tailscale, dev packages)
 #
-# Environment variables:
-#   For detailed control, you can use environment variables to enable/disable
-#   specific installation steps. See the source code for the full list.
+# For editor configurations (VS Code, Cursor, etc.), run separately:
+#   ./apps/vscode-like/install.bash [--code|--cursor|--insiders|...]
 #
-# Note: This script uses `sudo` directly for privileged operations.
+# Note: This script uses `sudo` for privileged operations.
 # If running as root (e.g., in containers), create this override at the top:
 #
 #   sudo() { "$@"; }  # No-op sudo for root environments
@@ -94,8 +78,22 @@ usage() {
     cat <<EOF
 Usage: ./setup/install.bash [options]
 
+Profiles:
+  --vm              Full VM setup
+                    Use cases: SSH-accessed cloud VMs, development servers
+                    Includes: Homebrew, dev packages (cmake, g++, python3-dev),
+                             editor launcher, debug logging enabled
+
+  --minimal         Lightweight installation
+                    Use cases: Containers, CI/CD, quick testing, resource-constrained environments
+                    Skips: Docker, Tailscale, dev packages, extra tools
+                    Includes: System packages, CLI tools (fzf, gh, aider), Node.js, shell configs
+
+  (default)         Balanced setup for most environments
+                    Includes: Docker, Tailscale, CLI tools, Node.js, shell configs
+                    Skips: Homebrew, dev packages, extra tools (opt-in with --with-extras)
+
 Options:
-  --minimal         Skip Docker, Tailscale, and dev packages (container-friendly)
   --no-docker       Skip Docker installation
   --no-tailscale    Skip Tailscale installation
   --with-extras     Install extra tools (zoxide, eza, delta, lazygit, tldr, htop)
@@ -112,6 +110,12 @@ EOF
 
 while [[ $# -gt 0 ]]; do
     case "$1" in
+        --vm)
+            SKIP_DEV_PACKAGES="false"
+            SKIP_HOMEBREW="false"
+            SKIP_EDITOR_LAUNCHER="false"
+            DEBUG="1"
+            ;;
         --minimal)
             SKIP_DOCKER="true"
             SKIP_TAILSCALE="true"
@@ -231,6 +235,37 @@ safe_symlink() {
     ln -s "$source" "$target"
     log_debug "Created symlink: $target -> $source"
     return 0
+}
+
+# =============================================================================
+# PATH MANAGEMENT
+# =============================================================================
+
+# Loads common installation paths into PATH for tools we install.
+# This ensures tools from previous runs are found by command_exists checks.
+load_path() {
+    # User bin directory (just, e, git shims)
+    if [[ -d "$HOME/bin" ]]; then
+        export PATH="$HOME/bin:$PATH"
+    fi
+
+    # Local bin directory (pipx tools like aider)
+    if [[ -d "$HOME/.local/bin" ]]; then
+        export PATH="$HOME/.local/bin:$PATH"
+    fi
+
+    # pnpm home directory
+    local pnpm_home="${PNPM_HOME:-$HOME/.local/share/pnpm}"
+    if [[ -d "$pnpm_home" ]]; then
+        export PNPM_HOME="$pnpm_home"
+        export PATH="$PNPM_HOME:$PATH"
+    fi
+
+    # Homebrew (Linux)
+    local brew_path="/home/linuxbrew/.linuxbrew"
+    if [[ -d "$brew_path" ]]; then
+        eval "$($brew_path/bin/brew shellenv)"
+    fi
 }
 
 # =============================================================================
@@ -358,8 +393,10 @@ install_system_packages() {
         jq
         lsb-release
         make
+        pipx
         software-properties-common
         wget
+        zsh
     )
 
     # Extended development packages (opt-in)
@@ -394,6 +431,32 @@ install_system_packages() {
         log_success "✅ System packages installed"
     fi
 
+    # Set zsh as default shell
+    local zsh_path
+    zsh_path=$(command -v zsh)
+
+    if [[ -z "$zsh_path" ]]; then
+        log_warning "⚠️  zsh not found, skipping default shell change"
+        return 0
+    fi
+
+    # Check if zsh is already the default shell
+    if [[ "$SHELL" == "$zsh_path" ]]; then
+        log_info "✅ zsh is already the default shell"
+        return 0
+    fi
+
+    log_info "🔧 Setting zsh as default shell..."
+
+    # Ensure zsh is in /etc/shells
+    if ! grep -q "$zsh_path" /etc/shells 2>/dev/null; then
+        echo "$zsh_path" | sudo tee -a /etc/shells > /dev/null
+    fi
+
+    # Change default shell (non-interactive)
+    sudo chsh -s "$zsh_path" "$USER"
+    log_success "✅ Default shell changed to zsh (restart session to use)"
+
     return 0
 }
 
@@ -406,7 +469,7 @@ __install_docker() {
     # 2// Configure apt.
     # Add Docker's official GPG key:
     sudo apt update
-    sudo apt install ca-certificates curl
+    sudo apt install ca-certificates curl -y
     sudo install -m 0755 -d /etc/apt/keyrings
     sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc
     sudo chmod a+r /etc/apt/keyrings/docker.asc
@@ -423,7 +486,7 @@ EOF
     sudo apt update
 
     # 3// Install the latest version.
-    sudo apt install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+    sudo apt install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin -y
 
     # 4// Add docker group (if it doesn't exist) and add user to it.
     if ! getent group docker > /dev/null; then
@@ -566,11 +629,13 @@ install_pnpm() {
 
     log_info "📦 Installing pnpm..."
 
-    # Configure pnpm home (init.sh already adds this to PATH).
+    # Configure pnpm home (init.sh already adds this to PATH)
+    # PNPM_HOME set skips shell config modification by installer
     export PNPM_HOME="${PNPM_HOME:-$HOME/.local/share/pnpm}"
-    mkdir -p "$PNPM_HOME"
-    # Install using official installer (PNPM_HOME set skips shell config modification)
     curl_cmd https://get.pnpm.io/install.sh | sh -
+
+    # Add to current PATH for immediate use (load_path only adds existing dirs)
+    export PATH="$PNPM_HOME:$PATH"
 
     log_success "✅ pnpm installed successfully"
 }
@@ -730,14 +795,12 @@ install_aider() {
     fi
 
     log_info "📦 Installing Aider (AI Pair Programmer)..."
-    # Ensure pip is up to date and install aider-chat
-    # pip should be installed via system packages
-    if command_exists pip3; then
-        pip3 install --upgrade pip
-        pip3 install aider-chat
+    # Use pipx for PEP 668 compliance (Ubuntu 24.04+ blocks system-wide pip installs)
+    if command_exists pipx; then
+        pipx install aider-chat
         log_success "✅ Aider installed"
     else
-        log_warning "⚠️  pip3 not found, skipping Aider installation"
+        log_warning "⚠️  pipx not found, skipping Aider installation"
     fi
 }
 
@@ -751,7 +814,7 @@ install_opencode() {
 
     log_info "📦 Installing OpenCode..."
     # OpenCode install script (curl | bash)
-    curl_safer https://opencode.ai/install.sh | bash
+    curl_safer https://opencode.ai/install | bash
     log_success "✅ OpenCode installed"
 }
 
@@ -1071,6 +1134,9 @@ install_extra_tools() {
 # =============================================================================
 
 main() {
+    # Load common installation paths into PATH
+    load_path
+
     log_info "🚀 Starting dotfiles installation..."
     log_info "📁 Dotfiles directory: $DOTFILES_DIR"
 
@@ -1103,7 +1169,8 @@ main() {
     log_info ""
     log_info "ℹ️  Next steps:"
     log_info "   - Restart your shell: source ~/.zshrc"
-    log_info "   - For Docker: docker run hello-world"
+    log_info "   - For Docker: Close and reopen your SSH session (or run: newgrp docker)"
+    log_info "       Then test with: docker run hello-world"
     log_info "       If it doesn't work, run this: sudo systemctl start docker"
     log_info "       and then try again."
     log_info "   - For Tailscale: sudo tailscale up"
