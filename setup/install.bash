@@ -821,28 +821,25 @@ install_neovim() {
     local nvim_downloads="$DOWNLOADS_DIR/nvim"
     mkdir -p "$nvim_downloads"
 
-    # Determine version (try to get latest tag using GitHub API)
+    # Determine version by checking where "latest" redirects to
+    # This avoids API rate limits and complex JSON parsing
     local version="latest"
-
-    # Try to fetch release info
-    local release_info
-    release_info=$(curl_safer https://api.github.com/repos/neovim/neovim/releases/latest || echo "")
-
-    local extracted_version=""
-
-    if [[ -n "$release_info" ]]; then
-        if command_exists jq; then
-            extracted_version=$(echo "$release_info" | jq -r .tag_name 2>/dev/null) || true
-        else
-            # Fallback: parse "tag_name": "v0.10.0" using sed with robust regex
-            # Matches "tag_name" : "VALUE" and captures VALUE
-            extracted_version=$(echo "$release_info" | sed -nE 's/.*"tag_name"[[:space:]]*:[[:space:]]*"([^"]+)".*/\1/p') || true
+    local latest_url="https://github.com/neovim/neovim/releases/latest/download/nvim-linux64.tar.gz"
+    local actual_url=""
+    
+    # -I (head), -L (follow redirects), -s (silent), -o /dev/null (ignore body), -w %{url_effective} (print final URL)
+    actual_url=$(curl -ILs -o /dev/null -w %{url_effective} "$latest_url" || echo "")
+    
+    if [[ -n "$actual_url" ]]; then
+        # Extract version from URL: .../download/v0.10.4/nvim-linux64.tar.gz
+        # Pattern match for /vX.Y.Z/
+        if [[ "$actual_url" =~ /download/([^/]+)/ ]]; then
+            version="${BASH_REMATCH[1]}"
         fi
     fi
 
-    if [[ -n "$extracted_version" && "$extracted_version" != "null" ]]; then
-        version="$extracted_version"
-    fi
+    log_debug "Neovim version detected: $version"
+    log_debug "Download URL: ${actual_url:-$latest_url}"
 
     local install_dir="$nvim_downloads/$version"
 
@@ -854,16 +851,9 @@ install_neovim() {
         local tmp_dir
         tmp_dir=$(mktemp -d)
 
-        # Construct download URL
-        local download_url="https://github.com/neovim/neovim/releases/latest/download/nvim-linux64.tar.gz"
-        if [[ "$version" != "latest" ]]; then
-            download_url="https://github.com/neovim/neovim/releases/download/$version/nvim-linux64.tar.gz"
-        fi
+        # Download and extract using the detected URL (or fallback to latest)
+        local download_url="${actual_url:-$latest_url}"
         
-        log_debug "Neovim version detected: $version"
-        log_debug "Download URL: $download_url"
-
-        # Download and extract
         if (cd "$tmp_dir" && curl_safer -O "$download_url" && tar -xzf nvim-linux64.tar.gz); then
              # Move extracted directory to install location
              # The tarball extracts to 'nvim-linux64'
