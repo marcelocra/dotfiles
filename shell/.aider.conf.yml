@@ -198,10 +198,10 @@ llm-history-file: $HOME/.aider.llm.history
 #completion-menu-current-bg-color: "xxx"
 
 ## Set the markdown code theme (default: default, other options include monokai, solarized-dark, solarized-light, or a Pygments builtin style, see https://pygments.org/styles for available themes)
-#code-theme: default
+code-theme: solarized-light
 
 ## Show diffs when committing changes (default: False)
-#show-diffs: false
+show-diffs: true
 
 ###############
 # Git settings:
@@ -216,10 +216,10 @@ llm-history-file: $HOME/.aider.llm.history
 #add-gitignore-files: false
 
 ## Specify the aider ignore file (default: .aiderignore in git root)
-#aiderignore: .aiderignore
+aiderignore: $HOME/.aiderignore
 
 ## Only consider files in the current subtree of the git repository
-#subtree-only: false
+subtree-only: true
 
 ## Enable/disable auto commit of LLM changes (default: True)
 auto-commits: true
@@ -249,7 +249,10 @@ dirty-commits: true
 #commit: false
 
 ## Specify a custom prompt for generating commit messages
-commit-prompt: Write concise commit messages following conventional commit format (feat, fix, chore, docs, style, refactor, perf, test). Use present tense, imperative mood. Keep subject line under 50 characters. Only include body if necessary to explain what changed and why.
+commit-prompt: >
+  Write concise commit messages following conventional commit format (feat, fix, chore, docs, style, refactor, perf, test).
+  Use present tense, imperative mood. Keep subject line under 50 characters. Only include body if necessary to explain why
+  a change was made, but NEVER what is the change -- the diff already shows that.
 
 ## Perform a dry run without modifying files (default: False)
 #dry-run: false
@@ -296,7 +299,7 @@ commit-prompt: Write concise commit messages following conventional commit forma
 #analytics-log: xxx
 
 ## Permanently disable analytics
-#analytics-disable: false
+analytics-disable: true
 
 ## Send analytics to custom PostHog instance
 #analytics-posthog-host: xxx
@@ -390,7 +393,7 @@ commit-prompt: Write concise commit messages following conventional commit forma
 #  - zzz
 
 ## Use VI editing mode in the terminal (default: False)
-#vim: false
+vim: true
 
 ## Specify the language to use in the chat (default: None, uses system settings)
 #chat-language: xxx
