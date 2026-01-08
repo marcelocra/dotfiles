@@ -821,58 +821,48 @@ install_neovim() {
     local nvim_downloads="$DOWNLOADS_DIR/nvim"
     mkdir -p "$nvim_downloads"
 
-    # Determine version by checking where "latest" redirects to
-    # This avoids API rate limits and complex JSON parsing
-    local version="latest"
-    local latest_url="https://github.com/neovim/neovim/releases/latest/download/nvim-linux64.tar.gz"
-    local actual_url=""
+    log_info "⬇️  Downloading Neovim (stable)..."
+    local tmp_dir
+    tmp_dir=$(mktemp -d)
+
+    # Correct URL for modern Neovim releases (stable)
+    local download_url="https://github.com/neovim/neovim/releases/download/stable/nvim-linux-x86_64.tar.gz"
     
-    # -I (head), -L (follow redirects), -s (silent), -o /dev/null (ignore body), -w %{url_effective} (print final URL)
-    actual_url=$(curl -ILs -o /dev/null -w %{url_effective} "$latest_url" || echo "")
-    
-    if [[ -n "$actual_url" ]]; then
-        # Extract version from URL: .../download/v0.10.4/nvim-linux64.tar.gz
-        # Pattern match for /vX.Y.Z/
-        if [[ "$actual_url" =~ /download/([^/]+)/ ]]; then
-            version="${BASH_REMATCH[1]}"
-        fi
-    fi
+    log_debug "Download URL: $download_url"
 
-    log_debug "Neovim version detected: $version"
-    log_debug "Download URL: ${actual_url:-$latest_url}"
-
-    local install_dir="$nvim_downloads/$version"
-
-    if [[ -d "$install_dir" ]]; then
-	# Downloaded but not installed yet.
-        log_info "✅ Neovim $version already downloaded in $install_dir"
-    else
-        log_info "⬇️  Downloading Neovim ($version)..."
-        local tmp_dir
-        tmp_dir=$(mktemp -d)
-
-        # Download and extract using the detected URL (or fallback to latest)
-        local download_url="${actual_url:-$latest_url}"
+    if (cd "$tmp_dir" && curl_safer -O "$download_url" && tar -xzf nvim-linux-x86_64.tar.gz); then
+        # Extract version from binary
+        local version_output
+        version_output=$("$tmp_dir/nvim-linux-x86_64/bin/nvim" --version | head -n 1)
+        # Format: NVIM v0.10.3
+        local version
+        version=$(echo "$version_output" | awk '{print $2}')
         
-        if (cd "$tmp_dir" && curl_safer -O "$download_url" && tar -xzf nvim-linux64.tar.gz); then
-             # Move extracted directory to install location
-             # The tarball extracts to 'nvim-linux64'
-             mv "$tmp_dir/nvim-linux64" "$install_dir"
-        else
-            log_error "❌ Failed to download or extract Neovim"
-            rm -rf "$tmp_dir"
-	    # Necessary to set proper error code.
-            return 1
+        if [[ -z "$version" ]]; then
+            version="unknown-$(date +%Y%m%d)"
         fi
+        
+        log_info "✅ Detected version: $version"
+
+        local install_dir="$nvim_downloads/$version"
+        
+        if [[ -d "$install_dir" ]]; then
+            log_info "✅ Neovim $version already installed at $install_dir"
+            rm -rf "$tmp_dir"
+        else
+            mkdir -p "$(dirname "$install_dir")"
+            mv "$tmp_dir/nvim-linux-x86_64" "$install_dir"
+            rm -rf "$tmp_dir"
+        fi
+
+        # Create symlink
+        safe_symlink "$install_dir/bin/nvim" "$USER_BIN_DIR/nvim"
+        log_success "✅ Neovim installed ($version)"
+    else
+        log_error "❌ Failed to download or extract Neovim"
         rm -rf "$tmp_dir"
+        return 1
     fi
-
-    # Create symlink
-    # We want ~/bin/nvim -> .../bin/nvim
-    # safe_symlink handles mkdir parent and backups
-    safe_symlink "$install_dir/bin/nvim" "$USER_BIN_DIR/nvim"
-
-    log_success "✅ Neovim installed ($version)"
 }
 
 install_opencode() {
