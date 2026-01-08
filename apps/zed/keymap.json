@@ -19,7 +19,7 @@
       // Put key bindings here (in addition to the context above) if you want them to
       // work when no editor exists.
       // "space f": "file_finder::Toggle"
-    }
+    },
   },
 
   // Workspace || Editor
@@ -61,8 +61,8 @@
       "alt-a": "agent::ToggleFocus", // VSCode: alt+a AI chat
 
       // === Navigation History (VSCode: ctrl+[/], alt+h/l) ===
-      "ctrl-[": "pane::GoBack", // VSCode: ctrl+[ navigate back
-      "ctrl-]": "pane::GoForward", // VSCode: ctrl+] navigate forward
+      // "ctrl-[": "pane::GoBack", // VSCode: ctrl+[ navigate back
+      // "ctrl-]": "pane::GoForward", // VSCode: ctrl+] navigate forward
       "alt-h": "pane::GoBack", // VSCode: alt+h navigate back
       // Note: alt-l conflicts with vim pane navigation, added in non-vim context below
 
@@ -76,16 +76,16 @@
       // === Other ===
       "alt-shift-p": "editor::CopyPermalinkToLine",
       "alt-z": "workspace::ToggleCenteredLayout", // VSCode: alt+z zen mode (closest equivalent)
-      "ctrl-alt-w": "pane::CloseOtherItems" // VSCode: ctrl+alt+w close other editors
-    }
+      "ctrl-alt-w": "pane::CloseOtherItems", // VSCode: ctrl+alt+w close other editors
+    },
   },
 
   // Workspace (non-editor, non-vim context for alt-l)
   {
     "context": "Workspace && !VimControl",
     "bindings": {
-      "alt-l": "pane::GoForward" // VSCode: alt+l navigate forward
-    }
+      "alt-l": "pane::GoForward", // VSCode: alt+l navigate forward
+    },
   },
 
   // ============================================================================
@@ -98,8 +98,8 @@
     "bindings": {
       "ctrl-i": "assistant::InlineAssist", // VSCode: ctrl+i inline AI assist
       "ctrl-shift-i": "agent::ToggleFocus", // VSCode: ctrl+shift+i open AI chat
-      "ctrl-l": "editor::AcceptPartialEditPrediction" // VSCode: ctrl+l accept next word from suggestion
-    }
+      "ctrl-l": "editor::AcceptNextWordEditPrediction", // VSCode: ctrl+l accept next word from suggestion
+    },
   },
 
   // ============================================================================
@@ -153,8 +153,8 @@
       "ctrl-shift-space": "editor::ShowSignatureHelp", // VSCode: ctrl+shift+space parameter hints
 
       // === Word Wrap ===
-      "alt-shift-w": "editor::ToggleSoftWrap" // VSCode: alt+shift+w toggle word wrap
-    }
+      "alt-shift-w": "editor::ToggleSoftWrap", // VSCode: alt+shift+w toggle word wrap
+    },
   },
 
   // ============================================================================
@@ -169,8 +169,8 @@
       "enter": "search::SelectNextMatch",
       "shift-enter": "search::SelectPreviousMatch",
       "alt-enter": "search::SelectAllMatches",
-      "escape": "buffer_search::Dismiss"
-    }
+      "escape": "buffer_search::Dismiss",
+    },
   },
 
   // ============================================================================
@@ -199,8 +199,8 @@
 
       "shift-enter": ["terminal::SendText", "\\\r\n"], // VSCode: shift+enter line break in terminal
 
-      ", q": null
-    }
+      ", q": null,
+    },
   },
 
   // ============================================================================
@@ -212,8 +212,8 @@
     "context": "Editor && jupyter && !ContextEditor",
     "bindings": {
       "ctrl-enter": "repl::Run",
-      "alt-enter": "repl::RunInPlace"
-    }
+      "alt-enter": "repl::RunInPlace",
+    },
   },
 
   // ============================================================================
@@ -228,8 +228,8 @@
     "context": "Picker > Editor",
     "bindings": {
       "ctrl-k": "menu::SelectPrevious",
-      "ctrl-j": "menu::SelectNext"
-    }
+      "ctrl-j": "menu::SelectNext",
+    },
   },
 
   // BufferSearchBar && !in_replace > Editor
@@ -241,8 +241,8 @@
       "ctrl-k": "search::PreviousHistoryQuery",
       "ctrl-j": "search::NextHistoryQuery",
       "ctrl-p": "search::PreviousHistoryQuery",
-      "ctrl-n": "search::NextHistoryQuery"
-    }
+      "ctrl-n": "search::NextHistoryQuery",
+    },
   },
 
   // ProjectSearchBar > Editor
@@ -250,8 +250,8 @@
     "context": "ProjectSearchBar > Editor",
     "bindings": {
       "ctrl-k": "search::PreviousHistoryQuery",
-      "ctrl-j": "search::NextHistoryQuery"
-    }
+      "ctrl-j": "search::NextHistoryQuery",
+    },
   },
 
   // Editor && (showing_code_actions || showing_completions)
@@ -262,8 +262,15 @@
     "context": "Editor && (showing_code_actions || showing_completions)",
     "bindings": {
       "ctrl-k": "editor::ContextMenuPrevious",
-      "ctrl-j": "editor::ContextMenuNext"
-    }
+      "ctrl-j": "editor::ContextMenuNext",
+    },
+  },
+
+  {
+    "context": "Editor && !Terminal",
+    "bindings": {
+      "ctrl-l": "agent::ToggleFocus",
+    },
   },
 
   // ============================================================================
@@ -277,8 +284,8 @@
       "ctrl-w h": "workspace::ActivatePaneLeft",
       "ctrl-w l": "workspace::ActivatePaneRight",
       "ctrl-w k": "workspace::ActivatePaneUp",
-      "ctrl-w j": "workspace::ActivatePaneDown"
-    }
+      "ctrl-w j": "workspace::ActivatePaneDown",
+    },
   },
 
   // Editor && !menu
@@ -293,7 +300,7 @@
       // "ctrl-f": "buffer_search::Deploy" // vim default: page down
       // "ctrl-o": "workspace::Open", // vim default: go back
       // "ctrl-a": "editor::SelectAll" // vim default: increment
-    }
+    },
   },
 
   // VimControl && !menu && vim_mode != operator
@@ -303,8 +310,8 @@
       "W": "vim::NextSubwordStart",
       "B": "vim::PreviousSubwordStart",
       "E": "vim::NextSubwordEnd",
-      "g E": "vim::PreviousSubwordEnd"
-    }
+      "g E": "vim::PreviousSubwordEnd",
+    },
   },
 
   // VimControl && !menu
@@ -312,7 +319,7 @@
     "context": "VimControl && !menu",
     "bindings": {
       // Put key bindings here if you want them to work in normal & visual mode.
-    }
+    },
   },
 
   // Editor && VimControl && !menu && vim_mode == normal
@@ -333,8 +340,8 @@
       ", w": "workspace::Save",
       "s": ["workspace::SendKeystrokes", "/"],
 
-      "shift-y": ["workspace::SendKeystrokes", "y $"] // Use neovim's yank behavior: yank to end of line.
-    }
+      "shift-y": ["workspace::SendKeystrokes", "y $"], // Use neovim's yank behavior: yank to end of line.
+    },
   },
 
   // Editor && VimControl && !menu && vim_mode == visual
@@ -352,8 +359,8 @@
       ", s": "workspace::Save",
       ", w": "workspace::Save",
 
-      "shift-s": "vim::PushAddSurrounds" // Supports `ys` operator mode.
-    }
+      "shift-s": "vim::PushAddSurrounds", // Supports `ys` operator mode.
+    },
   },
 
   // Editor && !menu && vim_mode == insert
@@ -369,7 +376,7 @@
       "k j": "vim::NormalBefore", // Alternative way to escape to normal mode.
 
       ", s": ["workspace::SendKeystrokes", "ctrl-s escape escape"],
-      ", w": ["workspace::SendKeystrokes", "ctrl-s escape escape"]
-    }
-  }
+      ", w": ["workspace::SendKeystrokes", "ctrl-s escape escape"],
+    },
+  },
 ]
