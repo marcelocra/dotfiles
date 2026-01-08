@@ -18,7 +18,7 @@
 # Main model:
 
 ## Specify the model to use for the main chat
-#model: xxx
+model: openrouter/qwen/qwen3-coder
 
 ########################
 # API Keys and settings:
@@ -102,7 +102,7 @@
 #auto-accept-architect: true
 
 ## Specify the model to use for commit messages and chat history summarization (default depends on --model)
-#weak-model: xxx
+weak-model: openrouter/deepseek/deepseek-v3.2
 
 ## Specify the model to use for editor tasks (default depends on --model)
 #editor-model: xxx
@@ -114,7 +114,7 @@
 #show-model-warnings: true
 
 ## Check if model accepts settings like reasoning_effort/thinking_tokens (default: True)
-#check-model-accepts-settings: true
+check-model-accepts-settings: true
 
 ## Soft limit on tokens for chat history, after which summarization begins. If unspecified, defaults to the model's max_chat_history_tokens.
 #max-chat-history-tokens: xxx
@@ -123,7 +123,7 @@
 # Cache settings:
 
 ## Enable caching of prompts (default: False)
-#cache-prompts: false
+cache-prompts: true
 
 ## Number of times to ping at 5min intervals to keep prompt cache warm (default: 0)
 #cache-keepalive-pings: false
@@ -144,16 +144,16 @@
 # History Files:
 
 ## Specify the chat input history file (default: .aider.input.history)
-#input-history-file: .aider.input.history
+input-history-file: ~/.aider.input.history
 
 ## Specify the chat history file (default: .aider.chat.history.md)
-#chat-history-file: .aider.chat.history.md
+chat-history-file: ~/.aider.chat.history.md
 
 ## Restore the previous chat history messages (default: False)
 #restore-chat-history: false
 
 ## Log the conversation with the LLM to this file (for example, .aider.llm.history)
-#llm-history-file: xxx
+llm-history-file: ~/.aider.llm.history
 
 ##################
 # Output settings:
@@ -249,7 +249,7 @@
 #commit: false
 
 ## Specify a custom prompt for generating commit messages
-#commit-prompt: xxx
+commit-prompt: Use conventional commits
 
 ## Perform a dry run without modifying files (default: False)
 #dry-run: false
@@ -396,7 +396,7 @@
 #chat-language: xxx
 
 ## Specify the language to use in the commit message (default: None, user language)
-#commit-language: xxx
+commit-language: en
 
 ## Always say yes to every confirmation
 #yes-always: false
@@ -411,7 +411,7 @@
 #encoding: utf-8
 
 ## Line endings to use when writing files (default: platform)
-#line-endings: platform
+line-endings: lf
 
 ## Specify the config file (default: search for .aider.conf.yml in git root, cwd or home directory)
 #config: xxx
