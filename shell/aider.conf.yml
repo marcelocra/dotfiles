@@ -144,16 +144,16 @@ cache-prompts: true
 # History Files:
 
 ## Specify the chat input history file (default: .aider.input.history)
-input-history-file: "$HOME/.aider.input.history"
+#input-history-file: xxx
 
 ## Specify the chat history file (default: .aider.chat.history.md)
-chat-history-file: "$HOME/.aider.chat.history.md"
+#chat-history-file: xxx
 
 ## Restore the previous chat history messages (default: False)
 #restore-chat-history: false
 
 ## Log the conversation with the LLM to this file (for example, .aider.llm.history)
-llm-history-file: "$HOME/.aider.llm.history"
+#llm-history-file: xxx
 
 ##################
 # Output settings:
@@ -216,7 +216,7 @@ show-diffs: true
 #add-gitignore-files: false
 
 ## Specify the aider ignore file (default: .aiderignore in git root)
-aiderignore: "$HOME/.aiderignore"
+#aiderignore: xxx
 
 ## Only consider files in the current subtree of the git repository
 subtree-only: true
