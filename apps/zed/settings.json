@@ -55,7 +55,7 @@
 
     // "dock": "right",
     "option_as_meta": true,
-    "cursor_shape": "underline",
+    "cursor_shape": "block",
     "line_height": "standard",
     "blinking": "on",
   },

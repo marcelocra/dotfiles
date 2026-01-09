@@ -379,4 +379,9 @@
       ", w": ["workspace::SendKeystrokes", "ctrl-s escape escape"],
     },
   },
+  {
+    "bindings": {
+      "ctrl-q": null
+    }
+  }
 ]
