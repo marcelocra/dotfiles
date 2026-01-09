@@ -11,7 +11,7 @@
  * Notes:
  * - Some keybindings are context-aware using "when" clauses for better UX.
  * - The file uses regions to organize keybindings logically.
- * - This is the Cursor-specific version. For VS Code, see keybindings.json
+ * - This is the Cursor-specific version.
  *
  * ┌─ Important ─────────────────────────────────────────────────────────────┐
  * │ This configuration overrides several default Cursor shortcuts.          │
@@ -637,11 +637,9 @@
   {
     // Open just the Keybindings JSON file. Keybindings UI: `ctrl+k ctrl+s`.
     "key": "ctrl+k ctrl+k",
-    "command": "workbench.action.openGlobalKeybindingsFile",
-    // ctrl+k ctrl+k is used by default to define keybindings when in this file,
-    // so here we are just using a NOT for the default keybinding 'when'
-    // expression.
-    "when": "!(resource == 'vscode-userdata:/c%3A/Users/marce/AppData/Roaming/Code%20-%20Insiders/User/keybindings.json')"
+    "command": "workbench.action.openGlobalKeybindingsFile"
+    // Note: ctrl+k ctrl+k is used by default to define keybindings when editing
+    // this file, but this binding allows opening the file from anywhere.
   },
 
   {
