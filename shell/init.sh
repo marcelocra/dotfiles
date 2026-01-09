@@ -601,6 +601,10 @@ configure_system_utility_aliases() {
         alias lua='rlwrap lua'
     fi
 
+    # Better man (falls back to --help)
+    alias mann='x-man'
+    alias bman=mann
+
     # Next alias marker
 }
 
@@ -775,6 +779,30 @@ x-backup-vscode-folders() {
         "$vscode_archives/.vscode-server.bak.$(x-datetime-for-filename)"
 }
 
+# Display man page for a command, or --help if man page doesn't exist
+x-man() {
+    local cmd="$1"
+    
+    if [[ -z "$cmd" ]]; then
+        echo "Usage: x-man <command>"
+        return 1
+    fi
+    
+    # Check if man page exists
+    if man -w "$cmd" >/dev/null 2>&1; then
+        man "$cmd"
+        return
+    fi
+    
+    # If no man page, try --help
+    if command_exists "$cmd"; then
+        echo "ℹ️  No manual entry for '$cmd', showing --help..." >&2
+        "$cmd" --help 2>&1 | less
+    else
+        echo "Command '$cmd' not found"
+        return 1
+    fi
+}
 # Next function marker
 
 # =============================================================================
@@ -1022,8 +1050,8 @@ configure_bash() {
                 echo -ne "\033]0;${USER}@${HOSTNAME}: ${SHELL}\007"
             }
 
-            trap 'preexec' DEBUG
             PROMPT_COMMAND="${PROMPT_COMMAND:+$PROMPT_COMMAND; }precmd"
+            trap 'preexec' DEBUG
         fi
 
         # Configure fzf if installed.
@@ -1130,7 +1158,11 @@ main() {
     if [[ -n "${BASH_SOURCE[0]:-}" ]]; then
         script_dir="$(dirname "${BASH_SOURCE[0]}")"
     elif [[ -n "${ZSH_VERSION:-}" ]]; then
-        script_dir="$(dirname "${(%):-%x}")"
+        # Use zsh's %x parameter expansion to get the current script path
+        # Fall back to "." if expansion fails
+        local script_path
+        script_path="${(%):-%x}" 2>/dev/null || script_path="."
+        script_dir="$(dirname -- "$script_path")"
     else
         script_dir="$(dirname "$0")"
     fi

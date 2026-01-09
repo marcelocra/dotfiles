@@ -18,7 +18,7 @@
 # Main model:
 
 ## Specify the model to use for the main chat
-#model: xxx
+model: openrouter/qwen/qwen3-coder
 
 ########################
 # API Keys and settings:
@@ -102,7 +102,7 @@
 #auto-accept-architect: true
 
 ## Specify the model to use for commit messages and chat history summarization (default depends on --model)
-#weak-model: xxx
+weak-model: openrouter/deepseek/deepseek-v3.2
 
 ## Specify the model to use for editor tasks (default depends on --model)
 #editor-model: xxx
@@ -114,7 +114,7 @@
 #show-model-warnings: true
 
 ## Check if model accepts settings like reasoning_effort/thinking_tokens (default: True)
-#check-model-accepts-settings: true
+check-model-accepts-settings: true
 
 ## Soft limit on tokens for chat history, after which summarization begins. If unspecified, defaults to the model's max_chat_history_tokens.
 #max-chat-history-tokens: xxx
@@ -123,7 +123,7 @@
 # Cache settings:
 
 ## Enable caching of prompts (default: False)
-#cache-prompts: false
+cache-prompts: true
 
 ## Number of times to ping at 5min intervals to keep prompt cache warm (default: 0)
 #cache-keepalive-pings: false
@@ -144,16 +144,16 @@
 # History Files:
 
 ## Specify the chat input history file (default: .aider.input.history)
-#input-history-file: .aider.input.history
+input-history-file: "$HOME/.aider.input.history"
 
 ## Specify the chat history file (default: .aider.chat.history.md)
-#chat-history-file: .aider.chat.history.md
+chat-history-file: "$HOME/.aider.chat.history.md"
 
 ## Restore the previous chat history messages (default: False)
 #restore-chat-history: false
 
 ## Log the conversation with the LLM to this file (for example, .aider.llm.history)
-#llm-history-file: xxx
+llm-history-file: "$HOME/.aider.llm.history"
 
 ##################
 # Output settings:
@@ -198,10 +198,10 @@
 #completion-menu-current-bg-color: "xxx"
 
 ## Set the markdown code theme (default: default, other options include monokai, solarized-dark, solarized-light, or a Pygments builtin style, see https://pygments.org/styles for available themes)
-#code-theme: default
+code-theme: solarized-light
 
 ## Show diffs when committing changes (default: False)
-#show-diffs: false
+show-diffs: true
 
 ###############
 # Git settings:
@@ -216,16 +216,16 @@
 #add-gitignore-files: false
 
 ## Specify the aider ignore file (default: .aiderignore in git root)
-#aiderignore: .aiderignore
+aiderignore: "$HOME/.aiderignore"
 
 ## Only consider files in the current subtree of the git repository
-#subtree-only: false
+subtree-only: true
 
 ## Enable/disable auto commit of LLM changes (default: True)
-#auto-commits: true
+auto-commits: false
 
 ## Enable/disable commits when repo is found dirty (default: True)
-#dirty-commits: true
+dirty-commits: false
 
 ## Attribute aider code changes in the git author name (default: True). If explicitly set to True, overrides --attribute-co-authored-by precedence.
 #attribute-author: xxx
@@ -249,7 +249,10 @@
 #commit: false
 
 ## Specify a custom prompt for generating commit messages
-#commit-prompt: xxx
+commit-prompt: >
+  Write concise commit messages following conventional commit format (feat, fix, chore, docs, style, refactor, perf, test).
+  Use present tense, imperative mood. Keep subject line under 50 characters. Only include body if necessary to explain why
+  a change was made, but NEVER what is the change -- the diff already shows that.
 
 ## Perform a dry run without modifying files (default: False)
 #dry-run: false
@@ -296,7 +299,7 @@
 #analytics-log: xxx
 
 ## Permanently disable analytics
-#analytics-disable: false
+analytics-disable: true
 
 ## Send analytics to custom PostHog instance
 #analytics-posthog-host: xxx
@@ -390,13 +393,13 @@
 #  - zzz
 
 ## Use VI editing mode in the terminal (default: False)
-#vim: false
+vim: true
 
 ## Specify the language to use in the chat (default: None, uses system settings)
 #chat-language: xxx
 
 ## Specify the language to use in the commit message (default: None, user language)
-#commit-language: xxx
+commit-language: en
 
 ## Always say yes to every confirmation
 #yes-always: false
@@ -411,7 +414,7 @@
 #encoding: utf-8
 
 ## Line endings to use when writing files (default: platform)
-#line-endings: platform
+line-endings: lf
 
 ## Specify the config file (default: search for .aider.conf.yml in git root, cwd or home directory)
 #config: xxx

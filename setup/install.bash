@@ -28,6 +28,8 @@ set -euo pipefail
 # =============================================================================
 
 DOTFILES_DIR="${DOTFILES_DIR:-$HOME/x/dotfiles}"
+USER_BIN_DIR="${USER_BIN_DIR:-$HOME/bin}"
+DOWNLOADS_DIR="${DOWNLOADS_DIR:-$USER_BIN_DIR/downloads}"
 
 # -----------------------------------------------------------------------------
 # Feature flags (all use SKIP_* pattern for consistency)
@@ -245,8 +247,8 @@ safe_symlink() {
 # This ensures tools from previous runs are found by command_exists checks.
 load_path() {
     # User bin directory (just, e, git shims)
-    if [[ -d "$HOME/bin" ]]; then
-        export PATH="$HOME/bin:$PATH"
+    if [[ -d "$USER_BIN_DIR" ]]; then
+        export PATH="$USER_BIN_DIR:$PATH"
     fi
 
     # Local bin directory (pipx tools like aider)
@@ -396,6 +398,7 @@ install_system_packages() {
         pipx
         software-properties-common
         wget
+        xclip
         zsh
     )
 
@@ -693,15 +696,15 @@ install_just() {
     fi
 
     log_info "📦 Installing just..."
-    mkdir -p "$HOME/bin"
-    curl_cmd https://just.systems/install.sh | bash -s -- --to "$HOME/bin"
+    mkdir -p "$USER_BIN_DIR"
+    curl_cmd https://just.systems/install.sh | bash -s -- --to "$USER_BIN_DIR"
     log_success "✅ just installed successfully"
 }
 
 # Install fzf from custom fork for security
 install_fzf() {
     local fzf_dir="$HOME/.fzf"
-    local fzf_bin="$HOME/bin/fzf"
+    local fzf_bin="$USER_BIN_DIR/fzf"
 
     if command_exists fzf && [[ -L "$fzf_bin" ]]; then
         log_info "✅ fzf already installed (custom fork)"
@@ -722,7 +725,7 @@ install_fzf() {
     "$fzf_dir/install" --bin
 
     # Create symlink in ~/bin
-    mkdir -p "$HOME/bin"
+    mkdir -p "$USER_BIN_DIR"
     ln -sf "$fzf_dir/bin/fzf" "$fzf_bin"
 
     log_success "✅ fzf installed from custom fork"
@@ -806,6 +809,62 @@ install_aider() {
 
 
 
+install_neovim() {
+    if command_exists nvim; then
+        log_info "✅ Neovim already installed"
+        return 0
+    fi
+
+    log_info "📦 Installing Neovim..."
+
+    # Create directory structure
+    local nvim_downloads="$DOWNLOADS_DIR/nvim"
+    mkdir -p "$nvim_downloads"
+
+    log_info "⬇️  Downloading Neovim (stable)..."
+    local tmp_dir
+    tmp_dir=$(mktemp -d)
+
+    # Correct URL for modern Neovim releases (stable)
+    local download_url="https://github.com/neovim/neovim/releases/download/stable/nvim-linux-x86_64.tar.gz"
+    
+    log_debug "Download URL: $download_url"
+
+    if (cd "$tmp_dir" && curl_safer -O "$download_url" && tar -xzf nvim-linux-x86_64.tar.gz); then
+        # Extract version from binary
+        local version_output
+        version_output=$("$tmp_dir/nvim-linux-x86_64/bin/nvim" --version | head -n 1)
+        # Format: NVIM v0.10.3
+        local version
+        version=$(echo "$version_output" | awk '{print $2}')
+        
+        if [[ -z "$version" ]]; then
+            version="unknown-$(date +%Y%m%d)"
+        fi
+        
+        log_info "✅ Detected version: $version"
+
+        local install_dir="$nvim_downloads/$version"
+        
+        if [[ -d "$install_dir" ]]; then
+            log_info "✅ Neovim $version already installed at $install_dir"
+            rm -rf "$tmp_dir"
+        else
+            mkdir -p "$(dirname "$install_dir")"
+            mv "$tmp_dir/nvim-linux-x86_64" "$install_dir"
+            rm -rf "$tmp_dir"
+        fi
+
+        # Create symlink
+        safe_symlink "$install_dir/bin/nvim" "$USER_BIN_DIR/nvim"
+        log_success "✅ Neovim installed ($version)"
+    else
+        log_error "❌ Failed to download or extract Neovim"
+        rm -rf "$tmp_dir"
+        return 1
+    fi
+}
+
 install_opencode() {
     if command_exists opencode; then
         log_info "✅ OpenCode already installed"
@@ -838,6 +897,7 @@ install_cli_tools() {
     # Official installers (curl | bash or git clone)
     install_fzf
     install_just
+    install_neovim
     install_oh_my_zsh
 
     # AI Agents "Team"
@@ -949,7 +1009,7 @@ setup_editor_launcher() {
     fi
 
     log_info "🔗 Setting up 'e' editor launcher command..."
-    safe_symlink "$DOTFILES_DIR/shell/e" "$HOME/bin/e"
+    safe_symlink "$DOTFILES_DIR/shell/e" "$USER_BIN_DIR/e"
     log_success "✅ 'e' editor launcher set up"
 }
 
@@ -1044,7 +1104,7 @@ setup_git_shims() {
     log_debug "Using SSH command: $ssh_cmd -> $ssh_binary"
 
     if [[ -n "$ssh_binary" ]]; then
-        safe_symlink "$ssh_binary" "$HOME/bin/git-ssh"
+        safe_symlink "$ssh_binary" "$USER_BIN_DIR/git-ssh"
         log_success "✅ Git SSH shim created: git-ssh -> $ssh_binary"
     fi
 
@@ -1054,14 +1114,14 @@ setup_git_shims() {
     if op_binary=$(resolve_op_signer_binary "$platform"); then
         log_debug "Using op-signer binary: $op_binary"
 
-        safe_symlink "$op_binary" "$HOME/bin/op-signer"
+        safe_symlink "$op_binary" "$USER_BIN_DIR/op-signer"
         log_success "✅ Op-signer shim created: op-signer -> $op_binary"
     fi
 
     # Check if shim directory is in PATH
-    if [[ ":$PATH:" != *":$HOME/bin:"* ]]; then
-        log_warning "⚠️  ~/bin is not in your PATH"
-        log_info "ℹ️  Add to your shell profile: export PATH=\"\$HOME/bin:\$PATH\""
+    if [[ ":$PATH:" != *":$USER_BIN_DIR:"* ]]; then
+        log_warning "⚠️  $USER_BIN_DIR is not in your PATH"
+        log_info "ℹ️  Add to your shell profile: export PATH=\"\$USER_BIN_DIR:\$PATH\""
     fi
 }
 

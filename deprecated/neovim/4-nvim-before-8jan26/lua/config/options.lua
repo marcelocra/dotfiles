@@ -14,9 +14,26 @@ vim.opt.number = true
 vim.opt.relativenumber = true
 vim.opt.mouse = "a"  -- Useful resizing splits.
 vim.opt.showmode = false  -- Mode already in statusline
-vim.schedule(function()  -- After UiEnter because it can increase startup-time
-  vim.opt.clipboard = "unnamedplus"  -- Sync with OS.
-end)
+
+-- TODO: This is likely unnecessary. Certainly didn't prevent the freezes... it
+--       actually brought down the whole VM. Keeping just as a reference.
+-- Force Neovim to use OSC 52 and IGNORE xclip/xsel to prevent startup freezes.
+-- We define the provider explicitly so Neovim never attempts to auto-detect system tools.
+-- vim.g.clipboard = {
+--   name = "OSC 52",
+--   copy = {
+--     ["+"] = require("vim.ui.clipboard.osc52").copy("+"),
+--     ["*"] = require("vim.ui.clipboard.osc52").copy("*"),
+--   },
+--   paste = {
+--     ["+"] = require("vim.ui.clipboard.osc52").paste("+"),
+--     ["*"] = require("vim.ui.clipboard.osc52").paste("*"),
+--   },
+-- }
+
+-- Only set unnamedplus AFTER the provider is hardcoded.
+vim.opt.clipboard = "unnamedplus"
+
 vim.opt.breakindent = true
 vim.opt.breakindentopt = { shift = 2, minlines = 1 }
 vim.opt.undofile = true  -- Undo even after closing a file
