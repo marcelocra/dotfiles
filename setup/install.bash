@@ -600,6 +600,20 @@ install_nvm() {
     log_success "✅ nvm installed successfully"
 }
 
+install_bun() {
+    if command_exists bun; then
+        log_info "✅ bun already installed"
+        return 0
+    fi
+
+    log_info "📦 Installing bun..."
+
+    # Install using official script.
+    curl_cmd https://bun.sh/install | bash
+
+    log_success "✅ bun installed successfully"
+}
+
 install_node_lts() {
     if [[ "$SKIP_NODE_LTS" == "true" ]]; then
         log_info "⏭️  Skipping Node.js LTS installation (DOTFILES_SKIP_NODE_LTS=true)"
@@ -895,6 +909,7 @@ install_cli_tools() {
 
     # Package managers & runtimes
     install_nvm
+    install_bun
     install_node_lts
     install_global_npm_packages
 
