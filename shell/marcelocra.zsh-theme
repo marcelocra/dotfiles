@@ -9,6 +9,8 @@
 # USE_TIME_PROMPT=0     # 1=time-based symbols, 0=standard
 # SHOW_DATE=1           # Show date
 # SHOW_TIME=1           # Show time
+# SHOW_HOST=1           # Show hostname
+# USE_FQDN_HOST=0       # 1=Fully qualified domain name, 0=Short hostname
 
 # ==============================================================================
 # High Contrast Colors (256-color palette for maximum visibility)
@@ -26,6 +28,7 @@ C_NODE="%F{114}"           # Bright green (PaleGreen3)
 C_RUST="%F{208}"           # Bright orange (DarkOrange)
 C_GO="%F{73}"              # Bright cyan (CadetBlue)
 C_DIM="%F{245}"            # Gray (Grey54)
+C_HOST="%F{39}"            # Bright blue (same as directory)
 C_RESET="%f"
 STYLE_NOBOLD="%{[22m%}"  # Reset bold so glyphs render regular weight
 
@@ -66,6 +69,8 @@ ICON_ERR="⨯"
 : ${SHOW_DATE:=1}
 : ${SHOW_TIME:=1}
 : ${USE_TIME_PROMPT:=0}
+: ${SHOW_HOST:=1}
+: ${USE_FQDN_HOST:=0}
 
 # ==============================================================================
 # Environment Detection
@@ -119,6 +124,21 @@ _get_envs() {
     _LAST_ENV_DIR="$PWD"
   fi
   echo "$_CACHED_ENVS"
+}
+
+# ==============================================================================
+# Host information
+# ==============================================================================
+_host_info() {
+  if [[ $SHOW_HOST == 1 ]]; then
+    local host
+    if [[ $USE_FQDN_HOST == 1 ]]; then
+      host="%M"  # Fully qualified domain name
+    else
+      host="%m"  # Short hostname
+    fi
+    echo " ${C_DIM}${ICON_SEP}${C_RESET} ${C_HOST}%n@${host}${C_RESET}"
+  fi
 }
 
 # ==============================================================================
@@ -176,9 +196,9 @@ _get_prompt_symbol() {
 # ==============================================================================
 setopt prompt_subst
 
-# Blank line + info line: dir › date › time › git › envs
+# Blank line + info line: dir › host › date › time › git › envs
 PROMPT='
-${C_DIR}${ICON_DIR} %~${C_RESET}'
+${C_DIR}${ICON_DIR} %~$(_host_info)${C_RESET}'
 PROMPT+='$(if [[ $SHOW_DATE == 1 ]]; then echo " ${C_DIM}${ICON_SEP}${C_RESET} ${C_DATE}${ICON_DATE} %D{%Y-%m-%d}${C_RESET}"; fi)'
 PROMPT+='$(if [[ $SHOW_TIME == 1 ]]; then echo " ${C_DIM}${ICON_SEP}${C_RESET} ${C_TIME}${ICON_TIME} %*${C_RESET}"; fi)'
 PROMPT+='$(_git_info)'
