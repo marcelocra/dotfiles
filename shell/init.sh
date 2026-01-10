@@ -803,6 +803,16 @@ x-man() {
         return 1
     fi
 }
+
+x-omz-reset-rc() {
+    mv ~/.zshrc ~/.zshrc.bak.$(x-datetime-for-filename)
+    cp ~/.oh-my-zsh/templates/zshrc.zsh-template ~/.zshrc
+}
+
+x-git-clone-d1() {
+    git clone --depth 1 "$1"
+}
+
 # Next function marker
 
 # =============================================================================
