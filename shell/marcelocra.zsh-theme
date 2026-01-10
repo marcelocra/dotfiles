@@ -28,7 +28,7 @@ C_NODE="%F{114}"           # Bright green (PaleGreen3)
 C_RUST="%F{208}"           # Bright orange (DarkOrange)
 C_GO="%F{73}"              # Bright cyan (CadetBlue)
 C_DIM="%F{245}"            # Gray (Grey54)
-C_HOST="%F{39}"            # Bright blue (same as directory)
+C_HOST="%F{141}"           # MediumPurple1
 C_RESET="%f"
 STYLE_NOBOLD="%{[22m%}"  # Reset bold so glyphs render regular weight
 
@@ -37,6 +37,7 @@ STYLE_NOBOLD="%{[22m%}"  # Reset bold so glyphs render regular weight
 # ==============================================================================
 : ${USE_NERD_FONT:=1}
 if [[ $USE_NERD_FONT == 1 ]]; then
+  ICON_USER=$'\uf109'          #  (nf-fa-laptop)
   ICON_DIR=$'\uf07b'           #  (nf-fa-folder)
   ICON_GIT=$'\uf126'           #   (nf-fa-code_fork)
   ICON_DIRTY=$'\u2a2f'         # ⨯ (cross product)
@@ -50,6 +51,7 @@ if [[ $USE_NERD_FONT == 1 ]]; then
   # ICON_SEP=$'\ue0b1'           #  (nf-pl-left_soft_divider)
   ICON_SEP='›'                 # › (ASCII divider preferred)
 else
+  ICON_USER="💻"
   ICON_DIR="📁"
   ICON_GIT="⎇"
   ICON_DIRTY="⨯"
@@ -129,8 +131,8 @@ _get_envs() {
 # ==============================================================================
 # Host information
 # ==============================================================================
- _host_info() {
-   if [[ $SHOW_HOST == 1 ]]; then
+_host_info() {
+  if [[ $SHOW_HOST == 1 ]]; then
     local host_color="$C_HOST"
     local host
     if [[ $USE_FQDN_HOST == 1 ]]; then
@@ -147,9 +149,9 @@ _get_envs() {
       host_color="$C_DIM"
     fi
 
-    echo " ${C_DIM}${ICON_SEP}${C_RESET} ${host_color}%n@${host}${C_RESET}"
-   fi
- }
+    echo "${host_color}${ICON_USER} %n@${host}${C_RESET} ${C_DIM}${ICON_SEP}${C_RESET} "
+  fi
+}
 
 # ==============================================================================
 # Git prompt (lightweight, no oh-my-zsh dependency)
@@ -206,9 +208,9 @@ _get_prompt_symbol() {
 # ==============================================================================
 setopt prompt_subst
 
-# Blank line + info line: dir › host › date › time › git › envs
+# Blank line + info line: host › dir › date › time › git › envs
 PROMPT='
-${C_DIR}${ICON_DIR} %~$(_host_info)${C_RESET}'
+$(_host_info)${C_DIR}${ICON_DIR} %~${C_RESET}'
 PROMPT+='$(if [[ $SHOW_DATE == 1 ]]; then echo " ${C_DIM}${ICON_SEP}${C_RESET} ${C_DATE}${ICON_DATE} %D{%Y-%m-%d}${C_RESET}"; fi)'
 PROMPT+='$(if [[ $SHOW_TIME == 1 ]]; then echo " ${C_DIM}${ICON_SEP}${C_RESET} ${C_TIME}${ICON_TIME} %*${C_RESET}"; fi)'
 PROMPT+='$(_git_info)'

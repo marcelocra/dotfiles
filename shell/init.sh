@@ -782,18 +782,18 @@ x-backup-vscode-folders() {
 # Display man page for a command, or --help if man page doesn't exist
 x-man() {
     local cmd="$1"
-    
+
     if [[ -z "$cmd" ]]; then
         echo "Usage: x-man <command>"
         return 1
     fi
-    
+
     # Check if man page exists
     if man -w "$cmd" >/dev/null 2>&1; then
         man "$cmd"
         return
     fi
-    
+
     # If no man page, try --help
     if command_exists "$cmd"; then
         echo "ℹ️  No manual entry for '$cmd', showing --help..." >&2
@@ -964,7 +964,7 @@ configure_zsh() {
 
             # Basic prompt
             setopt PROMPT_SUBST
-            PS1='%F{green}%n@%m%f %F{blue}%~%f %# '
+            PS1='%F{141}%n@%m%f %F{245}›%f %F{blue}%~%f %# '
         fi
 
         # Common zsh options (useful for both setups)
@@ -1025,9 +1025,8 @@ configure_bash() {
 
         # Custom prompt with git branch and timestamp
         __bash_prompt() {
-            local userpart='`export XIT=$? \
-                && [ ! -z "${GITHUB_USER:-}" ] && echo -n "\[\033[0;32m\]@${GITHUB_USER:-} " || echo -n "\[\033[0;32m\]\u " \
-                && [ "$XIT" -ne "0" ] && echo -n "\[\033[1;31m\]➜" || echo -n "\[\033[0m\]➜"`'
+            local userpart='`[ ! -z "${GITHUB_USER:-}" ] && echo -n "\[\033[38;5;141m\]@${GITHUB_USER:-}@\h " || echo -n "\[\033[38;5;141m\]\u@\h " \
+                && echo -n "\[\033[38;5;245m\]›\[\033[0m\]"`'
             local gitbranch='`\
                 if [ "$(git config --get devcontainers-theme.hide-status 2>/dev/null)" != 1 ] && [ "$(git config --get codespaces-theme.hide-status 2>/dev/null)" != 1 ]; then \
                     export BRANCH="$(git --no-optional-locks symbolic-ref --short HEAD 2>/dev/null || git --no-optional-locks rev-parse --short HEAD 2>/dev/null)"; \
@@ -1043,9 +1042,11 @@ configure_bash() {
             local timestamp='`echo -n "\[\033[33m\][$(date "+%Y-%m-%d %H:%M:%S")]\[\033[0m\]"`'
             local lightblue='\[\033[1;34m\]'
             local removecolor='\[\033[0m\]'
-            PS1="${userpart} ${lightblue}\w ${gitbranch}${timestamp}${removecolor}\n\$ "
+            local exitstatus='`[ "${MCRA_XIT:-0}" -ne "0" ] && echo -n "\[\033[1;31m\]" || echo -n "\[\033[32m\]"`'
+            PS1="${userpart} ${lightblue}\w ${gitbranch}${timestamp}${removecolor}\n${exitstatus}\$ ${removecolor}"
             unset -f __bash_prompt
         }
+        PROMPT_COMMAND='MCRA_XIT=$?; '"${PROMPT_COMMAND:-}"
         __bash_prompt
         export PROMPT_DIRTRIM=4
 
