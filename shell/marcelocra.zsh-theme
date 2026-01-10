@@ -129,17 +129,27 @@ _get_envs() {
 # ==============================================================================
 # Host information
 # ==============================================================================
-_host_info() {
-  if [[ $SHOW_HOST == 1 ]]; then
+ _host_info() {
+   if [[ $SHOW_HOST == 1 ]]; then
+    local host_color="$C_HOST"
     local host
     if [[ $USE_FQDN_HOST == 1 ]]; then
       host="%M"  # Fully qualified domain name
     else
       host="%m"  # Short hostname
     fi
-    echo " ${C_DIM}${ICON_SEP}${C_RESET} ${C_HOST}%n@${host}${C_RESET}"
-  fi
-}
+
+    # Highlight in red if root user
+    if (( EUID == 0 )); then
+      host_color="%F{203}"  # Bright red (same as C_ERR)
+    # Dim when not in SSH session
+    elif [[ -z "$SSH_CONNECTION" ]]; then
+      host_color="$C_DIM"
+    fi
+
+    echo " ${C_DIM}${ICON_SEP}${C_RESET} ${host_color}%n@${host}${C_RESET}"
+   fi
+ }
 
 # ==============================================================================
 # Git prompt (lightweight, no oh-my-zsh dependency)
