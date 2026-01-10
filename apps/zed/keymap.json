@@ -20,7 +20,6 @@
       // work when no editor exists.
       // "space f": "file_finder::Toggle"
     },
-    },
   },
 
   // Workspace || Editor
@@ -81,16 +80,12 @@
       "alt-z": "workspace::ToggleCenteredLayout", // VSCode: alt+z zen mode (closest equivalent)
       "ctrl-alt-w": "pane::CloseOtherItems", // VSCode: ctrl+alt+w close other editors
     },
-      "ctrl-alt-w": "pane::CloseOtherItems", // VSCode: ctrl+alt+w close other editors
-    },
   },
 
   // Workspace (non-editor, non-vim context for alt-l)
   {
     "context": "Workspace && !VimControl",
     "bindings": {
-      "alt-l": "pane::GoForward", // VSCode: alt+l navigate forward
-    },
       "alt-l": "pane::GoForward", // VSCode: alt+l navigate forward
     },
   },
@@ -105,8 +100,6 @@
     "bindings": {
       "ctrl-i": "assistant::InlineAssist", // VSCode: ctrl+i inline AI assist
       "ctrl-shift-i": "agent::ToggleFocus", // VSCode: ctrl+shift+i open AI chat
-      "ctrl-l": "editor::AcceptNextWordEditPrediction", // VSCode: ctrl+l accept next word from suggestion
-    },
       "ctrl-l": "editor::AcceptNextWordEditPrediction", // VSCode: ctrl+l accept next word from suggestion
     },
   },
@@ -164,8 +157,6 @@
       // === Word Wrap ===
       "alt-shift-w": "editor::ToggleSoftWrap", // VSCode: alt+shift+w toggle word wrap
     },
-      "alt-shift-w": "editor::ToggleSoftWrap", // VSCode: alt+shift+w toggle word wrap
-    },
   },
 
   // ============================================================================
@@ -180,8 +171,6 @@
       "enter": "search::SelectNextMatch",
       "shift-enter": "search::SelectPreviousMatch",
       "alt-enter": "search::SelectAllMatches",
-      "escape": "buffer_search::Dismiss",
-    },
       "escape": "buffer_search::Dismiss",
     },
   },
@@ -214,8 +203,6 @@
 
       ", q": null,
     },
-      ", q": null,
-    },
   },
 
   // ============================================================================
@@ -227,8 +214,6 @@
     "context": "Editor && jupyter && !ContextEditor",
     "bindings": {
       "ctrl-enter": "repl::Run",
-      "alt-enter": "repl::RunInPlace",
-    },
       "alt-enter": "repl::RunInPlace",
     },
   },
@@ -247,8 +232,6 @@
       "ctrl-k": "menu::SelectPrevious",
       "ctrl-j": "menu::SelectNext",
     },
-      "ctrl-j": "menu::SelectNext",
-    },
   },
 
   // BufferSearchBar && !in_replace > Editor
@@ -262,8 +245,6 @@
       "ctrl-p": "search::PreviousHistoryQuery",
       "ctrl-n": "search::NextHistoryQuery",
     },
-      "ctrl-n": "search::NextHistoryQuery",
-    },
   },
 
   // ProjectSearchBar > Editor
@@ -271,8 +252,6 @@
     "context": "ProjectSearchBar > Editor",
     "bindings": {
       "ctrl-k": "search::PreviousHistoryQuery",
-      "ctrl-j": "search::NextHistoryQuery",
-    },
       "ctrl-j": "search::NextHistoryQuery",
     },
   },
@@ -293,8 +272,6 @@
     "context": "Editor && !Terminal",
     "bindings": {
       "ctrl-l": "agent::ToggleFocus",
-    },
-      "ctrl-j": "editor::ContextMenuNext",
     },
   },
 
@@ -318,8 +295,6 @@
       "ctrl-w k": "workspace::ActivatePaneUp",
       "ctrl-w j": "workspace::ActivatePaneDown",
     },
-      "ctrl-w j": "workspace::ActivatePaneDown",
-    },
   },
 
   // Editor && !menu
@@ -335,7 +310,6 @@
       // "ctrl-o": "workspace::Open", // vim default: go back
       // "ctrl-a": "editor::SelectAll" // vim default: increment
     },
-    },
   },
 
   // VimControl && !menu && vim_mode != operator
@@ -347,8 +321,6 @@
       "E": "vim::NextSubwordEnd",
       "g E": "vim::PreviousSubwordEnd",
     },
-      "g E": "vim::PreviousSubwordEnd",
-    },
   },
 
   // VimControl && !menu
@@ -356,7 +328,6 @@
     "context": "VimControl && !menu",
     "bindings": {
       // Put key bindings here if you want them to work in normal & visual mode.
-    },
     },
   },
 
@@ -380,8 +351,6 @@
 
       "shift-y": ["workspace::SendKeystrokes", "y $"], // Use neovim's yank behavior: yank to end of line.
     },
-      "shift-y": ["workspace::SendKeystrokes", "y $"], // Use neovim's yank behavior: yank to end of line.
-    },
   },
 
   // Editor && VimControl && !menu && vim_mode == visual
@@ -399,8 +368,6 @@
       ", s": "workspace::Save",
       ", w": "workspace::Save",
 
-      "shift-s": "vim::PushAddSurrounds", // Supports `ys` operator mode.
-    },
       "shift-s": "vim::PushAddSurrounds", // Supports `ys` operator mode.
     },
   },
@@ -423,7 +390,7 @@
   },
   {
     "bindings": {
-      "ctrl-q": null
-    }
-  }
+      "ctrl-q": null,
+    },
+  },
 ]
