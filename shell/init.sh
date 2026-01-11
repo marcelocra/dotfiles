@@ -605,6 +605,9 @@ configure_system_utility_aliases() {
     alias mann='x-man'
     alias bman=mann
 
+    # Easily edit and source the rc file.
+    alias rc='$EDITOR $HOME/.config/dotfiles/shell/init.sh && . ~/.zshrc'
+
     # Next alias marker
 }
 
