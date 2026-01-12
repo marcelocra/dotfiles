@@ -63,8 +63,6 @@
       // === Navigation History (VSCode: ctrl+[/], alt+h/l) ===
       // "ctrl-[": "pane::GoBack", // VSCode: ctrl+[ navigate back
       // "ctrl-]": "pane::GoForward", // VSCode: ctrl+] navigate forward
-      // "ctrl-[": "pane::GoBack", // VSCode: ctrl+[ navigate back
-      // "ctrl-]": "pane::GoForward", // VSCode: ctrl+] navigate forward
       "alt-h": "pane::GoBack", // VSCode: alt+h navigate back
       // Note: alt-l conflicts with vim pane navigation, added in non-vim context below
 
@@ -101,6 +99,14 @@
       "ctrl-i": "assistant::InlineAssist", // VSCode: ctrl+i inline AI assist
       "ctrl-shift-i": "agent::ToggleFocus", // VSCode: ctrl+shift+i open AI chat
       "ctrl-l": "editor::AcceptNextWordEditPrediction", // VSCode: ctrl+l accept next word from suggestion
+    },
+  },
+
+  // Agent Panel context for new threads
+  {
+    "context": "AgentPanel",
+    "bindings": {
+      "ctrl-l": "agent::NewThread", // Create new thread when in agent panel
     },
   },
 
@@ -265,13 +271,6 @@
     "bindings": {
       "ctrl-k": "editor::ContextMenuPrevious",
       "ctrl-j": "editor::ContextMenuNext",
-    },
-  },
-
-  {
-    "context": "Editor && !Terminal",
-    "bindings": {
-      "ctrl-l": "agent::ToggleFocus",
     },
   },
 
