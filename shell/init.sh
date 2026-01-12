@@ -552,6 +552,8 @@ configure_docker_aliases() {
 
     alias x-podman-universal-devcontainer='podman run -it --rm -v "$(pwd):/workspace:Z" -w /workspace mcr.microsoft.com/devcontainers/universal:2-linux zsh'
     alias x-podman-ts-node-devcontainer='podman run -it --rm -v "$(pwd):/workspace:Z" -w /workspace mcr.microsoft.com/devcontainers/typescript-node:24-bookworm zsh'
+    alias x-podman-ubuntu='podman run -it --rm -v "$(pwd):/workspace:Z" -w /workspace docker.io/library/ubuntu /bin/bash'
+    alias x-podman-fedora='podman run -it --rm -v "$(pwd):/workspace:Z" -w /workspace docker.io/library/fedora:43 /bin/bash'
 }
 
 # Next docker alias marker
@@ -782,18 +784,18 @@ x-backup-vscode-folders() {
 # Display man page for a command, or --help if man page doesn't exist
 x-man() {
     local cmd="$1"
-    
+
     if [[ -z "$cmd" ]]; then
         echo "Usage: x-man <command>"
         return 1
     fi
-    
+
     # Check if man page exists
     if man -w "$cmd" >/dev/null 2>&1; then
         man "$cmd"
         return
     fi
-    
+
     # If no man page, try --help
     if command_exists "$cmd"; then
         echo "ℹ️  No manual entry for '$cmd', showing --help..." >&2
