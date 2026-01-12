@@ -102,6 +102,15 @@
     },
   },
 
+  // Quote selection to agent (only when selection is active)
+  {
+    "context": "Editor && selection",
+    "bindings": {
+      "alt-a": "agent::QuoteSelection",
+      "ctrl-l": "agent::QuoteSelection",
+    },
+  },
+
   // Agent Panel context for new threads
   {
     "context": "AgentPanel",
@@ -159,6 +168,9 @@
       "ctrl-.": "editor::ToggleCodeActions", // VSCode: ctrl+. quick fix
       "ctrl-space": "editor::ShowCompletions", // VSCode: ctrl+space trigger suggestions
       "ctrl-shift-space": "editor::ShowSignatureHelp", // VSCode: ctrl+shift+space parameter hints
+
+      // === Formatting ===
+      "alt-shift-f": "editor::Format", // VSCode default format
 
       // === Word Wrap ===
       "alt-shift-w": "editor::ToggleSoftWrap", // VSCode: alt+shift+w toggle word wrap
