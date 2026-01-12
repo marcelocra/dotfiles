@@ -309,12 +309,6 @@
   "git.openRepositoryInParentFolders": "never",
   "git.terminalAuthentication": false,
   "git.useIntegratedAskPass": true,
-    "*": true,
-    "markdown": true,
-    "plaintext": false,
-    "scminput": false,
-    "shellscript": true
-  },
   "gitlens.ai.model": "vscode",
   "gitlens.ai.vscode.model": "copilot:gpt-4.1",
   "gitlens.codeLens.authors.enabled": false,
