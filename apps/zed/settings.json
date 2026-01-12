@@ -13,15 +13,35 @@
     "use_modifier_to_send": false,
     "play_sound_when_agent_done": true,
     "model_parameters": [
-      { "provider": "openrouter", "model": "qwen/qwen3-coder", "temperature": 0.7 },
-      { "provider": "openrouter", "model": "google/gemini-2.5-flash-lite", "temperature": 0.3 },
-      { "provider": "openrouter", "model": "deepseek/deepseek-v3.2", "temperature": 0.2 },
-      { "provider": "openrouter", "model": "x-ai/grok-code-fast-1", "temperature": 0.5 },
-      { "provider": "openrouter", "model": "anthropic/claude-sonnet-4.5", "temperature": 0.3 },
+      {
+        "provider": "openrouter",
+        "model": "qwen/qwen3-coder",
+        "temperature": 0.7,
+      },
+      {
+        "provider": "openrouter",
+        "model": "google/gemini-2.5-flash-lite",
+        "temperature": 0.3,
+      },
+      {
+        "provider": "openrouter",
+        "model": "deepseek/deepseek-v3.2",
+        "temperature": 0.2,
+      },
+      {
+        "provider": "openrouter",
+        "model": "x-ai/grok-code-fast-1",
+        "temperature": 0.5,
+      },
+      {
+        "provider": "openrouter",
+        "model": "anthropic/claude-sonnet-4.5",
+        "temperature": 0.3,
+      },
     ],
     "default_model": {
       "provider": "openrouter",
-      "model": "qwen/qwen3-coder",
+      "model": "google/gemini-3-flash-preview",
     },
     "inline_assistant_model": {
       "provider": "openrouter",
@@ -191,11 +211,21 @@
 
   "languages": {
     "TypeScript": {
-      "language_servers": ["deno", "!typescript-language-server", "!vtsls", "!eslint"],
+      "language_servers": [
+        "deno",
+        "!typescript-language-server",
+        "!vtsls",
+        "!eslint",
+      ],
       "formatter": "language_server",
     },
     "TSX": {
-      "language_servers": ["deno", "!typescript-language-server", "!vtsls", "!eslint"],
+      "language_servers": [
+        "deno",
+        "!typescript-language-server",
+        "!vtsls",
+        "!eslint",
+      ],
       "formatter": "language_server",
     },
   },
