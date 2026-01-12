@@ -22,7 +22,8 @@ config.scrollback_lines = 20000
 -- THEME & VISUALS
 -- ============================================================================
 
-config.color_scheme = "Catppuccin Mocha"
+-- config.color_scheme = "Catppuccin Mocha"
+config.color_scheme = "Tokyo Night Storm"
 
 -- Solid background for best performance (no compositing overhead)
 config.window_background_opacity = 1.0
@@ -48,7 +49,7 @@ config.harfbuzz_features = { "calt=1", "ss01=1", "ss19=1", "ss20=1" }
 
 -- Font rendering optimization for crispness on high-DPI displays
 config.freetype_load_target = "Light"
-config.freetype_render_target = "HorizontalLcd"
+-- config.freetype_render_target = "HorizontalLcd"
 config.freetype_load_flags = "NO_HINTING"
 
 -- ============================================================================
@@ -56,10 +57,10 @@ config.freetype_load_flags = "NO_HINTING"
 -- ============================================================================
 
 config.window_padding = {
-  left = 20,
-  right = 20,
-  top = 20,
-  bottom = 20,
+  left = 5,
+  right = 5,
+  top = 5,
+  bottom = 5,
 }
 
 config.initial_cols = 120
@@ -119,7 +120,7 @@ config.quick_select_patterns = {
 -- ============================================================================
 
 -- Leader key: Make it different from your multiplexer's leader
-config.leader = { key = "q", mods = "CTRL", timeout_milliseconds = 1000 }
+config.leader = { key = "q", mods = "ALT", timeout_milliseconds = 1000 }
 
 config.keys = {
   -- Pane Navigation (Local WezTerm panes)
