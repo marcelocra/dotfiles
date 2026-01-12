@@ -14,6 +14,7 @@ vscode-like/
 │   ├── settings.json    # VS Code settings
 │   └── keybindings.json # VS Code keybindings
 ├── cursor/              # Cursor-specific files
+│   ├── README.md        # Cursor configuration documentation
 │   ├── settings.json    # Cursor settings (if different)
 │   └── keybindings.json # Cursor keybindings
 └── install.bash         # Installation script for all editors
@@ -56,6 +57,7 @@ The script automatically detects remote VS Code installations (`.vscode-server`,
 -   Uses Cursor's built-in AI (no extension checks needed)
 -   Keybindings use `workbench.action.chat.openagent` directly
 -   Settings exclude VS Code-only extensions
+-   See [`cursor/README.md`](cursor/README.md) for detailed documentation on Cursor-specific configurations and removed VS Code settings
 
 ## Migration from `apps/vscode/`
 

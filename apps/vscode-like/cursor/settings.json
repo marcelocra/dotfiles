@@ -97,7 +97,6 @@
   "[yaml]": {
     "editor.defaultFormatter": "redhat.vscode-yaml"
   },
-  "@azure.argTenant": "",
   // "accessibility.voice.speechLanguage": "pt-BR",
   "calva.paredit.defaultKeyMap": "original",
   "calva.prettyPrintingOptions": {
@@ -107,14 +106,13 @@
   },
   "calva.replConnectSequences": [],
   "calva.showCalvaSaysOnStart": false,
-  "chatgpt.runCodexInWindowsSubsystemForLinux": true,
   "csharp.suppressBuildAssetsNotification": true,
   "dart.debugExternalPackageLibraries": false,
   "dart.debugSdkLibraries": false,
   "dart.openDevTools": "flutter",
-  "dev.containers.dockerComposePath": "podman-compose",
-  "dev.containers.dockerPath": "podman",
-  "dev.containers.mountWaylandSocket": false,
+  // "dev.containers.dockerComposePath": "podman-compose",
+  // "dev.containers.dockerPath": "podman",
+  // "dev.containers.mountWaylandSocket": false,
   "diffEditor.codeLens": true,
   "diffEditor.ignoreTrimWhitespace": false,
   "diffEditor.renderSideBySide": true,
@@ -122,15 +120,6 @@
   "docker.extension.enableComposeLanguageServer": false,
   "dotfiles.installCommand": "~/prj/dotfiles/shell/install.sh",
   "dotfiles.repository": "marcelocra/dotfiles",
-  "dotnetAcquisitionExtension.enableTelemetry": false,
-  "dotnetAcquisitionExtension.existingDotnetPath": [
-    {
-      "extensionId": "ms-azuretools.vscode-azure-github-copilot",
-      // "path": "~/bin/binaries/dotnet/dotnet-v9.0.102/dotnet"
-      "path": "~/bin/binaries/dotnet/dotnet-v8.0.405/dotnet"
-    }
-  ],
-  "dotnetAcquisitionExtension.sharedExistingDotnetPath": "~/bin/dotnet",
   "editor.acceptSuggestionOnCommitCharacter": false,
   "editor.acceptSuggestionOnEnter": "on",
   "editor.accessibilitySupport": "off",
@@ -279,7 +268,6 @@
     "tsconfig.json": "tsconfig.*.json"
   },
   "explorer.openEditors.visible": 1,
-  "explorer.z next": "",
   "files.associations": {
     "*.adoc": "asciidoc",
     "*.css": "css",

@@ -1,7 +1,19 @@
 ##########################################################
-# Sample .aider.conf.yml
+# Aider configuration file template
 # This file lists *all* the valid configuration entries.
-# Place in your home dir, or at the root of your git repo.
+#
+# IMPORTANT: Aider does NOT expand shell variables like $HOME or ~
+# You must use absolute paths or paths relative to where aider runs.
+#
+# To use this file:
+# 1. Copy to your home dir (~/.aider.conf.yml) or git repo root (.aider.conf.yml)
+# 2. If uncommenting path settings, use relative paths (for repo storage) or absolute paths
+#
+# Aider searches for config in:
+# - Home directory (~/.aider.conf.yml)
+# - Git repository root (.aider.conf.yml)
+# - Current working directory (.aider.conf.yml)
+# - Or specify with: aider --config <path>
 ##########################################################
 
 # Note: You can only put OpenAI and Anthropic API keys in the YAML
@@ -144,16 +156,19 @@ cache-prompts: true
 # History Files:
 
 ## Specify the chat input history file (default: .aider.input.history)
-input-history-file: "$HOME/.aider.input.history"
+## NOTE: Use relative path for repo storage, or absolute path for home directory
+#input-history-file: .aider.input.history
 
 ## Specify the chat history file (default: .aider.chat.history.md)
-chat-history-file: "$HOME/.aider.chat.history.md"
+## NOTE: Use relative path for repo storage, or absolute path for home directory
+#chat-history-file: .aider.chat.history.md
 
 ## Restore the previous chat history messages (default: False)
 #restore-chat-history: false
 
 ## Log the conversation with the LLM to this file (for example, .aider.llm.history)
-llm-history-file: "$HOME/.aider.llm.history"
+## NOTE: Use relative path for repo storage, or absolute path for home directory
+#llm-history-file: .aider.llm.history
 
 ##################
 # Output settings:
@@ -216,7 +231,7 @@ show-diffs: true
 #add-gitignore-files: false
 
 ## Specify the aider ignore file (default: .aiderignore in git root)
-aiderignore: "$HOME/.aiderignore"
+#aiderignore: xxx
 
 ## Only consider files in the current subtree of the git repository
 subtree-only: true

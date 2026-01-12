@@ -56,7 +56,7 @@ SKIP_DOCKER="${DOTFILES_SKIP_DOCKER:-false}"
 SKIP_TAILSCALE="${DOTFILES_SKIP_TAILSCALE:-false}"
 
 # Optional tool bundles (opt-in via CLI flags)
-SKIP_EXTRA_TOOLS="${DOTFILES_SKIP_EXTRA_TOOLS:-true}"   # zoxide, eza, delta, lazygit, tldr, htop
+SKIP_EXTRA_TOOLS="${DOTFILES_SKIP_EXTRA_TOOLS:-true}" # zoxide, eza, delta, lazygit, tldr, htop
 
 # Script behavior
 DEBUG="${DOTFILES_DEBUG:-0}"
@@ -112,39 +112,39 @@ EOF
 
 while [[ $# -gt 0 ]]; do
     case "$1" in
-        --vm)
-            SKIP_DEV_PACKAGES="false"
-            SKIP_HOMEBREW="false"
-            SKIP_EDITOR_LAUNCHER="false"
-            DEBUG="1"
-            ;;
-        --minimal)
-            SKIP_DOCKER="true"
-            SKIP_TAILSCALE="true"
-            SKIP_DEV_PACKAGES="true"
-            SKIP_EXTRA_TOOLS="true"
-            ;;
-        --no-docker)
-            SKIP_DOCKER="true"
-            ;;
-        --no-tailscale)
-            SKIP_TAILSCALE="true"
-            ;;
-        --with-extras)
-            SKIP_EXTRA_TOOLS="false"
-            ;;
-        --debug)
-            DEBUG="1"
-            ;;
-        --help|-h)
-            usage
-            exit 0
-            ;;
-        *)
-            echo "Unknown option: $1"
-            usage
-            exit 1
-            ;;
+    --vm)
+        SKIP_DEV_PACKAGES="false"
+        SKIP_HOMEBREW="false"
+        SKIP_EDITOR_LAUNCHER="false"
+        DEBUG="1"
+        ;;
+    --minimal)
+        SKIP_DOCKER="true"
+        SKIP_TAILSCALE="true"
+        SKIP_DEV_PACKAGES="true"
+        SKIP_EXTRA_TOOLS="true"
+        ;;
+    --no-docker)
+        SKIP_DOCKER="true"
+        ;;
+    --no-tailscale)
+        SKIP_TAILSCALE="true"
+        ;;
+    --with-extras)
+        SKIP_EXTRA_TOOLS="false"
+        ;;
+    --debug)
+        DEBUG="1"
+        ;;
+    --help | -h)
+        usage
+        exit 0
+        ;;
+    *)
+        echo "Unknown option: $1"
+        usage
+        exit 1
+        ;;
     esac
     shift
 done
@@ -306,9 +306,9 @@ detect_environment() {
     # Derived: Remote environment (no local 1Password access)
     # Includes: containers, SSH sessions, DevBunker
     # These environments use forwarded SSH agent and need ssh-keygen shim
-    if [[ "${DOTFILES_IN_CONTAINER}" == "true" ]] || \
-       [[ "${DOTFILES_IN_SSH}" == "true" ]] || \
-       [[ "${DOTFILES_IN_BUNKER}" == "true" ]]; then
+    if [[ "${DOTFILES_IN_CONTAINER}" == "true" ]] ||
+        [[ "${DOTFILES_IN_SSH}" == "true" ]] ||
+        [[ "${DOTFILES_IN_BUNKER}" == "true" ]]; then
         export DOTFILES_REMOTE_ENV="true"
     fi
 
@@ -317,8 +317,14 @@ detect_environment() {
 
 detect_platform() {
     detect_environment
-    if [[ "${DOTFILES_REMOTE_ENV}" == "true" ]]; then echo "linux"; return 0; fi
-    if [[ "${DOTFILES_IN_WSL}" == "true" ]]; then echo "wsl"; return 0; fi
+    if [[ "${DOTFILES_REMOTE_ENV}" == "true" ]]; then
+        echo "linux"
+        return 0
+    fi
+    if [[ "${DOTFILES_IN_WSL}" == "true" ]]; then
+        echo "wsl"
+        return 0
+    fi
     echo "linux"
 }
 
@@ -453,7 +459,7 @@ install_system_packages() {
 
     # Ensure zsh is in /etc/shells
     if ! grep -q "$zsh_path" /etc/shells 2>/dev/null; then
-        echo "$zsh_path" | sudo tee -a /etc/shells > /dev/null
+        echo "$zsh_path" | sudo tee -a /etc/shells >/dev/null
     fi
 
     # Change default shell (non-interactive)
@@ -492,8 +498,8 @@ EOF
     sudo apt install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin -y
 
     # 4// Add docker group (if it doesn't exist) and add user to it.
-    if ! getent group docker > /dev/null; then
-      sudo groupadd docker
+    if ! getent group docker >/dev/null; then
+        sudo groupadd docker
     fi
     sudo usermod -aG docker "$USER"
 
@@ -592,6 +598,20 @@ install_nvm() {
     curl_cmd https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.3/install.sh | bash
 
     log_success "✅ nvm installed successfully"
+}
+
+install_bun() {
+    if command_exists bun; then
+        log_info "✅ bun already installed"
+        return 0
+    fi
+
+    log_info "📦 Installing bun..."
+
+    # Install using official script.
+    curl_cmd https://bun.sh/install | bash
+
+    log_success "✅ bun installed successfully"
 }
 
 install_node_lts() {
@@ -740,12 +760,12 @@ install_brew_packages() {
     log_info "📦 Installing packages via Homebrew..."
 
     local packages=(
-        "bat"                     # Better cat
-        "borkdude/brew/babashka"  # Clojure
-        "fd"                      # Better find
-        "ripgrep"                 # Better grep
-        "shellcheck"              # Shell code quality
-        "shfmt"                   # Shell code quality
+        "bat"                    # Better cat
+        "borkdude/brew/babashka" # Clojure
+        "fd"                     # Better find
+        "ripgrep"                # Better grep
+        "shellcheck"             # Shell code quality
+        "shfmt"                  # Shell code quality
     )
 
     local to_install=()
@@ -769,15 +789,15 @@ install_brew_packages() {
 # Uses official installation instructions for GitHub CLI, copy/pasted from:
 #   https://github.com/cli/cli/blob/trunk/docs/install_linux.md
 __install_gh() {
-    (type -p wget >/dev/null || (sudo apt update && sudo apt install wget -y)) \
-	&& sudo mkdir -p -m 755 /etc/apt/keyrings \
-	&& out=$(mktemp) && wget -nv -O$out https://cli.github.com/packages/githubcli-archive-keyring.gpg \
-	&& cat $out | sudo tee /etc/apt/keyrings/githubcli-archive-keyring.gpg > /dev/null \
-	&& sudo chmod go+r /etc/apt/keyrings/githubcli-archive-keyring.gpg \
-	&& sudo mkdir -p -m 755 /etc/apt/sources.list.d \
-	&& echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" | sudo tee /etc/apt/sources.list.d/github-cli.list > /dev/null \
-	&& sudo apt update \
-	&& sudo apt install gh -y
+    (type -p wget >/dev/null || (sudo apt update && sudo apt install wget -y)) &&
+        sudo mkdir -p -m 755 /etc/apt/keyrings &&
+        out=$(mktemp) && wget -nv -O$out https://cli.github.com/packages/githubcli-archive-keyring.gpg &&
+        cat $out | sudo tee /etc/apt/keyrings/githubcli-archive-keyring.gpg >/dev/null &&
+        sudo chmod go+r /etc/apt/keyrings/githubcli-archive-keyring.gpg &&
+        sudo mkdir -p -m 755 /etc/apt/sources.list.d &&
+        echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" | sudo tee /etc/apt/sources.list.d/github-cli.list >/dev/null &&
+        sudo apt update &&
+        sudo apt install gh -y
 }
 
 install_gh() {
@@ -807,8 +827,6 @@ install_aider() {
     fi
 }
 
-
-
 install_neovim() {
     if command_exists nvim; then
         log_info "✅ Neovim already installed"
@@ -827,7 +845,7 @@ install_neovim() {
 
     # Correct URL for modern Neovim releases (stable)
     local download_url="https://github.com/neovim/neovim/releases/download/stable/nvim-linux-x86_64.tar.gz"
-    
+
     log_debug "Download URL: $download_url"
 
     if (cd "$tmp_dir" && curl_safer -O "$download_url" && tar -xzf nvim-linux-x86_64.tar.gz); then
@@ -837,15 +855,15 @@ install_neovim() {
         # Format: NVIM v0.10.3
         local version
         version=$(echo "$version_output" | awk '{print $2}')
-        
+
         if [[ -z "$version" ]]; then
             version="unknown-$(date +%Y%m%d)"
         fi
-        
+
         log_info "✅ Detected version: $version"
 
         local install_dir="$nvim_downloads/$version"
-        
+
         if [[ -d "$install_dir" ]]; then
             log_info "✅ Neovim $version already installed at $install_dir"
             rm -rf "$tmp_dir"
@@ -891,6 +909,7 @@ install_cli_tools() {
 
     # Package managers & runtimes
     install_nvm
+    install_bun
     install_node_lts
     install_global_npm_packages
 
@@ -973,14 +992,14 @@ link_shell_configs() {
         if [[ -f "$rc" ]]; then
             if ! grep -q "source.*shell/init.sh" "$rc"; then
                 log_debug "Adding init.sh source to $rc..."
-                echo "" >> "$rc"
-                echo "# Dotfiles initialization" >> "$rc"
-                echo "$init_source" >> "$rc"
+                echo "" >>"$rc"
+                echo "# Dotfiles initialization" >>"$rc"
+                echo "$init_source" >>"$rc"
             fi
         else
             log_debug "Creating $rc with init.sh source..."
-            echo "# Dotfiles initialization" > "$rc"
-            echo "$init_source" >> "$rc"
+            echo "# Dotfiles initialization" >"$rc"
+            echo "$init_source" >>"$rc"
         fi
     done
 
@@ -996,7 +1015,6 @@ link_shell_configs() {
 
     log_success "✅ Shell configuration symlinks created"
 }
-
 
 # =============================================================================
 # EDITOR LAUNCHER SETUP
@@ -1041,34 +1059,34 @@ resolve_op_signer_binary() {
 
     local binary_path=""
     case "$platform" in
-        wsl)
-            log_debug "Environment: WSL2 detected. Resolving Windows user..."
+    wsl)
+        log_debug "Environment: WSL2 detected. Resolving Windows user..."
 
-            if ! command_exists cmd.exe; then
-                log_warning "cmd.exe not found. Is this a valid WSL environment?"
-                return 1
-            fi
-
-            local win_user
-            win_user=$(cmd.exe /c "echo %USERNAME%" 2>/dev/null | tr -d '\r')
-
-            if [[ -z "$win_user" ]]; then
-                log_warning "Failed to detect Windows username."
-                return 1
-            fi
-
-            binary_path="/mnt/c/Users/${win_user}/AppData/Local/Microsoft/WindowsApps/op-ssh-sign-wsl.exe"
-            ;;
-
-        linux)
-            log_debug "Environment: Native Linux detected."
-            binary_path="/opt/1Password/op-ssh-sign"
-            ;;
-
-        *)
-            log_warning "Unsupported platform for git shims: $platform"
+        if ! command_exists cmd.exe; then
+            log_warning "cmd.exe not found. Is this a valid WSL environment?"
             return 1
-            ;;
+        fi
+
+        local win_user
+        win_user=$(cmd.exe /c "echo %USERNAME%" 2>/dev/null | tr -d '\r')
+
+        if [[ -z "$win_user" ]]; then
+            log_warning "Failed to detect Windows username."
+            return 1
+        fi
+
+        binary_path="/mnt/c/Users/${win_user}/AppData/Local/Microsoft/WindowsApps/op-ssh-sign-wsl.exe"
+        ;;
+
+    linux)
+        log_debug "Environment: Native Linux detected."
+        binary_path="/opt/1Password/op-ssh-sign"
+        ;;
+
+    *)
+        log_warning "Unsupported platform for git shims: $platform"
+        return 1
+        ;;
     esac
 
     # Validate the binary exists before returning
