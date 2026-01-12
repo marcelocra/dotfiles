@@ -8,35 +8,41 @@
 // command palette (cmd-shift-p / ctrl-shift-p)
 {
   "agent": {
-    "message_editor_min_lines": 8,
-    "always_allow_tool_actions": false,
+    "message_editor_min_lines": 4,
+    "always_allow_tool_actions": true,
     "use_modifier_to_send": false,
     "play_sound_when_agent_done": true,
     "model_parameters": [
+      // Optimized for pure logic, complex refactoring, and deep technical accuracy
       {
         "provider": "openrouter",
         "model": "qwen/qwen3-coder",
-        "temperature": 0.7,
+        "temperature": 0.2,
       },
+      // Best ROI for fast exploration and general architectural discussions
       {
         "provider": "openrouter",
-        "model": "google/gemini-2.5-flash-lite",
-        "temperature": 0.3,
+        "model": "google/gemini-3-flash-preview",
+        "temperature": 0.5,
       },
+
+      // High-efficiency workhorse for summaries and commit logic
       {
         "provider": "openrouter",
         "model": "deepseek/deepseek-v3.2",
-        "temperature": 0.2,
+        "temperature": 0.1,
       },
+      // Maximum speed for real-time code completion and inline suggestions
       {
         "provider": "openrouter",
         "model": "x-ai/grok-code-fast-1",
-        "temperature": 0.5,
+        "temperature": 0.3,
       },
+      // The "Surgeon": use for mission-critical code where precision is non-negotiable
       {
         "provider": "openrouter",
         "model": "anthropic/claude-sonnet-4.5",
-        "temperature": 0.3,
+        "temperature": 0.1,
       },
     ],
     "default_model": {
