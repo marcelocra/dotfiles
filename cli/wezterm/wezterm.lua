@@ -56,12 +56,12 @@ config.freetype_load_flags = "NO_HINTING"
 -- WINDOW & LAYOUT
 -- ============================================================================
 
-config.window_padding = {
-  left = 5,
-  right = 5,
-  top = 5,
-  bottom = 5,
-}
+-- config.window_padding = {
+--   left = 5,
+--   right = 5,
+--   top = 5,
+--   bottom = 5,
+-- }
 
 config.initial_cols = 120
 config.initial_rows = 30
