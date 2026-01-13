@@ -30,7 +30,7 @@
 # Main model:
 
 ## Specify the model to use for the main chat
-model: openrouter/qwen/qwen3-coder
+model: openrouter/google/gemini-3-flash-preview
 
 ########################
 # API Keys and settings:
@@ -408,7 +408,7 @@ analytics-disable: true
 #  - zzz
 
 ## Use VI editing mode in the terminal (default: False)
-vim: true
+#vim: true
 
 ## Specify the language to use in the chat (default: None, uses system settings)
 #chat-language: xxx
