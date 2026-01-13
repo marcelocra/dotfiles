@@ -371,14 +371,6 @@
   },
 
   {
-    // Insert the next suggested word instead of the full suggestion.
-    // This takes priority when inline suggestions are visible.
-    "key": "ctrl+l",
-    "command": "editor.action.inlineSuggest.acceptNextWord",
-    "when": "editorTextFocus && inlineSuggestionVisible && !terminalFocus"
-  },
-
-  {
     // Enable/disable Cursor inline suggestions.
     "key": "ctrl+k ctrl+c",
     "command": "editor.action.inlineSuggest.toggle",
@@ -786,7 +778,7 @@
     "command": "editor.action.selectToBracket"
   },
   {
-    "key": "ctrl+k ctrl+shift+k",
+    "key": "ctrl+k ctrl+s",
     "command": "workbench.action.openGlobalKeybindings"
   },
   {
@@ -864,14 +856,31 @@
     "when": "!terminalFocus"
   },
   {
-    // Toggle AI agent. [Cursor] - Only when no inline suggestions visible
-    "key": "ctrl+l",
-    "command": "workbench.action.chat.openagent",
-    "when": "!terminalFocus && !inlineSuggestionVisible"
-  },
-  {
     "key": "ctrl+shift+a",
     "command": "expandLineSelection",
     "when": "textInputFocus"
+  },
+  {
+    "key": "ctrl+q",
+    "command": "-workbench.action.quit"
+  },
+  {
+    "key": "ctrl+l",
+    "command": "aichat.newchataction",
+    "when": "!terminalFocus"
+  },
+  {
+    "key": "ctrl+l",
+    "command": "-aichat.newchataction"
+  },
+  {
+    "key": "ctrl+l",
+    "command": "composer.sendToAgent",
+    "when": "editorHasPromptBar && editorPromptBarFocused && !terminalFocus"
+  },
+  {
+    "key": "ctrl+l",
+    "command": "-composer.sendToAgent",
+    "when": "editorHasPromptBar && editorPromptBarFocused"
   }
 ]

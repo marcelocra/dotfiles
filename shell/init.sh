@@ -552,6 +552,8 @@ configure_docker_aliases() {
 
     alias x-podman-universal-devcontainer='podman run -it --rm -v "$(pwd):/workspace:Z" -w /workspace mcr.microsoft.com/devcontainers/universal:2-linux zsh'
     alias x-podman-ts-node-devcontainer='podman run -it --rm -v "$(pwd):/workspace:Z" -w /workspace mcr.microsoft.com/devcontainers/typescript-node:24-bookworm zsh'
+    alias x-podman-ubuntu='podman run -it --rm -v "$(pwd):/workspace:Z" -w /workspace docker.io/library/ubuntu /bin/bash'
+    alias x-podman-fedora='podman run -it --rm -v "$(pwd):/workspace:Z" -w /workspace docker.io/library/fedora:43 /bin/bash'
 }
 
 # Next docker alias marker

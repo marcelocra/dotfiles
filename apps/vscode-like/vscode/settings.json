@@ -205,8 +205,15 @@
     "Write-Output": true,
     "xargs": false
   },
+  "chat.tools.urls.autoApprove": {
+    "https://docs.docker.com": true
+  },
   "chat.viewSessions.enabled": false,
   "chatgpt.runCodexInWindowsSubsystemForLinux": true,
+  "continue.enableConsole": true,
+  "continue.enableTabAutocomplete": true,
+  "continue.showInlineTip": false,
+  "continue.telemetryEnabled": false,
   "csharp.suppressBuildAssetsNotification": true,
   "dart.debugExternalPackageLibraries": false,
   "dart.debugSdkLibraries": false,
@@ -219,8 +226,6 @@
   "diffEditor.renderSideBySide": true,
   "docker.dockerPath": "podman",
   "docker.extension.enableComposeLanguageServer": false,
-  "dotfiles.installCommand": "~/prj/dotfiles/shell/install.sh",
-  "dotfiles.repository": "marcelocra/dotfiles",
   "dotnetAcquisitionExtension.enableTelemetry": false,
   "dotnetAcquisitionExtension.existingDotnetPath": [
     {
@@ -261,10 +266,10 @@
   // "editor.fontFamily": "JetBrainsMono Nerd Font Mono",
   // "editor.fontLigatures": "'zero' 1, 'ss19' 1",
   // ---------------------------------------------------------------------------
-  "editor.fontFamily": "Cascadia Mono NF",
+  "editor.fontFamily": "Cascadia Code NF",
   "editor.fontLigatures": "'calt' 1, 'ss01' 1, 'ss02' 0, 'ss03' 0, 'ss19' 1, 'ss20' 1",
-  "editor.fontSize": 13,
-  "editor.fontWeight": "400", // {light: 350, dark: 400}
+  "editor.fontSize": 16,
+  "editor.fontWeight": "350", // {light: 350, dark: 400}
   // ---------------------------------------------------------------------------
   // "editor.fontFamily": "CommitMono",
   // "editor.fontLigatures": "'ss01' 0, 'ss02' 0, 'ss03' 1, 'ss04' 1, 'ss05' 1, 'cv01' 1, 'cv02' 1, 'cv03' 0, 'cv04' 0, 'cv05' 1, 'cv06' 1, 'cv07' 0, 'cv08' 1, 'cv09' 0, 'cv10' 0, 'cv11' 0",
@@ -411,11 +416,11 @@
   "github.copilot.chat.byok.ollamaEndpoint": "http://localhost:11434",
   "github.copilot.chat.codesearch.enabled": true,
   "github.copilot.enable": {
-    "*": true,
-    "markdown": true,
+    "*": false,
+    "markdown": false,
     "plaintext": false,
     "scminput": false,
-    "shellscript": true
+    "shellscript": false
   },
   "github.copilot.nextEditSuggestions.enabled": true,
   "gitlens.ai.model": "vscode",
@@ -497,6 +502,9 @@
   "python.terminal.executeInFileDir": false,
   "python.terminal.shellIntegration.enabled": false,
   "remote.autoForwardPortsSource": "hybrid",
+  "remote.SSH.remotePlatform": {
+    "*": "linux"
+  },
   "roo-cline.allowedCommands": ["git log", "git diff", "git show"],
   "roo-cline.deniedCommands": [],
   "rubyLsp.rubyVersionManager": "asdf",
@@ -622,10 +630,10 @@
   "terminal.integrated.enableMultiLinePasteWarning": "always",
   "terminal.integrated.enableVisualBell": true,
   // ---------------------------------------------------------------------------
-  "terminal.integrated.fontFamily": "Cascadia Mono NF",
-  "terminal.integrated.fontLigatures.enabled": true,
-  "terminal.integrated.fontLigatures.featureSettings": "'calt' 1, 'ss01' 1, 'ss19' 1, 'ss20' 0",
-  "terminal.integrated.fontWeight": "400",
+  // "terminal.integrated.fontFamily": "Cascadia Code NF",
+  // "terminal.integrated.fontLigatures.enabled": true,
+  // "terminal.integrated.fontLigatures.featureSettings": "'calt' 1, 'ss01' 1, 'ss19' 1, 'ss20' 0",
+  // "terminal.integrated.fontWeight": "400",
   // ---------------------------------------------------------------------------
   // "terminal.integrated.fontFamily": "Hack Nerd Font Mono",
   // ---------------------------------------------------------------------------
@@ -635,8 +643,12 @@
   // "terminal.integrated.fontLigatures.enabled": true,
   // "terminal.integrated.fontLigatures.featureSettings": "'calt' 1, 'ss01' 1, 'ss19' 1, 'ss20' 0",
   // ---------------------------------------------------------------------------
+  "terminal.integrated.fontFamily": "FiraCode Nerd Font Mono",
+  "terminal.integrated.fontLigatures.enabled": true,
+  "terminal.integrated.fontLigatures.featureSettings": "'cv01' 1, 'cv02' 1, 'cv05' 1, 'cv09' 1, 'cv12' 1, 'cv14' 1, 'cv18' 1, 'cv30' 1, 'cv31' 1, 'ss03' 1, 'ss06' 1, 'ss08' 1",
+  // ---------------------------------------------------------------------------
   // "terminal.integrated.fontSize": 12,
-  "terminal.integrated.gpuAcceleration": "on",
+  "terminal.integrated.gpuAcceleration": "auto",
   // "terminal.integrated.lineHeight": 1,
   "terminal.integrated.localEchoExcludePrograms": [
     "vim",
@@ -661,6 +673,7 @@
       "path": "tmux"
     },
     "zsh": {
+      "icon": "symbol-event",
       "path": "zsh"
     }
   },
@@ -678,12 +691,14 @@
       "path": "tmux"
     },
     "zsh": {
+      "icon": "symbol-event",
       "path": "zsh"
     }
   },
   "terminal.integrated.profiles.windows": {
     "pwsh": null
   },
+  "terminal.integrated.rightClickBehavior": "copyPaste",
   "terminal.integrated.shellIntegration.decorationsEnabled": "both",
   "terminal.integrated.shellIntegration.enabled": true,
   "terminal.integrated.smoothScrolling": true,
@@ -711,14 +726,14 @@
   "window.commandCenter": false,
   "window.customMenuBarAltFocus": false,
   "window.customTitleBarVisibility": "auto",
-  "window.menuBarVisibility": "toggle",
+  "window.menuBarVisibility": "compact",
   "window.newWindowDimensions": "inherit",
   "window.newWindowProfile": "Default",
   "window.restoreWindows": "all",
   "window.title": "[${rootNameShort}] ${activeEditorMedium}",
   "window.titleBarStyle": "custom",
   "workbench.activityBar.location": "bottom",
-  "workbench.colorTheme": "Tokyo Night Light",
+  "workbench.colorTheme": "Night Owl Light",
   "workbench.editor.empty.hint": "hidden",
   "workbench.editor.pinnedTabsOnSeparateRow": false,
   "workbench.editorAssociations": {
@@ -730,7 +745,7 @@
     "**": "default"
   },
   "workbench.list.horizontalScrolling": true,
-  "workbench.panel.defaultLocation": "bottom",
+  "workbench.panel.defaultLocation": "right",
   "workbench.preferredDarkColorTheme": "Night Owl", // GitHub Dark Dimmed, Tokyo Night Storm
   "workbench.preferredLightColorTheme": "Night Owl Light", // Default Light Modern, Tokyo Night Light
   "workbench.settings.useSplitJSON": false,
@@ -739,6 +754,11 @@
   "workbench.statusBar.visible": true,
   "workbench.tree.indent": 20,
   "workbench.tree.renderIndentGuides": "always",
+  "yaml.schemas": {
+    "https://gist.githubusercontent.com/marcelocra/17e45d4d61d8bd1a13dcb30225430041/raw/51c0ddabb6ae6c98997a7eb4de8842f7829da928/continue-dev-yaml-schema.json": [
+      ".continue/**/*.yaml"
+    ]
+  },
   "zenMode.centerLayout": true,
   "zenMode.fullScreen": true,
   "zenMode.hideActivityBar": true,

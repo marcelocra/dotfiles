@@ -297,12 +297,6 @@
   "git.openRepositoryInParentFolders": "never",
   "git.terminalAuthentication": false,
   "git.useIntegratedAskPass": true,
-    "*": true,
-    "markdown": true,
-    "plaintext": false,
-    "scminput": false,
-    "shellscript": true
-  },
   "gitlens.ai.model": "vscode",
   "gitlens.ai.vscode.model": "copilot:gpt-4.1",
   "gitlens.codeLens.authors.enabled": false,
@@ -382,6 +376,9 @@
   "python.terminal.executeInFileDir": false,
   "python.terminal.shellIntegration.enabled": false,
   "remote.autoForwardPortsSource": "hybrid",
+  "remote.SSH.remotePlatform": {
+    "*": "linux"
+  },
   "roo-cline.allowedCommands": ["git log", "git diff", "git show"],
   "roo-cline.deniedCommands": [],
   "rubyLsp.rubyVersionManager": "asdf",
@@ -603,7 +600,7 @@
   "window.title": "[${rootNameShort}] ${activeEditorMedium}",
   "window.titleBarStyle": "custom",
   "workbench.activityBar.location": "bottom",
-  "workbench.colorTheme": "Tokyo Night Light",
+  "workbench.colorTheme": "Cursor Dark Midnight",
   "workbench.editor.empty.hint": "hidden",
   "workbench.editor.pinnedTabsOnSeparateRow": false,
   "workbench.editorAssociations": {
