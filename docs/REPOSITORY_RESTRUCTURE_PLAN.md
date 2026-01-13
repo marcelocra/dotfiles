@@ -1,7 +1,7 @@
 # Dotfiles Repository Restructure Plan
 
 **Created:** January 2026  
-**Status:** Draft  
+**Status:** Draft (v2 - refined based on feedback)  
 **Author:** AI Analysis
 
 ## Executive Summary
@@ -35,7 +35,7 @@ This document outlines a plan to restructure the dotfiles repository to align wi
 
 2. **`cli/` has mixed concerns**:
    - App configs (`nvim/`, `wezterm/`) - should be with other apps
-   - Dev scripts (`to-review/`) - utility scripts, not CLI apps
+   - Dev scripts (`to-review/`) - likely deprecated, needs review
 
 3. **Platform configs scattered**:
    - `pwsh/` for Windows
@@ -46,233 +46,260 @@ This document outlines a plan to restructure the dotfiles repository to align wi
 
 ---
 
-## Proposed Structure
+## Naming Philosophy
 
-### Option A: XDG-Centric Structure (Recommended)
+A dotfiles repository is almost entirely configs. Using `config/` as a directory name is too generic and creates confusion with `apps/` (which also contains configs).
 
-Organize configs to mirror `~/.config/` structure, making symlinks straightforward.
+**Chosen approach:**
+- **`apps/`** - Application-specific configs (editors, terminals, desktop apps)
+- **`xdg/`** - Simple tool configs that symlink to `~/.config/` (XDG Base Directory)
+- **`shell/`** - Shell initialization only (not tool configs)
+- **`home/`** - Files that symlink directly to `~/` (`.gitconfig`, `.curlrc`, etc.)
+
+This creates clear intent: `apps/` has complex app setups, `xdg/` mirrors `~/.config/`, `home/` mirrors `~/`.
+
+---
+
+## Proposed Structure (Recommended)
 
 ```
 dotfiles/
-├── config/                      # XDG-style configs (symlink to ~/.config/)
-│   ├── aider/
-│   │   └── aider.conf.yml
-│   ├── continue/
-│   │   └── config.yaml
-│   ├── curl/
-│   │   └── .curlrc
-│   ├── git/
-│   │   ├── config                # Main .gitconfig
-│   │   └── hooks/
-│   │       └── pre-commit
-│   ├── kitty/
-│   │   └── kitty.conf
-│   ├── nvim/                     # Moved from cli/
-│   │   ├── init.lua
-│   │   └── lua/...
-│   ├── opencode/
-│   │   └── opencode.json
-│   ├── ssh/                      # SSH configs
-│   │   ├── config
-│   │   └── config.d/
-│   │       └── 1password.config
-│   ├── tmux/
-│   │   └── tmux.conf
-│   ├── wezterm/                  # Moved from cli/
-│   │   └── wezterm.lua
-│   └── zsh/                      # Shell theme/plugins
-│       └── marcelocra.zsh-theme
-│
-├── shell/                        # Shell initialization (keep)
-│   ├── init.sh                   # Main shell init
-│   ├── x-functions.sh            # Extra functions
-│   └── e                         # Editor launcher
-│
-├── setup/                        # Installation scripts (keep)
-│   ├── install.bash              # Main installer
-│   ├── devcontainer-setup.sh
-│   └── common.bash               # Shared utilities
-│
-├── apps/                         # Desktop app configs (keep, add GUI apps)
+├── apps/                         # Application configs (complex, with installers)
 │   ├── alacritty/
-│   ├── cursor/                   # Move from vscode-like/
-│   ├── vscode/                   # Move from vscode-like/
-│   ├── kitty/                    # Keep (or move to config/)
-│   └── zed/
+│   ├── ghostty/
+│   ├── kitty/
+│   ├── nvim/                     # ← Moved from cli/
+│   ├── sublime-text/
+│   ├── vscode-like/              # Keep structure (shared/, cursor/, vscode/)
+│   │   ├── shared/               # Snippets, tasks shared between editors
+│   │   ├── cursor/
+│   │   ├── vscode/
+│   │   └── install.bash
+│   ├── wezterm/                  # ← Moved from cli/
+│   ├── zed/
+│   └── [desktop apps with .desktop files...]
 │
-├── scripts/                      # Utility scripts (new)
-│   ├── ai-dev.sh                 # From cli/to-review/
-│   ├── ai-dev.ps1
-│   └── setup-*.sh
+├── xdg/                          # Tool configs → ~/.config/
+│   ├── aider/
+│   │   └── aider.conf.yml        # ← From shell/
+│   ├── continue/
+│   │   └── config.yaml           # ← From shell/.continue.config.yaml
+│   ├── git/
+│   │   ├── config                # ← From git/.gitconfig (renamed)
+│   │   └── hooks/
+│   │       └── pre-commit        # ← From git/hooks/
+│   ├── opencode/
+│   │   └── opencode.json         # ← From shell/
+│   ├── ssh/
+│   │   ├── config                # ← From shell/ssh_config
+│   │   └── config.d/
+│   │       └── 1password         # ← From shell/ssh-1password.config
+│   └── tmux/
+│       └── tmux.conf             # ← From shell/tmux.conf
 │
-├── platform/                     # Platform-specific (new)
+├── home/                         # Files → ~/ (dotfiles in home dir)
+│   └── .curlrc                   # ← From shell/.curlrc
+│
+├── shell/                        # Shell initialization ONLY
+│   ├── init.sh                   # Main shell init (sourced by .zshrc/.bashrc)
+│   ├── x-functions.sh            # Extra functions
+│   ├── marcelocra.zsh-theme      # Custom prompt theme
+│   └── e                         # Editor launcher command
+│
+├── setup/                        # Installation & symlink wiring
+│   ├── install.bash              # Main installer (includes symlink creation)
+│   ├── devcontainer-setup.sh
+│   └── common.bash               # Shared utilities (if needed)
+│
+├── platform/                     # Platform-specific configs
 │   └── windows/
-│       ├── pwsh/                 # Moved from root
+│       ├── pwsh/                 # ← Moved from root pwsh/
 │       │   └── Microsoft.PowerShell_profile.ps1
-│       └── toggle-mic/
+│       └── toggle-mic/           # ← Moved from root pwsh/
 │
-├── tests/                        # Testing (expand)
+├── tests/                        # Testing
 │   ├── docker-test.bash
 │   ├── runner.bash
-│   └── unit/                     # Add unit tests
+│   └── shellcheck.bash           # Lint all scripts
 │
 ├── docs/
 │   ├── adr/
 │   └── to-review/
 │
+├── deprecated/                   # Legacy (review & clean)
+│   └── cli-to-review/            # ← Move cli/to-review/ here if deprecated
+│
 ├── AGENTS.md
 ├── CHANGELOG.md
-├── install.bash                  # Root wrapper
 ├── LICENSE
 ├── PLAN.md
-└── README.md                     # Add comprehensive README
+└── README.md
 ```
 
-### Option B: Minimal Restructure
+**Key decisions:**
+- **No root `install.bash`** - `./setup/install.bash` is clear enough
+- **No `scripts/` folder** - Setup scripts stay in `setup/`, deprecated scripts go to `deprecated/`
+- **`vscode-like/` stays intact** - The shared/ structure works well
+- **`git/` moves to `xdg/git/`** - Follows XDG pattern, `.gitconfig` → `~/.config/git/config`
 
-Keep most structure, only fix obvious issues:
+---
 
+## Symlink Management
+
+**Location: `setup/install.bash`** (not `shell/init.sh`)
+
+Symlinks are a one-time operation and belong in the installation script:
+
+| Concern | `setup/install.bash` | `shell/init.sh` |
+|---------|---------------------|-----------------|
+| Runs | Once per machine | Every shell session |
+| Purpose | Install, configure, create symlinks | Set env vars, aliases, PATH |
+| Symlinks | ✅ Create here | ❌ Never here |
+
+### Symlink Strategy
+
+The installer will create symlinks in a dedicated function:
+
+```bash
+# In setup/install.bash
+link_configs() {
+    log_info "🔗 Creating configuration symlinks..."
+    
+    # XDG configs → ~/.config/
+    safe_symlink "$DOTFILES_DIR/xdg/git/config" "$HOME/.config/git/config"
+    safe_symlink "$DOTFILES_DIR/xdg/aider" "$HOME/.config/aider"
+    safe_symlink "$DOTFILES_DIR/xdg/tmux/tmux.conf" "$HOME/.config/tmux/tmux.conf"
+    safe_symlink "$DOTFILES_DIR/xdg/ssh/config" "$HOME/.ssh/config"
+    # ...
+    
+    # Home directory dotfiles
+    safe_symlink "$DOTFILES_DIR/home/.curlrc" "$HOME/.curlrc"
+    
+    # Legacy compatibility (optional)
+    safe_symlink "$DOTFILES_DIR/xdg/git/config" "$HOME/.gitconfig"
+}
 ```
-dotfiles/
-├── apps/                         # Consolidate app configs
-│   ├── git/                      # Moved from root git/
-│   ├── nvim/                     # Moved from cli/
-│   ├── wezterm/                  # Moved from cli/
-│   └── ... (existing)
-│
-├── shell/                        # Clean up
-│   ├── init.sh
-│   ├── theme/
-│   │   └── marcelocra.zsh-theme
-│   └── e
-│
-├── config/                       # NEW: Tool configs
-│   ├── aider.conf.yml
-│   ├── opencode.json
-│   ├── continue.config.yaml
-│   ├── curlrc
-│   ├── ssh/
-│   │   ├── config
-│   │   └── 1password.config
-│   └── tmux.conf
-│
-├── scripts/                      # NEW: Utility scripts
-│   └── (from cli/to-review/)
-│
-├── platform/
-│   └── windows/                  # Moved from pwsh/
-│
-└── ... (rest stays same)
-```
+
+**Note:** The existing `safe_symlink` function already handles backups and idempotency.
 
 ---
 
 ## Recommended Changes (Phased)
 
-### Phase 1: Quick Wins (Low Risk)
+### Phase 1: Directory Restructure (Medium Risk)
 
-1. **Move `cli/nvim/` → `apps/nvim/`**
-   - Neovim is an app, should be with other apps
-   - Update any references
+Do this all at once to avoid multiple symlink rewiring:
 
-2. **Move `cli/wezterm/` → `apps/wezterm/`**
-   - Same reasoning
-
-3. **Move `git/` → `apps/git/`**
-   - Consistent with other app configs
-   - Update `setup/install.bash` symlink path
-
-4. **Move `cli/to-review/` → `scripts/`**
-   - AI dev scripts are utility scripts, not CLI configs
-   - Rename to more descriptive names
-
-5. **Create `README.md`**
-   - Comprehensive getting started guide
-   - Link to AGENTS.md for AI context
-
-### Phase 2: Shell Cleanup (Medium Risk)
-
-1. **Create `config/` directory** for XDG-style configs:
-   ```
-   config/
-   ├── aider/aider.conf.yml       # from shell/aider.conf.yml
-   ├── continue/config.yaml       # from shell/.continue.config.yaml
-   ├── curl/.curlrc               # from shell/.curlrc
-   ├── opencode/opencode.json     # from shell/opencode.json
-   ├── ssh/config                 # from shell/ssh_config
-   ├── ssh/1password.config       # from shell/ssh-1password.config
-   └── tmux/tmux.conf             # from shell/tmux.conf
+1. **Create new directories:**
+   ```bash
+   mkdir -p xdg/{aider,continue,git/hooks,opencode,ssh/config.d,tmux}
+   mkdir -p home
+   mkdir -p platform/windows
    ```
 
-2. **Update `setup/install.bash`**:
-   - Update symlink paths
-   - Consider using `stow` for symlink management
-
-3. **Clean `shell/` directory**:
-   - Keep only: `init.sh`, `x-functions.sh`, `e`, `marcelocra.zsh-theme`
-   - Consider: `shell/themes/marcelocra.zsh-theme`
-
-### Phase 3: Platform Organization (Medium Risk)
-
-1. **Create `platform/windows/`**:
-   - Move `pwsh/` → `platform/windows/pwsh/`
-   - Keep Windows-specific configs together
-
-2. **Consider `platform/linux/`**:
-   - Or keep Linux as default (current implicit behavior)
-
-### Phase 4: Testing & CI (Low Risk)
-
-1. **Expand `tests/`**:
-   ```
-   tests/
-   ├── docker-test.bash
-   ├── runner.bash
-   ├── test-install.bash          # Test installation
-   ├── test-shell-init.bash       # Test shell initialization
-   └── shellcheck.bash            # Lint all scripts
+2. **Move files:**
+   ```bash
+   # App configs
+   mv cli/nvim apps/nvim
+   mv cli/wezterm apps/wezterm
+   
+   # XDG configs (tool configs → ~/.config/)
+   mv git/.gitconfig xdg/git/config
+   mv git/hooks/pre-commit xdg/git/hooks/pre-commit
+   mv shell/aider.conf.yml xdg/aider/aider.conf.yml
+   mv shell/.continue.config.yaml xdg/continue/config.yaml
+   mv shell/opencode.json xdg/opencode/opencode.json
+   mv shell/ssh_config xdg/ssh/config
+   mv shell/ssh-1password.config xdg/ssh/config.d/1password
+   mv shell/tmux.conf xdg/tmux/tmux.conf
+   
+   # Home directory files
+   mv shell/.curlrc home/.curlrc
+   
+   # Platform-specific
+   mv pwsh platform/windows/pwsh
+   
+   # Deprecated
+   mv cli/to-review deprecated/cli-to-review
+   mv shell/x-archives.bash deprecated/x-archives.bash
    ```
 
-2. **Enable GitHub Actions**:
-   - Update `.github/workflows/test.yml`
-   - Add shellcheck/shfmt checks
-   - Run Docker tests on PR
+3. **Clean up empty directories:**
+   ```bash
+   rmdir cli  # After moving nvim, wezterm, to-review
+   rmdir git  # After moving .gitconfig and hooks
+   ```
+
+4. **Delete root install.bash wrapper:**
+   ```bash
+   rm install.bash
+   ```
+
+### Phase 2: Update Symlink Wiring (Medium Risk)
+
+Update `setup/install.bash` to use new paths:
+
+1. **Update `link_shell_configs()` function:**
+   - Change git symlink: `$DOTFILES_DIR/xdg/git/config` → `$HOME/.gitconfig`
+   - Or use XDG path: `$DOTFILES_DIR/xdg/git/config` → `$HOME/.config/git/config`
+
+2. **Add new symlinks for XDG configs:**
+   - aider, opencode, tmux, ssh configs
+
+3. **Test on fresh container:**
+   ```bash
+   ./tests/docker-test.bash
+   ```
+
+### Phase 3: Testing & CI (Low Risk)
+
+1. **Add shellcheck test:**
+   ```bash
+   # tests/shellcheck.bash
+   find . -name "*.bash" -o -name "*.sh" | xargs shellcheck
+   ```
+
+2. **Enable GitHub Actions** (`.github/workflows/test.yml`)
+
+### Phase 4: Documentation (Low Risk)
+
+1. **Create comprehensive `README.md`**
+2. **Update `AGENTS.md`** with new structure
+3. **Create ADR-0012** documenting this restructure decision
 
 ### Phase 5: Cleanup (Low Risk)
 
-1. **Review `deprecated/`**:
-   - Delete confirmed obsolete files
-   - Move any still-useful files to active locations
-   - Document what was deleted and why
-
-2. **Archive `x-archives.bash`**:
-   - Move to `deprecated/` or `docs/archives/`
+1. **Review `deprecated/`** - delete confirmed obsolete files
+2. **Review `apps/` desktop files** - are .desktop installers still needed?
 
 ---
 
-## Symlink Strategy
+## Complete File Movement Reference
 
-### Current Approach
-Manual symlinks in `setup/install.bash`:
-```bash
-safe_symlink "$DOTFILES_DIR/git/.gitconfig" "$HOME/.gitconfig"
-```
+| Current Location | New Location | Symlink Target |
+|------------------|--------------|----------------|
+| `git/.gitconfig` | `xdg/git/config` | `~/.gitconfig` or `~/.config/git/config` |
+| `git/hooks/pre-commit` | `xdg/git/hooks/pre-commit` | (template, not symlinked) |
+| `cli/nvim/` | `apps/nvim/` | `~/.config/nvim/` |
+| `cli/wezterm/` | `apps/wezterm/` | `~/.config/wezterm/` |
+| `cli/to-review/` | `deprecated/cli-to-review/` | (none - deprecated) |
+| `shell/aider.conf.yml` | `xdg/aider/aider.conf.yml` | `~/.config/aider/` |
+| `shell/.continue.config.yaml` | `xdg/continue/config.yaml` | `~/.config/continue/` |
+| `shell/opencode.json` | `xdg/opencode/opencode.json` | `~/.config/opencode/` |
+| `shell/ssh_config` | `xdg/ssh/config` | `~/.ssh/config` |
+| `shell/ssh-1password.config` | `xdg/ssh/config.d/1password` | (included from ssh/config) |
+| `shell/tmux.conf` | `xdg/tmux/tmux.conf` | `~/.config/tmux/tmux.conf` or `~/.tmux.conf` |
+| `shell/.curlrc` | `home/.curlrc` | `~/.curlrc` |
+| `shell/x-archives.bash` | `deprecated/x-archives.bash` | (none - archive) |
+| `pwsh/` | `platform/windows/pwsh/` | (Windows only) |
+| `install.bash` (root) | (deleted) | - |
 
-### Recommended Approach: GNU Stow Compatible
-
-Organize configs so `stow` can manage symlinks:
-
-```bash
-# From dotfiles root:
-stow -t ~ config    # Symlinks config/* to ~/.config/*
-stow -t ~ shell     # Symlinks shell files to ~
-```
-
-This requires:
-1. `config/git/config` → symlinks to `~/.config/git/config`
-2. Directory structure mirrors target location
-
-**Alternative**: Keep current manual approach but document it well.
+**Files that stay in `shell/`:**
+- `init.sh` - Shell initialization
+- `marcelocra.zsh-theme` - Prompt theme
+- `e` - Editor launcher
+- `x-functions.sh` - Extra shell functions (if exists)
+- `install.sh` - Keep as stub/warning
 
 ---
 
@@ -280,19 +307,16 @@ This requires:
 
 ### For Existing Users
 
-1. **Run migration script** (to be created):
-   ```bash
-   ./setup/migrate-v2.bash
-   ```
+The restructure will be handled by re-running `setup/install.bash`:
 
-2. **Script will**:
-   - Backup existing symlinks
-   - Create new symlinks
-   - Report any issues
+1. **Pull latest changes**
+2. **Run installer:** `./setup/install.bash`
+3. **Installer will:**
+   - Detect old symlinks (via `safe_symlink` backup mechanism)
+   - Create new symlinks to new locations
+   - Old symlinks get `.bak.TIMESTAMP` suffix
 
-3. **Manual cleanup**:
-   - Remove old symlinks if needed
-   - Verify everything works
+**No separate migration script needed** - the installer is already idempotent.
 
 ### For New Users
 
@@ -303,65 +327,58 @@ Just run `./setup/install.bash` - new structure is transparent.
 ## Backward Compatibility
 
 ### Preserve
-- `./install.bash` wrapper at root
 - `./setup/install.bash` main installer
-- `source ~/x/dotfiles/shell/init.sh` pattern
+- `source ~/x/dotfiles/shell/init.sh` pattern (critical)
+- `$DOTFILES_DIR` convention
+
+### Remove
+- `./install.bash` root wrapper (unnecessary indirection)
 
 ### Deprecate (with warnings)
 - `./shell/install.sh` (already a stub)
-- Direct references to old paths
+- Old paths like `git/.gitconfig` (will be moved)
 
 ---
 
 ## Decision Matrix
 
-| Change | Impact | Risk | Priority |
-|--------|--------|------|----------|
-| Move nvim/wezterm to apps | Low | Low | High |
-| Move git to apps | Low | Low | High |
-| Create scripts/ | Low | Low | High |
-| Create config/ | Medium | Medium | Medium |
-| Platform organization | Low | Low | Medium |
-| Stow integration | Medium | Medium | Low |
-| Deprecated cleanup | Low | Low | Low |
+| Change | Impact | Risk | Priority | Notes |
+|--------|--------|------|----------|-------|
+| Move nvim/wezterm to apps | Low | Low | High | Clear win |
+| Move git to xdg/git | Low | Low | High | Clear win |
+| Create xdg/ structure | Medium | Medium | High | Main change |
+| Create home/ | Low | Low | High | Simple |
+| Platform organization | Low | Low | Medium | Nice to have |
+| Delete root install.bash | Low | Low | Medium | Cleanup |
+| Deprecated cleanup | Low | Low | Low | Can do later |
 
 ---
 
-## Open Questions
+## Open Questions (Resolved)
 
-1. **Stow vs Manual Symlinks?**
-   - Stow is cleaner but adds dependency
-   - Current manual approach works but is verbose
-
-2. **Keep `apps/` or merge with `config/`?**
-   - `apps/` has desktop app configs (VS Code, kitty themes)
-   - `config/` would have CLI tool configs
-   - Could merge all into `config/`
-
-3. **XDG Strict Compliance?**
-   - Should we respect `$XDG_CONFIG_HOME` env var?
-   - Current: hardcoded `~/.config/`
-   - ADR-0010 says: "users can symlink or adjust as needed"
-
-4. **Windows Support Priority?**
-   - How much effort for `pwsh/` organization?
-   - Is cross-platform a priority?
+| Question | Decision |
+|----------|----------|
+| Stow vs Manual Symlinks? | **Manual** - avoid new dependency, current approach works |
+| Keep `apps/` or merge with `config/`? | **Keep separate** - `apps/` for complex app configs, `xdg/` for simple tool configs |
+| XDG Strict Compliance? | **Use `~/.config/` directly** - per ADR-0010 |
+| Windows Support Priority? | **Low** - organize into `platform/windows/` but don't invest heavily |
+| Symlink wiring location? | **`setup/install.bash`** - one-time operation, not shell init |
 
 ---
 
 ## Next Steps
 
-1. **Review this plan** and choose preferred option
+1. ✅ **Review this plan** - confirm structure makes sense
 2. **Create ADR-0012** for repository structure decision
-3. **Implement Phase 1** (quick wins)
-4. **Test** on fresh VM/container
-5. **Document** changes in CHANGELOG.md
+3. **Execute Phase 1** - all file movements at once
+4. **Execute Phase 2** - update symlink wiring in install.bash
+5. **Test** on fresh container: `./tests/docker-test.bash`
+6. **Document** changes in CHANGELOG.md
 
 ---
 
 ## References
 
 - [XDG Base Directory Specification](https://specifications.freedesktop.org/basedir-spec/basedir-spec-latest.html)
-- [GNU Stow](https://www.gnu.org/software/stow/)
 - [dotfiles.github.io](https://dotfiles.github.io/) - Community best practices
 - Existing ADRs: 0001, 0002, 0010
