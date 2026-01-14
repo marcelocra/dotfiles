@@ -15,6 +15,7 @@ vim.opt.ve = "onemore"                                      -- Allow cursor to m
 
 -- Behavior
 vim.g.have_nerd_font = true -- Explicitly declare nerd font support
+vim.g.maplocalleader = " " -- Mostly for Conjures
 
 -- Abbreviations (Shell & Coding Helpers)
 local cmd = vim.cmd
