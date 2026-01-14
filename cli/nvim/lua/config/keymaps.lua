@@ -121,7 +121,7 @@ map("v", ctrl_underscore, "gcgv", comment_opts)
 map("n", "<Leader>d", "<Leader>xx", { desc = "Diagnostics (Trouble)", remap = true })
 
 -- Pickers (VSCode habits)
--- CRITICAL FIX: Wrapped LazyVim.pick in function to prevent load-time crash
+--  FIX: [CRITICAL] Wrapped LazyVim.pick in function to prevent load-time crash
 map("n", "<C-p>", function()
   LazyVim.pick.open()
 end, { desc = "Find Files (Root)" })
@@ -136,7 +136,7 @@ end, { desc = "LSP Symbols" })
 map("n", "<M-b>", function()
   Snacks.explorer({ cwd = LazyVim.root() })
 end, { desc = "Explorer (Root)" })
-map("n", "<M-e>", function()
+map("n", "<M-r>", function()
   Snacks.explorer({ cwd = LazyVim.root() })
 end, { desc = "Explorer (Root)" })
 
@@ -159,4 +159,3 @@ end
 map("n", "<Leader>evk", config_edit("b", "keymaps.lua"), { desc = "Edit keymaps" })
 map("n", "<Leader>evo", config_edit("b", "options.lua"), { desc = "Edit options" })
 map("n", "<Leader>eva", config_edit("b", "autocmds.lua"), { desc = "Edit autocmds" })
-
