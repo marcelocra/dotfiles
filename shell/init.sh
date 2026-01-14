@@ -1,10 +1,21 @@
-#!/usr/bin/env bash
-# Main shell configuration script for Linux environments
-# Supports Ubuntu containers, Alpine containers, and openSUSE Tumbleweed
-# Assumes zsh and oh-my-zsh are installed
+# Main shell configuration script for Linux environments.
+# This script is designed to be SOURCED, not executed.
+# Works for bash and zsh (not pure POSIX sh).
 #
-# Follows Google Shell Style Guide:
+# TODO: Verify if the following is still true:
+# - Supports Ubuntu containers, Alpine containers, and openSUSE Tumbleweed
+# - Assumes zsh and oh-my-zsh are installed
+# - Follows Google Shell Style Guide:
 #   https://google.github.io/styleguide/shellguide.html
+#
+# Usage: source path/to/this/init.sh
+
+# Prevent direct execution.
+if ! (return 0 2>/dev/null); then
+    echo "ERROR: This script must be SOURCED, not executed directly."
+    echo "Usage: source $0"
+    exit 1
+fi
 
 # =============================================================================
 # ENVIRONMENT DETECTION
@@ -1195,14 +1206,6 @@ main() {
     log_debug "Dotfiles initialized for $DOTFILES_DISTRO"
     log_debug "Container: $DOTFILES_IN_CONTAINER, WSL: $DOTFILES_IN_WSL"
 }
-
-# Only run main if script is sourced, not executed.
-# Works for bash and zsh (not pure POSIX sh).
-if ! (return 0 2>/dev/null); then
-    echo "This script should be sourced, not executed directly."
-    echo "Use: source $0"
-    exit 1
-fi
 
 main "$@"
 
