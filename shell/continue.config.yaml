@@ -7,7 +7,7 @@ schema: v1
 # OpenRouter model contexts and prices updated 1jan26.
 provider_openrouter: &provider_openrouter
   provider: openrouter
-  apiKey: $CONTINUEDEV_OPEN_ROUTER_API_KEY
+  apiKey: $CONTINUEDEV_OPENROUTER_API_KEY
 
 # Recommended models per task, according to Continue.dev's documentation:
 # https://docs.continue.dev/customize/models#recommended-models
@@ -394,6 +394,40 @@ models:
       contextLength: 256000
       maxTokens: 10000
     roles:
+      - autocomplete
       - chat
       - edit
       - apply
+
+# Top-level toggles
+allowAnonymousTelemetry: false
+disableIndexing: true
+disableSessionTitles: false
+
+# UI settings (maps directly to VS Code UI toggles)
+ui:
+  showSessionTabs: true # Show session tabs above chat
+  codeWrap: true # Wrap long code blocks
+  showChatScrollbar: true
+  displayRawMarkdown: false
+  codeBlockToolbarPosition: "top" # "top" or "bottom"
+  continueAfterToolRejection: false
+  fontSize: 14
+
+tabAutocompleteOptions:
+  useCache: true
+  multilineCompletions: "auto" # "auto" | true | false
+  modelTimeout: 150 # ms
+  debounceDelay: 250 # ms
+  disableInFiles: # comma-list equivalents in UI
+    - "**/*.{txt,md}" # or use ["**/*.md","**/*.txt"]
+
+experimental:
+  readResponseTTS: false
+  useCurrentFileAsContext: false
+  enableExperimentalTools: false
+  onlyUseSystemMessageTools: false
+  codebaseToolCallingOnly: false
+  promptPath: ".continue/prompts"
+  useChromiumForDocsCrawling: false
+  enableStaticContextualization: false
