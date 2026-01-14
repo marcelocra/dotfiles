@@ -610,6 +610,9 @@ configure_system_utility_aliases() {
     # Easily edit and source the rc file.
     alias rc='$EDITOR $HOME/.config/dotfiles/shell/init.sh && . ~/.zshrc'
 
+    # Simplify using Aider to watch files.
+    alias aw='aider --watch-files'
+
     # Next alias marker
 }
 
