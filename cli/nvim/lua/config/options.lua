@@ -14,6 +14,7 @@ vim.opt.ve = "onemore"                                      -- Allow cursor to m
 -- stylua: ignore end
 
 -- Behavior
+vim.opt.clipboard = "unnamedplus" -- Sync with system clipboard
 vim.g.have_nerd_font = true -- Explicitly declare nerd font support
 vim.g.maplocalleader = " " -- Mostly for Conjures
 
