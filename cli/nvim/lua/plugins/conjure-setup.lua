@@ -20,7 +20,9 @@ return {
 
   -- Replaces vim-sexp with *-mappings-for-regular-people.
   {
-    "marcelocra/nvim-treesitter-sexp",
+        "marcelocra/nvim-treesitter-sexp",
+    -- TODO: Remove this plugin if not really necessary.
+    enabled = false, -- BROKEN: nvim-treesitter removed ts_utils.lua, causing startup errors.
     dependencies = {
       -- Add Clojure and related to treesitter.
       {
