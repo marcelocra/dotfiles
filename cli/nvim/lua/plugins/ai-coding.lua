@@ -1,3 +1,9 @@
+if true then
+  return {
+    { import = "lazyvim.plugins.extras.ai.sidekick" },
+  }
+end
+
 return {
   {
     "olimorris/codecompanion.nvim",
@@ -14,6 +20,7 @@ return {
       adapters = {
         openrouter = function()
           return require("codecompanion.adapters").extend("openai_compatible", {
+            name = "openrouter", -- Give it a name so it can be referenced in strategies
             env = {
               url = "https://openrouter.ai/api",
               api_key = "OPENROUTER_API_KEY", -- Reads from environment variable
