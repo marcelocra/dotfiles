@@ -34,7 +34,7 @@ if wezterm.target_triple == "x86_64-pc-windows-msvc" then
   -- config.window_background_opacity = 0.95
 end
 
-config.window_decorations = "RESIZE"
+config.window_decorations = "TITLE | RESIZE"
 
 -- ============================================================================
 -- FONT CONFIGURATION
@@ -56,23 +56,30 @@ config.freetype_load_flags = "NO_HINTING"
 -- WINDOW & LAYOUT
 -- ============================================================================
 
--- config.window_padding = {
---   left = 5,
---   right = 5,
---   top = 5,
---   bottom = 5,
--- }
+config.window_padding = {
+  left = 40,
+  right = 40,
+  top = 30,
+  bottom = 30,
+}
 
 config.initial_cols = 120
 config.initial_rows = 30
 
 -- ============================================================================
--- TABS (Disabled - Optimized for Multiplexer usage)
+-- TABS
 -- ============================================================================
 
-config.enable_tab_bar = false
-config.use_fancy_tab_bar = false
-config.hide_tab_bar_if_only_one_tab = true
+config.enable_tab_bar = true
+config.tab_bar_at_bottom = true
+config.use_fancy_tab_bar = true
+config.hide_tab_bar_if_only_one_tab = false
+
+-- Tab bar font and size
+config.window_frame = {
+  font = wezterm.font('Cascadia Mono NF'),
+  font_size = 10,
+}
 
 -- ============================================================================
 -- CURSOR
