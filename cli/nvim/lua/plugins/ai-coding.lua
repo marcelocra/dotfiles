@@ -1,7 +1,5 @@
 if true then
-  return {
-    { import = "lazyvim.plugins.extras.ai.sidekick" },
-  }
+  return {}
 end
 
 return {
