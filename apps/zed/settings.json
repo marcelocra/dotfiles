@@ -7,7 +7,20 @@
 // custom settings, run `zed: open default settings` from the
 // command palette (cmd-shift-p / ctrl-shift-p)
 {
+  "agent_servers": {
+    "claude": {
+      "default_mode": "plan",
+    },
+  },
+  "git_panel": {
+    "tree_view": true,
+  },
+  "agent_ui_font_size": 16.0,
+  "ui_font_family": "Segoe UI",
+  "ui_font_size": 16.0,
+  "buffer_font_weight": 400.0,
   "agent": {
+    "default_profile": "write",
     "message_editor_min_lines": 4,
     "always_allow_tool_actions": true,
     "use_modifier_to_send": false,
@@ -81,7 +94,7 @@
 
     // "dock": "right",
     "option_as_meta": true,
-    "cursor_shape": "block",
+    "cursor_shape": "underline",
     "line_height": "standard",
     "blinking": "on",
   },
@@ -131,7 +144,7 @@
   "cursor_blink": true,
   "autosave": {
     "after_delay": {
-      "milliseconds": 600000,
+      "milliseconds": 1000,
     },
   },
   "file_types": {
@@ -175,14 +188,20 @@
   //   "calt": false
   // },
 
-  // "buffer_font_family": "iMWritingDuo Nerd Font",
   "buffer_font_family": "Cascadia Code NF",
   // "buffer_font_size": 12.0,
-  "buffer_font_weight": 350,
+  // "buffer_font_weight": 350,
   "buffer_line_height": "comfortable",
   "buffer_font_fallbacks": ["MesloLGM Nerd Font Mono"],
   "buffer_font_features": {
-    "zero": true,
+    // VS Code: 'calt' 1, 'ss01' 1, 'ss02' 0, 'ss03' 0, 'ss19' 0, 'ss20' 1
+    "calt": 1,
+    "ss01": 1,
+    "ss02": 0,
+    "ss03": 0,
+    "ss19": 0,
+    "ss20": 1,
+    "zero": 1,
   },
 
   // "theme": {
@@ -217,21 +236,11 @@
 
   "languages": {
     "TypeScript": {
-      "language_servers": [
-        "deno",
-        "!typescript-language-server",
-        "!vtsls",
-        "!eslint",
-      ],
+      "language_servers": ["deno", "!typescript-language-server", "!vtsls", "!eslint"],
       "formatter": "language_server",
     },
     "TSX": {
-      "language_servers": [
-        "deno",
-        "!typescript-language-server",
-        "!vtsls",
-        "!eslint",
-      ],
+      "language_servers": ["deno", "!typescript-language-server", "!vtsls", "!eslint"],
       "formatter": "language_server",
     },
   },
