@@ -108,11 +108,26 @@ table.insert(config.hyperlink_rules, {
 
 -- Patterns for Quick Select (Leader + Space)
 config.quick_select_patterns = {
-  "\\b\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}\\b", -- IPs
-  "\\b[0-9a-f]{7,40}\\b", -- Hashes
-  "\\b[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}\\b", -- UUIDs
-  "\\b[a-z0-9]([-a-z0-9]*[a-z0-9])?\\b", -- Resource names
-  "\\b[0-9a-f]{12}\\b", -- Container IDs
+  -- URLs (Full)
+  "https?://\\S+",
+
+  -- IPs
+  "\\b\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}\\b",
+
+  -- Emails
+  "[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}",
+
+  -- Hashes
+  "\\b[0-9a-f]{7,40}\\b",
+
+  -- UUIDs
+  "\\b[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}\\b",
+
+  -- Resource names (Improved)
+  "\\b[a-zA-Z0-9][-a-zA-Z0-9_.]*[a-zA-Z0-9]\\b",
+
+  -- Container IDs
+  "\\b[0-9a-f]{12}\\b",
 }
 
 -- ============================================================================
