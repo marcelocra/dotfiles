@@ -86,7 +86,7 @@ config.window_frame = {
 -- ============================================================================
 
 -- Steady cursor (no blinking - better for accessibility and screenshots)
-config.default_cursor_style = "SteadyUnderline"
+config.default_cursor_style = "SteadyBlock"
 config.cursor_thickness = "200%"
 
 -- ============================================================================
@@ -375,13 +375,15 @@ config.mouse_bindings = {
 }
 
 -- Visual bell for long-running commands
-config.audible_bell = "Disabled"
+config.audible_bell = "Disable"
 config.visual_bell = {
-  fade_in_function = "EaseIn",
+  fade_in_function = 'EaseIn',
   fade_in_duration_ms = 150,
-  fade_out_function = "EaseOut",
+  fade_out_function = 'EaseOut',
   fade_out_duration_ms = 150,
 }
+config.colors = {
+  visual_bell = '#330000', -- Dark red.
 
 -- ============================================================================
 -- MISCELLANEOUS
