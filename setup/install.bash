@@ -1182,7 +1182,7 @@ install_extra_tools() {
     # zoxide - smart cd replacement (learns from usage)
     if ! command_exists zoxide; then
         log_info "📦 Installing zoxide..."
-        curl_cmd https://raw.githubusercontent.com/ajeetdsouza/zoxide/main/install.sh | bash
+        curl_cmd https://raw.githubusercontent.com/marcelocra/cli-zoxide/main/install.sh | bash
         log_success "✅ zoxide installed"
     else
         log_info "✅ zoxide already installed"
