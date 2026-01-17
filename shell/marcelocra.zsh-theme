@@ -136,7 +136,8 @@ _get_envs() {
 _host_info() {
   if [[ $SHOW_HOST == 1 ]]; then
     local host_color="$C_HOST"
-    local host_icon="$ICON_USER"
+    local host_icon=""
+    local label=""
     local host
     if [[ $USE_FQDN_HOST == 1 ]]; then
       host="%M"  # Fully qualified domain name
@@ -144,21 +145,27 @@ _host_info() {
       host="%m"  # Short hostname
     fi
 
-    # Highlight in red if root user
-    if (( EUID == 0 )); then
-      host_color="%F{203}"  # Bright red (same as C_ERR)
-    fi
-
-    # Change icon and ensure host is visible if in SSH session
+    # Environment Detection with Explicit Labels
     if [[ -n "$SSH_CONNECTION" || -n "$SSH_CLIENT" || -n "$SSH_TTY" ]]; then
       host_icon="$ICON_SSH"
-      # If it's SSH, we want it to stand out, so we keep C_HOST or C_ERR
-    elif [[ -z "$SSH_CONNECTION" ]]; then
-      # Dim when local and not root
-      [[ (( EUID != 0 )) ]] && host_color="$C_DIM"
+      label="SSH"
+      host_color="%F{208}"  # Bright Orange for SSH
+    elif [[ "$DOTFILES_IN_CONTAINER" == "true" || -f /.dockerenv ]]; then
+      host_icon="📦"
+      label="CONT"
+      host_color="%F{73}"   # Cyan for Containers
+    else
+      host_icon="$ICON_USER"
+      label="LOCAL"
+      host_color="$C_DIM"   # Dim for Local
     fi
 
-    echo "${host_color}${host_icon} %n@${host}${C_RESET} ${C_DIM}${ICON_SEP}${C_RESET} "
+    # Root override (keep label but change color to red)
+    if (( EUID == 0 )); then
+      host_color="%F{203}"
+    fi
+
+    echo "${host_color}${host_icon} [${label}] %n@${host}${C_RESET} ${C_DIM}${ICON_SEP}${C_RESET} "
   fi
 }
 
