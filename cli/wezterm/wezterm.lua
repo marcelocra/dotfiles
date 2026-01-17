@@ -142,7 +142,7 @@ config.quick_select_patterns = {
 -- ============================================================================
 
 -- Leader key: Make it different from your multiplexer's leader
-config.leader = { key = "q", mods = "ALT", timeout_milliseconds = 2000 }
+config.leader = { key = "w", mods = "ALT", timeout_milliseconds = 2000 }
 
 -- Local WezTerm panes
 config.keys = {
