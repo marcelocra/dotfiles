@@ -38,6 +38,7 @@ STYLE_NOBOLD="%{[22m%}"  # Reset bold so glyphs render regular weight
 : ${USE_NERD_FONT:=1}
 if [[ $USE_NERD_FONT == 1 ]]; then
   ICON_USER=$'\uf109'          #  (nf-fa-laptop)
+  ICON_SSH=$'\uf0c2'           # ☁ (nf-fa-cloud)
   ICON_DIR=$'\uf07b'           #  (nf-fa-folder)
   ICON_GIT=$'\uf126'           #   (nf-fa-code_fork)
   ICON_DIRTY=$'\u2a2f'         # ⨯ (cross product)
@@ -52,6 +53,7 @@ if [[ $USE_NERD_FONT == 1 ]]; then
   ICON_SEP='›'                 # › (ASCII divider preferred)
 else
   ICON_USER="💻"
+  ICON_SSH="☁"
   ICON_DIR="📁"
   ICON_GIT="⎇"
   ICON_DIRTY="⨯"
@@ -134,6 +136,7 @@ _get_envs() {
 _host_info() {
   if [[ $SHOW_HOST == 1 ]]; then
     local host_color="$C_HOST"
+    local host_icon="$ICON_USER"
     local host
     if [[ $USE_FQDN_HOST == 1 ]]; then
       host="%M"  # Fully qualified domain name
@@ -144,12 +147,18 @@ _host_info() {
     # Highlight in red if root user
     if (( EUID == 0 )); then
       host_color="%F{203}"  # Bright red (same as C_ERR)
-    # Dim when not in SSH session
-    elif [[ -z "$SSH_CONNECTION" ]]; then
-      host_color="$C_DIM"
     fi
 
-    echo "${host_color}${ICON_USER} %n@${host}${C_RESET} ${C_DIM}${ICON_SEP}${C_RESET} "
+    # Change icon and ensure host is visible if in SSH session
+    if [[ -n "$SSH_CONNECTION" || -n "$SSH_CLIENT" || -n "$SSH_TTY" ]]; then
+      host_icon="$ICON_SSH"
+      # If it's SSH, we want it to stand out, so we keep C_HOST or C_ERR
+    elif [[ -z "$SSH_CONNECTION" ]]; then
+      # Dim when local and not root
+      [[ (( EUID != 0 )) ]] && host_color="$C_DIM"
+    fi
+
+    echo "${host_color}${host_icon} %n@${host}${C_RESET} ${C_DIM}${ICON_SEP}${C_RESET} "
   fi
 }
 
