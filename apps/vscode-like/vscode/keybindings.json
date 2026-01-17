@@ -15,8 +15,6 @@
  * ┌─ Important ─────────────────────────────────────────────────────────────┐
  * │ This configuration overrides several default VSCode shortcuts.          │
  * │ Use at your own risk and adapt as needed.                               │
- * │                                                                          │
- * │ For Cursor-specific keybindings, see keybindings-cursor.json           │
  * └─────────────────────────────────────────────────────────────────────────┘
  *
  * Key Features:
@@ -94,11 +92,12 @@
  * - Ctrl+Shift+L      - Select all occurrences of current word
  * - Ctrl+Shift+J      - Toggle details in search (ex. include/exclude files)
  * - Ctrl+K C          - Diff current file with clipboard content
+ * - Ctrl+Right        - Accept next word of inline suggestion
  *
  * @author Marcelo Almeida
  * @version 0.1.0
  */
-[
+ [
   {
     "key": ">>>>>>>>>> 👇🏽 ESSENTIAL"
   },
@@ -373,10 +372,9 @@
 
   {
     // Insert the next suggested word instead of the full suggestion.
-    // This takes priority when inline suggestions are visible.
-    "key": "ctrl+l",
+    "key": "alt+.",
     "command": "editor.action.inlineSuggest.acceptNextWord",
-    "when": "editorTextFocus && inlineSuggestionVisible && !terminalFocus"
+    "when": "inlineSuggestionVisible && !editorReadonly"
   },
 
   {
@@ -585,7 +583,7 @@
 
   {
     // 🧘🏽 zen mode.
-    "key": "alt+z",
+    "key": "shift+alt+z",
     "command": "workbench.action.toggleZenMode"
   },
 
@@ -865,31 +863,16 @@
     "command": "-roo-cline.toggleAutoApprove"
   },
   {
-    // Toggle AI agent visibility. [VS Code - amp extension]
     "key": "alt+i",
     "command": "amp.agent.toggleVisibility",
-    "when": "amp.primaryShortcuts && !terminalFocus"
+    "when": "amp.primaryShortcuts"
   },
   {
-    // Disable default amp.agent.toggleVisibility. [VS Code - amp extension]
     "key": "ctrl+i",
     "command": "-amp.agent.toggleVisibility",
     "when": "amp.primaryShortcuts"
   },
   {
-    // Open composer mode. [VS Code - amp extension]
-    "key": "ctrl+i",
-    "command": "composerMode.agent",
-    "when": "amp.primaryShortcuts && !terminalFocus"
-  },
-  {
-    // New AI agent thread. [VS Code - amp extension]
-    "key": "ctrl+l",
-    "command": "amp.agent.newThread",
-    "when": "amp.activated && !terminalFocus && !inlineSuggestionVisible"
-  },
-  {
-    // Disable default amp.agent.newThread. [VS Code - amp extension]
     "key": "ctrl+l",
     "command": "-amp.agent.newThread",
     "when": "amp.primaryShortcuts"
@@ -898,5 +881,44 @@
     "key": "ctrl+shift+a",
     "command": "expandLineSelection",
     "when": "textInputFocus"
+  },
+  {
+    "key": "alt+z",
+    "command": "workbench.action.toggleCenteredLayout"
+  },
+  {
+    "key": "alt+i",
+    "command": "inlineChat.start",
+    "when": "editorFocus && inlineChatHasEditsAgent && inlineChatPossible && !editorReadonly && !editorSimpleInput && activeEditor != 'workbench.editor.notebook' || editorFocus && inlineChatHasNotebookAgent && inlineChatPossible && !editorReadonly && !editorSimpleInput && activeEditor == 'workbench.editor.notebook' || editorFocus && inlineChatHasNotebookInline && inlineChatPossible && !editorReadonly && !editorSimpleInput && activeEditor == 'workbench.editor.notebook' || editorFocus && inlineChatHasProvider && inlineChatPossible && !editorReadonly && !editorSimpleInput && activeEditor != 'workbench.editor.notebook'"
+  },
+  {
+    "key": "tab",
+    "command": "editor.action.inlineSuggest.acceptNextWord",
+    "when": "inlineSuggestionVisible && !editorReadonly"
+  },
+  {
+    "key": "ctrl+k tab",
+    "command": "editor.action.inlineSuggest.commit",
+    "when": "inlineEditIsVisible && tabShouldAcceptInlineEdit && !editorHoverFocused && !editorTabMovesFocus && !suggestWidgetVisible || inlineEditIsVisible && inlineSuggestionVisible && tabShouldAcceptInlineEdit && !editorHoverFocused && !editorTabMovesFocus && !suggestWidgetVisible || inlineSuggestionHasIndentationLessThanTabSize && inlineSuggestionVisible && !editor.hasSelection && !editorHoverFocused && !editorTabMovesFocus && !suggestWidgetVisible || inlineEditIsVisible && inlineSuggestionHasIndentationLessThanTabSize && inlineSuggestionVisible && !editor.hasSelection && !editorHoverFocused && !editorTabMovesFocus && !suggestWidgetVisible"
+  },
+  {
+    "key": "ctrl+k tab",
+    "command": "editor.action.inlineSuggest.commit",
+    "when": "inInlineEditsPreviewEditor"
+  },
+  {
+    "key": "ctrl+l",
+    "command": "-workbench.action.chat.newChat",
+    "when": "chatIsEnabled && inChat && chatLocation == 'panel'"
+  },
+  {
+    "key": "ctrl+l",
+    "command": "-expandLineSelection",
+    "when": "textInputFocus"
+  },
+  {
+    "key": "ctrl+l",
+    "command": "-notebook.centerActiveCell",
+    "when": "notebookEditorFocused"
   }
 ]

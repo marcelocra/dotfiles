@@ -404,4 +404,11 @@
       "ctrl-q": null,
     },
   },
+  {
+    "context": "Editor && !VimControl && showing_selection",
+    "bindings": {
+      "ctrl-n": ["editor::SelectNext", { "replace_newest": true }],
+      "ctrl-p": ["editor::SelectPrevious", { "replace_newest": true }],
+    },
+  },
 ]

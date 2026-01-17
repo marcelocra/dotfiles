@@ -211,7 +211,7 @@
   "chat.viewSessions.enabled": false,
   "chatgpt.runCodexInWindowsSubsystemForLinux": true,
   "continue.enableConsole": true,
-  "continue.enableTabAutocomplete": true,
+  "continue.enableTabAutocomplete": false,
   "continue.showInlineTip": false,
   "continue.telemetryEnabled": false,
   "csharp.suppressBuildAssetsNotification": true,
@@ -268,8 +268,8 @@
   // ---------------------------------------------------------------------------
   "editor.fontFamily": "Cascadia Code NF",
   "editor.fontLigatures": "'calt' 1, 'ss01' 1, 'ss02' 0, 'ss03' 0, 'ss19' 1, 'ss20' 1",
-  "editor.fontSize": 16,
-  "editor.fontWeight": "350", // {light: 350, dark: 400}
+  "editor.fontSize": 17,
+  // "editor.fontWeight": "350", // {light: 350, dark: 400}
   // ---------------------------------------------------------------------------
   // "editor.fontFamily": "CommitMono",
   // "editor.fontLigatures": "'ss01' 0, 'ss02' 0, 'ss03' 1, 'ss04' 1, 'ss05' 1, 'cv01' 1, 'cv02' 1, 'cv03' 0, 'cv04' 0, 'cv05' 1, 'cv06' 1, 'cv07' 0, 'cv08' 1, 'cv09' 0, 'cv10' 0, 'cv11' 0",
@@ -505,7 +505,12 @@
   "remote.SSH.remotePlatform": {
     "*": "linux"
   },
-  "roo-cline.allowedCommands": ["git log", "git diff", "git show"],
+  "roo-cline.allowedCommands": [
+    "git log",
+    "git diff",
+    "git show"
+  ],
+  "roo-cline.debug": false,
   "roo-cline.deniedCommands": [],
   "rubyLsp.rubyVersionManager": "asdf",
   "ruff.nativeServer": "on",
@@ -755,6 +760,7 @@
   "workbench.tree.indent": 20,
   "workbench.tree.renderIndentGuides": "always",
   "yaml.schemas": {
+    // https://gist.githubusercontent.com/marcelocra/17e45d4d61d8bd1a13dcb30225430041/raw/51c0ddabb6ae6c98997a7eb4de8842f7829da928/continue-dev-yaml-schema.json
     "https://gist.githubusercontent.com/marcelocra/17e45d4d61d8bd1a13dcb30225430041/raw/51c0ddabb6ae6c98997a7eb4de8842f7829da928/continue-dev-yaml-schema.json": [
       ".continue/**/*.yaml"
     ]

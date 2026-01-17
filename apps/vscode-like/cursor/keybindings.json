@@ -1,886 +1,221 @@
-/**
- * @fileoverview Custom keybindings configuration for Cursor.
- *
- * This file defines a comprehensive set of keyboard shortcuts organized into
- * three main categories:
- *
- *    1. Essential keybindings for core navigation and editor operations
- *    2. Nice-to-have shortcuts for improved productivity
- *    3. Experimental or pending keybindings to be reviewed
- *
- * Notes:
- * - Some keybindings are context-aware using "when" clauses for better UX.
- * - The file uses regions to organize keybindings logically.
- * - This is the Cursor-specific version.
- *
- * ┌─ Important ─────────────────────────────────────────────────────────────┐
- * │ This configuration overrides several default Cursor shortcuts.          │
- * │ Use at your own risk and adapt as needed.                               │
- * └─────────────────────────────────────────────────────────────────────────┘
- *
- * Key Features:
- * - Alt-based navigation between views (explorer, search, git, copilot, etc.)
- * - Alt+J/K for switching between editors and panels
- * - Ctrl+[/Alt+H/Alt+Left and Ctrl+]/Alt+L/Alt+Right for navigation history
- * - CamelCase-aware cursor movement and selection with Ctrl+Alt+Arrow keys
- * - Enhanced terminal integration Ctrl+Alt+`
- *
- * A non-exhaustive list of keybindings is provided below for quick reference.
- *
- * Essential Navigation:
- * - Alt+B             - Toggle sidebar visibility
- * - Alt+Shift+B       - Toggle auxiliary bar
- * - Alt+R             - Open Explorer view
- * - Alt+F             - Open Search view
- * - Alt+G             - Open Source Control view
- * - Alt+X             - Open Extensions view
- * - Alt+O             - Focus Outline view
- * - Alt+A             - AI chat view
- *
- * Editor Navigation:
- * - Alt+J/K           - Previous/Next editor (when not in panel)
- * - Alt+E             - Quick open recent editor
- * - Shift+Alt+E       - Quick open least recently used editor
- * - Ctrl+[/]          - Navigate backward/forward in history
- * - Ctrl+Tab          - Next editor (overrides default recent editor behavior)
- *
- * Panel & Terminal:
- * - Ctrl+J            - Toggle focus between panel and editor
- * - Ctrl+Alt+`        - Toggle maximized panel
- * - Alt+J/K           - Previous/Next panel view (when in panel)
- * - Shift+Enter       - Line break in terminal
- *
- * Selection & Editing:
- * - Alt+D             - Duplicate selection
- * - Alt+Shift+Up/Down - Expand/Shrink smart selection
- * - Alt+Left/Right    - Move by camelCase word parts
- * - Ctrl+N/P          - Next/Previous find match (when text selected)
- *
- * AI & Copilot:
- * - Ctrl+L            - Accept next word from inline suggestion
- * - Ctrl+K Ctrl+C     - Toggle GitHub Copilot suggestions
- * - Alt+A             - Open AI chat agent
- *
- * Settings & Configuration:
- * - Ctrl+Alt+Shift+S  - Open Settings UI and JSON side-by-side
- * - Ctrl+Alt+Shift+K  - Open Keybindings UI and JSON side-by-side
- * - Ctrl+R            - Go to symbol in file (overrides default Ctrl+Shift+O)
- *
- * @see {@link https://code.visualstudio.com/docs/getstarted/keybindings VSCode Keybindings Documentation}
- *
- * Useful default keybindings:
- * - Ctrl+K P          - Copy active file path to clipboard
- * - Ctrl+K O          - Show active file in new window
- * - Ctrl+K R          - Reveal active file in Explorer/Finder (not working)
- * - Ctrl+K M          - Change file language mode
- * - Ctrl+K Ctrl+T     - Change color theme
- * - Ctrl+K Ctrl+S     - Save all files
- * - Ctrl+K Ctrl+W     - Close all editors
- * - Ctrl+K W          - Close all editors in group
- * - Ctrl+K F          - Close folder/workspace
- * - Ctrl+K Ctrl+S     - Show keyboard shortcuts
- * - Ctrl+K V          - Open Markdown preview to the side
- * - Ctrl+K Z          - Toggle Zen mode
- * - Alt+Shift+H       - Show call hierarchy
- * - Ctrl+K Ctrl+I     - Show hover information
- * - F12               - Go to definition
- * - Alt+F12           - Peek definition
- * - Shift+F12         - Go to references
- * - Ctrl+Shift+O      - Go to symbol in file (alias: Ctrl+R)
- * - Ctrl+T            - Go to symbol in workspace
- * - Ctrl+G            - Go to line
- * - Ctrl+Shift+\      - Jump to matching bracket (alias: Ctrl+M)
- * - Ctrl+Shift+L      - Select all occurrences of current word
- * - Ctrl+Shift+J      - Toggle details in search (ex. include/exclude files)
- * - Ctrl+K C          - Diff current file with clipboard content
- *
- * @author Marcelo Almeida
- * @version 0.1.0
- */
+// Place your key bindings in this file to override the defaults
 [
   {
-    "key": ">>>>>>>>>> 👇🏽 ESSENTIAL"
+      "key": "alt+d",
+      "command": "editor.action.duplicateSelection",
+      "when": "editorTextFocus"
   },
-
-  // #region [Essential]
-
   {
-    "key": "alt+b",
-    "command": "workbench.action.toggleSidebarVisibility"
+      "key": "ctrl+q",
+      "command": "workbench.action.quickOpenNavigateNextInViewPicker",
+      "when": "inQuickOpen && inViewsPicker && !terminalFocus"
   },
-
   {
-    "key": "alt+shift+b",
-    "command": "workbench.action.toggleAuxiliaryBar"
+      "key": "ctrl+q",
+      "command": "-workbench.action.quickOpenNavigateNextInViewPicker",
+      "when": "inQuickOpen && inViewsPicker"
   },
-
   {
-    "key": "alt+x",
-    "command": "workbench.view.extensions",
-    "when": "viewContainer.workbench.view.extensions.enabled"
+      "key": "ctrl+q",
+      "command": "workbench.action.quickOpenView",
+      "when": "!terminalFocus"
   },
-
   {
-    "key": "alt+m",
-    "command": "editor.action.toggleMinimap"
+      "key": "ctrl+q",
+      "command": "-workbench.action.quickOpenView"
   },
-
   {
-    "key": "alt+g",
-    "command": "workbench.view.scm",
-    "when": "workbench.scm.active"
+      "key": "ctrl+p",
+      "command": "workbench.action.quickOpenNavigateNextInFilePicker",
+      "when": "inFilesPicker && inQuickOpen && !terminalFocus"
   },
-
   {
-    "key": "alt+o",
-    "command": "runCommands",
-    "args": {
-      "commands": ["outline.focus", "outline.focus"]
-    },
-    "when": "focusedView != 'outline'"
+      "key": "ctrl+p",
+      "command": "-workbench.action.quickOpenNavigateNextInFilePicker",
+      "when": "inFilesPicker && inQuickOpen"
   },
-
   {
-    "key": "alt+o",
-    "command": "workbench.action.focusLastEditorGroup",
-    "when": "focusedView == 'outline'"
+      "key": "ctrl+p",
+      "command": "notebook.centerActiveCell",
+      "when": "notebookEditorFocused && !terminalFocus"
   },
-
   {
-    "key": "alt+f",
-    "command": "workbench.view.search"
+      "key": "ctrl+p",
+      "command": "-notebook.centerActiveCell",
+      "when": "notebookEditorFocused"
   },
-
   {
-    "key": "ctrl+shift+f", // Same as the default, but with context awareness.
-    "command": "workbench.action.findInFiles",
-    "when": "!inSearchEditor"
+      "key": "ctrl+p",
+      "command": "workbench.action.quickOpen",
+      "when": "!terminalFocus"
   },
-
   {
-    "key": "ctrl+shift+f", // Do not open a new search when in a search editor.
-    "command": "search.action.focusQueryEditorWidget",
-    "when": "inSearchEditor"
+      "key": "ctrl+p",
+      "command": "-workbench.action.quickOpen"
   },
-
-  // #region [Explorer view: claim alt+r and replace existing bindings]
-
   {
-    "key": "alt+r",
-    "command": "workbench.view.explorer",
-    "when": "viewContainer.workbench.view.explorer.enabled"
+      "key": "ctrl+p",
+      "command": "-expandLineSelection",
+      "when": "textInputFocus"
   },
-
   {
-    "key": "shift+alt+r",
-    "command": "toggleFindRegex",
-    "when": "editorFocus"
+      "key": "ctrl+l",
+      "command": "workbench.action.focusBrowserLocationBar",
+      "when": "browserEditorActive && cursor.browserTabEnabled && !terminalFocus"
   },
-
   {
-    "key": "alt+r",
-    "command": "-toggleFindRegex",
-    "when": "editorFocus"
+      "key": "ctrl+l",
+      "command": "-workbench.action.focusBrowserLocationBar",
+      "when": "browserEditorActive && cursor.browserTabEnabled"
   },
-
   {
-    "key": "shift+alt+r",
-    "command": "-remote-wsl.revealInExplorer",
-    "when": "editorFocus && remoteName == 'wsl'"
+      "key": "ctrl+l",
+      "command": "aichat.newchataction",
+      "when": " !terminalFocus"
   },
-
   {
-    "key": "shift+alt+r",
-    "command": "-revealFileInOS",
-    "when": "!editorFocus"
+      "key": "ctrl+l",
+      "command": "-aichat.newchataction"
   },
-
   {
-    "key": "shift+alt+r",
-    "command": "toggleSearchEditorRegex",
-    "when": "inSearchEditor && searchInputBoxFocus"
+      "key": "ctrl+l",
+      "command": "composer.sendToAgent",
+      "when": "editorHasPromptBar && editorPromptBarFocused && !terminalFocus"
   },
-
   {
-    "key": "alt+r",
-    "command": "-toggleSearchEditorRegex",
-    "when": "inSearchEditor && searchInputBoxFocus"
+      "key": "ctrl+l",
+      "command": "-composer.sendToAgent",
+      "when": "editorHasPromptBar && editorPromptBarFocused"
   },
-
   {
-    "key": "shift+alt+r",
-    "command": "workbench.action.terminal.toggleFindRegex",
-    "when": "terminalFindVisible && terminalHasBeenCreated || terminalFindVisible && terminalProcessSupported"
+      "key": "alt+g",
+      "command": "workbench.view.scm",
+      "when": "workbench.scm.active"
   },
-
   {
-    "key": "alt+r",
-    "command": "-workbench.action.terminal.toggleFindRegex",
-    "when": "terminalFindVisible && terminalHasBeenCreated || terminalFindVisible && terminalProcessSupported"
+      "key": "alt+r",
+      "command": "workbench.view.explorer",
+      "when": "viewContainer.workbench.view.explorer.enabled"
   },
-
   {
-    "key": "shift+alt+r",
-    "command": "toggleSearchRegex",
-    "when": "searchViewletFocus"
+      "key": "alt+a",
+      "command": "-editor.action.accessibilityHelpConfigureAssignedKeybindings",
+      "when": "accessibilityHelpIsShown && accessibleViewHasAssignedKeybindings"
   },
-
-  // #endregion [Explorer view: claim alt+r and replace existing bindings]
-
   {
-    "key": "alt+r",
-    "command": "-toggleSearchRegex",
-    "when": "searchViewletFocus"
+      "key": "alt+a",
+      "command": "aichat.newchataction",
+      "when": "!terminalFocus"
   },
-
   {
-    "key": "alt+k",
-    "command": "workbench.action.nextEditor",
-    "when": "!panelFocus && !sideBarFocus && !auxiliaryBarFocus"
+      "key": "alt+a",
+      "command": "composer.sendToAgent",
+      "when": "editorHasPromptBar && editorPromptBarFocused && !terminalFocus"
   },
-
   {
-    "key": "alt+j",
-    "command": "workbench.action.previousEditor",
-    "when": "!panelFocus && !sideBarFocus && !auxiliaryBarFocus"
+      "key": "alt+k",
+      "command": "workbench.action.nextEditor"
   },
-
   {
-    // Go to next panel view (terminal, output, debug console, problems, etc.).
-    "key": "alt+k",
-    "command": "workbench.action.nextPanelView",
-    "when": "panelFocus"
+      "key": "alt+j",
+      "command": "workbench.action.previousEditor"
   },
-
   {
-    // Go to previous panel view (terminal, output, debug console, problems, etc.).
-    "key": "alt+j",
-    "command": "workbench.action.previousPanelView",
-    "when": "panelFocus"
+      "key": "shift+alt+j",
+      "command": "workbench.action.moveEditorLeftInGroup"
   },
-
   {
-    // Go to next sidebar view (explorer, search, source control, extensions, etc.).
-    "key": "alt+k",
-    "command": "workbench.action.nextSideBarView",
-    "when": "sideBarFocus"
+      "key": "shift+alt+k",
+      "command": "workbench.action.moveEditorRightInGroup"
   },
-
   {
-    // Go to previous sidebar view (explorer, search, source control, extensions, etc.).
-    "key": "alt+j",
-    "command": "workbench.action.previousSideBarView",
-    "when": "sideBarFocus"
+      "key": "ctrl+alt+oem_3",
+      "command": "workbench.action.toggleMaximizedPanel"
   },
-
   {
-    // Go to next auxiliary bar view.
-    "key": "alt+k",
-    "command": "workbench.action.nextAuxiliaryBarView",
-    "when": "auxiliaryBarFocus"
+      "key": "alt+e",
+      "command": "workbench.action.quickOpenPreviousRecentlyUsedAgent",
+      "when": "agentsPaneFocused && !isInBackgroundComposerWindow || composerFocused && !isInBackgroundComposerWindow"
   },
-
   {
-    // Go to previous auxiliary bar view.
-    "key": "alt+j",
-    "command": "workbench.action.previousAuxiliaryBarView",
-    "when": "auxiliaryBarFocus"
+      "key": "alt+e",
+      "command": "workbench.action.quickOpenPreviousRecentlyUsedEditorInGroup",
+      "when": "activeEditor && !activeEditorGroupEmpty && !agentsPaneFocused && !auxiliaryBarFocus && !composerFocused && !panelFocus && !sideBarFocus && !terminalFocus || editorFocus && !activeEditorGroupEmpty && !agentsPaneFocused && !auxiliaryBarFocus && !composerFocused && !panelFocus && !sideBarFocus && !terminalFocus"
   },
-
   {
-    "key": "ctrl+[",
-    "command": "workbench.action.navigateBack"
+      "key": "alt+e",
+      "command": "workbench.action.quickOpenNavigateNextInAgentsPicker",
+      "when": "inAgentsMRUPicker && inQuickOpen"
   },
-
   {
-    "key": "alt+h",
-    "command": "workbench.action.navigateBack"
+      "key": "alt+e",
+      "command": "workbench.action.quickOpenNavigateNextInEditorPicker",
+      "when": "inEditorsPicker && inQuickOpen"
   },
-
   {
-    "key": "ctrl+]",
-    "command": "workbench.action.navigateForward"
+      "key": "alt+z",
+      "command": "workbench.action.toggleZenMode",
+      "when": "!isAuxiliaryWindowFocusedContext"
   },
-
   {
-    "key": "alt+l",
-    "command": "workbench.action.navigateForward"
+      "key": "alt+z",
+      "command": "-workbench.action.terminal.sizeToContentWidth",
+      "when": "terminalFocus && terminalHasBeenCreated && terminalIsOpen || terminalFocus && terminalIsOpen && terminalProcessSupported"
   },
-
   {
-    "key": "shift+alt+e",
-    "command": "workbench.action.quickOpenLeastRecentlyUsedEditorInGroup",
-    "when": "!activeEditorGroupEmpty"
+      "key": "shift+alt+w",
+      "command": "editor.action.toggleWordWrap"
   },
-
   {
-    "key": "shift+alt+e",
-    "command": "workbench.action.quickOpenNavigatePreviousInEditorPicker",
-    "when": "inEditorsPicker && inQuickOpen"
+      "key": "alt+z",
+      "command": "-editor.action.toggleWordWrap"
   },
-
   {
-    "key": "alt+e",
-    "command": "workbench.action.quickOpenPreviousRecentlyUsedEditorInGroup",
-    "when": "!activeEditorGroupEmpty"
+      "key": "alt+x",
+      "command": "workbench.view.extensions",
+      "when": "viewContainer.workbench.view.extensions.enabled"
   },
-
   {
-    "key": "alt+e",
-    "command": "workbench.action.quickOpenNavigateNextInEditorPicker",
-    "when": "inEditorsPicker && inQuickOpen"
+      "key": "ctrl+r",
+      "command": "workbench.action.gotoSymbol",
+      "when": "!accessibilityHelpIsShown && !accessibleViewIsShown"
   },
-
   {
-    // If the panel is active, but not maximized, maximize it.
-    "key": "ctrl+alt+`",
-    "command": "workbench.action.toggleMaximizedPanel",
-    "when": "panelFocus && terminalFocus"
+      "key": "ctrl+tab",
+      "command": "-workbench.action.quickOpenNavigateNextInEditorPicker",
+      "when": "inEditorsPicker && inQuickOpen"
   },
-
   {
-    // If the panel is not active, activate and maximize it.
-    "key": "ctrl+alt+`",
-    "command": "workbench.action.toggleMaximizedPanel",
-    "when": "!panelFocus || !terminalFocus"
+      "key": "ctrl+tab",
+      "command": "-workbench.action.quickOpenPreviousRecentlyUsedEditorInGroup",
+      "when": "activeEditor && !activeEditorGroupEmpty && !agentsPaneFocused && !auxiliaryBarFocus && !composerFocused && !panelFocus && !sideBarFocus && !terminalFocus || editorFocus && !activeEditorGroupEmpty && !agentsPaneFocused && !auxiliaryBarFocus && !composerFocused && !panelFocus && !sideBarFocus && !terminalFocus"
   },
-
   {
-    // Toggle focus between panel and editor.
-    "key": "ctrl+j",
-    "command": "workbench.action.focusLastEditorGroup",
-    "when": "panelFocus"
+      "key": "ctrl+shift+tab",
+      "command": "-workbench.action.quickOpenLeastRecentlyUsedEditorInGroup",
+      "when": "activeEditor && !activeEditorGroupEmpty && !agentsPaneFocused && !auxiliaryBarFocus && !composerFocused && !panelFocus && !sideBarFocus && !terminalFocus || editorFocus && !activeEditorGroupEmpty && !agentsPaneFocused && !auxiliaryBarFocus && !composerFocused && !panelFocus && !sideBarFocus && !terminalFocus"
   },
-
   {
-    // Toggle focus between panel and editor.
-    "key": "ctrl+j",
-    "command": "workbench.action.focusPanel",
-    "when": "!panelFocus"
+      "key": "ctrl+shift+tab",
+      "command": "-workbench.action.quickOpenNavigatePreviousInEditorPicker",
+      "when": "inEditorsPicker && inQuickOpen"
   },
-
   {
-    // Override the default in terminal, as this is very useful there, and send
-    // the key sequence to it.
-    "key": "ctrl+p",
-    "command": "workbench.action.terminal.sendSequence",
-    "args": {
-      "text": "\u0010"
-    },
-    "when": "terminalFocus"
+      "key": "shift+alt+e",
+      "command": "workbench.action.quickOpenLeastRecentlyUsedAgent",
+      "when": "agentsPaneFocused && !isInBackgroundComposerWindow || composerFocused && !isInBackgroundComposerWindow"
   },
-
   {
-    // Enable/disable Cursor inline suggestions.
-    "key": "ctrl+k ctrl+c",
-    "command": "editor.action.inlineSuggest.toggle",
-    "when": "editorTextFocus && !terminalFocus"
+      "key": "shift+alt+e",
+      "command": "workbench.action.quickOpenNavigatePreviousInAgentsPicker",
+      "when": "inAgentsMRUPicker && inQuickOpen"
   },
-
   {
-    // Overriden. Use ctrl+/ instead, which is better anyway.
-    "key": "ctrl+k ctrl+c",
-    "command": "-editor.action.addCommentLine",
-    "when": "editorTextFocus && !editorReadonly"
+      "key": "ctrl+shift+tab",
+      "command": "workbench.action.previousEditor"
   },
-
   {
-    // <C-n/p> to move to the next/previous find match.
-    "key": "ctrl+n",
-    "command": "editor.action.moveSelectionToNextFindMatch",
-    "when": "editorTextFocus && editorHasSelection && (!neovim.init || (neovim.init && neovim.mode == 'insert'))"
-  },
-
-  {
-    // <C-n/p> to move to the next/previous find match.
-    "key": "ctrl+p",
-    "command": "editor.action.moveSelectionToPreviousFindMatch",
-    "when": "editorTextFocus && editorHasSelection && (!neovim.init || (neovim.init && neovim.mode == 'insert'))"
-  },
-
-  // #region [Cursor movements by line, word and camelcase humps]
-
-  {
-    // 🐪⬅️
-    "key": "ctrl+alt+left",
-    "command": "cursorWordPartLeft",
-    "when": "editorTextFocus && !editorReadonly"
-  },
-
-  {
-    // Select 🐪⬅️
-    "key": "ctrl+alt+shift+left",
-    "command": "cursorWordPartLeftSelect",
-    "when": "editorTextFocus && !editorReadonly"
-  },
-
-  {
-    // 🐪➡️
-    "key": "ctrl+alt+right",
-    "command": "cursorWordPartRight",
-    "when": "editorTextFocus && !editorReadonly"
-  },
-
-  {
-    // Select 🐪➡️
-    "key": "ctrl+alt+shift+right",
-    "command": "cursorWordPartRightSelect",
-    "when": "editorTextFocus"
-  },
-
-  // #endregion [Cursor movements by line, word and camelcase humps]
-
-  {
-    // The default is to navigate to the most recent editor, but I prefer the
-    // usual next/previous editor/browser tab behavior.
-    "key": "ctrl+tab",
-    "command": "workbench.action.nextEditor"
-  },
-  {
-    // The default is to navigate to the most recent editor, but I prefer the
-    // usual next/previous editor/browser tab behavior.
-    "key": "ctrl+shift+tab",
-    "command": "workbench.action.previousEditor"
-  },
-
-  {
-    // Send a line break in the terminal. Claude Code supports this for multiple
-    // lines.
-    "key": "shift+enter",
-    "command": "workbench.action.terminal.sendSequence",
-    "args": {
-      "text": "\\\r\n"
-    },
-    "when": "terminalFocus"
-  },
-
-  {
-    // I use ctrl+backspace to delete entire words and end up always triggering
-    // this command by mistake.
-    "key": "ctrl+backspace",
-    "command": "-chatEditing.discardAllFiles",
-    "when": "hasUndecidedChatEditingResource && inChatInput && !chatInputHasText && !chatSessionRequestInProgress"
-  },
-  {
-    // I use ctrl+backspace to delete entire words and end up always triggering
-    // this command by mistake.
-    "key": "ctrl+backspace",
-    "command": "-inlineChat2.undo",
-    "when": "inlineChatHasEditsAgent && inlineChatVisible && !chatEdits.isRequestInProgress"
-  },
-
-  {
-    "key": "alt+d",
-    "command": "editor.action.duplicateSelection",
-    "when": "editorTextFocus && !editorReadonly"
-  },
-
-  {
-    // 📈 selection.
-    "key": "alt+shift+up",
-    "command": "editor.action.smartSelect.expand",
-    "when": "editorTextFocus"
-  },
-
-  {
-    // 📈 selection.
-    "key": "alt+shift+up",
-    "command": "-editor.action.copyLinesUpAction",
-    "when": "editorTextFocus && !editorReadonly"
-  },
-
-  {
-    // 📈 selection.
-    "key": "alt+shift+up",
-    "command": "-notebook.cell.copyUp",
-    "when": "notebookEditorFocused && !inputFocus"
-  },
-
-  {
-    // 📉 selection.
-    "key": "alt+shift+down",
-    "command": "editor.action.smartSelect.shrink",
-    "when": "editorTextFocus"
-  },
-
-  {
-    // 📉 selection.
-    "key": "alt+shift+down",
-    "command": "-notebook.cell.copyDown",
-    "when": "notebookEditorFocused && !inputFocus"
-  },
-
-  {
-    // 📉 selection.
-    "key": "alt+shift+down",
-    "command": "-editor.action.copyLinesDownAction",
-    "when": "editorTextFocus && !editorReadonly"
-  },
-
-  {
-    "key": "alt+shift+w",
-    "command": "editor.action.toggleWordWrap"
-  },
-
-  {
-    // I use this WAY LESS than paste-as.
-    "key": "ctrl+shift+v",
-    "command": "-markdown.showPreview",
-    "when": "!notebookEditorFocused && editorLangId == 'markdown'"
-  },
-
-  {
-    // I use this WAY MORE than show preview.
-    "key": "ctrl+shift+v", // Default: none
-    "command": "editor.action.pasteAs",
-    "when": "!notebookEditorFocused && editorLangId == 'markdown'"
-  },
-
-  {
-    // Search through all symbols in a file. Amazing feature for productivity!
-    "key": "ctrl+r", // Default: ctrl+shift+o
-    "command": "workbench.action.gotoSymbol"
-  },
-
-  {
-    "key": "alt+a", // Default: ctrl+shift+i
-    "command": "workbench.action.chat.openagent",
-    "when": "!chatInputHasFocus && !terminalFocus"
-  },
-  {
-    "key": "alt+a", // Default: ctrl+alt+i
-    "command": "workbench.panel.chat",
-    "when": "!terminalFocus"
-  },
-
-  {
-    // Surround selection with ** (bold) in markdown files.
-    "key": "ctrl+b",
-    "command": "editor.action.insertSnippet",
-    "args": {
-      "snippet": "**${TM_SELECTED_TEXT}**$0"
-    },
-    "when": "editorTextFocus && editorLangId == 'markdown' && editorHasSelection"
-  },
-
-  {
-    "key": ">>>>>>>>>> 👆🏽 NEXT ESSENTIAL"
-  },
-
-  // #endregion [Essential]
-  // #region [Non-essential but nice to have]
-  {
-    "key": ">>>>>>>>>> 👇🏽 NICE TO HAVE"
-  },
-
-  {
-    // 🧘🏽 zen mode.
-    "key": "alt+z",
-    "command": "workbench.action.toggleZenMode"
-  },
-
-  {
-    // 🧘🏽 zen mode.
-    "key": "alt+z",
-    "command": "-editor.action.toggleWordWrap"
-  },
-
-  {
-    "key": "alt+shift+d",
-    "command": "workbench.action.toggleLightDarkThemes"
-  },
-
-  {
-    // Open the Settings UI and the Settings JSON file.
-    "key": "ctrl+alt+shift+s",
-    "command": "runCommands",
-    "args": {
-      "commands": [
-        // "workbench.action.newGroupRight",
-        "workbench.action.openApplicationSettingsJson",
-        "workbench.action.openGlobalSettings",
-        // "workbench.action.moveEditorGroupToNewWindow",
-        "workbench.action.openApplicationSettingsJson"
-      ]
-    }
-  },
-
-  {
-    // Open the Keybindings UI and the Keybindings JSON file.
-    "key": "ctrl+alt+shift+k",
-    "command": "runCommands",
-    "args": {
-      "commands": [
-        // "workbench.action.newGroupRight",
-        "workbench.action.openGlobalKeybindingsFile",
-        "workbench.action.openGlobalKeybindings",
-        // "workbench.action.moveEditorGroupToNewWindow",
-        "workbench.action.openGlobalKeybindingsFile"
-      ]
-    }
-  },
-
-  {
-    // Open the Settings JSON file. Settings UI: `ctrl+,`.
-    "key": "ctrl+alt+,",
-    "command": "workbench.action.openApplicationSettingsJson"
-  },
-
-  {
-    // Open just the Keybindings JSON file. Keybindings UI: `ctrl+k ctrl+s`.
-    "key": "ctrl+k ctrl+k",
-    "command": "workbench.action.openGlobalKeybindingsFile"
-    // Note: ctrl+k ctrl+k is used by default to define keybindings when editing
-    // this file, but this binding allows opening the file from anywhere.
-  },
-
-  {
-    "key": "alt+p",
-    "command": "workbench.action.pinEditor",
-    "when": "!activeEditorIsPinned"
-  },
-
-  {
-    "key": "alt+p",
-    "command": "workbench.action.unpinEditor",
-    "when": "activeEditorIsPinned"
-  },
-
-  {
-    // Example of how to use snippets directly from a keybinding. Inserts a code
-    // block markdown snippet in the editor.
-    "key": "ctrl+shift+c",
-    "command": "runCommands",
-    "args": {
-      "commands": [
-        {
-          "command": "editor.action.insertSnippet",
-          "args": {
-            "snippet": "```\n$1\n```$0"
-          }
-        }
-      ]
-    },
-    "when": "!terminalFocus"
-  },
-  {
-    "key": "ctrl+shift+c",
-    "command": "-workbench.action.terminal.openNativeConsole",
-    "when": "!terminalFocus"
-  },
-
-  {
-    // Add a new timestamped (time) header entry in markdown files.
-    "key": "alt+enter",
-    "command": "runCommands",
-    "args": {
-      "commands": [
-        // Put the next entry at the end of the file. Comment this to insert at
-        // the current cursor position.
-        { "command": "cursorBottom" },
-        // Insert the snippet defined in snippets/markdown.json.
-        {
-          "command": "editor.action.insertSnippet",
-          "args": {
-            "name": "alt+enter"
-          }
-        }
-      ]
-    },
-    "when": "editorTextFocus && editorLangId == 'markdown' && !editorReadonly && !terminalFocus"
-  },
-
-  {
-    // Creates a new task at the end of the file.
-    "key": "ctrl+enter",
-    "command": "runCommands",
-    "args": {
-      "commands": [
-        // Put the next entry at the end of the file.
-        { "command": "cursorBottom" },
-
-        // Insert the snippet defined in snippets/markdown.json.
-        {
-          "command": "editor.action.insertSnippet",
-          "args": {
-            "name": "ctrl+enter"
-          }
-        }
-      ]
-    },
-    "when": "editorTextFocus && editorLangId == 'markdown' && !editorReadonly && !terminalFocus && !inChatInput"
-  },
-
-  {
-    // Add a new topic near the top of markdown files.
-    "key": "alt+shift+enter",
-    "command": "runCommands",
-    "args": {
-      "commands": [
-        // Go to the beginning of the file and jump over the first 2 headings.
-        { "command": "cursorTop" },
-        { "command": "cursorDown" },
-        { "command": "cursorDown" },
-        { "command": "cursorDown" },
-        { "command": "cursorDown" },
-
-        // Insert the snippet defined in snippets/markdown.json.
-        {
-          "command": "editor.action.insertSnippet",
-          "args": {
-            "name": "alt+shift+enter"
-          }
-        }
-      ]
-    },
-    "when": "editorTextFocus && editorLangId == 'markdown' && !editorReadonly"
-  },
-
-  {
-    "key": "ctrl+shift+/",
-    "command": "editor.action.blockComment",
-    "when": "editorTextFocus && !editorReadonly"
-  },
-
-  {
-    "key": "ctrl+alt+w",
-    "command": "workbench.action.closeOtherEditors"
-  },
-
-  {
-    "key": ">>>>>>>>>> 👆🏽 NEXT NICE TO HAVE"
-  },
-
-  // #endregion [Non-essential but nice to have]
-
-  {
-    "key": ">>>>>>>>>> 👇🏽 ADDED FROM THE KEYBINDINGS UI — VERIFY AND MOVE ABOVE"
-  },
-  {
-    "key": "shift+alt+j",
-    "command": "workbench.action.moveEditorLeftInGroup"
-  },
-  {
-    "key": "shift+alt+k",
-    "command": "workbench.action.moveEditorRightInGroup"
-  },
-  {
-    "key": "ctrl+m",
-    "command": "-editor.action.toggleTabFocusMode"
-  },
-  {
-    "key": "ctrl+m",
-    "command": "editor.action.jumpToBracket",
-    "when": "editorTextFocus"
-  },
-  {
-    "key": "ctrl+alt+m",
-    "command": "editor.action.selectToBracket"
-  },
-  {
-    "key": "ctrl+k ctrl+s",
-    "command": "workbench.action.openGlobalKeybindings"
-  },
-  {
-    "key": "ctrl+alt+u",
-    "command": "cursorRedo"
-  },
-  {
-    "key": "ctrl+shift+j",
-    "command": "json.sort",
-    "when": "editorTextFocus && (editorLangId == 'json' || editorLangId == 'jsonc')"
-  },
-  {
-    "key": "ctrl+shift+f",
-    "command": "workbench.action.terminal.focusFind",
-    "when": "terminalFindFocused && terminalHasBeenCreated || terminalFindFocused && terminalProcessSupported || terminalFocusInAny && terminalHasBeenCreated || terminalFocusInAny && terminalProcessSupported"
-  },
-  {
-    "key": "ctrl+f",
-    "command": "-workbench.action.terminal.focusFind",
-    "when": "terminalFindFocused && terminalHasBeenCreated || terminalFindFocused && terminalProcessSupported || terminalFocusInAny && terminalHasBeenCreated || terminalFocusInAny && terminalProcessSupported"
-  },
-  {
-    "key": "ctrl+q",
-    "command": "-workbench.action.quickOpenNavigateNextInViewPicker",
-    "when": "inQuickOpen && inViewsPicker"
-  },
-  {
-    "key": "ctrl+q",
-    "command": "-workbench.action.quickOpenView"
-  },
-  {
-    "key": "ctrl+e",
-    "command": "workbench.action.quickOpen",
-    "when": "!terminalFocus"
-  },
-  {
-    "key": "ctrl+e",
-    "command": "-workbench.action.quickOpen"
-  },
-  {
-    "key": "f12",
-    "command": "editor.action.openLink",
-    // Each internal parenthesis group (wrapped in extra parenthesis) is from
-    // a different f12 default 'when' clause. This one only activates when all
-    // others do not.
-    //  - hasSymbols: editor.gotoNextSymbolFromResult
-    //  - editorHasDefinitionProvider && editorTextFocus: editor.action.revealDefinition
-    //  - inReferenceSearchEditor || referenceSearchVisible: goToNextReference
-    "when": "!((hasSymbols) || (inReferenceSearchEditor || referenceSearchVisible) || (editorHasDefinitionProvider && editorTextFocus))"
-  },
-  {
-    "key": "ctrl+g",
-    "command": "-workbench.action.terminal.goToRecentDirectory",
-    "when": "terminalFocus && terminalHasBeenCreated || terminalFocus && terminalProcessSupported"
-  },
-  {
-    "key": "ctrl+c",
-    "command": "editor.action.inlineSuggest.hide",
-    "when": "inlineEditIsVisible || inlineSuggestionVisible"
-  },
-  {
-    "key": "ctrl+alt+s",
-    "command": "workbench.action.files.saveWithoutFormatting"
-  },
-  {
-    // Toggle AI agent. [Cursor]
-    "key": "alt+i",
-    "command": "workbench.action.chat.openagent",
-    "when": "!terminalFocus"
-  },
-  {
-    // Toggle AI agent. [Cursor]
-    "key": "ctrl+i",
-    "command": "workbench.action.chat.openagent",
-    "when": "!terminalFocus"
-  },
-  {
-    "key": "ctrl+shift+a",
-    "command": "expandLineSelection",
-    "when": "textInputFocus"
-  },
-  {
-    "key": "ctrl+q",
-    "command": "-workbench.action.quit"
-  },
-  {
-    "key": "ctrl+l",
-    "command": "aichat.newchataction",
-    "when": "!terminalFocus"
-  },
-  {
-    "key": "ctrl+l",
-    "command": "-aichat.newchataction"
-  },
-  {
-    "key": "ctrl+l",
-    "command": "composer.sendToAgent",
-    "when": "editorHasPromptBar && editorPromptBarFocused && !terminalFocus"
-  },
-  {
-    "key": "ctrl+l",
-    "command": "-composer.sendToAgent",
-    "when": "editorHasPromptBar && editorPromptBarFocused"
+      "key": "ctrl+tab",
+      "command": "workbench.action.nextEditor"
   }
 ]

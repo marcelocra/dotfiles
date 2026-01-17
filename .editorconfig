@@ -25,6 +25,8 @@ max_line_length = 80
 
 [*.{md,markdown,mdx}]
 indent_size = 4
-max_line_length = unset           # Not wrapping lines reduces diffs.
-trim_trailing_whitespace = false  # Double trailing spaces can be used to break lines.
+# Not wrapping lines reduces diffs.
+max_line_length = unset
+# Double trailing spaces can be used to break lines.
+trim_trailing_whitespace = false
 

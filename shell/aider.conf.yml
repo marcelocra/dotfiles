@@ -30,7 +30,7 @@
 # Main model:
 
 ## Specify the model to use for the main chat
-model: openrouter/qwen/qwen3-coder
+model: openrouter/google/gemini-3-flash-preview
 
 ########################
 # API Keys and settings:
@@ -213,7 +213,7 @@ cache-prompts: true
 #completion-menu-current-bg-color: "xxx"
 
 ## Set the markdown code theme (default: default, other options include monokai, solarized-dark, solarized-light, or a Pygments builtin style, see https://pygments.org/styles for available themes)
-code-theme: solarized-light
+#code-theme: monokai
 
 ## Show diffs when committing changes (default: False)
 show-diffs: true
@@ -408,7 +408,7 @@ analytics-disable: true
 #  - zzz
 
 ## Use VI editing mode in the terminal (default: False)
-vim: true
+#vim: true
 
 ## Specify the language to use in the chat (default: None, uses system settings)
 #chat-language: xxx
@@ -426,7 +426,7 @@ commit-language: en
 #load: xxx
 
 ## Specify the encoding for input and output (default: utf-8)
-#encoding: utf-8
+encoding: utf-8
 
 ## Line endings to use when writing files (default: platform)
 line-endings: lf

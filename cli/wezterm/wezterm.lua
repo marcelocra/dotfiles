@@ -34,7 +34,7 @@ if wezterm.target_triple == "x86_64-pc-windows-msvc" then
   -- config.window_background_opacity = 0.95
 end
 
-config.window_decorations = "RESIZE"
+config.window_decorations = "TITLE | RESIZE"
 
 -- ============================================================================
 -- FONT CONFIGURATION
@@ -56,30 +56,37 @@ config.freetype_load_flags = "NO_HINTING"
 -- WINDOW & LAYOUT
 -- ============================================================================
 
--- config.window_padding = {
---   left = 5,
---   right = 5,
---   top = 5,
---   bottom = 5,
--- }
+config.window_padding = {
+  left = 40,
+  right = 40,
+  top = 30,
+  bottom = 30,
+}
 
 config.initial_cols = 120
 config.initial_rows = 30
 
 -- ============================================================================
--- TABS (Disabled - Optimized for Multiplexer usage)
+-- TABS
 -- ============================================================================
 
-config.enable_tab_bar = false
-config.use_fancy_tab_bar = false
-config.hide_tab_bar_if_only_one_tab = true
+config.enable_tab_bar = true
+config.tab_bar_at_bottom = true
+config.use_fancy_tab_bar = true
+config.hide_tab_bar_if_only_one_tab = false
+
+-- Tab bar font and size
+config.window_frame = {
+  font = wezterm.font('Cascadia Mono NF'),
+  font_size = 10,
+}
 
 -- ============================================================================
 -- CURSOR
 -- ============================================================================
 
 -- Steady cursor (no blinking - better for accessibility and screenshots)
-config.default_cursor_style = "SteadyUnderline"
+config.default_cursor_style = "SteadyBlock"
 config.cursor_thickness = "200%"
 
 -- ============================================================================
@@ -108,11 +115,26 @@ table.insert(config.hyperlink_rules, {
 
 -- Patterns for Quick Select (Leader + Space)
 config.quick_select_patterns = {
-  "\\b\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}\\b", -- IPs
-  "\\b[0-9a-f]{7,40}\\b", -- Hashes
-  "\\b[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}\\b", -- UUIDs
-  "\\b[a-z0-9]([-a-z0-9]*[a-z0-9])?\\b", -- Resource names
-  "\\b[0-9a-f]{12}\\b", -- Container IDs
+  -- URLs (Full)
+  "https?://\\S+",
+
+  -- IPs
+  "\\b\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}\\b",
+
+  -- Emails
+  "[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}",
+
+  -- Hashes
+  "\\b[0-9a-f]{7,40}\\b",
+
+  -- UUIDs
+  "\\b[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}\\b",
+
+  -- Resource names (Improved)
+  "\\b[a-zA-Z0-9][-a-zA-Z0-9_.]*[a-zA-Z0-9]\\b",
+
+  -- Container IDs
+  "\\b[0-9a-f]{12}\\b",
 }
 
 -- ============================================================================
@@ -120,66 +142,69 @@ config.quick_select_patterns = {
 -- ============================================================================
 
 -- Leader key: Make it different from your multiplexer's leader
-config.leader = { key = "q", mods = "ALT", timeout_milliseconds = 1000 }
+config.leader = { key = "q", mods = "ALT", timeout_milliseconds = 2000 }
 
+-- Local WezTerm panes
 config.keys = {
-  -- Pane Navigation (Local WezTerm panes)
-  {
-    key = "-",
-    mods = "LEADER",
-    action = act.SplitVertical({ domain = "CurrentPaneDomain" }),
-  },
-  {
-    key = "\\",
-    mods = "LEADER",
-    action = act.SplitHorizontal({ domain = "CurrentPaneDomain" }),
-  },
+  -- Pane Creation and Deletion
+  { key = "c", mods = "LEADER", action = act.SpawnTab("CurrentPaneDomain") },
+  { key = "-", mods = "LEADER", action = act.SplitVertical({ domain = "CurrentPaneDomain" }), },
+  { key = "\\", mods = "LEADER", action = act.SplitHorizontal({ domain = "CurrentPaneDomain" }), },
+  { key = "x", mods = "LEADER", action = act.CloseCurrentPane({ confirm = true }) },
+
+  -- Pane Navigation
   { key = "h", mods = "LEADER", action = act.ActivatePaneDirection("Left") },
   { key = "l", mods = "LEADER", action = act.ActivatePaneDirection("Right") },
   { key = "k", mods = "LEADER", action = act.ActivatePaneDirection("Up") },
   { key = "j", mods = "LEADER", action = act.ActivatePaneDirection("Down") },
-  {
-    key = "x",
-    mods = "LEADER",
-    action = act.CloseCurrentPane({ confirm = true }),
-  },
 
-  -- Pane Resizing
+  -- Tab Navigation - Activates key table to allow tmux-style repetition
+  -- The first key already executes the action AND activates the repetition mode
   {
-    key = "LeftArrow",
-    mods = "LEADER",
-    action = act.AdjustPaneSize({ "Left", 5 }),
+    key = "h",
+    mods = "LEADER|ALT",
+    action = act.Multiple({
+      act.ActivateTabRelative(-1),
+      act.ActivateKeyTable({ name = "tab_nav", one_shot = false, until_unknown = true }),
+    })
   },
   {
-    key = "RightArrow",
-    mods = "LEADER",
-    action = act.AdjustPaneSize({ "Right", 5 }),
-  },
-  {
-    key = "UpArrow",
-    mods = "LEADER",
-    action = act.AdjustPaneSize({ "Up", 5 }),
-  },
-  {
-    key = "DownArrow",
-    mods = "LEADER",
-    action = act.AdjustPaneSize({ "Down", 5 }),
-  },
-
-  -- Utilities
-  { key = "Space", mods = "LEADER", action = act.QuickSelect }, -- Grab text from screen
-  { key = "[", mods = "LEADER", action = act.ActivateCopyMode }, -- Vim-mode scrolling
-  {
-    key = "f",
-    mods = "CTRL|SHIFT",
-    action = act.Search("CurrentSelectionOrEmptyString"),
+    key = "l",
+    mods = "LEADER|ALT",
+    action = act.Multiple({
+      act.ActivateTabRelative(1),
+      act.ActivateKeyTable({ name = "tab_nav", one_shot = false, until_unknown = true }),
+    })
   },
   {
     key = "k",
-    mods = "CTRL|SHIFT",
-    action = act.ClearScrollback("ScrollbackAndViewport"),
+    mods = "LEADER|ALT",
+    action = act.Multiple({
+      act.MoveTabRelative(-1),
+      act.ActivateKeyTable({ name = "tab_nav", one_shot = false, until_unknown = true }),
+    })
   },
-  { key = "l", mods = "CTRL|SHIFT", action = act.ShowLauncher }, -- SSH Launcher
+  {
+    key = "j",
+    mods = "LEADER|ALT",
+    action = act.Multiple({
+      act.MoveTabRelative(1),
+      act.ActivateKeyTable({ name = "tab_nav", one_shot = false, until_unknown = true }),
+    })
+  },
+
+  -- Pane Resizing
+  { key = "LeftArrow", mods = "LEADER", action = act.AdjustPaneSize({ "Left", 5 }), },
+  { key = "RightArrow", mods = "LEADER", action = act.AdjustPaneSize({ "Right", 5 }), },
+  { key = "UpArrow", mods = "LEADER", action = act.AdjustPaneSize({ "Up", 5 }), },
+  { key = "DownArrow", mods = "LEADER", action = act.AdjustPaneSize({ "Down", 5 }), },
+
+  -- Utilities
+  { key = "l", mods = "CTRL|ALT|SHIFT", action = act.ShowLauncher },  -- SSH Launcher
+  { key = "Space", mods = "LEADER", action = act.QuickSelect },  -- Grab text from screen
+  { key = "[", mods = "LEADER", action = act.ActivateCopyMode }, -- Vim-mode scrolling
+  { key = "f", mods = "CTRL|SHIFT", action = act.Search("CurrentSelectionOrEmptyString"), },
+  { key = "k", mods = "CTRL|SHIFT", action = act.ClearScrollback("ScrollbackAndViewport"), },
   { key = "v", mods = "CTRL|SHIFT", action = act.PasteFrom("Clipboard") },
   { key = "c", mods = "CTRL|SHIFT", action = act.CopyTo("Clipboard") },
 
@@ -194,6 +219,15 @@ config.keys = {
 -- ============================================================================
 
 config.key_tables = {
+  -- Tab navigation (tmux-style: hold mod to repeat)
+  tab_nav = {
+    { key = "h", mods = "ALT", action = act.ActivateTabRelative(-1) },
+    { key = "l", mods = "ALT", action = act.ActivateTabRelative(1) },
+    { key = "k", mods = "ALT", action = act.MoveTabRelative(-1) },
+    { key = "j", mods = "ALT", action = act.MoveTabRelative(1) },
+    -- Releasing CTRL or pressing any other key exits the mode
+  },
+
   copy_mode = {
     { key = "Escape", mods = "NONE", action = act.CopyMode("Close") },
     { key = "q", mods = "NONE", action = act.CopyMode("Close") },
@@ -214,35 +248,17 @@ config.key_tables = {
 
     -- Page movement
     { key = "g", mods = "NONE", action = act.CopyMode("MoveToScrollbackTop") },
-    {
-      key = "G",
-      mods = "NONE",
-      action = act.CopyMode("MoveToScrollbackBottom"),
-    },
+    { key = "G", mods = "NONE", action = act.CopyMode("MoveToScrollbackBottom"), },
     { key = "d", mods = "CTRL", action = act.CopyMode("PageDown") },
     { key = "u", mods = "CTRL", action = act.CopyMode("PageUp") },
 
     -- Selection
-    {
-      key = "v",
-      mods = "NONE",
-      action = act.CopyMode({ SetSelectionMode = "Cell" }),
-    },
-    {
-      key = "V",
-      mods = "NONE",
-      action = act.CopyMode({ SetSelectionMode = "Line" }),
-    },
-    {
-      key = "v",
-      mods = "CTRL",
-      action = act.CopyMode({ SetSelectionMode = "Block" }),
-    },
+    { key = "v", mods = "NONE", action = act.CopyMode({ SetSelectionMode = "Cell" }), },
+    { key = "V", mods = "NONE", action = act.CopyMode({ SetSelectionMode = "Line" }), },
+    { key = "v", mods = "CTRL", action = act.CopyMode({ SetSelectionMode = "Block" }), },
 
     -- Copy
-    {
-      key = "y",
-      mods = "NONE",
+    { key = "y", mods = "NONE",
       action = act.Multiple({
         { CopyTo = "ClipboardAndPrimarySelection" },
         { CopyMode = "Close" },
@@ -250,11 +266,7 @@ config.key_tables = {
     },
 
     -- Search
-    {
-      key = "/",
-      mods = "NONE",
-      action = act.Search("CurrentSelectionOrEmptyString"),
-    },
+    { key = "/", mods = "NONE", action = act.Search("CurrentSelectionOrEmptyString"), },
     { key = "n", mods = "NONE", action = act.CopyMode("NextMatch") },
     { key = "N", mods = "NONE", action = act.CopyMode("PriorMatch") },
   },
@@ -274,22 +286,10 @@ config.key_tables = {
 -- ============================================================================
 
 config.launch_menu = {
-  {
-    label = "PowerShell 7",
-    args = { "pwsh.exe", "-NoLogo" },
-  },
-  {
-    label = "PowerShell 5",
-    args = { "powershell.exe", "-NoLogo" },
-  },
-  {
-    label = "Command Prompt",
-    args = { "cmd.exe" },
-  },
-  {
-    label = "WSL",
-    args = { "wsl.exe", "--cd", "~" },
-  },
+  { label = "PowerShell 7", args = { "pwsh.exe", "-NoLogo" }, },
+  { label = "PowerShell 5", args = { "powershell.exe", "-NoLogo" }, },
+  { label = "Command Prompt", args = { "cmd.exe" }, },
+  { label = "WSL", args = { "wsl.exe", "--cd", "~" }, },
 }
 
 -- ============================================================================
@@ -355,10 +355,13 @@ config.mouse_bindings = {
 -- Visual bell for long-running commands
 config.audible_bell = "Disabled"
 config.visual_bell = {
-  fade_in_function = "EaseIn",
+  fade_in_function = 'EaseIn',
   fade_in_duration_ms = 150,
-  fade_out_function = "EaseOut",
+  fade_out_function = 'EaseOut',
   fade_out_duration_ms = 150,
+}
+config.colors = {
+  visual_bell = '#330000', -- Dark red.
 }
 
 -- ============================================================================
