@@ -217,5 +217,15 @@
   {
       "key": "ctrl+tab",
       "command": "workbench.action.nextEditor"
-  }
+},
+{
+    "key": "alt+b",
+    "command": "workbench.action.toggleSidebarVisibility",
+    "when": "!isAuxiliaryWindowFocusedContext"
+},
+{
+    "key": "shift+alt+b",
+    "command": "workbench.action.toggleAuxiliaryBar",
+    "when": "!isAuxiliaryWindowFocusedContext"
+},
 ]
