@@ -93,49 +93,29 @@ config.cursor_thickness = "200%"
 -- HYPERLINKS & QUICK SELECT - Auto-detect URLs, file paths, etc.
 -- ============================================================================
 
+-- Use default rules (URLs) but disable the aggressive custom ones that
+-- make almost everything a link.
 config.hyperlink_rules = wezterm.default_hyperlink_rules()
 
--- GitHub/GitLab paths
-table.insert(config.hyperlink_rules, {
-  regex = [[["]?([\w\d]{1}[-\w\d]+)(/){1}([-\w\d\.]+)[":]?]],
-  format = "https://github.com/$1/$3",
-})
+-- TODO: The following commented out rules are too aggressive and make almost
+-- everything a link. Worse yet, it seems like single clicks already open the
+-- link in some cases.
 
--- Localhost URLs
-table.insert(config.hyperlink_rules, {
-  regex = [[\blocalhost:\d+\b]],
-  format = "http://$0",
-})
-
--- Log file paths
-table.insert(config.hyperlink_rules, {
-  regex = [[/[\w\d\.\-_/]+\.(log|txt|md|json|yaml|yml|toml|conf|cfg)]],
-  format = "file://$0",
-})
-
--- Patterns for Quick Select (Leader + Space)
-config.quick_select_patterns = {
-  -- URLs (Full)
-  "https?://\\S+",
-
-  -- IPs
-  "\\b\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}\\b",
-
-  -- Emails
-  "[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}",
-
-  -- Hashes
-  "\\b[0-9a-f]{7,40}\\b",
-
-  -- UUIDs
-  "\\b[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}\\b",
-
-  -- Resource names (Improved)
-  "\\b[a-zA-Z0-9][-a-zA-Z0-9_.]*[a-zA-Z0-9]\\b",
-
-  -- Container IDs
-  "\\b[0-9a-f]{12}\\b",
-}
+-- -- Localhost URLs (Keep this as it's specific enough)
+-- table.insert(config.hyperlink_rules, {
+--   regex = [[\blocalhost:\d+\b]],
+--   format = "http://$0",
+-- })
+-- -- Patterns for Quick Select (Leader + Space)
+-- config.quick_select_patterns = {
+--   "https?://\\S+",-- URLs (Full)
+--   "\\b\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}\\b",-- IPs
+--   "[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}",-- Emails
+--   "\\b[0-9a-f]{7,40}\\b",-- Hashes
+--   "\\b[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}\\b",-- UUIDs
+--   "\\b[a-zA-Z0-9][-a-zA-Z0-9_.]*[a-zA-Z0-9]\\b",-- Resource names (Improved)
+--   "\\b[0-9a-f]{12}\\b",-- Container IDs
+-- }
 
 -- ============================================================================
 -- KEY BINDINGS - Optimized for SSH workflow
@@ -344,8 +324,16 @@ config.mouse_bindings = {
     end),
   },
 
+  -- Disable the default "click to open link" by explicitly assigning
+  -- a simple click to just complete the selection.
   {
-    -- Open hyperlinks with Ctrl+Click
+    event = { Up = { streak = 1, button = "Left" } },
+    mods = "NONE",
+    action = act.CompleteSelection("PrimarySelection"),
+  },
+
+  {
+    -- Open hyperlinks ONLY with Ctrl+Click
     event = { Up = { streak = 1, button = "Left" } },
     mods = "CTRL",
     action = act.OpenLinkAtMouseCursor,
