@@ -213,7 +213,7 @@
   "chat.viewSessions.enabled": false,
   "chatgpt.runCodexInWindowsSubsystemForLinux": true,
   "continue.enableConsole": true,
-  "continue.enableTabAutocomplete": false,
+  "continue.enableTabAutocomplete": true,
   "continue.showInlineTip": false,
   "continue.telemetryEnabled": false,
   "csharp.suppressBuildAssetsNotification": true,
@@ -418,11 +418,7 @@
   "github.copilot.chat.byok.ollamaEndpoint": "http://localhost:11434",
   "github.copilot.chat.codesearch.enabled": true,
   "github.copilot.enable": {
-    "*": false,
-    "markdown": false,
-    "plaintext": false,
-    "scminput": false,
-    "shellscript": false
+    "*": false
   },
   "github.copilot.nextEditSuggestions.enabled": true,
   "gitlens.ai.model": "vscode",
@@ -511,7 +507,7 @@
     "git log",
     "git diff",
     "git show"
-  ],
+  ], // prettier-ignore
   "roo-cline.debug": false,
   "roo-cline.deniedCommands": [],
   "rubyLsp.rubyVersionManager": "asdf",
