@@ -127,16 +127,16 @@ config.leader = { key = "w", mods = "ALT", timeout_milliseconds = 2000 }
 -- Local WezTerm panes
 config.keys = {
   -- Pane Creation and Deletion
-  { key = "c", mods = "LEADER", action = act.SpawnTab("CurrentPaneDomain") },
-  { key = "-", mods = "LEADER", action = act.SplitVertical({ domain = "CurrentPaneDomain" }), },
+  { key = "c",  mods = "LEADER", action = act.SpawnTab("CurrentPaneDomain") },
+  { key = "-",  mods = "LEADER", action = act.SplitVertical({ domain = "CurrentPaneDomain" }), },
   { key = "\\", mods = "LEADER", action = act.SplitHorizontal({ domain = "CurrentPaneDomain" }), },
-  { key = "x", mods = "LEADER", action = act.CloseCurrentPane({ confirm = true }) },
+  { key = "x",  mods = "LEADER", action = act.CloseCurrentPane({ confirm = true }) },
 
   -- Pane Navigation
-  { key = "h", mods = "LEADER", action = act.ActivatePaneDirection("Left") },
-  { key = "l", mods = "LEADER", action = act.ActivatePaneDirection("Right") },
-  { key = "k", mods = "LEADER", action = act.ActivatePaneDirection("Up") },
-  { key = "j", mods = "LEADER", action = act.ActivatePaneDirection("Down") },
+  { key = "h",  mods = "LEADER", action = act.ActivatePaneDirection("Left") },
+  { key = "l",  mods = "LEADER", action = act.ActivatePaneDirection("Right") },
+  { key = "k",  mods = "LEADER", action = act.ActivatePaneDirection("Up") },
+  { key = "j",  mods = "LEADER", action = act.ActivatePaneDirection("Down") },
 
   -- Tab Navigation - Activates key table to allow tmux-style repetition
   -- The first key already executes the action AND activates the repetition mode
@@ -174,24 +174,24 @@ config.keys = {
   },
 
   -- Pane Resizing
-  { key = "LeftArrow", mods = "LEADER", action = act.AdjustPaneSize({ "Left", 5 }), },
-  { key = "RightArrow", mods = "LEADER", action = act.AdjustPaneSize({ "Right", 5 }), },
-  { key = "UpArrow", mods = "LEADER", action = act.AdjustPaneSize({ "Up", 5 }), },
-  { key = "DownArrow", mods = "LEADER", action = act.AdjustPaneSize({ "Down", 5 }), },
+  { key = "LeftArrow",  mods = "LEADER",         action = act.AdjustPaneSize({ "Left", 5 }), },
+  { key = "RightArrow", mods = "LEADER",         action = act.AdjustPaneSize({ "Right", 5 }), },
+  { key = "UpArrow",    mods = "LEADER",         action = act.AdjustPaneSize({ "Up", 5 }), },
+  { key = "DownArrow",  mods = "LEADER",         action = act.AdjustPaneSize({ "Down", 5 }), },
 
   -- Utilities
-  { key = "l", mods = "CTRL|ALT|SHIFT", action = act.ShowLauncher },  -- SSH Launcher
-  { key = "Space", mods = "LEADER", action = act.QuickSelect },  -- Grab text from screen
-  { key = "[", mods = "LEADER", action = act.ActivateCopyMode }, -- Vim-mode scrolling
-  { key = "f", mods = "CTRL|SHIFT", action = act.Search("CurrentSelectionOrEmptyString"), },
-  { key = "k", mods = "CTRL|SHIFT", action = act.ClearScrollback("ScrollbackAndViewport"), },
-  { key = "v", mods = "CTRL|SHIFT", action = act.PasteFrom("Clipboard") },
-  { key = "c", mods = "CTRL|SHIFT", action = act.CopyTo("Clipboard") },
+  { key = "l",          mods = "CTRL|ALT|SHIFT", action = act.ShowLauncher }, -- SSH Launcher
+  { key = "Space",      mods = "LEADER",         action = act.QuickSelect }, -- Grab text from screen
+  { key = "[",          mods = "LEADER",         action = act.ActivateCopyMode }, -- Vim-mode scrolling
+  { key = "f",          mods = "CTRL|SHIFT",     action = act.Search("CurrentSelectionOrEmptyString"), },
+  { key = "k",          mods = "CTRL|SHIFT",     action = act.ClearScrollback("ScrollbackAndViewport"), },
+  { key = "v",          mods = "CTRL|SHIFT",     action = act.PasteFrom("Clipboard") },
+  { key = "c",          mods = "CTRL|SHIFT",     action = act.CopyTo("Clipboard") },
 
   -- Font Sizing
-  { key = "+", mods = "CTRL", action = act.IncreaseFontSize },
-  { key = "-", mods = "CTRL", action = act.DecreaseFontSize },
-  { key = "0", mods = "CTRL", action = act.ResetFontSize },
+  { key = "+",          mods = "CTRL",           action = act.IncreaseFontSize },
+  { key = "-",          mods = "CTRL",           action = act.DecreaseFontSize },
+  { key = "0",          mods = "CTRL",           action = act.ResetFontSize },
 }
 
 -- ============================================================================
@@ -210,16 +210,16 @@ config.key_tables = {
 
   copy_mode = {
     { key = "Escape", mods = "NONE", action = act.CopyMode("Close") },
-    { key = "q", mods = "NONE", action = act.CopyMode("Close") },
+    { key = "q",      mods = "NONE", action = act.CopyMode("Close") },
 
     -- Movement
-    { key = "h", mods = "NONE", action = act.CopyMode("MoveLeft") },
-    { key = "j", mods = "NONE", action = act.CopyMode("MoveDown") },
-    { key = "k", mods = "NONE", action = act.CopyMode("MoveUp") },
-    { key = "l", mods = "NONE", action = act.CopyMode("MoveRight") },
-    { key = "w", mods = "NONE", action = act.CopyMode("MoveForwardWord") },
-    { key = "b", mods = "NONE", action = act.CopyMode("MoveBackwardWord") },
-    { key = "0", mods = "NONE", action = act.CopyMode("MoveToStartOfLine") },
+    { key = "h",      mods = "NONE", action = act.CopyMode("MoveLeft") },
+    { key = "j",      mods = "NONE", action = act.CopyMode("MoveDown") },
+    { key = "k",      mods = "NONE", action = act.CopyMode("MoveUp") },
+    { key = "l",      mods = "NONE", action = act.CopyMode("MoveRight") },
+    { key = "w",      mods = "NONE", action = act.CopyMode("MoveForwardWord") },
+    { key = "b",      mods = "NONE", action = act.CopyMode("MoveBackwardWord") },
+    { key = "0",      mods = "NONE", action = act.CopyMode("MoveToStartOfLine") },
     {
       key = "$",
       mods = "NONE",
@@ -238,7 +238,9 @@ config.key_tables = {
     { key = "v", mods = "CTRL", action = act.CopyMode({ SetSelectionMode = "Block" }), },
 
     -- Copy
-    { key = "y", mods = "NONE",
+    {
+      key = "y",
+      mods = "NONE",
       action = act.Multiple({
         { CopyTo = "ClipboardAndPrimarySelection" },
         { CopyMode = "Close" },
@@ -253,11 +255,11 @@ config.key_tables = {
 
   search_mode = {
     { key = "Escape", mods = "NONE", action = act.CopyMode("Close") },
-    { key = "Enter", mods = "NONE", action = act.CopyMode("PriorMatch") },
-    { key = "n", mods = "CTRL", action = act.CopyMode("NextMatch") },
-    { key = "p", mods = "CTRL", action = act.CopyMode("PriorMatch") },
-    { key = "r", mods = "CTRL", action = act.CopyMode("CycleMatchType") },
-    { key = "u", mods = "CTRL", action = act.CopyMode("ClearPattern") },
+    { key = "Enter",  mods = "NONE", action = act.CopyMode("PriorMatch") },
+    { key = "n",      mods = "CTRL", action = act.CopyMode("NextMatch") },
+    { key = "p",      mods = "CTRL", action = act.CopyMode("PriorMatch") },
+    { key = "r",      mods = "CTRL", action = act.CopyMode("CycleMatchType") },
+    { key = "u",      mods = "CTRL", action = act.CopyMode("ClearPattern") },
   },
 }
 
@@ -266,10 +268,10 @@ config.key_tables = {
 -- ============================================================================
 
 config.launch_menu = {
-  { label = "PowerShell 7", args = { "pwsh.exe", "-NoLogo" }, },
-  { label = "PowerShell 5", args = { "powershell.exe", "-NoLogo" }, },
+  { label = "PowerShell 7",   args = { "pwsh.exe", "-NoLogo" }, },
+  { label = "PowerShell 5",   args = { "powershell.exe", "-NoLogo" }, },
   { label = "Command Prompt", args = { "cmd.exe" }, },
-  { label = "WSL", args = { "wsl.exe", "--cd", "~" }, },
+  { label = "WSL",            args = { "wsl.exe", "--cd", "~" }, },
 }
 
 -- ============================================================================
