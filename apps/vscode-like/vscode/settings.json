@@ -208,6 +208,8 @@
   "chat.tools.urls.autoApprove": {
     "https://docs.docker.com": true
   },
+  "chat.useAgentSkills": true,
+  "chat.useNestedAgentsMdFiles": true,
   "chat.viewSessions.enabled": false,
   "chatgpt.runCodexInWindowsSubsystemForLinux": true,
   "continue.enableConsole": true,
