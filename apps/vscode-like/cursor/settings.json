@@ -13,6 +13,7 @@
       "*": "linux",
   },
   "telemetry.feedback.enabled": false,
+  "terminal.integrated.allowChords": false,
   "terminal.integrated.fontFamily": "FiraCode Nerd Font Mono",
   "terminal.integrated.fontLigatures.enabled": true,
   "terminal.integrated.fontLigatures.featureSettings": "'cv01' 1, 'cv02' 1, 'cv05' 1, 'cv09' 1, 'cv12' 1, 'cv14' 1, 'cv18' 1, 'cv30' 1, 'cv31' 1, 'ss03' 1, 'ss06' 1, 'ss08' 1",
