@@ -680,12 +680,12 @@ install_global_npm_packages() {
 
     # Packages to install globally (AI CLI tools, etc.)
     local packages=(
-        "@anthropic-ai/claude-code"
+        # "@anthropic-ai/claude-code"
         "@google/gemini-cli"
-        "@github/copilot"
+        # "@github/copilot"
         "@google/jules"
-        "@openai/codex"
-        "@continuedev/cli"
+        # "@openai/codex"
+        # "@continuedev/cli"
     )
 
     log_info "   Installing: ${packages[*]}"
