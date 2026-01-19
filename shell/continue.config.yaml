@@ -7,7 +7,7 @@ schema: v1
 # OpenRouter model contexts and prices updated 1jan26.
 provider_openrouter: &provider_openrouter
   provider: openrouter
-  apiKey: $CONTINUEDEV_OPENROUTER_API_KEY
+  apiKey: $OPENROUTER_API_KEY_CODE_ASSISTANTS
 
 # Recommended models per task, according to Continue.dev's documentation:
 # https://docs.continue.dev/customize/models#recommended-models
@@ -24,10 +24,17 @@ models:
       contextLength: 262144
     capabilities:
       - tool_use
+      - tool_use
+      # - image_input
+      # - next_edit
     roles:
-      - apply
       - chat
+      # - autocomplete
+      # - embed
+      # - rerank
       - edit
+      - apply
+      # - summarize
 
   # Created Jul 31, 2025 | 160,000 context | $0.07/M input tokens | $0.27/M output tokens
   - name: "Qwen: Qwen3 Coder 30B A3B Instruct"
@@ -86,6 +93,7 @@ models:
       - apply
       - chat
       - edit
+      - summarize
 
   # Created Dec 1, 2025 | 163,840 context | $0.27/M input tokens | $0.41/M output tokens
   - name: "DeepSeek: DeepSeek V3.2 Speciale"
@@ -99,6 +107,7 @@ models:
       - apply
       - chat
       - edit
+      - summarize
 
   # Created May 29, 2025 | 128,000 context | $0.06/M input tokens | $0.09/M output tokens
   - name: "DeepSeek: DeepSeek R1 0528 Qwen3 8B"
@@ -176,6 +185,8 @@ models:
       - chat
       - edit
       - apply
+      - summarize
+
     defaultCompletionOptions:
       contextLength: 1048576
       maxTokens: 65536
@@ -271,6 +282,13 @@ models:
   # ============================================================================
   # Misc Models
   # ============================================================================
+
+  - name: Codestral
+    provider: mistral
+    model: codestral-latest
+    apiKey: $CONTINUEDEV_CODESTRAL_API_KEY
+    roles:
+      - autocomplete
 
   # Created Aug 1, 2025 | 256,000 context | $0.30/M input tokens | $0.90/M output tokens
   - name: "Mistral: Codestral 2508"
@@ -398,36 +416,39 @@ models:
       - chat
       - edit
       - apply
+#
 
-# Top-level toggles
-allowAnonymousTelemetry: false
-disableIndexing: true
-disableSessionTitles: false
+# TODO: Figure out a way to make these work. They don't work here.
 
-# UI settings (maps directly to VS Code UI toggles)
-ui:
-  showSessionTabs: true # Show session tabs above chat
-  codeWrap: true # Wrap long code blocks
-  showChatScrollbar: true
-  displayRawMarkdown: false
-  codeBlockToolbarPosition: "top" # "top" or "bottom"
-  continueAfterToolRejection: false
-  fontSize: 14
+# # Top-level toggles
+# allowAnonymousTelemetry: false
+# disableIndexing: true
+# disableSessionTitles: false
 
-tabAutocompleteOptions:
-  useCache: true
-  multilineCompletions: "auto" # "auto" | true | false
-  modelTimeout: 150 # ms
-  debounceDelay: 250 # ms
-  disableInFiles: # comma-list equivalents in UI
-    - "**/*.{txt,md}" # or use ["**/*.md","**/*.txt"]
+# # UI settings (maps directly to VS Code UI toggles)
+# ui:
+#   showSessionTabs: true # Show session tabs above chat
+#   codeWrap: true # Wrap long code blocks
+#   showChatScrollbar: true
+#   displayRawMarkdown: false
+#   codeBlockToolbarPosition: "top" # "top" or "bottom"
+#   continueAfterToolRejection: false
+#   fontSize: 14
 
-experimental:
-  readResponseTTS: false
-  useCurrentFileAsContext: false
-  enableExperimentalTools: false
-  onlyUseSystemMessageTools: false
-  codebaseToolCallingOnly: false
-  promptPath: ".continue/prompts"
-  useChromiumForDocsCrawling: false
-  enableStaticContextualization: false
+# tabAutocompleteOptions:
+#   useCache: true
+#   multilineCompletions: "auto" # "auto" | true | false
+#   modelTimeout: 150 # ms
+#   debounceDelay: 250 # ms
+#   disableInFiles: # comma-list equivalents in UI
+#     - "**/*.{txt,md}" # or use ["**/*.md","**/*.txt"]
+
+# experimental:
+#   readResponseTTS: false
+#   useCurrentFileAsContext: false
+#   enableExperimentalTools: false
+#   onlyUseSystemMessageTools: false
+#   codebaseToolCallingOnly: false
+#   promptPath: ".continue/prompts"
+#   useChromiumForDocsCrawling: false
+#   enableStaticContextualization: false
