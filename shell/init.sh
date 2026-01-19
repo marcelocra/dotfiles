@@ -832,6 +832,11 @@ x-git-clone-d1() {
     git clone --depth 1 "$1"
 }
 
+x-tar-gz() {
+    tar -czvf "$@"
+}
+alias targz="x-tar-gz"
+
 # Next function marker
 
 # =============================================================================
